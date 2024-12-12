@@ -37,7 +37,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
             type: "alias",
             value: {
                 type: "id",
-                id: FernRegistry.TypeId(this.schemaId),
+                id: FernRegistry.TypeId(`type_:${this.schemaId}`),
                 // TODO: figure out how to handle default
                 default: undefined,
             },

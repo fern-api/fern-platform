@@ -12,3 +12,4 @@ export const xFernBearerTokenVariableNameKey = "x-fern-token-variable-name";
 export const xFernHeaderAuthKey = "x-fern-header";
 export const xFernHeaderVariableNameKey = "x-fern-header-variable-name";
 export const xFernServerNameKey = "x-fern-server-name";
+export const xFernExamplesKey = "x-fern-examples";

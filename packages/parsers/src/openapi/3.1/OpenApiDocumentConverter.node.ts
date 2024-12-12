@@ -36,6 +36,16 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     parse(): void {
         this.servers = coalesceServers(this.servers, this.input.servers, this.context, this.accessPath);
+
+        if (this.input.security != null) {
+            this.auth = new SecurityRequirementObjectConverterNode({
+                input: this.input.security,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: "security",
+            });
+        }
+
         this.basePath = new XFernBasePathConverterNode({
             input: this.input,
             context: this.context,
@@ -78,6 +88,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                     pathId: "paths",
                 },
                 this.servers,
+                this.auth,
                 this.basePath,
             );
         }
@@ -91,6 +102,8 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                     pathId: "webhooks",
                 },
                 this.basePath,
+                this.servers,
+                this.auth,
             );
         }
 
@@ -105,15 +118,6 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: "components",
-            });
-        }
-
-        if (this.input.security != null) {
-            this.auth = new SecurityRequirementObjectConverterNode({
-                input: this.input.security,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: "security",
             });
         }
     }
@@ -162,7 +166,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             // Websockets are not implemented in OAS, but are in AsyncAPI
             websockets: {},
             webhooks: { ...(this.webhooks?.convert() ?? {}), ...(webhookEndpoints ?? {}) },
-            types,
+            types: Object.fromEntries(Object.entries(types).map(([id, type]) => [`type_:${id}`, type])),
             // This is not necessary and will be removed
             subpackages,
             auths: this.auth?.convert() ?? {},

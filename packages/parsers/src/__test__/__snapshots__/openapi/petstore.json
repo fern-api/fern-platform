@@ -1,59 +1,18 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "post-pet": {
-      "description": "Add a new pet to the store",
-      "namespace": [
-        "pet"
-      ],
-      "id": "post-pet",
-      "method": "POST",
-      "path": [
-        {
-          "type": "literal",
-          "value": "pet"
-        }
-      ],
-      "auth": [],
-      "defaultEnvironment": "/api/v31",
-      "environments": [
-        {
-          "id": "/api/v31",
-          "baseUrl": "/api/v31"
-        }
-      ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        },
-        "description": "Successful operation"
-      },
-      "errors": [],
-      "examples": []
-    },
-    "put-pet": {
+    "endpoint_pet.pet": {
       "description": "Update an existing pet by Id",
       "namespace": [
         "pet"
       ],
-      "id": "put-pet",
+      "id": "endpoint_pet.pet",
       "method": "PUT",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "pet"
@@ -73,7 +32,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "Pet"
+            "id": "type_:Pet"
           }
         }
       },
@@ -83,7 +42,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "Pet"
+            "id": "type_:Pet"
           }
         },
         "description": "Successful operation"
@@ -91,17 +50,25 @@
       "errors": [],
       "examples": []
     },
-    "get-pet-pet-id": {
+    "endpoint_pets.petId": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
       "namespace": [
         "pets"
       ],
-      "id": "get-pet-pet-id",
+      "id": "endpoint_pets.petId",
       "method": "GET",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
@@ -137,7 +104,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "Pet"
+            "id": "type_:Pet"
           }
         },
         "description": "The pet"
@@ -149,7 +116,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "Pet"
+              "id": "type_:Pet"
             }
           },
           "description": "Invalid ID supplied",
@@ -161,7 +128,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "Pet"
+              "id": "type_:Pet"
             }
           },
           "description": "Pet not found",
@@ -174,7 +141,7 @@
   "websockets": {},
   "webhooks": {},
   "types": {
-    "Order": {
+    "type_:Order": {
       "name": "Order",
       "shape": {
         "type": "object",
@@ -261,7 +228,7 @@
         ]
       }
     },
-    "Customer": {
+    "type_:Customer": {
       "name": "Customer",
       "shape": {
         "type": "object",
@@ -301,7 +268,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "Address"
+                    "id": "type_:Address"
                   }
                 }
               }
@@ -310,7 +277,7 @@
         ]
       }
     },
-    "Address": {
+    "type_:Address": {
       "name": "Address",
       "shape": {
         "type": "object",
@@ -367,7 +334,7 @@
         ]
       }
     },
-    "Category": {
+    "type_:Category": {
       "name": "Category",
       "shape": {
         "type": "object",
@@ -400,7 +367,7 @@
         ]
       }
     },
-    "User": {
+    "type_:User": {
       "name": "User",
       "shape": {
         "type": "object",
@@ -506,7 +473,7 @@
         ]
       }
     },
-    "Tag": {
+    "type_:Tag": {
       "name": "Tag",
       "shape": {
         "type": "object",
@@ -539,7 +506,7 @@
         ]
       }
     },
-    "Pet": {
+    "type_:Pet": {
       "name": "Pet",
       "shape": {
         "type": "object",
@@ -585,7 +552,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "Category"
+                    "id": "type_:Category"
                   }
                 }
               }
@@ -623,7 +590,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "Tag"
+                        "id": "type_:Tag"
                       }
                     }
                   }
@@ -658,7 +625,7 @@
         ]
       }
     },
-    "ApiResponse": {
+    "type_:ApiResponse": {
       "name": "ApiResponse",
       "shape": {
         "type": "object",

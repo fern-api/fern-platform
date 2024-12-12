@@ -1,17 +1,25 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "post-v-1-text-to-speech": {
+    "endpoint_text_to_speech.textToSpeech": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "post-v-1-text-to-speech",
+      "id": "endpoint_text_to_speech.textToSpeech",
       "method": "POST",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "literal",
@@ -31,28 +39,40 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "TextToSpeechRequest"
+            "id": "type_:TextToSpeechRequest"
           }
         }
       },
       "errors": [],
       "examples": []
     },
-    "post-v-1-text-to-speech-from-prompt": {
+    "endpoint_text_to_speech.fromPrompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "post-v-1-text-to-speech-from-prompt",
+      "id": "endpoint_text_to_speech.fromPrompt",
       "method": "POST",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "text-to-speech"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "literal",
@@ -72,62 +92,32 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "TextToSpeechFromPromptRequest"
+            "id": "type_:TextToSpeechFromPromptRequest"
           }
         }
       },
       "errors": [],
       "examples": []
     },
-    "get-v-1-voices": {
-      "description": "Retrieve all voices associated with the current workspace.",
-      "namespace": [
-        "voices"
-      ],
-      "id": "get-v-1-voices",
-      "method": "GET",
-      "path": [
-        {
-          "type": "literal",
-          "value": "v1"
-        },
-        {
-          "type": "literal",
-          "value": "voices"
-        }
-      ],
-      "defaultEnvironment": "https://api.deeptune.com",
-      "environments": [
-        {
-          "id": "https://api.deeptune.com",
-          "baseUrl": "https://api.deeptune.com"
-        }
-      ],
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "ListVoicesResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": [],
-      "examples": []
-    },
-    "post-v-1-voices": {
+    "endpoint_voices.voices": {
       "description": "Create a new voice with a name, optional description, and audio file.",
       "namespace": [
         "voices"
       ],
-      "id": "post-v-1-voices",
+      "id": "endpoint_voices.voices",
       "method": "POST",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "literal",
@@ -147,7 +137,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "CreateVoiceRequest"
+            "id": "type_:CreateVoiceRequest"
           }
         }
       },
@@ -157,7 +147,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "CreateVoiceResponse"
+            "id": "type_:CreateVoiceResponse"
           }
         },
         "description": "Successful response"
@@ -165,145 +155,33 @@
       "errors": [],
       "examples": []
     },
-    "get-v-1-voices-voice-id": {
-      "description": "Retrieve a specific voice by its ID.",
-      "namespace": [
-        "voices"
-      ],
-      "id": "get-v-1-voices-voice-id",
-      "method": "GET",
-      "path": [
-        {
-          "type": "literal",
-          "value": "v1"
-        },
-        {
-          "type": "literal",
-          "value": "voices"
-        },
-        {
-          "type": "pathParameter",
-          "value": "voice_id"
-        }
-      ],
-      "defaultEnvironment": "https://api.deeptune.com",
-      "environments": [
-        {
-          "id": "https://api.deeptune.com",
-          "baseUrl": "https://api.deeptune.com"
-        }
-      ],
-      "pathParameters": [
-        {
-          "key": "voice_id",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "description": "The ID of the voice to retrieve"
-        }
-      ],
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "GetVoiceByIdResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": [],
-      "examples": []
-    },
-    "put-v-1-voices-voice-id": {
-      "description": "Update an existing voice with new name, description, or audio file.",
-      "namespace": [
-        "voices"
-      ],
-      "id": "put-v-1-voices-voice-id",
-      "method": "PUT",
-      "path": [
-        {
-          "type": "literal",
-          "value": "v1"
-        },
-        {
-          "type": "literal",
-          "value": "voices"
-        },
-        {
-          "type": "pathParameter",
-          "value": "voice_id"
-        }
-      ],
-      "defaultEnvironment": "https://api.deeptune.com",
-      "environments": [
-        {
-          "id": "https://api.deeptune.com",
-          "baseUrl": "https://api.deeptune.com"
-        }
-      ],
-      "pathParameters": [
-        {
-          "key": "voice_id",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "description": "The ID of the voice to update"
-        }
-      ],
-      "request": {
-        "contentType": "multipart/form-data",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "UpdateVoiceRequest"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "UpdateVoiceResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": [],
-      "examples": []
-    },
-    "delete-v-1-voices-voice-id": {
+    "endpoint_voices.voiceId": {
       "description": "Delete an existing voice by its ID.",
       "namespace": [
         "voices"
       ],
-      "id": "delete-v-1-voices-voice-id",
+      "id": "endpoint_voices.voiceId",
       "method": "DELETE",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "voices"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
@@ -339,7 +217,7 @@
   "websockets": {},
   "webhooks": {},
   "types": {
-    "TextToSpeechRequest": {
+    "type_:TextToSpeechRequest": {
       "name": "TextToSpeechRequest",
       "shape": {
         "type": "object",
@@ -412,7 +290,7 @@
         ]
       }
     },
-    "TextToSpeechResponse": {
+    "type_:TextToSpeechResponse": {
       "name": "TextToSpeechResponse",
       "shape": {
         "type": "object",
@@ -434,7 +312,7 @@
         ]
       }
     },
-    "TextToSpeechFromPromptRequest": {
+    "type_:TextToSpeechFromPromptRequest": {
       "name": "TextToSpeechFromPromptRequest",
       "shape": {
         "type": "object",
@@ -507,7 +385,7 @@
         ]
       }
     },
-    "TextToSpeechFromPromptResponse": {
+    "type_:TextToSpeechFromPromptResponse": {
       "name": "TextToSpeechFromPromptResponse",
       "shape": {
         "type": "object",
@@ -529,7 +407,7 @@
         ]
       }
     },
-    "ListVoicesResponse": {
+    "type_:ListVoicesResponse": {
       "name": "ListVoicesResponse",
       "shape": {
         "type": "alias",
@@ -539,23 +417,23 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "Voice"
+              "id": "type_:Voice"
             }
           }
         }
       }
     },
-    "GetVoiceByIdResponse": {
+    "type_:GetVoiceByIdResponse": {
       "name": "GetVoiceByIdResponse",
       "shape": {
         "type": "alias",
         "value": {
           "type": "id",
-          "id": "Voice"
+          "id": "type_:Voice"
         }
       }
     },
-    "Voice": {
+    "type_:Voice": {
       "name": "Voice",
       "shape": {
         "type": "object",
@@ -616,7 +494,7 @@
         ]
       }
     },
-    "CreateVoiceRequest": {
+    "type_:CreateVoiceRequest": {
       "name": "CreateVoiceRequest",
       "shape": {
         "type": "object",
@@ -670,17 +548,17 @@
         ]
       }
     },
-    "CreateVoiceResponse": {
+    "type_:CreateVoiceResponse": {
       "name": "CreateVoiceResponse",
       "shape": {
         "type": "alias",
         "value": {
           "type": "id",
-          "id": "Voice"
+          "id": "type_:Voice"
         }
       }
     },
-    "UpdateVoiceRequest": {
+    "type_:UpdateVoiceRequest": {
       "name": "UpdateVoiceRequest",
       "shape": {
         "type": "object",
@@ -728,13 +606,13 @@
         ]
       }
     },
-    "UpdateVoiceResponse": {
+    "type_:UpdateVoiceResponse": {
       "name": "UpdateVoiceResponse",
       "shape": {
         "type": "alias",
         "value": {
           "type": "id",
-          "id": "Voice"
+          "id": "type_:Voice"
         }
       }
     }

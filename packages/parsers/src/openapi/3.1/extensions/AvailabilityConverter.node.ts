@@ -54,6 +54,7 @@ export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     convert(): FernRegistry.Availability | undefined {
         switch (this.availability) {
+            case "beta":
             case "pre-release":
                 return FernRegistry.Availability.Beta;
             case "in-development":

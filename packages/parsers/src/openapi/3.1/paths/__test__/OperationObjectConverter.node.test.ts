@@ -27,6 +27,7 @@ describe("OperationObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
+                undefined,
                 "/pets/{petId}",
                 "GET",
                 undefined,
@@ -81,6 +82,7 @@ describe("OperationObjectConverterNode", () => {
                 },
                 undefined,
                 undefined,
+                undefined,
                 "GET",
                 undefined,
             );
@@ -99,6 +101,7 @@ describe("OperationObjectConverterNode", () => {
                     accessPath: [],
                     pathId: "test",
                 },
+                undefined,
                 undefined,
                 "/users/{userId}/posts/{postId}",
                 "GET",

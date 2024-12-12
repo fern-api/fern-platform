@@ -11,6 +11,7 @@ import { getEndpointId } from "../../utils/getEndpointId";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
+import { XFernEndpointExampleConverterNode } from "../extensions/XFernEndpointExampleConverter.node";
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
@@ -25,6 +26,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.OperationObject,
     FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition
 > {
+    endpointId: string | undefined;
     description: string | undefined;
     pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
     queryParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
@@ -34,11 +36,13 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     availability: AvailabilityConverterNode | undefined;
     auth: SecurityRequirementObjectConverterNode | undefined;
     namespace: XFernGroupNameConverterNode | undefined;
+    examples: XFernEndpointExampleConverterNode | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
         protected servers: ServerObjectConverterNode[] | undefined,
-        protected path: string | undefined,
+        protected globalAuth: SecurityRequirementObjectConverterNode | undefined,
+        protected path: string,
         protected method: "GET" | "POST" | "PUT" | "DELETE",
         protected basePath: XFernBasePathConverterNode | undefined,
         protected isWebhook?: boolean,
@@ -122,16 +126,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             }
         }
 
-        this.requests =
-            this.input.requestBody != null
-                ? new RequestBodyObjectConverterNode({
-                      input: this.input.requestBody,
-                      context: this.context,
-                      accessPath: this.accessPath,
-                      pathId: "requestBody",
-                  })
-                : undefined;
-
         this.responses =
             this.input.responses != null
                 ? new ResponsesObjectConverterNode({
@@ -141,6 +135,34 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                       pathId: "responses",
                   })
                 : undefined;
+
+        // TODO: pass appropriate status codes for examples
+        let responseStatusCode = 200;
+        if (this.responses?.responsesByStatusCode != null) {
+            responseStatusCode = Number(
+                Object.keys(this.responses.responsesByStatusCode)?.filter(
+                    (statusCode) => Number(statusCode) >= 200 && Number(statusCode) < 300,
+                )[0],
+            );
+        }
+
+        this.requests =
+            this.input.requestBody != null
+                ? new RequestBodyObjectConverterNode(
+                      {
+                          input: this.input.requestBody,
+                          context: this.context,
+                          accessPath: this.accessPath,
+                          pathId: "requestBody",
+                      },
+                      this.path,
+                      responseStatusCode,
+                  )
+                : undefined;
+
+        if (this.globalAuth != null) {
+            this.auth = this.globalAuth;
+        }
 
         if (this.input.security != null) {
             this.auth = new SecurityRequirementObjectConverterNode({
@@ -161,6 +183,23 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (this.namespace?.groupName == null && this.input.tags != null) {
             this.namespace.groupName = this.input.tags;
         }
+
+        this.endpointId = getEndpointId(this.namespace?.groupName, this.path);
+        this.examples = new XFernEndpointExampleConverterNode(
+            {
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: "examples",
+            },
+            this.path,
+            responseStatusCode,
+            this.requests,
+            this.responses,
+            this.pathParameters,
+            this.queryParameters,
+            this.requestHeaders,
+        );
     }
 
     extractPathParameterIds(): string[] | undefined {
@@ -188,18 +227,26 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         const basePath = this.basePath?.convert();
         const pathParts = basePath ? [basePath, ...path.split("/")] : path.split("/");
 
-        return pathParts.map((part) => {
+        return pathParts.reduce<FernRegistry.api.latest.PathPart[]>((acc, part) => {
+            acc.push({
+                type: "literal" as const,
+                value: "/",
+            });
+
             if (part.startsWith("{") && part.endsWith("}")) {
-                return {
+                acc.push({
                     type: "pathParameter" as const,
                     value: FernRegistry.PropertyKey(part.slice(1, -1).trim()),
-                };
+                });
+            } else {
+                acc.push({
+                    type: "literal" as const,
+                    value: part,
+                });
             }
-            return {
-                type: "literal" as const,
-                value: part,
-            };
-        });
+
+            return acc;
+        }, []);
     }
 
     convert(): FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition | undefined {
@@ -227,7 +274,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             };
         }
 
-        const endpointId = getEndpointId(this.method, this.path);
+        const endpointId = getEndpointId(this.namespace?.convert(), this.path);
+        if (endpointId == null) {
+            return undefined;
+        }
 
         const environments = this.servers?.map((server) => server.convert()).filter(isNonNullish);
         const pathParts = this.convertPathToPathParts();
