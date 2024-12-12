@@ -10,21 +10,38 @@ export interface FernDatetimeInputProps extends ComponentProps<"input"> {
     defaultValue?: string;
 }
 
+/**
+ * Formats a date string to the format expected by the input element.
+ *
+ * @param date - The date string to format.
+ * @returns The formatted date string.
+ */
+function formatInputDate(date: string) {
+    return format(date, "yyyy-MM-dd'T'HH:mm");
+}
+
+/**
+ * Converts a date string to a UTC date string for use with downstream elements, like the playground.
+ *
+ * @param date - The date string to convert.
+ * @returns The UTC date string.
+ */
+function utcDate(date: string) {
+    return new Date(date).toISOString();
+}
+
 export const FernDatetimeInput = forwardRef<HTMLInputElement, FernDatetimeInputProps>(
-    ({ id, className, placeholder, value, defaultValue, onValueChange, disabled }, ref) => {
+    ({ value, defaultValue, onValueChange, ...props }, ref) => {
         return (
             <FernInput
-                id={id}
+                {...props}
                 type="datetime-local"
-                className={className}
-                placeholder={placeholder}
-                value={typeof value === "string" ? format(value, "yyyy-MM-dd'T'HH:mm") : undefined}
-                defaultValue={typeof defaultValue === "string" ? format(defaultValue, "yyyy-MM-dd'T'HH:mm") : undefined}
+                value={typeof value === "string" ? formatInputDate(value) : undefined}
+                defaultValue={typeof defaultValue === "string" ? formatInputDate(defaultValue) : undefined}
                 resettable={typeof defaultValue === "string"}
                 onValueChange={(value) => {
-                    onValueChange?.(new Date(value).toISOString());
+                    onValueChange?.(utcDate(value));
                 }}
-                disabled={disabled}
                 ref={ref}
             />
         );
