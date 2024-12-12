@@ -39,7 +39,7 @@ export interface FdrConfig {
     venusUrl: string;
     awsAccessKey: string;
     awsSecretKey: string;
-    cdnPublidDocsUrl: string;
+    cdnPublicDocsUrl: string;
     publicDocsS3: S3Config;
     privateDocsS3: S3Config;
     privateApiDefinitionSourceS3: S3Config;
@@ -91,7 +91,7 @@ export function getConfig(): FdrConfig {
         redisEnabled: process.env[REDIS_ENABLED_ENV_VAR] === "true",
         redisClusteringEnabled: process.env[REDIS_CLUSTERING_ENABLED_ENV_VAR] === "true",
         applicationEnvironment: getEnvironmentVariableOrThrow(APPLICATION_ENVIRONMENT_ENV_VAR),
-        cdnPublidDocsUrl: getEnvironmentVariableOrThrow(PUBLIC_DOCS_CDN_URL),
+        cdnPublicDocsUrl: getEnvironmentVariableOrThrow(PUBLIC_DOCS_CDN_URL),
     };
 }
 
