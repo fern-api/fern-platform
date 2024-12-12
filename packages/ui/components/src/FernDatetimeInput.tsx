@@ -11,10 +11,10 @@ export interface FernDatetimeInputProps extends ComponentProps<"input"> {
 }
 
 /**
- * Formats a date string to the format expected by the input element.
+ * Formats a date string to the format expected by the input element, in local time.
  *
- * @param date - The date string to format.
- * @returns The formatted date string.
+ * @param date - The date string to format into local time.
+ * @returns The formatted date string in local time for the input element.
  */
 function formatInputDate(date: string) {
     return format(date, "yyyy-MM-dd'T'HH:mm");
