@@ -211,7 +211,10 @@ export class FdrDeployStack extends Stack {
                     REDIS_ENABLED: options.redis.toString(),
                     REDIS_CLUSTERING_MODE_ENABLED: options.redisClusteringModeEnabled.toString(),
                     APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
-                    PUBLIC_DOCS_CDN_URL: environmentType === "DEV2" ? "https://files-dev2.buildwithfern.com" : "https://files.buildwithfern.com",
+                    PUBLIC_DOCS_CDN_URL:
+                        environmentType === "DEV2"
+                            ? "https://files-dev2.buildwithfern.com"
+                            : "https://files.buildwithfern.com",
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
