@@ -26,6 +26,16 @@ const DOCS_FILES_ALLOWLIST = [
         hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
         port: "",
     },
+    {
+        protocol: "https",
+        hostname: "files.buildwithfern.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "files-dev2.buildwithfern.com",
+        port: "",
+    },
 ];
 
 /** @type {import("next").NextConfig} */
