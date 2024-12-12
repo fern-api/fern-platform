@@ -5,7 +5,7 @@ import {
     unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
+import { FernDatetimeInput, FernInput, FernNumericInput, FernSwitch, FernTextarea } from "@fern-ui/components";
 import { ReactElement, memo, useCallback } from "react";
 import { useFeatureFlags } from "../../atoms";
 import { WithLabel } from "../WithLabel";
@@ -213,14 +213,12 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                 ),
                 datetime: () => (
                     <WithLabel property={property} value={value} onRemove={onRemove} types={types} htmlFor={id}>
-                        <FernInput
+                        <FernDatetimeInput
                             id={id}
-                            type="datetime-local"
                             className="w-full"
                             placeholder="MM/DD/YYYY HH:MM"
                             value={typeof value === "string" ? value : undefined}
                             defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
-                            resettable={typeof defaultValue === "string"}
                             onValueChange={onChange}
                             disabled={disabled}
                         />
