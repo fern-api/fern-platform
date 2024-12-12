@@ -161,5 +161,6 @@ export async function resolveMarkdownPageWithoutApiRefs({
         breadcrumb,
         neighbors,
         hasAside,
+        frontmatter,
     };
 }

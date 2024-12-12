@@ -341,6 +341,7 @@ export async function withInitialProps({
             docs.definition.filesV2,
             found.tabs.length > 0,
         ),
+        frontmatterLogoOverride: content?.type === "markdown-page" ? content.frontmatter?.logo : undefined,
     };
 
     // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

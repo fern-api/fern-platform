@@ -35,6 +35,9 @@ types:
         docs: |
           The subtitle of the page. This is a markdown string that is rendered below the title.
           If `description` is not set, this will be used for the <meta name="description"> tag in the HTML.
+      logo:
+        type: optional<Logo>
+        docs: The logo for this page.
       image:
         type: optional<commons.FileIdOrUrl>
         docs: The URL to this page's image. This is currently an alias for `og:image`, but its purpose may change to a be a cover-image (pre-title).
@@ -66,6 +69,21 @@ types:
       canonical-url:
         type: optional<string>
         docs: The canonical URL of the page. This is used for the <link rel="canonical"> tag in the HTML.
+
+  Logo:
+    discriminated: false
+    union:
+      - commons.FileIdOrUrl
+      - LogoConfiguration
+
+  LogoConfiguration:
+    properties:
+      light:
+        type: optional<commons.FileIdOrUrl>
+        docs: The URL to this page's light theme logo.
+      dark:
+        type: optional<commons.FileIdOrUrl>
+        docs: The URL to this page's dark theme logo.
 
   Layout:
     enum:
