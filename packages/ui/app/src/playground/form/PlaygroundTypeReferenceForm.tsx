@@ -219,6 +219,7 @@ export const PlaygroundTypeReferenceForm = memo<PlaygroundTypeReferenceFormProps
                             placeholder="MM/DD/YYYY HH:MM"
                             value={typeof value === "string" ? value : undefined}
                             defaultValue={typeof defaultValue === "string" ? defaultValue : undefined}
+                            resettable={typeof defaultValue === "string"}
                             onValueChange={onChange}
                             disabled={disabled}
                         />
