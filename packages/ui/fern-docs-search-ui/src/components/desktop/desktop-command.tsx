@@ -1,8 +1,7 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Command } from "cmdk";
-import { ComponentPropsWithoutRef, KeyboardEvent, forwardRef, useRef, useState } from "react";
+import { ComponentPropsWithoutRef, KeyboardEvent, forwardRef, useEffect, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
-import tunnel from "tunnel-rat";
 
 import { useSearchHitsRerender } from "../../hooks/use-search-hits";
 import { useFacetFilters } from "../search-client";
@@ -10,22 +9,25 @@ import { CommandUxProvider } from "../shared/command-ux";
 import { DesktopCommandInputError } from "./desktop-command-input";
 
 import "../shared/common.scss";
+import tunnel from "../tunnel-rat";
 import "./desktop.scss";
 
 export interface DesktopCommandProps {
     onClose?: () => void;
     onEscape?: (e: KeyboardEvent<HTMLDivElement>) => void;
+    onBackspaceWhenEmpty?: (e: KeyboardEvent<HTMLDivElement>) => void;
+    placeholder?: string;
 }
 
-const aboveInput = tunnel();
-const beforeInput = tunnel();
-const afterInput = tunnel();
+export const aboveInput = tunnel();
+export const beforeInput = tunnel();
+export const afterInput = tunnel();
 
 /**
  * The desktop command is intended to be used within a dialog component.
  */
 const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & ComponentPropsWithoutRef<typeof Command>>(
-    ({ onEscape: onEscape_, onClose, children, ...props }, forwardedRef) => {
+    ({ onEscape: onEscape_, onBackspaceWhenEmpty, onClose, children, placeholder, ...props }, forwardedRef) => {
         useSearchHitsRerender();
 
         const { query, refine, clear } = useSearchBox();
@@ -42,17 +44,27 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                 if (scrollToTop) {
                     scrollRef.current?.scrollTo({ top: 0 });
                 }
-            }, 0);
+            });
         };
 
-        const popOrClearFilters = (e: KeyboardEvent<HTMLDivElement>) => {
-            if (e.metaKey || e.ctrlKey) {
-                clearFilters();
-            } else {
-                popFilter();
-            }
-            focus();
-        };
+        useEffect(() => {
+            setTimeout(() => {
+                focus();
+            }, 10);
+        }, []);
+
+        const popOrClearFilters = composeEventHandlers(
+            onBackspaceWhenEmpty,
+            (e: KeyboardEvent<HTMLDivElement>) => {
+                if (e.metaKey || e.ctrlKey) {
+                    clearFilters();
+                } else {
+                    popFilter();
+                }
+                focus();
+            },
+            { checkForDefaultPrevented: true },
+        );
 
         const onEscape = composeEventHandlers(
             onEscape_,
@@ -62,12 +74,15 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                     focus();
                 } else if (filters.length > 0) {
                     popOrClearFilters(e);
+                    if (e.isPropagationStopped()) {
+                        return;
+                    }
                 } else {
                     onClose?.();
                 }
                 e.stopPropagation();
             },
-            { checkForDefaultPrevented: false },
+            { checkForDefaultPrevented: true },
         );
 
         return (
@@ -76,8 +91,6 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                 ref={forwardedRef}
                 {...props}
                 id="fern-search-desktop-command"
-                // value={value}
-                // onValueChange={setValue}
                 onKeyDownCapture={composeEventHandlers(
                     props.onKeyDownCapture,
                     (e) => {
@@ -112,13 +125,12 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                         ) {
                             // focus input _immediately_:
                             inputRef.current?.focus();
-                            // scrollToTop();c
                         }
                     },
                     { checkForDefaultPrevented: false },
                 )}
             >
-                <CommandUxProvider focus={focus} setInputError={setInputError}>
+                <CommandUxProvider focus={focus} setInputError={setInputError} input={inputRef.current}>
                     <div
                         className="cursor-text"
                         onClick={() => {
@@ -137,7 +149,7 @@ const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & Componen
                                     autoFocus
                                     value={query}
                                     maxLength={100}
-                                    placeholder="Search"
+                                    placeholder={placeholder ?? "Search"}
                                     onValueChange={(value) => {
                                         refine(value);
                                         focus();

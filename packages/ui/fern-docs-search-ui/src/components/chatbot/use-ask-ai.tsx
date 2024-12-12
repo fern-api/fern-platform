@@ -14,7 +14,7 @@ export function useSystemPrompt(): [string, Dispatch<SetStateAction<string>>] {
 export interface UseAskAIOpts {
     api?: string;
     initialInput?: string;
-    headers?: Record<string, string>;
+    algoliaSearchKey?: string;
     model?: string;
     systemContext?: Record<string, string>;
 }
@@ -22,7 +22,7 @@ export interface UseAskAIOpts {
 export function useAskAI({
     api,
     initialInput,
-    headers,
+    algoliaSearchKey,
     model = "gpt-4o-mini",
     systemContext,
 }: UseAskAIOpts): ReturnType<typeof useChat> {
@@ -33,7 +33,6 @@ export function useAskAI({
     return useChat({
         api: api ?? "/api/chat",
         initialInput,
-        headers,
         body: {
             model,
             system: compiled({
@@ -44,6 +43,7 @@ export function useAskAI({
                     day: "numeric",
                 }),
             }),
+            algoliaSearchKey,
         },
     });
 }

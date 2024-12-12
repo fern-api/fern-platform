@@ -13,11 +13,13 @@ export const DesktopSearchDialog = memo(
         children,
         asChild,
         trigger,
+        afterInput,
         ...rest
     }: PropsWithChildren<
         {
             trigger?: ReactNode;
             asChild?: boolean;
+            afterInput?: ReactNode;
         } & ComponentPropsWithoutRef<typeof Dialog.Root>
     >) => {
         return (
@@ -32,22 +34,24 @@ export const DesktopSearchDialog = memo(
                     </VisuallyHidden>
 
                     <DesktopCommandAfterInput>
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Dialog.DialogClose asChild>
-                                        <Button size="xs" variant="outline">
-                                            <kbd>Esc</kbd>
-                                        </Button>
-                                    </Dialog.DialogClose>
-                                </TooltipTrigger>
-                                <TooltipPortal>
-                                    <TooltipContent>
-                                        <p>Close search</p>
-                                    </TooltipContent>
-                                </TooltipPortal>
-                            </Tooltip>
-                        </TooltipProvider>
+                        {afterInput || (
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Dialog.DialogClose asChild>
+                                            <Button size="xs" variant="outline">
+                                                <kbd>Esc</kbd>
+                                            </Button>
+                                        </Dialog.DialogClose>
+                                    </TooltipTrigger>
+                                    <TooltipPortal>
+                                        <TooltipContent>
+                                            <p>Close search</p>
+                                        </TooltipContent>
+                                    </TooltipPortal>
+                                </Tooltip>
+                            </TooltipProvider>
+                        )}
                     </DesktopCommandAfterInput>
 
                     <Dialog.Content

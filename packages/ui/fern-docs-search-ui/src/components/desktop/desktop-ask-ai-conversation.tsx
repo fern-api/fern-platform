@@ -2,7 +2,7 @@ import { Badge } from "@fern-ui/components/badges";
 import { Message } from "ai";
 import { Command } from "cmdk";
 import { useAtomValue } from "jotai";
-import { Copy, RefreshCcw, Sparkles, User } from "lucide-react";
+import { Copy, Sparkles, User } from "lucide-react";
 import { ReactElement } from "react";
 import type { Components } from "react-markdown";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
@@ -15,7 +15,7 @@ import { Suggestions } from "./suggestions";
 
 interface AskAICommandItemsProps {
     messages: Message[];
-    headers?: Record<string, string>;
+    algoliaSearchKey: string | undefined;
     askAI: (message: string) => void;
     onSelectHit: (path: string) => void;
     components?: Components;
@@ -25,12 +25,12 @@ interface AskAICommandItemsProps {
 
 export const AskAICommandItems = ({
     messages,
-    headers,
+    algoliaSearchKey,
     askAI,
     onSelectHit,
     components,
     isLoading,
-    refreshLastMessage,
+    // refreshLastMessage,
 }: AskAICommandItemsProps): ReactElement => {
     const squeezedMessages = squeezeMessages(messages);
     if (squeezedMessages.length === 0) {
@@ -43,7 +43,7 @@ export const AskAICommandItems = ({
                     </div>
                 </div>
 
-                <Suggestions headers={headers} askAI={askAI} />
+                <Suggestions algoliaSearchKey={algoliaSearchKey} askAI={askAI} />
             </>
         );
     }
@@ -76,7 +76,11 @@ export const AskAICommandItems = ({
                                             section: ({ children, node, ...props }) => {
                                                 if (node?.properties["dataFootnotes"]) {
                                                     return (
-                                                        <FootnotesSection node={node} searchResults={searchResults} />
+                                                        <FootnotesSection
+                                                            node={node}
+                                                            searchResults={searchResults}
+                                                            className="hidden"
+                                                        />
                                                     );
                                                 }
 
@@ -93,15 +97,15 @@ export const AskAICommandItems = ({
                                 </section>
                             </div>
                             {!isLoading && message.role === "assistant" && idx === squeezedMessages.length - 1 && (
-                                <div className="flex gap-1 ml-auto px-2">
+                                <div className="flex gap-1 ml-auto px-2 w-fit">
                                     <CopyToClipboard content={message.content}>
                                         <Button variant="ghost" size="iconSm">
                                             <Copy />
                                         </Button>
                                     </CopyToClipboard>
-                                    <Button variant="ghost" size="iconSm" onClick={refreshLastMessage}>
+                                    {/* <Button variant="ghost" size="iconSm" onClick={refreshLastMessage}>
                                         <RefreshCcw />
-                                    </Button>
+                                    </Button> */}
                                 </div>
                             )}
                         </article>

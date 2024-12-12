@@ -1,7 +1,7 @@
 import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
 import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
 import { FacetName } from "@fern-ui/fern-docs-search-server/types";
-import { useDeepCompareEffect, useEventCallback } from "@fern-ui/react-commons";
+import { useDeepCompareEffectNoCheck, useEventCallback } from "@fern-ui/react-commons";
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import { useAtom, useSetAtom } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
@@ -160,7 +160,7 @@ function FacetFiltersProvider({
     const setFilters = useSetAtom(ref.current);
 
     // preload facets on initial render so that they're cached before the user runs `cmdk`
-    useDeepCompareEffect(() => {
+    useDeepCompareEffectNoCheck(() => {
         const filters = toFacetFilters(initialFilters);
         void preloadFacets(filters);
         setFilters(filters);

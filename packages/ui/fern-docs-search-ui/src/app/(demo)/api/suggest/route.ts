@@ -10,18 +10,18 @@ import { streamObject } from "ai";
 export const maxDuration = 30;
 
 export async function POST(request: Request): Promise<Response> {
-    const searchKey = request.headers.get("X-Algolia-Search-Key");
-    const userToken = request.headers.get("X-User-Token") ?? undefined;
-    const model = models["gpt-4o-mini"];
+    const { algoliaSearchKey } = await request.json();
 
-    if (!searchKey) {
+    const model = models["claude-3-5-haiku"];
+
+    if (!algoliaSearchKey || typeof algoliaSearchKey !== "string") {
         return new Response("Missing search key", { status: 400 });
     }
 
-    const client = searchClient(algoliaAppId(), searchKey);
+    const client = searchClient(algoliaAppId(), algoliaSearchKey);
     const response = await client.searchSingleIndex<AlgoliaRecord>({
         indexName: SEARCH_INDEX,
-        searchParams: { query: "", userToken, hitsPerPage: 100, attributesToSnippet: [] },
+        searchParams: { query: "", hitsPerPage: 100, attributesToSnippet: [] },
     });
 
     const result = await streamObject({

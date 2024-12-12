@@ -23,7 +23,10 @@ import {
     useCommandUx,
     useFacetFilters,
 } from "@/components";
+import { DesktopAskAICommand } from "@/components/desktop/desktop-ask-ai";
+import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { AvailabilityBadge, Badge } from "@fern-ui/components";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 
 const USER_TOKEN_KEY = "user-token";
@@ -33,6 +36,8 @@ const ApiKeySchema = z.object({
 });
 
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
+    const [initialInput, setInitialInput] = useState("");
+    const [askAi, setAskAi] = useState(false);
     const [open, setOpen] = useState(false);
     const { setTheme } = useTheme();
     const isMobile = useIsMobile();
@@ -112,43 +117,86 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 </AppSidebar>
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
-                    <DesktopCommand onClose={() => setOpen(false)}>
-                        <DesktopCommandAboveInput>
-                            <DesktopCommandBadges />
-                        </DesktopCommandAboveInput>
+                    {askAi ? (
+                        <DesktopAskAICommand
+                            model="claude-3-5-haiku"
+                            algoliaSearchKey={apiKey}
+                            systemContext={{ domain }}
+                            onClose={() => setOpen(false)}
+                            returnToSearch={() => setAskAi(false)}
+                            initialInput={initialInput}
+                        />
+                    ) : (
+                        <DesktopCommand onClose={() => setOpen(false)} placeholder={askAi ? "Ask AI" : "Search"}>
+                            <DesktopCommandAboveInput>
+                                <DesktopCommandBadges>
+                                    {askAi && (
+                                        <>
+                                            <Badge size="sm" variant="outlined-subtle">
+                                                Ask AI
+                                            </Badge>
+                                            <AvailabilityBadge
+                                                availability="Experimental"
+                                                rounded
+                                                size="sm"
+                                                className="ml-auto"
+                                                color="gray"
+                                            />
+                                        </>
+                                    )}
+                                </DesktopCommandBadges>
+                            </DesktopCommandAboveInput>
 
-                        <DesktopCommandBeforeInput>
-                            <BackButton />
-                        </DesktopCommandBeforeInput>
+                            <DesktopCommandBeforeInput>
+                                <BackButton askAi={askAi} setAskAi={setAskAi} />
+                            </DesktopCommandBeforeInput>
 
-                        <CommandGroupFilters />
-                        <CommandEmpty />
-                        <CommandSearchHits onSelect={handleSubmit} />
-                        <CommandActions>
-                            <CommandGroupTheme setTheme={setTheme} />
-                        </CommandActions>
-                    </DesktopCommand>
+                            <CommandAskAIGroup
+                                onAskAI={(initialInput) => {
+                                    setInitialInput(initialInput);
+                                    setAskAi(true);
+                                }}
+                                forceMount
+                            />
+
+                            <CommandGroupFilters />
+                            <CommandEmpty />
+                            <CommandSearchHits onSelect={handleSubmit} />
+                            <CommandActions>
+                                <CommandGroupTheme setTheme={setTheme} />
+                            </CommandActions>
+                        </DesktopCommand>
+                    )}
                 </DesktopSearchDialog>
             )}
         </SearchClientRoot>
     );
 }
 
-function BackButton() {
+function BackButton({ askAi, setAskAi }: { askAi: boolean; setAskAi: (askAi: boolean) => void }) {
     const { filters, popFilter, clearFilters } = useFacetFilters();
     const { focus } = useCommandUx();
-    if (filters.length === 0) {
+
+    if (filters.length === 0 && !askAi) {
         return false;
     }
 
     return (
         <DesktopBackButton
             pop={() => {
-                popFilter();
+                if (askAi) {
+                    setAskAi(false);
+                } else {
+                    popFilter();
+                }
                 focus();
             }}
             clear={() => {
-                clearFilters();
+                if (askAi) {
+                    setAskAi(false);
+                } else {
+                    clearFilters();
+                }
                 focus();
             }}
         />

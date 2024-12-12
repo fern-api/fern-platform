@@ -6,23 +6,22 @@ import { ReactNode, useEffect, useMemo } from "react";
 import { SuggestionsSchema } from "../../server/suggestions-schema";
 
 export const Suggestions = ({
-    headers,
+    algoliaSearchKey,
     askAI,
 }: {
-    headers?: Record<string, string>;
+    algoliaSearchKey: string | undefined;
     askAI: (suggestion: string) => void;
 }): ReactNode => {
     const { object, submit } = experimental_useObject({
         api: "/api/suggest",
         schema: SuggestionsSchema,
-        headers,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debouncedSubmit = useMemo(() => debounce(submit, 500), []);
 
     useEffect(() => {
-        debouncedSubmit("");
+        debouncedSubmit({ algoliaSearchKey });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

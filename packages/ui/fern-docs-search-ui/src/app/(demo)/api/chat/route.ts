@@ -10,10 +10,7 @@ import { z } from "zod";
 export const maxDuration = 30;
 
 export async function POST(request: Request): Promise<Response> {
-    const searchKey = request.headers.get("X-Algolia-Search-Key");
-    const userToken = request.headers.get("X-User-Token") ?? undefined;
-
-    const { messages, system: _system, model: _model } = await request.json();
+    const { messages, system: _system, model: _model, algoliaSearchKey } = await request.json();
 
     const model = models[(_model as keyof typeof models) ?? ""];
 
@@ -38,16 +35,15 @@ export async function POST(request: Request): Promise<Response> {
                         .describe("the search terms to use. Only use keywords. Never use full sentences or questions."),
                 }),
                 async execute({ query }) {
-                    if (!searchKey) {
+                    if (!algoliaSearchKey) {
                         return [];
                     }
 
-                    const client = searchClient(algoliaAppId(), searchKey);
+                    const client = searchClient(algoliaAppId(), algoliaSearchKey);
                     const response = await client.searchSingleIndex<AlgoliaRecord>({
                         indexName: SEARCH_INDEX,
                         searchParams: {
                             query,
-                            userToken,
                             hitsPerPage: 20,
                             distinct: false,
                             decompoundQuery: true,

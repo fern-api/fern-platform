@@ -1,5 +1,6 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { Badge } from "@fern-ui/components/badges";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { groupBy } from "es-toolkit/array";
 import type { Element as HastElement } from "hast";
@@ -8,6 +9,7 @@ import { ReactElement, useEffect } from "react";
 import { EXIT, visit } from "unist-util-visit";
 import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
+import { cn } from "../ui/cn";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { useChatbotTurnContext } from "./turn-context";
 
@@ -44,29 +46,31 @@ export function FootnoteSup({ node }: { node?: HastElement }): ReactElement | nu
                     </Badge>
                 </TooltipTrigger>
 
-                <TooltipContent className="not-prose">
-                    <h5 className="font-semibold text-[var(--grayscale-12)] flex items-center gap-2">
-                        <PageIcon
-                            icon={fn.icon}
-                            type={fn.api_type ?? fn.type}
-                            isSubPage={fn.url.includes("#")}
-                            className="size-4"
-                        />
-                        <a href={fn.url} target="_blank" rel="noreferrer">
-                            {fn.title}
-                        </a>
-                    </h5>
-                    <p className="max-w-xs break-words text-[var(--grayscale-a9)] leading-snug text-xs">
-                        <a
-                            href={fn.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="hover:text-[var(--grayscale-a10)] hover:underline"
-                        >
-                            {fn.url}
-                        </a>
-                    </p>
-                </TooltipContent>
+                <TooltipPortal>
+                    <TooltipContent className="not-prose">
+                        <h5 className="font-semibold text-[var(--grayscale-12)] flex items-center gap-2">
+                            <PageIcon
+                                icon={fn.icon}
+                                type={fn.api_type ?? fn.type}
+                                isSubPage={fn.url.includes("#")}
+                                className="size-4"
+                            />
+                            <a href={fn.url} target="_blank" rel="noreferrer">
+                                {fn.title}
+                            </a>
+                        </h5>
+                        <p className="max-w-xs break-words text-[var(--grayscale-a9)] leading-snug text-xs">
+                            <a
+                                href={fn.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:text-[var(--grayscale-a10)] hover:underline"
+                            >
+                                {fn.url}
+                            </a>
+                        </p>
+                    </TooltipContent>
+                </TooltipPortal>
             </Tooltip>
         </TooltipProvider>
     );
@@ -99,9 +103,11 @@ function selectFootnoteLinks(node: HastElement): { id: string; href: string }[] 
 export function FootnotesSection({
     node,
     searchResults,
+    className,
 }: {
     node: HastElement;
     searchResults: AlgoliaRecordHit[];
+    className?: string;
 }): ReactElement | null {
     const { footnotesAtom } = useChatbotTurnContext();
     const [footnotes, setFootnotes] = useAtom(footnotesAtom);
@@ -124,7 +130,7 @@ export function FootnotesSection({
     }
 
     return (
-        <section data-footnotes className="not-prose">
+        <section data-footnotes className={cn("not-prose", className)}>
             <VisuallyHidden asChild>
                 <h6>Footnotes</h6>
             </VisuallyHidden>
