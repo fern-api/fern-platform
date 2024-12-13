@@ -13,6 +13,7 @@ import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.n
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { XFernEndpointExampleConverterNode } from "../extensions/XFernEndpointExampleConverter.node";
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
+import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import {
@@ -43,7 +44,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         protected servers: ServerObjectConverterNode[] | undefined,
         protected globalAuth: SecurityRequirementObjectConverterNode | undefined,
         protected path: string,
-        protected method: "GET" | "POST" | "PUT" | "DELETE",
+        protected method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
         protected basePath: XFernBasePathConverterNode | undefined,
         protected isWebhook?: boolean,
     ) {
@@ -184,7 +185,20 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             this.namespace.groupName = this.input.tags;
         }
 
-        this.endpointId = getEndpointId(this.namespace?.groupName, this.path);
+        const sdkMethodName = new XFernSdkMethodNameConverterNode({
+            input: this.input,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "x-fern-sdk-method-name",
+        });
+
+        this.endpointId = getEndpointId(
+            this.namespace?.groupName,
+            this.path,
+            sdkMethodName.sdkMethodName,
+            this.input.operationId,
+        );
+        // TODO: figure out how to merge user specified examples with success response
         this.examples = new XFernEndpointExampleConverterNode(
             {
                 input: this.input,
@@ -194,11 +208,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             },
             this.path,
             responseStatusCode,
-            this.requests,
-            this.responses,
-            this.pathParameters,
-            this.queryParameters,
-            this.requestHeaders,
+            this.requests?.requestBodiesByContentType,
+            this.responses?.responsesByStatusCode?.[responseStatusCode]?.responses,
+            this.responses?.errorsByStatusCode,
         );
     }
 
@@ -274,11 +286,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             };
         }
 
-        const endpointId = getEndpointId(this.namespace?.convert(), this.path);
-        if (endpointId == null) {
-            return undefined;
-        }
-
         const environments = this.servers?.map((server) => server.convert()).filter(isNonNullish);
         const pathParts = this.convertPathToPathParts();
         if (pathParts == null) {
@@ -291,6 +298,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             authIds = Object.keys(auth);
         }
 
+        if (this.endpointId == null) {
+            return undefined;
+        }
+
         // TODO: revisit fdr shape to suport multiple responses
         const { responses, errors } = this.responses?.convert() ?? { responses: undefined, errors: undefined };
 
@@ -299,7 +310,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             description: this.description,
             availability: this.availability?.convert(),
             namespace: this.namespace?.convert(),
-            id: FernRegistry.EndpointId(endpointId),
+            id: FernRegistry.EndpointId(this.endpointId),
             method: this.method,
             path: pathParts,
             auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
@@ -313,8 +324,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             request: this.requests?.convert()[0],
             response: responses?.[0]?.response,
             errors,
-            // TODO: examples
-            examples: [],
+            examples: this.examples?.convert(),
             snippetTemplates: undefined,
         };
     }

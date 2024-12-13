@@ -1,12 +1,60 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_pet.pet": {
+    "endpoint_pet.addPet": {
+      "description": "Add a new pet to the store",
+      "namespace": [
+        "pet"
+      ],
+      "id": "endpoint_pet.addPet",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "pet"
+        }
+      ],
+      "auth": [],
+      "defaultEnvironment": "/api/v31",
+      "environments": [
+        {
+          "id": "/api/v31",
+          "baseUrl": "/api/v31"
+        }
+      ],
+      "request": {
+        "contentType": "application/json",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "type_:Pet"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "type_:Pet"
+          }
+        },
+        "description": "Successful operation"
+      },
+      "errors": []
+    },
+    "endpoint_pet.updatePet": {
       "description": "Update an existing pet by Id",
       "namespace": [
         "pet"
       ],
-      "id": "endpoint_pet.pet",
+      "id": "endpoint_pet.updatePet",
       "method": "PUT",
       "path": [
         {
@@ -47,15 +95,14 @@
         },
         "description": "Successful operation"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "endpoint_pets.petId": {
+    "endpoint_pets.getPetById": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
       "namespace": [
         "pets"
       ],
-      "id": "endpoint_pets.petId",
+      "id": "endpoint_pets.getPetById",
       "method": "GET",
       "path": [
         {
@@ -134,8 +181,7 @@
           "description": "Pet not found",
           "name": "Not Found"
         }
-      ],
-      "examples": []
+      ]
     }
   },
   "websockets": {},

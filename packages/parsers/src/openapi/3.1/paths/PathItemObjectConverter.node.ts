@@ -94,6 +94,21 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.basePath,
             );
         }
+        if (this.input.patch != null) {
+            this.patch = new OperationObjectConverterNode(
+                {
+                    input: this.input.patch,
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: "patch",
+                },
+                this.servers,
+                this.globalAuth,
+                this.pathId,
+                "PATCH",
+                this.basePath,
+            );
+        }
         if (this.input.delete != null) {
             this.delete = new OperationObjectConverterNode(
                 {
@@ -112,8 +127,12 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     convert(): (FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition)[] | undefined {
-        return [this.get?.convert(), this.post?.convert(), this.put?.convert(), this.delete?.convert()].filter(
-            isNonNullish,
-        );
+        return [
+            this.get?.convert(),
+            this.post?.convert(),
+            this.put?.convert(),
+            this.patch?.convert(),
+            this.delete?.convert(),
+        ].filter(isNonNullish);
     }
 }

@@ -3,11 +3,11 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
-import { xFernBasicPasswordVariableNameKey } from "../fernExtension.consts";
+import { X_FERN_BASIC_PASSWORD } from "../fernExtension.consts";
 
 export declare namespace XFernBasicPasswordVariableNameConverterNode {
     export interface Input {
-        [xFernBasicPasswordVariableNameKey]?: string;
+        [X_FERN_BASIC_PASSWORD]?: string;
     }
 }
 
@@ -21,7 +21,7 @@ export class XFernBasicPasswordVariableNameConverterNode extends BaseOpenApiV3_1
 
     parse(): void {
         this.passwordVariableName = extendType<XFernBasicPasswordVariableNameConverterNode.Input>(this.input)[
-            xFernBasicPasswordVariableNameKey
+            X_FERN_BASIC_PASSWORD
         ];
     }
 

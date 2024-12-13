@@ -14,8 +14,8 @@ import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
+import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
-import { RequestExampleObjectConverterNode } from "./RequestExampleObjectConverter.node";
 
 export type RequestContentType = ConstArrayToType<typeof SUPPORTED_REQUEST_CONTENT_TYPES>;
 
@@ -38,7 +38,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     fields: Record<string, MultipartFormDataPropertySchemaConverterNode> | undefined;
 
     resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
-    example: RequestExampleObjectConverterNode | undefined;
+    example: ExampleObjectConverterNode | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
@@ -120,17 +120,17 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
 
         if (this.contentType != null) {
             if (this.input.example != null) {
-                this.example = new RequestExampleObjectConverterNode(
-                    {
-                        input: this.input.example,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: "example",
-                    },
-                    this.path,
-                    this.responseStatusCode,
-                    this,
-                );
+                // this.example = new ExampleObjectConverterNode(
+                //     {
+                //         input: this.input.example,
+                //         context: this.context,
+                //         accessPath: this.accessPath,
+                //         pathId: "example",
+                //     },
+                //     this.path,
+                //     this.responseStatusCode,
+                //     this,
+                // );
             }
         }
     }

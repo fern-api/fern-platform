@@ -10,6 +10,7 @@
   "include": ["./src/**/*.ts"],
   "exclude": [
     "node_modules",
+    "**/__test__/**",
     "src/client/generated/Client.ts",
     "src/client/generated/api/resources/api/client/",
     "src/client/generated/api/resources/api/resources/v1/client/",

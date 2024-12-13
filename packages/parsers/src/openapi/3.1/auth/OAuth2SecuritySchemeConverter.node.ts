@@ -70,13 +70,19 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
             return undefined;
         }
 
+        // TODO: revisit this -- this is not correct
+        const endpointId = getEndpointId("post", this.authorizationUrl, undefined, undefined);
+        if (endpointId == null) {
+            return undefined;
+        }
+
         return {
             type: "oAuth",
             value: {
                 type: "clientCredentials",
                 value: {
                     type: "referencedEndpoint",
-                    endpointId: FernRegistry.EndpointId(getEndpointId("post", this.authorizationUrl)),
+                    endpointId: FernRegistry.EndpointId(endpointId),
                     accessTokenLocator: FernRegistry.JqString(accessTokenLocator),
                     headerName: this.headerAuthNode?.convert()?.headerWireValue,
                     tokenPrefix: this.headerAuthNode?.convert()?.prefix,

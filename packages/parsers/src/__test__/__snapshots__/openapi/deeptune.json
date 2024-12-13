@@ -1,12 +1,12 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_text_to_speech.textToSpeech": {
+    "endpoint_textToSpeech.generate": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "endpoint_text_to_speech.textToSpeech",
+      "id": "endpoint_textToSpeech.generate",
       "method": "POST",
       "path": [
         {
@@ -43,15 +43,14 @@
           }
         }
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "endpoint_text_to_speech.fromPrompt": {
+    "endpoint_textToSpeech.generateFromPrompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "endpoint_text_to_speech.fromPrompt",
+      "id": "endpoint_textToSpeech.generateFromPrompt",
       "method": "POST",
       "path": [
         {
@@ -96,15 +95,59 @@
           }
         }
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "endpoint_voices.voices": {
+    "endpoint_voices.list": {
+      "description": "Retrieve all voices associated with the current workspace.",
+      "namespace": [
+        "voices"
+      ],
+      "id": "endpoint_voices.list",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        }
+      ],
+      "defaultEnvironment": "https://api.deeptune.com",
+      "environments": [
+        {
+          "id": "https://api.deeptune.com",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "type_:ListVoicesResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": []
+    },
+    "endpoint_voices.create": {
       "description": "Create a new voice with a name, optional description, and audio file.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.voices",
+      "id": "endpoint_voices.create",
       "method": "POST",
       "path": [
         {
@@ -152,15 +195,160 @@
         },
         "description": "Successful response"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "endpoint_voices.voiceId": {
+    "endpoint_voices.get": {
+      "description": "Retrieve a specific voice by its ID.",
+      "namespace": [
+        "voices"
+      ],
+      "id": "endpoint_voices.get",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "voice_id"
+        }
+      ],
+      "defaultEnvironment": "https://api.deeptune.com",
+      "environments": [
+        {
+          "id": "https://api.deeptune.com",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "voice_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The ID of the voice to retrieve"
+        }
+      ],
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "type_:GetVoiceByIdResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": []
+    },
+    "endpoint_voices.update": {
+      "description": "Update an existing voice with new name, description, or audio file.",
+      "namespace": [
+        "voices"
+      ],
+      "id": "endpoint_voices.update",
+      "method": "PUT",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "voices"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "voice_id"
+        }
+      ],
+      "defaultEnvironment": "https://api.deeptune.com",
+      "environments": [
+        {
+          "id": "https://api.deeptune.com",
+          "baseUrl": "https://api.deeptune.com"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "voice_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The ID of the voice to update"
+        }
+      ],
+      "request": {
+        "contentType": "multipart/form-data",
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "type_:UpdateVoiceRequest"
+          }
+        }
+      },
+      "response": {
+        "statusCode": 200,
+        "body": {
+          "type": "alias",
+          "value": {
+            "type": "id",
+            "id": "type_:UpdateVoiceResponse"
+          }
+        },
+        "description": "Successful response"
+      },
+      "errors": []
+    },
+    "endpoint_voices.delete": {
       "description": "Delete an existing voice by its ID.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.voiceId",
+      "id": "endpoint_voices.delete",
       "method": "DELETE",
       "path": [
         {
@@ -210,8 +398,7 @@
           "description": "The ID of the voice to delete"
         }
       ],
-      "errors": [],
-      "examples": []
+      "errors": []
     }
   },
   "websockets": {},

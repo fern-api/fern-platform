@@ -6,9 +6,11 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { ParameterBaseObjectConverterNode } from "../parameters";
+import { ResponseMediaTypeObjectConverterNode } from "../response/ResponseMediaTypeObjectConverter.node";
 import { RequestMediaTypeObjectConverterNode } from "./RequestMediaTypeObjectConverter.node";
 
-export class RequestExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ExampleObject,
     FernRegistry.api.latest.ExampleEndpointCall
 > {
@@ -17,6 +19,10 @@ export class RequestExampleObjectConverterNode extends BaseOpenApiV3_1ConverterN
         protected path: string,
         protected responseStatusCode: number,
         protected requestBody: RequestMediaTypeObjectConverterNode,
+        protected responseBody: ResponseMediaTypeObjectConverterNode,
+        protected pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined,
+        protected queryParameters: Record<string, ParameterBaseObjectConverterNode> | undefined,
+        protected requestHeaders: Record<string, ParameterBaseObjectConverterNode> | undefined,
     ) {
         super(args);
         this.safeParse();
@@ -218,16 +224,89 @@ export class RequestExampleObjectConverterNode extends BaseOpenApiV3_1ConverterN
     }
 
     convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
+        let requestBody: FernRegistry.api.latest.ExampleEndpointRequest | undefined;
+        switch (this.requestBody.contentType) {
+            case "form-data":
+                requestBody = this.convertFormDataExampleRequest();
+                break;
+            case "json":
+                requestBody = {
+                    type: "json",
+                    value: this.input.value,
+                };
+                break;
+            case "bytes":
+                requestBody = {
+                    type: "bytes",
+                    value: {
+                        type: "base64",
+                        value: this.input.value,
+                    },
+                };
+                break;
+            case undefined:
+                break;
+            default:
+                new UnreachableCaseError(this.requestBody.contentType);
+                return undefined;
+        }
+
+        let responseBody: FernRegistry.api.latest.ExampleEndpointResponse | undefined;
+        // TODO: convert response body
+        // switch (this.responseBody.contentType) {
+        //     case "application/json":
+        //         responseBody = {
+        //             type: "json",
+        //             value: this.responseBody.input.value,
+        //         };
+        //         break;
+        //     case "text/event-stream":
+        //         responseBody = {
+        //             type: "stream",
+        //             value: this.responseBody.input.value,
+        //         };
+        //         break;
+        //     case "application/octet-stream":
+        //         responseBody = {
+        //             type: "bytes",
+        //             value: {
+        //                 type: "base64",
+        //                 value: this.responseBody.,
+        //             },
+        //         };
+        //         break;
+        //     case undefined:
+        //         break;
+        //     default:
+        //         new UnreachableCaseError(this.responseBody.contentType);
+        //         return undefined;
+        // }
+
         return {
             path: this.path,
             responseStatusCode: this.responseStatusCode,
             name: this.input.summary,
             description: this.input.description,
+            // pathParameters: Object.fromEntries(
+            //     Object.entries(this.pathParameters ?? {}).map(([key, value]) => {
+            //         return [key, value.generateDefault()];
+            //     }),
+            // ),
+            // queryParameters: Object.fromEntries(
+            //     Object.entries(this.queryParameters ?? {}).map(([key, value]) => {
+            //         return [key, value.generateDefault()];
+            //     }),
+            // ),
+            // headers: Object.fromEntries(
+            //     Object.entries(this.requestHeaders ?? {}).map(([key, value]) => {
+            //         return [key, value.generateDefault()];
+            //     }),
+            // ),
             pathParameters: undefined,
             queryParameters: undefined,
             headers: undefined,
-            requestBody: this.convertFormDataExampleRequest(),
-            responseBody: undefined,
+            requestBody,
+            responseBody,
             snippets: undefined,
         };
     }
