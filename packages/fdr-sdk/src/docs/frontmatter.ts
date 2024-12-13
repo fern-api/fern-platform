@@ -37,4 +37,5 @@ export const EMPTY_FRONTMATTER: Frontmatter = {
     nofollow: undefined,
     "jsonld:breadcrumb": undefined,
     keywords: undefined,
+    logo: undefined,
 };
