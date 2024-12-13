@@ -15,7 +15,10 @@
     "styled-jsx",
     "node-fetch",
     "@types/node-fetch",
-    "@emotion/is-prop-valid"
+    "@emotion/is-prop-valid",
+    "glslify-import",
+    "glslify-loader",
+    "raw-loader"
   ],
   "ignore-patterns": ["dist"]
 }

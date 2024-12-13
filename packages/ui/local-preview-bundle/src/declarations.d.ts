@@ -35,3 +35,16 @@ declare module "*.ico" {
     const src: string;
     export default { src };
 }
+
+/**
+ * Shaders
+ */
+declare module "*.frag" {
+    const content: string;
+    export default content;
+}
+
+declare module "*.vert" {
+    const content: string;
+    export default content;
+}
