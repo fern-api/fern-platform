@@ -23,8 +23,7 @@ import { Composer } from "./composer";
 import { ChatbotConversation } from "./conversation";
 import { ChatbotModelSelect, useChatbotModels } from "./model-select";
 import { SystemPromptDialog } from "./system-prompt-dialog";
-import { useAskAI, useSystemPrompt } from "./use-ask-ai";
-import { combineSearchResults, squeezeMessages } from "./utils";
+import { combineSearchResults } from "./utils";
 
 interface ChatbotDialogProps {
     open?: boolean;
@@ -109,23 +108,23 @@ const ChatbotInterface = forwardRef<
 
         const defaultModel = useChatbotModels()[0]?.model;
         const [model = defaultModel, setModel] = useAtom(modelAtom);
-        const [system, setSystem] = useSystemPrompt();
+        // const [system, setSystem] = useSystemPrompt();
         const [systemDialogOpen, setSystemDialogOpen] = useState(false);
 
-        const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useAskAI({
-            api,
-            initialInput,
-            headers,
-            model,
-            systemContext,
-        });
+        // const { messages, input, handleInputChange, handleSubmit, setInput, setMessages, isLoading } = useAskAI({
+        //     api,
+        //     initialInput,
+        //     headers,
+        //     model,
+        //     systemContext,
+        // });
 
-        useEffect(() => {
-            setInput(initialInput ?? "");
-        }, [initialInput, setInput]);
+        // useEffect(() => {
+        //     setInput(initialInput ?? "");
+        // }, [initialInput, setInput]);
 
-        const squeezedMessages = squeezeMessages(messages);
-        const searchResults = combineSearchResults(messages);
+        // const squeezedMessages = squeezeMessages([]);
+        const searchResults = combineSearchResults([]);
 
         useEffect(() => {
             focus();
@@ -149,7 +148,7 @@ const ChatbotInterface = forwardRef<
                     }
 
                     if (/^[a-zA-Z0-9]$/.test(e.key)) {
-                        setInput((prev) => prev + e.key);
+                        // setInput((prev) => prev + e.key);
                         focus();
                     }
                 }}
@@ -177,8 +176,8 @@ const ChatbotInterface = forwardRef<
                             </Tooltip>
 
                             <SystemPromptDialog
-                                value={system}
-                                onValueChange={setSystem}
+                                // value={system}
+                                // onValueChange={setSystem}
                                 open={systemDialogOpen}
                                 onOpenChange={setSystemDialogOpen}
                             >
@@ -202,9 +201,9 @@ const ChatbotInterface = forwardRef<
                                             variant="outline"
                                             size="icon"
                                             className="rounded-full"
-                                            onClick={() => {
-                                                setMessages([]);
-                                            }}
+                                            // onClick={() => {
+                                            //     setMessages([]);
+                                            // }}
                                         >
                                             <X />
                                         </Button>
@@ -219,16 +218,16 @@ const ChatbotInterface = forwardRef<
                     </div>
                 </div>
                 <ChatbotConversation
-                    isLoading={isLoading}
-                    messages={squeezedMessages}
+                    isLoading={false}
+                    messages={[]}
                     components={components}
                     searchResults={searchResults}
                 />
                 <div className="max-w-3xl w-screen m-auto shrink-0 max-md:px-3">
                     <Composer
-                        value={input}
-                        onChange={handleInputChange}
-                        onSubmit={handleSubmit}
+                        // value={input}
+                        // onChange={handleInputChange}
+                        // onSubmit={handleSubmit}
                         autoFocus
                         ref={composeRefs(inputRef, _inputRef)}
                     >

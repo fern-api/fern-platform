@@ -7,7 +7,7 @@ import { TextArea } from "../ui/textarea";
 export const Composer = forwardRef<
     HTMLTextAreaElement,
     Omit<ComponentPropsWithoutRef<typeof TextArea>, "className"> & {
-        onSubmit: (e: { preventDefault: () => void }) => void;
+        onSubmit?: (e: { preventDefault: () => void }) => void;
         asChild?: boolean;
     }
 >(({ onSubmit, children, asChild, ...props }, ref) => {
@@ -28,7 +28,7 @@ export const Composer = forwardRef<
                     className="w-full px-0 py-2 m-0 resize-none text-grayscale-12 placeholder:text-grayscale-a10 border-0 bg-transparent focus:outline-none focus-visible:outline-none focus:ring-0 focus-visible:ring-0 max-h-52 placeholder:text-[var(--grayscale-a9)]"
                     onKeyDown={(e) => {
                         if (e.key === "Enter" && !e.shiftKey && !e.nativeEvent.isComposing) {
-                            onSubmit(e);
+                            onSubmit?.(e);
                         }
                     }}
                 />
