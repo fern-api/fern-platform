@@ -688,6 +688,8 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     );
 });
 
+Root.displayName = "CommandRoot";
+
 /**
  * Command menu item. Becomes active on pointer enter or through keyboard navigation.
  * Preferably pass a `value`, otherwise the value will be inferred from `children` or
@@ -766,6 +768,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
     );
 });
 
+Item.displayName = "CommandItem";
+
 /**
  * Group command menu items together with a heading.
  * Grouped items are always shown together.
@@ -812,6 +816,8 @@ const Group = forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
     );
 });
 
+Group.displayName = "CommandGroup";
+
 /**
  * A visual and semantic separator between items or groups.
  * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
@@ -826,6 +832,8 @@ const Separator = forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRe
     }
     return <Primitive.div ref={mergeRefs([ref, forwardedRef])} {...etc} data-cmdk-separator="" role="separator" />;
 });
+
+Separator.displayName = "CommandSeparator";
 
 /**
  * Command menu input.
@@ -882,6 +890,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => 
     );
 });
 
+Input.displayName = "CommandInput";
+
 /**
  * Contains `Item`, `Group`, and `Separator`.
  * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
@@ -929,6 +939,8 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
     );
 });
 
+List.displayName = "CommandList";
+
 /**
  * Renders the command menu in a Radix Dialog.
  */
@@ -946,6 +958,8 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => 
     );
 });
 
+Dialog.displayName = "CommandDialog";
+
 /**
  * Automatically renders when there are no results for the search query.
  */
@@ -957,6 +971,8 @@ const Empty = forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
     }
     return <Primitive.div ref={forwardedRef} {...props} data-cmdk-empty="" role="presentation" />;
 });
+
+Empty.displayName = "CommandEmpty";
 
 /**
  * You should conditionally render this with `progress` while loading asynchronous items.
@@ -981,6 +997,8 @@ const Loading = forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) =
         </Primitive.div>
     );
 });
+
+Loading.displayName = "CommandLoading";
 
 export {
     Dialog,
