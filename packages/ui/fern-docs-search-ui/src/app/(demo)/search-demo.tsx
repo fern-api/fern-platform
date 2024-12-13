@@ -26,11 +26,17 @@ import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
 import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 const USER_TOKEN_KEY = "user-token";
 
 const ApiKeySchema = z.object({
     apiKey: z.string(),
+});
+
+const modelAtom = atomWithStorage("ai-model", "claude-3-5-haiku", undefined, {
+    getOnInit: true,
 });
 
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
@@ -87,7 +93,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
         [domain, apiKey],
     );
 
-    const [model, setModel] = useState<string>("gpt-4o-mini");
+    const [model, setModel] = useAtom(modelAtom);
 
     if (!apiKey) {
         return false;
