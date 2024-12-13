@@ -26,6 +26,16 @@ const DOCS_FILES_ALLOWLIST = [
         hostname: "fdr-dev2-docs-files-public.s3.amazonaws.com",
         port: "",
     },
+    {
+        protocol: "https",
+        hostname: "files.buildwithfern.com",
+        port: "",
+    },
+    {
+        protocol: "https",
+        hostname: "files-dev2.buildwithfern.com",
+        port: "",
+    },
 ];
 
 /** @type {import("next").NextConfig} */
@@ -36,6 +46,7 @@ const nextConfig = {
         "next-mdx-remote",
         "esbuild",
         "es-toolkit",
+        "three",
 
         /**
          * Monorepo packages that are not transpiled by default.
@@ -145,6 +156,19 @@ const nextConfig = {
             config.externals = config.externals || [];
             config.externals.push("esbuild");
         }
+        config.module.rules.push({
+            test: /\.(glsl|vs|fs|vert|frag)$/,
+            exclude: /node_modules/,
+            use: [
+                "raw-loader",
+                {
+                    loader: "glslify-loader",
+                    options: {
+                        transform: ["glslify-import"],
+                    },
+                },
+            ],
+        });
         return config;
     },
 };
