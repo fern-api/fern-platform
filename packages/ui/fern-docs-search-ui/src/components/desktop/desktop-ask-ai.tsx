@@ -1,5 +1,5 @@
 import { Badge } from "@fern-ui/components/badges";
-import { useDebouncedCallback } from "@fern-ui/react-commons";
+import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
@@ -8,13 +8,13 @@ import { useAtomValue } from "jotai";
 import { ArrowLeft, ArrowUp, Sparkles, StopCircle } from "lucide-react";
 import {
     ComponentPropsWithoutRef,
+    KeyboardEventHandler,
     ReactElement,
     ReactNode,
     createElement,
     forwardRef,
     isValidElement,
     memo,
-    useCallback,
     useDeferredValue,
     useEffect,
     useMemo,
@@ -54,6 +54,7 @@ export const DesktopCommandWithAskAI = forwardRef<
         chatId?: string;
         onSelectHit?: (path: string) => void;
         prefetch?: (path: string) => Promise<void>;
+        composerActions?: ReactNode;
     }
 >(
     (
@@ -71,6 +72,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             chatId,
             onSelectHit,
             prefetch,
+            composerActions,
             ...props
         },
         ref,
@@ -109,6 +111,7 @@ export const DesktopCommandWithAskAI = forwardRef<
                         chatId={chatId}
                         onSelectHit={onSelectHit}
                         prefetch={prefetch}
+                        composerActions={composerActions}
                     />
                 ) : (
                     <DesktopCommandContent>{children}</DesktopCommandContent>
@@ -130,6 +133,7 @@ const DesktopAskAIContent = ({
     headers,
     onSelectHit,
     prefetch,
+    composerActions,
 }: {
     onReturnToSearch?: () => void;
     initialInput?: string;
@@ -140,16 +144,10 @@ const DesktopAskAIContent = ({
     headers?: Record<string, string>;
     onSelectHit?: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
+    composerActions?: ReactNode;
 }) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [userScrolled, setUserScrolled] = useState(false);
-
-    const focus = useCallback(() => {
-        setTimeout(() => {
-            inputRef.current?.focus();
-        });
-    }, [inputRef]);
-
     const chat = useChat({
         id: chatId,
         initialInput,
@@ -166,23 +164,28 @@ const DesktopAskAIContent = ({
     }, [chat.isLoading]);
 
     const askAI = useDebouncedCallback(
-        (message: string) => {
-            if (chat.isLoading) {
-                return;
-            }
-
+        (message: string): void => {
             if (message.trim().split(/\s+/).length < 2) {
-                focus();
+                chat.setInput(message);
+                inputRef.current?.focus();
+                inputRef.current?.setSelectionRange(chat.input.length, chat.input.length);
                 return;
             }
             void chat.append({ role: "user", content: message });
             chat.setInput("");
-            focus();
         },
-        [chat, focus],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [chat.append, chat.setInput],
         1000,
         { edges: ["leading"] },
     );
+
+    useEffect(() => {
+        if (initialInput) {
+            askAI(initialInput);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const [isScrolled, setIsScrolled] = useState(false);
 
@@ -266,12 +269,19 @@ const DesktopAskAIContent = ({
             </Command.List>
 
             <AskAIComposer
-                chat={chat}
-                onKeyDown={(e) => {
+                ref={inputRef}
+                value={chat.input}
+                onValueChange={chat.setInput}
+                isLoading={chat.isLoading}
+                stop={chat.stop}
+                onSend={askAI}
+                onKeyDown={useEventCallback((e) => {
                     if (e.key === "ArrowUp" || e.key === "ArrowDown") {
                         setUserScrolled(true);
                     }
-                }}
+                })}
+                onPopState={onReturnToSearch}
+                actions={composerActions}
             />
         </>
     );
@@ -279,8 +289,16 @@ const DesktopAskAIContent = ({
 
 const AskAIComposer = forwardRef<
     HTMLTextAreaElement,
-    ComponentPropsWithoutRef<"textarea"> & { chat: ReturnType<typeof useChat> }
->(({ chat, ...props }, forwardedRef) => {
+    ComponentPropsWithoutRef<typeof TextArea> & {
+        isLoading?: boolean;
+        stop?: () => void;
+        onSend?: (message: string) => void;
+        onPopState?: KeyboardEventHandler<HTMLTextAreaElement>;
+        actions?: ReactNode;
+    }
+>(({ isLoading, stop, onSend, onPopState, actions, ...props }, forwardedRef) => {
+    const value = typeof props.value === "string" ? props.value : "";
+    const canSubmit = value.trim().split(/\s+/).length >= 2;
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
         <div className="border-t border-[var(--grayscale-a6)] cursor-text" onClick={() => inputRef.current?.focus()}>
@@ -288,48 +306,51 @@ const AskAIComposer = forwardRef<
                 <TextArea
                     ref={composeRefs(forwardedRef, inputRef)}
                     autoFocus
-                    placeholder="Ask AI"
-                    {...props}
-                    className={cn("w-full resize-none focus:outline-none block p-2", props.className)}
-                    style={{ fontSize: "16px", lineHeight: "24px", maxHeight: 200, ...props.style }}
+                    placeholder="Ask AI a question..."
                     minLines={1}
                     lineHeight={24}
                     maxLines={10}
                     padding={8}
-                    onKeyDownCapture={composeEventHandlers(
-                        props.onKeyDownCapture,
+                    {...props}
+                    className={cn("w-full resize-none focus:outline-none block p-2", props.className)}
+                    style={{ fontSize: "16px", lineHeight: "24px", maxHeight: 200, ...props.style }}
+                    onKeyDown={composeEventHandlers(
+                        props.onKeyDown,
                         (e) => {
                             if (e.key === "Enter") {
-                                if (!e.shiftKey && chat.input.length === 0) {
+                                if (!e.shiftKey && value.length === 0) {
                                     return;
-                                } else if (chat.isLoading) {
-                                    chat.stop();
+                                } else if (isLoading) {
+                                    stop?.();
                                     e.preventDefault();
                                 } else {
-                                    chat.handleSubmit();
+                                    if (canSubmit) {
+                                        onSend?.(value);
+                                    }
                                     e.preventDefault();
                                 }
 
                                 e.stopPropagation();
-                            } else if (chat.input.length > 0 && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
+                            } else if (value.length > 0 && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
                                 e.stopPropagation();
+                            } else if (value.length === 0 && e.key === "Backspace" && (e.ctrlKey || e.metaKey)) {
+                                onPopState?.(e);
                             }
                         },
                         { checkForDefaultPrevented: false },
                     )}
-                    value={chat.input}
-                    onValueChange={chat.setInput}
                 />
             </DesktopCommandInput>
-            <div className="ml-auto w-fit pb-2 pr-2">
+            <div className="flex items-center justify-between pb-2 px-2">
+                <div>{actions}</div>
                 <Button
                     size="icon"
                     className="rounded-full"
                     variant="ghost"
-                    onClick={chat.isLoading ? chat.stop : chat.handleSubmit}
-                    disabled={!chat.isLoading && chat.input.trim().split(/\s+/).length < 2}
+                    onClick={isLoading ? stop : () => onSend?.(value)}
+                    disabled={!isLoading && !canSubmit}
                 >
-                    {chat.isLoading ? <StopCircle /> : <ArrowUp />}
+                    {isLoading ? <StopCircle /> : <ArrowUp />}
                 </Button>
             </div>
         </div>
@@ -406,7 +427,7 @@ const AskAICommandItems = memo<{
                             >
                                 <article>
                                     <div className="relative max-w-[70%] rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2 whitespace-pre-wrap ml-auto w-fit mb-2">
-                                        <section className="prose prose-sm dark:prose-invert">
+                                        <section className="prose prose-sm dark:prose-invert cursor-auto">
                                             <MarkdownContent components={components}>
                                                 {message.user?.content ?? "_No user message_"}
                                             </MarkdownContent>
@@ -414,7 +435,7 @@ const AskAICommandItems = memo<{
                                     </div>
                                     <div className="flex items-start justify-start gap-4">
                                         <Sparkles className="size-4 shrink-0 my-1" />
-                                        <section className="prose prose-sm dark:prose-invert">
+                                        <section className="prose prose-sm dark:prose-invert flex-1 shrink cursor-text">
                                             {message.assistant?.content && (
                                                 <MarkdownContent
                                                     components={{

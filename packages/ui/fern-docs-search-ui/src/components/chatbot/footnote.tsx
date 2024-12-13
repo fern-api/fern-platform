@@ -59,7 +59,7 @@ export function FootnoteSup({ node }: { node?: HastElement }): ReactElement | nu
                                 {fn.title}
                             </a>
                         </h5>
-                        <p className="max-w-xs break-words text-[var(--grayscale-a9)] leading-snug text-xs">
+                        <p className="max-w-xs text-[var(--grayscale-a9)] leading-snug text-xs break-all">
                             <a
                                 href={fn.url}
                                 target="_blank"

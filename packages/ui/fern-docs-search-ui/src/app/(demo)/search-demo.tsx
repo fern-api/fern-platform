@@ -21,7 +21,7 @@ import {
     SearchClientRoot,
     useFacetFilters,
 } from "@/components";
-// import { DesktopAskAICommand } from "@/components/desktop/desktop-ask-ai";
+import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
 import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -87,6 +87,8 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
         [domain, apiKey],
     );
 
+    const [model, setModel] = useState<string>("gpt-4o-mini");
+
     if (!apiKey) {
         return false;
     }
@@ -125,8 +127,10 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                         body={{
                             algoliaSearchKey: apiKey,
                             domain,
+                            model,
                         }}
                         onSelectHit={handleSubmit}
+                        composerActions={<ChatbotModelSelect value={model} onValueChange={setModel} />}
                     >
                         <DesktopCommandAboveInput>
                             <DesktopCommandBadges />
