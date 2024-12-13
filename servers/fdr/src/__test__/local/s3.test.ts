@@ -37,6 +37,7 @@ describe("S3 Service", () => {
             redisEnabled: true,
             redisClusteringEnabled: true,
             applicationEnvironment: "string",
+            cdnPublicDocsUrl: "string",
         });
         const startUploadDocsResponse = await s3Service.createPresignedDocsAssetsUploadUrlWithClient({
             domain: "buildwithfern.com",
