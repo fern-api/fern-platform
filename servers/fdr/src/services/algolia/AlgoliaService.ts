@@ -56,9 +56,6 @@ export class AlgoliaServiceImpl implements AlgoliaService {
             if (config == null) {
                 return [];
             }
-            // const generator = getConfig().algoliaSearchV2Domains.some((domains) => url.includes(domains))
-            //     ? new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById })
-            //     : new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
             return generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(config, indexSegment);
         });
     }
