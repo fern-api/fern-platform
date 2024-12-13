@@ -1,4 +1,4 @@
-import { FileIdOrUrl, Logo, LogoConfiguration } from "@fern-api/fdr-sdk/docs";
+import { EMPTY_FRONTMATTER, FileIdOrUrl, Logo, LogoConfiguration } from "@fern-api/fdr-sdk/docs";
 import { atom, useAtomValue } from "jotai";
 import { DOCS_ATOM } from "./docs";
 import { FEATURE_FLAGS_ATOM } from "./flags";
@@ -32,9 +32,18 @@ function isFileIdOrUrl(logo: Logo | undefined): logo is FileIdOrUrl {
     return logo.type === "fileId" || logo.type === "url";
 }
 
-export const LOGO_OVERRIDE_ATOM = atom<LogoConfiguration | undefined>((get) => {
-    const logo = get(DOCS_ATOM).frontmatterLogoOverride ?? undefined;
-    console.log("frontmatter logo", logo);
+export const LOGO_IMAGE_ATOM = atom<LogoConfiguration>((get) => {
+    const { content, colors } = get(DOCS_ATOM);
+    const markdownText =
+        content.type === "markdown-page"
+            ? content.content
+            : content.type === "changelog" && content.node.overviewPageId != null
+              ? content.pages[content.node.overviewPageId]
+              : content.type === "changelog-entry"
+                ? content.page
+                : undefined;
+
+    const { logo } = typeof markdownText === "object" ? markdownText.frontmatter : EMPTY_FRONTMATTER;
 
     if (logo != null && typeof logo === "object") {
         if ("light" in logo && "dark" in logo && isFileIdOrUrl(logo.light) && isFileIdOrUrl(logo.dark)) {
@@ -50,5 +59,9 @@ export const LOGO_OVERRIDE_ATOM = atom<LogoConfiguration | undefined>((get) => {
             return { light: logo, dark: logo };
         }
     }
-    return undefined;
+
+    const light = colors.light?.logo != null ? { type: "fileId" as const, value: colors.light.logo } : undefined;
+    const dark = colors.dark?.logo != null ? { type: "fileId" as const, value: colors.dark.logo } : undefined;
+
+    return { light: light ?? dark, dark: dark ?? light };
 });

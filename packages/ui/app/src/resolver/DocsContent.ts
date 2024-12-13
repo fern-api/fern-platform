@@ -52,7 +52,6 @@ export declare namespace DocsContent {
          * The Request / Response snippets will use this to link back to the endpoint reference page.
          */
         endpointIdsToSlugs: Record<FernNavigation.EndpointId, FernNavigation.Slug>;
-        frontmatter: FernDocs.Frontmatter | undefined;
     }
 
     interface ApiEndpointPage {

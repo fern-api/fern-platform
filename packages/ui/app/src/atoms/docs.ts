@@ -62,7 +62,6 @@ export const EMPTY_DOCS_STATE: DocsProps = {
         hasAside: false,
         apis: {},
         endpointIdsToSlugs: {},
-        frontmatter: undefined,
     },
     featureFlags: DEFAULT_FEATURE_FLAGS,
     apis: [],
@@ -74,7 +73,6 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     user: undefined,
     defaultLang: "curl",
     stylesheet: "",
-    frontmatterLogoOverride: undefined,
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(EMPTY_DOCS_STATE, (_, next) => {

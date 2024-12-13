@@ -55,7 +55,6 @@ export interface DocsProps {
     navbarLinks: NavbarLink[];
     logoHeight: DocsV1Read.Height | undefined;
     logoHref: DocsV1Read.Url | undefined;
-    frontmatterLogoOverride: FernDocs.Frontmatter["logo"] | undefined;
     files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
     content: DocsContent;
     featureFlags: FeatureFlags;
