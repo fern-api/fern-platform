@@ -1,14 +1,13 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import { ComponentPropsWithoutRef, KeyboardEvent, forwardRef, memo, useEffect, useRef } from "react";
 import { useSearchBox } from "react-instantsearch";
+
 import * as Command from "../cmdk";
-
 import { useFacetFilters } from "../search-client";
-import { DesktopCommandInput, DesktopCommandInputError } from "./desktop-command-input";
-
-import { composeRefs } from "@radix-ui/react-compose-refs";
 import "../shared/common.scss";
 import tunnel from "../tunnel-rat";
+import { DesktopCommandInput, DesktopCommandInputError } from "./desktop-command-input";
 import { DesktopCommandRoot } from "./desktop-command-root";
 import "./desktop.scss";
 
@@ -26,23 +25,24 @@ export const afterInput = tunnel();
 /**
  * The desktop command is intended to be used within a dialog component.
  */
-const DesktopCommand = forwardRef<HTMLDivElement, DesktopCommandProps & ComponentPropsWithoutRef<typeof Command>>(
-    ({ onEscape, onPopState, onClose, children, placeholder, ...props }, forwardedRef) => {
-        const { filters, handlePopState: handlePopFilters } = useFacetFilters();
-        return (
-            <DesktopCommandRoot
-                label="Search"
-                {...props}
-                ref={forwardedRef}
-                onPopState={composeEventHandlers(onPopState, handlePopFilters, { checkForDefaultPrevented: false })}
-                onEscape={composeEventHandlers(onEscape, () => onClose?.(), { checkForDefaultPrevented: false })}
-                escapeKeyShouldPopFilters={filters.length > 0}
-            >
-                <DesktopCommandContent>{children}</DesktopCommandContent>
-            </DesktopCommandRoot>
-        );
-    },
-);
+const DesktopCommand = forwardRef<
+    HTMLDivElement,
+    DesktopCommandProps & ComponentPropsWithoutRef<typeof DesktopCommandRoot>
+>(({ onEscape, onPopState, onClose, children, placeholder, ...props }, forwardedRef) => {
+    const { filters, handlePopState: handlePopFilters } = useFacetFilters();
+    return (
+        <DesktopCommandRoot
+            label="Search"
+            {...props}
+            ref={forwardedRef}
+            onPopState={composeEventHandlers(onPopState, handlePopFilters, { checkForDefaultPrevented: false })}
+            onEscape={composeEventHandlers(onEscape, () => onClose?.(), { checkForDefaultPrevented: false })}
+            escapeKeyShouldPopFilters={filters.length > 0}
+        >
+            <DesktopCommandContent>{children}</DesktopCommandContent>
+        </DesktopCommandRoot>
+    );
+});
 
 DesktopCommand.displayName = "DesktopCommand";
 
