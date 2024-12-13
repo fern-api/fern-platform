@@ -1,4 +1,4 @@
-import { isPlainObject } from "lodash-es";
+import { isPlainObject } from "es-toolkit/predicate";
 
 export const isPlainObject2 = isPlainObject as (val: unknown) => val is Record<string, unknown>;
 

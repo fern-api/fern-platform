@@ -12,7 +12,7 @@ export function DesktopInstantSearchWrapper({ appId }: { appId: string }): React
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.metaKey && e.shiftKey && e.key === "k") {
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === "k") {
                 e.preventDefault();
                 e.stopPropagation();
 

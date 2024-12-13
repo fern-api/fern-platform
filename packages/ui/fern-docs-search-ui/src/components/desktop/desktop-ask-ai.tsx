@@ -123,7 +123,39 @@ export const DesktopCommandWithAskAI = forwardRef<
 
 DesktopCommandWithAskAI.displayName = "DesktopCommandWithAskAI";
 
-const DesktopAskAIContent = ({
+const DesktopAskAIContent = (props: {
+    onReturnToSearch?: () => void;
+    initialInput?: string;
+    chatId?: string;
+    api?: string;
+    suggestionsApi?: string;
+    body?: object;
+    headers?: Record<string, string>;
+    onSelectHit?: (path: string) => void;
+    prefetch?: (path: string) => Promise<void>;
+    composerActions?: ReactNode;
+}) => {
+    return (
+        <>
+            <div className="flex items-center justify-between p-2 pb-0">
+                <div>
+                    {props.onReturnToSearch && (
+                        <Button size="xs" variant="outline" onClick={props.onReturnToSearch}>
+                            <ArrowLeft />
+                            Back to search
+                        </Button>
+                    )}
+                </div>
+                <div>
+                    <afterInput.Out />
+                </div>
+            </div>
+            <DesktopAskAIChat {...props} />
+        </>
+    );
+};
+
+const DesktopAskAIChat = ({
     onReturnToSearch,
     initialInput,
     chatId,
@@ -193,19 +225,6 @@ const DesktopAskAIContent = ({
 
     return (
         <>
-            <div className="flex items-center justify-between p-2 pb-0">
-                <div>
-                    {onReturnToSearch && (
-                        <Button size="xs" variant="outline" onClick={onReturnToSearch}>
-                            <ArrowLeft />
-                            Back to search
-                        </Button>
-                    )}
-                </div>
-                <div>
-                    <afterInput.Out />
-                </div>
-            </div>
             <Command.List
                 onWheel={(e) => {
                     if (e.deltaY > 0) {
@@ -424,6 +443,7 @@ const AskAICommandItems = memo<{
                                     }
                                 }}
                                 asChild
+                                scrollLogicalPosition="start"
                             >
                                 <article>
                                     <div className="relative max-w-[70%] rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2 whitespace-pre-wrap ml-auto w-fit mb-2">

@@ -2,8 +2,7 @@ import { algoliaAppId } from "@/server/env-variables";
 import { models } from "@/server/models";
 import { SuggestionsSchema } from "@/server/suggestions-schema";
 import { searchClient } from "@algolia/client-search";
-import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
-import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
+import { SEARCH_INDEX, type AlgoliaRecord } from "@fern-ui/fern-docs-search-server/algolia";
 import { streamObject } from "ai";
 import { z } from "zod";
 

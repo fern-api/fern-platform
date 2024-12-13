@@ -3,7 +3,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-ui/fern-docs-utils";
 import { createRoleFacet } from "../../shared/roles/create-role-facet";
 import { flipAndOrToOrAnd, modifyRolesForEveryone } from "../../shared/roles/role-utils";
-import { BaseRecord } from "../types";
+import { FernTurbopufferRecordWithoutVector } from "../types";
 
 interface CreateBaseRecordOptions {
     domain: string;
@@ -11,7 +11,12 @@ interface CreateBaseRecordOptions {
     parents: readonly FernNavigation.NavigationNodeParent[];
     node: FernNavigation.NavigationNodeWithMetadata;
     authed: boolean;
+    type: "markdown" | "api-reference";
 }
+
+export type BaseRecord = Omit<FernTurbopufferRecordWithoutVector, "attributes"> & {
+    attributes: Omit<FernTurbopufferRecordWithoutVector["attributes"], "chunk">;
+};
 
 export function createBaseRecord({
     domain,
@@ -19,6 +24,7 @@ export function createBaseRecord({
     parents,
     node,
     authed: isDocsSiteAuthed,
+    type,
 }: CreateBaseRecordOptions): BaseRecord {
     const productNode = parents.find((n): n is FernNavigation.ProductNode => n.type === "product");
     const versionNode = parents.find((n): n is FernNavigation.VersionNode => n.type === "version");
@@ -39,45 +45,28 @@ export function createBaseRecord({
                   )
                   // Changelog months and years should not be included in the breadcrumb
                   .filter((n) => n.type !== "changelogMonth" && n.type !== "changelogYear")
-                  .map((metadata) => ({
-                      title: metadata.title,
-                      pathname: addLeadingSlash(metadata.canonicalSlug ?? metadata.slug),
-                  }));
+                  .map((metadata) => metadata.title);
 
     const { roles, authed } = createViewersForNodes([...parents, node], isDocsSiteAuthed);
 
     return {
-        objectID: `${org_id}:${domain}:${node.id}`,
-        org_id,
-        domain,
-        canonicalPathname: addLeadingSlash(node.canonicalSlug ?? node.slug),
-        pathname: addLeadingSlash(node.slug),
-        icon: node.icon,
-        title: node.title,
-        breadcrumb,
-        product: productNode
-            ? {
-                  id: productNode.productId,
-                  title: productNode.title,
-                  pathname: `/${productNode.canonicalSlug ?? productNode.slug}`,
-              }
-            : undefined,
-        version: versionNode
-            ? {
-                  id: versionNode.versionId,
-                  title: versionNode.title,
-                  pathname: `/${versionNode.canonicalSlug ?? versionNode.slug}`,
-              }
-            : undefined,
-        tab: tabNode
-            ? {
-                  title: tabNode.title,
-                  pathname: `/${tabNode.canonicalSlug ?? tabNode.slug}`,
-              }
-            : undefined,
-        visible_by: roles.map(createRoleFacet),
-        authed,
-        page_position: 0,
+        id: `${org_id}:${domain}:${node.id}`,
+        attributes: {
+            type,
+            org_id,
+            domain,
+            canonicalPathname: addLeadingSlash(node.canonicalSlug ?? node.slug),
+            pathname: addLeadingSlash(node.slug),
+            icon: node.icon,
+            title: node.title,
+            breadcrumb,
+            product: productNode?.title,
+            version: versionNode?.title,
+            tab: tabNode?.title,
+            visible_by: roles.map(createRoleFacet),
+            authed,
+            page_position: 0,
+        },
     };
 }
 

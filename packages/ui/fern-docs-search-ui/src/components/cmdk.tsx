@@ -22,6 +22,7 @@ import {
     useSyncExternalStore,
 } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { z } from "zod";
 import { commandScore } from "./command-score";
 
 type Children = { children?: ReactNode };
@@ -60,6 +61,8 @@ type ListProps = Children &
          */
         label?: string;
     };
+const ScrollLogicalPositionSchema = z.enum(["center", "end", "nearest", "start"]);
+type ScrollLogicalPosition = z.infer<typeof ScrollLogicalPositionSchema>;
 type ItemProps = Children &
     Omit<DivProps, "disabled" | "onSelect" | "value"> & {
         /** Whether this item is currently disabled. */
@@ -75,6 +78,11 @@ type ItemProps = Children &
         keywords?: string[];
         /** Whether this item is forcibly rendered regardless of filtering. */
         forceMount?: boolean;
+        /**
+         * The position to scroll the item to when it is selected.
+         * @default "nearest"
+         */
+        scrollLogicalPosition?: ScrollLogicalPosition;
     };
 type GroupProps = Children &
     Omit<DivProps, "heading" | "value"> & {
@@ -504,11 +512,25 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
         if (item) {
             if (item.parentElement?.firstChild === item) {
                 // First item in Group, ensure heading is in view
-                item.closest(GROUP_SELECTOR)?.querySelector(GROUP_HEADING_SELECTOR)?.scrollIntoView({ block: "start" });
-            }
+                item
+                    .closest(GROUP_SELECTOR)
+                    ?.querySelector(GROUP_HEADING_SELECTOR)
+                    ?.scrollIntoView({
+                        block:
+                            ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position"))
+                                .data ?? "nearest",
+                    });
 
-            // Ensure the item is always in view
-            item.scrollIntoView({ block: "start" });
+                // Ensure the item is always in view under the heading
+                item.scrollIntoView({ block: "nearest" });
+            } else {
+                // Ensure the item is always in view
+                item.scrollIntoView({
+                    block:
+                        ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position")).data ??
+                        "nearest",
+                });
+            }
         }
     }
 
@@ -760,6 +782,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
             aria-selected={Boolean(selected)}
             data-disabled={Boolean(disabled)}
             data-selected={Boolean(selected)}
+            data-scroll-logical-position={props.scrollLogicalPosition}
             onPointerMove={disabled || context.getDisablePointerSelection() ? undefined : select}
             onClick={disabled ? undefined : onSelect}
         >

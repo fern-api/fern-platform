@@ -5,7 +5,7 @@ import {
     type ChangelogRecord,
     type FacetName,
     type MarkdownRecord,
-} from "@fern-ui/fern-docs-search-server/types";
+} from "@fern-ui/fern-docs-search-server/algolia/types";
 import type { BaseHit, Hit } from "instantsearch.js";
 import { MarkRequired } from "ts-essentials";
 

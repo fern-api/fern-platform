@@ -4,8 +4,7 @@ import { algoliaAppId, algoliaWriteApiKey, fdrEnvironment, fernToken } from "@/s
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainNode } from "@/server/xfernhost/node";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
-import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
-import { algoliaIndexSettingsTask, algoliaIndexerTask } from "@fern-ui/fern-docs-search-server/tasks";
+import { SEARCH_INDEX, algoliaIndexSettingsTask, algoliaIndexerTask } from "@fern-ui/fern-docs-search-server/algolia";
 import { addLeadingSlash, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { NextApiRequest, NextApiResponse } from "next/types";
 

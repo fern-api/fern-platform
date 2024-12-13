@@ -36,7 +36,6 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "lodash": "^4.17.21",
     "lucide-react": "^0.460.0",
     "pluralize": "^8.0.0",
     "react": "^18",
@@ -51,7 +50,6 @@
   "devDependencies": {
     "@tanstack/router-devtools": "^1.78.2",
     "@tanstack/router-vite-plugin": "^1.78.2",
-    "@types/lodash": "^4.17.4",
     "@types/node": "^20.12.12",
     "@types/pluralize": "^0.0.33",
     "@types/react": "^18",

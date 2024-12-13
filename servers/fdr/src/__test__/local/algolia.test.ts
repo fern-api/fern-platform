@@ -1,5 +1,5 @@
 import { addHours, subHours } from "date-fns";
-import { uniqueId } from "lodash-es";
+import { uniqueId } from "es-toolkit/compat";
 import { createMockFdrApplication } from "../mock";
 import { prisma } from "./setupMockFdr";
 import { createMockDocs, createMockIndexSegment, getUniqueDocsForUrl } from "./util";

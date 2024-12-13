@@ -1,6 +1,5 @@
 import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
-import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
-import { FacetName } from "@fern-ui/fern-docs-search-server/types";
+import type { FacetName, FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
 import { useDeepCompareEffectNoCheck, useEventCallback } from "@fern-ui/react-commons";
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import { useAtom, useSetAtom } from "jotai";

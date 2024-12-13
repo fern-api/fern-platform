@@ -1,12 +1,12 @@
-import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import {
     AlgoliaIndexerTaskResponse,
+    SEARCH_INDEX,
     algoliaIndexSettingsTask,
     algoliaIndexerTask,
-} from "@fern-ui/fern-docs-search-server/tasks";
+} from "@fern-ui/fern-docs-search-server/algolia";
 import { algoliaAppId, algoliaWriteApiKey, fdrEnvironment, fernToken } from "./env-variables";
 
-export const runReindex = async (domain: string): Promise<AlgoliaIndexerTaskResponse> => {
+export const runReindexAlgolia = async (domain: string): Promise<AlgoliaIndexerTaskResponse> => {
     // eslint-disable-next-line no-console
     console.time("reindexing");
 

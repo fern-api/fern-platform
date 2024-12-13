@@ -25,6 +25,28 @@ export const DesktopSearchDialog = memo(
         return (
             <Dialog.Root {...rest}>
                 <Dialog.Trigger asChild>{trigger ?? <DesktopSearchButton />}</Dialog.Trigger>
+
+                <DesktopCommandAfterInput>
+                    {afterInput || (
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Dialog.DialogClose asChild>
+                                        <Button size="xs" variant="outline">
+                                            <kbd>Esc</kbd>
+                                        </Button>
+                                    </Dialog.DialogClose>
+                                </TooltipTrigger>
+                                <TooltipPortal>
+                                    <TooltipContent>
+                                        <p>Close search</p>
+                                    </TooltipContent>
+                                </TooltipPortal>
+                            </Tooltip>
+                        </TooltipProvider>
+                    )}
+                </DesktopCommandAfterInput>
+
                 <Dialog.Portal>
                     <Dialog.Overlay className="fixed inset-0 bg-[var(--white-a3)] dark:bg-[var(--black-a3)] backdrop-blur-md" />
 
@@ -32,27 +54,6 @@ export const DesktopSearchDialog = memo(
                         <Dialog.Title>Search</Dialog.Title>
                         <Dialog.Description>Search our documentation.</Dialog.Description>
                     </VisuallyHidden>
-
-                    <DesktopCommandAfterInput>
-                        {afterInput || (
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Dialog.DialogClose asChild>
-                                            <Button size="xs" variant="outline">
-                                                <kbd>Esc</kbd>
-                                            </Button>
-                                        </Dialog.DialogClose>
-                                    </TooltipTrigger>
-                                    <TooltipPortal>
-                                        <TooltipContent>
-                                            <p>Close search</p>
-                                        </TooltipContent>
-                                    </TooltipPortal>
-                                </Tooltip>
-                            </TooltipProvider>
-                        )}
-                    </DesktopCommandAfterInput>
 
                     <Dialog.Content
                         className={cn(

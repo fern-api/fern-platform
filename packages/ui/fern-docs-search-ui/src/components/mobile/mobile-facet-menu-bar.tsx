@@ -7,7 +7,7 @@ import {
     isAvailability,
     isHttpMethod,
 } from "@fern-ui/components/badges";
-import { FacetName } from "@fern-ui/fern-docs-search-server/types";
+import { FacetName } from "@fern-ui/fern-docs-search-server/algolia/types";
 import * as Menubar from "@radix-ui/react-menubar";
 import { Check, ChevronDown, Minus } from "lucide-react";
 import { ComponentPropsWithoutRef, Fragment, ReactElement, ReactNode, forwardRef } from "react";

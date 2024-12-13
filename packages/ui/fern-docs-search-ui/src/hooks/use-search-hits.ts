@@ -1,4 +1,4 @@
-import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
+import type { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/algolia/types";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useHits } from "react-instantsearch";
 
