@@ -14,7 +14,6 @@ import {
     DesktopSearchDialog,
     SEARCH_INDEX,
     SearchClientRoot,
-    useCommandUx,
     useFacetFilters,
     useIsMobile,
 } from "@fern-ui/fern-docs-search-ui";
@@ -174,23 +173,10 @@ function RouterAwareCommandSearchHits({ onClose }: { onClose: () => void }) {
 
 function BackButton() {
     const { filters, popFilter, clearFilters } = useFacetFilters();
-    const { focus } = useCommandUx();
     if (filters.length === 0) {
         return false;
     }
-
-    return (
-        <DesktopBackButton
-            pop={() => {
-                popFilter();
-                focus();
-            }}
-            clear={() => {
-                clearFilters();
-                focus();
-            }}
-        />
-    );
+    return <DesktopBackButton pop={popFilter} clear={clearFilters} />;
 }
 
 function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
