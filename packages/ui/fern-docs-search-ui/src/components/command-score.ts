@@ -76,7 +76,10 @@ function commandScoreInner(
     let index = lowerString.indexOf(abbreviationChar, stringIndex);
     let highScore = 0;
 
-    let score, transposedScore, wordBreaks, spaceBreaks;
+    let score: number,
+        transposedScore: number,
+        wordBreaks: RegExpMatchArray | null,
+        spaceBreaks: RegExpMatchArray | null;
 
     while (index >= 0) {
         score = commandScoreInner(
