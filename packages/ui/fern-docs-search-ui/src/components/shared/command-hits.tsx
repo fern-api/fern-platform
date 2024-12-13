@@ -1,10 +1,10 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { Command, useCommandState } from "cmdk";
 import { PropsWithChildren, ReactNode, memo } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";
+import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
 import { useFacetFilters } from "../search-client";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
@@ -19,7 +19,7 @@ export const CommandSearchHits = ({
     onSelect: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
 }): ReactNode => {
-    const isQueryEmpty = useCommandState((state) => state.search.trimStart().length === 0) as boolean;
+    const isQueryEmpty = Command.useCommandState((state) => state.search.trimStart().length === 0) as boolean;
     const items = useSearchHits();
 
     const { filters } = useFacetFilters();
@@ -95,7 +95,7 @@ function CommandGroupSearchHitTooltip({
     path,
     children,
 }: PropsWithChildren<{ hit: AlgoliaRecordHit; path: string }>) {
-    const open = useCommandState((state) => state.value === path) as boolean;
+    const open = Command.useCommandState((state) => state.value === path) as boolean;
 
     if (hit._snippetResult?.content == null && hit._snippetResult?.description == null) {
         return children;

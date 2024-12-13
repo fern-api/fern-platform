@@ -1,7 +1,7 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
-import { Command } from "cmdk";
 import { ComponentPropsWithoutRef, KeyboardEvent, forwardRef, memo, useEffect, useRef } from "react";
 import { useSearchBox } from "react-instantsearch";
+import * as Command from "../cmdk";
 
 import { useFacetFilters } from "../search-client";
 import { DesktopCommandInput, DesktopCommandInputError } from "./desktop-command-input";

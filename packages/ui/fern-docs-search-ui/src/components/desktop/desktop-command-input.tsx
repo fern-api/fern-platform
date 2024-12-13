@@ -1,11 +1,11 @@
+import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { Command } from "cmdk";
 import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
-
-import { composeEventHandlers } from "@radix-ui/primitive";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+import * as Command from "../cmdk";
+
 import { useCommandUx } from "../shared";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 

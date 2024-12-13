@@ -1,7 +1,7 @@
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
-import { Command, useCommandState } from "cmdk";
 import { ComponentPropsWithoutRef, forwardRef, useCallback, useEffect, useRef } from "react";
+import * as Command from "../cmdk";
 
 export const CommandLink = forwardRef<
     HTMLAnchorElement,
@@ -13,7 +13,7 @@ export const CommandLink = forwardRef<
     }
 >(({ href, target, rel, onSelect, prefetch, ...props }, forwardedRef) => {
     const ref = useRef<HTMLAnchorElement>(null);
-    const isSelected = useCommandState((state) => state.value === href) as boolean;
+    const isSelected = Command.useCommandState((state) => state.value === href) as boolean;
 
     const getPathname = useCallback(() => {
         try {
@@ -37,8 +37,8 @@ export const CommandLink = forwardRef<
             return;
         }
         const listener = () => onSelect?.(href);
-        element.addEventListener("cmdk-item-select", listener);
-        return () => element.removeEventListener("cmdk-item-select", listener);
+        element.addEventListener(Command.SELECT_EVENT, listener);
+        return () => element.removeEventListener(Command.SELECT_EVENT, listener);
     }, [href, isSelected, onSelect, prefetch]);
 
     const Comp = props.asChild ? Slot : "a";

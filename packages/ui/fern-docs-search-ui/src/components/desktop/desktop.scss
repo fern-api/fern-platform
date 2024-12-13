@@ -1,4 +1,4 @@
-#fern-search-desktop-command[cmdk-root] {
+#fern-search-desktop-command[data-cmdk-root] {
     overflow: hidden;
     border: 1px solid var(--grayscale-a6);
     background-color: var(--grayscale-a1);
@@ -19,15 +19,15 @@
         cursor: text;
     }
 
-    [cmdk-list][data-empty="true"] {
+    [data-cmdk-list][data-empty="true"] {
         height: 0;
     }
 
-    [data-cmdk-fern-header]:has(+ [cmdk-list][data-empty="true"]) {
+    [data-cmdk-fern-header]:has(+ [data-cmdk-list][data-empty="true"]) {
         border-bottom: none;
     }
 
-    [cmdk-input] {
+    [data-cmdk-input] {
         padding: 0.25rem 0.5rem;
         width: 100%;
         background: transparent;
@@ -46,7 +46,7 @@
         }
     }
 
-    [cmdk-empty] {
+    [data-cmdk-empty] {
         color: var(--grayscale-a11);
 
         padding: 2rem;
@@ -55,7 +55,7 @@
         overflow-wrap: break-word;
     }
 
-    [cmdk-group-heading] {
+    [data-cmdk-group-heading] {
         font-size: 0.75rem;
         font-weight: 600;
         color: var(--grayscale-a11);
@@ -64,7 +64,7 @@
         padding: 0 0.5rem;
     }
 
-    [cmdk-list] {
+    [data-cmdk-list] {
         height: min(400px, var(--cmdk-list-height));
         max-height: 400px;
         overflow: auto;
@@ -83,7 +83,7 @@
         }
     }
 
-    [cmdk-list-sizer] {
+    [data-cmdk-list-sizer] {
         padding: 0.75rem 0.5rem;
 
         display: flex;
@@ -91,16 +91,19 @@
         gap: 0.5rem;
     }
 
-    [cmdk-item] {
+    [data-cmdk-item] {
         font-size: 0.875rem;
         line-height: 1.25rem;
 
         border-radius: calc(0.5rem - 2px);
         padding: 0.5rem;
         text-align: left;
-        display: flex;
-        gap: 1rem;
-        align-items: center;
+
+        &:not([data-conversation-id]) {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
 
         &:not(a) {
             cursor: default;

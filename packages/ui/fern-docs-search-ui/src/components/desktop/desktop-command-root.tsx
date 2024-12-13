@@ -1,13 +1,13 @@
 import { useSearchHitsRerender } from "@/hooks/use-search-hits";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import { Command } from "cmdk";
 import { ComponentPropsWithoutRef, KeyboardEventHandler, forwardRef, useCallback, useRef, useState } from "react";
+import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
 
 export const DesktopCommandRoot = forwardRef<
     HTMLDivElement,
-    ComponentPropsWithoutRef<typeof Command> & {
+    ComponentPropsWithoutRef<typeof Command.Root> & {
         onEscape?: KeyboardEventHandler<HTMLDivElement>;
         onPopState?: KeyboardEventHandler<HTMLDivElement>;
         escapeKeyShouldPopFilters?: boolean;
@@ -24,7 +24,7 @@ export const DesktopCommandRoot = forwardRef<
 
     return (
         <CommandUxProvider setInputRef={setInputRef} inputError={inputError} setInputError={setInputError}>
-            <Command
+            <Command.Root
                 label="Search"
                 ref={composeRefs(forwardedRef, ref)}
                 {...props}
@@ -78,7 +78,7 @@ export const DesktopCommandRoot = forwardRef<
                 )}
             >
                 {children}
-            </Command>
+            </Command.Root>
         </CommandUxProvider>
     );
 });
