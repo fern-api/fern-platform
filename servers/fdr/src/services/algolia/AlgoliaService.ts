@@ -1,7 +1,7 @@
 import { APIV1Db, DocsV1Db } from "@fern-api/fdr-sdk";
 import algolia, { type SearchClient } from "algoliasearch";
 import { type FdrApplication } from "../../app";
-import { AlgoliaSearchRecordGeneratorV2 } from "./AlgoliaSearchRecordGeneratorV2";
+import { AlgoliaSearchRecordGenerator } from "./AlgoliaSearchRecordGenerator";
 import type { AlgoliaSearchRecord, ConfigSegmentTuple } from "./types";
 
 export interface AlgoliaService {
@@ -51,7 +51,7 @@ export class AlgoliaServiceImpl implements AlgoliaService {
         configSegmentTuples: ConfigSegmentTuple[];
     }) {
         return configSegmentTuples.flatMap(([config, indexSegment]) => {
-            const generator = new AlgoliaSearchRecordGeneratorV2({ docsDefinition, apiDefinitionsById });
+            const generator = new AlgoliaSearchRecordGenerator({ docsDefinition, apiDefinitionsById });
 
             if (config == null) {
                 return [];
