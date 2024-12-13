@@ -13,20 +13,18 @@ import {
     CommandGroupTheme,
     CommandSearchHits,
     DesktopBackButton,
-    DesktopCommand,
     DesktopCommandAboveInput,
     DesktopCommandBadges,
     DesktopCommandBeforeInput,
     DesktopSearchDialog,
     MobileCommand,
     SearchClientRoot,
-    useCommandUx,
     useFacetFilters,
 } from "@/components";
-import { DesktopAskAICommand } from "@/components/desktop/desktop-ask-ai";
+// import { DesktopAskAICommand } from "@/components/desktop/desktop-ask-ai";
+import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
 import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { AvailabilityBadge, Badge } from "@fern-ui/components";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 
 const USER_TOKEN_KEY = "user-token";
@@ -69,7 +67,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
     const handleSubmit = useCallback(
         (path: string) => {
-            window.open(`https://${domain}${path}`, "_blank", "noopener,noreferrer");
+            window.open(String(new URL(path, `https://${domain}`)), "_blank", "noopener,noreferrer");
         },
         [domain],
     );
@@ -117,56 +115,42 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 </AppSidebar>
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
-                    {askAi ? (
-                        <DesktopAskAICommand
-                            model="claude-3-5-haiku"
-                            algoliaSearchKey={apiKey}
-                            systemContext={{ domain }}
-                            onClose={() => setOpen(false)}
-                            returnToSearch={() => setAskAi(false)}
-                            initialInput={initialInput}
+                    <DesktopCommandWithAskAI
+                        askAI={askAi}
+                        setAskAI={setAskAi}
+                        onClose={() => setOpen(false)}
+                        api="/api/chat"
+                        suggestionsApi="/api/suggest"
+                        initialInput={initialInput}
+                        body={{
+                            algoliaSearchKey: apiKey,
+                            domain,
+                        }}
+                        onSelectHit={handleSubmit}
+                    >
+                        <DesktopCommandAboveInput>
+                            <DesktopCommandBadges />
+                        </DesktopCommandAboveInput>
+
+                        <DesktopCommandBeforeInput>
+                            <BackButton askAi={askAi} setAskAi={setAskAi} />
+                        </DesktopCommandBeforeInput>
+
+                        <CommandAskAIGroup
+                            onAskAI={(initialInput) => {
+                                setInitialInput(initialInput);
+                                setAskAi(true);
+                            }}
+                            forceMount
                         />
-                    ) : (
-                        <DesktopCommand onClose={() => setOpen(false)} placeholder={askAi ? "Ask AI" : "Search"}>
-                            <DesktopCommandAboveInput>
-                                <DesktopCommandBadges>
-                                    {askAi && (
-                                        <>
-                                            <Badge size="sm" variant="outlined-subtle">
-                                                Ask AI
-                                            </Badge>
-                                            <AvailabilityBadge
-                                                availability="Experimental"
-                                                rounded
-                                                size="sm"
-                                                className="ml-auto"
-                                                color="gray"
-                                            />
-                                        </>
-                                    )}
-                                </DesktopCommandBadges>
-                            </DesktopCommandAboveInput>
 
-                            <DesktopCommandBeforeInput>
-                                <BackButton askAi={askAi} setAskAi={setAskAi} />
-                            </DesktopCommandBeforeInput>
-
-                            <CommandAskAIGroup
-                                onAskAI={(initialInput) => {
-                                    setInitialInput(initialInput);
-                                    setAskAi(true);
-                                }}
-                                forceMount
-                            />
-
-                            <CommandGroupFilters />
-                            <CommandEmpty />
-                            <CommandSearchHits onSelect={handleSubmit} />
-                            <CommandActions>
-                                <CommandGroupTheme setTheme={setTheme} />
-                            </CommandActions>
-                        </DesktopCommand>
-                    )}
+                        <CommandGroupFilters />
+                        <CommandEmpty />
+                        <CommandSearchHits onSelect={handleSubmit} />
+                        <CommandActions>
+                            <CommandGroupTheme setTheme={setTheme} />
+                        </CommandActions>
+                    </DesktopCommandWithAskAI>
                 </DesktopSearchDialog>
             )}
         </SearchClientRoot>
@@ -175,7 +159,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
 function BackButton({ askAi, setAskAi }: { askAi: boolean; setAskAi: (askAi: boolean) => void }) {
     const { filters, popFilter, clearFilters } = useFacetFilters();
-    const { focus } = useCommandUx();
+    // const { focus } = useCommandUx();
 
     if (filters.length === 0 && !askAi) {
         return false;
@@ -189,7 +173,6 @@ function BackButton({ askAi, setAskAi }: { askAi: boolean; setAskAi: (askAi: boo
                 } else {
                     popFilter();
                 }
-                focus();
             }}
             clear={() => {
                 if (askAi) {
@@ -197,7 +180,6 @@ function BackButton({ askAi, setAskAi }: { askAi: boolean; setAskAi: (askAi: boo
                 } else {
                     clearFilters();
                 }
-                focus();
             }}
         />
     );

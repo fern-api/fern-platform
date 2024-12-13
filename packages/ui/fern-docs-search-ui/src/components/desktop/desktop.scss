@@ -69,8 +69,11 @@
         max-height: 400px;
         overflow: auto;
         overscroll-behavior: contain;
-        transition: 100ms ease;
-        transition-property: height;
+
+        &:not([data-disable-animation]) {
+            transition: 100ms ease;
+            transition-property: height;
+        }
 
         scroll-padding-block-start: 0.75rem;
         scroll-padding-block-end: 0.75rem;
@@ -118,7 +121,7 @@
         }
 
         @media (hover: hover) and (pointer: fine) {
-            &[data-selected="true"] {
+            &[data-selected="true"]:not([data-conversation-id]) {
                 background-color: var(--accent-a3);
                 color: var(--accent-a12);
 

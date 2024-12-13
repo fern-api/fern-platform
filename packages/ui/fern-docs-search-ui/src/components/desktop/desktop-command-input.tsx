@@ -1,20 +1,29 @@
+import { composeRefs } from "@radix-ui/react-compose-refs";
+import { Slot } from "@radix-ui/react-slot";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { forwardRef } from "react";
+import { Command } from "cmdk";
+import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
+
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { useCommandUx } from "../shared";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 
-interface DesktopCommandInputProps extends React.ComponentPropsWithoutRef<typeof TooltipTrigger> {
-    inputError: string | null;
-}
-
-export const DesktopCommandInputError = forwardRef<HTMLButtonElement, DesktopCommandInputProps>(
-    ({ inputError, children, ...props }, ref) => {
+export const DesktopCommandInputError = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof TooltipTrigger>>(
+    ({ children, asChild, ...props }, ref) => {
+        const { inputError } = useCommandUx();
         if (inputError == null) {
-            return children;
+            const Comp = asChild ? Slot : "button";
+            return (
+                <Comp {...props} ref={ref}>
+                    {children}
+                </Comp>
+            );
         }
         return (
             <TooltipProvider>
                 <Tooltip open={true}>
-                    <TooltipTrigger asChild {...props} ref={ref}>
+                    <TooltipTrigger {...props} ref={ref} asChild={asChild}>
                         {children}
                     </TooltipTrigger>
                     <TooltipPortal>
@@ -29,3 +38,36 @@ export const DesktopCommandInputError = forwardRef<HTMLButtonElement, DesktopCom
 );
 
 DesktopCommandInputError.displayName = "DesktopCommandInputError";
+
+export const DesktopCommandInput = forwardRef<HTMLInputElement, ComponentPropsWithoutRef<typeof Command.Input>>(
+    ({ children, ...props }, forwardedRef) => {
+        const inputRef = useRef<HTMLInputElement>(null);
+        const selectionState = useRef<number | null>(null);
+        const { setInputRef } = useCommandUx();
+        useIsomorphicLayoutEffect(() => {
+            setInputRef(inputRef.current);
+            if (inputRef.current != null && selectionState.current != null) {
+                inputRef.current.setSelectionRange(selectionState.current, selectionState.current);
+            }
+        });
+        return (
+            <Command.Input
+                {...props}
+                ref={composeRefs(inputRef, forwardedRef)}
+                onChangeCapture={composeEventHandlers(props.onChangeCapture, (e) => {
+                    selectionState.current = e.currentTarget.selectionStart;
+                })}
+                onBlur={composeEventHandlers(props.onBlur, () => {
+                    selectionState.current = null;
+                })}
+                onFocus={composeEventHandlers(props.onFocus, () => {
+                    selectionState.current = null;
+                })}
+            >
+                {children}
+            </Command.Input>
+        );
+    },
+);
+
+DesktopCommandInput.displayName = "DesktopCommandInput";

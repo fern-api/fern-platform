@@ -7,6 +7,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
 import {
     Dispatch,
+    KeyboardEventHandler,
     PropsWithChildren,
     ReactElement,
     ReactNode,
@@ -179,20 +180,30 @@ function useFacetFilters(atom?: ReturnType<typeof atomWithDefault<readonly Facet
     clearFilters: () => void;
     resetFilters: () => void;
     popFilter: () => void;
+    handlePopState: KeyboardEventHandler<HTMLElement>;
 } {
     const contextAtom = useContext(FacetFiltersContext).atom;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [filters, setFilters] = useAtom(atom ?? contextAtom);
-    return useMemo(
-        () => ({
+    return useMemo(() => {
+        const clearFilters = () => setFilters([]);
+        const resetFilters = () => setFilters(RESET);
+        const popFilter = () => setFilters((prev) => prev.slice(0, -1));
+        return {
             filters,
             setFilters,
-            clearFilters: () => setFilters([]),
-            resetFilters: () => setFilters(RESET),
-            popFilter: () => setFilters((prev) => prev.slice(0, -1)),
-        }),
-        [filters, setFilters],
-    );
+            clearFilters,
+            resetFilters,
+            popFilter,
+            handlePopState: (e) => {
+                if (e.metaKey || e.ctrlKey) {
+                    clearFilters();
+                } else {
+                    popFilter();
+                }
+            },
+        };
+    }, [filters, setFilters]);
 }
 
 /**

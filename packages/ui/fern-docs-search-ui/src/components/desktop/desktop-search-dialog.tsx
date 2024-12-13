@@ -63,9 +63,6 @@ export const DesktopSearchDialog = memo(
                         onEscapeKeyDown={(e) => {
                             e.preventDefault();
                         }}
-                        onOpenAutoFocus={(e) => {
-                            e.preventDefault();
-                        }}
                     >
                         {children}
                     </Dialog.Content>

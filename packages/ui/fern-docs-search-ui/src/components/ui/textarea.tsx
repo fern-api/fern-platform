@@ -7,15 +7,23 @@ export const TextArea = forwardRef<
     ComponentProps<"textarea"> & {
         onValueChange?: (value: string) => void;
         minLines?: number;
+        maxLines?: number;
+        lineHeight?: number;
+        padding?: number;
     }
->(({ onValueChange, minLines, ...props }, forwardedRef) => {
+>(({ onValueChange, minLines, maxLines, lineHeight = 20, padding = 0, ...props }, forwardedRef) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
-    useAutosizeTextArea(inputRef, minLines);
+    useAutosizeTextArea(inputRef, minLines, lineHeight);
     return (
         <textarea
             ref={composeRefs(inputRef, forwardedRef)}
             {...props}
             onChange={composeEventHandlers(props.onChange, (e) => onValueChange?.(e.target.value))}
+            style={{
+                padding: `${padding}px`,
+                maxHeight: maxLines ? `${maxLines * lineHeight + padding * 2}px` : undefined,
+                ...props.style,
+            }}
         />
     );
 });
@@ -23,8 +31,13 @@ export const TextArea = forwardRef<
 TextArea.displayName = "TextArea";
 
 // Updates the height of a <textarea> when the value changes.
-function useAutosizeTextArea(textAreaRef: RefObject<HTMLTextAreaElement>, minLines: number = 1): void {
-    const minHeight = minLines * 20 + 20;
+function useAutosizeTextArea(
+    textAreaRef: RefObject<HTMLTextAreaElement>,
+    minLines: number = 1,
+    lineHeight: number = 20,
+    padding: number = 0,
+): void {
+    const minHeight = Math.max(minLines, 1) * Math.max(lineHeight, 10) + padding * 2;
     useEffect(() => {
         const textArea = textAreaRef.current;
         if (!textArea) {

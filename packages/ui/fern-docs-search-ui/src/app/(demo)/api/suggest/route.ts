@@ -5,14 +5,20 @@ import { searchClient } from "@algolia/client-search";
 import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
 import { streamObject } from "ai";
+import { z } from "zod";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
-export async function POST(request: Request): Promise<Response> {
-    const { algoliaSearchKey } = await request.json();
+const BodySchema = z.object({
+    algoliaSearchKey: z.string(),
+    model: z.string().optional(),
+});
 
-    const model = models["claude-3-5-haiku"];
+export async function POST(request: Request): Promise<Response> {
+    const { algoliaSearchKey, model: _model } = BodySchema.parse(await request.json());
+
+    const model = models[(_model as keyof typeof models) ?? "gpt-4o-mini"];
 
     if (!algoliaSearchKey || typeof algoliaSearchKey !== "string") {
         return new Response("Missing search key", { status: 400 });

@@ -1,3 +1,4 @@
+import { createDefaultSystemPrompt } from "@/components/chatbot/system-prompt";
 import { algoliaAppId } from "@/server/env-variables";
 import { models } from "@/server/models";
 import { searchClient } from "@algolia/client-search";
@@ -9,16 +10,19 @@ import { z } from "zod";
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
+const BodySchema = z.object({
+    messages: z.array(z.any()),
+    algoliaSearchKey: z.string(),
+    model: z.string().optional(),
+    domain: z.string().optional(),
+});
+
 export async function POST(request: Request): Promise<Response> {
-    const { messages, system: _system, model: _model, algoliaSearchKey } = await request.json();
+    const { messages, model: _model, algoliaSearchKey, domain } = BodySchema.parse(await request.json());
 
-    const model = models[(_model as keyof typeof models) ?? ""];
+    const model = models[(_model as keyof typeof models) ?? "gpt-4o-mini"];
 
-    if (!model) {
-        return new Response(`Invalid model: ${_model}`, { status: 400 });
-    }
-
-    const system = typeof _system === "string" ? _system.trim() + "\n" : undefined;
+    const system = createDefaultSystemPrompt({ domain, date: new Date().toDateString() });
 
     const result = await streamText({
         model,
