@@ -24,6 +24,8 @@
     "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.5",
+    "@algolia/client-search": "^5.15.0",
     "@algolia/requester-fetch": "^5.13.0",
     "@aws-sdk/client-s3": "^3.685.0",
     "@aws-sdk/s3-request-presigner": "^3.685.0",
@@ -48,6 +50,7 @@
     "@upstash/qstash": "^2.7.16",
     "@vercel/kv": "^2.0.0",
     "@workos-inc/node": "^7.29.0",
+    "ai": "^4.0.18",
     "algoliasearch": "^5.13.0",
     "cohere-ai": "^7.9.5",
     "cssnano": "^6.0.3",
@@ -69,6 +72,7 @@
     "ts-essentials": "^10.0.1",
     "url-join": "5.0.0",
     "uuid": "^9.0.0",
+    "voyage-ai-provider": "^1.0.0",
     "webflow-api": "^2.4.2",
     "zod": "^3.23.8"
   },

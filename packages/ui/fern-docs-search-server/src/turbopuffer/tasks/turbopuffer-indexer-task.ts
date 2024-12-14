@@ -31,6 +31,11 @@ interface TurbopufferIndexerTaskOptions {
      * Text splitter to use.
      */
     splitText?: (text: string) => Promise<string[]>;
+
+    /**
+     * Whether to delete the existing records before upserting.
+     */
+    deleteExisting?: boolean;
 }
 
 export async function turbopufferUpsertTask({
@@ -40,6 +45,7 @@ export async function turbopufferUpsertTask({
     authed,
     vectorizer,
     splitText = (text) => defaultTextSplitter.splitText(text),
+    deleteExisting = false,
 }: TurbopufferIndexerTaskOptions): Promise<number> {
     const tpuf = new Turbopuffer({ apiKey });
     const ns = tpuf.namespace(namespace);
@@ -57,6 +63,10 @@ export async function turbopufferUpsertTask({
     });
 
     const records = await vectorizeTurbopufferRecords(unvectorizedRecords, vectorizer);
+
+    if (deleteExisting) {
+        await ns.deleteAll();
+    }
 
     await ns.upsert({ vectors: records, distance_metric: "cosine_distance", schema: FernTurbopufferAttributeSchema });
 

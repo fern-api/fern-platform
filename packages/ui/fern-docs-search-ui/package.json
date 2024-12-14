@@ -48,10 +48,10 @@
     "typescript": "5.4.3"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^0.0.56",
-    "@ai-sdk/cohere": "^1.0.3",
-    "@ai-sdk/openai": "^1.0.4",
-    "@ai-sdk/provider": "^1.0.1",
+    "@ai-sdk/anthropic": "^1.0.5",
+    "@ai-sdk/cohere": "^1.0.5",
+    "@ai-sdk/openai": "^1.0.8",
+    "@ai-sdk/provider": "^1.0.2",
     "@algolia/client-search": "^5.15.0",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/components": "workspace:*",
@@ -75,7 +75,7 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "@radix-ui/react-use-controllable-state": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
-    "ai": "^3.4.33",
+    "ai": "^4.0.18",
     "algoliasearch": "^5.13.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

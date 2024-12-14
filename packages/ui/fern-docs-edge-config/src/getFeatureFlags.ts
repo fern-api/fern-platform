@@ -69,7 +69,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
         const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
-        const isAiChatbotEnabledInPreview = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
+        const isAskAiEnabled = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
         const isAudioFileDownloadSpanSummary = checkDomainMatchesCustomers(
             domain,
             config["audio-file-download-span-summary"],
@@ -115,7 +115,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useMdxBundler,
             isBatchStreamToggleDisabled,
             isAuthEnabledInDocs,
-            isAiChatbotEnabledInPreview,
+            isAskAiEnabled,
             isAudioFileDownloadSpanSummary,
             isDocsLogoTextEnabled,
             isAudioExampleInternal,
@@ -151,7 +151,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useMdxBundler: false,
             isBatchStreamToggleDisabled: false,
             isAuthEnabledInDocs: false,
-            isAiChatbotEnabledInPreview: false,
+            isAskAiEnabled: false,
             isAudioFileDownloadSpanSummary: false,
             isDocsLogoTextEnabled: false,
             isAudioExampleInternal: false,

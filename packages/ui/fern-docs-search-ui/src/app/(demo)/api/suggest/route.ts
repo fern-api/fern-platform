@@ -29,7 +29,7 @@ export async function POST(request: Request): Promise<Response> {
         searchParams: { query: "", hitsPerPage: 100, attributesToSnippet: [] },
     });
 
-    const result = await streamObject({
+    const result = streamObject({
         model,
         system: "You are a helpful assistant that suggestions of questions for the user to ask about the documentation. Generate 5 questions based on the following search results.",
         prompt: response.hits

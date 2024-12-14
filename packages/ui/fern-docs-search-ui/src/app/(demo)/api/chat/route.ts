@@ -1,8 +1,8 @@
-import { createDefaultSystemPrompt } from "@/components/chatbot/system-prompt";
 import { models } from "@/server/models";
 import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
+import { createDefaultSystemPrompt } from "@/server/system-prompt";
+import { toDocuments } from "@fern-ui/fern-docs-search-server/turbopuffer";
 import { streamText, tool } from "ai";
-import { uniqBy, zipWith } from "es-toolkit/array";
 import { z } from "zod";
 
 // Allow streaming responses up to 30 seconds
@@ -22,38 +22,12 @@ export async function POST(request: Request): Promise<Response> {
 
     const lastUserMessage = messages.findLast((message) => message.role === "user")?.content;
 
-    const searchResults = (await runSemanticSearchTurbopuffer(lastUserMessage ?? "", domain, 20)).map((result) => {
-        const code_snippets = zipWith(
-            result.attributes.code_snippets ?? [],
-            result.attributes.code_snippet_langs ?? [],
-            (snippet, lang) => {
-                const lang_str: string = lang ?? "";
-                return `\`\`\`${lang_str}\n${snippet}\n\`\`\``;
-            },
-        ).join("\n\n");
-        return {
-            canonicalPathname: result.attributes.canonicalPathname,
-            domain: result.attributes.domain,
-            pathname: result.attributes.pathname,
-            hash: result.attributes.hash,
-            title: result.attributes.title,
-            description: result.attributes.description ? result.attributes.description + "\n\n" : "",
-            content: result.attributes.content ? result.attributes.content + "\n\n" : "",
-            code_snippets: code_snippets ? code_snippets + "\n\n" : "",
-            page_position: result.attributes.page_position,
-        };
-    });
-
-    const documents = uniqBy(searchResults, (result) => `${result.pathname}${result.hash} - ${result.page_position}`)
-        .map(
-            (result) =>
-                `# ${result.title}\n Source: ${result.domain}${result.pathname}${result.hash ?? ""}\n\n${result.description}${result.content}${result.code_snippets}`,
-        )
-        .join("\n\n");
+    const searchResults = await runSemanticSearchTurbopuffer(lastUserMessage ?? "", domain, 20);
+    const documents = toDocuments(searchResults).join("\n\n");
 
     const system = createDefaultSystemPrompt({ domain, date: new Date().toDateString(), documents });
 
-    const result = await streamText({
+    const result = streamText({
         model,
         system,
         messages,
