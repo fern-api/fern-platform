@@ -8,7 +8,7 @@ import { SEARCH_INDEX, type AlgoliaRecord } from "@fern-ui/fern-docs-search-serv
 import { SuggestionsSchema } from "@fern-ui/fern-docs-search-ui";
 import { COOKIE_FERN_TOKEN } from "@fern-ui/fern-docs-utils";
 import { kv } from "@vercel/kv";
-import { formatDataStreamPart, streamObject } from "ai";
+import { streamObject } from "ai";
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { z } from "zod";
 
@@ -47,7 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             return res
                 .status(200)
                 .setHeader("Content-Type", "text/plain; charset=utf-8")
-                .send(formatDataStreamPart("text", JSON.stringify(cachedSuggestions)));
+                .send(JSON.stringify(cachedSuggestions));
         }
     }
 

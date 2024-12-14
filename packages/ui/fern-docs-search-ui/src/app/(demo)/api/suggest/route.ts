@@ -4,7 +4,7 @@ import { SuggestionsSchema } from "@/server/suggestions-schema";
 import { searchClient } from "@algolia/client-search";
 import { SEARCH_INDEX, type AlgoliaRecord } from "@fern-ui/fern-docs-search-server/algolia";
 import { kv } from "@vercel/kv";
-import { formatDataStreamPart, streamObject } from "ai";
+import { streamObject } from "ai";
 import { z } from "zod";
 
 // Allow streaming responses up to 30 seconds
@@ -27,7 +27,7 @@ export async function POST(request: Request): Promise<Response> {
     const cacheKey = `suggestions:${algoliaSearchKey}`;
     const cachedSuggestions = await kv.get<string>(cacheKey);
     if (cachedSuggestions) {
-        return new Response(formatDataStreamPart("text", JSON.stringify(cachedSuggestions)), {
+        return new Response(JSON.stringify(cachedSuggestions), {
             headers: { "Content-Type": "text/plain; charset=utf-8" },
         });
     }
