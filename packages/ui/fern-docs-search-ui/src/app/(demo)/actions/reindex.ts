@@ -3,7 +3,8 @@
 import { Client } from "@upstash/qstash";
 
 import { qstashToken } from "@/server/env-variables";
-import { runReindex } from "@/server/run-reindex";
+import { runReindexAlgolia } from "@/server/run-reindex-algolia";
+import { runReindexTurbopuffer } from "@/server/run-reindex-turbopuffer";
 
 export const handleReindex = async (domain: string): Promise<string | undefined> => {
     if (process.env.VERCEL && process.env.VERCEL_ENV !== "development") {
@@ -29,9 +30,13 @@ export const handleReindex = async (domain: string): Promise<string | undefined>
         return res.messageId;
     }
 
-    const response = await runReindex(domain);
+    const response = await runReindexAlgolia(domain);
     // eslint-disable-next-line no-console
     console.debug(response);
+
+    const response2 = await runReindexTurbopuffer(domain);
+    // eslint-disable-next-line no-console
+    console.debug(response2);
 
     return;
 };

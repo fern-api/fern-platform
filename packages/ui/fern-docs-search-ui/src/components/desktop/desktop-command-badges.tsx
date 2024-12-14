@@ -1,6 +1,5 @@
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { useFacetFilters } from "../search-client";
-import { useCommandUx } from "../shared/command-ux";
 import { DesktopFilterDropdownMenu } from "./desktop-filter-dropdown-menu";
 
 interface DesktopCommandBadgesProps {
@@ -11,11 +10,10 @@ export const DesktopCommandBadges = forwardRef<
     HTMLDivElement,
     DesktopCommandBadgesProps & ComponentPropsWithoutRef<"div">
 >((props, ref) => {
-    const { onDropdownClose, ...rest } = props;
+    const { onDropdownClose, children, ...rest } = props;
     const { filters, setFilters } = useFacetFilters();
-    const { focus } = useCommandUx();
 
-    if (filters == null || filters.length === 0) {
+    if ((filters == null || filters.length === 0) && !children) {
         return false;
     }
 
@@ -34,10 +32,10 @@ export const DesktopCommandBadges = forwardRef<
                     }}
                     onCloseAutoFocus={(e) => {
                         e.preventDefault();
-                        focus({ scrollToTop: false });
                     }}
                 />
             ))}
+            {children}
         </div>
     );
 });

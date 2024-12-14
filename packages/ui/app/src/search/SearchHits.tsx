@@ -97,8 +97,10 @@ const MobileSearchSection: React.FC<{
     </>
 );
 
+const isAskAiEnabled = false;
+
 export const SearchHits: React.FC = () => {
-    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
+    // const { isAskAiEnabled } = useFeatureFlags();
     const basePath = useBasePath();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
@@ -142,9 +144,9 @@ export const SearchHits: React.FC = () => {
     useEffect(() => {
         const [firstHit] = hits;
         if (firstHit != null) {
-            setHoveredSearchHitId((id) => id ?? (isAiChatbotEnabledInPreview ? COHERE_AI_HIT_ID : firstHit.objectID));
+            setHoveredSearchHitId((id) => id ?? (isAskAiEnabled ? COHERE_AI_HIT_ID : firstHit.objectID));
         }
-    }, [hits, isAiChatbotEnabledInPreview]);
+    }, [hits]);
 
     useKeyboardPress({
         key: "Up",
@@ -152,7 +154,7 @@ export const SearchHits: React.FC = () => {
             if (hoveredSearchHit == null) {
                 setHoveredSearchHitId(null);
                 return;
-            } else if (hoveredSearchHit.index === 0 && isAiChatbotEnabledInPreview) {
+            } else if (hoveredSearchHit.index === 0 && isAskAiEnabled) {
                 setHoveredSearchHitId(COHERE_AI_HIT_ID);
                 return;
             }
@@ -176,7 +178,7 @@ export const SearchHits: React.FC = () => {
                 return;
             }
 
-            if (hoveredSearchHit == null && isAiChatbotEnabledInPreview) {
+            if (hoveredSearchHit == null && isAskAiEnabled) {
                 setHoveredSearchHitId(COHERE_AI_HIT_ID);
                 return;
             }
@@ -202,11 +204,7 @@ export const SearchHits: React.FC = () => {
     const toHref = useToHref();
     const navigateToHoveredHit = async () => {
         if (hoveredSearchHit == null) {
-            if (
-                isAiChatbotEnabledInPreview &&
-                hoveredSearchHitId === COHERE_AI_HIT_ID &&
-                search.results.query.length > 0
-            ) {
+            if (isAskAiEnabled && hoveredSearchHitId === COHERE_AI_HIT_ID && search.results.query.length > 0) {
                 closeSearchDialog();
                 openCohere();
             }
@@ -235,7 +233,7 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    if ((hits.length === 0 && !isAiChatbotEnabledInPreview) || search.results.query.length === 0) {
+    if ((hits.length === 0 && !isAskAiEnabled) || search.results.query.length === 0) {
         return null;
     }
 
@@ -247,7 +245,7 @@ export const SearchHits: React.FC = () => {
             className="p-2"
             scrollbars="vertical"
         >
-            {isAiChatbotEnabledInPreview && (
+            {isAskAiEnabled && (
                 <AskCohereHit
                     setRef={(elem) => {
                         if (elem != null) {
@@ -286,7 +284,7 @@ export const SearchHits: React.FC = () => {
 };
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
-    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
+    const { isAskAiEnabled } = useFeatureFlags();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [expandEndpoints, setExpandEndpoints] = useState(false);
@@ -307,7 +305,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
-            {isAiChatbotEnabledInPreview && (
+            {isAskAiEnabled && (
                 <AskCohereHit
                     setRef={(elem) => {
                         if (elem != null) {

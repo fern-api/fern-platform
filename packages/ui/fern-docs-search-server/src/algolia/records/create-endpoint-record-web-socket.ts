@@ -1,9 +1,9 @@
 import { ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
 import { measureBytes, truncateToBytes, withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { compact, flatten } from "es-toolkit";
+import { compact, flatten } from "es-toolkit/array";
+import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
+import { toDescription } from "../../utils/to-description";
 import { BaseRecord, EndpointBaseRecord } from "../types";
-import { maybePrepareMdxContent } from "./prepare-mdx-content";
-import { toDescription } from "./to-description";
 
 interface CreateWebSocketEndpointBaseRecordOptions {
     node: FernNavigation.WebSocketNode;

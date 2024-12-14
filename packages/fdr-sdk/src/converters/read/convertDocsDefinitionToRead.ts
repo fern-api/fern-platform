@@ -1,4 +1,4 @@
-import { mapValues } from "es-toolkit";
+import { mapValues } from "es-toolkit/object";
 import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read } from "../../client";
 import { SearchInfo } from "../../client/FdrAPI";
 import { FernRegistry } from "../../client/generated";

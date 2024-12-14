@@ -45,7 +45,12 @@ export function DesktopBackButton({
                             }
                         }}
                         onKeyDownCapture={(e) => {
-                            if (e.key === "Backspace" || e.key === "Delete" || e.key === "Space" || e.key === "Enter") {
+                            if (
+                                e.key === "Backspace" ||
+                                e.key === "Delete" ||
+                                e.key === "Space" ||
+                                (e.key === "Enter" && !e.nativeEvent.isComposing)
+                            ) {
                                 if (e.metaKey || e.ctrlKey) {
                                     clear();
                                 } else {

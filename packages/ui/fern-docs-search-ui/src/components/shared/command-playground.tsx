@@ -1,7 +1,7 @@
 import { Kbd } from "@fern-ui/components";
-import { Command } from "cmdk";
 import { Play } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import * as Command from "../cmdk";
 
 export const CommandGroupPlayground = forwardRef<
     HTMLDivElement,

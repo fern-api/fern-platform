@@ -12,21 +12,25 @@
   ],
   "type": "module",
   "exports": {
-    "./types": {
-      "types": "./dist/algolia/types.d.ts",
-      "default": "./dist/algolia/types.js"
-    },
     "./algolia": {
       "types": "./dist/algolia/index.d.ts",
       "default": "./dist/algolia/index.js"
+    },
+    "./algolia/types": {
+      "types": "./dist/algolia/types.d.ts",
+      "default": "./dist/algolia/types.js"
     },
     "./archive": {
       "types": "./dist/algolia/records/archive/index.d.ts",
       "default": "./dist/algolia/records/archive/index.js"
     },
-    "./tasks": {
-      "types": "./dist/tasks/index.d.ts",
-      "default": "./dist/tasks/index.js"
+    "./turbopuffer": {
+      "types": "./dist/turbopuffer/index.d.ts",
+      "default": "./dist/turbopuffer/index.js"
+    },
+    "./turbopuffer/types": {
+      "types": "./dist/turbopuffer/types.d.ts",
+      "default": "./dist/turbopuffer/types.js"
     }
   },
   "sideEffects": false,
@@ -49,6 +53,8 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-ui/fern-docs-mdx": "workspace:*",
     "@fern-ui/fern-docs-utils": "workspace:*",
+    "@langchain/textsplitters": "^0.1.0",
+    "@turbopuffer/turbopuffer": "^0.5.11",
     "algoliasearch": "^5.13.0",
     "es-toolkit": "^1.27.0",
     "html-entities": "^2.5.2",

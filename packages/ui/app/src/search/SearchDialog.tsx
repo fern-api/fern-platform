@@ -1,7 +1,6 @@
 import { getDevice, getPlatform } from "@fern-api/ui-core-utils";
 import { createSearchPlaceholderWithVersion } from "@fern-ui/search-utils";
 import { useAtomValue, useSetAtom } from "jotai";
-import dynamic from "next/dynamic";
 import { PropsWithChildren, ReactNode, useMemo, useRef } from "react";
 import { Configure, InstantSearch } from "react-instantsearch";
 import {
@@ -25,10 +24,10 @@ import { InkeepChatButton } from "./inkeep/InkeepChatButton";
 import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
 
-const CohereChatButton = dynamic(
-    () => import("./cohere/CohereChatButton").then(({ CohereChatButton }) => CohereChatButton),
-    { ssr: false },
-);
+// const CohereChatButton = dynamic(
+//     () => import("./cohere/CohereChatButton").then(({ CohereChatButton }) => CohereChatButton),
+//     { ssr: false },
+// );
 
 export const SearchDialog = (): ReactNode => {
     const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
@@ -42,7 +41,6 @@ const InternalSearchDialog = (): ReactNode => {
     const setSearchDialogState = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
     useSearchTrigger(setSearchDialogState);
     const isSearchDialogOpen = useIsSearchDialogOpen();
-    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
 
     const config = useSearchConfig();
 
@@ -59,7 +57,7 @@ const InternalSearchDialog = (): ReactNode => {
         return (
             <>
                 <AlgoliaSearchDialog />
-                {isAiChatbotEnabledInPreview && <CohereChatButton />}
+                {/* {isAskAiEnabled && <CohereChatButton />} */}
             </>
         );
     } else {

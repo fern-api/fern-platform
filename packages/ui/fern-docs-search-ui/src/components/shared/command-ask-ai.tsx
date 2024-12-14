@@ -1,17 +1,19 @@
 import { Badge } from "@fern-ui/components/badges";
-import { Command } from "cmdk";
 import { Sparkles } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { useSearchBox } from "react-instantsearch";
+import * as Command from "../cmdk";
 
 export const CommandAskAIGroup = forwardRef<
     HTMLDivElement,
-    { query: string; onAskAI: (initialInput: string) => void } & ComponentPropsWithoutRef<typeof Command.Group>
->(({ query, onAskAI, ...props }, ref) => {
+    { onAskAI: (initialInput: string) => void } & ComponentPropsWithoutRef<typeof Command.Group>
+>(({ onAskAI, ...props }, ref) => {
+    const { query } = useSearchBox();
     return (
         <Command.Group ref={ref} {...props}>
             <Command.Item onSelect={() => onAskAI(query)}>
                 <Sparkles />
-                <AskAIText query={query} />
+                <AskAIText query={query.trim().split(/\s+/).length < 2 ? "" : query.trim()} />
                 <Badge rounded className="ml-auto" size="sm">
                     Experimental
                 </Badge>

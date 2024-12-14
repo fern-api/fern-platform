@@ -1,11 +1,12 @@
 import { DocsKVCache } from "@/server/DocsCache";
 import { DocsLoader } from "@/server/DocsLoader";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { queueAlgoliaReindex } from "@/server/queueAlgoliaReindex";
+import { queueAlgoliaReindex, queueTurbopufferReindex } from "@/server/queue-reindex";
 import { Revalidator } from "@/server/revalidator";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
+import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { withoutStaging } from "@fern-ui/fern-docs-utils";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
@@ -39,7 +40,8 @@ const handler: NextApiHandler = async (
     // never provide a token here because revalidation should only be done on public routes (for now)
     const loader = DocsLoader.for(domain, host);
 
-    const root = await loader.root();
+    const flags = await getFeatureFlags(domain);
+    const root = await loader.withFeatureFlags(flags).root();
 
     if (!root) {
         /**
@@ -58,6 +60,9 @@ const handler: NextApiHandler = async (
         const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
         if (orgMetadata?.isPreviewUrl === false) {
             await queueAlgoliaReindex(host, withoutStaging(domain), root.slug);
+            if (flags.isAskAiEnabled) {
+                await queueTurbopufferReindex(host, withoutStaging(domain), root.slug);
+            }
         }
     } catch (err) {
         // eslint-disable-next-line no-console

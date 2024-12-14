@@ -1,6 +1,6 @@
-import { Command } from "cmdk";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import * as Command from "../cmdk";
 
 export const CommandGroupTheme = forwardRef<
     HTMLDivElement,

@@ -62,3 +62,9 @@
         background-color: var(--color-background);
     }
 }
+
+@layer utilities {
+    .mask-grad-top-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+    }
+}

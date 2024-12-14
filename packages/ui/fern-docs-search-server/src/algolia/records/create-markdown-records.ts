@@ -5,10 +5,10 @@ import {
     markdownToString,
     splitMarkdownIntoSections,
 } from "@fern-ui/fern-docs-mdx";
-import { compact, flatten } from "es-toolkit";
+import { compact, flatten } from "es-toolkit/array";
 import { decode } from "html-entities";
+import { maybePrepareMdxContent } from "../../utils/prepare-mdx-content";
 import { BaseRecord, Hierarchy, MarkdownRecord } from "../types";
-import { maybePrepareMdxContent } from "./prepare-mdx-content";
 
 interface CreateMarkdownRecordsOptions {
     base: BaseRecord;

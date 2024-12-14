@@ -32,6 +32,10 @@ export function qstashNextSigningKey(): string {
     return getEnvVariable("QSTASH_NEXT_SIGNING_KEY");
 }
 
+export function turbopufferApiKey(): string {
+    return getEnvVariable("TURBOPUFFER_API_KEY");
+}
+
 function assertNonNullable<T>(value: T, key: string): asserts value is NonNullable<T> {
     if (value == null) {
         throw new Error(`${key} is not defined`);
