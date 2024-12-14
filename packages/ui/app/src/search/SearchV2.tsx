@@ -118,7 +118,7 @@ export function SearchV2(): ReactElement | false {
             </DesktopCommandBeforeInput>
             <CommandGroupFilters />
             <CommandEmpty />
-            <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} />;
+            <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} domain={domain} />
             <CommandActions>
                 <CommandPlayground onClose={() => setOpen(false)} />
                 <CommandTheme onClose={() => setOpen(false)} />
@@ -140,6 +140,7 @@ export function SearchV2(): ReactElement | false {
             <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild trigger={<DesktopSearchButton />}>
                 {isAskAiEnabled ? (
                     <DesktopCommandWithAskAI
+                        domain={domain}
                         onClose={() => setOpen(false)}
                         askAI={askAi}
                         setAskAI={setAskAi}

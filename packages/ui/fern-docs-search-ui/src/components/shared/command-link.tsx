@@ -1,3 +1,4 @@
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
 import { ComponentPropsWithoutRef, forwardRef, useCallback, useEffect, useRef } from "react";
@@ -6,22 +7,35 @@ import * as Command from "../cmdk";
 export const CommandLink = forwardRef<
     HTMLAnchorElement,
     Omit<ComponentPropsWithoutRef<typeof Command.Item>, "value"> & {
+        domain: string;
         href: string;
         target?: string;
         rel?: string;
         prefetch?: (href: string) => Promise<void>;
     }
->(({ href, target, rel, onSelect, prefetch, ...props }, forwardedRef) => {
+>(({ href, target, rel, onSelect, prefetch, domain, ...props }, forwardedRef) => {
     const ref = useRef<HTMLAnchorElement>(null);
     const isSelected = Command.useCommandState((state) => state.value === href) as boolean;
+    const handleSelect = useCallback(() => {
+        const url = new URL(href, withDefaultProtocol(domain));
+        if (url.host === domain) {
+            onSelect?.(`${url.pathname}${url.search}${url.hash}`);
+        } else {
+            window.open(href, target);
+        }
+    }, [href, onSelect, target, domain]);
 
     const getPathname = useCallback(() => {
         try {
-            return new URL(href, window.location.origin).pathname;
-        } catch (e) {
-            return undefined;
+            const { pathname, host } = new URL(href, withDefaultProtocol(domain));
+            if (host === domain) {
+                return pathname;
+            }
+        } catch (_e) {
+            // ignore errors
         }
-    }, [href]);
+        return undefined;
+    }, [href, domain]);
 
     useEffect(() => {
         const pathname = getPathname();
@@ -36,10 +50,10 @@ export const CommandLink = forwardRef<
         if (!element) {
             return;
         }
-        const listener = () => onSelect?.(href);
+        const listener = () => handleSelect();
         element.addEventListener(Command.SELECT_EVENT, listener);
         return () => element.removeEventListener(Command.SELECT_EVENT, listener);
-    }, [href, isSelected, onSelect, prefetch]);
+    }, [handleSelect]);
 
     const Comp = props.asChild ? Slot : "a";
     // Note: `onSelect` is purposely not passed in here because these command items must be rendered as
@@ -62,7 +76,7 @@ export const CommandLink = forwardRef<
                     // navigate to the link using the `onSelect` handler to defer the behavior to the NextJS router.
                     if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && (e.button === 0 || e.button === 1)) {
                         e.preventDefault();
-                        onSelect?.(href);
+                        handleSelect();
                     }
                 }}
             >

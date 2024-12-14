@@ -22,7 +22,7 @@ const FEATURE_FLAGS = [
     "use-mdx-bundler" as const,
     "batch-stream-toggle-disabled" as const,
     "enabled-auth-in-generated-docs" as const,
-    "ai-chat-preview" as const,
+    "ask-ai-enabled" as const,
     "audio-file-download-span-summary" as const,
     "docs-logo-text-enabled" as const,
     "audio-example-internal" as const,
@@ -69,7 +69,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
         const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
-        const isAskAiEnabled = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
+        const isAskAiEnabled = checkDomainMatchesCustomers(domain, config["ask-ai-enabled"]);
         const isAudioFileDownloadSpanSummary = checkDomainMatchesCustomers(
             domain,
             config["audio-file-download-span-summary"],

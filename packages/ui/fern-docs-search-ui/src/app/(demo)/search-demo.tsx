@@ -114,7 +114,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                             <>
                                 <CommandGroupFilters />
                                 <CommandEmpty />
-                                <CommandSearchHits onSelect={handleSubmit} />
+                                <CommandSearchHits onSelect={handleSubmit} domain={domain} />
                             </>
                         ) : (
                             <AppSidebarContent />
@@ -124,6 +124,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
                     <DesktopCommandWithAskAI
+                        domain={domain}
                         askAI={askAi}
                         setAskAI={setAskAi}
                         onClose={() => setOpen(false)}
@@ -156,7 +157,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
                         <CommandGroupFilters />
                         <CommandEmpty />
-                        <CommandSearchHits onSelect={handleSubmit} />
+                        <CommandSearchHits onSelect={handleSubmit} domain={domain} />
                         <CommandActions>
                             <CommandGroupTheme setTheme={setTheme} />
                         </CommandActions>

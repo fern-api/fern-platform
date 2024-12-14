@@ -2,10 +2,11 @@ import { Badge } from "@fern-ui/components/badges";
 import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { Message, useChat } from "ai/react";
 import { useAtomValue } from "jotai";
-import { ArrowLeft, ArrowUp, Sparkles, StopCircle } from "lucide-react";
+import { ArrowLeft, ArrowUp, Sparkles, SquarePen, StopCircle } from "lucide-react";
 import {
     ComponentPropsWithoutRef,
     KeyboardEventHandler,
@@ -31,13 +32,17 @@ import { CodeBlock } from "../code-block";
 import { MarkdownContent } from "../md-content";
 import { useFacetFilters } from "../search-client";
 import { CommandLink } from "../shared/command-link";
+import tunnel from "../tunnel-rat";
 import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { TextArea } from "../ui/textarea";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { DesktopCommandContent, afterInput } from "./desktop-command";
 import { DesktopCommandInput } from "./desktop-command-input";
 import { DesktopCommandRoot } from "./desktop-command-root";
 import { Suggestions } from "./suggestions";
+
+const headerActions = tunnel();
 
 export const DesktopCommandWithAskAI = forwardRef<
     HTMLDivElement,
@@ -55,6 +60,7 @@ export const DesktopCommandWithAskAI = forwardRef<
         onSelectHit?: (path: string) => void;
         prefetch?: (path: string) => Promise<void>;
         composerActions?: ReactNode;
+        domain: string;
     }
 >(
     (
@@ -73,6 +79,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             onSelectHit,
             prefetch,
             composerActions,
+            domain,
             ...props
         },
         ref,
@@ -112,6 +119,7 @@ export const DesktopCommandWithAskAI = forwardRef<
                         onSelectHit={onSelectHit}
                         prefetch={prefetch}
                         composerActions={composerActions}
+                        domain={domain}
                     />
                 ) : (
                     <DesktopCommandContent>{children}</DesktopCommandContent>
@@ -134,6 +142,7 @@ const DesktopAskAIContent = (props: {
     onSelectHit?: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
     composerActions?: ReactNode;
+    domain: string;
 }) => {
     return (
         <>
@@ -146,7 +155,8 @@ const DesktopAskAIContent = (props: {
                         </Button>
                     )}
                 </div>
-                <div>
+                <div className="flex gap-2">
+                    <headerActions.Out />
                     <afterInput.Out />
                 </div>
             </div>
@@ -166,6 +176,7 @@ const DesktopAskAIChat = ({
     onSelectHit,
     prefetch,
     composerActions,
+    domain,
 }: {
     onReturnToSearch?: () => void;
     initialInput?: string;
@@ -177,6 +188,7 @@ const DesktopAskAIChat = ({
     onSelectHit?: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
     composerActions?: ReactNode;
+    domain: string;
 }) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [userScrolled, setUserScrolled] = useState(false);
@@ -247,6 +259,29 @@ const DesktopAskAIChat = ({
                 className={cn(isScrolled && "mask-grad-top-3")}
                 data-disable-animation={chat.isLoading ? "" : undefined}
             >
+                <headerActions.In>
+                    {chat.messages.length > 0 && (
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    size="iconXs"
+                                    variant="outline"
+                                    onClick={() => {
+                                        chat.setMessages([]);
+                                    }}
+                                >
+                                    <SquarePen />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipPortal>
+                                <TooltipContent>
+                                    <p>New chat</p>
+                                </TooltipContent>
+                            </TooltipPortal>
+                        </Tooltip>
+                    )}
+                </headerActions.In>
+
                 <AskAICommandItems
                     messages={messages}
                     onSelectHit={onSelectHit}
@@ -282,6 +317,7 @@ const DesktopAskAIChat = ({
                     )}
                     isLoading={chat.isLoading}
                     userScrolled={userScrolled}
+                    domain={domain}
                 >
                     {suggestionsApi && <Suggestions api={suggestionsApi} body={body} headers={headers} askAI={askAI} />}
                 </AskAICommandItems>
@@ -386,140 +422,162 @@ const AskAICommandItems = memo<{
     userScrolled?: boolean;
     children?: ReactNode;
     prefetch?: (path: string) => Promise<void>;
-}>(({ messages, onSelectHit, components, userScrolled = true, isLoading, children, prefetch }): ReactElement => {
-    const squeezedMessages = squeezeMessages(messages);
+    domain: string;
+}>(
+    ({
+        messages,
+        onSelectHit,
+        components,
+        userScrolled = true,
+        isLoading,
+        children,
+        prefetch,
+        domain,
+    }): ReactElement => {
+        const squeezedMessages = squeezeMessages(messages);
 
-    const lastConversationRef = useRef<Element | null>(null);
-    const lastConversationId =
-        squeezedMessages[squeezedMessages.length - 1]?.assistant?.id ??
-        squeezedMessages[squeezedMessages.length - 1]?.user?.id;
-    useIsomorphicLayoutEffect(() => {
-        if (
-            lastConversationRef.current &&
-            lastConversationRef.current.getAttribute("data-conversation-id") !== lastConversationId
-        ) {
-            lastConversationRef.current = null;
+        const lastConversationRef = useRef<Element | null>(null);
+        const lastConversationId =
+            squeezedMessages[squeezedMessages.length - 1]?.assistant?.id ??
+            squeezedMessages[squeezedMessages.length - 1]?.user?.id;
+        useIsomorphicLayoutEffect(() => {
+            if (
+                lastConversationRef.current &&
+                lastConversationRef.current.getAttribute("data-conversation-id") !== lastConversationId
+            ) {
+                lastConversationRef.current = null;
+            }
+
+            if (!lastConversationRef.current) {
+                lastConversationRef.current = document.querySelector(`[data-conversation-id="${lastConversationId}"]`);
+            }
+        }, [lastConversationId]);
+
+        useEffect(() => {
+            if (lastConversationRef.current && isLoading && !userScrolled) {
+                lastConversationRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+        });
+
+        if (squeezedMessages.length === 0) {
+            return (
+                <>
+                    <div className="flex gap-4 p-2">
+                        <Sparkles className="size-4 shrink-0 my-1" />
+                        <div className="space-y-2">
+                            <p>Hi, I&apos;m an AI assistant with access to documentation and other content.</p>
+                        </div>
+                    </div>
+                    {children}
+                </>
+            );
         }
 
-        if (!lastConversationRef.current) {
-            lastConversationRef.current = document.querySelector(`[data-conversation-id="${lastConversationId}"]`);
-        }
-    }, [lastConversationId]);
-
-    useEffect(() => {
-        if (lastConversationRef.current && isLoading && !userScrolled) {
-            lastConversationRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-    });
-
-    if (squeezedMessages.length === 0) {
         return (
             <>
-                <div className="flex gap-4 p-2">
-                    <Sparkles className="size-4 shrink-0 my-1" />
-                    <div className="space-y-2">
-                        <p>Hi, I&apos;m an AI assistant with access to documentation and other content.</p>
-                    </div>
-                </div>
-                {children}
+                {squeezedMessages.map((message, idx) => {
+                    const searchResults = combineSearchResults([message]);
+                    return (
+                        <ChatbotTurnContextProvider key={message.user?.id ?? message.assistant?.id ?? idx}>
+                            <Command.Group>
+                                <Command.Item
+                                    data-conversation-id={message.assistant?.id ?? message.user?.id}
+                                    value={message.assistant?.id ?? message.user?.id}
+                                    onSelect={() => {
+                                        const content = message.assistant?.content;
+                                        if (content) {
+                                            void navigator.clipboard.writeText(content);
+                                        }
+                                    }}
+                                    asChild
+                                    scrollLogicalPosition="start"
+                                >
+                                    <article>
+                                        <div className="relative max-w-[70%] rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2 whitespace-pre-wrap ml-auto w-fit mb-2">
+                                            <section className="prose prose-sm dark:prose-invert cursor-auto">
+                                                <MarkdownContent components={components}>
+                                                    {message.user?.content ?? "_No user message_"}
+                                                </MarkdownContent>
+                                            </section>
+                                        </div>
+                                        <div className="flex items-start justify-start gap-4">
+                                            <Sparkles className="size-4 shrink-0 my-1" />
+                                            <section className="prose prose-sm dark:prose-invert flex-1 shrink cursor-text">
+                                                {message.assistant?.content && (
+                                                    <MarkdownContent
+                                                        components={{
+                                                            ...components,
+                                                            sup: FootnoteSup,
+                                                            section: ({ children, node, ...props }) => {
+                                                                if (node?.properties["dataFootnotes"]) {
+                                                                    return (
+                                                                        <FootnotesSection
+                                                                            node={node}
+                                                                            searchResults={searchResults}
+                                                                            className="hidden"
+                                                                        />
+                                                                    );
+                                                                }
+
+                                                                if (components?.section) {
+                                                                    return createElement(
+                                                                        components.section,
+                                                                        { ...props, node },
+                                                                        children,
+                                                                    );
+                                                                }
+
+                                                                return <section {...props}>{children}</section>;
+                                                            },
+                                                        }}
+                                                    >
+                                                        {message.assistant.content}
+                                                    </MarkdownContent>
+                                                )}
+                                                {isLoading &&
+                                                    (!message.toolInvocations ||
+                                                        message.toolInvocations.some(
+                                                            (invocation) => invocation.state !== "result",
+                                                        )) && (
+                                                        <p className="text-[var(--grayscale-a10)]">Thinking...</p>
+                                                    )}
+                                            </section>
+                                        </div>
+                                    </article>
+                                </Command.Item>
+                                <FootnoteCommands onSelect={onSelectHit} prefetch={prefetch} domain={domain} />
+                            </Command.Group>
+                        </ChatbotTurnContextProvider>
+                    );
+                })}
             </>
         );
-    }
-
-    return (
-        <>
-            {squeezedMessages.map((message, idx) => {
-                const searchResults = combineSearchResults([message]);
-                return (
-                    <ChatbotTurnContextProvider key={message.user?.id ?? message.assistant?.id ?? idx}>
-                        <Command.Group>
-                            <Command.Item
-                                data-conversation-id={message.assistant?.id ?? message.user?.id}
-                                value={message.assistant?.id ?? message.user?.id}
-                                onSelect={() => {
-                                    const content = message.assistant?.content;
-                                    if (content) {
-                                        void navigator.clipboard.writeText(content);
-                                    }
-                                }}
-                                asChild
-                                scrollLogicalPosition="start"
-                            >
-                                <article>
-                                    <div className="relative max-w-[70%] rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2 whitespace-pre-wrap ml-auto w-fit mb-2">
-                                        <section className="prose prose-sm dark:prose-invert cursor-auto">
-                                            <MarkdownContent components={components}>
-                                                {message.user?.content ?? "_No user message_"}
-                                            </MarkdownContent>
-                                        </section>
-                                    </div>
-                                    <div className="flex items-start justify-start gap-4">
-                                        <Sparkles className="size-4 shrink-0 my-1" />
-                                        <section className="prose prose-sm dark:prose-invert flex-1 shrink cursor-text">
-                                            {message.assistant?.content && (
-                                                <MarkdownContent
-                                                    components={{
-                                                        ...components,
-                                                        sup: FootnoteSup,
-                                                        section: ({ children, node, ...props }) => {
-                                                            if (node?.properties["dataFootnotes"]) {
-                                                                return (
-                                                                    <FootnotesSection
-                                                                        node={node}
-                                                                        searchResults={searchResults}
-                                                                        className="hidden"
-                                                                    />
-                                                                );
-                                                            }
-
-                                                            if (components?.section) {
-                                                                return createElement(
-                                                                    components.section,
-                                                                    { ...props, node },
-                                                                    children,
-                                                                );
-                                                            }
-
-                                                            return <section {...props}>{children}</section>;
-                                                        },
-                                                    }}
-                                                >
-                                                    {message.assistant.content}
-                                                </MarkdownContent>
-                                            )}
-                                            {isLoading &&
-                                                (!message.toolInvocations ||
-                                                    message.toolInvocations.some(
-                                                        (invocation) => invocation.state !== "result",
-                                                    )) && <p className="text-[var(--grayscale-a10)]">Thinking...</p>}
-                                        </section>
-                                    </div>
-                                </article>
-                            </Command.Item>
-                            <FootnoteCommands onSelect={onSelectHit} prefetch={prefetch} />
-                        </Command.Group>
-                    </ChatbotTurnContextProvider>
-                );
-            })}
-        </>
-    );
-});
+    },
+);
 
 AskAICommandItems.displayName = "AskAICommandItems";
 
 function FootnoteCommands({
     onSelect,
     prefetch,
+    domain,
 }: {
     onSelect?: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
+    domain: string;
 }) {
     const { footnotesAtom } = useChatbotTurnContext();
     const footnotes = useAtomValue(footnotesAtom);
     return (
         <>
             {footnotes.map((footnote, idx) => (
-                <CommandLink key={footnote.ids.join("-")} href={footnote.url} onSelect={onSelect} prefetch={prefetch}>
+                <CommandLink
+                    key={footnote.ids.join("-")}
+                    href={footnote.url}
+                    onSelect={onSelect}
+                    prefetch={prefetch}
+                    domain={domain}
+                >
                     <Badge rounded>{String(idx + 1)}</Badge>
                     <div>
                         <div className="text-sm font-semibold">{footnote.title}</div>

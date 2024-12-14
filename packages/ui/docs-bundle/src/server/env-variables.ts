@@ -38,8 +38,8 @@ export function anthropicApiKey(): string {
     return getEnvVariable("ANTHROPIC_API_KEY");
 }
 
-export function voyageApiKey(): string {
-    return getEnvVariable("VOYAGE_API_KEY");
+export function openaiApiKey(): string {
+    return getEnvVariable("OPENAI_API_KEY");
 }
 
 function assertNonNullable<T>(value: T, key: string): asserts value is NonNullable<T> {

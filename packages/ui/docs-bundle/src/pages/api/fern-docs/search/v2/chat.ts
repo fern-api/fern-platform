@@ -5,20 +5,23 @@ import { createDefaultSystemPrompt } from "@fern-ui/fern-docs-search-ui";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { embed, streamText, tool } from "ai";
 import { NextApiRequest, NextApiResponse } from "next/types";
-import { createVoyage } from "voyage-ai-provider";
 import { z } from "zod";
 
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { anthropicApiKey, turbopufferApiKey, voyageApiKey } from "@/server/env-variables";
+import { anthropicApiKey, openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { createOpenAI } from "@ai-sdk/openai";
 
 const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-const voyage = createVoyage({ apiKey: voyageApiKey() });
-
 const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
-const embeddingModel = voyage.textEmbeddingModel("voyage-3");
+
+const openai = createOpenAI({
+    apiKey: openaiApiKey(),
+});
+
+const embeddingModel = openai.embedding("text-embedding-3-small");
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     if (req.method !== "POST") {
@@ -27,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const domain = getDocsDomainNode(req);
-    const namespace = `${embeddingModel.modelId}:${withoutStaging(domain)}}`;
+    const namespace = `${embeddingModel.modelId}_${withoutStaging(domain)}`;
     const messages = req.body.messages;
 
     const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));

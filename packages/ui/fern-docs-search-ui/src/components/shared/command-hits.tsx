@@ -13,9 +13,11 @@ import { HitContent } from "./hit-content";
 import { GroupedHit, generateHits } from "./hits";
 
 export const CommandSearchHits = ({
+    domain,
     onSelect,
     prefetch,
 }: {
+    domain: string;
     onSelect: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
 }): ReactNode => {
@@ -28,15 +30,17 @@ export const CommandSearchHits = ({
         return false;
     }
 
-    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} prefetch={prefetch} />;
+    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} prefetch={prefetch} domain={domain} />;
 };
 
 const MemoizedCommandSearchHits = memo(
     ({
+        domain,
         items,
         onSelect,
         prefetch,
     }: {
+        domain: string;
         items: AlgoliaRecordHit[];
         onSelect: (path: string) => void;
         prefetch?: (path: string) => Promise<void>;
@@ -48,7 +52,13 @@ const MemoizedCommandSearchHits = memo(
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
-                            <CommandHit key={hit.path} hit={hit} onSelect={onSelect} prefetch={prefetch} />
+                            <CommandHit
+                                key={hit.path}
+                                hit={hit}
+                                onSelect={onSelect}
+                                prefetch={prefetch}
+                                domain={domain}
+                            />
                         ))}
                     </Command.Group>
                 ))}
@@ -59,10 +69,12 @@ const MemoizedCommandSearchHits = memo(
 
 function CommandHit({
     hit,
+    domain,
     onSelect,
     prefetch,
 }: {
     hit: GroupedHit;
+    domain: string;
     /**
      * @param path - the path to navigate to via nextjs router
      */
@@ -75,7 +87,13 @@ function CommandHit({
 
     return (
         <CommandGroupSearchHitTooltip key={hit.path} hit={hit.record} path={hit.path}>
-            <CommandLink href={hit.path} keywords={[hit.record.title]} prefetch={prefetch} onSelect={onSelect}>
+            <CommandLink
+                href={hit.path}
+                keywords={[hit.record.title]}
+                prefetch={prefetch}
+                onSelect={onSelect}
+                domain={domain}
+            >
                 <PageIcon
                     icon={hit.icon}
                     type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}

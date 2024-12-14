@@ -522,7 +522,11 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
                     });
 
                 // Ensure the item is always in view under the heading
-                item.scrollIntoView({ block: "nearest" });
+                item.scrollIntoView({
+                    block:
+                        ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position")).data ??
+                        "nearest",
+                });
             } else {
                 // Ensure the item is always in view
                 item.scrollIntoView({

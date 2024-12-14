@@ -1,28 +1,28 @@
+import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { turbopufferUpsertTask } from "@fern-ui/fern-docs-search-server/turbopuffer";
 import { addLeadingSlash, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { embedMany } from "ai";
 import { NextApiRequest, NextApiResponse } from "next/types";
-import { createVoyage } from "voyage-ai-provider";
 
 import { track } from "@/server/analytics/posthog";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { fdrEnvironment, fernToken, turbopufferApiKey, voyageApiKey } from "@/server/env-variables";
+import { fdrEnvironment, fernToken, openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainNode } from "@/server/xfernhost/node";
 
-const voyage = createVoyage({
-    apiKey: voyageApiKey(),
+const openai = createOpenAI({
+    apiKey: openaiApiKey(),
 });
 
-const embeddingModel = voyage.textEmbeddingModel("voyage-3");
+const embeddingModel = openai.embedding("text-embedding-3-small");
 
 export const maxDuration = 900; // 15 minutes
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const domain = getDocsDomainNode(req);
     const deleteExisting = req.query.deleteExisting === "true";
-    const namespace = `${embeddingModel.modelId}:${withoutStaging(domain)}}`;
+    const namespace = `${embeddingModel.modelId}_${withoutStaging(domain)}`;
 
     try {
         const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
