@@ -30,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const domain = getDocsDomainNode(req);
-    const namespace = `${embeddingModel.modelId}_${withoutStaging(domain)}`;
+    const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
     const messages = req.body.messages;
 
     const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));

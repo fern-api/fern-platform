@@ -16,7 +16,7 @@ const model = openai.embedding("text-embedding-3-small");
 export const runReindexTurbopuffer = async (domain: string): Promise<number> => {
     return turbopufferUpsertTask({
         apiKey: turbopufferApiKey(),
-        namespace: `${model.modelId}_${domain}`,
+        namespace: `${domain}_${model.modelId}`,
         payload: {
             environment: fdrEnvironment(),
             fernToken: fernToken(),
@@ -38,7 +38,7 @@ export const runSemanticSearchTurbopuffer = async (
     topK: number = 10,
 ): Promise<FernTurbopufferRecord[]> => {
     return queryTurbopuffer(query, {
-        namespace: `${model.modelId}_${domain}`,
+        namespace: `${domain}_${model.modelId}`,
         apiKey: turbopufferApiKey(),
         topK,
         vectorizer: async (text) => {

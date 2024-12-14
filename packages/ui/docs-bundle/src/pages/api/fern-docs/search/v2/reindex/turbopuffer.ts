@@ -22,7 +22,7 @@ export const maxDuration = 900; // 15 minutes
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const domain = getDocsDomainNode(req);
     const deleteExisting = req.query.deleteExisting === "true";
-    const namespace = `${embeddingModel.modelId}_${withoutStaging(domain)}`;
+    const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
 
     try {
         const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
