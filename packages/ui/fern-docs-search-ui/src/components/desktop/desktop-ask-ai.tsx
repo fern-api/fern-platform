@@ -202,9 +202,9 @@ const DesktopAskAIChat = ({
         api,
         body,
         headers,
-        onFinish: () => {
+        onFinish: useEventCallback(() => {
             setInitialConversation(chat.messages);
-        },
+        }),
     });
 
     // Reset userScrolled when the chat is loading
@@ -276,6 +276,7 @@ const DesktopAskAIChat = ({
                                         variant="outline"
                                         onClick={() => {
                                             chat.setMessages([]);
+                                            setInitialConversation([]);
                                         }}
                                     >
                                         <SquarePen />
