@@ -6,9 +6,13 @@ import { searchClient } from "@algolia/client-search";
 import { getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { SEARCH_INDEX, type AlgoliaRecord } from "@fern-ui/fern-docs-search-server/algolia";
 import { SuggestionsSchema } from "@fern-ui/fern-docs-search-ui";
-import { streamObject } from "ai";
+import { kv } from "@vercel/kv";
+import { formatDataStreamPart, streamObject } from "ai";
 import { NextApiRequest, NextApiResponse } from "next/types";
 import { z } from "zod";
+
+const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
+const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
 const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
 const languageModel = anthropic.languageModel("claude-3-5-haiku-latest");
@@ -32,6 +36,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (!featureFlags.isAskAiEnabled) {
         throw new Error(`Ask AI is not enabled for ${domain}`);
+    }
+
+    const cacheKey = `${PREFIX}:${domain}:suggestions`;
+    const cachedSuggestions = await kv.get<string>(cacheKey);
+
+    if (cachedSuggestions) {
+        return res
+            .status(200)
+            .setHeader("Content-Type", "text/plain; charset=utf-8")
+            .send(formatDataStreamPart("text", cachedSuggestions));
     }
 
     const { algoliaSearchKey } = BodySchema.parse(req.body);
@@ -66,6 +80,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 // eslint-disable-next-line no-console
                 console.warn(warning);
             });
+            if (e.object) {
+                await kv.set(cacheKey, JSON.stringify(e.object));
+                await kv.expire(cacheKey, 60 * 60);
+            }
         },
     });
 
