@@ -2,7 +2,7 @@ import { Badge } from "@fern-ui/components/badges";
 import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import { TooltipPortal } from "@radix-ui/react-tooltip";
+import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { Message, useChat } from "ai/react";
 import { useAtomValue } from "jotai";
@@ -261,24 +261,26 @@ const DesktopAskAIChat = ({
             >
                 <headerActions.In>
                     {chat.messages.length > 0 && (
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    size="iconXs"
-                                    variant="outline"
-                                    onClick={() => {
-                                        chat.setMessages([]);
-                                    }}
-                                >
-                                    <SquarePen />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipPortal>
-                                <TooltipContent>
-                                    <p>New chat</p>
-                                </TooltipContent>
-                            </TooltipPortal>
-                        </Tooltip>
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        size="iconXs"
+                                        variant="outline"
+                                        onClick={() => {
+                                            chat.setMessages([]);
+                                        }}
+                                    >
+                                        <SquarePen />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipPortal>
+                                    <TooltipContent>
+                                        <p>New chat</p>
+                                    </TooltipContent>
+                                </TooltipPortal>
+                            </Tooltip>
+                        </TooltipProvider>
                     )}
                 </headerActions.In>
 
