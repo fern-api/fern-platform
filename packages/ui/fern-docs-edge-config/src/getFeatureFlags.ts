@@ -1,5 +1,5 @@
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import { isCustomDomain, isDevelopment, isFern } from "@fern-ui/fern-docs-utils";
+import { isCustomDomain, isDevelopment, isFern, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { getAll } from "@vercel/edge-config";
 
 export const runtime = "edge";
@@ -173,5 +173,17 @@ function checkDomainMatchesCustomers(domain: string, customers: readonly string[
     if (customers == null) {
         return false;
     }
-    return customers.some((customer) => domain.toLowerCase().includes(customer.toLowerCase()));
+    const domainWithoutDocs = domain
+        .replace(".docs.buildwithfern.com", "")
+        .replace(".docs.staging.buildwithfern.com", "")
+        .replace(".docs.dev.buildwithfern.com", "")
+        .replace(".buildwithfern.dev", "")
+        .replace(".ferndocs.dev", "")
+        .replace(".ferndocs.app", "")
+        .replace(".ferndocs.com", "");
+    return (
+        customers.some((customer) => domainWithoutDocs.toLowerCase().includes(customer.toLowerCase())) ||
+        customers.includes(domain) ||
+        customers.includes(withoutStaging(domain))
+    );
 }
