@@ -25,7 +25,7 @@ export async function queryTurbopuffer(
     query: string,
     { vectorizer, namespace, apiKey, topK, mode = "semantic", authed = false, roles = [] }: SemanticSearchOptions,
 ): Promise<FernTurbopufferRecord[]> {
-    const tpuf = new Turbopuffer({ apiKey });
+    const tpuf = new Turbopuffer({ apiKey, baseUrl: "https://gcp-us-east4.turbopuffer.com" });
     const ns = tpuf.namespace(namespace);
 
     const vector = await vectorizer(query);

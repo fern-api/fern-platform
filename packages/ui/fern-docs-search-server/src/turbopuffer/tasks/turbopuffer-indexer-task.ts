@@ -47,7 +47,7 @@ export async function turbopufferUpsertTask({
     splitText = (text) => defaultTextSplitter.splitText(text),
     deleteExisting = false,
 }: TurbopufferIndexerTaskOptions): Promise<number> {
-    const tpuf = new Turbopuffer({ apiKey });
+    const tpuf = new Turbopuffer({ apiKey, baseUrl: "https://gcp-us-east4.turbopuffer.com" });
     const ns = tpuf.namespace(namespace);
 
     // load the docs
