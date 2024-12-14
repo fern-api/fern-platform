@@ -5,7 +5,7 @@ import { composeRefs } from "@radix-ui/react-compose-refs";
 import { TooltipPortal, TooltipProvider } from "@radix-ui/react-tooltip";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { Message, useChat } from "ai/react";
-import { useAtomValue } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { ArrowLeft, ArrowUp, Sparkles, SquarePen, StopCircle } from "lucide-react";
 import {
     ComponentPropsWithoutRef,
@@ -165,6 +165,8 @@ const DesktopAskAIContent = (props: {
     );
 };
 
+const initialConversationAtom = atom<Message[]>([]);
+
 const DesktopAskAIChat = ({
     onReturnToSearch,
     initialInput,
@@ -192,12 +194,17 @@ const DesktopAskAIChat = ({
 }) => {
     const inputRef = useRef<HTMLTextAreaElement>(null);
     const [userScrolled, setUserScrolled] = useState(false);
+    const [initialConversation, setInitialConversation] = useAtom(initialConversationAtom);
     const chat = useChat({
         id: chatId,
         initialInput,
+        initialMessages: initialConversation,
         api,
         body,
         headers,
+        onFinish: () => {
+            setInitialConversation(chat.messages);
+        },
     });
 
     // Reset userScrolled when the chat is loading
