@@ -184,7 +184,7 @@ const ITEM_SELECTOR = "[data-cmdk-item]";
 const VALID_ITEM_SELECTOR = `${ITEM_SELECTOR}:not([aria-disabled="true"])`;
 const SELECT_EVENT = "cmdk-item-select";
 const VALUE_ATTR = "data-value";
-const defaultFilter: CommandProps["filter"] = (value, search, keywords) => commandScore(value, search, keywords);
+const defaultFilter: CommandProps["filter"] = (value, search, keywords) => commandScore(value, search, keywords) ?? 0;
 
 const CommandContext = createContext<Context>(undefined as unknown as Context);
 const useCommand = () => useContext(CommandContext);
@@ -729,6 +729,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
         if (!forceMount) {
             return context.item(id, groupContext?.id);
         }
+        return;
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [forceMount]);
 
@@ -942,6 +943,7 @@ const List = forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
                 observer.unobserve(el);
             };
         }
+        return;
     }, []);
 
     return (
@@ -1035,7 +1037,7 @@ export {
     SELECT_EVENT,
     Separator,
     defaultFilter,
-    useCmdk as useCommandState,
+    useCmdk as useCommandState
 };
 
 /**
@@ -1055,6 +1057,7 @@ function findNextSibling(el: Element, selector: string) {
         }
         sibling = sibling.nextElementSibling;
     }
+    return;
 }
 
 function findPreviousSibling(el: Element, selector: string) {
@@ -1066,6 +1069,7 @@ function findPreviousSibling(el: Element, selector: string) {
         }
         sibling = sibling.previousElementSibling;
     }
+    return;
 }
 
 function useAsRef<T>(data: T) {

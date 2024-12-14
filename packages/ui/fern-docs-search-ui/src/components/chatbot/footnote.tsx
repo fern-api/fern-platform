@@ -6,7 +6,7 @@ import { groupBy } from "es-toolkit/array";
 import type { Element as HastElement } from "hast";
 import { useAtom, useAtomValue } from "jotai";
 import { ReactElement, useEffect } from "react";
-import { EXIT, visit } from "unist-util-visit";
+import { CONTINUE, EXIT, visit } from "unist-util-visit";
 import { AlgoliaRecordHit } from "../../types";
 import { PageIcon } from "../icons/page";
 import { cn } from "../ui/cn";
@@ -156,6 +156,7 @@ function selectHref(node: HastElement): undefined | string {
             href = innerNode.properties.href;
             return EXIT;
         }
+        return CONTINUE;
     });
 
     return href;

@@ -1,7 +1,8 @@
-import { useSearchHitsRerender } from "@/hooks/use-search-hits";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { ComponentPropsWithoutRef, KeyboardEventHandler, forwardRef, useCallback, useRef, useState } from "react";
+
+import { useSearchHitsRerender } from "../../hooks/use-search-hits";
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
 

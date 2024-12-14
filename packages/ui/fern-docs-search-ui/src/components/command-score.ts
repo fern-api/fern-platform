@@ -76,8 +76,8 @@ function commandScoreInner(
     let index = lowerString.indexOf(abbreviationChar, stringIndex);
     let highScore = 0;
 
-    let score: number,
-        transposedScore: number,
+    let score: number | undefined,
+        transposedScore: number | undefined,
         wordBreaks: RegExpMatchArray | null,
         spaceBreaks: RegExpMatchArray | null;
 
@@ -155,7 +155,7 @@ function formatInput(string: string) {
     return string.toLowerCase().replace(COUNT_SPACE_REGEXP, " ");
 }
 
-export function commandScore(string: string, abbreviation: string, aliases?: string[]): number {
+export function commandScore(string: string, abbreviation: string, aliases?: string[]): number | undefined {
     /* NOTE:
      * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
      * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.

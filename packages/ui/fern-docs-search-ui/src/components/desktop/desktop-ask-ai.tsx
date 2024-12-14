@@ -232,7 +232,7 @@ const DesktopAskAIChat = ({
                     }
                 }}
                 onTouchMove={(e) => {
-                    if (e.touches[0].clientY !== e.touches[e.touches.length - 1].clientY) {
+                    if (e.touches[0]?.clientY !== e.touches[e.touches.length - 1]?.clientY) {
                         setUserScrolled(true);
                     }
                 }}
