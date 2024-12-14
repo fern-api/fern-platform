@@ -774,7 +774,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
         return null;
     }
 
-    const { disabled, value: _, onSelect: __, forceMount: ___, keywords: ____, ...etc } = props;
+    const { disabled, value: _, onSelect: __, forceMount: ___, keywords: ____, scrollLogicalPosition, ...etc } = props;
 
     return (
         <Primitive.div
@@ -787,7 +787,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
             aria-selected={Boolean(selected)}
             data-disabled={Boolean(disabled)}
             data-selected={Boolean(selected)}
-            data-scroll-logical-position={props.scrollLogicalPosition}
+            data-scroll-logical-position={scrollLogicalPosition}
             onPointerMove={disabled || context.getDisablePointerSelection() ? undefined : select}
             onClick={disabled ? undefined : onSelect}
         >
