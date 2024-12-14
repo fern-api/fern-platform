@@ -11,10 +11,12 @@ const openai = createOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
+const model = openai.embedding("text-embedding-3-small");
+
 export const runReindexTurbopuffer = async (domain: string): Promise<number> => {
     return turbopufferUpsertTask({
         apiKey: turbopufferApiKey(),
-        namespace: domain,
+        namespace: `${model.modelId}_${domain}`,
         payload: {
             environment: fdrEnvironment(),
             fernToken: fernToken(),
@@ -22,7 +24,7 @@ export const runReindexTurbopuffer = async (domain: string): Promise<number> => 
         },
         vectorizer: async (chunks) => {
             const embeddings = await embedMany({
-                model: openai.embedding("text-embedding-3-small"),
+                model,
                 values: chunks,
             });
             return embeddings.embeddings;
@@ -36,12 +38,12 @@ export const runSemanticSearchTurbopuffer = async (
     topK: number = 10,
 ): Promise<FernTurbopufferRecord[]> => {
     return queryTurbopuffer(query, {
-        namespace: domain,
+        namespace: `${model.modelId}_${domain}`,
         apiKey: turbopufferApiKey(),
         topK,
         vectorizer: async (text) => {
             const embedding = await embed({
-                model: openai.embedding("text-embedding-3-small"),
+                model,
                 value: text,
             });
             return embedding.embedding;
