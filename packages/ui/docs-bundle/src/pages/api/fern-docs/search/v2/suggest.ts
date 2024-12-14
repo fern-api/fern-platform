@@ -41,13 +41,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const cacheKey = `${PREFIX}:${domain}:suggestions`;
     if (!req.cookies[COOKIE_FERN_TOKEN]) {
-        const cachedSuggestions = await kv.get<string>(cacheKey);
+        const cachedSuggestions = await kv.get(cacheKey);
 
         if (cachedSuggestions) {
             return res
                 .status(200)
                 .setHeader("Content-Type", "text/plain; charset=utf-8")
-                .send(formatDataStreamPart("text", cachedSuggestions));
+                .send(formatDataStreamPart("text", JSON.stringify(cachedSuggestions)));
         }
     }
 
@@ -84,7 +84,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 console.warn(warning);
             });
             if (e.object && !req.cookies[COOKIE_FERN_TOKEN]) {
-                await kv.set(cacheKey, JSON.stringify(e.object));
+                await kv.set(cacheKey, e.object);
                 await kv.expire(cacheKey, 60 * 60);
             }
         },
