@@ -82,15 +82,16 @@ function commandScoreInner(
         spaceBreaks: RegExpMatchArray | null;
 
     while (index >= 0) {
-        score = commandScoreInner(
-            string,
-            abbreviation,
-            lowerString,
-            lowerAbbreviation,
-            index + 1,
-            abbreviationIndex + 1,
-            memoizedResults,
-        );
+        score =
+            commandScoreInner(
+                string,
+                abbreviation,
+                lowerString,
+                lowerAbbreviation,
+                index + 1,
+                abbreviationIndex + 1,
+                memoizedResults,
+            ) ?? 0;
         if (score > highScore) {
             if (index === stringIndex) {
                 score *= SCORE_CONTINUE_MATCH;
@@ -113,13 +114,14 @@ function commandScoreInner(
                 }
             }
 
-            if (string.charAt(index) !== abbreviation.charAt(abbreviationIndex)) {
+            if (string.charAt(index) !== abbreviation.charAt(abbreviationIndex) && score !== undefined) {
                 score *= PENALTY_CASE_MISMATCH;
             }
         }
 
         if (
-            (score < SCORE_TRANSPOSITION &&
+            (score !== undefined &&
+                score < SCORE_TRANSPOSITION &&
                 lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
             (lowerAbbreviation.charAt(abbreviationIndex + 1) === lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
                 lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
@@ -134,12 +136,12 @@ function commandScoreInner(
                 memoizedResults,
             );
 
-            if (transposedScore * SCORE_TRANSPOSITION > score) {
+            if (transposedScore !== undefined && transposedScore * SCORE_TRANSPOSITION > score) {
                 score = transposedScore * SCORE_TRANSPOSITION;
             }
         }
 
-        if (score > highScore) {
+        if (score !== undefined && score > highScore) {
             highScore = score;
         }
 

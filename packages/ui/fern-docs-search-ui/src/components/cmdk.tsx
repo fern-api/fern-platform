@@ -1037,7 +1037,7 @@ export {
     SELECT_EVENT,
     Separator,
     defaultFilter,
-    useCmdk as useCommandState
+    useCmdk as useCommandState,
 };
 
 /**
@@ -1137,6 +1137,7 @@ function useValue(
                     return valueRef.current;
                 }
             }
+            return;
         })();
 
         const keywords = aliases.map((alias) => alias.trim());
