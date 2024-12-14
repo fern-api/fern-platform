@@ -20,7 +20,7 @@ export class FernNextResponse {
         const allowedDomains = [getHostEdge(req), ...(allowedDestinations ?? []).map((url) => new URL(url).host)];
         const redirectLocation = new URL(destination);
 
-        if (!allowedDomains.includes(redirectLocation.host) || isBuildWithFern(redirectLocation.host)) {
+        if (!allowedDomains.includes(redirectLocation.host) && !isBuildWithFern(redirectLocation.host)) {
             // open redirect to unknown host detected:
             return new NextResponse(null, { status: 410 });
         }
