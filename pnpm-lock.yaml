@@ -1799,9 +1799,6 @@ importers:
       '@algolia/client-search':
         specifier: ^5.15.0
         version: 5.15.0
-      '@algolia/requester-fetch':
-        specifier: ^5.13.0
-        version: 5.13.0
       '@aws-sdk/client-s3':
         specifier: ^3.685.0
         version: 3.685.0
@@ -1877,9 +1874,6 @@ importers:
       algoliasearch:
         specifier: ^5.13.0
         version: 5.13.0
-      cohere-ai:
-        specifier: ^7.9.5
-        version: 7.9.5
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
@@ -1934,9 +1928,6 @@ importers:
       url-join:
         specifier: 5.0.0
         version: 5.0.0
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.1
       webflow-api:
         specifier: ^2.4.2
         version: 2.4.2
@@ -1981,9 +1972,6 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
-      '@types/uuid':
-        specifier: ^9.0.1
-        version: 9.0.8
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
