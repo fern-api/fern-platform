@@ -24,11 +24,6 @@ import { InkeepChatButton } from "./inkeep/InkeepChatButton";
 import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
 
-// const CohereChatButton = dynamic(
-//     () => import("./cohere/CohereChatButton").then(({ CohereChatButton }) => CohereChatButton),
-//     { ssr: false },
-// );
-
 export const SearchDialog = (): ReactNode => {
     const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
     if (isSearchV2Enabled) {
@@ -54,12 +49,7 @@ const InternalSearchDialog = (): ReactNode => {
     }
 
     if (config.inkeep == null) {
-        return (
-            <>
-                <AlgoliaSearchDialog />
-                {/* {isAskAiEnabled && <CohereChatButton />} */}
-            </>
-        );
+        return <AlgoliaSearchDialog />;
     } else {
         return (
             <>
