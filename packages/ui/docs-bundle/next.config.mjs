@@ -56,7 +56,6 @@ const nextConfig = {
         "@fern-api/fdr-sdk",
         "@fern-api/template-resolver",
         "@fern-api/ui-core-utils",
-        "@fern-ui/chatbot",
         "@fern-ui/components",
         "@fern-ui/fdr-utils",
         "@fern-ui/fern-docs-auth",

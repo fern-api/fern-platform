@@ -1109,9 +1109,6 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
-      '@fern-ui/chatbot':
-        specifier: workspace:*
-        version: link:../chatbot
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
@@ -1233,14 +1230,14 @@ importers:
         specifier: ^5.2.3
         version: 5.2.4
       jotai:
-        specifier: ^2.8.1
-        version: 2.8.1(@types/react@18.3.3)(react@18.3.1)
+        specifier: ^2.10.4
+        version: 2.10.4(@types/react@18.3.3)(react@18.3.1)
       jotai-effect:
-        specifier: ^1.0.0
-        version: 1.0.0(jotai@2.8.1(@types/react@18.3.3)(react@18.3.1))
+        specifier: ^1.0.5
+        version: 1.0.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
       jotai-location:
         specifier: ^0.5.5
-        version: 0.5.5(jotai@2.8.1(@types/react@18.3.3)(react@18.3.1))
+        version: 0.5.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
       jsonpath:
         specifier: ^1.1.1
         version: 1.1.1
@@ -1431,9 +1428,6 @@ importers:
       chromatic:
         specifier: ^11.3.0
         version: 11.3.2
-      cohere-ai:
-        specifier: ^7.9.5
-        version: 7.9.5
       depcheck:
         specifier: ^1.4.3
         version: 1.4.7
@@ -1488,97 +1482,6 @@ importers:
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@edge-runtime/vm@3.2.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-
-  packages/ui/chatbot:
-    dependencies:
-      '@fern-ui/components':
-        specifier: workspace:*
-        version: link:../components
-      '@radix-ui/colors':
-        specifier: ^3.0.0
-        version: 3.0.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
-      es-toolkit:
-        specifier: ^1.27.0
-        version: 1.27.0
-      hastscript:
-        specifier: ^9.0.0
-        version: 9.0.0
-      jotai:
-        specifier: ^2.8.1
-        version: 2.8.1(@types/react@18.3.3)(react@18.3.1)
-      react-markdown:
-        specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.3.3)(react@18.3.1)
-      remark-gfm:
-        specifier: ^4.0.0
-        version: 4.0.0
-      uuid:
-        specifier: ^9.0.0
-        version: 9.0.1
-    devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@tailwindcss/typography':
-        specifier: ^0.5.10
-        version: 0.5.13(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3)))
-      '@types/hast':
-        specifier: ^3.0.4
-        version: 3.0.4
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.3.0
-      '@types/uuid':
-        specifier: ^9.0.1
-        version: 9.0.8
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.15.0
-        version: 7.17.0(@typescript-eslint/parser@7.17.0(eslint@8.57.0)(typescript@5.4.3))(eslint@8.57.0)(typescript@5.4.3)
-      '@typescript-eslint/parser':
-        specifier: ^7.15.0
-        version: 7.17.0(eslint@8.57.0)(typescript@5.4.3)
-      depcheck:
-        specifier: ^1.4.3
-        version: 1.4.7
-      eslint:
-        specifier: ^8.57.0
-        version: 8.57.0
-      eslint-plugin-react-hooks:
-        specifier: ^4.6.2
-        version: 4.6.2(eslint@8.57.0)
-      eslint-plugin-react-refresh:
-        specifier: ^0.4.7
-        version: 0.4.7(eslint@8.57.0)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
-      prettier:
-        specifier: ^3.3.2
-        version: 3.3.2
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.4.3)
-      tailwindcss:
-        specifier: ^3.4.3
-        version: 3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3))
-      typescript:
-        specifier: 5.4.3
-        version: 5.4.3
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@edge-runtime/vm@3.2.0)(@types/node@22.5.5)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
 
   packages/ui/components:
     dependencies:
@@ -1817,9 +1720,6 @@ importers:
       '@fern-fern/proxy-sdk':
         specifier: 0.0.26
         version: 0.0.26
-      '@fern-ui/chatbot':
-        specifier: workspace:*
-        version: link:../chatbot
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
@@ -2569,8 +2469,8 @@ importers:
         specifier: 4.75.4
         version: 4.75.4(algoliasearch@5.13.0)
       jotai:
-        specifier: ^2.8.1
-        version: 2.8.1(@types/react@18.3.3)(react@18.3.1)
+        specifier: ^2.10.4
+        version: 2.10.4(@types/react@18.3.3)(react@18.3.1)
       lucide-react:
         specifier: ^0.460.0
         version: 0.460.0(react@18.3.1)
@@ -12192,8 +12092,8 @@ packages:
   jose@5.6.3:
     resolution: {integrity: sha512-1Jh//hEEwMhNYPDDLwXHa2ePWgWiFNNUadVmguAAw2IJ6sj9mNxV5tGXJNqlMkJAybF6Lgw1mISDxTePP/187g==}
 
-  jotai-effect@1.0.0:
-    resolution: {integrity: sha512-eCgKKG4BACDzuJGYTu0xZRk1C1MEOvbAhC3L8w7YufQ2lSLORwNX/WFnCuZxLFX0sDLkTUeoUzOYaw8wnXY+UQ==}
+  jotai-effect@1.0.5:
+    resolution: {integrity: sha512-/QlB7XOGTDVbcp7cjN2INttjxvx5Y8qiRO7mM+YwwwBCwVE48VG3fFHGxWIDxPP1l+P/sv1h8Z6BfNP66Wd4lQ==}
     peerDependencies:
       jotai: '>=2.5.0'
 
@@ -12202,8 +12102,8 @@ packages:
     peerDependencies:
       jotai: '>=1.11.0'
 
-  jotai@2.8.1:
-    resolution: {integrity: sha512-Gmk5Y3yJL/vN5S0rQ6AaWpXH5Q+HBGHThMHXfylVzXGVuO8YxPRtZf8Y9XYvl+h7ZMQXoHNdFi37vNsJFsiszQ==}
+  jotai@2.10.4:
+    resolution: {integrity: sha512-/T4ofyMSkAybEs2OvR8S4HACa+/ASUEPLz86SUjFXJqU9RdJKLvZDJrag398suvHC5CR0+Cs4P5m/gtVcryzlw==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -22360,14 +22260,6 @@ snapshots:
       postcss-selector-parser: 6.0.10
       tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.4.3))
 
-  '@tailwindcss/typography@0.5.13(tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3)))':
-    dependencies:
-      lodash.castarray: 4.4.0
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
-      postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3))
-
   '@tanem/svg-injector@10.1.68':
     dependencies:
       '@babel/runtime': 7.24.5
@@ -29011,15 +28903,15 @@ snapshots:
 
   jose@5.6.3: {}
 
-  jotai-effect@1.0.0(jotai@2.8.1(@types/react@18.3.3)(react@18.3.1)):
+  jotai-effect@1.0.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1)):
     dependencies:
-      jotai: 2.8.1(@types/react@18.3.3)(react@18.3.1)
+      jotai: 2.10.4(@types/react@18.3.3)(react@18.3.1)
 
-  jotai-location@0.5.5(jotai@2.8.1(@types/react@18.3.3)(react@18.3.1)):
+  jotai-location@0.5.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1)):
     dependencies:
-      jotai: 2.8.1(@types/react@18.3.3)(react@18.3.1)
+      jotai: 2.10.4(@types/react@18.3.3)(react@18.3.1)
 
-  jotai@2.8.1(@types/react@18.3.3)(react@18.3.1):
+  jotai@2.10.4(@types/react@18.3.3)(react@18.3.1):
     optionalDependencies:
       '@types/react': 18.3.3
       react: 18.3.1
@@ -31140,14 +31032,6 @@ snapshots:
       postcss: 8.4.31
       ts-node: 10.9.2(@swc/core@1.5.7)(@types/node@20.12.12)(typescript@5.4.3)
 
-  postcss-load-config@4.0.2(postcss@8.4.31)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3)):
-    dependencies:
-      lilconfig: 3.1.1
-      yaml: 2.4.2
-    optionalDependencies:
-      postcss: 8.4.31
-      ts-node: 10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3)
-
   postcss-load-config@6.0.1(jiti@1.21.0)(postcss@8.4.31)(tsx@4.19.2)(yaml@2.4.2):
     dependencies:
       lilconfig: 3.1.1
@@ -33137,33 +33021,6 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tailwindcss@3.4.3(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3)):
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.2
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.0
-      lilconfig: 2.1.0
-      micromatch: 4.0.8
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.0
-      postcss: 8.4.31
-      postcss-import: 15.1.0(postcss@8.4.31)
-      postcss-js: 4.0.1(postcss@8.4.31)
-      postcss-load-config: 4.0.2(postcss@8.4.31)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3))
-      postcss-nested: 6.0.1(postcss@8.4.31)
-      postcss-selector-parser: 6.0.16
-      resolve: 1.22.8
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-
   tapable@2.2.1: {}
 
   tar-stream@1.6.2:
@@ -33507,27 +33364,6 @@ snapshots:
       '@tsconfig/node14': 1.0.3
       '@tsconfig/node16': 1.0.4
       '@types/node': 20.12.12
-      acorn: 8.11.3
-      acorn-walk: 8.3.2
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 5.4.3
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optionalDependencies:
-      '@swc/core': 1.5.7(@swc/helpers@0.5.5)
-    optional: true
-
-  ts-node@10.9.2(@swc/core@1.5.7)(@types/node@22.5.5)(typescript@5.4.3):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 22.5.5
       acorn: 8.11.3
       acorn-walk: 8.3.2
       arg: 4.1.3
