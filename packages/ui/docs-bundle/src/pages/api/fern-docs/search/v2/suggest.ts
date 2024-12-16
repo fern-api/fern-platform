@@ -69,6 +69,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             )
             .join("\n\n"),
         maxRetries: 3,
+        experimental_telemetry: {
+            isEnabled: true,
+            recordInputs: true,
+            recordOutputs: true,
+            functionId: "ask_ai_suggest",
+            metadata: {
+                domain,
+                indexName: SEARCH_INDEX,
+                languageModel: languageModel.modelId,
+            },
+        },
         schema: SuggestionsSchema,
         onFinish: async (e) => {
             const end = Date.now();

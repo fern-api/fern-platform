@@ -84,6 +84,7 @@ const nextConfig = {
          * NOTE: @fern-api/next uses this flag to prevent the client from throwing an error.
          */
         externalMiddlewareRewritesResolve: true,
+        instrumentationHook: true,
     },
 
     skipMiddlewareUrlNormalize: true,
