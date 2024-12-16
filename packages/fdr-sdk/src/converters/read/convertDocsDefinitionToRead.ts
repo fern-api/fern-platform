@@ -9,6 +9,7 @@ export function convertDocsDefinitionToRead({
     algoliaSearchIndex,
     filesV2,
     apis,
+    apisLatest,
     id,
     search,
 }: {
@@ -16,6 +17,7 @@ export function convertDocsDefinitionToRead({
     algoliaSearchIndex: FernRegistry.AlgoliaSearchIndex | undefined;
     filesV2: Record<DocsV1Read.FileId, DocsV1Read.File_>;
     apis: Record<DocsV1Db.ApiDefinitionId, APIV1Read.ApiDefinition>;
+    apisLatest: Record<FernRegistry.ApiDefinitionId, FernRegistry.api.latest.ApiDefinition>;
     id: APIV1Db.DocsConfigId | undefined;
     search: SearchInfo;
 }): DocsV1Read.DocsDefinition {
@@ -23,6 +25,7 @@ export function convertDocsDefinitionToRead({
         algoliaSearchIndex,
         pages: docsDbDefinition.pages,
         apis,
+        apisLatest,
         files: mapValues(filesV2, (fileV2) => fileV2.url),
         filesV2,
         jsFiles: docsDbDefinition.type === "v3" ? docsDbDefinition.jsFiles : undefined,

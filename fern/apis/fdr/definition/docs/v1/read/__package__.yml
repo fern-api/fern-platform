@@ -4,6 +4,7 @@ imports:
   algolia: ../../../algolia.yml
   rootCommons: ../../../commons.yml
   apiReadV1: ../../../api/v1/read/__package__.yml
+  apiReadLatest: ../../../api/latest/__package__.yml
   apiCommonsV1: ../../../api/v1/commons.yml
   commons: ../commons/commons.yml
   navigationV1: ../../../navigation/v1/__package__.yml
@@ -67,6 +68,7 @@ types:
       algoliaSearchIndex: optional<algolia.AlgoliaSearchIndex>
       pages: map<rootCommons.PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
+      apisLatest: map<rootCommons.ApiDefinitionId, apiReadLatest.ApiDefinition>
       files: map<rootCommons.FileId, rootCommons.Url>
       filesV2: map<rootCommons.FileId, File>
       jsFiles:

@@ -20,6 +20,7 @@ types:
     properties:
       pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
+      referencedApisLatest: set<rootCommons.ApiDefinitionId>
       files: map<rootCommons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<commons.ColorsConfig>
@@ -29,6 +30,7 @@ types:
     properties:
       pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
+      referencedApisLatest: set<rootCommons.ApiDefinitionId>
       files: map<rootCommons.FileId, DbFileInfo>
       config: DocsDbConfig
       colors: optional<commons.ColorsConfig>
@@ -38,6 +40,7 @@ types:
     properties:
       pages: map<rootCommons.PageId, docsReadV1.PageContent>
       referencedApis: set<rootCommons.ApiDefinitionId>
+      referencedApisLatest: set<rootCommons.ApiDefinitionId>
       files: map<rootCommons.FileId, DbFileInfoV2>
       config: DocsDbConfig
       jsFiles:
