@@ -12,6 +12,7 @@
     "node_modules",
     "src/client/generated/Client.ts",
     "src/client/generated/api/resources/api/client/",
+    "src/client/generated/api/resources/api/resources/latest/client/",
     "src/client/generated/api/resources/api/resources/v1/client/",
     "src/client/generated/api/resources/api/resources/v1/resources/read/client/",
     "src/client/generated/api/resources/api/resources/v1/resources/register/client/",
