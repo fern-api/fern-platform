@@ -56,9 +56,6 @@
       "path": "packages/ui/app"
     },
     {
-      "path": "packages/ui/chatbot"
-    },
-    {
       "path": "packages/ui/components"
     },
     {
