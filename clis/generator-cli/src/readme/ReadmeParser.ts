@@ -1,4 +1,4 @@
-import { snakeCase } from "lodash-es";
+import { snakeCase } from "es-toolkit/string";
 import { Block } from "./Block";
 
 export interface ParseResult {

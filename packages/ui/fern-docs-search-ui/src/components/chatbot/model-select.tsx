@@ -71,36 +71,53 @@ export const ChatbotModelSelect = forwardRef<
         onOpenChange?: (open: boolean) => void;
         disabled?: boolean;
         required?: boolean;
+        onCloseAutoFocus?: ComponentPropsWithoutRef<typeof SelectContent>["onCloseAutoFocus"];
     }
->(({ value, defaultValue, onValueChange, open, defaultOpen, onOpenChange, disabled, required, ...props }, ref) => {
-    const models = useChatbotModels();
-    return (
-        <Select
-            name="model"
-            defaultValue={defaultValue ?? models[0]?.model}
-            value={value}
-            onValueChange={onValueChange}
-            open={open}
-            defaultOpen={defaultOpen}
-            onOpenChange={onOpenChange}
-            disabled={disabled}
-            required={required}
-        >
-            <SelectTrigger ref={ref} {...props} className={cn("rounded-full shadow-none", props.className)}>
-                <SelectValue placeholder="Select a model" />
-            </SelectTrigger>
-            <SelectContent>
-                <SelectGroup>
-                    {models.map(({ provider, model, displayName }) => (
-                        <SelectItem key={model} value={model}>
-                            <Icon provider={provider} /> {displayName}
-                        </SelectItem>
-                    ))}
-                </SelectGroup>
-            </SelectContent>
-        </Select>
-    );
-});
+>(
+    (
+        {
+            value,
+            defaultValue,
+            onValueChange,
+            open,
+            defaultOpen,
+            onOpenChange,
+            disabled,
+            required,
+            onCloseAutoFocus,
+            ...props
+        },
+        ref,
+    ) => {
+        const models = useChatbotModels();
+        return (
+            <Select
+                name="model"
+                defaultValue={defaultValue ?? models[0]?.model}
+                value={value}
+                onValueChange={onValueChange}
+                open={open}
+                defaultOpen={defaultOpen}
+                onOpenChange={onOpenChange}
+                disabled={disabled}
+                required={required}
+            >
+                <SelectTrigger ref={ref} {...props} className={cn("rounded-full shadow-none", props.className)}>
+                    <SelectValue placeholder="Select a model" />
+                </SelectTrigger>
+                <SelectContent onCloseAutoFocus={onCloseAutoFocus}>
+                    <SelectGroup>
+                        {models.map(({ provider, model, displayName }) => (
+                            <SelectItem key={model} value={model}>
+                                <Icon provider={provider} /> {displayName}
+                            </SelectItem>
+                        ))}
+                    </SelectGroup>
+                </SelectContent>
+            </Select>
+        );
+    },
+);
 
 ChatbotModelSelect.displayName = "ChatbotModelSelect";
 

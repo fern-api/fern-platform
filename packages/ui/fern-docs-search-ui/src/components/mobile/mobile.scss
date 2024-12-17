@@ -1,4 +1,4 @@
-#fern-search-mobile-command[cmdk-root] {
+#fern-search-mobile-command[data-cmdk-root] {
     overflow: hidden;
 
     [data-cmdk-fern-header] {
@@ -7,7 +7,7 @@
         gap: 0.5rem;
     }
 
-    [cmdk-list] {
+    [data-cmdk-list] {
         overflow: auto;
         overscroll-behavior: contain;
 
@@ -16,13 +16,13 @@
         }
     }
 
-    [cmdk-list-sizer] {
+    [data-cmdk-list-sizer] {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
     }
 
-    [cmdk-item] {
+    [data-cmdk-item] {
         border-radius: calc(0.5rem - 2px);
         margin-left: 0.5rem;
         margin-right: 0.5rem;
@@ -62,7 +62,7 @@
         }
     }
 
-    [cmdk-empty] {
+    [data-cmdk-empty] {
         color: var(--grayscale-a9);
 
         padding: 2rem;
@@ -71,7 +71,7 @@
         overflow-wrap: break-word;
     }
 
-    [cmdk-group-heading] {
+    [data-cmdk-group-heading] {
         font-size: 0.75rem;
         font-weight: 600;
         color: var(--grayscale-a9);

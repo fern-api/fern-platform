@@ -33,9 +33,6 @@
       "path": "../../template-resolver"
     },
     {
-      "path": "../chatbot"
-    },
-    {
       "path": "../fern-docs-auth"
     },
     {

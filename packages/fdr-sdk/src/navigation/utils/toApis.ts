@@ -1,4 +1,4 @@
-import { mapValues } from "es-toolkit";
+import { mapValues } from "es-toolkit/object";
 import { ApiDefinition } from "../..";
 import { DocsV2Read } from "../../client";
 

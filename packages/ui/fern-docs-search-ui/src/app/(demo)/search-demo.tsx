@@ -13,18 +13,21 @@ import {
     CommandGroupTheme,
     CommandSearchHits,
     DesktopBackButton,
-    DesktopCommand,
     DesktopCommandAboveInput,
     DesktopCommandBadges,
     DesktopCommandBeforeInput,
     DesktopSearchDialog,
     MobileCommand,
     SearchClientRoot,
-    useCommandUx,
     useFacetFilters,
 } from "@/components";
+import { ChatbotModelSelect } from "@/components/chatbot/model-select";
+import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
+import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 const USER_TOKEN_KEY = "user-token";
 
@@ -32,7 +35,13 @@ const ApiKeySchema = z.object({
     apiKey: z.string(),
 });
 
+const modelAtom = atomWithStorage("ai-model", "claude-3-5-haiku", undefined, {
+    getOnInit: true,
+});
+
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
+    const [initialInput, setInitialInput] = useState("");
+    const [askAi, setAskAi] = useState(false);
     const [open, setOpen] = useState(false);
     const { setTheme } = useTheme();
     const isMobile = useIsMobile();
@@ -64,7 +73,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
 
     const handleSubmit = useCallback(
         (path: string) => {
-            window.open(`https://${domain}${path}`, "_blank", "noopener,noreferrer");
+            window.open(String(new URL(path, `https://${domain}`)), "_blank", "noopener,noreferrer");
         },
         [domain],
     );
@@ -83,6 +92,8 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
         async (filters: readonly string[]) => fetchFacets({ filters, domain, apiKey: apiKey || "" }),
         [domain, apiKey],
     );
+
+    const [model, setModel] = useAtom(modelAtom);
 
     if (!apiKey) {
         return false;
@@ -103,7 +114,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                             <>
                                 <CommandGroupFilters />
                                 <CommandEmpty />
-                                <CommandSearchHits onSelect={handleSubmit} />
+                                <CommandSearchHits onSelect={handleSubmit} domain={domain} />
                             </>
                         ) : (
                             <AppSidebarContent />
@@ -112,44 +123,74 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 </AppSidebar>
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
-                    <DesktopCommand onClose={() => setOpen(false)}>
+                    <DesktopCommandWithAskAI
+                        domain={domain}
+                        askAI={askAi}
+                        setAskAI={setAskAi}
+                        onClose={() => setOpen(false)}
+                        api="/api/chat"
+                        suggestionsApi="/api/suggest"
+                        initialInput={initialInput}
+                        body={{
+                            algoliaSearchKey: apiKey,
+                            domain,
+                            model,
+                        }}
+                        onSelectHit={handleSubmit}
+                        composerActions={<ChatbotModelSelect value={model} onValueChange={setModel} />}
+                    >
                         <DesktopCommandAboveInput>
                             <DesktopCommandBadges />
                         </DesktopCommandAboveInput>
 
                         <DesktopCommandBeforeInput>
-                            <BackButton />
+                            <BackButton askAi={askAi} setAskAi={setAskAi} />
                         </DesktopCommandBeforeInput>
+
+                        <CommandAskAIGroup
+                            onAskAI={(initialInput) => {
+                                setInitialInput(initialInput);
+                                setAskAi(true);
+                            }}
+                            forceMount
+                        />
 
                         <CommandGroupFilters />
                         <CommandEmpty />
-                        <CommandSearchHits onSelect={handleSubmit} />
+                        <CommandSearchHits onSelect={handleSubmit} domain={domain} />
                         <CommandActions>
                             <CommandGroupTheme setTheme={setTheme} />
                         </CommandActions>
-                    </DesktopCommand>
+                    </DesktopCommandWithAskAI>
                 </DesktopSearchDialog>
             )}
         </SearchClientRoot>
     );
 }
 
-function BackButton() {
+function BackButton({ askAi, setAskAi }: { askAi: boolean; setAskAi: (askAi: boolean) => void }) {
     const { filters, popFilter, clearFilters } = useFacetFilters();
-    const { focus } = useCommandUx();
-    if (filters.length === 0) {
+    // const { focus } = useCommandUx();
+
+    if (filters.length === 0 && !askAi) {
         return false;
     }
 
     return (
         <DesktopBackButton
             pop={() => {
-                popFilter();
-                focus();
+                if (askAi) {
+                    setAskAi(false);
+                } else {
+                    popFilter();
+                }
             }}
             clear={() => {
-                clearFilters();
-                focus();
+                if (askAi) {
+                    setAskAi(false);
+                } else {
+                    clearFilters();
+                }
             }}
         />
     );

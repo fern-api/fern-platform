@@ -2,7 +2,7 @@ import { ApiDefinition, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { mapValues } from "es-toolkit/object";
 
-interface LoadDocsWithUrlPayload {
+export interface LoadDocsWithUrlPayload {
     /**
      * FDR environment to use. (either `https://registry-dev2.buildwithfern.com` or `https://registry.buildwithfern.com`)
      */

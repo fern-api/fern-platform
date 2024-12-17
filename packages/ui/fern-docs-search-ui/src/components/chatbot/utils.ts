@@ -15,59 +15,60 @@ const SearchResult = z.object({
 
 export type SearchResult = z.infer<typeof SearchResult>;
 
-export function squeezeMessages(messages: Message[]): {
-    id: string;
-    createdAt?: Date;
-    role: "assistant" | "user";
-    content: string;
-    toolInvocations?: ToolInvocation[];
-}[] {
-    const squeezed: {
+interface SqueezedMessage {
+    user?: {
         id: string;
         createdAt?: Date;
-        role: "assistant" | "user";
         content: string;
-        toolInvocations?: ToolInvocation[];
-    }[] = [];
+    };
+    assistant?: {
+        id: string;
+        createdAt?: Date;
+        content: string;
+    };
+    toolInvocations?: ToolInvocation[];
+}
+
+export function squeezeMessages(messages: Message[]): SqueezedMessage[] {
+    const squeezed: SqueezedMessage[] = [];
 
     for (const message of messages) {
-        if (message.role === "assistant") {
-            if (squeezed.length > 0 && squeezed[squeezed.length - 1].role === "assistant") {
-                const lastContent = squeezed[squeezed.length - 1].content;
-                squeezed[squeezed.length - 1].content = [lastContent, message.content]
-                    .filter((content) => content.trimStart().length > 0)
-                    .join("\n\n");
-
-                // merge tool invocations
-                squeezed[squeezed.length - 1].toolInvocations = [
-                    ...(squeezed[squeezed.length - 1].toolInvocations ?? []),
-                    ...(message.toolInvocations ?? []),
-                ];
-            } else {
-                squeezed.push({
-                    id: message.id,
-                    createdAt: message.createdAt,
-                    role: message.role,
-                    content: message.content,
-                    toolInvocations: message.toolInvocations,
-                });
-            }
-        }
+        let lastMessage = squeezed[squeezed.length - 1];
 
         if (message.role === "user") {
             squeezed.push({
+                user: {
+                    id: message.id,
+                    createdAt: message.createdAt,
+                    content: message.content,
+                },
+                toolInvocations: message.toolInvocations,
+            });
+        } else if (message.role === "assistant") {
+            if (lastMessage == null) {
+                const newMessage: SqueezedMessage = {};
+                lastMessage = newMessage;
+                squeezed.push(newMessage);
+            }
+
+            lastMessage.assistant ??= {
                 id: message.id,
                 createdAt: message.createdAt,
-                role: message.role,
-                content: message.content,
-            });
+                content: "",
+            };
+
+            lastMessage.assistant.content = [lastMessage.assistant.content, message.content]
+                .filter((content) => content.trimStart().length > 0)
+                .join("\n\n");
+
+            lastMessage.toolInvocations = [...(lastMessage.toolInvocations ?? []), ...(message.toolInvocations ?? [])];
         }
     }
 
     return squeezed;
 }
 
-export function combineSearchResults(messages: Message[]): AlgoliaRecordHit[] {
+export function combineSearchResults(messages: SqueezedMessage[]): AlgoliaRecordHit[] {
     return (
         messages
             .flatMap((message) => message.toolInvocations ?? [])

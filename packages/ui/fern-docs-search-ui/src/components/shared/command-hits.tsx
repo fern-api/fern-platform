@@ -1,24 +1,27 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { Command, useCommandState } from "cmdk";
-import { PropsWithChildren, ReactNode, memo, useEffect, useRef } from "react";
+import { PropsWithChildren, ReactNode, memo } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";
+import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
 import { useFacetFilters } from "../search-client";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
+import { CommandLink } from "./command-link";
 import { HitContent } from "./hit-content";
 import { GroupedHit, generateHits } from "./hits";
 
 export const CommandSearchHits = ({
+    domain,
     onSelect,
     prefetch,
 }: {
+    domain: string;
     onSelect: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
 }): ReactNode => {
-    const isQueryEmpty = useCommandState((state) => state.search.trimStart().length === 0) as boolean;
+    const isQueryEmpty = Command.useCommandState((state) => state.search.trimStart().length === 0) as boolean;
     const items = useSearchHits();
 
     const { filters } = useFacetFilters();
@@ -27,15 +30,17 @@ export const CommandSearchHits = ({
         return false;
     }
 
-    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} prefetch={prefetch} />;
+    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} prefetch={prefetch} domain={domain} />;
 };
 
 const MemoizedCommandSearchHits = memo(
     ({
+        domain,
         items,
         onSelect,
         prefetch,
     }: {
+        domain: string;
         items: AlgoliaRecordHit[];
         onSelect: (path: string) => void;
         prefetch?: (path: string) => Promise<void>;
@@ -47,7 +52,13 @@ const MemoizedCommandSearchHits = memo(
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
                         {group.hits.map((hit) => (
-                            <CommandHit key={hit.path} hit={hit} onSelect={onSelect} prefetch={prefetch} />
+                            <CommandHit
+                                key={hit.path}
+                                hit={hit}
+                                onSelect={onSelect}
+                                prefetch={prefetch}
+                                domain={domain}
+                            />
                         ))}
                     </Command.Group>
                 ))}
@@ -58,79 +69,39 @@ const MemoizedCommandSearchHits = memo(
 
 function CommandHit({
     hit,
+    domain,
     onSelect,
     prefetch,
 }: {
     hit: GroupedHit;
+    domain: string;
     /**
      * @param path - the path to navigate to via nextjs router
      */
     onSelect: (path: string) => void;
     prefetch?: (path: string) => Promise<void>;
 }) {
-    const ref = useRef<HTMLDivElement>(null);
-
-    const isSelected = useCommandState((state) => state.value === hit.path) as boolean;
-    useEffect(() => {
-        if (isSelected) {
-            void prefetch?.(hit.path);
-        }
-    }, [hit.path, isSelected, prefetch]);
-
-    // the following mirrors the `onSelect` handling in the original cmdk codebase
-    useEffect(() => {
-        const element = ref.current;
-        if (!element) {
-            return;
-        }
-        const listener = () => onSelect(hit.path);
-        element.addEventListener("cmdk-item-select", listener);
-        return () => element.removeEventListener("cmdk-item-select", listener);
-    }, [hit.path, isSelected, onSelect, prefetch]);
-
     if (!hit.record) {
         return false;
     }
 
     return (
         <CommandGroupSearchHitTooltip key={hit.path} hit={hit.record} path={hit.path}>
-            <Command.Item
-                // Note: `onSelect` is purposely not passed in here because these command items must be rendered as
-                // `<a>` elements to allow opening the links in a new tab, an new window, etc + showing the default browser context menu.
-                ref={ref}
-                value={hit.path}
+            <CommandLink
+                href={hit.path}
                 keywords={[hit.record.title]}
-                onPointerOver={() => {
-                    void prefetch?.(hit.path);
-                }}
-                asChild
+                prefetch={prefetch}
+                onSelect={onSelect}
+                domain={domain}
             >
-                <a
-                    href={hit.path}
-                    onClick={(e) => {
-                        // if the user clicked this link without any modifier keys, and it's a left click, then we want to
-                        // navigate to the link using the `onSelect` handler to defer the behavior to the NextJS router.
-                        if (
-                            !e.metaKey &&
-                            !e.ctrlKey &&
-                            !e.shiftKey &&
-                            !e.altKey &&
-                            (e.button === 0 || e.button === 1)
-                        ) {
-                            e.preventDefault();
-                            onSelect(hit.path);
-                        }
-                    }}
-                >
-                    <PageIcon
-                        icon={hit.icon}
-                        type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
-                        isSubPage={hit.record.hash != null}
-                        className="self-start"
-                    />
-                    <HitContent hit={hit.record} />
-                </a>
-            </Command.Item>
+                <PageIcon
+                    icon={hit.icon}
+                    type={hit.record.type === "api-reference" ? hit.record.api_type : hit.record.type}
+                    isSubPage={hit.record.hash != null}
+                    className="self-start"
+                />
+                <HitContent hit={hit.record} />
+            </CommandLink>
         </CommandGroupSearchHitTooltip>
     );
 }
@@ -142,7 +113,7 @@ function CommandGroupSearchHitTooltip({
     path,
     children,
 }: PropsWithChildren<{ hit: AlgoliaRecordHit; path: string }>) {
-    const open = useCommandState((state) => state.value === path) as boolean;
+    const open = Command.useCommandState((state) => state.value === path) as boolean;
 
     if (hit._snippetResult?.content == null && hit._snippetResult?.description == null) {
         return children;

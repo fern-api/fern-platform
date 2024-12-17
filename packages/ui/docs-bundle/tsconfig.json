@@ -41,9 +41,6 @@
       "path": "../app/tsconfig.build.json"
     },
     {
-      "path": "../chatbot"
-    },
-    {
       "path": "../components"
     }
   ]

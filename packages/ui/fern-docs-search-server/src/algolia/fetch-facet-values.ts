@@ -1,5 +1,5 @@
 import { Algoliasearch } from "algoliasearch";
-import { zip } from "es-toolkit";
+import { zip } from "es-toolkit/array";
 import { SEARCH_INDEX } from "./constants";
 import { FacetName, SEARCHABLE_FACET_ATTRIBUTES } from "./types";
 

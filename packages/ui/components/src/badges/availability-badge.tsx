@@ -134,6 +134,7 @@ export const AvailabilityColorScheme: Record<Availability, UIColor> = {
 
 interface AvailabilityBadgeProps extends Omit<BadgeProps, "color"> {
     availability: Availability;
+    color?: BadgeProps["color"];
 }
 
 export const AvailabilityBadge = forwardRef<HTMLSpanElement & HTMLButtonElement, AvailabilityBadgeProps>(
@@ -142,8 +143,8 @@ export const AvailabilityBadge = forwardRef<HTMLSpanElement & HTMLButtonElement,
         return (
             <Badge
                 ref={ref}
-                {...rest}
                 color={AvailabilityColorScheme[availability]}
+                {...rest}
                 data-badge-type="availability"
                 title={AvailabilityFullyQualifiedDisplayNames[availability]}
             >

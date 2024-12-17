@@ -3,7 +3,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY, EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FernScrollArea, StatusCodeBadge, statusCodeToIntent } from "@fern-ui/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
-import { sortBy } from "es-toolkit";
+import { sortBy } from "es-toolkit/array";
 import { RESET } from "jotai/utils";
 import { ReactNode, SetStateAction, memo, useCallback, useMemo, useRef } from "react";
 import { FernErrorTag } from "../../components/FernErrorBoundary";

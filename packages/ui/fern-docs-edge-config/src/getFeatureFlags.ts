@@ -1,5 +1,5 @@
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import { isCustomDomain, isDevelopment, isFern } from "@fern-ui/fern-docs-utils";
+import { isCustomDomain, isDevelopment, isFern, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { getAll } from "@vercel/edge-config";
 
 export const runtime = "edge";
@@ -22,7 +22,7 @@ const FEATURE_FLAGS = [
     "use-mdx-bundler" as const,
     "batch-stream-toggle-disabled" as const,
     "enabled-auth-in-generated-docs" as const,
-    "ai-chat-preview" as const,
+    "ask-ai-enabled" as const,
     "audio-file-download-span-summary" as const,
     "docs-logo-text-enabled" as const,
     "audio-example-internal" as const,
@@ -69,7 +69,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
         const useMdxBundler = checkDomainMatchesCustomers(domain, config["use-mdx-bundler"]);
         const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(domain, config["batch-stream-toggle-disabled"]);
         const isAuthEnabledInDocs = checkDomainMatchesCustomers(domain, config["enabled-auth-in-generated-docs"]);
-        const isAiChatbotEnabledInPreview = checkDomainMatchesCustomers(domain, config["ai-chat-preview"]);
+        const isAskAiEnabled = checkDomainMatchesCustomers(domain, config["ask-ai-enabled"]);
         const isAudioFileDownloadSpanSummary = checkDomainMatchesCustomers(
             domain,
             config["audio-file-download-span-summary"],
@@ -115,7 +115,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useMdxBundler,
             isBatchStreamToggleDisabled,
             isAuthEnabledInDocs,
-            isAiChatbotEnabledInPreview,
+            isAskAiEnabled,
             isAudioFileDownloadSpanSummary,
             isDocsLogoTextEnabled,
             isAudioExampleInternal,
@@ -151,7 +151,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             useMdxBundler: false,
             isBatchStreamToggleDisabled: false,
             isAuthEnabledInDocs: false,
-            isAiChatbotEnabledInPreview: false,
+            isAskAiEnabled: false,
             isAudioFileDownloadSpanSummary: false,
             isDocsLogoTextEnabled: false,
             isAudioExampleInternal: false,
@@ -173,5 +173,17 @@ function checkDomainMatchesCustomers(domain: string, customers: readonly string[
     if (customers == null) {
         return false;
     }
-    return customers.some((customer) => domain.toLowerCase().includes(customer.toLowerCase()));
+    const domainWithoutDocs = domain
+        .replace(".docs.buildwithfern.com", "")
+        .replace(".docs.staging.buildwithfern.com", "")
+        .replace(".docs.dev.buildwithfern.com", "")
+        .replace(".buildwithfern.dev", "")
+        .replace(".ferndocs.dev", "")
+        .replace(".ferndocs.app", "")
+        .replace(".ferndocs.com", "");
+    return (
+        customers.some((customer) => domainWithoutDocs.toLowerCase().includes(customer.toLowerCase())) ||
+        customers.includes(domain) ||
+        customers.includes(withoutStaging(domain))
+    );
 }

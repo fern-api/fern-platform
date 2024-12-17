@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AvailabilitySchema } from "../shared/types";
 
 // in order of priority:
 export const SEARCHABLE_ATTRIBUTES = [
@@ -58,27 +59,7 @@ export const BaseRecordSchema = z.object({
     hash: z.string().optional().describe("The anchor link on the page (with leading #)"),
     icon: z.string().optional(),
     title: z.string().describe("The title of the page, as specified in the frontmatter or docs.yml"),
-    availability: z
-        .enum([
-            "Stable",
-            "GenerallyAvailable", // also known as "GA" or "Graduated"
-            "ReleaseCandidate", // also known as "RC"
-            "PublicBeta",
-            "Beta",
-            "PrivateBeta",
-            "LimitedAvailability", // also known as "Limited"
-            "CanaryRelease", // also known as "Canary"
-            "Preview", // also known as "Early Access"
-            "PreRelease",
-            "Alpha",
-            "Experimental",
-            "Internal",
-            "InDevelopment",
-            "Sunset",
-            "Deprecated",
-            "Retired",
-        ])
-        .optional(),
+    availability: AvailabilitySchema.optional(),
     description: z
         .string()
         .optional()

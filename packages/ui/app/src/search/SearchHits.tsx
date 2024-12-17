@@ -3,21 +3,18 @@ import { FernButton, FernScrollArea } from "@fern-ui/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { getSlugForSearchRecord, type SearchRecord } from "@fern-ui/search-utils";
 import { Minus, Xmark } from "iconoir-react";
-import { useSetAtom } from "jotai";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { COHERE_ASK_AI, COHERE_INITIAL_MESSAGE, useBasePath, useCloseSearchDialog, useFeatureFlags } from "../atoms";
+import { useBasePath, useCloseSearchDialog } from "../atoms";
 import { Separator } from "../components/Separator";
 import { useToHref } from "../hooks/useHref";
 import { SearchHit } from "./SearchHit";
-import { AskCohereHit } from "./cohere/AskCohereHit";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
     return <div className="justify t-muted flex h-24 w-full flex-col hits-center py-3">{children}</div>;
 };
 
-const COHERE_AI_HIT_ID = "cohere-ai-hit";
 const SEARCH_HITS_PER_SECTION = 3;
 
 const expandHits = (expanded: boolean, hits: SearchRecord[]) => {
@@ -97,8 +94,10 @@ const MobileSearchSection: React.FC<{
     </>
 );
 
+const isAskAiEnabled = false;
+
 export const SearchHits: React.FC = () => {
-    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
+    // const { isAskAiEnabled } = useFeatureFlags();
     const basePath = useBasePath();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
@@ -142,18 +141,15 @@ export const SearchHits: React.FC = () => {
     useEffect(() => {
         const [firstHit] = hits;
         if (firstHit != null) {
-            setHoveredSearchHitId((id) => id ?? (isAiChatbotEnabledInPreview ? COHERE_AI_HIT_ID : firstHit.objectID));
+            setHoveredSearchHitId((id) => id ?? firstHit.objectID);
         }
-    }, [hits, isAiChatbotEnabledInPreview]);
+    }, [hits]);
 
     useKeyboardPress({
         key: "Up",
         onPress: () => {
             if (hoveredSearchHit == null) {
                 setHoveredSearchHitId(null);
-                return;
-            } else if (hoveredSearchHit.index === 0 && isAiChatbotEnabledInPreview) {
-                setHoveredSearchHitId(COHERE_AI_HIT_ID);
                 return;
             }
 
@@ -171,15 +167,6 @@ export const SearchHits: React.FC = () => {
     useKeyboardPress({
         key: "Down",
         onPress: () => {
-            if (hoveredSearchHitId === COHERE_AI_HIT_ID) {
-                setHoveredSearchHitId(orderedHits[0]?.objectID ?? null);
-                return;
-            }
-
-            if (hoveredSearchHit == null && isAiChatbotEnabledInPreview) {
-                setHoveredSearchHitId(COHERE_AI_HIT_ID);
-                return;
-            }
             const nextHit = orderedHits[hoveredSearchHit != null ? hoveredSearchHit.index + 1 : 0];
             if (nextHit != null) {
                 setHoveredSearchHitId(nextHit.objectID);
@@ -191,26 +178,9 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    const setOpenCohere = useSetAtom(COHERE_ASK_AI);
-    const setCohereInitialMessage = useSetAtom(COHERE_INITIAL_MESSAGE);
-
-    const openCohere = () => {
-        setCohereInitialMessage(`Can you tell me about ${search.results.query}?`);
-        setOpenCohere(true);
-    };
-
     const toHref = useToHref();
     const navigateToHoveredHit = async () => {
         if (hoveredSearchHit == null) {
-            if (
-                isAiChatbotEnabledInPreview &&
-                hoveredSearchHitId === COHERE_AI_HIT_ID &&
-                search.results.query.length > 0
-            ) {
-                closeSearchDialog();
-                openCohere();
-            }
-
             return;
         }
         const slug = FernNavigation.Slug(getSlugForSearchRecord(hoveredSearchHit.record, basePath));
@@ -235,7 +205,7 @@ export const SearchHits: React.FC = () => {
         capture: true,
     });
 
-    if ((hits.length === 0 && !isAiChatbotEnabledInPreview) || search.results.query.length === 0) {
+    if ((hits.length === 0 && !isAskAiEnabled) || search.results.query.length === 0) {
         return null;
     }
 
@@ -247,18 +217,6 @@ export const SearchHits: React.FC = () => {
             className="p-2"
             scrollbars="vertical"
         >
-            {isAiChatbotEnabledInPreview && (
-                <AskCohereHit
-                    setRef={(elem) => {
-                        if (elem != null) {
-                            refs.current.set(COHERE_AI_HIT_ID, elem);
-                        }
-                    }}
-                    message={search.results.query}
-                    isHovered={hoveredSearchHitId === COHERE_AI_HIT_ID}
-                    onMouseEnter={() => setHoveredSearchHitId(COHERE_AI_HIT_ID)}
-                />
-            )}
             {pageHits.length > 0 && (
                 <SearchSection
                     title="Pages"
@@ -286,7 +244,6 @@ export const SearchHits: React.FC = () => {
 };
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
-    const { isAiChatbotEnabledInPreview } = useFeatureFlags();
     const { hits } = useInfiniteHits<SearchRecord>();
     const search = useInstantSearch();
     const [expandEndpoints, setExpandEndpoints] = useState(false);
@@ -307,17 +264,6 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <FernScrollArea rootClassName="min-h-[80vh]" className="mask-grad-top-4 px-2 pt-4">
-            {isAiChatbotEnabledInPreview && (
-                <AskCohereHit
-                    setRef={(elem) => {
-                        if (elem != null) {
-                            refs.current.set(COHERE_AI_HIT_ID, elem);
-                        }
-                    }}
-                    message={search.results.query}
-                    isHovered={true}
-                />
-            )}
             {pageHits.length > 0 && (
                 <MobileSearchSection
                     title="Pages"
