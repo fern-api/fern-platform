@@ -39,7 +39,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:TextToSpeechRequest"
+            "id": "TextToSpeechRequest"
           }
         }
       },
@@ -91,7 +91,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:TextToSpeechFromPromptRequest"
+            "id": "TextToSpeechFromPromptRequest"
           }
         }
       },
@@ -135,7 +135,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListVoicesResponse"
+            "id": "ListVoicesResponse"
           }
         },
         "description": "Successful response"
@@ -180,7 +180,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateVoiceRequest"
+            "id": "CreateVoiceRequest"
           }
         }
       },
@@ -190,7 +190,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateVoiceResponse"
+            "id": "CreateVoiceResponse"
           }
         },
         "description": "Successful response"
@@ -258,7 +258,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:GetVoiceByIdResponse"
+            "id": "GetVoiceByIdResponse"
           }
         },
         "description": "Successful response"
@@ -326,7 +326,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:UpdateVoiceRequest"
+            "id": "UpdateVoiceRequest"
           }
         }
       },
@@ -336,7 +336,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:UpdateVoiceResponse"
+            "id": "UpdateVoiceResponse"
           }
         },
         "description": "Successful response"
@@ -404,7 +404,7 @@
   "websockets": {},
   "webhooks": {},
   "types": {
-    "type_:TextToSpeechRequest": {
+    "TextToSpeechRequest": {
       "name": "TextToSpeechRequest",
       "shape": {
         "type": "object",
@@ -477,7 +477,7 @@
         ]
       }
     },
-    "type_:TextToSpeechResponse": {
+    "TextToSpeechResponse": {
       "name": "TextToSpeechResponse",
       "shape": {
         "type": "object",
@@ -499,7 +499,7 @@
         ]
       }
     },
-    "type_:TextToSpeechFromPromptRequest": {
+    "TextToSpeechFromPromptRequest": {
       "name": "TextToSpeechFromPromptRequest",
       "shape": {
         "type": "object",
@@ -572,7 +572,7 @@
         ]
       }
     },
-    "type_:TextToSpeechFromPromptResponse": {
+    "TextToSpeechFromPromptResponse": {
       "name": "TextToSpeechFromPromptResponse",
       "shape": {
         "type": "object",
@@ -594,7 +594,7 @@
         ]
       }
     },
-    "type_:ListVoicesResponse": {
+    "ListVoicesResponse": {
       "name": "ListVoicesResponse",
       "shape": {
         "type": "alias",
@@ -604,23 +604,23 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Voice"
+              "id": "Voice"
             }
           }
         }
       }
     },
-    "type_:GetVoiceByIdResponse": {
+    "GetVoiceByIdResponse": {
       "name": "GetVoiceByIdResponse",
       "shape": {
         "type": "alias",
         "value": {
           "type": "id",
-          "id": "type_:Voice"
+          "id": "Voice"
         }
       }
     },
-    "type_:Voice": {
+    "Voice": {
       "name": "Voice",
       "shape": {
         "type": "object",
@@ -681,7 +681,7 @@
         ]
       }
     },
-    "type_:CreateVoiceRequest": {
+    "CreateVoiceRequest": {
       "name": "CreateVoiceRequest",
       "shape": {
         "type": "object",
@@ -735,17 +735,17 @@
         ]
       }
     },
-    "type_:CreateVoiceResponse": {
+    "CreateVoiceResponse": {
       "name": "CreateVoiceResponse",
       "shape": {
         "type": "alias",
         "value": {
           "type": "id",
-          "id": "type_:Voice"
+          "id": "Voice"
         }
       }
     },
-    "type_:UpdateVoiceRequest": {
+    "UpdateVoiceRequest": {
       "name": "UpdateVoiceRequest",
       "shape": {
         "type": "object",
@@ -793,13 +793,13 @@
         ]
       }
     },
-    "type_:UpdateVoiceResponse": {
+    "UpdateVoiceResponse": {
       "name": "UpdateVoiceResponse",
       "shape": {
         "type": "alias",
         "value": {
           "type": "id",
-          "id": "type_:Voice"
+          "id": "Voice"
         }
       }
     }

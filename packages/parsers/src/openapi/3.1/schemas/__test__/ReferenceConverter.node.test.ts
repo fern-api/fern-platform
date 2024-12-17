@@ -56,7 +56,7 @@ describe("ReferenceConverterNode", () => {
                 type: "alias",
                 value: {
                     type: "id",
-                    id: "type_:Pet",
+                    id: "Pet",
                     default: undefined,
                 },
             });

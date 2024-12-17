@@ -32,7 +32,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:Pet"
+            "id": "Pet"
           }
         }
       },
@@ -42,7 +42,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:Pet"
+            "id": "Pet"
           }
         },
         "description": "Successful operation"
@@ -80,7 +80,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:Pet"
+            "id": "Pet"
           }
         }
       },
@@ -90,7 +90,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:Pet"
+            "id": "Pet"
           }
         },
         "description": "Successful operation"
@@ -151,7 +151,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:Pet"
+            "id": "Pet"
           }
         },
         "description": "The pet"
@@ -163,7 +163,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Pet"
+              "id": "Pet"
             }
           },
           "description": "Invalid ID supplied",
@@ -175,7 +175,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Pet"
+              "id": "Pet"
             }
           },
           "description": "Pet not found",
@@ -187,7 +187,7 @@
   "websockets": {},
   "webhooks": {},
   "types": {
-    "type_:Order": {
+    "Order": {
       "name": "Order",
       "shape": {
         "type": "object",
@@ -274,7 +274,7 @@
         ]
       }
     },
-    "type_:Customer": {
+    "Customer": {
       "name": "Customer",
       "shape": {
         "type": "object",
@@ -314,7 +314,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Address"
+                    "id": "Address"
                   }
                 }
               }
@@ -323,7 +323,7 @@
         ]
       }
     },
-    "type_:Address": {
+    "Address": {
       "name": "Address",
       "shape": {
         "type": "object",
@@ -380,7 +380,7 @@
         ]
       }
     },
-    "type_:Category": {
+    "Category": {
       "name": "Category",
       "shape": {
         "type": "object",
@@ -413,7 +413,7 @@
         ]
       }
     },
-    "type_:User": {
+    "User": {
       "name": "User",
       "shape": {
         "type": "object",
@@ -519,7 +519,7 @@
         ]
       }
     },
-    "type_:Tag": {
+    "Tag": {
       "name": "Tag",
       "shape": {
         "type": "object",
@@ -552,7 +552,7 @@
         ]
       }
     },
-    "type_:Pet": {
+    "Pet": {
       "name": "Pet",
       "shape": {
         "type": "object",
@@ -598,7 +598,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Category"
+                    "id": "Category"
                   }
                 }
               }
@@ -636,7 +636,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Tag"
+                        "id": "Tag"
                       }
                     }
                   }
@@ -671,7 +671,7 @@
         ]
       }
     },
-    "type_:ApiResponse": {
+    "ApiResponse": {
       "name": "ApiResponse",
       "shape": {
         "type": "object",
