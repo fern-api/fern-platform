@@ -1,69 +1,68 @@
 import { ProxyRequestSchema } from "@fern-ui/ui";
-import type { NextApiRequest, NextApiResponse } from "next/types";
-import fetch, { Headers } from "node-fetch";
 import { buildRequestBody } from "./rest";
 
 /**
- * Note: this API route must be deployed as an node.js serverless function because
- * edge functions must return a response within 25 seconds.
- *
- * This function is used to return the response directly from the proxied request, and is useful for file downloads.
- *
- * TODO: this is kind of expensive to run as a serverless function in vercel. We should consider moving this to cloudflare workers.
+ * Note: edge functions must return a response within 25 seconds.
  */
 
-export const config = {
-    maxDuration: 300, // 5 minutes
-};
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+export default async function handler(req: Request): Promise<Response> {
     if (req.method !== "POST" && req.method !== "OPTIONS") {
-        return res.status(405).send(null);
+        return new Response(null, { status: 405 });
     }
 
-    const origin = req.headers.origin;
+    const origin = req.headers.get("origin");
     if (origin == null) {
-        return res.status(400).send(null);
+        return new Response(null, { status: 400 });
     }
 
-    res.setHeader("Access-Control-Allow-Origin", origin);
-    res.setHeader("Access-Control-Allow-Methods", "POST");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    const headers = new Headers({
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Headers": "Content-Type",
+    });
 
     if (req.method === "OPTIONS") {
-        return res.status(204).send(null);
+        return new Response(null, { status: 204, headers });
     }
 
     // eslint-disable-next-line no-console
     console.log("Starting proxy request to", req.url);
 
     try {
-        const proxyRequest = ProxyRequestSchema.parse(req.body);
+        const body = await req.json();
+        const proxyRequest = ProxyRequestSchema.parse(body);
         const [mime, requestBody] = await buildRequestBody(proxyRequest.body);
-        const headers = new Headers(proxyRequest.headers);
+        const proxyHeaders = new Headers(proxyRequest.headers);
 
         // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
-        const contentType = headers.get("Content-Type");
+        const contentType = proxyHeaders.get("Content-Type");
         if (contentType != null && contentType.toLowerCase().includes("multipart/form-data")) {
-            headers.delete("Content-Type");
+            proxyHeaders.delete("Content-Type");
         } else if (mime != null) {
-            headers.set("Content-Type", mime);
+            proxyHeaders.set("Content-Type", mime);
         }
 
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
-            headers,
-            body: requestBody,
+            headers: proxyHeaders,
+            body: requestBody as BodyInit,
         });
 
+        // Copy all headers from proxied response
         response.headers.forEach((value, name) => {
-            res.setHeader(name, value);
+            headers.set(name, value);
         });
 
-        return res.status(response.status).send(response.body);
+        return new Response(response.body, {
+            status: response.status,
+            headers,
+        });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return res.status(500).send(null);
+        return new Response(null, { status: 500 });
     }
 }

@@ -1,6 +1,6 @@
 import { AvailabilityBadge, HttpMethodBadge } from "@fern-ui/components/badges";
-import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
-import { SEARCHABLE_FACET_ATTRIBUTES, type FacetName } from "@fern-ui/fern-docs-search-server/types";
+import type { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
+import { SEARCHABLE_FACET_ATTRIBUTES, type FacetName } from "@fern-ui/fern-docs-search-server/algolia/types";
 import { ReactNode } from "react";
 
 import { FilterOption } from "../types";

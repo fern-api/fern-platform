@@ -1,4 +1,4 @@
-import { prepareMdxContent } from "../prepare-mdx-content";
+import { prepareMdxContent } from "../../../utils/prepare-mdx-content";
 
 describe("prepareMdxContent", () => {
     it("should remove mdxjsEsm nodes", () => {

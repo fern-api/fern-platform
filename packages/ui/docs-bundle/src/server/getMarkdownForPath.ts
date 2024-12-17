@@ -3,7 +3,7 @@ import { EndpointDefinition, TypeDefinition, TypeShape } from "@fern-api/fdr-sdk
 import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { FeatureFlags } from "@fern-ui/fern-docs-utils";
-import { isString } from "es-toolkit";
+import { isString } from "es-toolkit/predicate";
 import { DocsLoader } from "./DocsLoader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";

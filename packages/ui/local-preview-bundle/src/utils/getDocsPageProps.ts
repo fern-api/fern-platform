@@ -70,6 +70,7 @@ export async function getDocsPageProps(
         prev: node.prev,
         next: node.next,
         apis: docs.definition.apis,
+        apisV2: docs.definition.apisV2,
         pages: docs.definition.pages,
         featureFlags,
         mdxOptions: {

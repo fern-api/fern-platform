@@ -1,12 +1,12 @@
 import { EMPTY_OBJECT, getDevice, getPlatform } from "@fern-api/ui-core-utils";
-import { FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
-import { FacetName } from "@fern-ui/fern-docs-search-server/types";
-import { useDeepCompareEffect, useEventCallback } from "@fern-ui/react-commons";
+import type { FacetName, FacetsResponse } from "@fern-ui/fern-docs-search-server/algolia";
+import { useDeepCompareEffectNoCheck, useEventCallback } from "@fern-ui/react-commons";
 import { LiteClient, liteClient } from "algoliasearch/lite";
 import { useAtom, useSetAtom } from "jotai";
 import { RESET, atomWithDefault } from "jotai/utils";
 import {
     Dispatch,
+    KeyboardEventHandler,
     PropsWithChildren,
     ReactElement,
     ReactNode,
@@ -160,7 +160,7 @@ function FacetFiltersProvider({
     const setFilters = useSetAtom(ref.current);
 
     // preload facets on initial render so that they're cached before the user runs `cmdk`
-    useDeepCompareEffect(() => {
+    useDeepCompareEffectNoCheck(() => {
         const filters = toFacetFilters(initialFilters);
         void preloadFacets(filters);
         setFilters(filters);
@@ -179,20 +179,30 @@ function useFacetFilters(atom?: ReturnType<typeof atomWithDefault<readonly Facet
     clearFilters: () => void;
     resetFilters: () => void;
     popFilter: () => void;
+    handlePopState: KeyboardEventHandler<HTMLElement>;
 } {
     const contextAtom = useContext(FacetFiltersContext).atom;
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [filters, setFilters] = useAtom(atom ?? contextAtom);
-    return useMemo(
-        () => ({
+    return useMemo(() => {
+        const clearFilters = () => setFilters([]);
+        const resetFilters = () => setFilters(RESET);
+        const popFilter = () => setFilters((prev) => prev.slice(0, -1));
+        return {
             filters,
             setFilters,
-            clearFilters: () => setFilters([]),
-            resetFilters: () => setFilters(RESET),
-            popFilter: () => setFilters((prev) => prev.slice(0, -1)),
-        }),
-        [filters, setFilters],
-    );
+            clearFilters,
+            resetFilters,
+            popFilter,
+            handlePopState: (e) => {
+                if (e.metaKey || e.ctrlKey) {
+                    clearFilters();
+                } else {
+                    popFilter();
+                }
+            },
+        };
+    }, [filters, setFilters]);
 }
 
 /**
