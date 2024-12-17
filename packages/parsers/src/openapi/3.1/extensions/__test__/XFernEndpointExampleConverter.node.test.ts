@@ -46,12 +46,12 @@ describe("XFernEndpointExampleConverterNode", () => {
                         contentType: "json",
                     } as RequestMediaTypeObjectConverterNode,
                 },
+                undefined,
                 [
                     {
                         contentType: "application/json",
                     } as ResponseMediaTypeObjectConverterNode,
                 ],
-                {},
             );
 
             const result = converter.convert();
@@ -120,12 +120,12 @@ describe("XFernEndpointExampleConverterNode", () => {
                         },
                     } as unknown as RequestMediaTypeObjectConverterNode,
                 },
+                undefined,
                 [
                     {
                         contentType: "application/json",
                     } as ResponseMediaTypeObjectConverterNode,
                 ],
-                {},
             );
 
             const result = converter.convert();
@@ -191,12 +191,12 @@ describe("XFernEndpointExampleConverterNode", () => {
                         contentType: "json",
                     } as RequestMediaTypeObjectConverterNode,
                 },
+                undefined,
                 [
                     {
                         contentType: "text/event-stream",
                     } as ResponseMediaTypeObjectConverterNode,
                 ],
-                {},
             );
 
             const result = converter.convert();

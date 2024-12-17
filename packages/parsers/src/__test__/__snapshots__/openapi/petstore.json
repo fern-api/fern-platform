@@ -167,7 +167,15 @@
             }
           },
           "description": "Invalid ID supplied",
-          "name": "Bad Request"
+          "name": "Bad Request",
+          "examples": [
+            {
+              "description": "A Pet in JSON format",
+              "responseBody": {
+                "type": "json"
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -179,7 +187,15 @@
             }
           },
           "description": "Pet not found",
-          "name": "Not Found"
+          "name": "Not Found",
+          "examples": [
+            {
+              "description": "A Pet in JSON format",
+              "responseBody": {
+                "type": "json"
+              }
+            }
+          ]
         }
       ]
     }

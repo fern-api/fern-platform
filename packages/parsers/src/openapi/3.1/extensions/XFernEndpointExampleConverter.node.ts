@@ -8,11 +8,8 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
-import {
-    RequestMediaTypeObjectConverterNode,
-    ResponseMediaTypeObjectConverterNode,
-    ResponseObjectConverterNode,
-} from "../paths";
+import { RequestMediaTypeObjectConverterNode, ResponseMediaTypeObjectConverterNode } from "../paths";
+import { RedocExampleConverterNode } from "./examples/RedocExampleConverter.node";
 import { X_FERN_EXAMPLES } from "./fernExtension.consts";
 
 export declare namespace XFernEndpointExampleConverterNode {
@@ -74,10 +71,8 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
         protected path: string,
         protected successResponseStatusCode: number,
         protected requestBodyByContentType: Record<string, RequestMediaTypeObjectConverterNode> | undefined,
+        protected redocSnippetsNode: RedocExampleConverterNode | undefined,
         protected responseBodies: ResponseMediaTypeObjectConverterNode[] | undefined,
-        protected errorsByStatusCode: Record<number, ResponseObjectConverterNode> | undefined,
-        // TODO: add support for error references, which may necessitate below
-        // protected errorResponseStatusCode: number,
     ) {
         super(args);
         this.safeParse();
@@ -342,7 +337,10 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
                     ),
                     requestBody,
                     responseBody,
-                    snippets,
+                    snippets: {
+                        ...(this.redocSnippetsNode?.convert() ?? {}),
+                        ...snippets,
+                    },
                 };
             });
         });
