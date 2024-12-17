@@ -1,6 +1,7 @@
 import { ProxyRequestSchema } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import fetch, { Headers } from "node-fetch";
+import { ServerResponse } from "node:http";
 import { buildRequestBody } from "./rest";
 
 /**
@@ -60,10 +61,60 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.setHeader(name, value);
         });
 
-        return res.status(response.status).send(response.body);
+        // Handle JSON responses more efficiently
+        const responseContentType = response.headers.get("content-type");
+        if (responseContentType?.includes("application/json")) {
+            const json = await response.json();
+            return res.status(response.status).json(json);
+        }
+
+        // Stream other response types
+        writeToServerResponse({
+            response: res,
+            status: response.status,
+            headers: Object.fromEntries(response.headers.entries()),
+            stream: response.body,
+        });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
         return res.status(500).send(null);
     }
+}
+
+/**
+ * Writes the content of a stream to a server response.
+ */
+export function writeToServerResponse({
+    response,
+    status,
+    statusText,
+    headers,
+    stream,
+}: {
+    response: ServerResponse;
+    status?: number;
+    statusText?: string;
+    headers?: Record<string, string | number | string[]>;
+    stream: ReadableStream<Uint8Array>;
+}): void {
+    response.writeHead(status ?? 200, statusText, headers);
+
+    const reader = stream.getReader();
+    const read = async () => {
+        try {
+            // eslint-disable-next-line no-constant-condition
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                    break;
+                }
+                response.write(value);
+            }
+        } finally {
+            response.end();
+        }
+    };
+
+    void read();
 }
