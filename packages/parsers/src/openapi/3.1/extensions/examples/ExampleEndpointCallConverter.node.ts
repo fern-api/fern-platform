@@ -5,7 +5,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 
-export class ExampleEndpointRequestConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class ExampleEndpointCallConverterNode extends BaseOpenApiV3_1ConverterNode<
     FernDefinition.ExampleEndpointCallSchema,
     FernRegistry.api.latest.ExampleEndpointCall
 > {

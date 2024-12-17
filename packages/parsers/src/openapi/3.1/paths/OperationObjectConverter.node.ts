@@ -14,6 +14,7 @@ import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter
 import { XFernEndpointExampleConverterNode } from "../extensions/XFernEndpointExampleConverter.node";
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
+import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import {
@@ -198,19 +199,27 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             sdkMethodName.sdkMethodName,
             this.input.operationId,
         );
+
+        const redocSnippetsNode = new RedocExampleConverterNode({
+            input: this.input,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "x-code-samples",
+        });
+
         // TODO: figure out how to merge user specified examples with success response
         this.examples = new XFernEndpointExampleConverterNode(
             {
                 input: this.input,
                 context: this.context,
                 accessPath: this.accessPath,
-                pathId: "examples",
+                pathId: "x-fern-examples",
             },
             this.path,
             responseStatusCode,
             this.requests?.requestBodiesByContentType,
+            redocSnippetsNode,
             this.responses?.responsesByStatusCode?.[responseStatusCode]?.responses,
-            this.responses?.errorsByStatusCode,
         );
     }
 
