@@ -1,4 +1,5 @@
 export * from "./command-actions";
+export * from "./command-ask-ai";
 export * from "./command-empty";
 export * from "./command-filters";
 export * from "./command-hits";

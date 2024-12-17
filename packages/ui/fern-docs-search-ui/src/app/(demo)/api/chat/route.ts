@@ -1,29 +1,33 @@
-import { algoliaAppId } from "@/server/env-variables";
 import { models } from "@/server/models";
-import { searchClient } from "@algolia/client-search";
-import { SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
-import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/types";
+import { runSemanticSearchTurbopuffer } from "@/server/run-reindex-turbopuffer";
+import { createDefaultSystemPrompt } from "@/server/system-prompt";
+import { toDocuments } from "@fern-ui/fern-docs-search-server/turbopuffer";
 import { streamText, tool } from "ai";
 import { z } from "zod";
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
+const BodySchema = z.object({
+    messages: z.array(z.any()),
+    algoliaSearchKey: z.string(),
+    model: z.string().optional(),
+    domain: z.string(),
+});
+
 export async function POST(request: Request): Promise<Response> {
-    const searchKey = request.headers.get("X-Algolia-Search-Key");
-    const userToken = request.headers.get("X-User-Token") ?? undefined;
+    const { messages, model: _model, domain } = BodySchema.parse(await request.json());
 
-    const { messages, system: _system, model: _model } = await request.json();
+    const model = models[(_model as keyof typeof models) ?? "gpt-4o-mini"];
 
-    const model = models[(_model as keyof typeof models) ?? ""];
+    const lastUserMessage = messages.findLast((message) => message.role === "user")?.content;
 
-    if (!model) {
-        return new Response(`Invalid model: ${_model}`, { status: 400 });
-    }
+    const searchResults = await runSemanticSearchTurbopuffer(lastUserMessage ?? "", domain, 20);
+    const documents = toDocuments(searchResults).join("\n\n");
 
-    const system = typeof _system === "string" ? _system.trim() + "\n" : undefined;
+    const system = createDefaultSystemPrompt({ domain, date: new Date().toDateString(), documents });
 
-    const result = await streamText({
+    const result = streamText({
         model,
         system,
         messages,
@@ -31,37 +35,16 @@ export async function POST(request: Request): Promise<Response> {
         maxRetries: 3,
         tools: {
             search: tool({
-                description: "knowledge base search. If no results are found, try again with a more general query.",
+                description: "Search the knowledge base for the user's query. Semantic search is enabled.",
                 parameters: z.object({
-                    query: z
-                        .string()
-                        .describe("the search terms to use. Only use keywords. Never use full sentences or questions."),
+                    query: z.string(),
                 }),
                 async execute({ query }) {
-                    if (!searchKey) {
-                        return [];
-                    }
-
-                    const client = searchClient(algoliaAppId(), searchKey);
-                    const response = await client.searchSingleIndex<AlgoliaRecord>({
-                        indexName: SEARCH_INDEX,
-                        searchParams: {
-                            query,
-                            userToken,
-                            hitsPerPage: 20,
-                            distinct: false,
-                            decompoundQuery: true,
-                            enableRules: true,
-                            ignorePlurals: true,
-                            attributesToSnippet: [],
-                            attributesToHighlight: [],
-                        },
-                    });
-
-                    return response.hits.map((hit) => {
-                        const { domain, pathname, hash } = hit;
+                    const response = await runSemanticSearchTurbopuffer(query, domain);
+                    return response.map((hit) => {
+                        const { domain, pathname, hash } = hit.attributes;
                         const url = `https://${domain}${pathname}${hash ?? ""}`;
-                        return { url, ...hit };
+                        return { url, ...hit.attributes };
                     });
                 },
             }),

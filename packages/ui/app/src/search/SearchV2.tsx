@@ -1,5 +1,6 @@
 import {
     CommandActions,
+    CommandAskAIGroup,
     CommandEmpty,
     CommandGroupFilters,
     CommandGroupPlayground,
@@ -10,16 +11,16 @@ import {
     DesktopCommandAboveInput,
     DesktopCommandBadges,
     DesktopCommandBeforeInput,
+    DesktopCommandWithAskAI,
     DesktopSearchButton,
     DesktopSearchDialog,
     SEARCH_INDEX,
     SearchClientRoot,
-    useCommandUx,
     useFacetFilters,
     useIsMobile,
 } from "@fern-ui/fern-docs-search-ui";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { useAtomValue } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
 import { Dispatch, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { z } from "zod";
@@ -30,6 +31,7 @@ import {
     HAS_API_PLAYGROUND,
     THEME_SWITCH_ENABLED_ATOM,
     atomWithStorageString,
+    useFeatureFlags,
     useFernUser,
     useIsPlaygroundOpen,
     useSetTheme,
@@ -52,13 +54,18 @@ function useAlgoliaUserToken() {
     return useAtomValue(userTokenRef.current);
 }
 
+const askAiAtom = atom(false);
+
 export function SearchV2(): ReactElement | false {
     const version = useAtomValue(CURRENT_VERSION_ATOM);
+    const { isAskAiEnabled } = useFeatureFlags();
 
     const userToken = useAlgoliaUserToken();
     const user = useFernUser();
 
     const [open, setOpen] = useCommandTrigger();
+    const [askAi, setAskAi] = useAtom(askAiAtom);
+    const [initialInput, setInitialInput] = useState("");
     const domain = useAtomValue(DOMAIN_ATOM);
 
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
@@ -69,6 +76,16 @@ export function SearchV2(): ReactElement | false {
     });
 
     const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
+    const chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
+    const suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
+
+    const router = useRouter();
+
+    const handleNavigate = useEventCallback((path: string) => {
+        void router.push(path).then(() => {
+            setOpen(false);
+        });
+    });
 
     const facetFetcher = useCallback(
         async (filters: readonly string[]) => {
@@ -91,6 +108,24 @@ export function SearchV2(): ReactElement | false {
 
     const { appId, apiKey } = data;
 
+    const children = (
+        <>
+            <DesktopCommandAboveInput>
+                <DesktopCommandBadges />
+            </DesktopCommandAboveInput>
+            <DesktopCommandBeforeInput>
+                <BackButton />
+            </DesktopCommandBeforeInput>
+            <CommandGroupFilters />
+            <CommandEmpty />
+            <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} domain={domain} />
+            <CommandActions>
+                <CommandPlayground onClose={() => setOpen(false)} />
+                <CommandTheme onClose={() => setOpen(false)} />
+            </CommandActions>
+        </>
+    );
+
     return (
         <SearchClientRoot
             appId={appId}
@@ -103,23 +138,30 @@ export function SearchV2(): ReactElement | false {
             analyticsTags={["search-v2-dialog"]}
         >
             <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild trigger={<DesktopSearchButton />}>
-                <DesktopCommand onClose={() => setOpen(false)}>
-                    <DesktopCommandAboveInput>
-                        <DesktopCommandBadges />
-                    </DesktopCommandAboveInput>
-
-                    <DesktopCommandBeforeInput>
-                        <BackButton />
-                    </DesktopCommandBeforeInput>
-
-                    <CommandGroupFilters />
-                    <CommandEmpty />
-                    <RouterAwareCommandSearchHits onClose={() => setOpen(false)} />
-                    <CommandActions>
-                        <CommandPlayground onClose={() => setOpen(false)} />
-                        <CommandTheme onClose={() => setOpen(false)} />
-                    </CommandActions>
-                </DesktopCommand>
+                {isAskAiEnabled ? (
+                    <DesktopCommandWithAskAI
+                        domain={domain}
+                        onClose={() => setOpen(false)}
+                        askAI={askAi}
+                        setAskAI={setAskAi}
+                        api={chatEndpoint}
+                        suggestionsApi={suggestEndpoint}
+                        initialInput={initialInput}
+                        body={{ algoliaSearchKey: apiKey }}
+                        onSelectHit={handleNavigate}
+                    >
+                        <CommandAskAIGroup
+                            onAskAI={(initialInput) => {
+                                setInitialInput(initialInput);
+                                setAskAi(true);
+                            }}
+                            forceMount
+                        />
+                        {children}
+                    </DesktopCommandWithAskAI>
+                ) : (
+                    <DesktopCommand onClose={() => setOpen(false)}>{children}</DesktopCommand>
+                )}
             </DesktopSearchDialog>
         </SearchClientRoot>
     );
@@ -160,37 +202,12 @@ function CommandTheme({ onClose }: { onClose: () => void }) {
     );
 }
 
-function RouterAwareCommandSearchHits({ onClose }: { onClose: () => void }) {
-    const router = useRouter();
-
-    const handleNavigate = useEventCallback((path: string) => {
-        void router.push(path).then(() => {
-            onClose();
-        });
-    });
-
-    return <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} />;
-}
-
 function BackButton() {
     const { filters, popFilter, clearFilters } = useFacetFilters();
-    const { focus } = useCommandUx();
     if (filters.length === 0) {
         return false;
     }
-
-    return (
-        <DesktopBackButton
-            pop={() => {
-                popFilter();
-                focus();
-            }}
-            clear={() => {
-                clearFilters();
-                focus();
-            }}
-        />
-    );
+    return <DesktopBackButton pop={popFilter} clear={clearFilters} />;
 }
 
 function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {

@@ -1,4 +1,4 @@
-import { uniq } from "es-toolkit";
+import { uniq } from "es-toolkit/array";
 import { createAlgoliaRecords } from "../records/create-algolia-records";
 import { readFixture, readFixtureToRootNode } from "./test-utils";
 

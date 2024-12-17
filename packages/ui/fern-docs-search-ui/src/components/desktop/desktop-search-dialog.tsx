@@ -13,25 +13,21 @@ export const DesktopSearchDialog = memo(
         children,
         asChild,
         trigger,
+        afterInput,
         ...rest
     }: PropsWithChildren<
         {
             trigger?: ReactNode;
             asChild?: boolean;
+            afterInput?: ReactNode;
         } & ComponentPropsWithoutRef<typeof Dialog.Root>
     >) => {
         return (
             <Dialog.Root {...rest}>
                 <Dialog.Trigger asChild>{trigger ?? <DesktopSearchButton />}</Dialog.Trigger>
-                <Dialog.Portal>
-                    <Dialog.Overlay className="fixed inset-0 bg-[var(--white-a3)] dark:bg-[var(--black-a3)] backdrop-blur-md" />
 
-                    <VisuallyHidden>
-                        <Dialog.Title>Search</Dialog.Title>
-                        <Dialog.Description>Search our documentation.</Dialog.Description>
-                    </VisuallyHidden>
-
-                    <DesktopCommandAfterInput>
+                <DesktopCommandAfterInput>
+                    {afterInput || (
                         <TooltipProvider>
                             <Tooltip>
                                 <TooltipTrigger asChild>
@@ -48,7 +44,16 @@ export const DesktopSearchDialog = memo(
                                 </TooltipPortal>
                             </Tooltip>
                         </TooltipProvider>
-                    </DesktopCommandAfterInput>
+                    )}
+                </DesktopCommandAfterInput>
+
+                <Dialog.Portal>
+                    <Dialog.Overlay className="fixed inset-0 bg-[var(--white-a3)] dark:bg-[var(--black-a3)] backdrop-blur-md" />
+
+                    <VisuallyHidden>
+                        <Dialog.Title>Search</Dialog.Title>
+                        <Dialog.Description>Search our documentation.</Dialog.Description>
+                    </VisuallyHidden>
 
                     <Dialog.Content
                         className={cn(
@@ -57,9 +62,6 @@ export const DesktopSearchDialog = memo(
                         )}
                         asChild={asChild}
                         onEscapeKeyDown={(e) => {
-                            e.preventDefault();
-                        }}
-                        onOpenAutoFocus={(e) => {
                             e.preventDefault();
                         }}
                     >

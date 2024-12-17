@@ -10,8 +10,8 @@ import {
     visitUnversionedDbNavigationConfig,
 } from "@fern-api/fdr-sdk";
 import { titleCase, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { noop } from "es-toolkit/function";
 import grayMatter from "gray-matter";
-import { noop } from "lodash-es";
 import { v4 as uuid } from "uuid";
 import { LOGGER } from "../../app/FdrApplication";
 import { assertNever, convertMarkdownToText, truncateToBytes } from "../../util";

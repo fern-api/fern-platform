@@ -1,3 +1,4 @@
+export * from "./desktop-ask-ai";
 export * from "./desktop-back-button";
 export * from "./desktop-command";
 export * from "./desktop-command-badges";

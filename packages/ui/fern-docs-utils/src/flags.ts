@@ -16,7 +16,7 @@ export interface FeatureFlags {
     useMdxBundler: boolean;
     isBatchStreamToggleDisabled: boolean;
     isAuthEnabledInDocs: boolean;
-    isAiChatbotEnabledInPreview: boolean;
+    isAskAiEnabled: boolean;
     isAudioFileDownloadSpanSummary: boolean;
     isDocsLogoTextEnabled: boolean;
     isAudioExampleInternal: boolean;
@@ -51,7 +51,7 @@ export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
     useMdxBundler: false,
     isBatchStreamToggleDisabled: false,
     isAuthEnabledInDocs: false,
-    isAiChatbotEnabledInPreview: false,
+    isAskAiEnabled: false,
     isAudioFileDownloadSpanSummary: false,
     isDocsLogoTextEnabled: false,
     isAudioExampleInternal: false,
