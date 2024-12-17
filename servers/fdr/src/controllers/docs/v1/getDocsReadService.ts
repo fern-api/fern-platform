@@ -126,7 +126,7 @@ export async function getDocsDefinition({
         app.services.db.prisma.apiDefinitionsLatest.findMany({
             where: {
                 apiDefinitionId: {
-                    in: Array.from(docsDbDefinition.referencedApisLatest),
+                    in: Array.from(docsDbDefinition.referencedApis),
                 },
             },
         }),
