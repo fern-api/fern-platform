@@ -162,7 +162,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:Message"
+                          "id": "Message"
                         }
                       }
                     }
@@ -228,7 +228,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:ChatConnector"
+                          "id": "ChatConnector"
                         }
                       }
                     }
@@ -270,7 +270,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:ChatDocument"
+                          "id": "ChatDocument"
                         }
                       }
                     }
@@ -504,7 +504,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:Tool"
+                          "id": "Tool"
                         }
                       }
                     }
@@ -527,7 +527,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:ToolResult"
+                          "id": "ToolResult"
                         }
                       }
                     }
@@ -565,7 +565,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ResponseFormat"
+                      "id": "ResponseFormat"
                     }
                   }
                 }
@@ -1666,7 +1666,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:ChatMessages"
+                  "id": "ChatMessages"
                 }
               }
             },
@@ -1684,7 +1684,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:ToolV2"
+                          "id": "ToolV2"
                         }
                       }
                     }
@@ -1743,7 +1743,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:CitationOptions"
+                      "id": "CitationOptions"
                     }
                   }
                 }
@@ -1759,7 +1759,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ResponseFormatV2"
+                      "id": "ResponseFormatV2"
                     }
                   }
                 }
@@ -3297,7 +3297,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:Generation"
+            "id": "Generation"
           }
         },
         "description": "OK"
@@ -3917,7 +3917,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:EmbedInputType"
+                  "id": "EmbedInputType"
                 }
               }
             },
@@ -3931,7 +3931,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:EmbeddingType"
+                      "id": "EmbeddingType"
                     }
                   }
                 }
@@ -7720,7 +7720,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:EmbedInputType"
+                  "id": "EmbedInputType"
                 }
               }
             },
@@ -7734,7 +7734,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:EmbeddingType"
+                      "id": "EmbeddingType"
                     }
                   }
                 }
@@ -7776,7 +7776,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:EmbedByTypeResponse"
+            "id": "EmbedByTypeResponse"
           }
         },
         "description": "OK"
@@ -11479,7 +11479,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListEmbedJobResponse"
+            "id": "ListEmbedJobResponse"
           }
         },
         "description": "OK"
@@ -11918,7 +11918,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateEmbedJobRequest"
+            "id": "CreateEmbedJobRequest"
           }
         }
       },
@@ -11928,7 +11928,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateEmbedJobResponse"
+            "id": "CreateEmbedJobResponse"
           }
         },
         "description": "OK"
@@ -12447,7 +12447,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:EmbedJob"
+            "id": "EmbedJob"
           }
         },
         "description": "OK"
@@ -13539,7 +13539,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ApiMeta"
+                      "id": "ApiMeta"
                     }
                   }
                 }
@@ -14235,7 +14235,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ApiMeta"
+                      "id": "ApiMeta"
                     }
                   }
                 }
@@ -14802,7 +14802,7 @@
                         "type": "alias",
                         "value": {
                           "type": "id",
-                          "id": "type_:ClassifyExample"
+                          "id": "ClassifyExample"
                         }
                       }
                     }
@@ -15054,7 +15054,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ApiMeta"
+                      "id": "ApiMeta"
                     }
                   }
                 }
@@ -15722,7 +15722,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:DatasetValidationStatus"
+                  "id": "DatasetValidationStatus"
                 }
               }
             }
@@ -15767,7 +15767,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:Dataset"
+                      "id": "Dataset"
                     }
                   }
                 }
@@ -16183,7 +16183,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:DatasetType"
+              "id": "DatasetType"
             }
           },
           "description": "The dataset type, which is used to validate the data. Valid types are `embed-input`, `reranker-finetune-input`, `single-label-classification-finetune-input`, `chat-finetune-input`, and `multi-label-classification-finetune-input`."
@@ -17315,7 +17315,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:Dataset"
+                  "id": "Dataset"
                 }
               }
             }
@@ -18381,7 +18381,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:ApiMeta"
+                  "id": "ApiMeta"
                 }
               }
             }
@@ -18981,7 +18981,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ApiMeta"
+                      "id": "ApiMeta"
                     }
                   }
                 }
@@ -19582,7 +19582,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:ApiMeta"
+                      "id": "ApiMeta"
                     }
                   }
                 }
@@ -20129,7 +20129,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListConnectorsResponse"
+            "id": "ListConnectorsResponse"
           }
         },
         "description": "OK"
@@ -20547,7 +20547,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateConnectorRequest"
+            "id": "CreateConnectorRequest"
           }
         }
       },
@@ -20557,7 +20557,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateConnectorResponse"
+            "id": "CreateConnectorResponse"
           }
         },
         "description": "OK"
@@ -21055,7 +21055,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:GetConnectorResponse"
+            "id": "GetConnectorResponse"
           }
         },
         "description": "OK"
@@ -21496,7 +21496,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:UpdateConnectorRequest"
+            "id": "UpdateConnectorRequest"
           }
         }
       },
@@ -21506,7 +21506,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:UpdateConnectorResponse"
+            "id": "UpdateConnectorResponse"
           }
         },
         "description": "OK"
@@ -22004,7 +22004,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:DeleteConnectorResponse"
+            "id": "DeleteConnectorResponse"
           }
         },
         "description": "OK"
@@ -22482,7 +22482,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:OAuthAuthorizeResponse"
+            "id": "OAuthAuthorizeResponse"
           }
         },
         "description": "OK"
@@ -22943,7 +22943,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:GetModelResponse"
+            "id": "GetModelResponse"
           }
         },
         "description": "OK"
@@ -23383,7 +23383,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:CompatibleEndpoint"
+                  "id": "CompatibleEndpoint"
                 }
               }
             }
@@ -23416,7 +23416,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListModelsResponse"
+            "id": "ListModelsResponse"
           }
         },
         "description": "OK"
@@ -24362,7 +24362,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListFinetunedModelsResponse"
+            "id": "ListFinetunedModelsResponse"
           }
         },
         "description": "A successful response."
@@ -24374,7 +24374,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -24393,7 +24393,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -24412,7 +24412,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -24431,7 +24431,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -24450,7 +24450,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -24469,7 +24469,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -24553,7 +24553,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:FinetunedModel"
+            "id": "FinetunedModel"
           }
         }
       },
@@ -24563,7 +24563,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:CreateFinetunedModelResponse"
+            "id": "CreateFinetunedModelResponse"
           }
         },
         "description": "A successful response."
@@ -24575,7 +24575,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -24594,7 +24594,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -24613,7 +24613,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -24632,7 +24632,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -24651,7 +24651,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -24670,7 +24670,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -24834,7 +24834,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:GetFinetunedModelResponse"
+            "id": "GetFinetunedModelResponse"
           }
         },
         "description": "A successful response."
@@ -24846,7 +24846,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -24865,7 +24865,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -24884,7 +24884,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -24903,7 +24903,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -24922,7 +24922,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -24941,7 +24941,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -25105,7 +25105,7 @@
                 "type": "alias",
                 "value": {
                   "type": "id",
-                  "id": "type_:Settings"
+                  "id": "Settings"
                 }
               },
               "description": "FinetunedModel settings such as dataset, hyperparameters..."
@@ -25120,7 +25120,7 @@
                     "type": "alias",
                     "value": {
                       "type": "id",
-                      "id": "type_:Status"
+                      "id": "Status"
                     }
                   }
                 }
@@ -25212,7 +25212,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:UpdateFinetunedModelResponse"
+            "id": "UpdateFinetunedModelResponse"
           }
         },
         "description": "A successful response."
@@ -25224,7 +25224,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -25243,7 +25243,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -25262,7 +25262,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -25281,7 +25281,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -25300,7 +25300,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -25319,7 +25319,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -25486,7 +25486,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:DeleteFinetunedModelResponse"
+            "id": "DeleteFinetunedModelResponse"
           }
         },
         "description": "A successful response."
@@ -25498,7 +25498,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -25517,7 +25517,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -25536,7 +25536,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -25555,7 +25555,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -25574,7 +25574,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -25593,7 +25593,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -25767,7 +25767,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListEventsResponse"
+            "id": "ListEventsResponse"
           }
         },
         "description": "A successful response."
@@ -25779,7 +25779,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -25798,7 +25798,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -25817,7 +25817,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -25836,7 +25836,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -25855,7 +25855,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -25874,7 +25874,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -26029,7 +26029,7 @@
           "type": "alias",
           "value": {
             "type": "id",
-            "id": "type_:ListTrainingStepMetricsResponse"
+            "id": "ListTrainingStepMetricsResponse"
           }
         },
         "description": "A successful response."
@@ -26041,7 +26041,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Bad Request",
@@ -26060,7 +26060,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Unauthorized",
@@ -26079,7 +26079,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Forbidden",
@@ -26098,7 +26098,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Not Found",
@@ -26117,7 +26117,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Internal Server Error",
@@ -26136,7 +26136,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:Error"
+              "id": "Error"
             }
           },
           "description": "Status Service Unavailable",
@@ -26155,7 +26155,7 @@
   "websockets": {},
   "webhooks": {},
   "types": {
-    "type_:ChatRole": {
+    "ChatRole": {
       "name": "ChatRole",
       "shape": {
         "type": "enum",
@@ -26176,7 +26176,7 @@
       },
       "description": "One of `CHATBOT`, `SYSTEM`, `TOOL` or `USER` to identify who the message is coming from.\n"
     },
-    "type_:ToolCall": {
+    "ToolCall": {
       "name": "ToolCall",
       "shape": {
         "type": "object",
@@ -26208,7 +26208,7 @@
       },
       "description": "Contains the tool calls generated by the model. Use it to invoke your tools.\n"
     },
-    "type_:ChatMessage": {
+    "ChatMessage": {
       "name": "ChatMessage",
       "shape": {
         "type": "object",
@@ -26220,7 +26220,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ChatRole"
+                "id": "ChatRole"
               }
             }
           },
@@ -26251,7 +26251,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ToolCall"
+                        "id": "ToolCall"
                       }
                     }
                   }
@@ -26263,7 +26263,7 @@
       },
       "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n"
     },
-    "type_:ToolResult": {
+    "ToolResult": {
       "name": "ToolResult",
       "shape": {
         "type": "object",
@@ -26275,7 +26275,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ToolCall"
+                "id": "ToolCall"
               }
             }
           },
@@ -26296,7 +26296,7 @@
         ]
       }
     },
-    "type_:ToolMessage": {
+    "ToolMessage": {
       "name": "ToolMessage",
       "shape": {
         "type": "object",
@@ -26308,7 +26308,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ChatRole"
+                "id": "ChatRole"
               }
             }
           },
@@ -26326,7 +26326,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ToolResult"
+                        "id": "ToolResult"
                       }
                     }
                   }
@@ -26338,7 +26338,7 @@
       },
       "description": "Represents tool result in the chat history.\n"
     },
-    "type_:Message": {
+    "Message": {
       "name": "Message",
       "shape": {
         "type": "discriminatedUnion",
@@ -26356,7 +26356,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ChatRole"
+                    "id": "ChatRole"
                   }
                 }
               },
@@ -26387,7 +26387,7 @@
                           "type": "alias",
                           "value": {
                             "type": "id",
-                            "id": "type_:ToolCall"
+                            "id": "ToolCall"
                           }
                         }
                       }
@@ -26409,7 +26409,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ChatRole"
+                    "id": "ChatRole"
                   }
                 }
               },
@@ -26440,7 +26440,7 @@
                           "type": "alias",
                           "value": {
                             "type": "id",
-                            "id": "type_:ToolCall"
+                            "id": "ToolCall"
                           }
                         }
                       }
@@ -26462,7 +26462,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ChatRole"
+                    "id": "ChatRole"
                   }
                 }
               },
@@ -26493,7 +26493,7 @@
                           "type": "alias",
                           "value": {
                             "type": "id",
-                            "id": "type_:ToolCall"
+                            "id": "ToolCall"
                           }
                         }
                       }
@@ -26515,7 +26515,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ChatRole"
+                    "id": "ChatRole"
                   }
                 }
               },
@@ -26533,7 +26533,7 @@
                           "type": "alias",
                           "value": {
                             "type": "id",
-                            "id": "type_:ToolResult"
+                            "id": "ToolResult"
                           }
                         }
                       }
@@ -26546,7 +26546,7 @@
         ]
       }
     },
-    "type_:ChatConnector": {
+    "ChatConnector": {
       "name": "ChatConnector",
       "shape": {
         "type": "object",
@@ -26622,7 +26622,7 @@
       },
       "description": "The connector used for fetching documents.\n"
     },
-    "type_:ChatDocument": {
+    "ChatDocument": {
       "name": "ChatDocument",
       "shape": {
         "type": "object",
@@ -26651,7 +26651,7 @@
       },
       "description": "Relevant information that could be used by the model to generate a more accurate reply.\nThe contents of each document are generally short (under 300 words), and are passed in the form of a\ndictionary of strings. Some suggested keys are \"text\", \"author\", \"date\". Both the key name and the value will be\npassed to the model.\n"
     },
-    "type_:Tool": {
+    "Tool": {
       "name": "Tool",
       "shape": {
         "type": "object",
@@ -26701,7 +26701,7 @@
         ]
       }
     },
-    "type_:ResponseFormatType": {
+    "ResponseFormatType": {
       "name": "ResponseFormatType",
       "shape": {
         "type": "enum",
@@ -26716,7 +26716,7 @@
       },
       "description": "Defaults to `\"text\"`.\n\nWhen set to `\"json_object\"`, the model's output will be a valid JSON Object.\n"
     },
-    "type_:TextResponseFormat": {
+    "TextResponseFormat": {
       "name": "Text Response",
       "shape": {
         "type": "object",
@@ -26728,14 +26728,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ResponseFormatType"
+                "id": "ResponseFormatType"
               }
             }
           }
         ]
       }
     },
-    "type_:JSONResponseFormat": {
+    "JSONResponseFormat": {
       "name": "JSON Object Response",
       "shape": {
         "type": "object",
@@ -26747,7 +26747,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ResponseFormatType"
+                "id": "ResponseFormatType"
               }
             }
           },
@@ -26770,7 +26770,7 @@
         ]
       }
     },
-    "type_:ResponseFormat": {
+    "ResponseFormat": {
       "name": "ResponseFormat",
       "shape": {
         "type": "discriminatedUnion",
@@ -26787,7 +26787,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ResponseFormatType"
+                    "id": "ResponseFormatType"
                   }
                 }
               }
@@ -26804,7 +26804,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ResponseFormatType"
+                    "id": "ResponseFormatType"
                   }
                 }
               },
@@ -26830,7 +26830,7 @@
       },
       "description": "Configuration for forcing the model output to adhere to the specified format. Supported on [Command R 03-2024](https://docs.cohere.com/docs/command-r), [Command R+ 04-2024](https://docs.cohere.com/docs/command-r-plus) and newer models.\n\nThe model can be forced into outputting JSON objects (with up to 5 levels of nesting) by setting `{ \"type\": \"json_object\" }`.\n\nA [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.\n\n**Note**: When using  `{ \"type\": \"json_object\" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _\"Generate a JSON ...\"_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.\n**Limitation**: The parameter is not supported in RAG mode (when any of `connectors`, `documents`, `tools`, `tool_results` are provided).\n"
     },
-    "type_:ChatCitation": {
+    "ChatCitation": {
       "name": "ChatCitation",
       "shape": {
         "type": "object",
@@ -26898,7 +26898,7 @@
       },
       "description": "A section of the generated reply which cites external knowledge.\n"
     },
-    "type_:ChatSearchQuery": {
+    "ChatSearchQuery": {
       "name": "ChatSearchQuery",
       "shape": {
         "type": "object",
@@ -26934,7 +26934,7 @@
       },
       "description": "The generated search query. Contains the text of the query and a unique identifier for the query.\n"
     },
-    "type_:ChatSearchResultConnector": {
+    "ChatSearchResultConnector": {
       "name": "ChatSearchResultConnector",
       "shape": {
         "type": "object",
@@ -26957,7 +26957,7 @@
       },
       "description": "The connector used for fetching documents.\n"
     },
-    "type_:ChatSearchResult": {
+    "ChatSearchResult": {
       "name": "ChatSearchResult",
       "shape": {
         "type": "object",
@@ -26973,7 +26973,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ChatSearchQuery"
+                    "id": "ChatSearchQuery"
                   }
                 }
               }
@@ -26985,7 +26985,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ChatSearchResultConnector"
+                "id": "ChatSearchResultConnector"
               }
             },
             "description": "The connector from which this result comes from.\n"
@@ -27050,7 +27050,7 @@
         ]
       }
     },
-    "type_:FinishReason": {
+    "FinishReason": {
       "name": "FinishReason",
       "shape": {
         "type": "enum",
@@ -27079,7 +27079,7 @@
         ]
       }
     },
-    "type_:ApiMeta": {
+    "ApiMeta": {
       "name": "ApiMeta",
       "shape": {
         "type": "object",
@@ -27272,7 +27272,7 @@
         ]
       }
     },
-    "type_:NonStreamedChatResponse": {
+    "NonStreamedChatResponse": {
       "name": "NonStreamedChatResponse",
       "shape": {
         "type": "object",
@@ -27343,7 +27343,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ChatCitation"
+                        "id": "ChatCitation"
                       }
                     }
                   }
@@ -27366,7 +27366,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ChatDocument"
+                        "id": "ChatDocument"
                       }
                     }
                   }
@@ -27408,7 +27408,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ChatSearchQuery"
+                        "id": "ChatSearchQuery"
                       }
                     }
                   }
@@ -27431,7 +27431,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ChatSearchResult"
+                        "id": "ChatSearchResult"
                       }
                     }
                   }
@@ -27450,7 +27450,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:FinishReason"
+                    "id": "FinishReason"
                   }
                 }
               }
@@ -27470,7 +27470,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ToolCall"
+                        "id": "ToolCall"
                       }
                     }
                   }
@@ -27492,7 +27492,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Message"
+                        "id": "Message"
                       }
                     }
                   }
@@ -27511,7 +27511,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -27520,7 +27520,7 @@
         ]
       }
     },
-    "type_:ChatStreamEvent": {
+    "ChatStreamEvent": {
       "name": "ChatStreamEvent",
       "shape": {
         "type": "object",
@@ -27558,7 +27558,7 @@
         ]
       }
     },
-    "type_:ChatStreamStartEvent": {
+    "ChatStreamStartEvent": {
       "name": "ChatStreamStartEvent",
       "shape": {
         "type": "object",
@@ -27568,7 +27568,7 @@
         "properties": []
       }
     },
-    "type_:ChatSearchQueriesGenerationEvent": {
+    "ChatSearchQueriesGenerationEvent": {
       "name": "ChatSearchQueriesGenerationEvent",
       "shape": {
         "type": "object",
@@ -27578,7 +27578,7 @@
         "properties": []
       }
     },
-    "type_:ChatSearchResultsEvent": {
+    "ChatSearchResultsEvent": {
       "name": "ChatSearchResultsEvent",
       "shape": {
         "type": "object",
@@ -27588,7 +27588,7 @@
         "properties": []
       }
     },
-    "type_:ChatTextGenerationEvent": {
+    "ChatTextGenerationEvent": {
       "name": "ChatTextGenerationEvent",
       "shape": {
         "type": "object",
@@ -27598,7 +27598,7 @@
         "properties": []
       }
     },
-    "type_:ChatCitationGenerationEvent": {
+    "ChatCitationGenerationEvent": {
       "name": "ChatCitationGenerationEvent",
       "shape": {
         "type": "object",
@@ -27608,7 +27608,7 @@
         "properties": []
       }
     },
-    "type_:ChatToolCallsGenerationEvent": {
+    "ChatToolCallsGenerationEvent": {
       "name": "ChatToolCallsGenerationEvent",
       "shape": {
         "type": "object",
@@ -27618,7 +27618,7 @@
         "properties": []
       }
     },
-    "type_:ChatStreamEndEvent": {
+    "ChatStreamEndEvent": {
       "name": "ChatStreamEndEvent",
       "shape": {
         "type": "object",
@@ -27628,7 +27628,7 @@
         "properties": []
       }
     },
-    "type_:ToolCallDelta": {
+    "ToolCallDelta": {
       "name": "ToolCallDelta",
       "shape": {
         "type": "object",
@@ -27690,7 +27690,7 @@
       },
       "description": "Contains the chunk of the tool call generation in the stream.\n"
     },
-    "type_:ChatToolCallsChunkEvent": {
+    "ChatToolCallsChunkEvent": {
       "name": "ChatToolCallsChunkEvent",
       "shape": {
         "type": "object",
@@ -27700,7 +27700,7 @@
         "properties": []
       }
     },
-    "type_:ChatDebugEvent": {
+    "ChatDebugEvent": {
       "name": "ChatDebugEvent",
       "shape": {
         "type": "object",
@@ -27710,7 +27710,7 @@
         "properties": []
       }
     },
-    "type_:StreamedChatResponse": {
+    "StreamedChatResponse": {
       "name": "StreamedChatResponse",
       "shape": {
         "type": "discriminatedUnion",
@@ -27792,7 +27792,7 @@
       },
       "description": "StreamedChatResponse is returned in streaming mode (specified with `stream=True` in the request)."
     },
-    "type_:TextContent": {
+    "TextContent": {
       "name": "TextContent",
       "shape": {
         "type": "object",
@@ -27825,7 +27825,7 @@
       },
       "description": "Text content of the message."
     },
-    "type_:Content": {
+    "Content": {
       "name": "Content",
       "shape": {
         "type": "discriminatedUnion",
@@ -27866,7 +27866,7 @@
       },
       "description": "A Content block which contains information about the content type and the content itself."
     },
-    "type_:UserMessage": {
+    "UserMessage": {
       "name": "User Message",
       "shape": {
         "type": "object",
@@ -27895,7 +27895,7 @@
       },
       "description": "A message from the user."
     },
-    "type_:ToolCallV2": {
+    "ToolCallV2": {
       "name": "ToolCallV2",
       "shape": {
         "type": "object",
@@ -27961,7 +27961,7 @@
       },
       "description": "An array of tool calls to be made."
     },
-    "type_:ToolSource": {
+    "ToolSource": {
       "name": "Tool Output",
       "shape": {
         "type": "object",
@@ -27991,7 +27991,7 @@
         ]
       }
     },
-    "type_:DocumentSource": {
+    "DocumentSource": {
       "name": "DocumentSource",
       "shape": {
         "type": "object",
@@ -28022,7 +28022,7 @@
       },
       "description": "A document source object containing the unique identifier of the document and the document itself."
     },
-    "type_:Source": {
+    "Source": {
       "name": "Source",
       "shape": {
         "type": "discriminatedUnion",
@@ -28089,7 +28089,7 @@
       },
       "description": "A source object containing information about the source of the data cited."
     },
-    "type_:Citation": {
+    "Citation": {
       "name": "Citation",
       "shape": {
         "type": "object",
@@ -28144,7 +28144,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Source"
+                    "id": "Source"
                   }
                 }
               }
@@ -28154,7 +28154,7 @@
       },
       "description": "Citation information containing sources and the text cited."
     },
-    "type_:AssistantMessage": {
+    "AssistantMessage": {
       "name": "Assistant Message",
       "shape": {
         "type": "object",
@@ -28185,7 +28185,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ToolCallV2"
+                        "id": "ToolCallV2"
                       }
                     }
                   }
@@ -28239,7 +28239,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Citation"
+                        "id": "Citation"
                       }
                     }
                   }
@@ -28251,7 +28251,7 @@
       },
       "description": "A message from the assistant role can contain text and tool call information."
     },
-    "type_:SystemMessage": {
+    "SystemMessage": {
       "name": "System Message",
       "shape": {
         "type": "object",
@@ -28279,7 +28279,7 @@
       },
       "description": "A message from the system."
     },
-    "type_:Document": {
+    "Document": {
       "name": "Document",
       "shape": {
         "type": "object",
@@ -28323,7 +28323,7 @@
       },
       "description": "Relevant information that could be used by the model to generate a more accurate reply.\nThe content of each document are generally short (should be under 300 words). Metadata should be used to provide additional information, both the key name and the value will be\npassed to the model.\n"
     },
-    "type_:DocumentContent": {
+    "DocumentContent": {
       "name": "DocumentContent",
       "shape": {
         "type": "object",
@@ -28346,7 +28346,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:Document"
+                "id": "Document"
               }
             }
           }
@@ -28354,7 +28354,7 @@
       },
       "description": "Document content."
     },
-    "type_:ToolContent": {
+    "ToolContent": {
       "name": "ToolContent",
       "shape": {
         "type": "discriminatedUnion",
@@ -28414,7 +28414,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Document"
+                    "id": "Document"
                   }
                 }
               }
@@ -28424,7 +28424,7 @@
       },
       "description": "A content block which contains information about the content of a tool result"
     },
-    "type_:ToolMessageV2": {
+    "ToolMessageV2": {
       "name": "Tool Message",
       "shape": {
         "type": "object",
@@ -28466,7 +28466,7 @@
       },
       "description": "A message with Tool outputs."
     },
-    "type_:ChatMessageV2": {
+    "ChatMessageV2": {
       "name": "ChatMessageV2",
       "shape": {
         "type": "discriminatedUnion",
@@ -28530,7 +28530,7 @@
                           "type": "alias",
                           "value": {
                             "type": "id",
-                            "id": "type_:ToolCallV2"
+                            "id": "ToolCallV2"
                           }
                         }
                       }
@@ -28584,7 +28584,7 @@
                           "type": "alias",
                           "value": {
                             "type": "id",
-                            "id": "type_:Citation"
+                            "id": "Citation"
                           }
                         }
                       }
@@ -28664,7 +28664,7 @@
       },
       "description": "Represents a single message in the chat history from a given role."
     },
-    "type_:ChatMessages": {
+    "ChatMessages": {
       "name": "ChatMessages",
       "shape": {
         "type": "alias",
@@ -28674,14 +28674,14 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "type_:ChatMessageV2"
+              "id": "ChatMessageV2"
             }
           }
         }
       },
       "description": "A list of chat messages in chronological order, representing a conversation between the user and the model.\n\nMessages can be from `User`, `Assistant`, `Tool` and `System` roles. Learn more about messages and roles in [the Chat API guide](https://docs.cohere.com/v2/docs/chat-api).\n"
     },
-    "type_:ToolV2": {
+    "ToolV2": {
       "name": "ToolV2",
       "shape": {
         "type": "object",
@@ -28746,7 +28746,7 @@
         ]
       }
     },
-    "type_:CitationOptions": {
+    "CitationOptions": {
       "name": "CitationOptions",
       "shape": {
         "type": "object",
@@ -28774,7 +28774,7 @@
       },
       "description": "Options for controlling citation generation."
     },
-    "type_:ResponseFormatTypeV2": {
+    "ResponseFormatTypeV2": {
       "name": "ResponseFormatTypeV2",
       "shape": {
         "type": "enum",
@@ -28789,7 +28789,7 @@
       },
       "description": "Defaults to `\"text\"`.\n\nWhen set to `\"json_object\"`, the model's output will be a valid JSON Object.\n"
     },
-    "type_:TextResponseFormatV2": {
+    "TextResponseFormatV2": {
       "name": "TextResponseFormatV2",
       "shape": {
         "type": "object",
@@ -28801,14 +28801,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ResponseFormatTypeV2"
+                "id": "ResponseFormatTypeV2"
               }
             }
           }
         ]
       }
     },
-    "type_:JsonResponseFormatV2": {
+    "JsonResponseFormatV2": {
       "name": "JsonResponseFormatV2",
       "shape": {
         "type": "object",
@@ -28820,7 +28820,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ResponseFormatTypeV2"
+                "id": "ResponseFormatTypeV2"
               }
             }
           },
@@ -28842,7 +28842,7 @@
         ]
       }
     },
-    "type_:ResponseFormatV2": {
+    "ResponseFormatV2": {
       "name": "ResponseFormatV2",
       "shape": {
         "type": "discriminatedUnion",
@@ -28859,7 +28859,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ResponseFormatTypeV2"
+                    "id": "ResponseFormatTypeV2"
                   }
                 }
               }
@@ -28876,7 +28876,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ResponseFormatTypeV2"
+                    "id": "ResponseFormatTypeV2"
                   }
                 }
               },
@@ -28901,7 +28901,7 @@
       },
       "description": "Configuration for forcing the model output to adhere to the specified format. Supported on [Command R](https://docs.cohere.com/v2/docs/command-r), [Command R+](https://docs.cohere.com/v2/docs/command-r-plus) and newer models.\n\nThe model can be forced into outputting JSON objects by setting `{ \"type\": \"json_object\" }`.\n\nA [JSON Schema](https://json-schema.org/) can optionally be provided, to ensure a specific structure.\n\n**Note**: When using  `{ \"type\": \"json_object\" }` your `message` should always explicitly instruct the model to generate a JSON (eg: _\"Generate a JSON ...\"_) . Otherwise the model may end up getting stuck generating an infinite stream of characters and eventually run out of context length.\n\n**Note**: When `json_schema` is not specified, the generated object can have up to 5 layers of nesting.\n\n**Limitation**: The parameter is not supported when used in combinations with the `documents` or `tools` parameters.\n"
     },
-    "type_:ChatFinishReason": {
+    "ChatFinishReason": {
       "name": "ChatFinishReason",
       "shape": {
         "type": "enum",
@@ -28925,7 +28925,7 @@
       },
       "description": "The reason a chat request has finished.\n\n- **complete**: The model finished sending a complete message.\n- **max_tokens**: The number of generated tokens exceeded the model's context length or the value specified via the `max_tokens` parameter.\n- **stop_sequence**: One of the provided `stop_sequence` entries was reached in the model's generation.\n- **tool_call**: The model generated a Tool Call and is expecting a Tool Message in return\n- **error**: The generation failed due to an internal error\n"
     },
-    "type_:AssistantMessageResponse": {
+    "AssistantMessageResponse": {
       "name": "AssistantMessageResponse",
       "shape": {
         "type": "object",
@@ -28956,7 +28956,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:ToolCallV2"
+                        "id": "ToolCallV2"
                       }
                     }
                   }
@@ -29049,7 +29049,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Citation"
+                        "id": "Citation"
                       }
                     }
                   }
@@ -29061,7 +29061,7 @@
       },
       "description": "A message from the assistant role can contain text and tool call information."
     },
-    "type_:Usage": {
+    "Usage": {
       "name": "Usage",
       "shape": {
         "type": "object",
@@ -29166,7 +29166,7 @@
         ]
       }
     },
-    "type_:LogprobItem": {
+    "LogprobItem": {
       "name": "LogprobItem",
       "shape": {
         "type": "object",
@@ -29238,7 +29238,7 @@
         ]
       }
     },
-    "type_:ChatResponse": {
+    "ChatResponse": {
       "name": "ChatResponse",
       "shape": {
         "type": "object",
@@ -29263,7 +29263,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ChatFinishReason"
+                "id": "ChatFinishReason"
               }
             }
           },
@@ -29273,7 +29273,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:AssistantMessageResponse"
+                "id": "AssistantMessageResponse"
               }
             }
           },
@@ -29287,7 +29287,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Usage"
+                    "id": "Usage"
                   }
                 }
               }
@@ -29307,7 +29307,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:LogprobItem"
+                        "id": "LogprobItem"
                       }
                     }
                   }
@@ -29318,7 +29318,7 @@
         ]
       }
     },
-    "type_:ChatStreamEventType": {
+    "ChatStreamEventType": {
       "name": "ChatStreamEventType",
       "shape": {
         "type": "object",
@@ -29369,7 +29369,7 @@
       },
       "description": "The streamed event types"
     },
-    "type_:ChatMessageStartEvent": {
+    "ChatMessageStartEvent": {
       "name": "ChatMessageStartEvent",
       "shape": {
         "type": "object",
@@ -29380,7 +29380,7 @@
       },
       "description": "A streamed event which signifies that a stream has started."
     },
-    "type_:ChatContentStartEvent": {
+    "ChatContentStartEvent": {
       "name": "ChatContentStartEvent",
       "shape": {
         "type": "object",
@@ -29391,7 +29391,7 @@
       },
       "description": "A streamed delta event which signifies that a new content block has started."
     },
-    "type_:ChatContentDeltaEvent": {
+    "ChatContentDeltaEvent": {
       "name": "ChatContentDeltaEvent",
       "shape": {
         "type": "object",
@@ -29402,7 +29402,7 @@
       },
       "description": "A streamed delta event which contains a delta of chat text content."
     },
-    "type_:ChatContentEndEvent": {
+    "ChatContentEndEvent": {
       "name": "ChatContentEndEvent",
       "shape": {
         "type": "object",
@@ -29413,7 +29413,7 @@
       },
       "description": "A streamed delta event which signifies that the content block has ended."
     },
-    "type_:ChatToolPlanDeltaEvent": {
+    "ChatToolPlanDeltaEvent": {
       "name": "ChatToolPlanDeltaEvent",
       "shape": {
         "type": "object",
@@ -29424,7 +29424,7 @@
       },
       "description": "A streamed event which contains a delta of tool plan text."
     },
-    "type_:ChatToolCallStartEvent": {
+    "ChatToolCallStartEvent": {
       "name": "ChatToolCallStartEvent",
       "shape": {
         "type": "object",
@@ -29435,7 +29435,7 @@
       },
       "description": "A streamed event delta which signifies a tool call has started streaming."
     },
-    "type_:ChatToolCallDeltaEvent": {
+    "ChatToolCallDeltaEvent": {
       "name": "ChatToolCallDeltaEvent",
       "shape": {
         "type": "object",
@@ -29446,7 +29446,7 @@
       },
       "description": "A streamed event delta which signifies a delta in tool call arguments."
     },
-    "type_:ChatToolCallEndEvent": {
+    "ChatToolCallEndEvent": {
       "name": "ChatToolCallEndEvent",
       "shape": {
         "type": "object",
@@ -29457,7 +29457,7 @@
       },
       "description": "A streamed event delta which signifies a tool call has finished streaming."
     },
-    "type_:CitationStartEvent": {
+    "CitationStartEvent": {
       "name": "CitationStartEvent",
       "shape": {
         "type": "object",
@@ -29468,7 +29468,7 @@
       },
       "description": "A streamed event which signifies a citation has been created."
     },
-    "type_:CitationEndEvent": {
+    "CitationEndEvent": {
       "name": "CitationEndEvent",
       "shape": {
         "type": "object",
@@ -29479,7 +29479,7 @@
       },
       "description": "A streamed event which signifies a citation has finished streaming."
     },
-    "type_:ChatMessageEndEvent": {
+    "ChatMessageEndEvent": {
       "name": "ChatMessageEndEvent",
       "shape": {
         "type": "object",
@@ -29490,7 +29490,7 @@
       },
       "description": "A streamed event which signifies that the chat message has ended."
     },
-    "type_:StreamedChatResponseV2": {
+    "StreamedChatResponseV2": {
       "name": "StreamedChatResponseV2",
       "shape": {
         "type": "discriminatedUnion",
@@ -29607,7 +29607,7 @@
       },
       "description": "StreamedChatResponse is returned in streaming mode (specified with `stream=True` in the request)."
     },
-    "type_:SingleGeneration": {
+    "SingleGeneration": {
       "name": "SingleGeneration",
       "shape": {
         "type": "object",
@@ -29723,7 +29723,7 @@
         ]
       }
     },
-    "type_:Generation": {
+    "Generation": {
       "name": "Generation",
       "shape": {
         "type": "object",
@@ -29770,7 +29770,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:SingleGeneration"
+                    "id": "SingleGeneration"
                   }
                 }
               }
@@ -29787,7 +29787,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -29796,7 +29796,7 @@
         ]
       }
     },
-    "type_:GenerateStreamEvent": {
+    "GenerateStreamEvent": {
       "name": "GenerateStreamEvent",
       "shape": {
         "type": "object",
@@ -29822,7 +29822,7 @@
         ]
       }
     },
-    "type_:GenerateStreamText": {
+    "GenerateStreamText": {
       "name": "GenerateStreamText",
       "shape": {
         "type": "object",
@@ -29832,7 +29832,7 @@
         "properties": []
       }
     },
-    "type_:SingleGenerationInStream": {
+    "SingleGenerationInStream": {
       "name": "SingleGenerationInStream",
       "shape": {
         "type": "object",
@@ -29888,14 +29888,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:FinishReason"
+                "id": "FinishReason"
               }
             }
           }
         ]
       }
     },
-    "type_:GenerateStreamEnd": {
+    "GenerateStreamEnd": {
       "name": "GenerateStreamEnd",
       "shape": {
         "type": "object",
@@ -29905,7 +29905,7 @@
         "properties": []
       }
     },
-    "type_:GenerateStreamError": {
+    "GenerateStreamError": {
       "name": "GenerateStreamError",
       "shape": {
         "type": "object",
@@ -29915,7 +29915,7 @@
         "properties": []
       }
     },
-    "type_:GenerateStreamedResponse": {
+    "GenerateStreamedResponse": {
       "name": "GenerateStreamedResponse",
       "shape": {
         "type": "discriminatedUnion",
@@ -29949,7 +29949,7 @@
       },
       "description": "Response in content type stream when `stream` is `true` in the request parameters. Generation tokens are streamed with the GenerationStream response. The final response is of type GenerationFinalResponse."
     },
-    "type_:EmbedInputType": {
+    "EmbedInputType": {
       "name": "EmbedInputType",
       "shape": {
         "type": "enum",
@@ -29973,7 +29973,7 @@
       },
       "description": "Specifies the type of input passed to the model. Required for embedding models v3 and higher.\n\n- `\"search_document\"`: Used for embeddings stored in a vector database for search use-cases.\n- `\"search_query\"`: Used for embeddings of search queries run against a vector DB to find relevant documents.\n- `\"classification\"`: Used for embeddings passed through a text classifier.\n- `\"clustering\"`: Used for the embeddings run through a clustering algorithm.\n- `\"image\"`: Used for embeddings with image input.\n"
     },
-    "type_:EmbeddingType": {
+    "EmbeddingType": {
       "name": "EmbeddingType",
       "shape": {
         "type": "enum",
@@ -29996,7 +29996,7 @@
         ]
       }
     },
-    "type_:Image": {
+    "Image": {
       "name": "Image",
       "shape": {
         "type": "object",
@@ -30057,7 +30057,7 @@
         ]
       }
     },
-    "type_:EmbedFloatsResponse": {
+    "EmbedFloatsResponse": {
       "name": "EmbedFloatsResponse",
       "shape": {
         "type": "object",
@@ -30153,7 +30153,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Image"
+                        "id": "Image"
                       }
                     }
                   }
@@ -30172,7 +30172,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -30181,7 +30181,7 @@
         ]
       }
     },
-    "type_:EmbedByTypeResponse": {
+    "EmbedByTypeResponse": {
       "name": "EmbedByTypeResponse",
       "shape": {
         "type": "object",
@@ -30387,7 +30387,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Image"
+                        "id": "Image"
                       }
                     }
                   }
@@ -30406,7 +30406,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -30415,7 +30415,7 @@
         ]
       }
     },
-    "type_:EmbedJob": {
+    "EmbedJob": {
       "name": "EmbedJob",
       "shape": {
         "type": "object",
@@ -30560,7 +30560,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -30569,7 +30569,7 @@
         ]
       }
     },
-    "type_:ListEmbedJobResponse": {
+    "ListEmbedJobResponse": {
       "name": "ListEmbedJobResponse",
       "shape": {
         "type": "object",
@@ -30585,7 +30585,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:EmbedJob"
+                    "id": "EmbedJob"
                   }
                 }
               }
@@ -30594,7 +30594,7 @@
         ]
       }
     },
-    "type_:CreateEmbedJobRequest": {
+    "CreateEmbedJobRequest": {
       "name": "CreateEmbedJobRequest",
       "shape": {
         "type": "object",
@@ -30632,7 +30632,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:EmbedInputType"
+                "id": "EmbedInputType"
               }
             }
           },
@@ -30669,7 +30669,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:EmbeddingType"
+                        "id": "EmbeddingType"
                       }
                     }
                   }
@@ -30704,7 +30704,7 @@
         ]
       }
     },
-    "type_:CreateEmbedJobResponse": {
+    "CreateEmbedJobResponse": {
       "name": "CreateEmbedJobResponse",
       "shape": {
         "type": "object",
@@ -30732,7 +30732,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -30742,7 +30742,7 @@
       },
       "description": "Response from creating an embed job."
     },
-    "type_:RerankDocument": {
+    "RerankDocument": {
       "name": "RerankDocument",
       "shape": {
         "type": "object",
@@ -30764,7 +30764,7 @@
         ]
       }
     },
-    "type_:ClassifyExample": {
+    "ClassifyExample": {
       "name": "ClassifyExample",
       "shape": {
         "type": "object",
@@ -30797,7 +30797,7 @@
         ]
       }
     },
-    "type_:DatasetValidationStatus": {
+    "DatasetValidationStatus": {
       "name": "DatasetValidationStatus",
       "shape": {
         "type": "enum",
@@ -30824,7 +30824,7 @@
       },
       "description": "The validation status of the dataset"
     },
-    "type_:DatasetType": {
+    "DatasetType": {
       "name": "DatasetType",
       "shape": {
         "type": "enum",
@@ -30857,7 +30857,7 @@
       },
       "description": "The type of the dataset"
     },
-    "type_:DatasetPart": {
+    "DatasetPart": {
       "name": "DatasetPart",
       "shape": {
         "type": "object",
@@ -31012,7 +31012,7 @@
         ]
       }
     },
-    "type_:ParseInfo": {
+    "ParseInfo": {
       "name": "ParseInfo",
       "shape": {
         "type": "object",
@@ -31045,7 +31045,7 @@
         ]
       }
     },
-    "type_:RerankerDataMetrics": {
+    "RerankerDataMetrics": {
       "name": "RerankerDataMetrics",
       "shape": {
         "type": "object",
@@ -31132,7 +31132,7 @@
         ]
       }
     },
-    "type_:ChatDataMetrics": {
+    "ChatDataMetrics": {
       "name": "ChatDataMetrics",
       "shape": {
         "type": "object",
@@ -31180,7 +31180,7 @@
         ]
       }
     },
-    "type_:LabelMetric": {
+    "LabelMetric": {
       "name": "LabelMetric",
       "shape": {
         "type": "object",
@@ -31234,7 +31234,7 @@
         ]
       }
     },
-    "type_:ClassifyDataMetrics": {
+    "ClassifyDataMetrics": {
       "name": "ClassifyDataMetrics",
       "shape": {
         "type": "object",
@@ -31250,7 +31250,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:LabelMetric"
+                    "id": "LabelMetric"
                   }
                 }
               }
@@ -31259,7 +31259,7 @@
         ]
       }
     },
-    "type_:FinetuneDatasetMetrics": {
+    "FinetuneDatasetMetrics": {
       "name": "FinetuneDatasetMetrics",
       "shape": {
         "type": "object",
@@ -31349,7 +31349,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:RerankerDataMetrics"
+                "id": "RerankerDataMetrics"
               }
             }
           },
@@ -31359,7 +31359,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ChatDataMetrics"
+                "id": "ChatDataMetrics"
               }
             }
           },
@@ -31369,14 +31369,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:ClassifyDataMetrics"
+                "id": "ClassifyDataMetrics"
               }
             }
           }
         ]
       }
     },
-    "type_:Metrics": {
+    "Metrics": {
       "name": "Metrics",
       "shape": {
         "type": "object",
@@ -31388,14 +31388,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:FinetuneDatasetMetrics"
+                "id": "FinetuneDatasetMetrics"
               }
             }
           }
         ]
       }
     },
-    "type_:Dataset": {
+    "Dataset": {
       "name": "Dataset",
       "shape": {
         "type": "object",
@@ -31459,7 +31459,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:DatasetType"
+                "id": "DatasetType"
               }
             }
           },
@@ -31469,7 +31469,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:DatasetValidationStatus"
+                "id": "DatasetValidationStatus"
               }
             }
           },
@@ -31573,7 +31573,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:DatasetPart"
+                        "id": "DatasetPart"
                       }
                     }
                   }
@@ -31617,7 +31617,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ParseInfo"
+                    "id": "ParseInfo"
                   }
                 }
               }
@@ -31633,7 +31633,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Metrics"
+                    "id": "Metrics"
                   }
                 }
               }
@@ -31642,7 +31642,7 @@
         ]
       }
     },
-    "type_:ConnectorOAuth": {
+    "ConnectorOAuth": {
       "name": "ConnectorOAuth",
       "shape": {
         "type": "object",
@@ -31734,7 +31734,7 @@
         ]
       }
     },
-    "type_:Connector": {
+    "Connector": {
       "name": "Connector",
       "shape": {
         "type": "object",
@@ -31903,7 +31903,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ConnectorOAuth"
+                    "id": "ConnectorOAuth"
                   }
                 }
               }
@@ -31973,7 +31973,7 @@
       },
       "description": "A connector allows you to integrate data sources with the '/chat' endpoint to create grounded generations with citations to the data source.\ndocuments to help answer users."
     },
-    "type_:ListConnectorsResponse": {
+    "ListConnectorsResponse": {
       "name": "ListConnectorsResponse",
       "shape": {
         "type": "object",
@@ -31989,7 +31989,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Connector"
+                    "id": "Connector"
                   }
                 }
               }
@@ -32017,7 +32017,7 @@
         ]
       }
     },
-    "type_:CreateConnectorOAuth": {
+    "CreateConnectorOAuth": {
       "name": "CreateConnectorOAuth",
       "shape": {
         "type": "object",
@@ -32121,7 +32121,7 @@
         ]
       }
     },
-    "type_:AuthTokenType": {
+    "AuthTokenType": {
       "name": "AuthTokenType",
       "shape": {
         "type": "enum",
@@ -32140,7 +32140,7 @@
       },
       "description": "The token_type specifies the way the token is passed in the Authorization header. Valid values are \"bearer\", \"basic\", and \"noscheme\"."
     },
-    "type_:CreateConnectorServiceAuth": {
+    "CreateConnectorServiceAuth": {
       "name": "CreateConnectorServiceAuth",
       "shape": {
         "type": "object",
@@ -32152,7 +32152,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:AuthTokenType"
+                "id": "AuthTokenType"
               }
             }
           },
@@ -32172,7 +32172,7 @@
         ]
       }
     },
-    "type_:CreateConnectorRequest": {
+    "CreateConnectorRequest": {
       "name": "CreateConnectorRequest",
       "shape": {
         "type": "object",
@@ -32258,7 +32258,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:CreateConnectorOAuth"
+                    "id": "CreateConnectorOAuth"
                   }
                 }
               }
@@ -32315,7 +32315,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:CreateConnectorServiceAuth"
+                    "id": "CreateConnectorServiceAuth"
                   }
                 }
               }
@@ -32325,7 +32325,7 @@
         ]
       }
     },
-    "type_:CreateConnectorResponse": {
+    "CreateConnectorResponse": {
       "name": "CreateConnectorResponse",
       "shape": {
         "type": "object",
@@ -32337,14 +32337,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:Connector"
+                "id": "Connector"
               }
             }
           }
         ]
       }
     },
-    "type_:GetConnectorResponse": {
+    "GetConnectorResponse": {
       "name": "GetConnectorResponse",
       "shape": {
         "type": "object",
@@ -32356,14 +32356,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:Connector"
+                "id": "Connector"
               }
             }
           }
         ]
       }
     },
-    "type_:DeleteConnectorResponse": {
+    "DeleteConnectorResponse": {
       "name": "DeleteConnectorResponse",
       "shape": {
         "type": "object",
@@ -32371,7 +32371,7 @@
         "properties": []
       }
     },
-    "type_:UpdateConnectorRequest": {
+    "UpdateConnectorRequest": {
       "name": "UpdateConnectorRequest",
       "shape": {
         "type": "object",
@@ -32428,7 +32428,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:CreateConnectorOAuth"
+                "id": "CreateConnectorOAuth"
               }
             },
             "description": "The OAuth 2.0 configuration for the connector. Cannot be specified if service_auth is specified."
@@ -32465,7 +32465,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:CreateConnectorServiceAuth"
+                "id": "CreateConnectorServiceAuth"
               }
             },
             "description": "The service to service authentication configuration for the connector. Cannot be specified if oauth is specified."
@@ -32473,7 +32473,7 @@
         ]
       }
     },
-    "type_:UpdateConnectorResponse": {
+    "UpdateConnectorResponse": {
       "name": "UpdateConnectorResponse",
       "shape": {
         "type": "object",
@@ -32485,14 +32485,14 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:Connector"
+                "id": "Connector"
               }
             }
           }
         ]
       }
     },
-    "type_:OAuthAuthorizeResponse": {
+    "OAuthAuthorizeResponse": {
       "name": "OAuthAuthorizeResponse",
       "shape": {
         "type": "object",
@@ -32514,7 +32514,7 @@
         ]
       }
     },
-    "type_:ConnectorLog": {
+    "ConnectorLog": {
       "name": "ConnectorLog",
       "shape": {
         "type": "object",
@@ -32646,7 +32646,7 @@
         ]
       }
     },
-    "type_:GetConnectorsLogsResponse": {
+    "GetConnectorsLogsResponse": {
       "name": "GetConnectorsLogsResponse",
       "shape": {
         "type": "object",
@@ -32662,7 +32662,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ConnectorLog"
+                    "id": "ConnectorLog"
                   }
                 }
               }
@@ -32684,7 +32684,7 @@
         ]
       }
     },
-    "type_:FeedbackResponse": {
+    "FeedbackResponse": {
       "name": "FeedbackResponse",
       "shape": {
         "type": "object",
@@ -32692,7 +32692,7 @@
         "properties": []
       }
     },
-    "type_:TokenLikelihood": {
+    "TokenLikelihood": {
       "name": "TokenLikelihood",
       "shape": {
         "type": "object",
@@ -32740,7 +32740,7 @@
         ]
       }
     },
-    "type_:LogLikelihoodResponse": {
+    "LogLikelihoodResponse": {
       "name": "LogLikelihoodResponse",
       "shape": {
         "type": "object",
@@ -32768,7 +32768,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:TokenLikelihood"
+                    "id": "TokenLikelihood"
                   }
                 }
               }
@@ -32785,7 +32785,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:TokenLikelihood"
+                    "id": "TokenLikelihood"
                   }
                 }
               }
@@ -32802,7 +32802,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:TokenLikelihood"
+                    "id": "TokenLikelihood"
                   }
                 }
               }
@@ -32819,7 +32819,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -32828,7 +32828,7 @@
         ]
       }
     },
-    "type_:Cluster": {
+    "Cluster": {
       "name": "Cluster",
       "shape": {
         "type": "object",
@@ -32909,7 +32909,7 @@
         ]
       }
     },
-    "type_:GetClusterJobResponse": {
+    "GetClusterJobResponse": {
       "name": "GetClusterJobResponse",
       "shape": {
         "type": "object",
@@ -33141,7 +33141,7 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "type_:Cluster"
+                        "id": "Cluster"
                       }
                     }
                   }
@@ -33178,7 +33178,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -33188,7 +33188,7 @@
       },
       "description": "Response for getting a cluster job."
     },
-    "type_:ListClusterJobsResponse": {
+    "ListClusterJobsResponse": {
       "name": "ListClusterJobsResponse",
       "shape": {
         "type": "object",
@@ -33204,7 +33204,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:GetClusterJobResponse"
+                    "id": "GetClusterJobResponse"
                   }
                 }
               }
@@ -33238,7 +33238,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:ApiMeta"
+                    "id": "ApiMeta"
                   }
                 }
               }
@@ -33247,7 +33247,7 @@
         ]
       }
     },
-    "type_:CreateClusterJobRequest": {
+    "CreateClusterJobRequest": {
       "name": "CreateClusterJobRequest",
       "shape": {
         "type": "object",
@@ -33367,7 +33367,7 @@
         ]
       }
     },
-    "type_:CreateClusterJobResponse": {
+    "CreateClusterJobResponse": {
       "name": "CreateClusterJobResponse",
       "shape": {
         "type": "object",
@@ -33389,7 +33389,7 @@
       },
       "description": "Response for creating a cluster job."
     },
-    "type_:UpdateClusterJobRequest": {
+    "UpdateClusterJobRequest": {
       "name": "UpdateClusterJobRequest",
       "shape": {
         "type": "object",
@@ -33428,7 +33428,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Cluster"
+                    "id": "Cluster"
                   }
                 }
               }
@@ -33489,7 +33489,7 @@
         ]
       }
     },
-    "type_:UpdateClusterJobResponse": {
+    "UpdateClusterJobResponse": {
       "name": "UpdateClusterJobResponse",
       "shape": {
         "type": "object",
@@ -33511,7 +33511,7 @@
       },
       "description": "Response for updating a cluster job."
     },
-    "type_:CompatibleEndpoint": {
+    "CompatibleEndpoint": {
       "name": "CompatibleEndpoint",
       "shape": {
         "type": "enum",
@@ -33541,7 +33541,7 @@
       },
       "description": "One of the Cohere API endpoints that the model can be used with."
     },
-    "type_:GetModelResponse": {
+    "GetModelResponse": {
       "name": "GetModelResponse",
       "shape": {
         "type": "object",
@@ -33570,7 +33570,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:CompatibleEndpoint"
+                    "id": "CompatibleEndpoint"
                   }
                 }
               }
@@ -33626,7 +33626,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:CompatibleEndpoint"
+                    "id": "CompatibleEndpoint"
                   }
                 }
               }
@@ -33637,7 +33637,7 @@
       },
       "description": "Contains information about the model and which API endpoints it can be used with."
     },
-    "type_:ListModelsResponse": {
+    "ListModelsResponse": {
       "name": "ListModelsResponse",
       "shape": {
         "type": "object",
@@ -33653,7 +33653,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:GetModelResponse"
+                    "id": "GetModelResponse"
                   }
                 }
               }
@@ -33681,7 +33681,7 @@
         ]
       }
     },
-    "type_:BaseType": {
+    "BaseType": {
       "name": "BaseType",
       "shape": {
         "type": "enum",
@@ -33706,7 +33706,7 @@
       },
       "description": "The possible types of fine-tuned models.\n\n - BASE_TYPE_UNSPECIFIED: Unspecified model.\n - BASE_TYPE_GENERATIVE: Deprecated: Generative model.\n - BASE_TYPE_CLASSIFICATION: Classification model.\n - BASE_TYPE_RERANK: Rerank model.\n - BASE_TYPE_CHAT: Chat model."
     },
-    "type_:Strategy": {
+    "Strategy": {
       "name": "Strategy",
       "shape": {
         "type": "enum",
@@ -33725,7 +33725,7 @@
       },
       "description": "The possible strategy used to serve a fine-tuned models.\n\n - STRATEGY_UNSPECIFIED: Unspecified strategy.\n - STRATEGY_VANILLA: Deprecated: Serve the fine-tuned model on a dedicated GPU.\n - STRATEGY_TFEW: Deprecated: Serve the fine-tuned model on a shared GPU."
     },
-    "type_:BaseModel": {
+    "BaseModel": {
       "name": "BaseModel",
       "shape": {
         "type": "object",
@@ -33775,7 +33775,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:BaseType"
+                "id": "BaseType"
               }
             },
             "description": "The type of the base model."
@@ -33790,7 +33790,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Strategy"
+                    "id": "Strategy"
                   }
                 }
               }
@@ -33801,7 +33801,7 @@
       },
       "description": "The base model used for fine-tuning."
     },
-    "type_:LoraTargetModules": {
+    "LoraTargetModules": {
       "name": "LoraTargetModules",
       "shape": {
         "type": "enum",
@@ -33823,7 +33823,7 @@
       },
       "description": "The possible combinations of LoRA modules to target.\n\n - LORA_TARGET_MODULES_UNSPECIFIED: Unspecified LoRA target modules.\n - LORA_TARGET_MODULES_QV: LoRA adapts the query and value matrices in transformer attention layers.\n - LORA_TARGET_MODULES_QKVO: LoRA adapts query, key, value, and output matrices in attention layers.\n - LORA_TARGET_MODULES_QKVO_FFN: LoRA adapts attention projection matrices and feed-forward networks (FFN)."
     },
-    "type_:Hyperparameters": {
+    "Hyperparameters": {
       "name": "Hyperparameters",
       "shape": {
         "type": "object",
@@ -33926,7 +33926,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:LoraTargetModules"
+                "id": "LoraTargetModules"
               }
             },
             "description": "The combination of LoRA modules to target."
@@ -33935,7 +33935,7 @@
       },
       "description": "The fine-tuning hyperparameters."
     },
-    "type_:WandbConfig": {
+    "WandbConfig": {
       "name": "WandbConfig",
       "shape": {
         "type": "object",
@@ -33990,7 +33990,7 @@
       },
       "description": "The Weights & Biases configuration."
     },
-    "type_:Settings": {
+    "Settings": {
       "name": "Settings",
       "shape": {
         "type": "object",
@@ -34002,7 +34002,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:BaseModel"
+                "id": "BaseModel"
               }
             },
             "description": "The base model to fine-tune."
@@ -34030,7 +34030,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Hyperparameters"
+                    "id": "Hyperparameters"
                   }
                 }
               }
@@ -34066,7 +34066,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:WandbConfig"
+                    "id": "WandbConfig"
                   }
                 }
               }
@@ -34077,7 +34077,7 @@
       },
       "description": "The configuration used for fine-tuning."
     },
-    "type_:Status": {
+    "Status": {
       "name": "Status",
       "shape": {
         "type": "enum",
@@ -34114,7 +34114,7 @@
       },
       "description": "The possible stages of a fine-tuned model life-cycle.\n\n - STATUS_UNSPECIFIED: Unspecified status.\n - STATUS_FINETUNING: The fine-tuned model is being fine-tuned.\n - STATUS_DEPLOYING_API: Deprecated: The fine-tuned model is being deployed.\n - STATUS_READY: The fine-tuned model is ready to receive requests.\n - STATUS_FAILED: The fine-tuned model failed.\n - STATUS_DELETED: The fine-tuned model was deleted.\n - STATUS_TEMPORARILY_OFFLINE: Deprecated: The fine-tuned model is temporarily unavailable.\n - STATUS_PAUSED: Deprecated: The fine-tuned model is paused (Vanilla only).\n - STATUS_QUEUED: The fine-tuned model is queued for training."
     },
-    "type_:FinetunedModel": {
+    "FinetunedModel": {
       "name": "FinetunedModel",
       "shape": {
         "type": "object",
@@ -34196,7 +34196,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:Settings"
+                "id": "Settings"
               }
             },
             "description": "FinetunedModel settings such as dataset, hyperparameters..."
@@ -34211,7 +34211,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Status"
+                    "id": "Status"
                   }
                 }
               }
@@ -34298,7 +34298,7 @@
       },
       "description": "This resource represents a fine-tuned model."
     },
-    "type_:ListFinetunedModelsResponse": {
+    "ListFinetunedModelsResponse": {
       "name": "ListFinetunedModelsResponse",
       "shape": {
         "type": "object",
@@ -34314,7 +34314,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:FinetunedModel"
+                    "id": "FinetunedModel"
                   }
                 }
               }
@@ -34351,7 +34351,7 @@
       },
       "description": "Response to a request to list fine-tuned models."
     },
-    "type_:Error": {
+    "Error": {
       "name": "Error",
       "shape": {
         "type": "object",
@@ -34374,7 +34374,7 @@
       },
       "description": "Error is the response for any unsuccessful event."
     },
-    "type_:CreateFinetunedModelResponse": {
+    "CreateFinetunedModelResponse": {
       "name": "CreateFinetunedModelResponse",
       "shape": {
         "type": "object",
@@ -34386,7 +34386,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:FinetunedModel"
+                "id": "FinetunedModel"
               }
             },
             "description": "Information about the fine-tuned model."
@@ -34395,7 +34395,7 @@
       },
       "description": "Response to request to create a fine-tuned model."
     },
-    "type_:GetFinetunedModelResponse": {
+    "GetFinetunedModelResponse": {
       "name": "GetFinetunedModelResponse",
       "shape": {
         "type": "object",
@@ -34407,7 +34407,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:FinetunedModel"
+                "id": "FinetunedModel"
               }
             },
             "description": "Information about the fine-tuned model."
@@ -34416,7 +34416,7 @@
       },
       "description": "Response to a request to get a fine-tuned model."
     },
-    "type_:DeleteFinetunedModelResponse": {
+    "DeleteFinetunedModelResponse": {
       "name": "DeleteFinetunedModelResponse",
       "shape": {
         "type": "object",
@@ -34425,7 +34425,7 @@
       },
       "description": "Response to request to delete a fine-tuned model."
     },
-    "type_:UpdateFinetunedModelResponse": {
+    "UpdateFinetunedModelResponse": {
       "name": "UpdateFinetunedModelResponse",
       "shape": {
         "type": "object",
@@ -34437,7 +34437,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:FinetunedModel"
+                "id": "FinetunedModel"
               }
             },
             "description": "Information about the fine-tuned model."
@@ -34446,7 +34446,7 @@
       },
       "description": "Response to a request to update a fine-tuned model."
     },
-    "type_:Event": {
+    "Event": {
       "name": "Event",
       "shape": {
         "type": "object",
@@ -34471,7 +34471,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "type_:Status"
+                "id": "Status"
               }
             },
             "description": "Status of the fine-tuned model."
@@ -34493,7 +34493,7 @@
       },
       "description": "A change in status of a fine-tuned model."
     },
-    "type_:ListEventsResponse": {
+    "ListEventsResponse": {
       "name": "ListEventsResponse",
       "shape": {
         "type": "object",
@@ -34509,7 +34509,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:Event"
+                    "id": "Event"
                   }
                 }
               }
@@ -34546,7 +34546,7 @@
       },
       "description": "Response to a request to list events of a fine-tuned model."
     },
-    "type_:TrainingStepMetrics": {
+    "TrainingStepMetrics": {
       "name": "TrainingStepMetrics",
       "shape": {
         "type": "object",
@@ -34597,7 +34597,7 @@
       },
       "description": "The evaluation metrics at a given step of the training of a fine-tuned model."
     },
-    "type_:ListTrainingStepMetricsResponse": {
+    "ListTrainingStepMetricsResponse": {
       "name": "ListTrainingStepMetricsResponse",
       "shape": {
         "type": "object",
@@ -34613,7 +34613,7 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:TrainingStepMetrics"
+                    "id": "TrainingStepMetrics"
                   }
                 }
               }

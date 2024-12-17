@@ -166,7 +166,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             // Websockets are not implemented in OAS, but are in AsyncAPI
             websockets: {},
             webhooks: { ...(this.webhooks?.convert() ?? {}), ...(webhookEndpoints ?? {}) },
-            types: Object.fromEntries(Object.entries(types).map(([id, type]) => [`type_:${id}`, type])),
+            types: Object.fromEntries(Object.entries(types).map(([id, type]) => [id, type])),
             // This is not necessary and will be removed
             subpackages,
             auths: this.auth?.convert() ?? {},
