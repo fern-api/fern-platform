@@ -25,6 +25,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             const apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
             let transformedApiDefinition: APIV1Db.DbApiDefinition | FdrAPI.api.latest.ApiDefinition | undefined;
 
+            console.log(req.body.definition);
             if (req.body.definition != null && Object.keys(req.body.definition).length > 0) {
                 const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {
                     typescriptSdk: undefined,
@@ -117,7 +118,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 REGISTER_API_DEFINITION_META,
             );
             await (
-                isLatest ? app.services.db.prisma.apiDefinitionsV2 : app.services.db.prisma.apiDefinitionsLatest
+                isLatest ? app.services.db.prisma.apiDefinitionsLatest : app.services.db.prisma.apiDefinitionsV2
             ).create({
                 data: {
                     apiDefinitionId,
