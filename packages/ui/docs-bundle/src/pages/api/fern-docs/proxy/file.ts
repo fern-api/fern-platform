@@ -60,13 +60,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.setHeader(name, value);
         });
 
-        // Handle audio/mpeg content type
-        if (response.headers.get("Content-Type")?.includes("audio/mpeg")) {
-            const buffer = await response.buffer();
-            return res.status(response.status).send(buffer);
-        }
-
-        return res.status(response.status).send(response.body);
+        const buffer = await response.arrayBuffer();
+        // eslint-disable-next-line no-console
+        console.log("Audio buffer:", buffer);
+        return res.status(response.status).send(Buffer.from(buffer));
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
