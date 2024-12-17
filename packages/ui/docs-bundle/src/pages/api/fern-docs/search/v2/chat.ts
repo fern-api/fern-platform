@@ -74,6 +74,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         messages,
         maxSteps: 10,
         maxRetries: 3,
+        experimental_telemetry: {
+            isEnabled: true,
+            recordInputs: true,
+            recordOutputs: true,
+            functionId: "ask_ai_chat",
+            metadata: {
+                domain,
+                languageModel: languageModel.modelId,
+                embeddingModel: embeddingModel.modelId,
+                db: "turbopuffer",
+                namespace,
+            },
+        },
         tools: {
             search: tool({
                 description: "Search the knowledge base for the user's query. Semantic search is enabled.",
