@@ -32,6 +32,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     isFileWithData(valueObject: object): valueObject is { filename: string; data: string } {
         return (
+            typeof valueObject === "object" &&
             "filename" in valueObject &&
             "data" in valueObject &&
             typeof valueObject.filename === "string" &&
