@@ -21,7 +21,7 @@ export default async function handler(req: Request): Promise<Response> {
     const headers = new Headers({
         "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type"
+        "Access-Control-Allow-Headers": "Content-Type",
     });
 
     if (req.method === "OPTIONS") {
@@ -58,7 +58,7 @@ export default async function handler(req: Request): Promise<Response> {
 
         return new Response(response.body, {
             status: response.status,
-            headers
+            headers,
         });
     } catch (err) {
         // eslint-disable-next-line no-console
