@@ -73,7 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             response: res,
             status: response.status,
             headers: Object.fromEntries(response.headers.entries()),
-            stream: response.body,
+            stream: response.body as ReadableStream<Uint8Array>,
         });
     } catch (err) {
         // eslint-disable-next-line no-console
