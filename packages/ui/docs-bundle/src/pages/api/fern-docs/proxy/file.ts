@@ -81,10 +81,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const reader = stream.getReader();
         const read = async () => {
             try {
-                let isDone = false;
-                while (!isDone) {
+                // eslint-disable-next-line no-constant-condition
+                while (true) {
                     const { done, value } = await reader.read();
-                    isDone = done;
                     if (done) {
                         break;
                     }
