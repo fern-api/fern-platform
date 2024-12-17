@@ -25,7 +25,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
             const apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
             let transformedApiDefinition: APIV1Db.DbApiDefinition | FdrAPI.api.latest.ApiDefinition | undefined;
 
-            if (req.body.definition != null) {
+            if (req.body.definition != null && Object.keys(req.body.definition).length > 0) {
                 const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {
                     typescriptSdk: undefined,
                     pythonSdk: undefined,
@@ -90,7 +90,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
 
             let isLatest = false;
             if (transformedApiDefinition == null) {
-                if (req.body.definitionLatest == null) {
+                if (req.body.definitionV2 == null || Object.keys(req.body.definitionV2).length === 0) {
                     throw new Error("No latest definition provided");
                 }
                 isLatest = true;

@@ -28,7 +28,7 @@ interface ResolveDocsContentArgs {
     prev: FernNavigation.NavigationNodeNeighbor | undefined;
     next: FernNavigation.NavigationNodeNeighbor | undefined;
     apis: Record<string, APIV1Read.ApiDefinition>;
-    apisLatest: Record<string, FdrAPI.api.latest.ApiDefinition>;
+    apisV2: Record<string, FdrAPI.api.latest.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     featureFlags: FeatureFlags;
@@ -46,7 +46,7 @@ export async function resolveDocsContent({
     prev,
     next,
     apis,
-    apisLatest,
+    apisV2,
     pages,
     mdxOptions,
     featureFlags,
@@ -67,24 +67,24 @@ export async function resolveDocsContent({
         );
 
     // TODO: remove legacy when done
-    const apiLoaders =
-        Object.keys(apis).length > 0
-            ? mapValues(apis, (api) => {
-                  return ApiDefinitionLoader.create(domain, api.id)
-                      .withMdxBundler(serializeMdx, engine)
-                      .withFlags(featureFlags)
-                      .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
-                      .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-                      .withResolveDescriptions();
-              })
-            : mapValues(apisLatest, (api) => {
-                  return ApiDefinitionLoader.create(domain, api.id)
-                      .withMdxBundler(serializeMdx, engine)
-                      .withFlags(featureFlags)
-                      .withApiDefinition(api)
-                      .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-                      .withResolveDescriptions();
-              });
+    const apiLoaders = {
+        ...mapValues(apis, (api) => {
+            return ApiDefinitionLoader.create(domain, api.id)
+                .withMdxBundler(serializeMdx, engine)
+                .withFlags(featureFlags)
+                .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
+                .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+                .withResolveDescriptions();
+        }),
+        ...mapValues(apisV2, (api) => {
+            return ApiDefinitionLoader.create(domain, api.id)
+                .withMdxBundler(serializeMdx, engine)
+                .withFlags(featureFlags)
+                .withApiDefinition(api)
+                .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+                .withResolveDescriptions();
+        }),
+    };
 
     let result: DocsContent | undefined;
 

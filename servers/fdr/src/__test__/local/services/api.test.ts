@@ -96,7 +96,7 @@ it("register api latest", async () => {
         await fdr.api.v1.register.registerApiDefinition({
             orgId: FdrAPI.OrgId("fern"),
             apiId: FdrAPI.ApiId("api"),
-            definitionLatest: EMPTY_REGISTER_API_LATEST_DEFINITION,
+            definitionV2: EMPTY_REGISTER_API_LATEST_DEFINITION,
         }),
     );
 
@@ -120,7 +120,7 @@ it("register api latest", async () => {
         await fdr.api.v1.register.registerApiDefinition({
             orgId: FdrAPI.OrgId("fern"),
             apiId: FdrAPI.ApiId("api"),
-            definitionLatest: MOCK_REGISTER_API_LATEST_DEFINITION,
+            definitionV2: MOCK_REGISTER_API_LATEST_DEFINITION,
         }),
     );
     // load updated definition

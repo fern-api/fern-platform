@@ -533,7 +533,7 @@ export class Register {
      *                     }]
      *             }
      *         },
-     *         definitionLatest: {
+     *         definitionV2: {
      *             id: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             endpoints: {
      *                 "string": {

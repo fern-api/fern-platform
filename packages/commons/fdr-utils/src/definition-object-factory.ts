@@ -5,7 +5,7 @@ export class DefinitionObjectFactory {
         return {
             pages: {},
             apis: {},
-            apisLatest: {},
+            apisV2: {},
             files: {},
             filesV2: {},
             config: {

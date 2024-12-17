@@ -155,7 +155,7 @@ export async function getDocsDefinition({
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
         filesV2,
         apis: apiDefinitionsById,
-        apisLatest: apiV2DefinitionsById,
+        apisV2: apiV2DefinitionsById,
         id: docsV2?.docsConfigInstanceId ?? undefined,
         search: searchInfo,
     });

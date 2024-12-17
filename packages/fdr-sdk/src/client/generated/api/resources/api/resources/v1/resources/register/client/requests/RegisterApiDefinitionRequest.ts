@@ -506,7 +506,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     }]
  *             }
  *         },
- *         definitionLatest: {
+ *         definitionV2: {
  *             id: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
  *             endpoints: {
  *                 "string": {
@@ -717,6 +717,6 @@ export interface RegisterApiDefinitionRequest {
     orgId: FernRegistry.OrgId;
     apiId: FernRegistry.ApiId;
     definition?: FernRegistry.api.v1.register.ApiDefinition;
-    definitionLatest?: FernRegistry.api.latest.ApiDefinition;
+    definitionV2?: FernRegistry.api.latest.ApiDefinition;
     sources?: Record<FernRegistry.api.v1.register.SourceId, FernRegistry.api.v1.register.Source>;
 }

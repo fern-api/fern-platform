@@ -16,7 +16,7 @@ const HEALTHCHECK_DOCS_RESPONSE: CachedDocsResponse = {
         definition: {
             pages: {},
             apis: {},
-            apisLatest: {},
+            apisV2: {},
             config: {
                 navigation: {
                     items: [],

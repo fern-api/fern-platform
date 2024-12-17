@@ -25,7 +25,7 @@ service:
             orgId: rootCommons.OrgId
             apiId: rootCommons.ApiId
             definition: optional<ApiDefinition>
-            definitionLatest: optional<latest.ApiDefinition>
+            definitionV2: optional<latest.ApiDefinition>
             sources: optional<map<SourceId, Source>>
       response: RegisterApiDefinitionResponse
       errors:

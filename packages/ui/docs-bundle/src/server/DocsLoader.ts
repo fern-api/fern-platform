@@ -88,7 +88,7 @@ export class DocsLoader {
         }
         const v1 = res.definition.apis[key];
         const latest =
-            res.definition.apisLatest[key] ??
+            res.definition.apisV2[key] ??
             (v1 != null ? ApiDefinitionV1ToLatest.from(v1, this.featureFlags).migrate() : undefined);
         if (!latest) {
             return undefined;

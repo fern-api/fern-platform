@@ -63,16 +63,16 @@ export async function loadDocsWithUrl(payload: LoadDocsWithUrlPayload): Promise<
     const pages = mapValues(docs.body.definition.pages, (page) => page.markdown);
 
     // migrate apis
-    const apis =
-        Object.keys(docs.body.definition.apis).length > 0
-            ? mapValues(docs.body.definition.apis, (api) =>
-                  ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
-                      useJavaScriptAsTypeScript: payload.useJavaScriptAsTypeScript ?? false,
-                      alwaysEnableJavaScriptFetch: payload.alwaysEnableJavaScriptFetch ?? false,
-                      usesApplicationJsonInFormDataValue: payload.usesApplicationJsonInFormDataValue ?? false,
-                  }).migrate(),
-              )
-            : mapValues(docs.body.definition.apisLatest, (api) => api);
+    const apis = {
+        ...mapValues(docs.body.definition.apis, (api) =>
+            ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
+                useJavaScriptAsTypeScript: payload.useJavaScriptAsTypeScript ?? false,
+                alwaysEnableJavaScriptFetch: payload.alwaysEnableJavaScriptFetch ?? false,
+                usesApplicationJsonInFormDataValue: payload.usesApplicationJsonInFormDataValue ?? false,
+            }).migrate(),
+        ),
+        ...docs.body.definition.apisV2,
+    };
 
     return { org_id: org.body, root, pages, apis, domain: domain.host };
 }

@@ -425,7 +425,7 @@ async function uploadToAlgolia(
                 // we don't need to use this for generating algolia records
                 filesV2: {},
                 apis: mapValues(apiDefinitionsById, (def) => convertDbAPIDefinitionToRead(def)),
-                apisLatest: mapValues(apiDefinitionsLatestById, (def) => def),
+                apisV2: mapValues(apiDefinitionsLatestById, (def) => def),
                 id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
                 search: getSearchInfoFromDocs({
                     algoliaIndex,
@@ -447,7 +447,7 @@ async function uploadToAlgolia(
         const apis =
             Object.entries(loadDocsForUrlResponse.definition.apis).length > 0
                 ? FernNavigation.utils.toApis(loadDocsForUrlResponse)
-                : loadDocsForUrlResponse.definition.apisLatest;
+                : loadDocsForUrlResponse.definition.apisV2;
         await Promise.all(
             configSegmentTuples.map(async ([_, indexSegment]) => {
                 try {
