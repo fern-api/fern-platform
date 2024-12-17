@@ -93,6 +93,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 if (req.body.definitionV2 == null || Object.keys(req.body.definitionV2).length === 0) {
                     throw new Error("No latest definition provided");
                 }
+                transformedApiDefinition = req.body.definitionV2;
                 isLatest = true;
             }
 
