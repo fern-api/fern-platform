@@ -1,7 +1,6 @@
 import { ProxyRequestSchema } from "@fern-ui/ui";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import fetch, { Headers } from "node-fetch";
-import { ServerResponse } from "node:http";
 import { buildRequestBody } from "./rest";
 
 /**
@@ -69,52 +68,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         // Stream other response types
-        writeToServerResponse({
-            response: res,
-            status: response.status,
-            headers: Object.fromEntries(response.headers.entries()),
-            stream: response.body as any as ReadableStream<Uint8Array>,
-        });
+        // For audio streaming, we need to ensure we get the raw stream
+        if (!response.body) {
+            return res.status(response.status).send(undefined);
+        }
+
+        // Set response headers before starting stream
+        res.writeHead(response.status, Object.fromEntries(response.headers.entries()));
+
+        // Create a new stream from the response body
+        const stream = response.body as unknown as ReadableStream<Uint8Array>;
+        const reader = stream.getReader();
+        const read = async () => {
+            try {
+                let isDone = false;
+                while (!isDone) {
+                    const { done, value } = await reader.read();
+                    isDone = done;
+                    if (done) {
+                        break;
+                    }
+                    res.write(value);
+                }
+            } finally {
+                res.end();
+            }
+        };
+
+        await read();
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
         return res.status(500).send(null);
     }
-}
-
-/**
- * Writes the content of a stream to a server response.
- */
-export function writeToServerResponse({
-    response,
-    status,
-    statusText,
-    headers,
-    stream,
-}: {
-    response: ServerResponse;
-    status?: number;
-    statusText?: string;
-    headers?: Record<string, string | number | string[]>;
-    stream: ReadableStream<Uint8Array>;
-}): void {
-    response.writeHead(status ?? 200, statusText, headers);
-
-    const reader = stream.getReader();
-    const read = async () => {
-        try {
-            // eslint-disable-next-line no-constant-condition
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) {
-                    break;
-                }
-                response.write(value);
-            }
-        } finally {
-            response.end();
-        }
-    };
-
-    void read();
 }
