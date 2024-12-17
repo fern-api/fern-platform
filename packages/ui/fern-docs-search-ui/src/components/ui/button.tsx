@@ -8,11 +8,11 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "bg-[var(--accent-6)] text-[var(--accent-12)] shadow hover:bg-[var(--accent-11)]",
-                destructive: "bg-[var(--red-10)] text-[var(--red-12)] shadow-sm hover:bg-[var(--red-11)]",
+                default: "bg-[var(--accent-10)] text-[var(--accent-1)] hover:bg-[var(--accent-9)]",
+                destructive: "bg-[var(--red-10)] text-[var(--red-12)] hover:bg-[var(--red-11)]",
                 outline:
-                    "border border-[var(--grayscale-a6)] bg-[var(--grayscale-2)] text-[var(--grayscale-12)] shadow-sm hover:bg-[var(--grayscale-4)] hover:text-[var(--accent-12)]",
-                secondary: "bg-[var(--grayscale-a3)] text-[var(--accent-12)] shadow-sm hover:bg-[var(--grayscale-a4)]",
+                    "border border-[var(--grayscale-a6)] bg-[var(--grayscale-2)] text-[var(--grayscale-12)] hover:bg-[var(--grayscale-4)] hover:text-[var(--accent-12)]",
+                secondary: "bg-[var(--grayscale-a3)] text-[var(--accent-12)] hover:bg-[var(--grayscale-a4)]",
                 ghost: "hover:bg-[var(--accent-a3)] hover:text-[var(--accent-12)]",
                 link: "text-[var(--accent-6)] underline-offset-4 hover:underline",
             },

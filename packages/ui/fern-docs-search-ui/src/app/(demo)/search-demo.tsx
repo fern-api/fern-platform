@@ -1,8 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { ReactElement, isValidElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import useSWR from "swr";
+import { ReactElement, isValidElement, useCallback, useState } from "react";
 import { z } from "zod";
 
 import { AppSidebar, AppSidebarContent } from "@/app/(demo)/app-sidebar";
@@ -30,17 +29,15 @@ import {
 } from "@/components/desktop/desktop-ask-ai";
 import { Suggestions } from "@/components/desktop/suggestions";
 import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
+import { useCmdkShortcut } from "@/hooks/use-cmdk-shortcut";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { SuggestionsSchema } from "@/server/suggestions-schema";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { useSuggestions } from "@/hooks/use-suggestions";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-ui/fern-docs-search-server/algolia";
 import { useDebouncedCallback } from "@fern-ui/react-commons";
-import { Message } from "ai";
-import { experimental_useObject, useChat } from "ai/react";
-import { debounce } from "es-toolkit/function";
-import { atom, useAtom } from "jotai";
-import { atomWithStorage } from "jotai/utils";
-import { Components } from "react-markdown";
+import { useChat } from "ai/react";
+import { useAtom } from "jotai";
+import { atomWithDefault, atomWithStorage } from "jotai/utils";
+import useSWRImmutable from "swr/immutable";
 
 const USER_TOKEN_KEY = "user-token";
 
@@ -52,7 +49,8 @@ const modelAtom = atomWithStorage("ai-model", "claude-3-5-haiku", undefined, {
     getOnInit: true,
 });
 
-const initialConversationAtom = atom<Message[]>([]);
+const chatIdAtom = atomWithDefault<string>(() => crypto.randomUUID());
+const suggestIdAtom = atomWithDefault<string>(() => crypto.randomUUID());
 
 export function DemoInstantSearchClient({ appId, domain }: { appId: string; domain: string }): ReactElement | false {
     const [askAi, setAskAi] = useState(false);
@@ -60,39 +58,14 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
     const { setTheme } = useTheme();
     const isMobile = useIsMobile();
 
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (isMobile) {
-                return;
-            }
-
-            setOpen((prev) => {
-                if (prev) {
-                    return prev;
-                }
-
-                if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key === "k")) {
-                    event.preventDefault();
-                    return true;
-                }
-
-                return prev;
-            });
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [isMobile]);
+    useCmdkShortcut(setOpen);
 
     const handleSubmit = useCallback(
-        (path: string) => {
-            window.open(String(new URL(path, `https://${domain}`)), "_blank", "noopener,noreferrer");
-        },
+        (path: string) => window.open(String(new URL(path, `https://${domain}`)), "_blank", "noopener,noreferrer"),
         [domain],
     );
 
-    const { data: apiKey } = useSWR([domain, "api-key"], async (): Promise<string> => {
+    const { data: algoliaSearchKey } = useSWRImmutable([domain, "api-key"], async (): Promise<string> => {
         const userToken = window.sessionStorage.getItem(USER_TOKEN_KEY) ?? `anonymous-user-${crypto.randomUUID()}`;
         window.sessionStorage.setItem(USER_TOKEN_KEY, userToken);
         const res = await fetch(`/api/search-key?domain=${domain}`, {
@@ -103,50 +76,26 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
     });
 
     const facetFetcher = useCallback(
-        async (filters: readonly string[]) => fetchFacets({ filters, domain, apiKey: apiKey || "" }),
-        [domain, apiKey],
+        async (filters: readonly string[]) => fetchFacets({ filters, domain, apiKey: algoliaSearchKey || "" }),
+        [algoliaSearchKey, domain],
     );
 
     const [model, setModel] = useAtom(modelAtom);
+    const [chatId, setChatId] = useAtom(chatIdAtom);
+    const [suggestId, _setSuggestId] = useAtom(suggestIdAtom);
 
-    const [initialConversation, setInitialConversation] = useAtom(initialConversationAtom);
-
-    const [id, setId] = useState(crypto.randomUUID());
-    const { messages, input, setInput, isLoading, append, stop, setMessages } = useChat({
-        id,
-        initialMessages: initialConversation,
+    const { messages, isLoading, append, stop, input, setInput } = useChat({
+        id: chatId,
         api: "/api/chat",
-        body: {
-            algoliaSearchKey: apiKey,
-            domain,
-            model,
-        },
-        onFinish: () => {
-            setInitialConversation(messages);
-        },
+        body: { algoliaSearchKey, domain, model },
     });
 
-    const { object, submit } = experimental_useObject({
+    const suggestions = useSuggestions({
+        id: suggestId,
         api: "/api/suggest",
-        schema: SuggestionsSchema,
+        body: { algoliaSearchKey, domain, model },
+        shouldSuggest: algoliaSearchKey != null && askAi,
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const debouncedSubmit = useMemo(() => debounce(submit, 500, { edges: ["leading"] }), []);
-
-    const suggested = useRef(false);
-
-    useEffect(() => {
-        if (apiKey && !suggested.current) {
-            debouncedSubmit({
-                algoliaSearchKey: apiKey,
-                domain,
-                model,
-            });
-            suggested.current = true;
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [domain, apiKey, model]);
 
     const handleSubmitMessage = useDebouncedCallback(
         (message: string) => {
@@ -162,54 +111,14 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
         { edges: ["leading"] },
     );
 
-    const handleClearMessages = useCallback(() => {
-        stop();
-        setMessages([]);
-        setId(crypto.randomUUID());
-    }, [stop, setMessages, setId]);
-
-    const handleCloseDialog = useCallback(() => {
-        setOpen(false);
-    }, [setOpen]);
-
-    const components = useMemo<Components>(
-        () => ({
-            pre(props) {
-                if (isValidElement(props.children) && props.children.type === "code") {
-                    const { children, className } = props.children.props as {
-                        children: string;
-                        className: string;
-                    };
-                    if (typeof children === "string") {
-                        const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
-                        return <CodeBlock code={children} language={match} fontSize="sm" />;
-                    }
-                }
-                return <pre {...props} />;
-            },
-
-            a: ({ children, node, ...props }) => (
-                <a
-                    {...props}
-                    className="hover:text-[var(--accent-a10)] font-semibold decoration-[var(--accent-a10)] hover:decoration-2"
-                    target="_blank"
-                    rel="noreferrer"
-                >
-                    {children}
-                </a>
-            ),
-        }),
-        [],
-    );
-
-    if (!apiKey) {
+    if (!algoliaSearchKey) {
         return false;
     }
 
     return (
         <SearchClientRoot
             appId={appId}
-            apiKey={apiKey}
+            apiKey={algoliaSearchKey}
             domain={domain}
             indexName={SEARCH_INDEX}
             fetchFacets={facetFetcher}
@@ -230,31 +139,61 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 </AppSidebar>
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
-                    <DesktopCommandWithAskAI isAskAI={askAi} onClose={handleCloseDialog}>
+                    <DesktopCommandWithAskAI isAskAI={askAi} onClose={() => setOpen(false)}>
                         {askAi ? (
                             <DesktopAskAIContent onReturnToSearch={() => setAskAi(false)} isThinking={isLoading}>
-                                {messages.length > 0 && <NewChatButton onClick={handleClearMessages} />}
+                                {messages.length > 0 && (
+                                    <NewChatButton
+                                        onClick={() => {
+                                            stop();
+                                            setChatId(crypto.randomUUID());
+                                        }}
+                                    />
+                                )}
 
                                 <AskAICommandItems
                                     messages={messages}
                                     onSelectHit={handleSubmit}
-                                    components={components}
+                                    components={{
+                                        pre(props) {
+                                            if (isValidElement(props.children) && props.children.type === "code") {
+                                                const { children, className } = props.children.props as {
+                                                    children: string;
+                                                    className: string;
+                                                };
+                                                if (typeof children === "string") {
+                                                    const match =
+                                                        /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                                    return <CodeBlock code={children} language={match} fontSize="sm" />;
+                                                }
+                                            }
+                                            return <pre {...props} />;
+                                        },
+
+                                        a: ({ children, node, ...props }) => (
+                                            <a
+                                                {...props}
+                                                className="hover:text-[var(--accent-a10)] font-semibold decoration-[var(--accent-a10)] hover:decoration-2"
+                                                target="_blank"
+                                                rel="noreferrer"
+                                            >
+                                                {children}
+                                            </a>
+                                        ),
+                                    }}
                                     isThinking={isLoading}
                                     domain={domain}
                                 >
-                                    <Suggestions
-                                        suggestions={object?.suggestions ?? EMPTY_ARRAY}
-                                        onSubmitMessage={handleSubmitMessage}
-                                    />
+                                    <Suggestions suggestions={suggestions} onSubmitMessage={handleSubmitMessage} />
                                 </AskAICommandItems>
 
                                 <AskAIComposer
-                                    value={input}
-                                    onValueChange={setInput}
                                     isLoading={isLoading}
                                     stop={stop}
                                     onSend={handleSubmitMessage}
                                     onPopState={() => setAskAi(false)}
+                                    value={input}
+                                    onValueChange={setInput}
                                 />
 
                                 <DesktopAskAIComposerActions>

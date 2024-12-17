@@ -1,7 +1,7 @@
-import { AlgoliaRecordHit } from "@/types";
 import { Badge } from "@fern-ui/components/badges";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
+import { Primitive } from "@radix-ui/react-primitive";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { Message } from "ai/react";
 import { atom, useAtomValue, useSetAtom } from "jotai";
@@ -21,6 +21,8 @@ import {
 } from "react";
 import type { Components } from "react-markdown";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+
+import type { AlgoliaRecordHit } from "../../types";
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import { ChatbotTurnContextProvider, useChatbotTurnContext } from "../chatbot/turn-context";
 import { combineSearchResults, squeezeMessages } from "../chatbot/utils";
@@ -41,7 +43,7 @@ const headerActions = tunnel();
 const composerActions = tunnel();
 const composer = tunnel();
 
-export const DesktopCommandWithAskAI = forwardRef<
+const DesktopCommandWithAskAI = forwardRef<
     HTMLDivElement,
     Omit<ComponentPropsWithoutRef<typeof DesktopCommandRoot>, "children"> & {
         isAskAI?: boolean;
@@ -79,7 +81,7 @@ export const DesktopCommandWithAskAI = forwardRef<
 
 DesktopCommandWithAskAI.displayName = "DesktopCommandWithAskAI";
 
-export const DesktopAskAIContent = ({
+const DesktopAskAIContent = ({
     onReturnToSearch,
     isThinking,
     children,
@@ -90,24 +92,41 @@ export const DesktopAskAIContent = ({
 }): ReactElement => {
     return (
         <>
-            <div className="flex items-center justify-between p-2 pb-0">
-                <div>
-                    {onReturnToSearch && (
-                        <Button size="xs" variant="outline" onClick={onReturnToSearch}>
-                            <ArrowLeft />
-                            Back to search
-                        </Button>
-                    )}
-                </div>
-                <div className="flex gap-2">
-                    <headerActions.Out />
-                    <afterInput.Out />
-                </div>
-            </div>
+            <DesktopAskAIHeader onReturnToSearch={onReturnToSearch} />
             <DesktopAskAIChat isThinking={isThinking}>{children}</DesktopAskAIChat>
         </>
     );
 };
+
+const DesktopAskAIHeader = forwardRef<
+    HTMLDivElement,
+    ComponentPropsWithoutRef<typeof Primitive.div> & {
+        onReturnToSearch?: () => void;
+    }
+>(({ onReturnToSearch, ...props }, ref) => {
+    return (
+        <Primitive.div
+            ref={ref}
+            {...props}
+            className={cn("flex items-center justify-between p-2 pb-0", props.className)}
+        >
+            <div>
+                {onReturnToSearch && (
+                    <Button size="xs" variant="outline" onClick={onReturnToSearch}>
+                        <ArrowLeft />
+                        Back to search
+                    </Button>
+                )}
+            </div>
+            <div className="flex gap-2">
+                <headerActions.Out />
+                <afterInput.Out />
+            </div>
+        </Primitive.div>
+    );
+});
+
+DesktopAskAIHeader.displayName = "DesktopAskAIHeader";
 
 // const UserScrolledContext = createContext<[boolean, Dispatch<SetStateAction<boolean>>]>([false, noop]);
 const userScrolledAtom = atom(false);
@@ -156,19 +175,22 @@ const DesktopAskAIChat = ({ isThinking, children }: { isThinking?: boolean; chil
     );
 };
 
-export const AskAIComposer = forwardRef<
+const AskAIComposer = forwardRef<
     HTMLTextAreaElement,
-    ComponentPropsWithoutRef<typeof TextArea> & {
+    Omit<ComponentPropsWithoutRef<typeof TextArea>, "value" | "defaultValue"> & {
         isLoading?: boolean;
         stop?: () => void;
         onSend?: (message: string) => void;
         onPopState?: KeyboardEventHandler<HTMLTextAreaElement>;
+        value?: string;
     }
->(({ isLoading, stop, onSend, onPopState, ...props }, forwardedRef) => {
+>((props, forwardedRef) => {
+    const { isLoading, stop, onSend, onPopState, value = "", ...rest } = props;
+
     const setUserScrolled = useSetAtom(userScrolledAtom);
-    const value = typeof props.value === "string" ? props.value : "";
     const canSubmit = value.trim().split(/\s+/).length >= 2;
     const inputRef = useRef<HTMLTextAreaElement>(null);
+    const disabled = !isLoading && !canSubmit;
     return (
         <composer.In>
             <div
@@ -184,11 +206,12 @@ export const AskAIComposer = forwardRef<
                         lineHeight={24}
                         maxLines={10}
                         padding={8}
-                        {...props}
-                        className={cn("w-full resize-none focus:outline-none block p-2", props.className)}
-                        style={{ fontSize: "16px", lineHeight: "24px", maxHeight: 200, ...props.style }}
+                        value={value}
+                        {...rest}
+                        className={cn("w-full resize-none focus:outline-none block p-2", rest.className)}
+                        style={{ fontSize: "16px", lineHeight: "24px", maxHeight: 200, ...rest.style }}
                         onKeyDown={composeEventHandlers(
-                            props.onKeyDown,
+                            rest.onKeyDown,
                             (e) => {
                                 if (e.key === "Enter") {
                                     if (!e.shiftKey && value.length === 0) {
@@ -223,11 +246,10 @@ export const AskAIComposer = forwardRef<
                         <composerActions.Out />
                     </div>
                     <Button
-                        size="icon"
-                        className="rounded-full"
-                        variant="ghost"
+                        size="iconSm"
+                        variant={disabled ? "outline" : "default"}
                         onClick={isLoading ? stop : () => onSend?.(value)}
-                        disabled={!isLoading && !canSubmit}
+                        disabled={disabled}
                     >
                         {isLoading ? <StopCircle /> : <ArrowUp />}
                     </Button>
@@ -249,7 +271,7 @@ interface AskAICommandItemsProps {
     domain: string;
 }
 
-export const AskAICommandItems = memo<AskAICommandItemsProps>((props): ReactElement => {
+const AskAICommandItems = memo<AskAICommandItemsProps>((props): ReactElement => {
     const { messages, onSelectHit, components: componentsProp, isThinking, children, prefetch, domain } = props;
     const userScrolled = useAtomValue(userScrolledAtom);
     const squeezedMessages = squeezeMessages(messages);
@@ -376,26 +398,28 @@ export const AskAICommandItems = memo<AskAICommandItemsProps>((props): ReactElem
 
 AskAICommandItems.displayName = "AskAICommandItems";
 
-export const NewChatButton = forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof Button>>((props, ref) => {
-    return (
-        <headerActions.In>
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button ref={ref} size="iconXs" variant="outline" {...props}>
-                            <SquarePen />
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipPortal>
-                        <TooltipContent>
-                            <p>New chat</p>
-                        </TooltipContent>
-                    </TooltipPortal>
-                </Tooltip>
-            </TooltipProvider>
-        </headerActions.In>
-    );
-});
+const NewChatButton = memo(
+    forwardRef<HTMLButtonElement, ComponentPropsWithoutRef<typeof Button>>((props, ref) => {
+        return (
+            <headerActions.In>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button ref={ref} size="iconXs" variant="outline" {...props}>
+                                <SquarePen />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipPortal>
+                            <TooltipContent>
+                                <p>New chat</p>
+                            </TooltipContent>
+                        </TooltipPortal>
+                    </Tooltip>
+                </TooltipProvider>
+            </headerActions.In>
+        );
+    }),
+);
 
 NewChatButton.displayName = "NewChatButton";
 
@@ -410,8 +434,12 @@ function FootnoteCommands({
 }) {
     const { footnotesAtom } = useChatbotTurnContext();
     const footnotes = useAtomValue(footnotesAtom);
+    if (footnotes.length === 0) {
+        return false;
+    }
+
     return (
-        <>
+        <Command.Group forceMount heading="Sources">
             {footnotes.map((footnote, idx) => (
                 <CommandLink
                     key={footnote.ids.join("-")}
@@ -427,8 +455,17 @@ function FootnoteCommands({
                     </div>
                 </CommandLink>
             ))}
-        </>
+        </Command.Group>
     );
 }
 
-export const DesktopAskAIComposerActions = composerActions.In;
+const DesktopAskAIComposerActions = composerActions.In;
+
+export {
+    AskAICommandItems,
+    AskAIComposer,
+    DesktopAskAIComposerActions,
+    DesktopAskAIContent,
+    DesktopCommandWithAskAI,
+    NewChatButton,
+};

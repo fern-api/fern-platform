@@ -64,7 +64,7 @@ export function DesktopFilterDropdownMenu({
                         }
                     }}
                     onCloseAutoFocus={onCloseAutoFocus}
-                    onEscapeKeyDownKeyDown={(e) => {
+                    onEscapeKeyDown={(e) => {
                         e.stopImmediatePropagation();
                     }}
                 >

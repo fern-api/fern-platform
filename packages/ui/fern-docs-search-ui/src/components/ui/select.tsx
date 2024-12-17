@@ -2,6 +2,7 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import * as React from "react";
 
+import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "./cn";
 
 const Select = SelectPrimitive.Root;
@@ -10,19 +11,31 @@ const SelectGroup = SelectPrimitive.Group;
 
 const SelectValue = SelectPrimitive.Value;
 
+const selectVariants = cva(
+    cn(
+        "flex w-full items-center justify-between whitespace-nowrap rounded-md border border-[var(--grayscale-a6)] bg-transparent text-sm shadow-sm ring-offset-background placeholder:text-[var(--accent-12)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-6)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+        "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&>span]:inline-flex [&>span]:items-center [&>span]:gap-2",
+    ),
+    {
+        variants: {
+            size: {
+                default: "h-9 px-3 py-2",
+                xs: "h-6 rounded-md px-2 text-xs",
+                sm: "h-8 rounded-md px-2 text-xs",
+                lg: "h-10 rounded-md px-6",
+            },
+        },
+        defaultVariants: {
+            size: "default",
+        },
+    },
+);
+
 const SelectTrigger = React.forwardRef<
     React.ElementRef<typeof SelectPrimitive.Trigger>,
-    React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-    <SelectPrimitive.Trigger
-        ref={ref}
-        className={cn(
-            "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-[var(--grayscale-a6)] bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-[var(--accent-12)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-6)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-            "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 [&>span]:inline-flex [&>span]:items-center [&>span]:gap-2",
-            className,
-        )}
-        {...props}
-    >
+    React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & VariantProps<typeof selectVariants>
+>(({ className, children, size, ...props }, ref) => (
+    <SelectPrimitive.Trigger ref={ref} className={cn(selectVariants({ size, className }))} {...props}>
         {children}
         <SelectPrimitive.Icon asChild>
             <ChevronDown className="size-4 opacity-50 ml-2" />

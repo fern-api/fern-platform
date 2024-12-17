@@ -56,6 +56,7 @@ DesktopCommand.displayName = "DesktopCommand";
 export const DesktopCommandContent = memo(({ children }: { children: React.ReactNode }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
+    console.log("DesktopCommandContent");
     return (
         <>
             <div

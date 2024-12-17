@@ -35,7 +35,13 @@ export async function POST(request: Request): Promise<Response> {
     const client = searchClient(algoliaAppId(), algoliaSearchKey);
     const response = await client.searchSingleIndex<AlgoliaRecord>({
         indexName: SEARCH_INDEX,
-        searchParams: { query: "", hitsPerPage: 100, attributesToSnippet: [] },
+        searchParams: {
+            query: "",
+            hitsPerPage: 100,
+            attributesToSnippet: [],
+            attributesToHighlight: [],
+            restrictHighlightAndSnippetArrays: true,
+        },
     });
 
     const result = streamObject({

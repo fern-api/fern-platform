@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactElement, ReactNode, createContext, forwardRef, useContext } from "react";
+import { ComponentPropsWithoutRef, ReactElement, ReactNode, createContext, forwardRef, memo, useContext } from "react";
 import { Anthropic } from "../icons/anthropic";
 import { Cohere } from "../icons/cohere";
 import { OpenAI } from "../icons/openai";
@@ -46,36 +46,30 @@ export const CHATBOT_MODELS: ChatbotModel[] = [
 
 const ChatbotModelContext = createContext<ChatbotModel[]>(CHATBOT_MODELS);
 
-export function ChatbotModelProvider({
-    children,
-    models,
-}: {
-    children: ReactNode;
-    models: ChatbotModel[];
-}): ReactElement {
+function ChatbotModelProvider({ children, models }: { children: ReactNode; models: ChatbotModel[] }): ReactElement {
     return <ChatbotModelContext.Provider value={models}>{children}</ChatbotModelContext.Provider>;
 }
 
-export function useChatbotModels(): ChatbotModel[] {
+function useChatbotModels(): ChatbotModel[] {
     return useContext(ChatbotModelContext);
 }
 
-export const ChatbotModelSelect = forwardRef<
-    HTMLButtonElement,
-    ComponentPropsWithoutRef<"button"> & {
-        value?: string;
-        defaultValue?: string;
-        onValueChange?: (value: string) => void;
-        open?: boolean;
-        defaultOpen?: boolean;
-        onOpenChange?: (open: boolean) => void;
-        disabled?: boolean;
-        required?: boolean;
-        onCloseAutoFocus?: ComponentPropsWithoutRef<typeof SelectContent>["onCloseAutoFocus"];
-    }
->(
-    (
-        {
+const ChatbotModelSelect = memo(
+    forwardRef<
+        HTMLButtonElement,
+        ComponentPropsWithoutRef<"button"> & {
+            value?: string;
+            defaultValue?: string;
+            onValueChange?: (value: string) => void;
+            open?: boolean;
+            defaultOpen?: boolean;
+            onOpenChange?: (open: boolean) => void;
+            disabled?: boolean;
+            required?: boolean;
+            onCloseAutoFocus?: ComponentPropsWithoutRef<typeof SelectContent>["onCloseAutoFocus"];
+        }
+    >((props, ref) => {
+        const {
             value,
             defaultValue,
             onValueChange,
@@ -85,10 +79,8 @@ export const ChatbotModelSelect = forwardRef<
             disabled,
             required,
             onCloseAutoFocus,
-            ...props
-        },
-        ref,
-    ) => {
+            ...rest
+        } = props;
         const models = useChatbotModels();
         return (
             <Select
@@ -102,7 +94,7 @@ export const ChatbotModelSelect = forwardRef<
                 disabled={disabled}
                 required={required}
             >
-                <SelectTrigger ref={ref} {...props} className={cn("rounded-full shadow-none", props.className)}>
+                <SelectTrigger ref={ref} {...rest} className={cn("shadow-none", props.className)} size="sm">
                     <SelectValue placeholder="Select a model" />
                 </SelectTrigger>
                 <SelectContent onCloseAutoFocus={onCloseAutoFocus}>
@@ -116,7 +108,7 @@ export const ChatbotModelSelect = forwardRef<
                 </SelectContent>
             </Select>
         );
-    },
+    }),
 );
 
 ChatbotModelSelect.displayName = "ChatbotModelSelect";
@@ -133,3 +125,5 @@ function Icon({ provider }: { provider: "anthropic" | "openai" | "cohere" }) {
     }
     return null;
 }
+
+export { ChatbotModelProvider, ChatbotModelSelect, useChatbotModels };
