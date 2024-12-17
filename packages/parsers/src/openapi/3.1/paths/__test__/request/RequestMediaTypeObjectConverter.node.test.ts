@@ -46,7 +46,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
             "application/octet-stream",
         );
 
-        expect(converter.contentType).toBe("stream");
+        expect(converter.contentType).toBe("bytes");
         expect(converter.isOptional).toBe(true);
     });
 

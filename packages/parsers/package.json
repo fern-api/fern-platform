@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/docs-parsers",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
@@ -38,6 +38,7 @@
     "whatwg-mimetype": "^4.0.0"
   },
   "devDependencies": {
+    "@fern-fern/docs-parsers-fern-definition": "^0.0.3",
     "@fern-platform/configs": "workspace:*",
     "@types/uuid": "^9.0.1",
     "@types/whatwg-mimetype": "^3.0.2",
