@@ -76,7 +76,7 @@ export async function resolveDocsContent({
                 .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
                 .withResolveDescriptions();
         }),
-        ...mapValues(apisV2, (api) => {
+        ...mapValues(apisV2 ?? {}, (api) => {
             return ApiDefinitionLoader.create(domain, api.id)
                 .withMdxBundler(serializeMdx, engine)
                 .withFlags(featureFlags)
