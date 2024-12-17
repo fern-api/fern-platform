@@ -76,25 +76,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Set response headers before starting stream
         res.writeHead(response.status, Object.fromEntries(response.headers.entries()));
 
-        // Create a new stream from the response body
-        const stream = response.body as unknown as ReadableStream<Uint8Array>;
-        const reader = stream.getReader();
-        const read = async () => {
-            try {
-                // eslint-disable-next-line no-constant-condition
-                while (true) {
-                    const { done, value } = await reader.read();
-                    if (done) {
-                        break;
-                    }
-                    res.write(value);
-                }
-            } finally {
-                res.end();
-            }
-        };
+        // Log the type of response.body for debugging
+        if (response.body instanceof ReadableStream) {
+            const reader = response.body.getReader();
 
-        await read();
+            // eslint-disable-next-line no-constant-condition
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) {
+                    break;
+                }
+                res.write(value);
+            }
+        } else if (response.body && typeof response.body.pipe === "function") {
+            // Handle Node.js readable streams
+            response.body.pipe(res);
+
+            await new Promise((resolve, reject) => {
+                response.body.on("end", resolve);
+                response.body.on("error", reject);
+            });
+        } else {
+            throw new Error("Unsupported response body type");
+        }
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
