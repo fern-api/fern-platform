@@ -29,7 +29,7 @@ interface SqueezedMessage {
     toolInvocations?: ToolInvocation[];
 }
 
-export function squeezeMessages(messages: Message[]): SqueezedMessage[] {
+export function squeezeMessages(messages: readonly Message[]): SqueezedMessage[] {
     const squeezed: SqueezedMessage[] = [];
 
     for (const message of messages) {

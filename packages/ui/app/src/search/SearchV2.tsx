@@ -1,4 +1,6 @@
 import {
+    AskAICommandItems,
+    AskAIComposer,
     CommandActions,
     CommandAskAIGroup,
     CommandEmpty,
@@ -6,25 +8,44 @@ import {
     CommandGroupPlayground,
     CommandGroupTheme,
     CommandSearchHits,
-    DesktopBackButton,
+    DefaultDesktopBackButton,
+    DesktopAskAIContent,
     DesktopCommand,
     DesktopCommandAboveInput,
     DesktopCommandBadges,
-    DesktopCommandBeforeInput,
+    DesktopCommandContent,
     DesktopCommandWithAskAI,
     DesktopSearchButton,
     DesktopSearchDialog,
+    NewChatButton,
     SEARCH_INDEX,
     SearchClientRoot,
-    useFacetFilters,
+    Suggestions,
+    SuggestionsSchema,
     useIsMobile,
 } from "@fern-ui/fern-docs-search-ui";
-import { useEventCallback } from "@fern-ui/react-commons";
+import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
+import { Message, experimental_useObject, useChat } from "ai/react";
 import { atom, useAtom, useAtomValue } from "jotai";
 import { useRouter } from "next/router";
-import { Dispatch, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import {
+    ComponentPropsWithoutRef,
+    Dispatch,
+    ReactElement,
+    ReactNode,
+    SetStateAction,
+    forwardRef,
+    isValidElement,
+    useCallback,
+    useEffect,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 import { z } from "zod";
 
+import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { debounce } from "es-toolkit/function";
 import {
     CURRENT_VERSION_ATOM,
     DOMAIN_ATOM,
@@ -39,6 +60,7 @@ import {
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
+import { CodeBlock } from "../mdx/components/code/CodeBlock";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -64,8 +86,6 @@ export function SearchV2(): ReactElement | false {
     const user = useFernUser();
 
     const [open, setOpen] = useCommandTrigger();
-    const [askAi, setAskAi] = useAtom(askAiAtom);
-    const [initialInput, setInitialInput] = useState("");
     const domain = useAtomValue(DOMAIN_ATOM);
 
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
@@ -75,10 +95,6 @@ export function SearchV2(): ReactElement | false {
         refreshInterval: 60 * 60 * 12 * 1000,
     });
 
-    const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
-    const chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
-    const suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
-
     const router = useRouter();
 
     const handleNavigate = useEventCallback((path: string) => {
@@ -87,6 +103,7 @@ export function SearchV2(): ReactElement | false {
         });
     });
 
+    const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
     const facetFetcher = useCallback(
         async (filters: readonly string[]) => {
             if (!data) {
@@ -113,9 +130,7 @@ export function SearchV2(): ReactElement | false {
             <DesktopCommandAboveInput>
                 <DesktopCommandBadges />
             </DesktopCommandAboveInput>
-            <DesktopCommandBeforeInput>
-                <BackButton />
-            </DesktopCommandBeforeInput>
+            <DefaultDesktopBackButton />
             <CommandGroupFilters />
             <CommandEmpty />
             <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} domain={domain} />
@@ -139,33 +154,157 @@ export function SearchV2(): ReactElement | false {
         >
             <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild trigger={<DesktopSearchButton />}>
                 {isAskAiEnabled ? (
-                    <DesktopCommandWithAskAI
-                        domain={domain}
-                        onClose={() => setOpen(false)}
-                        askAI={askAi}
-                        setAskAI={setAskAi}
-                        api={chatEndpoint}
-                        suggestionsApi={suggestEndpoint}
-                        initialInput={initialInput}
-                        body={{ algoliaSearchKey: apiKey }}
-                        onSelectHit={handleNavigate}
-                    >
-                        <CommandAskAIGroup
-                            onAskAI={(initialInput) => {
-                                setInitialInput(initialInput);
-                                setAskAi(true);
-                            }}
-                            forceMount
-                        />
+                    <DesktopCommandWithAskAIImpl onClose={() => setOpen(false)} apiKey={apiKey}>
                         {children}
-                    </DesktopCommandWithAskAI>
+                    </DesktopCommandWithAskAIImpl>
                 ) : (
-                    <DesktopCommand onClose={() => setOpen(false)}>{children}</DesktopCommand>
+                    <DesktopCommand onClose={() => setOpen(false)}>
+                        <DesktopCommandContent>{children}</DesktopCommandContent>
+                    </DesktopCommand>
                 )}
             </DesktopSearchDialog>
         </SearchClientRoot>
     );
 }
+
+const initialConversationAtom = atom<Message[]>([]);
+const DesktopCommandWithAskAIImpl = forwardRef<
+    HTMLDivElement,
+    Omit<ComponentPropsWithoutRef<typeof DesktopCommandWithAskAI>, "isAskAI" | "children"> & {
+        apiKey: string;
+        children: ReactNode;
+    }
+>(({ children, apiKey, ...props }, ref) => {
+    const domain = useAtomValue(DOMAIN_ATOM);
+    const router = useRouter();
+
+    const handleNavigate = useEventCallback((path: string) => {
+        void router.push(path).then(() => {
+            props.onClose?.();
+        });
+    });
+
+    const [isAskAI, setIsAskAI] = useAtom(askAiAtom);
+    const [id, setId] = useState(crypto.randomUUID());
+    const [initialConversation, setInitialConversation] = useAtom(initialConversationAtom);
+    const { messages, input, setInput, isLoading, append, stop, setMessages } = useChat({
+        id,
+        initialMessages: initialConversation,
+        api: useApiRoute("/api/fern-docs/search/v2/chat"),
+        onFinish: () => {
+            setInitialConversation(messages);
+        },
+    });
+
+    const { object, submit } = experimental_useObject({
+        api: useApiRoute("/api/fern-docs/search/v2/suggest"),
+        schema: SuggestionsSchema,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const debouncedSubmit = useMemo(() => debounce(submit, 500, { edges: ["leading"] }), []);
+
+    const suggested = useRef(false);
+
+    useEffect(() => {
+        if (apiKey && !suggested.current && isAskAI) {
+            debouncedSubmit({ algoliaSearchKey: apiKey });
+            suggested.current = true;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apiKey, isAskAI]);
+
+    const handleSubmitMessage = useDebouncedCallback(
+        (message: string) => {
+            if (message.trim().split(/\s+/).length < 2) {
+                setInput(message);
+                return;
+            }
+            void append({ role: "user", content: message });
+            setInput("");
+        },
+        [append, setInput],
+        1000,
+        { edges: ["leading"] },
+    );
+
+    const handleClearMessages = useCallback(() => {
+        stop();
+        setMessages([]);
+        setId(crypto.randomUUID());
+    }, [stop, setMessages, setId]);
+
+    return (
+        <DesktopCommandWithAskAI {...props} ref={ref} isAskAI={isAskAI}>
+            {isAskAI ? (
+                <DesktopAskAIContent onReturnToSearch={() => setIsAskAI(false)} isThinking={isLoading}>
+                    {messages.length > 0 && <NewChatButton onClick={handleClearMessages} />}
+
+                    <AskAICommandItems
+                        messages={messages}
+                        onSelectHit={handleNavigate}
+                        prefetch={router.prefetch}
+                        components={{
+                            pre(props) {
+                                if (isValidElement(props.children) && props.children.type === "code") {
+                                    const { children, className } = props.children.props as {
+                                        children: string;
+                                        className: string;
+                                    };
+                                    if (typeof children === "string") {
+                                        const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                        return <CodeBlock code={children} language={match} fontSize="sm" />;
+                                    }
+                                }
+                                return <pre {...props} />;
+                            },
+
+                            a: ({ children, node, ...props }) => (
+                                <a
+                                    {...props}
+                                    className="hover:text-[var(--accent-a10)] font-semibold decoration-[var(--accent-a10)] hover:decoration-2"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {children}
+                                </a>
+                            ),
+                        }}
+                        isThinking={isLoading}
+                        domain={domain}
+                    >
+                        <Suggestions
+                            suggestions={object?.suggestions ?? EMPTY_ARRAY}
+                            onSubmitMessage={handleSubmitMessage}
+                        />
+                    </AskAICommandItems>
+
+                    <AskAIComposer
+                        value={input}
+                        onValueChange={setInput}
+                        isLoading={isLoading}
+                        stop={stop}
+                        onSend={handleSubmitMessage}
+                        onPopState={() => setIsAskAI(false)}
+                    />
+                </DesktopAskAIContent>
+            ) : (
+                <DesktopCommandContent>
+                    <CommandAskAIGroup
+                        onAskAI={(initialInput) => {
+                            setIsAskAI(true);
+                            handleSubmitMessage(initialInput);
+                        }}
+                        forceMount
+                    />
+                    {children}
+                </DesktopCommandContent>
+            )}
+        </DesktopCommandWithAskAI>
+    );
+});
+
+DesktopCommandWithAskAIImpl.displayName = "DesktopCommandWithAskAIImpl";
 
 function CommandPlayground({ onClose }: { onClose: () => void }) {
     const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
@@ -200,14 +339,6 @@ function CommandTheme({ onClose }: { onClose: () => void }) {
             }}
         />
     );
-}
-
-function BackButton() {
-    const { filters, popFilter, clearFilters } = useFacetFilters();
-    if (filters.length === 0) {
-        return false;
-    }
-    return <DesktopBackButton pop={popFilter} clear={clearFilters} />;
 }
 
 function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {

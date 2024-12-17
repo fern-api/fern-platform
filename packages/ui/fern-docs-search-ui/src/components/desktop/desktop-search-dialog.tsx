@@ -61,7 +61,7 @@ export const DesktopSearchDialog = memo(
                             "before:absolute before:inset-0 before:bg-[var(--white-a9)] dark:before:bg-[var(--black-a9)] before:-z-50 before:pointer-events-none",
                         )}
                         asChild={asChild}
-                        onEscapeKeyDown={(e) => {
+                        onEscapeKeyDownKeyDown={(e) => {
                             e.preventDefault();
                         }}
                     >

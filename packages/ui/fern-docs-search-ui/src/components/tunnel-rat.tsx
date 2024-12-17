@@ -17,6 +17,7 @@ type State = {
 export default function tunnel(): {
     In: (props: Props) => null;
     Out: () => ReactNode;
+    useHasChildren: () => boolean;
 } {
     const useStore = create<State>((set) => ({
         current: new Array<ReactNode>(),
@@ -62,5 +63,7 @@ export default function tunnel(): {
             const current = useStore((state) => state.only || state.current);
             return <>{current}</>;
         },
+
+        useHasChildren: () => useStore((state) => !!state.only || state.current.length > 0),
     };
 }

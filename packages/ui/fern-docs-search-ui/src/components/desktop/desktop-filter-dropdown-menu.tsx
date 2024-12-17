@@ -64,6 +64,9 @@ export function DesktopFilterDropdownMenu({
                         }
                     }}
                     onCloseAutoFocus={onCloseAutoFocus}
+                    onEscapeKeyDownKeyDown={(e) => {
+                        e.stopImmediatePropagation();
+                    }}
                 >
                     <DropdownMenuLabel>{toFilterLabel(filter.facet)}</DropdownMenuLabel>
                     <DropdownMenuSeparator />

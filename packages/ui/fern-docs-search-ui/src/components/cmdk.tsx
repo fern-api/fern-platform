@@ -22,6 +22,7 @@ import {
     useSyncExternalStore,
 } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { noop } from "ts-essentials";
 import { z } from "zod";
 import { commandScore } from "./command-score";
 
@@ -191,6 +192,8 @@ const useCommand = () => useContext(CommandContext);
 const StoreContext = createContext<Store>(undefined as unknown as Store);
 const useStore = () => useContext(StoreContext);
 const GroupContext = createContext<Group>(undefined as unknown as Group);
+const ScrollContext = createContext<() => void>(noop);
+const useScrollSelectedIntoView = (): (() => void) => useContext(ScrollContext);
 
 // const getId = (() => {
 //     let i = 0;
@@ -707,7 +710,9 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
             </label>
             {SlottableWithNestedChildren(props, (child) => (
                 <StoreContext.Provider value={store}>
-                    <CommandContext.Provider value={context}>{child}</CommandContext.Provider>
+                    <CommandContext.Provider value={context}>
+                        <ScrollContext.Provider value={scrollSelectedIntoView}>{child}</ScrollContext.Provider>
+                    </CommandContext.Provider>
                 </StoreContext.Provider>
             ))}
         </Primitive.div>
@@ -1042,6 +1047,7 @@ export {
     Separator,
     defaultFilter,
     useCmdk as useCommandState,
+    useScrollSelectedIntoView,
 };
 
 /**
