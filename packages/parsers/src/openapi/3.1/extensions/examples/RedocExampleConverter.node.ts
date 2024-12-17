@@ -35,6 +35,19 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
             ...(extendType<RedocExampleConverterNode.Input>(this.input)[REDOC_CODE_SAMPLES_KEBAB] ?? []),
             ...(extendType<RedocExampleConverterNode.Input>(this.input)[REDOC_CODE_SAMPLES_CAMEL] ?? []),
         ];
+
+        this.codeSamples.forEach((codeSample) => {
+            if (
+                Object.values(FernRegistry.api.v1.read.SupportedLanguage).includes(
+                    codeSample.lang.toLowerCase() as FernRegistry.api.v1.read.SupportedLanguage,
+                )
+            ) {
+                this.context.errors.warning({
+                    message: `Unsupported language: ${codeSample.lang}. This may not render correctly.`,
+                    path: this.accessPath,
+                });
+            }
+        });
     }
 
     convert(): Record<string, FernRegistry.api.latest.CodeSnippet[]> | undefined {
