@@ -60,48 +60,63 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             res.setHeader(name, value);
         });
 
-        // Handle JSON responses more efficiently
-        const responseContentType = response.headers.get("content-type");
-        if (responseContentType?.includes("application/json")) {
-            const json = await response.json();
-            return res.status(response.status).json(json);
-        }
-
-        // Stream other response types
-        // For audio streaming, we need to ensure we get the raw stream
-        if (!response.body) {
-            return res.status(response.status).send(undefined);
-        }
-
-        // Set response headers before starting stream
+        // Set headers first for all response types
         res.writeHead(response.status, Object.fromEntries(response.headers.entries()));
 
-        // Log the type of response.body for debugging
+        // Handle JSON responses
+        const responseContentType = response.headers.get("content-type");
+        if (responseContentType?.includes("application/json")) {
+            try {
+                const json = await response.json();
+                return res.json(json);
+            } catch (err) {
+                return res.status(500).json({ error: "Invalid JSON response" });
+            }
+        }
+
+        // Handle empty responses
+        if (!response.body) {
+            res.end();
+            return;
+        }
+
+        // Stream handling
         if (response.body instanceof ReadableStream) {
             const reader = response.body.getReader();
-
-            // eslint-disable-next-line no-constant-condition
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) {
-                    break;
+            try {
+                // eslint-disable-next-line no-constant-condition
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) {
+                        break;
+                    }
+                    res.write(value);
                 }
-                res.write(value);
+            } catch (err) {
+                throw new Error(`Stream reading failed: ${err.message}`);
+            } finally {
+                res.end();
             }
         } else if (response.body && typeof response.body.pipe === "function") {
-            // Handle Node.js readable streams
-            response.body.pipe(res);
-
             await new Promise((resolve, reject) => {
+                response.body.pipe(res);
                 response.body.on("end", resolve);
-                response.body.on("error", reject);
+                response.body.on("error", (err) => {
+                    (response.body as any).destroy();
+                    reject(new Error(`Pipe streaming failed: ${err.message}`));
+                });
             });
         } else {
             throw new Error("Unsupported response body type");
         }
     } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
-        return res.status(500).send(null);
+        // If headers haven't been sent, send error response
+        if (!res.headersSent) {
+            res.status(500).json({ error: err.message });
+        } else {
+            // If headers were sent, just end the response
+            res.end();
+        }
+        throw err; // Re-throw for upstream error handling
     }
 }
