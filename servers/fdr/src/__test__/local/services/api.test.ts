@@ -108,12 +108,12 @@ it("register api latest", async () => {
 
     // assert definitions are equal
     expect(JSON.stringify(registeredEmptyDefinition.types)).toEqual(
-        JSON.stringify(EMPTY_REGISTER_API_DEFINITION.types),
+        JSON.stringify(EMPTY_REGISTER_API_LATEST_DEFINITION.types),
     );
     expect(JSON.stringify(registeredEmptyDefinition.subpackages)).toEqual(
-        JSON.stringify(EMPTY_REGISTER_API_DEFINITION.subpackages),
+        JSON.stringify(EMPTY_REGISTER_API_LATEST_DEFINITION.subpackages),
     );
-    expect(registeredEmptyDefinition).toEqual(EMPTY_REGISTER_API_DEFINITION);
+    expect(registeredEmptyDefinition).toEqual(EMPTY_REGISTER_API_LATEST_DEFINITION);
 
     // register updated definition
     const updatedDefinitionRegisterResponse = getAPIResponse(
@@ -128,8 +128,8 @@ it("register api latest", async () => {
         await fdr.api.latest.getApiLatest(updatedDefinitionRegisterResponse.apiDefinitionId),
     );
     // assert definitions equal
-    expect(JSON.stringify(updatedDefinition.types)).toEqual(JSON.stringify(MOCK_REGISTER_API_DEFINITION.types));
+    expect(JSON.stringify(updatedDefinition.types)).toEqual(JSON.stringify(MOCK_REGISTER_API_LATEST_DEFINITION.types));
     expect(JSON.stringify(updatedDefinition.subpackages)).toEqual(
-        JSON.stringify(MOCK_REGISTER_API_DEFINITION.subpackages),
+        JSON.stringify(MOCK_REGISTER_API_LATEST_DEFINITION.subpackages),
     );
 });
