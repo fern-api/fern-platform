@@ -7,7 +7,6 @@ import { Agent, setGlobalDispatcher } from "undici";
 import { register } from "./api";
 import { FdrApplication, getConfig } from "./app";
 import { registerBackgroundTasks } from "./background";
-import { getApiLatestService } from "./controllers/api/getApiLatestService";
 import { getReadApiService } from "./controllers/api/getApiReadService";
 import { getRegisterApiService } from "./controllers/api/getRegisterApiService";
 import { getApiDiffService } from "./controllers/diff/getApiDiffService";
@@ -114,9 +113,6 @@ async function startServer(): Promise<void> {
                     register: {
                         _root: getRegisterApiService(app),
                     },
-                },
-                latest: {
-                    _root: getApiLatestService(app),
                 },
             },
             snippets: getSnippetsService(app),

@@ -1,4 +1,4 @@
-import { APIResponse, APIV1Write, FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
+import { APIResponse, APIV1Write, FdrClient } from "@fern-api/fdr-sdk";
 import type { DocsV2, IndexSegment } from "@prisma/client";
 
 export function getUniqueDocsForUrl(prefix: string): string {
@@ -53,48 +53,6 @@ export function createApiDefinition({
         auth: undefined,
         globalHeaders: undefined,
         navigation: undefined,
-    };
-}
-
-export function createApiDefinitionLatest({
-    endpointId,
-    endpointPath,
-    endpointMethod,
-}: {
-    endpointId: FdrAPI.EndpointId;
-    endpointPath: FdrAPI.api.latest.PathPart[];
-    endpointMethod: FdrAPI.HttpMethod;
-}): FdrAPI.api.latest.ApiDefinition {
-    return {
-        endpoints: {
-            [FdrAPI.EndpointId(endpointId)]: {
-                id: FdrAPI.EndpointId(endpointId),
-                method: endpointMethod,
-                path: endpointPath,
-                requestHeaders: undefined,
-                responseHeaders: undefined,
-                queryParameters: undefined,
-                pathParameters: undefined,
-                snippetTemplates: undefined,
-                namespace: undefined,
-                examples: undefined,
-                auth: undefined,
-                defaultEnvironment: undefined,
-                environments: undefined,
-                request: undefined,
-                response: undefined,
-                errors: undefined,
-                description: undefined,
-                availability: undefined,
-            },
-        },
-        types: {},
-        subpackages: {},
-        websockets: {},
-        webhooks: {},
-        id: FdrAPI.ApiDefinitionId("api"),
-        auths: {},
-        globalHeaders: undefined,
     };
 }
 

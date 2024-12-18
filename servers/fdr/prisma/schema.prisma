@@ -21,16 +21,6 @@ model ApiDefinitionsV2 {
   @@id([apiDefinitionId])
 }
 
-model ApiDefinitionsLatest {
-  orgId           String
-  apiName         String
-  apiDefinitionId String
-  createdAt       DateTime @default(now())
-  definition      Bytes
-
-  @@id([apiDefinitionId])
-}
-
 model DocsRegistrations {
   registrationID String
   orgID          String

@@ -5,7 +5,6 @@ import express from "express";
 import http from "http";
 import { register } from "../../api";
 import { FdrApplication, FdrConfig } from "../../app";
-import { getApiLatestService } from "../../controllers/api/getApiLatestService";
 import { getReadApiService } from "../../controllers/api/getApiReadService";
 import { getRegisterApiService } from "../../controllers/api/getRegisterApiService";
 import { getApiDiffService } from "../../controllers/diff/getApiDiffService";
@@ -107,7 +106,6 @@ async function runMockFdr(port: number): Promise<MockFdr.Instance> {
                 read: { _root: getReadApiService(fdrApplication) },
                 register: { _root: getRegisterApiService(fdrApplication) },
             },
-            latest: { _root: getApiLatestService(fdrApplication) },
         },
         snippets: getSnippetsService(fdrApplication),
         snippetsFactory: getSnippetsFactoryService(fdrApplication),
