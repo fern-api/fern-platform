@@ -1,3 +1,4 @@
+import { withProxyCors } from "@/server/withProxyCors";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { ProxyRequestSchema } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
@@ -9,25 +10,12 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function OPTIONS(req: NextRequest): Promise<NextResponse> {
-    const origin = getDocsDomainEdge(req);
-
-    const headers = new Headers({
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type",
-    });
-
+    const headers = new Headers(withProxyCors(getDocsDomainEdge(req)));
     return new NextResponse(null, { status: 204, headers });
 }
 
 export async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
-    const origin = getDocsDomainEdge(req);
-
-    const corsHeaders = new Headers({
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type",
-    });
+    const corsHeaders = new Headers(withProxyCors(getDocsDomainEdge(req)));
 
     try {
         const proxyRequest = ProxyRequestSchema.parse(await req.json());
