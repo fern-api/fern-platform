@@ -1,10 +1,6 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
-import { isEqual } from "es-toolkit/predicate";
-import { useAtomValue } from "jotai";
-import { selectAtom } from "jotai/utils";
 import dynamic from "next/dynamic";
 import { ReactElement, memo } from "react";
-import { DOCS_ATOM, DOMAIN_ATOM, DocsProps, EMPTY_ANALYTICS_CONFIG } from "../atoms";
+import { useAnalyticsConfig } from "../atoms";
 
 declare global {
     interface Window {
@@ -35,15 +31,8 @@ const PlausibleScript = dynamic(() => import("./plausible").then((mod) => mod.de
 const PosthogScript = dynamic(() => import("./posthog").then((mod) => mod.default), { ssr: true });
 const SegmentScript = dynamic(() => import("./segment").then((mod) => mod.default), { ssr: true });
 
-const ANALYTICS_CONFIG_ATOM = selectAtom<DocsProps, DocsV1Read.AnalyticsConfig>(
-    DOCS_ATOM,
-    (docs) => docs.analyticsConfig ?? EMPTY_ANALYTICS_CONFIG,
-    isEqual,
-);
-
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
-    const domain = useAtomValue(DOMAIN_ATOM);
-    const config = useAtomValue(ANALYTICS_CONFIG_ATOM);
+    const config = useAnalyticsConfig();
 
     return (
         <>
@@ -75,7 +64,7 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
             {config.posthog && (
                 <CustomerPosthogScript token={config.posthog.apiKey} api_host={config.posthog.endpoint} />
             )}
-            {config.segment && <SegmentScript apiKey={config.segment.writeKey} host={domain} />}
+            {config.segment && <SegmentScript apiKey={config.segment.writeKey} />}
         </>
     );
 });

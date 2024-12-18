@@ -6,6 +6,7 @@ import { useSafeListenTrackEvents } from "./track";
 
 export default function SegmentScript(props: snippet.Options): ReactNode {
     const user = useFernUser();
+
     useEffect(() => {
         try {
             if (user && window.analytics) {

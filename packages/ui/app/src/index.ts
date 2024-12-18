@@ -1,7 +1,8 @@
-export { track } from "./analytics";
-export type { DocsProps, EMPTY_ANALYTICS_CONFIG, NavbarLink } from "./atoms";
+export { EMPTY_ANALYTICS_CONFIG } from "./atoms";
+export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
+export { NotFoundPage } from "./docs/NotFoundPage";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
 export * from "./mdx/types";
 export { Stream } from "./playground/Stream";
