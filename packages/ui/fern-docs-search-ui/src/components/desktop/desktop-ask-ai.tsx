@@ -1,4 +1,5 @@
 import { Badge } from "@fern-ui/components/badges";
+import { Button } from "@fern-ui/components/button";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Primitive } from "@radix-ui/react-primitive";
@@ -31,7 +32,6 @@ import { MarkdownContent } from "../md-content";
 import { useFacetFilters } from "../search-client";
 import { CommandLink } from "../shared/command-link";
 import tunnel from "../tunnel-rat";
-import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { TextArea } from "../ui/textarea";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
@@ -47,11 +47,10 @@ const DesktopCommandWithAskAI = forwardRef<
     HTMLDivElement,
     Omit<ComponentPropsWithoutRef<typeof DesktopCommandRoot>, "children"> & {
         isAskAI?: boolean;
-        onClose?: () => void;
         children?: ReactNode | ((props: { isAskAI: boolean }) => ReactNode);
     }
 >((props, ref) => {
-    const { children: childrenProp, onClose, isAskAI = false, ...rest } = props;
+    const { children: childrenProp, isAskAI = false, ...rest } = props;
     const { filters, handlePopState: handlePopFilters } = useFacetFilters();
 
     const children = typeof childrenProp === "function" ? childrenProp({ isAskAI }) : childrenProp;
@@ -69,10 +68,8 @@ const DesktopCommandWithAskAI = forwardRef<
                           checkForDefaultPrevented: false,
                       })
             }
-            onEscapeKeyDown={composeEventHandlers(rest.onEscapeKeyDown, () => onClose?.(), {
-                checkForDefaultPrevented: false,
-            })}
-            escapeKeyShouldPopFilters={!isAskAI && filters.length > 0}
+            onEscapeKeyDown={rest.onEscapeKeyDown}
+            escapeKeyShouldPopState={!isAskAI && filters.length > 0}
         >
             {children}
         </DesktopCommandRoot>
@@ -85,15 +82,19 @@ const DesktopAskAIContent = ({
     onReturnToSearch,
     isThinking,
     children,
+    asChild,
 }: {
     onReturnToSearch?: () => void;
     isThinking?: boolean;
     children?: ReactNode;
+    asChild?: boolean;
 }): ReactElement => {
     return (
         <>
             <DesktopAskAIHeader onReturnToSearch={onReturnToSearch} />
-            <DesktopAskAIChat isThinking={isThinking}>{children}</DesktopAskAIChat>
+            <DesktopAskAIChat isThinking={isThinking} asChild={asChild}>
+                {children}
+            </DesktopAskAIChat>
         </>
     );
 };
@@ -131,7 +132,15 @@ DesktopAskAIHeader.displayName = "DesktopAskAIHeader";
 // const UserScrolledContext = createContext<[boolean, Dispatch<SetStateAction<boolean>>]>([false, noop]);
 const userScrolledAtom = atom(false);
 
-const DesktopAskAIChat = ({ isThinking, children }: { isThinking?: boolean; children?: ReactNode }) => {
+const DesktopAskAIChat = ({
+    isThinking,
+    children,
+    asChild,
+}: {
+    isThinking?: boolean;
+    children?: ReactNode;
+    asChild?: boolean;
+}) => {
     const setUserScrolled = useSetAtom(userScrolledAtom);
 
     // Reset userScrolled when the chat is loading
@@ -146,6 +155,7 @@ const DesktopAskAIChat = ({ isThinking, children }: { isThinking?: boolean; chil
     return (
         <>
             <Command.List
+                asChild={asChild}
                 onWheel={(e) => {
                     if (e.deltaY > 0) {
                         setUserScrolled(true);

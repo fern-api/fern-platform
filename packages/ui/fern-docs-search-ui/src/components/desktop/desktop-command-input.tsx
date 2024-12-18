@@ -2,7 +2,7 @@ import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { ComponentPropsWithoutRef, forwardRef, useRef } from "react";
+import { ComponentPropsWithoutRef, forwardRef, useEffect, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 
 import * as Command from "../cmdk";
@@ -55,6 +55,20 @@ export const DesktopCommandInput = forwardRef<HTMLInputElement, ComponentPropsWi
                 inputRef.current.setSelectionRange(selectionState.current, selectionState.current);
             }
         });
+
+        // receive a custom event that clears the input when the user presses escape
+        useEffect(() => {
+            const element = inputRef.current;
+            if (!element || props.disabled) {
+                return;
+            }
+            const onClearInput = () => {
+                props.onValueChange?.("");
+            };
+            element.addEventListener("cmdk-fern-clear-input", onClearInput);
+            return () => element.removeEventListener("cmdk-fern-clear-input", onClearInput);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [props.onValueChange, props.disabled]);
 
         return (
             <Command.Input

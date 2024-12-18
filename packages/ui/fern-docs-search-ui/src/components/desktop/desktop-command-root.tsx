@@ -9,12 +9,11 @@ import { CommandUxProvider } from "../shared/command-ux";
 export const DesktopCommandRoot = forwardRef<
     HTMLDivElement,
     ComponentPropsWithoutRef<typeof Command.Root> & {
-        onClearInput?: KeyboardEventHandler<HTMLDivElement>;
         onEscapeKeyDown?: KeyboardEventHandler<HTMLDivElement>;
         onPopState?: KeyboardEventHandler<HTMLDivElement>;
-        escapeKeyShouldPopFilters?: boolean;
+        escapeKeyShouldPopState?: boolean;
     }
->(({ children, onClearInput, onEscapeKeyDown, onPopState, escapeKeyShouldPopFilters, ...props }, forwardedRef) => {
+>(({ children, onEscapeKeyDown, onPopState, escapeKeyShouldPopState, ...props }, forwardedRef) => {
     useSearchHitsRerender();
 
     const ref = useRef<HTMLDivElement>(null);
@@ -40,8 +39,8 @@ export const DesktopCommandRoot = forwardRef<
                         // if escape, handle it
                         if (e.key === "Escape") {
                             if (inputRef.current?.value.length) {
-                                onClearInput?.(e);
-                            } else if (escapeKeyShouldPopFilters) {
+                                inputRef.current?.dispatchEvent(new Event("cmdk-fern-clear-input"));
+                            } else if (escapeKeyShouldPopState) {
                                 onPopState?.(e);
                             } else {
                                 onEscapeKeyDown?.(e);

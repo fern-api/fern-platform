@@ -1,3 +1,4 @@
+import { Button } from "@fern-ui/components/button";
 import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
 
@@ -5,7 +6,6 @@ import { FacetFilter } from "../../types";
 import { FACET_DISPLAY_NAME_MAP } from "../../utils/facet-display";
 import * as Command from "../cmdk";
 import { useFacetFilters } from "../search-client";
-import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { Input } from "../ui/input";
 import { MobileFacetMenuBar } from "./mobile-facet-menu-bar";

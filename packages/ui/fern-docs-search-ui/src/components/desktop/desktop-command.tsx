@@ -1,21 +1,20 @@
+import { Button } from "@fern-ui/components/button";
+import { Kbd } from "@fern-ui/components/kbd";
+import { usePlatformKbdShortcut } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
+import { TooltipPortal } from "@radix-ui/react-tooltip";
+import { ArrowLeft } from "lucide-react";
 import { ComponentPropsWithoutRef, KeyboardEvent, ReactNode, forwardRef, memo, useEffect, useRef } from "react";
 import { useSearchBox } from "react-instantsearch";
 
-import { Button, Kbd } from "@fern-ui/components";
-import { usePlatformKbdShortcut } from "@fern-ui/react-commons";
-import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { ArrowLeft } from "lucide-react";
 import * as Command from "../cmdk";
 import { useFacetFilters } from "../search-client";
-import "../shared/common.scss";
 import tunnel from "../tunnel-rat";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { DesktopCommandBadges } from "./desktop-command-badges";
 import { DesktopCommandInput, DesktopCommandInputError } from "./desktop-command-input";
 import { DesktopCommandRoot } from "./desktop-command-root";
-import "./desktop.scss";
 
 export interface DesktopCommandProps {
     onClose?: () => void;
@@ -44,19 +43,18 @@ const DesktopCommand = forwardRef<
             onEscapeKeyDown={composeEventHandlers(onEscapeKeyDown, () => onClose?.(), {
                 checkForDefaultPrevented: false,
             })}
-            escapeKeyShouldPopFilters={filters.length > 0}
+            escapeKeyShouldPopState={filters.length > 0}
         >
-            <DesktopCommandContent>{children}</DesktopCommandContent>
+            {children}
         </DesktopCommandRoot>
     );
 });
 
 DesktopCommand.displayName = "DesktopCommand";
 
-export const DesktopCommandContent = memo(({ children }: { children: React.ReactNode }) => {
+export const DesktopCommandContent = memo(({ children, asChild }: { children: React.ReactNode; asChild?: boolean }) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollRef = useRef<HTMLDivElement>(null);
-    console.log("DesktopCommandContent");
     return (
         <>
             <div
@@ -78,7 +76,7 @@ export const DesktopCommandContent = memo(({ children }: { children: React.React
                 </div>
             </div>
 
-            <Command.List ref={scrollRef} tabIndex={-1}>
+            <Command.List ref={scrollRef} tabIndex={-1} asChild={asChild}>
                 {children}
             </Command.List>
         </>

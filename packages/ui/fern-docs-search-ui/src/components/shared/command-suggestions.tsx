@@ -2,7 +2,7 @@ import { EMPTY_ARRAY, isNonNullish } from "@fern-api/ui-core-utils";
 import { ReactNode, memo } from "react";
 import * as Command from "../cmdk";
 
-const Suggestions = memo(
+const CommandSuggestionsGroup = memo(
     ({
         suggestions = EMPTY_ARRAY,
         onSubmitMessage,
@@ -31,6 +31,6 @@ const Suggestions = memo(
     },
 );
 
-Suggestions.displayName = "Suggestions";
+CommandSuggestionsGroup.displayName = "CommandSuggestionsGroup";
 
-export { Suggestions };
+export { CommandSuggestionsGroup };

@@ -6,3 +6,4 @@ export * from "./command-hits";
 export * from "./command-playground";
 export * from "./command-theme";
 export * from "./command-ux";
+export * from "./command-suggestions";

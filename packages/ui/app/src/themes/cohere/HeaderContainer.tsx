@@ -23,7 +23,11 @@ export const HeaderContainer = memo(function HeaderContainer({ className }: Head
                     <nav aria-label="tabs" className="fern-header-tabs">
                         <HeaderTabs />
 
-                        {showSearchBar && <SidebarSearchBar className="w-96 shrink" />}
+                        {showSearchBar && (
+                            <div className="w-96 shrink h-fit self-center">
+                                <SidebarSearchBar />
+                            </div>
+                        )}
                     </nav>
                 )}
             </div>

@@ -11,6 +11,7 @@ import {
     CommandGroupFilters,
     CommandGroupTheme,
     CommandSearchHits,
+    CommandSuggestionsGroup,
     DefaultDesktopBackButton,
     DesktopCommandContent,
     DesktopSearchDialog,
@@ -27,7 +28,6 @@ import {
     DesktopCommandWithAskAI,
     NewChatButton,
 } from "@/components/desktop/desktop-ask-ai";
-import { Suggestions } from "@/components/desktop/suggestions";
 import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useCmdkShortcut } from "@/hooks/use-cmdk-shortcut";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -139,7 +139,7 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                 </AppSidebar>
             ) : (
                 <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
-                    <DesktopCommandWithAskAI isAskAI={askAi} onClose={() => setOpen(false)}>
+                    <DesktopCommandWithAskAI isAskAI={askAi} onEscapeKeyDown={() => setOpen(false)}>
                         {askAi ? (
                             <DesktopAskAIContent onReturnToSearch={() => setAskAi(false)} isThinking={isLoading}>
                                 {messages.length > 0 && (
@@ -184,7 +184,10 @@ export function DemoInstantSearchClient({ appId, domain }: { appId: string; doma
                                     isThinking={isLoading}
                                     domain={domain}
                                 >
-                                    <Suggestions suggestions={suggestions} onSubmitMessage={handleSubmitMessage} />
+                                    <CommandSuggestionsGroup
+                                        suggestions={suggestions}
+                                        onSubmitMessage={handleSubmitMessage}
+                                    />
                                 </AskAICommandItems>
 
                                 <AskAIComposer

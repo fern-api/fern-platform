@@ -134,7 +134,7 @@ const MemoizedTooltip = memo(({ children, hit, open }: PropsWithChildren<{ hit: 
                 side="right"
                 sideOffset={16}
                 align="start"
-                className="max-w-[var(--radix-tooltip-content-available-width)] max-h-[var(--radix-tooltip-content-available-height)] [&_mark]:bg-[var(--accent-a3)] [&_mark]:text-[var(--accent-a11)] space-y-2"
+                className="max-w-[min(var(--radix-tooltip-content-available-width),384px)] max-h-[var(--radix-tooltip-content-available-height)] [&_mark]:bg-[var(--accent-a3)] [&_mark]:text-[var(--accent-a11)] space-y-2"
                 avoidCollisions
                 animate={false}
                 collisionPadding={10}

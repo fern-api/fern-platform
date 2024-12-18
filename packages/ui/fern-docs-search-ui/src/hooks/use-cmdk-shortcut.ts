@@ -27,6 +27,5 @@ export function useCmdkShortcut(setOpen: Dispatch<SetStateAction<boolean>>): voi
         return () => {
             window.removeEventListener("keydown", handleKeyDown, true);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isMobile]);
+    }, [isMobile, setOpen]);
 }
