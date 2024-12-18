@@ -6,16 +6,22 @@ import dynamic from "next/dynamic";
 import { ReactElement, memo } from "react";
 import { DOCS_ATOM, DOMAIN_ATOM, DocsProps, EMPTY_ANALYTICS_CONFIG } from "../atoms";
 
+declare global {
+    interface Window {
+        [key: string]: any;
+    }
+}
+
 const AmplitudeScript = dynamic(() => import("./amplitude").then((mod) => mod.default), { ssr: true });
 const ClearbitScript = dynamic(() => import("./clearbit").then((mod) => mod.default), { ssr: true });
 const CustomerPosthogScript = dynamic(() => import("./posthog").then((mod) => mod.CustomerPosthog), { ssr: true });
 const DatadogRumScript = dynamic(() => import("./datadog-rum").then((mod) => mod.default), { ssr: true });
 const FathomScript = dynamic(() => import("./fathom").then((mod) => mod.FathomScript), { ssr: true });
 const FullstoryScript = dynamic(() => import("./fullstory").then((mod) => mod.default), { ssr: true });
-const GoogleAnalytics = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleAnalytics), {
+const GoogleAnalytics = dynamic(() => import("./ga").then((mod) => mod.default), {
     ssr: true,
 });
-const GoogleTagManager = dynamic(() => import("@next/third-parties/google").then((mod) => mod.GoogleTagManager), {
+const GoogleTagManager = dynamic(() => import("./gtm").then((mod) => mod.default), {
     ssr: true,
 });
 const HeapScript = dynamic(() => import("./heap").then((mod) => mod.default), { ssr: true });

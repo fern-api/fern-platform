@@ -1,7 +1,31 @@
 import Script from "next/script";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { useFernUser } from "../atoms";
+import { useSafeListenTrackEvents } from "./track";
 
 export default function HeapScript({ appId }: { appId: string }): ReactNode {
+    useSafeListenTrackEvents(({ event, properties }) => {
+        if (window.heap) {
+            window.heap.track(event, properties);
+        }
+    });
+
+    const user = useFernUser();
+    useEffect(() => {
+        if (!window.heap) {
+            return;
+        }
+        try {
+            if (user && user.email) {
+                window.heap.identify(user.email);
+            } else {
+                window.heap.resetIdentity();
+            }
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.warn("Error identifying user with Heap", error);
+        }
+    }, [user]);
     return <Script id="heap" type="text/javascript" dangerouslySetInnerHTML={{ __html: initHeapScript(appId) }} />;
 }
 

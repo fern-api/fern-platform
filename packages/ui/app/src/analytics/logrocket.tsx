@@ -8,7 +8,7 @@ export default function LogRocketScript({ appId }: { appId: string }): ReactNode
     }, [appId]);
 
     useSafeListenTrackEvents(({ event, properties }) => {
-        LogRocket.track(event, properties);
+        LogRocket.track(event, properties as any);
     });
 
     return false;

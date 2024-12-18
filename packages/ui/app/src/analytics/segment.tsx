@@ -16,7 +16,7 @@ export default function SegmentScript(props: snippet.Options): ReactNode {
             }
         } catch (e) {
             // eslint-disable-next-line no-console
-            console.error("Error identifying user with segment", e);
+            console.warn("Error identifying user with segment", e);
         }
     }, [user]);
 

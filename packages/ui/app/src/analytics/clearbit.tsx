@@ -1,6 +1,7 @@
 import Script from "next/script";
 import { ReactNode } from "react";
 
+// TODO: send events to clearbit
 export default function ClearbitScript({ apiKey }: { apiKey: string }): ReactNode {
     return (
         <Script

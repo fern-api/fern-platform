@@ -56,7 +56,7 @@ function useIntercomInitializer(config: IntercomSettings): void {
             }
         } catch (e) {
             // eslint-disable-next-line no-console
-            console.error("Error initializing Intercom", e);
+            console.warn("Error initializing Intercom", e);
         }
     }, [config, user?.email, user?.name]);
 

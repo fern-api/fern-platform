@@ -10,7 +10,7 @@ export default function AmplitudeScript({ apiKey }: { apiKey: string }): ReactNo
             });
         } catch (e) {
             // eslint-disable-next-line no-console
-            console.error("Error initializing Amplitude", e);
+            console.warn("Error initializing Amplitude", e);
         }
     }, [apiKey]);
 

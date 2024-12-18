@@ -76,7 +76,7 @@ export function useSafeListenTrackEvents(cb: (detail: TrackEvent) => void, allow
                 }
             } catch (error) {
                 // eslint-disable-next-line no-console
-                console.error("Error parsing track event", error, event);
+                console.warn("Error emitting track event", error, event);
             }
         };
         window.addEventListener(TRACK_EVENT_NAME, handler);

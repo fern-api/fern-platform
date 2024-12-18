@@ -53,7 +53,6 @@
     "@fern-ui/search-utils": "workspace:*",
     "@hotjar/browser": "^1.0.9",
     "@inkeep/widgets": "^0.2.288",
-    "@next/third-parties": "14.2.9",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-collapsible": "^1.1.1",
