@@ -1,5 +1,5 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
-import { buildEndpointUrl } from "@fern-api/fdr-sdk/api-definition";
+import { buildEndpointUrl, toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
@@ -8,6 +8,7 @@ import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useCallback, useState } from "react";
+import { track } from "../../analytics";
 import {
     FERN_USER_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,
@@ -62,13 +63,6 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
     const uploadEnvironment = useApiRoute("/api/fern-docs/upload", { basepath: proxyBasePath });
     const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
 
-    // TODO: remove potentially
-    // const grpcClient = useMemo(() => {
-    //     return new FernProxyClient({
-    //         environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
-    //     });
-    // }, []);
-
     const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
     const sendRequest = useCallback(async () => {
@@ -77,8 +71,7 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
         }
         setResponse(loading());
         try {
-            const { capturePosthogEvent } = await import("../../analytics/posthog");
-            capturePosthogEvent("api_playground_request_sent", {
+            track("api_playground_request_sent", {
                 endpointId: endpoint.id,
                 endpointName: node.title,
                 method: endpoint.method,
@@ -147,17 +140,18 @@ export const PlaygroundEndpoint = ({ context }: { context: EndpointContext }): R
                 const res = await executeProxyRest(proxyEnvironment, req);
                 setResponse(loaded(res));
                 if (res.type !== "stream") {
-                    capturePosthogEvent("api_playground_request_received", {
+                    track("api_playground_request_received", {
                         endpointId: endpoint.id,
                         endpointName: node.title,
                         method: endpoint.method,
+                        endpointPath: toCurlyBraceEndpointPathLiteral(endpoint.path),
+                        environment: baseUrl,
                         docsRoute: `/${node.slug}`,
-                        response: {
-                            status: res.response.status,
-                            statusText: res.response.statusText,
-                            time: res.time,
-                            size: res.size,
-                        },
+
+                        status: res.response.status,
+                        statusText: res.response.statusText,
+                        responseTime: res.time,
+                        responseSize: res.size ?? undefined,
                     });
                 }
             }

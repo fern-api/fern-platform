@@ -1,12 +1,17 @@
 import mixpanel from "mixpanel-browser";
-import { ReactNode } from "react";
-import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { ReactNode, useEffect } from "react";
+import { useSafeListenTrackEvents } from "./track";
 
 export default function MixpanelScript({ token }: { token: string }): ReactNode {
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
         mixpanel.init(token, {
             track_pageview: true,
         });
     }, [token]);
+
+    useSafeListenTrackEvents(({ event, properties }) => {
+        mixpanel.track(event, properties);
+    });
+
     return null;
 }

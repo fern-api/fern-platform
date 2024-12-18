@@ -1,10 +1,15 @@
 import LogRocket from "logrocket";
-import { ReactNode } from "react";
-import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { ReactNode, useEffect } from "react";
+import { useSafeListenTrackEvents } from "./track";
 
 export default function LogRocketScript({ appId }: { appId: string }): ReactNode {
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
         LogRocket.init(appId);
     }, [appId]);
+
+    useSafeListenTrackEvents(({ event, properties }) => {
+        LogRocket.track(event, properties);
+    });
+
     return false;
 }

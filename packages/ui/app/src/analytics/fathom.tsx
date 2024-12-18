@@ -1,15 +1,19 @@
 import * as Fathom from "fathom-client";
-import { ReactNode } from "react";
-import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { ReactNode, useEffect } from "react";
 import { useRouteChangeComplete } from "../hooks/useRouteChanged";
+import { useSafeListenTrackEvents } from "./track";
 
 export function FathomScript({ siteId }: { siteId: string }): ReactNode {
-    useIsomorphicLayoutEffect(() => {
+    useEffect(() => {
         Fathom.load(siteId);
     }, [siteId]);
 
     useRouteChangeComplete(() => {
         Fathom.trackPageview();
+    });
+
+    useSafeListenTrackEvents(({ event, properties }) => {
+        Fathom.trackEvent(event, properties);
     });
 
     return false;

@@ -1,7 +1,23 @@
 import Script from "next/script";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { useFernUser } from "../atoms";
+import { useSafeListenTrackEvents } from "./track";
 
 export default function KoalaScript({ apiKey }: { apiKey: string }): ReactNode {
+    const user = useFernUser();
+
+    useEffect(() => {
+        if (user && user.email && window.ko) {
+            window.ko.identify(user.email);
+        }
+    }, [user]);
+
+    useSafeListenTrackEvents(({ event, properties }) => {
+        if (window.ko) {
+            window.ko.track(event, properties);
+        }
+    });
+
     return <Script id="koala" type="text/javascript" dangerouslySetInnerHTML={{ __html: initKoala(apiKey) }} />;
 }
 

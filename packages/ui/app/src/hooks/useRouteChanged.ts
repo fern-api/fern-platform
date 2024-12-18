@@ -1,5 +1,6 @@
 import { Router } from "next/router";
 import { useEffect, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "swr/_internal";
 
 export function useRouteChangeComplete(
     callback: (route: string, shallow?: boolean) => void,
@@ -11,7 +12,7 @@ export function useRouteChangeComplete(
     const destroyRef = useRef(destroy);
     destroyRef.current = destroy;
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         const handleRouteChange = (route: string, { shallow }: { shallow?: boolean }) => {
             callbackRef.current(route, shallow);
         };

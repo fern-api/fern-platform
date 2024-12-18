@@ -1,10 +1,11 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { unknownToString } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { capturePosthogEvent } from "../../../analytics/posthog";
+import { trackInternal } from "../../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
@@ -109,12 +110,12 @@ const UnmemoizedObjectPropertyInternal = forwardRef<HTMLDivElement, ObjectProper
 
     useEffect(() => {
         if (descriptions.length > 0) {
-            capturePosthogEvent("api_reference_multiple_descriptions", {
+            trackInternal("api_reference_multiple_descriptions", {
                 name: property.key,
                 slug,
                 anchorIdParts,
                 count: descriptions.length,
-                descriptions,
+                descriptions: descriptions.map((d) => unknownToString(d)),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,7 @@
 import Script from "next/script";
 import { ReactElement, useEffect } from "react";
+import { useFernUser } from "../atoms";
+import { useSafeListenTrackEvents } from "./track";
 
 // copied from @intercom/messenger-js-sdk
 interface IntercomSettings {
@@ -45,16 +47,22 @@ export default function IntercomScript(props: IntercomSettings): ReactElement {
  * @param config
  */
 function useIntercomInitializer(config: IntercomSettings): void {
+    const user = useFernUser();
+
     useEffect(() => {
         try {
             if (window.Intercom) {
-                window.Intercom("boot", config);
+                window.Intercom("boot", { ...config, email: user?.email, name: user?.name } satisfies IntercomSettings);
             }
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error("Error initializing Intercom", e);
         }
-    }, [config]);
+    }, [config, user?.email, user?.name]);
+
+    useSafeListenTrackEvents(({ event, properties }) => {
+        window.Intercom("trackEvent", event, properties);
+    });
 }
 
 function widgetBootstrapScript(appId: string) {

@@ -1,12 +1,12 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
+import { EMPTY_ARRAY, unknownToString } from "@fern-api/ui-core-utils";
 import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { FC, PropsWithChildren, ReactNode, memo, useEffect, useRef, useState } from "react";
-import { capturePosthogEvent } from "../../analytics/posthog";
+import { trackInternal } from "../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { useHref } from "../../hooks/useHref";
@@ -102,12 +102,12 @@ export const EndpointParameterContent: FC<PropsWithChildren<EndpointParameter.Co
 
     useEffect(() => {
         if (descriptions.length > 0) {
-            capturePosthogEvent("api_reference_multiple_descriptions", {
+            trackInternal("api_reference_multiple_descriptions", {
                 name,
                 slug,
                 anchorIdParts,
                 count: descriptions.length,
-                descriptions,
+                descriptions: descriptions.map((d) => unknownToString(d)),
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

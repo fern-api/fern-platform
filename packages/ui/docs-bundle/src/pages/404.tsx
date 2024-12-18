@@ -1,4 +1,4 @@
-import { capturePosthogEvent } from "@fern-ui/ui";
+import { track } from "@fern-ui/ui";
 import Error from "next/error";
 import { ReactElement, useEffect } from "react";
 
@@ -12,7 +12,7 @@ import { ReactElement, useEffect } from "react";
 // If you use initial props, the middleware's response will probably cause a client-side error to be thrown.
 export default function Page(): ReactElement {
     useEffect(() => {
-        capturePosthogEvent("not_found");
+        track("not_found");
     });
 
     return <Error statusCode={404} />;

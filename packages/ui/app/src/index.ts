@@ -1,4 +1,4 @@
-export { capturePosthogEvent } from "./analytics/posthog";
+export { track } from "./analytics";
 export type { DocsProps, EMPTY_ANALYTICS_CONFIG, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
