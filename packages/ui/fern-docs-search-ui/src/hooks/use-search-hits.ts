@@ -1,4 +1,5 @@
 import type { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/algolia/types";
+import type { SendEventForHits } from "instantsearch.js/es/lib/utils";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { useHits } from "react-instantsearch";
 
@@ -9,6 +10,11 @@ const usePolymorphicEffect = typeof window !== "undefined" ? useLayoutEffect : u
 export function useSearchHits(): AlgoliaRecordHit[] {
     const { items } = useHits<AlgoliaRecord>();
     return items;
+}
+
+export function useSendEvent(): SendEventForHits {
+    const { sendEvent } = useHits<AlgoliaRecord>();
+    return sendEvent;
 }
 
 // this is a hack to force the `<Command>` component to re-render when the hits change, so that it can change its selected hit

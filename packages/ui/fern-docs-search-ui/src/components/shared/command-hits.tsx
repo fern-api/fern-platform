@@ -1,8 +1,9 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
+import type { SendEventForHits } from "instantsearch.js/es/lib/utils";
 import { PropsWithChildren, ReactNode, memo } from "react";
 import { Snippet } from "react-instantsearch";
 
-import { useSearchHits } from "../../hooks/use-search-hits";
+import { useSearchHits, useSendEvent } from "../../hooks/use-search-hits";
 import { AlgoliaRecordHit } from "../../types";
 import * as Command from "../cmdk";
 import { PageIcon } from "../icons/page";
@@ -23,6 +24,7 @@ export const CommandSearchHits = ({
 }): ReactNode => {
     const isQueryEmpty = Command.useCommandState((state) => state.search.trimStart().length === 0) as boolean;
     const items = useSearchHits();
+    const sendEvent = useSendEvent();
 
     const { filters } = useFacetFilters();
 
@@ -30,18 +32,28 @@ export const CommandSearchHits = ({
         return false;
     }
 
-    return <MemoizedCommandSearchHits items={items} onSelect={onSelect} prefetch={prefetch} domain={domain} />;
+    return (
+        <MemoizedCommandSearchHits
+            items={items}
+            sendEvent={sendEvent}
+            onSelect={onSelect}
+            prefetch={prefetch}
+            domain={domain}
+        />
+    );
 };
 
 const MemoizedCommandSearchHits = memo(
     ({
         domain,
         items,
+        sendEvent,
         onSelect,
         prefetch,
     }: {
         domain: string;
         items: AlgoliaRecordHit[];
+        sendEvent: SendEventForHits;
         onSelect: (path: string) => void;
         prefetch?: (path: string) => Promise<void>;
     }) => {
@@ -51,11 +63,19 @@ const MemoizedCommandSearchHits = memo(
             <TooltipProvider>
                 {groups.map((group, index) => (
                     <Command.Group key={group.title ?? index} heading={group.title ?? "Results"} forceMount>
-                        {group.hits.map((hit) => (
+                        {group.hits.map((hit, hitIndex) => (
                             <CommandHit
                                 key={hit.path}
                                 hit={hit}
                                 onSelect={onSelect}
+                                sendClickEvent={(eventName, additionalData) => {
+                                    if (hit.record) {
+                                        sendEvent("click", hit.record, eventName, {
+                                            search_position: hitIndex + 1,
+                                            ...additionalData,
+                                        });
+                                    }
+                                }}
                                 prefetch={prefetch}
                                 domain={domain}
                             />
@@ -71,6 +91,7 @@ function CommandHit({
     hit,
     domain,
     onSelect,
+    sendClickEvent,
     prefetch,
 }: {
     hit: GroupedHit;
@@ -79,6 +100,7 @@ function CommandHit({
      * @param path - the path to navigate to via nextjs router
      */
     onSelect: (path: string) => void;
+    sendClickEvent?: (eventName?: string | undefined, additionalData?: Record<string, any> | undefined) => void;
     prefetch?: (path: string) => Promise<void>;
 }) {
     if (!hit.record) {
@@ -93,6 +115,7 @@ function CommandHit({
                 prefetch={prefetch}
                 onSelect={onSelect}
                 domain={domain}
+                sendClickEvent={sendClickEvent}
             >
                 <PageIcon
                     icon={hit.icon}
