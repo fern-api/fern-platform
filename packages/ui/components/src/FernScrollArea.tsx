@@ -51,7 +51,7 @@ export const FernScrollArea = forwardRef<HTMLDivElement, FernScrollArea.Props>((
                     <ScrollArea.Thumb className="fern-scroll-area-thumb" />
                 </ScrollArea.Scrollbar>
             )}
-            {props.scrollbars !== "vertical" && props.scrollbars !== "horizontal" && (
+            {scrollbars !== "vertical" && scrollbars !== "horizontal" && (
                 <ScrollArea.Corner className="fern-scroll-area-corner" />
             )}
         </ScrollArea.Root>

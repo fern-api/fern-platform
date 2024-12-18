@@ -1,10 +1,10 @@
+import { Button } from "@fern-ui/components/button";
 import { Slot } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 import { PanelLeft } from "lucide-react";
 import * as React from "react";
 
 import { useIsMobile } from "../../hooks/use-mobile";
-import { Button } from "./button";
 import { cn } from "./cn";
 import { Input } from "./input";
 import { Separator } from "./separator";

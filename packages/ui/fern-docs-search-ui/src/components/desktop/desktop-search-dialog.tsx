@@ -1,9 +1,9 @@
+import { Button } from "@fern-ui/components/button";
 import * as Dialog from "@radix-ui/react-dialog";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { ComponentPropsWithoutRef, PropsWithChildren, ReactNode, memo } from "react";
-import { Button } from "../ui/button";
-import { cn } from "../ui/cn";
+
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { DesktopCommandAfterInput } from "./desktop-command";
 import { DesktopSearchButton } from "./desktop-search-button";
@@ -48,7 +48,7 @@ export const DesktopSearchDialog = memo(
                 </DesktopCommandAfterInput>
 
                 <Dialog.Portal>
-                    <Dialog.Overlay className="fixed inset-0 bg-[var(--white-a3)] dark:bg-[var(--black-a3)] backdrop-blur-md" />
+                    <Dialog.Overlay data-cmdk-dialog-overlay="" />
 
                     <VisuallyHidden>
                         <Dialog.Title>Search</Dialog.Title>
@@ -56,10 +56,7 @@ export const DesktopSearchDialog = memo(
                     </VisuallyHidden>
 
                     <Dialog.Content
-                        className={cn(
-                            "fixed top-[15%] left-1/2 w-[640px] -translate-x-1/2 shadow-xl overflow-hidden origin-left outline-none",
-                            "before:absolute before:inset-0 before:bg-[var(--white-a9)] dark:before:bg-[var(--black-a9)] before:-z-50 before:pointer-events-none",
-                        )}
+                        data-cmdk-dialog-content=""
                         asChild={asChild}
                         onEscapeKeyDown={(e) => {
                             e.preventDefault();

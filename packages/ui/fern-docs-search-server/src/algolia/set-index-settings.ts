@@ -36,6 +36,7 @@ export async function setIndexSettings(
                 "code",
                 "snippet",
             ],
+            numericAttributesForFiltering: ["date_timestamp"],
         },
     });
 }

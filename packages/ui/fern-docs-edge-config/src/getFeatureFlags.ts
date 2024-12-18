@@ -93,8 +93,7 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
             domain,
             config["authenticated-pages-discoverable"],
         );
-        const isSearchV2Enabled =
-            domain === "buildwithfern.com" ? true : checkDomainMatchesCustomers(domain, config["search-v2"]);
+        const isSearchV2Enabled = true;
         const grpcEndpoints = config["grpc-endpoints"];
 
         return {

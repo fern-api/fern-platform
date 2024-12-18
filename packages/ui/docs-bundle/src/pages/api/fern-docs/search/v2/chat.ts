@@ -1,7 +1,7 @@
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-ui/fern-docs-edge-config";
 import { queryTurbopuffer, toDocuments } from "@fern-ui/fern-docs-search-server/turbopuffer";
-import { createDefaultSystemPrompt } from "@fern-ui/fern-docs-search-ui";
+import { SEARCH_INDEX, createDefaultSystemPrompt } from "@fern-ui/fern-docs-search-ui";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-ui/fern-docs-utils";
 import { embed, streamText, tool } from "ai";
 import { NextApiRequest, NextApiResponse } from "next/types";
@@ -10,9 +10,11 @@ import { z } from "zod";
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { anthropicApiKey, openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
+import { algoliaAppId, anthropicApiKey, openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { getDocsDomainNode } from "@/server/xfernhost/node";
 import { createOpenAI } from "@ai-sdk/openai";
+import { searchClient } from "@algolia/client-search";
+import { AlgoliaRecord } from "@fern-ui/fern-docs-search-server/algolia/types";
 
 const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
 const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
@@ -23,6 +25,11 @@ const openai = createOpenAI({
 
 const embeddingModel = openai.embedding("text-embedding-3-small");
 
+const BodySchema = z.object({
+    algoliaSearchKey: z.string(),
+    messages: z.array(z.any()),
+});
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     if (req.method !== "POST") {
         res.setHeader("Allow", ["POST"]);
@@ -31,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const domain = getDocsDomainNode(req);
     const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-    const messages = req.body.messages;
+    const { algoliaSearchKey, messages } = BodySchema.parse(req.body);
 
     const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
     if (orgMetadata == null) {
@@ -93,6 +100,49 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     });
                 },
             }),
+
+            searchChangelogs: tool({
+                description:
+                    "Query the changelog for the user's query using BM25 for the first 10 results, sorted by descending order",
+                parameters: z.object({
+                    query: z.string().optional().describe("If not provided, all changelogs will be returned"),
+                    startDate: z
+                        .string()
+                        .date()
+                        .optional()
+                        .describe("If provided, only changelogs on or after this date will be returned"),
+                    endDate: z
+                        .string()
+                        .date()
+                        .optional()
+                        .describe("If provided, only changelogs on or before this date will be returned"),
+                    page: z.number().optional().describe("The page number to return, starting from 0"),
+                }),
+                async execute({ query = "", startDate, endDate, page = 0 }) {
+                    const client = searchClient(algoliaAppId(), algoliaSearchKey);
+                    const dateFilter = getAlgoliaDateFilter(
+                        startDate ? new Date(startDate) : undefined,
+                        endDate ? new Date(endDate) : undefined,
+                    );
+                    const response = await client.searchSingleIndex<AlgoliaRecord>({
+                        indexName: SEARCH_INDEX,
+                        searchParams: {
+                            query,
+                            hitsPerPage: 10,
+                            page,
+                            attributesToHighlight: [],
+                            attributesToSnippet: [],
+                            restrictHighlightAndSnippetArrays: true,
+                            filters: dateFilter ? `type:changelog AND ${dateFilter}` : "type:changelog",
+                            distinct: true,
+                        },
+                    });
+                    return response.hits.map((hit) => ({
+                        ...hit,
+                        url: `https://${hit.domain}${hit.pathname}${hit.hash ?? ""}`,
+                    }));
+                },
+            }),
         },
         onFinish: async (e) => {
             const end = Date.now();
@@ -140,5 +190,26 @@ async function runQueryTurbopuffer(
               },
               authed: opts.authed,
               roles: opts.roles,
+              mode: "hybrid",
           });
+}
+
+function getAlgoliaDateFilter(startDate?: Date, endDate?: Date): string | undefined {
+    if (startDate && endDate) {
+        return `date_timestamp:${toUnixTimestamp(startDate)} TO ${toUnixTimestamp(endDate)}`;
+    }
+
+    if (startDate) {
+        return `date_timestamp >= ${toUnixTimestamp(startDate)}`;
+    }
+
+    if (endDate) {
+        return `date_timestamp <= ${toUnixTimestamp(endDate)}`;
+    }
+
+    return undefined;
+}
+
+function toUnixTimestamp(date: Date) {
+    return Math.floor(date.getTime() / 1000);
 }

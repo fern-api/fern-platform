@@ -1,4 +1,6 @@
 import {
+    AskAICommandItems,
+    AskAIComposer,
     CommandActions,
     CommandAskAIGroup,
     CommandEmpty,
@@ -6,29 +8,34 @@ import {
     CommandGroupPlayground,
     CommandGroupTheme,
     CommandSearchHits,
-    DesktopBackButton,
+    CommandSuggestionsGroup,
+    DefaultDesktopBackButton,
+    DesktopAskAIContent,
     DesktopCommand,
-    DesktopCommandAboveInput,
-    DesktopCommandBadges,
-    DesktopCommandBeforeInput,
+    DesktopCommandContent,
     DesktopCommandWithAskAI,
     DesktopSearchButton,
     DesktopSearchDialog,
+    NewChatButton,
     SEARCH_INDEX,
     SearchClientRoot,
-    useFacetFilters,
+    useCmdkShortcut,
     useIsMobile,
+    useSuggestions,
 } from "@fern-ui/fern-docs-search-ui";
-import { useEventCallback } from "@fern-ui/react-commons";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
+import { useChat } from "ai/react";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import { useRouter } from "next/router";
-import { Dispatch, ReactElement, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
+import { ComponentPropsWithoutRef, ReactElement, forwardRef, isValidElement, useCallback, useRef } from "react";
 import { z } from "zod";
 
+import { atomWithDefault } from "jotai/utils";
 import {
     CURRENT_VERSION_ATOM,
     DOMAIN_ATOM,
     HAS_API_PLAYGROUND,
+    SEARCH_DIALOG_OPEN_ATOM,
     THEME_SWITCH_ENABLED_ATOM,
     atomWithStorageString,
     useFeatureFlags,
@@ -39,6 +46,8 @@ import {
 } from "../atoms";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
+import { useRouteChangeComplete } from "../hooks/useRouteChanged";
+import { CodeBlock } from "../mdx/components/code/CodeBlock";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -54,20 +63,10 @@ function useAlgoliaUserToken() {
     return useAtomValue(userTokenRef.current);
 }
 
-const askAiAtom = atom(false);
-
-export function SearchV2(): ReactElement | false {
-    const version = useAtomValue(CURRENT_VERSION_ATOM);
-    const { isAskAiEnabled } = useFeatureFlags();
-
+function useSearchInfo():
+    | { appId: string; apiKey: string; facetFetcher: (filters: readonly string[]) => Promise<any> }
+    | undefined {
     const userToken = useAlgoliaUserToken();
-    const user = useFernUser();
-
-    const [open, setOpen] = useCommandTrigger();
-    const [askAi, setAskAi] = useAtom(askAiAtom);
-    const [initialInput, setInitialInput] = useState("");
-    const domain = useAtomValue(DOMAIN_ATOM);
-
     const { data } = useApiRouteSWRImmutable("/api/fern-docs/search/v2/key", {
         request: { headers: { "X-User-Token": userToken } },
         validate: ApiKeySchema,
@@ -76,17 +75,6 @@ export function SearchV2(): ReactElement | false {
     });
 
     const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
-    const chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
-    const suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
-
-    const router = useRouter();
-
-    const handleNavigate = useEventCallback((path: string) => {
-        void router.push(path).then(() => {
-            setOpen(false);
-        });
-    });
-
     const facetFetcher = useCallback(
         async (filters: readonly string[]) => {
             if (!data) {
@@ -103,28 +91,40 @@ export function SearchV2(): ReactElement | false {
     );
 
     if (!data) {
+        return undefined;
+    }
+
+    return {
+        appId: data.appId,
+        apiKey: data.apiKey,
+        facetFetcher,
+    };
+}
+
+const askAiAtom = atom(false);
+
+export function SearchV2(): ReactElement | false {
+    const version = useAtomValue(CURRENT_VERSION_ATOM);
+    const { isAskAiEnabled } = useFeatureFlags();
+
+    const user = useFernUser();
+    const searchInfo = useSearchInfo();
+
+    const [open, setOpen] = useAtom(SEARCH_DIALOG_OPEN_ATOM);
+    useCmdkShortcut(setOpen);
+    const isMobile = useIsMobile();
+
+    const domain = useAtomValue(DOMAIN_ATOM);
+
+    const handleClose = useCallback(() => setOpen(false), [setOpen]);
+
+    useRouteChangeComplete(handleClose);
+
+    if (!searchInfo) {
         return <DesktopSearchButton variant="loading" />;
     }
 
-    const { appId, apiKey } = data;
-
-    const children = (
-        <>
-            <DesktopCommandAboveInput>
-                <DesktopCommandBadges />
-            </DesktopCommandAboveInput>
-            <DesktopCommandBeforeInput>
-                <BackButton />
-            </DesktopCommandBeforeInput>
-            <CommandGroupFilters />
-            <CommandEmpty />
-            <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} domain={domain} />
-            <CommandActions>
-                <CommandPlayground onClose={() => setOpen(false)} />
-                <CommandTheme onClose={() => setOpen(false)} />
-            </CommandActions>
-        </>
-    );
+    const { appId, apiKey, facetFetcher } = searchInfo;
 
     return (
         <SearchClientRoot
@@ -137,35 +137,165 @@ export function SearchV2(): ReactElement | false {
             initialFilters={{ "version.title": version?.title }}
             analyticsTags={["search-v2-dialog"]}
         >
-            <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild trigger={<DesktopSearchButton />}>
-                {isAskAiEnabled ? (
-                    <DesktopCommandWithAskAI
-                        domain={domain}
-                        onClose={() => setOpen(false)}
-                        askAI={askAi}
-                        setAskAI={setAskAi}
-                        api={chatEndpoint}
-                        suggestionsApi={suggestEndpoint}
-                        initialInput={initialInput}
-                        body={{ algoliaSearchKey: apiKey }}
-                        onSelectHit={handleNavigate}
-                    >
-                        <CommandAskAIGroup
-                            onAskAI={(initialInput) => {
-                                setInitialInput(initialInput);
-                                setAskAi(true);
-                            }}
-                            forceMount
-                        />
-                        {children}
-                    </DesktopCommandWithAskAI>
-                ) : (
-                    <DesktopCommand onClose={() => setOpen(false)}>{children}</DesktopCommand>
-                )}
+            <DesktopSearchDialog
+                open={open && !isMobile}
+                onOpenChange={setOpen}
+                asChild
+                trigger={<DesktopSearchButton />}
+            >
+                {isAskAiEnabled ? <AskAICommand algoliaSearchKey={apiKey} /> : <SearchCommand />}
             </DesktopSearchDialog>
         </SearchClientRoot>
     );
 }
+
+const chatIdAtom = atomWithDefault<string>(() => crypto.randomUUID());
+const suggestIdAtom = atomWithDefault<string>(() => crypto.randomUUID());
+
+const AskAICommand = forwardRef<
+    HTMLDivElement,
+    ComponentPropsWithoutRef<typeof DesktopAskAIContent> & { algoliaSearchKey: string }
+>(({ algoliaSearchKey, ...props }, ref) => {
+    const setOpen = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
+    const domain = useAtomValue(DOMAIN_ATOM);
+    const router = useRouter();
+
+    const handleNavigate = useEventCallback((path: string) => {
+        void router.push(path);
+    });
+
+    const [isAskAI, setIsAskAI] = useAtom(askAiAtom);
+    const [chatId, setChatId] = useAtom(chatIdAtom);
+    const [suggestId, _setSuggestId] = useAtom(suggestIdAtom);
+    const { messages, input, setInput, isLoading, append, stop } = useChat({
+        id: chatId,
+        api: useApiRoute("/api/fern-docs/search/v2/chat"),
+        body: { algoliaSearchKey },
+    });
+
+    const suggestions = useSuggestions({
+        id: suggestId,
+        api: useApiRoute("/api/fern-docs/search/v2/suggest"),
+        body: { algoliaSearchKey },
+    });
+
+    const handleSubmitMessage = useDebouncedCallback(
+        (message: string) => {
+            if (message.trim().split(/\s+/).length < 2) {
+                setInput(message);
+                return;
+            }
+            void append({ role: "user", content: message });
+            setInput("");
+        },
+        [append, setInput],
+        1000,
+        { edges: ["leading"] },
+    );
+
+    const handleClearMessages = useCallback(() => {
+        stop();
+        setChatId(crypto.randomUUID());
+    }, [stop, setChatId]);
+
+    return (
+        <DesktopCommandWithAskAI {...props} ref={ref} onEscapeKeyDown={() => setOpen(false)} isAskAI={isAskAI}>
+            {isAskAI ? (
+                <DesktopAskAIContent onReturnToSearch={() => setIsAskAI(false)} isThinking={isLoading}>
+                    {messages.length > 0 && <NewChatButton onClick={handleClearMessages} />}
+
+                    <AskAICommandItems
+                        messages={messages}
+                        onSelectHit={router.push}
+                        prefetch={router.prefetch}
+                        components={{
+                            pre(props) {
+                                if (isValidElement(props.children) && props.children.type === "code") {
+                                    const { children, className } = props.children.props as {
+                                        children: string;
+                                        className: string;
+                                    };
+                                    if (typeof children === "string") {
+                                        const match = /language-(\w+)/.exec(className || "")?.[1] ?? "plaintext";
+                                        return <CodeBlock code={children} language={match} fontSize="sm" />;
+                                    }
+                                }
+                                return <pre {...props} />;
+                            },
+
+                            a: ({ children, node, ...props }) => (
+                                <a
+                                    {...props}
+                                    className="hover:text-[var(--accent-a10)] font-semibold decoration-[var(--accent-a10)] hover:decoration-2"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {children}
+                                </a>
+                            ),
+                        }}
+                        isThinking={isLoading}
+                        domain={domain}
+                    >
+                        <CommandSuggestionsGroup suggestions={suggestions} onSubmitMessage={handleSubmitMessage} />
+                    </AskAICommandItems>
+
+                    <AskAIComposer
+                        value={input}
+                        onValueChange={setInput}
+                        isLoading={isLoading}
+                        stop={stop}
+                        onSend={handleSubmitMessage}
+                        onPopState={() => setIsAskAI(false)}
+                    />
+                </DesktopAskAIContent>
+            ) : (
+                <DesktopCommandContent>
+                    <DefaultDesktopBackButton />
+                    <CommandAskAIGroup
+                        onAskAI={(initialInput) => {
+                            setIsAskAI(true);
+                            handleSubmitMessage(initialInput);
+                        }}
+                        forceMount
+                    />
+                    <CommandGroupFilters />
+                    <CommandEmpty />
+                    <CommandSearchHits onSelect={handleNavigate} prefetch={router.prefetch} domain={domain} />
+                    <CommandActions>
+                        <CommandPlayground onClose={() => setOpen(false)} />
+                        <CommandTheme onClose={() => setOpen(false)} />
+                    </CommandActions>
+                </DesktopCommandContent>
+            )}
+        </DesktopCommandWithAskAI>
+    );
+});
+
+AskAICommand.displayName = "AskAICommand";
+
+const SearchCommand = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<typeof DesktopCommand>>((props, ref) => {
+    const setOpen = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
+    const domain = useAtomValue(DOMAIN_ATOM);
+    const router = useRouter();
+
+    return (
+        <DesktopCommand {...props} ref={ref} onEscapeKeyDown={() => setOpen(false)}>
+            <DesktopCommandContent>
+                <DefaultDesktopBackButton />
+                <CommandGroupFilters />
+                <CommandEmpty />
+                <CommandSearchHits onSelect={router.push} prefetch={router.prefetch} domain={domain} />
+                <CommandActions>
+                    <CommandPlayground onClose={() => setOpen(false)} />
+                    <CommandTheme onClose={() => setOpen(false)} />
+                </CommandActions>
+            </DesktopCommandContent>
+        </DesktopCommand>
+    );
+});
+
+SearchCommand.displayName = "SearchCommand";
 
 function CommandPlayground({ onClose }: { onClose: () => void }) {
     const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
@@ -200,43 +330,4 @@ function CommandTheme({ onClose }: { onClose: () => void }) {
             }}
         />
     );
-}
-
-function BackButton() {
-    const { filters, popFilter, clearFilters } = useFacetFilters();
-    if (filters.length === 0) {
-        return false;
-    }
-    return <DesktopBackButton pop={popFilter} clear={clearFilters} />;
-}
-
-function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
-    const [open, setOpen] = useState(false);
-    const isMobile = useIsMobile();
-
-    useEffect(() => {
-        const handleKeyDown = (event: KeyboardEvent) => {
-            if (isMobile) {
-                return;
-            }
-
-            setOpen((prev) => {
-                if (prev) {
-                    return prev;
-                }
-
-                if (event.key === "/" || ((event.metaKey || event.ctrlKey) && event.key === "k")) {
-                    event.preventDefault();
-                    return true;
-                }
-
-                return prev;
-            });
-        };
-        window.addEventListener("keydown", handleKeyDown);
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [isMobile]);
-    return [open, setOpen];
 }

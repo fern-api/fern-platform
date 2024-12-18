@@ -138,3 +138,40 @@
         }
     }
 }
+
+@layer components {
+    [data-cmdk-dialog-overlay] {
+        position: fixed;
+        inset: 0;
+        background-color: var(--white-a3);
+        backdrop-filter: blur(12px);
+
+        &:is(.dark *) {
+            background-color: var(--black-a3);
+        }
+    }
+    [data-cmdk-dialog-content] {
+        @apply shadow-xl;
+        position: fixed;
+        top: 15%;
+        left: 50%;
+        width: 640px;
+        transform: translateX(-50%);
+        overflow: hidden;
+        outline: none;
+        transform-origin: left;
+
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: var(--white-a9);
+            z-index: -50;
+            pointer-events: none;
+        }
+
+        &:is(.dark *)::before {
+            background-color: var(--black-a9);
+        }
+    }
+}

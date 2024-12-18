@@ -1,3 +1,4 @@
+import { useDebouncedCallback } from "@fern-ui/react-commons";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { useId } from "@radix-ui/react-id";
 import { Primitive } from "@radix-ui/react-primitive";
@@ -22,6 +23,7 @@ import {
     useSyncExternalStore,
 } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { noop } from "ts-essentials";
 import { z } from "zod";
 import { commandScore } from "./command-score";
 
@@ -191,6 +193,8 @@ const useCommand = () => useContext(CommandContext);
 const StoreContext = createContext<Store>(undefined as unknown as Store);
 const useStore = () => useContext(StoreContext);
 const GroupContext = createContext<Group>(undefined as unknown as Group);
+const ScrollContext = createContext<() => void>(noop);
+const useScrollSelectedIntoView = (): (() => void) => useContext(ScrollContext);
 
 // const getId = (() => {
 //     let i = 0;
@@ -506,37 +510,44 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
         state.current.filtered.count = itemCount;
     }
 
-    function scrollSelectedIntoView() {
-        const item = getSelectedItem();
+    // the following query selectors are expensive, and we call them on every keystroke.
+    // debouncing improves performance— 150ms is typically human-friendly
+    const scrollSelectedIntoView = useDebouncedCallback(
+        () => {
+            const item = getSelectedItem();
 
-        if (item) {
-            if (item.parentElement?.firstChild === item) {
-                // First item in Group, ensure heading is in view
-                item
-                    .closest(GROUP_SELECTOR)
-                    ?.querySelector(GROUP_HEADING_SELECTOR)
-                    ?.scrollIntoView({
+            if (item) {
+                if (item.parentElement?.firstChild === item) {
+                    // First item in Group, ensure heading is in view
+                    item
+                        .closest(GROUP_SELECTOR)
+                        ?.querySelector(GROUP_HEADING_SELECTOR)
+                        ?.scrollIntoView({
+                            block:
+                                ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position"))
+                                    .data ?? "nearest",
+                        });
+
+                    // Ensure the item is always in view under the heading
+                    item.scrollIntoView({
                         block:
                             ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position"))
                                 .data ?? "nearest",
                     });
-
-                // Ensure the item is always in view under the heading
-                item.scrollIntoView({
-                    block:
-                        ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position")).data ??
-                        "nearest",
-                });
-            } else {
-                // Ensure the item is always in view
-                item.scrollIntoView({
-                    block:
-                        ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position")).data ??
-                        "nearest",
-                });
+                } else {
+                    // Ensure the item is always in view
+                    item.scrollIntoView({
+                        block:
+                            ScrollLogicalPositionSchema.safeParse(item.getAttribute("data-scroll-logical-position"))
+                                .data ?? "nearest",
+                    });
+                }
             }
-        }
-    }
+        },
+        [],
+        150,
+        { edges: ["leading", "trailing"] },
+    );
 
     /** Getters */
 
@@ -707,7 +718,9 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
             </label>
             {SlottableWithNestedChildren(props, (child) => (
                 <StoreContext.Provider value={store}>
-                    <CommandContext.Provider value={context}>{child}</CommandContext.Provider>
+                    <CommandContext.Provider value={context}>
+                        <ScrollContext.Provider value={scrollSelectedIntoView}>{child}</ScrollContext.Provider>
+                    </CommandContext.Provider>
                 </StoreContext.Provider>
             ))}
         </Primitive.div>
@@ -741,6 +754,14 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
 
     const store = useStore();
     const selected = useCmdk((state) => state.value && state.value === value.current);
+
+    const scrollIntoView = useScrollSelectedIntoView();
+    useEffect(() => {
+        if (selected) {
+            scrollIntoView();
+        }
+    }, [selected, scrollIntoView]);
+
     const render = useCmdk((state) =>
         forceMount
             ? true
@@ -1042,6 +1063,7 @@ export {
     Separator,
     defaultFilter,
     useCmdk as useCommandState,
+    useScrollSelectedIntoView,
 };
 
 /**

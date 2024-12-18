@@ -5,7 +5,7 @@ import { ReactElement } from "react";
 import "./globals.scss";
 
 export const metadata: Metadata = {
-    title: "Create Next App",
+    title: "Fern Docs Search Demo",
 };
 
 export default function RootLayout({

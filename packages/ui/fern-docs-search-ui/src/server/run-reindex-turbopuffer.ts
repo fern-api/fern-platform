@@ -48,5 +48,6 @@ export const runSemanticSearchTurbopuffer = async (
             });
             return embedding.embedding;
         },
+        mode: "hybrid",
     });
 };

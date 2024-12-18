@@ -12,8 +12,9 @@ export const CommandLink = forwardRef<
         target?: string;
         rel?: string;
         prefetch?: (href: string) => Promise<void>;
+        sendClickEvent?: (eventName?: string | undefined, additionalData?: Record<string, any> | undefined) => void;
     }
->(({ href, target, rel, onSelect, prefetch, domain, ...props }, forwardedRef) => {
+>(({ href, target, rel, onSelect, prefetch, domain, sendClickEvent, ...props }, forwardedRef) => {
     const ref = useRef<HTMLAnchorElement>(null);
     const isSelected = Command.useCommandState((state) => state.value === href) as boolean;
     const handleSelect = useCallback(() => {
@@ -50,10 +51,13 @@ export const CommandLink = forwardRef<
         if (!element) {
             return;
         }
-        const listener = () => handleSelect();
+        const listener = () => {
+            handleSelect();
+            sendClickEvent?.("onselect");
+        };
         element.addEventListener(Command.SELECT_EVENT, listener);
         return () => element.removeEventListener(Command.SELECT_EVENT, listener);
-    }, [handleSelect]);
+    }, [handleSelect, sendClickEvent]);
 
     const Comp = props.asChild ? Slot : "a";
     // Note: `onSelect` is purposely not passed in here because these command items must be rendered as
@@ -72,6 +76,8 @@ export const CommandLink = forwardRef<
                     }
                 }}
                 onClick={(e) => {
+                    sendClickEvent?.("onclick");
+
                     // if the user clicked this link without any modifier keys, and it's a left click, then we want to
                     // navigate to the link using the `onSelect` handler to defer the behavior to the NextJS router.
                     if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey && (e.button === 0 || e.button === 1)) {

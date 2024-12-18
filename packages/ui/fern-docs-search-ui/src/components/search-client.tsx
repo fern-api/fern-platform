@@ -131,6 +131,10 @@ function useSearchClient(): {
     return value;
 }
 
+function useHasSearchClient(): boolean {
+    return useContext(SearchClientContext) != null;
+}
+
 const FacetFiltersContext = createContext({
     atom: atomWithDefault<readonly FacetFilter[]>(() => []),
     preloadFacets: (_: readonly FacetFilter[]): Promise<FacetsResponse> => Promise.resolve({}),
@@ -281,4 +285,4 @@ function InstantSearchWrapper({
     );
 }
 
-export { SearchClientRoot, useFacetFilters, useFacets, usePreloadFacets, useSearchClient };
+export { SearchClientRoot, useFacetFilters, useFacets, useHasSearchClient, usePreloadFacets, useSearchClient };
