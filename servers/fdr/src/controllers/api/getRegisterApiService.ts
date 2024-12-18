@@ -1,4 +1,4 @@
-import { APIV1Db, APIV1Write, FdrAPI, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
+import { APIV1Write, FdrAPI, SDKSnippetHolder, convertAPIDefinitionToDb } from "@fern-api/fdr-sdk";
 import { v4 as uuidv4 } from "uuid";
 import { APIV1WriteService } from "../../api";
 import { SdkRequest } from "../../api/generated/api";
@@ -21,85 +21,63 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 authHeader: req.headers.authorization,
                 orgId: req.body.orgId,
             });
+            const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                goSdk: undefined,
+                rubySdk: undefined,
+            };
 
+            const snippetsConfigurationWithSdkIds = await app.dao.sdks().getSdkIdsForPackages(snippetsConfiguration);
+            const sdkIds: string[] = [];
+            if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.pythonSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.javaSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.goSdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
+            }
+            if (snippetsConfigurationWithSdkIds.rubySdk != null) {
+                sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
+            }
+
+            const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(sdkIds);
+            const snippetsBySdkIdAndEndpointId = await app.dao.snippets().loadAllSnippetsForSdkIdsByEndpointId(sdkIds);
+            const snippetTemplatesByEndpoint = await getSnippetTemplatesIfEnabled({
+                app,
+                authorization: req.headers.authorization,
+                orgId: req.body.orgId,
+                apiId: req.body.apiId,
+                definition: req.body.definition,
+                snippetsConfigurationWithSdkIds,
+            });
+            const snippetTemplatesByEndpointId = await getSnippetTemplatesByEndpointIdIfEnabled({
+                app,
+                authorization: req.headers.authorization,
+                orgId: req.body.orgId,
+                apiId: req.body.apiId,
+                definition: req.body.definition,
+                snippetsConfigurationWithSdkIds,
+            });
             const apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
-            let transformedApiDefinition: APIV1Db.DbApiDefinition | FdrAPI.api.latest.ApiDefinition | undefined;
-
-            console.log(req.body.definition);
-            if (req.body.definition != null && Object.keys(req.body.definition).length > 0) {
-                const snippetsConfiguration = req.body.definition.snippetsConfiguration ?? {
-                    typescriptSdk: undefined,
-                    pythonSdk: undefined,
-                    javaSdk: undefined,
-                    goSdk: undefined,
-                    rubySdk: undefined,
-                };
-
-                const snippetsConfigurationWithSdkIds = await app.dao
-                    .sdks()
-                    .getSdkIdsForPackages(snippetsConfiguration);
-                const sdkIds: string[] = [];
-                if (snippetsConfigurationWithSdkIds.typescriptSdk != null) {
-                    sdkIds.push(snippetsConfigurationWithSdkIds.typescriptSdk.sdkId);
-                }
-                if (snippetsConfigurationWithSdkIds.pythonSdk != null) {
-                    sdkIds.push(snippetsConfigurationWithSdkIds.pythonSdk.sdkId);
-                }
-                if (snippetsConfigurationWithSdkIds.javaSdk != null) {
-                    sdkIds.push(snippetsConfigurationWithSdkIds.javaSdk.sdkId);
-                }
-                if (snippetsConfigurationWithSdkIds.goSdk != null) {
-                    sdkIds.push(snippetsConfigurationWithSdkIds.goSdk.sdkId);
-                }
-                if (snippetsConfigurationWithSdkIds.rubySdk != null) {
-                    sdkIds.push(snippetsConfigurationWithSdkIds.rubySdk.sdkId);
-                }
-
-                const snippetsBySdkId = await app.dao.snippets().loadAllSnippetsForSdkIds(sdkIds);
-                const snippetsBySdkIdAndEndpointId = await app.dao
-                    .snippets()
-                    .loadAllSnippetsForSdkIdsByEndpointId(sdkIds);
-                const snippetTemplatesByEndpoint = await getSnippetTemplatesIfEnabled({
-                    app,
-                    authorization: req.headers.authorization,
-                    orgId: req.body.orgId,
-                    apiId: req.body.apiId,
-                    definition: req.body.definition,
-                    snippetsConfigurationWithSdkIds,
-                });
-                const snippetTemplatesByEndpointId = await getSnippetTemplatesByEndpointIdIfEnabled({
-                    app,
-                    authorization: req.headers.authorization,
-                    orgId: req.body.orgId,
-                    apiId: req.body.apiId,
-                    definition: req.body.definition,
-                    snippetsConfigurationWithSdkIds,
-                });
-                const snippetHolder = new SDKSnippetHolder({
-                    snippetsBySdkId,
-                    snippetsBySdkIdAndEndpointId,
-                    snippetsConfigWithSdkId: snippetsConfigurationWithSdkIds,
-                    snippetTemplatesByEndpoint,
-                    snippetTemplatesByEndpointId,
-                });
-                transformedApiDefinition = convertAPIDefinitionToDb(
-                    req.body.definition,
-                    apiDefinitionId,
-                    snippetHolder,
-                );
-            }
-
-            let isLatest = false;
-            if (transformedApiDefinition == null) {
-                if (
-                    req.body.definitionV2 == null ||
-                    (req.body.definitionV2 != null && Object.keys(req.body.definitionV2).length === 0)
-                ) {
-                    throw new Error("No latest definition provided");
-                }
-                transformedApiDefinition = req.body.definitionV2;
-                isLatest = true;
-            }
+            const snippetHolder = new SDKSnippetHolder({
+                snippetsBySdkId,
+                snippetsBySdkIdAndEndpointId,
+                snippetsConfigWithSdkId: snippetsConfigurationWithSdkIds,
+                snippetTemplatesByEndpoint,
+                snippetTemplatesByEndpointId,
+            });
+            const transformedApiDefinition = convertAPIDefinitionToDb(
+                req.body.definition,
+                apiDefinitionId,
+                snippetHolder,
+            );
 
             let sources: Record<string, APIV1Write.SourceUpload> | undefined;
             if (req.body.sources != null) {
@@ -120,9 +98,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
                 `Creating API Definition in database with name=${req.body.apiId} for org ${req.body.orgId}`,
                 REGISTER_API_DEFINITION_META,
             );
-            await (
-                isLatest ? app.services.db.prisma.apiDefinitionsLatest : app.services.db.prisma.apiDefinitionsV2
-            ).create({
+            await app.services.db.prisma.apiDefinitionsV2.create({
                 data: {
                     apiDefinitionId,
                     apiName: req.body.apiId,

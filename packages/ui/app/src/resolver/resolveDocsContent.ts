@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
-import type { APIV1Read, DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk/client/types";
+import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-ui/fern-docs-server";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
@@ -28,7 +28,6 @@ interface ResolveDocsContentArgs {
     prev: FernNavigation.NavigationNodeNeighbor | undefined;
     next: FernNavigation.NavigationNodeNeighbor | undefined;
     apis: Record<string, APIV1Read.ApiDefinition>;
-    apisV2: Record<string, FdrAPI.api.latest.ApiDefinition>;
     pages: Record<string, DocsV1Read.PageContent>;
     mdxOptions?: FernSerializeMdxOptions;
     featureFlags: FeatureFlags;
@@ -46,7 +45,6 @@ export async function resolveDocsContent({
     prev,
     next,
     apis,
-    apisV2,
     pages,
     mdxOptions,
     featureFlags,
@@ -66,25 +64,14 @@ export async function resolveDocsContent({
             engine,
         );
 
-    // TODO: remove legacy when done
-    const apiLoaders = {
-        ...mapValues(apis, (api) => {
-            return ApiDefinitionLoader.create(domain, api.id)
-                .withMdxBundler(serializeMdx, engine)
-                .withFlags(featureFlags)
-                .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
-                .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-                .withResolveDescriptions();
-        }),
-        ...mapValues(apisV2 ?? {}, (api) => {
-            return ApiDefinitionLoader.create(domain, api.id)
-                .withMdxBundler(serializeMdx, engine)
-                .withFlags(featureFlags)
-                .withApiDefinition(api)
-                .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-                .withResolveDescriptions();
-        }),
-    };
+    const apiLoaders = mapValues(apis, (api) => {
+        return ApiDefinitionLoader.create(domain, api.id)
+            .withMdxBundler(serializeMdx, engine)
+            .withFlags(featureFlags)
+            .withApiDefinition(ApiDefinitionV1ToLatest.from(api, featureFlags).migrate())
+            .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+            .withResolveDescriptions();
+    });
 
     let result: DocsContent | undefined;
 

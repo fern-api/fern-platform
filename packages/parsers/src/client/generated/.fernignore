@@ -3,8 +3,6 @@ Client.ts
 index.ts
 api/resources/api/client/
 api/resources/api/index.ts
-api/resources/api/resources/latest/client/
-api/resources/api/resources/latest/index.ts
 api/resources/api/resources/v1/client/
 api/resources/api/resources/v1/index.ts
 api/resources/api/resources/v1/resources/read/client/
