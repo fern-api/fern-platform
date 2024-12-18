@@ -1717,9 +1717,6 @@ importers:
       '@fern-fern/fern-docs-sdk':
         specifier: 0.0.5
         version: 0.0.5
-      '@fern-fern/proxy-sdk':
-        specifier: 0.0.26
-        version: 0.0.26
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
@@ -4679,9 +4676,6 @@ packages:
 
   '@fern-fern/paged-generators-sdk@0.0.5706':
     resolution: {integrity: sha512-E+qk3MT+opUqt4JXPw4OQ/2GwssUk5GJvLY3ytwIT7BQ/8F3/IVDqcpOP6/wByVCwU0UKRGJQUf/HrUwbk0XYA==}
-
-  '@fern-fern/proxy-sdk@0.0.26':
-    resolution: {integrity: sha512-BEt0sfP5VcyDe4cipSSaDZ6jf4CgNaq0SlsqyEi64vC14VCeVupes9WLBExdMsCXK8ve7ov9E54Eh6ccpb+8UA==}
 
   '@fern-fern/revalidation-sdk@0.0.9':
     resolution: {integrity: sha512-iZhm1odMdgWqlJi8B6lUPkza8YFfPz6iAhLfTkTnG4cpgPLER4sdQ8tlO+sUcGJF07Z3KkCRKmD6k54wNhv6Gg==}
@@ -18383,17 +18377,6 @@ snapshots:
       form-data: 4.0.0
       formdata-node: 6.0.3
       js-base64: 3.7.2
-      node-fetch: 2.7.0
-      qs: 6.11.2
-      readable-stream: 4.5.2
-      url-join: 4.0.1
-    transitivePeerDependencies:
-      - encoding
-
-  '@fern-fern/proxy-sdk@0.0.26':
-    dependencies:
-      form-data: 4.0.0
-      formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.11.2
       readable-stream: 4.5.2
