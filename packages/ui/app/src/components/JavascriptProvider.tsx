@@ -1,7 +1,6 @@
 import { atom, useAtomValue } from "jotai";
 import Script from "next/script";
 import { memo } from "react";
-import { CustomerAnalytics } from "../analytics/CustomerAnalytics";
 import { DOCS_ATOM, FILES_ATOM } from "../atoms";
 
 const JS_ATOM = atom((get) => get(DOCS_ATOM).js);
@@ -27,7 +26,6 @@ export const JavascriptProvider = memo(() => {
                 />
             ))}
             {js?.remote?.map((remote) => <Script key={remote.url} src={remote.url} strategy={remote.strategy} />)}
-            <CustomerAnalytics />
         </>
     );
 });

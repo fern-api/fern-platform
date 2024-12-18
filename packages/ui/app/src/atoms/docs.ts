@@ -22,6 +22,7 @@ export const EMPTY_ANALYTICS_CONFIG: DocsV1Read.AnalyticsConfig = {
     fathom: undefined,
     clearbit: undefined,
     heap: undefined,
+    datadog: undefined,
 };
 
 export const EMPTY_DOCS_STATE: DocsProps = {
@@ -66,7 +67,6 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     featureFlags: DEFAULT_FEATURE_FLAGS,
     apis: [],
     seo: {},
-    analytics: undefined,
     analyticsConfig: EMPTY_ANALYTICS_CONFIG,
     fallback: {},
     theme: "default",

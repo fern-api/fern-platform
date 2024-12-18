@@ -5,6 +5,7 @@ import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";
 import { SWRConfig } from "swr";
+import { CustomerAnalytics } from "../analytics";
 import { DocsProps, HydrateAtoms, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LocalPreviewContextProvider } from "../contexts/local-preview";
@@ -24,6 +25,7 @@ export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | u
     return (
         <JotaiProvider store={store}>
             <HydrateAtoms pageProps={pageProps}>
+                <CustomerAnalytics />
                 <ThemeScript colors={pageProps?.colors} />
                 <NextNProgress options={{ showSpinner: false, speed: 400 }} showOnShallow={false} />
                 <Toaster />

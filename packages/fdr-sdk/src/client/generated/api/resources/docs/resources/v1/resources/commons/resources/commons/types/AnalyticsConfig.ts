@@ -21,4 +21,5 @@ export interface AnalyticsConfig {
     fathom: FernRegistry.docs.v1.commons.FathomConfig | undefined;
     clearbit: FernRegistry.docs.v1.commons.ClearBitConfig | undefined;
     heap: FernRegistry.docs.v1.commons.HeapConfig | undefined;
+    datadog: FernRegistry.docs.v1.commons.DatadogRumConfig | undefined;
 }

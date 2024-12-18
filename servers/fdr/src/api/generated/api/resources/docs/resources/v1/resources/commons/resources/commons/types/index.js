@@ -19,6 +19,7 @@ export * from "./PlausibleConfig";
 export * from "./FathomConfig";
 export * from "./ClearBitConfig";
 export * from "./HeapConfig";
+export * from "./DatadogRumConfig";
 export * from "./DocsLayoutConfig";
 export * from "./SearchbarPlacement";
 export * from "./TabsPlacement";

@@ -68,6 +68,7 @@ types:
       fathom: optional<FathomConfig>
       clearbit: optional<ClearBitConfig>
       heap: optional<HeapConfig>
+      datadog: optional<DatadogRumConfig>
 
   SegmentConfig:
     properties:
@@ -135,6 +136,12 @@ types:
   HeapConfig:
     properties:
       appId: string
+
+  DatadogRumConfig:
+    properties:
+      applicationId: string
+      clientToken: string
+      site: optional<string>
 
   DocsLayoutConfig:
     properties:

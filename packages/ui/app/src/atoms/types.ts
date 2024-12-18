@@ -5,7 +5,6 @@ import { ColorsConfig, SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-util
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { NextSeoProps } from "@fern-ui/next-seo";
-import { CustomerAnalytics } from "../analytics/types";
 import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
 
@@ -60,7 +59,6 @@ export interface DocsProps {
     featureFlags: FeatureFlags;
     apis: FdrAPI.ApiDefinitionId[];
     seo: NextSeoProps;
-    analytics: CustomerAnalytics | undefined; // deprecated
     analyticsConfig: DocsV1Read.AnalyticsConfig | undefined;
     fallback: Record<string, any>;
     theme: FernTheme;
