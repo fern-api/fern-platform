@@ -47,21 +47,56 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             proxyHeaders.set("Content-Type", mime);
         }
 
+        const startTime = Date.now();
+
         const response = await fetch(proxyRequest.url, {
             method: proxyRequest.method,
             headers: proxyHeaders,
-            body: requestBody as BodyInit,
+            body: requestBody,
         });
 
-        // Copy all headers from proxied response
+        // eslint-disable-next-line no-console
+        console.log("Proxy request to", req.url, "completed with status", response.status);
+
+        let responseBody = await response.text();
+        const endTime = Date.now();
+
+        // eslint-disable-next-line no-console
+        console.log("Proxy request to", req.url, "received response body after", endTime - startTime, "milliseconds");
+
+        try {
+            responseBody = JSON.parse(responseBody);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log("Failed to parse response body as JSON, but will return it as text.");
+            // eslint-disable-next-line no-console
+            console.error(e);
+        }
+
         response.headers.forEach((value, name) => {
             headers.set(name, value);
         });
 
-        return new NextResponse(response.body, {
-            status: response.status,
-            headers,
-        });
+        return new NextResponse(
+            JSON.stringify({
+                response: {
+                    headers: Object.fromEntries(response.headers.entries()),
+                    ok: response.ok,
+                    redirected: response.redirected,
+                    status: response.status,
+                    statusText: response.statusText,
+                    type: response.type,
+                    url: response.url,
+                    body: responseBody,
+                },
+                time: endTime - startTime,
+                size: response.headers.get("Content-Length"),
+            }),
+            {
+                status: 200,
+                headers,
+            },
+        );
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
