@@ -1,18 +1,11 @@
+import { buildRequestBody } from "@/pages/api/fern-docs/proxy/rest";
 import { ProxyRequestSchema } from "@fern-ui/ui";
-import { buildRequestBody } from "./rest";
 
 /**
  * Note: edge functions must return a response within 25 seconds.
  */
 
-export const runtime = "edge";
-export const dynamic = "force-dynamic";
-
-export default async function handler(req: Request): Promise<Response> {
-    if (req.method !== "POST" && req.method !== "OPTIONS") {
-        return new Response(null, { status: 405 });
-    }
-
+export async function POST(req: Request): Promise<Response> {
     const origin = req.headers.get("origin");
     if (origin == null) {
         return new Response(null, { status: 400 });

@@ -4,11 +4,20 @@
     "outDir": "./dist",
     "rootDir": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "strictNullChecks": true
   },
-  "exclude": ["node_modules"],
-  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__"],
+  "exclude": [
+    "node_modules"
+  ],
+  "include": [
+    "./src/**/*",
+    ".next/types/**/*.ts",
+    "__mocks__"
+  ],
   "references": [
     {
       "path": "../../commons/core-utils"
