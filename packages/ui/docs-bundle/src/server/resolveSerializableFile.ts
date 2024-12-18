@@ -1,5 +1,4 @@
 import { SerializableFile } from "@fern-ui/ui";
-import fetch from "node-fetch";
 
 export async function resolveSerializableFile(
     file: Pick<SerializableFile, "dataUrl" | "type">,
