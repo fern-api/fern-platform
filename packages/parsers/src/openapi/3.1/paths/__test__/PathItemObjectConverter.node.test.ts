@@ -93,6 +93,7 @@ describe("PathItemObjectConverterNode", () => {
                         },
                     },
                 ],
+                responses: [],
                 errors: [],
             });
             expect(result?.[1]).toEqual({
@@ -118,6 +119,7 @@ describe("PathItemObjectConverterNode", () => {
                     },
                 ],
                 environments: [],
+                responses: [],
                 errors: [],
             });
         });

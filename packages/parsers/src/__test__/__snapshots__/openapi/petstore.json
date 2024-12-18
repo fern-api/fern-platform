@@ -26,27 +26,41 @@
           "baseUrl": "/api/v31"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
           }
         },
-        "description": "Successful operation"
-      },
+        {
+          "contentType": "application/xml",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
       "errors": []
     },
     "endpoint_pet.updatePet": {
@@ -74,27 +88,41 @@
           "baseUrl": "/api/v31"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
           }
         },
-        "description": "Successful operation"
-      },
+        {
+          "contentType": "application/xml",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
       "errors": []
     },
     "endpoint_pets.getPetById": {
@@ -145,17 +173,19 @@
           "description": "ID of pet that needs to be fetched"
         }
       ],
-      "response": {
-        "statusCode": null,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        },
-        "description": "The pet"
-      },
+      "responses": [
+        {
+          "statusCode": null,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "The pet"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
