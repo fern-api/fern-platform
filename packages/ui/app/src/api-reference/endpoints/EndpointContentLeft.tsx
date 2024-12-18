@@ -288,15 +288,15 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     </FernCard>
                 </Tabs.Root>
             )} */}
-            {endpoint.request && (
+            {endpoint.requests?.[0] && (
                 <EndpointSection
-                    key={endpoint.request.contentType}
+                    key={endpoint.requests[0].contentType}
                     title="Request"
                     anchorIdParts={REQUEST}
                     slug={node.slug}
                 >
                     <EndpointRequestSection
-                        request={endpoint.request}
+                        request={endpoint.requests[0]}
                         onHoverProperty={onHoverRequestProperty}
                         anchorIdParts={REQUEST_BODY}
                         slug={node.slug}
@@ -304,10 +304,10 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                     />
                 </EndpointSection>
             )}
-            {endpoint.response && (
+            {endpoint.responses?.[0] && (
                 <EndpointSection title="Response" anchorIdParts={RESPONSE} slug={node.slug}>
                     <EndpointResponseSection
-                        response={endpoint.response}
+                        response={endpoint.responses[0]}
                         exampleResponseBody={example?.responseBody}
                         onHoverProperty={onHoverResponseProperty}
                         anchorIdParts={RESPONSE_BODY}

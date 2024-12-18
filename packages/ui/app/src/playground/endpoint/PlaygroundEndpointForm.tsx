@@ -154,8 +154,8 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                 </PlaygroundEndpointFormSection>
             )}
 
-            {endpoint.request?.body != null &&
-                visitDiscriminatedUnion(endpoint.request.body)._visit({
+            {endpoint.requests?.[0]?.body != null &&
+                visitDiscriminatedUnion(endpoint.requests[0].body)._visit({
                     formData: (formData) => (
                         <PlaygroundEndpointFormSection ignoreHeaders={ignoreHeaders} title="Multipart Form">
                             <PlaygroundEndpointMultipartForm

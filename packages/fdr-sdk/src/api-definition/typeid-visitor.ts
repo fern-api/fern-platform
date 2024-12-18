@@ -19,13 +19,16 @@ export class ApiTypeIdVisitor {
         endpoint.responseHeaders?.forEach((header) => {
             ApiTypeIdVisitor.visitTypeShape(header.valueShape, visit);
         });
-        if (endpoint.request?.body != null) {
-            ApiTypeIdVisitor.visitHttpRequestBodyShape(endpoint.request.body, visit);
-        }
-        if (endpoint.response?.body != null) {
-            ApiTypeIdVisitor.visitHttpResponseBodyShape(endpoint.response.body, visit);
-        }
-
+        endpoint.requests?.forEach((request) => {
+            if (request.body != null) {
+                ApiTypeIdVisitor.visitHttpRequestBodyShape(request.body, visit);
+            }
+        });
+        endpoint.responses?.forEach((response) => {
+            if (response.body != null) {
+                ApiTypeIdVisitor.visitHttpResponseBodyShape(response.body, visit);
+            }
+        });
         endpoint.errors?.forEach((error) => {
             if (error.shape != null) {
                 ApiTypeIdVisitor.visitTypeShape(error.shape, visit);

@@ -330,8 +330,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             requestHeaders: convertOperationObjectProperties(this.requestHeaders),
             responseHeaders: responses?.[0]?.headers,
             // TODO: revisit fdr shape to suport multiple requests
-            request: this.requests?.convert()[0],
-            response: responses?.[0]?.response,
+            requests: this.requests?.convert(),
+            responses: responses?.map((response) => response.response),
             errors,
             examples: this.examples?.convert(),
             snippetTemplates: undefined,

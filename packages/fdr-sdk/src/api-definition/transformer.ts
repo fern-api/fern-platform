@@ -250,12 +250,14 @@ export class Transformer {
             endpoint.responseHeaders?.map((param) =>
                 this.visitor.ObjectProperty(param, `${parentKey}/responseHeader/${param.key}`),
             ) ?? [];
-        const request = endpoint.request
-            ? this.visitor.HttpRequest(endpoint.request, `${parentKey}/request`)
-            : undefined;
-        const response = endpoint.response
-            ? this.visitor.HttpResponse(endpoint.response, `${parentKey}/response`)
-            : undefined;
+        const requests = endpoint.requests?.map((request, i) =>
+            // this has changed
+            this.visitor.HttpRequest(request, `${parentKey}/request/${i}`),
+        );
+        const responses = endpoint.responses?.map((response, i) =>
+            // this has changed discretely
+            this.visitor.HttpResponse(response, `${parentKey}/response/${i}/${response.statusCode}`),
+        );
         const errors =
             endpoint.errors?.map((error, i) =>
                 this.visitor.ErrorResponse(error, `${parentKey}/error/${i}/${error.statusCode}`),
@@ -271,8 +273,8 @@ export class Transformer {
             queryParameters: queryParameters.length > 0 ? queryParameters : undefined,
             requestHeaders: requestHeaders.length > 0 ? requestHeaders : undefined,
             responseHeaders: responseHeaders.length > 0 ? responseHeaders : undefined,
-            request,
-            response,
+            requests,
+            responses,
             errors: errors.length > 0 ? errors : undefined,
             examples: examples.length > 0 ? examples : undefined,
         };
