@@ -1,22 +1,16 @@
+import { buildRequestBody } from "@/pages/api/fern-docs/proxy/rest";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { ProxyRequestSchema } from "@fern-ui/ui";
-import { buildRequestBody } from "./rest";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Note: edge functions must return a response within 25 seconds.
  */
 
-export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
-export default async function handler(req: Request): Promise<Response> {
-    if (req.method !== "POST" && req.method !== "OPTIONS") {
-        return new Response(null, { status: 405 });
-    }
-
-    const origin = req.headers.get("origin");
-    if (origin == null) {
-        return new Response(null, { status: 400 });
-    }
+export async function OPTIONS(req: NextRequest): Promise<NextResponse> {
+    const origin = getDocsDomainEdge(req);
 
     const headers = new Headers({
         "Access-Control-Allow-Origin": origin,
@@ -24,9 +18,17 @@ export default async function handler(req: Request): Promise<Response> {
         "Access-Control-Allow-Headers": "Content-Type",
     });
 
-    if (req.method === "OPTIONS") {
-        return new Response(null, { status: 204, headers });
-    }
+    return new NextResponse(null, { status: 204, headers });
+}
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
+    const origin = getDocsDomainEdge(req);
+
+    const headers = new Headers({
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": "POST",
+        "Access-Control-Allow-Headers": "Content-Type",
+    });
 
     // eslint-disable-next-line no-console
     console.log("Starting proxy request to", req.url);
@@ -56,13 +58,13 @@ export default async function handler(req: Request): Promise<Response> {
             headers.set(name, value);
         });
 
-        return new Response(response.body, {
+        return new NextResponse(response.body, {
             status: response.status,
             headers,
         });
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error(err);
-        return new Response(null, { status: 500 });
+        return new NextResponse(null, { status: 500 });
     }
 }
