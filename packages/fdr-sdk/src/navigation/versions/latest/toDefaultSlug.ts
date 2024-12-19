@@ -6,32 +6,29 @@ import { Slug } from ".";
  * This should be treated as the cannonical slug for that page.
  */
 export function toDefaultSlug(
-    slug: Slug,
-    rootSlug: Slug,
-    versionSlug: Slug
+  slug: Slug,
+  rootSlug: Slug,
+  versionSlug: Slug
 ): Slug;
 export function toDefaultSlug(
-    slug: Slug | undefined,
-    rootSlug: Slug,
-    versionSlug: Slug
+  slug: Slug | undefined,
+  rootSlug: Slug,
+  versionSlug: Slug
 ): Slug | undefined;
 export function toDefaultSlug(
-    slug: Slug | undefined,
-    rootSlug: Slug,
-    versionSlug: Slug
+  slug: Slug | undefined,
+  rootSlug: Slug,
+  versionSlug: Slug
 ): Slug | undefined {
-    if (slug == null) {
-        return undefined;
-    }
-    if (slug.startsWith(versionSlug)) {
-        return Slug(
-            slug
-                .replace(
-                    new RegExp(`^${versionSlug.replaceAll("/", "\\/")}`),
-                    rootSlug
-                )
-                .replace(/^\//, "")
-        );
-    }
-    return slug;
+  if (slug == null) {
+    return undefined;
+  }
+  if (slug.startsWith(versionSlug)) {
+    return Slug(
+      slug
+        .replace(new RegExp(`^${versionSlug.replaceAll("/", "\\/")}`), rootSlug)
+        .replace(/^\//, "")
+    );
+  }
+  return slug;
 }

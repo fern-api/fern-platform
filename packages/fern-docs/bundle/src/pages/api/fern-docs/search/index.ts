@@ -8,35 +8,35 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export default async function handler(
-    req: NextRequest
+  req: NextRequest
 ): Promise<NextResponse<SearchConfig>> {
-    if (req.method !== "GET") {
-        return NextResponse.json({ isAvailable: false }, { status: 405 });
-    }
+  if (req.method !== "GET") {
+    return NextResponse.json({ isAvailable: false }, { status: 405 });
+  }
 
-    const authState = await getAuthStateEdge(req, req.nextUrl.pathname);
+  const authState = await getAuthStateEdge(req, req.nextUrl.pathname);
 
-    if (!authState.ok) {
-        return NextResponse.json(
-            { isAvailable: false },
-            { status: authState.authed ? 403 : 401 }
-        );
-    }
-
-    const docs = await loadWithUrl(authState.domain);
-
-    if (!docs.ok) {
-        return NextResponse.json({ isAvailable: false }, { status: 503 });
-    }
-
-    const inkeepSettings = await getInkeepSettings(authState.domain);
-    const searchInfo = docs.body.definition.search;
-    const config = await getSearchConfig(
-        provideRegistryService(),
-        searchInfo,
-        inkeepSettings
+  if (!authState.ok) {
+    return NextResponse.json(
+      { isAvailable: false },
+      { status: authState.authed ? 403 : 401 }
     );
-    return NextResponse.json(config, {
-        status: config.isAvailable ? 200 : 503,
-    });
+  }
+
+  const docs = await loadWithUrl(authState.domain);
+
+  if (!docs.ok) {
+    return NextResponse.json({ isAvailable: false }, { status: 503 });
+  }
+
+  const inkeepSettings = await getInkeepSettings(authState.domain);
+  const searchInfo = docs.body.definition.search;
+  const config = await getSearchConfig(
+    provideRegistryService(),
+    searchInfo,
+    inkeepSettings
+  );
+  return NextResponse.json(config, {
+    status: config.isAvailable ? 200 : 503,
+  });
 }

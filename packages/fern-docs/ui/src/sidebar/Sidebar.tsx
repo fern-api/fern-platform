@@ -6,20 +6,20 @@ import { DismissableSidebar } from "./DismissableSidebar";
 import { SidebarContainer } from "./SidebarContainer";
 
 export const Sidebar = memo(function Sidebar({
-    className,
+  className,
 }: {
-    className?: string;
+  className?: string;
 }): ReactElement | null {
-    const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
-    const disableSidebar = useAtomValue(DISABLE_SIDEBAR_ATOM);
+  const showDismissableSidebar = useAtomValue(SIDEBAR_DISMISSABLE_ATOM);
+  const disableSidebar = useAtomValue(DISABLE_SIDEBAR_ATOM);
 
-    if (disableSidebar) {
-        return null;
-    }
+  if (disableSidebar) {
+    return null;
+  }
 
-    return showDismissableSidebar ? (
-        <DismissableSidebar className={className} />
-    ) : (
-        <SidebarContainer className={clsx("desktop", className)} />
-    );
+  return showDismissableSidebar ? (
+    <DismissableSidebar className={className} />
+  ) : (
+    <SidebarContainer className={clsx("desktop", className)} />
+  );
 });

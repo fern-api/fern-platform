@@ -7,18 +7,18 @@ import { GetServerSideProps } from "next";
 export default DocsPage;
 
 export const getServerSideProps: GetServerSideProps = async ({
-    req,
-    res,
-    query,
-    params = {},
+  req,
+  res,
+  query,
+  params = {},
 }) => {
-    if (query.error === "true") {
-        res.statusCode = 500;
-    }
+  if (query.error === "true") {
+    res.statusCode = 500;
+  }
 
-    const domain = params.domain as string;
-    const host = getHostNode(req) ?? domain;
-    const slug = FernNavigation.slugjoin(params.slug);
+  const domain = params.domain as string;
+  const host = getHostNode(req) ?? domain;
+  const slug = FernNavigation.slugjoin(params.slug);
 
-    return getDynamicDocsPageProps(domain, host, slug, req.cookies);
+  return getDynamicDocsPageProps(domain, host, slug, req.cookies);
 };

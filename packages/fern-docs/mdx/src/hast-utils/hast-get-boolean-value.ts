@@ -15,15 +15,15 @@ import { isMdxJsxAttributeValueExpression } from "../mdx-utils/is-mdx-jsx-attr";
  * ```
  */
 export function hastGetBooleanValue(
-    value: MdxJsxAttribute["value"]
+  value: MdxJsxAttribute["value"]
 ): boolean | undefined {
-    if (isMdxJsxAttributeValueExpression(value)) {
-        return value.value === "true"
-            ? true
-            : value.value === "false"
-              ? false
-              : undefined;
-    }
+  if (isMdxJsxAttributeValueExpression(value)) {
+    return value.value === "true"
+      ? true
+      : value.value === "false"
+        ? false
+        : undefined;
+  }
 
-    return undefined;
+  return undefined;
 }

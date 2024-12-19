@@ -1,25 +1,25 @@
 import {
-    createContext,
-    useContext,
-    type PropsWithChildren,
-    type ReactNode,
+  createContext,
+  useContext,
+  type PropsWithChildren,
+  type ReactNode,
 } from "react";
 
 export const SyntaxHighlighterFeatureFlags = createContext({
-    isDarkCodeEnabled: false,
+  isDarkCodeEnabled: false,
 });
 
 export function SyntaxHighlighterFeatureFlagsProvider({
-    children,
-    isDarkCodeEnabled,
+  children,
+  isDarkCodeEnabled,
 }: PropsWithChildren<{ isDarkCodeEnabled: boolean }>): ReactNode {
-    return (
-        <SyntaxHighlighterFeatureFlags.Provider value={{ isDarkCodeEnabled }}>
-            {children}
-        </SyntaxHighlighterFeatureFlags.Provider>
-    );
+  return (
+    <SyntaxHighlighterFeatureFlags.Provider value={{ isDarkCodeEnabled }}>
+      {children}
+    </SyntaxHighlighterFeatureFlags.Provider>
+  );
 }
 
 export const useFeatureFlags = (): { isDarkCodeEnabled: boolean } => {
-    return useContext(SyntaxHighlighterFeatureFlags);
+  return useContext(SyntaxHighlighterFeatureFlags);
 };

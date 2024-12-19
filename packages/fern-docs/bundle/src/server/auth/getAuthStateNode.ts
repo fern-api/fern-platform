@@ -8,11 +8,11 @@ import { getAuthState } from "./getAuthState";
  * @param pathname - the pathname to check the auth config against.
  */
 export async function getAuthStateNode(
-    request: NextApiRequest,
-    pathname?: string
+  request: NextApiRequest,
+  pathname?: string
 ): ReturnType<typeof getAuthState> {
-    const domain = getDocsDomainNode(request);
-    const host = getHostNode(request) ?? domain;
-    const fern_token = request.cookies[COOKIE_FERN_TOKEN];
-    return getAuthState(domain, host, fern_token, pathname);
+  const domain = getDocsDomainNode(request);
+  const host = getHostNode(request) ?? domain;
+  const fern_token = request.cookies[COOKIE_FERN_TOKEN];
+  return getAuthState(domain, host, fern_token, pathname);
 }

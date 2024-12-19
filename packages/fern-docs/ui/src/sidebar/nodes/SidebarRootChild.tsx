@@ -6,21 +6,21 @@ import { SidebarRootApiPackageNode } from "./SidebarRootApiPackageNode";
 import { SidebarRootSectionNode } from "./SidebarRootSectionNode";
 
 export interface SidebarRootChildProps {
-    node: FernNavigation.SidebarRootChild | FernNavigation.ApiPackageNode;
+  node: FernNavigation.SidebarRootChild | FernNavigation.ApiPackageNode;
 }
 
 export function SidebarRootChild({
-    node,
+  node,
 }: SidebarRootChildProps): ReactElement {
-    switch (node.type) {
-        case "sidebarGroup":
-            return <SidebarGroupNode node={node} />;
-        case "apiReference":
-        case "apiPackage":
-            return <SidebarRootApiPackageNode node={node} />;
-        case "section":
-            return <SidebarRootSectionNode node={node} />;
-        default:
-            throw new UnreachableCaseError(node);
-    }
+  switch (node.type) {
+    case "sidebarGroup":
+      return <SidebarGroupNode node={node} />;
+    case "apiReference":
+    case "apiPackage":
+      return <SidebarRootApiPackageNode node={node} />;
+    case "section":
+      return <SidebarRootSectionNode node={node} />;
+    default:
+      throw new UnreachableCaseError(node);
+  }
 }

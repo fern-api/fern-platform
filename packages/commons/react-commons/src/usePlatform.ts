@@ -10,21 +10,21 @@ let globalPlatform: Platform | undefined;
  * This is useful for conditional rendering of platform-specific components.
  */
 export function usePlatform(): Platform | undefined {
-    const [platform, setPlatform] = useState(() => globalPlatform);
+  const [platform, setPlatform] = useState(() => globalPlatform);
 
-    // upon mount, update the global platform
-    useEffect(() => {
-        globalPlatform = getPlatform();
-        setPlatform(getPlatform());
-    }, []);
+  // upon mount, update the global platform
+  useEffect(() => {
+    globalPlatform = getPlatform();
+    setPlatform(getPlatform());
+  }, []);
 
-    return platform;
+  return platform;
 }
 
 export function usePlatformKbdShortcut(): string | undefined {
-    const platform = usePlatform();
-    if (platform === undefined) {
-        return undefined;
-    }
-    return platform === "mac" ? "⌘" : "Ctrl";
+  const platform = usePlatform();
+  if (platform === undefined) {
+    return undefined;
+  }
+  return platform === "mac" ? "⌘" : "Ctrl";
 }

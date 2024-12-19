@@ -4,47 +4,47 @@ import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { Button } from "../ui/button";
 
 interface DesktopCommandActionProps {
-    onClose?: () => void;
-    isLoading?: boolean;
-    onClickAskAI?: () => void;
-    onStopAskAI?: () => void;
+  onClose?: () => void;
+  isLoading?: boolean;
+  onClickAskAI?: () => void;
+  onStopAskAI?: () => void;
 }
 
 export const AskAiAction = forwardRef<
-    HTMLButtonElement,
-    DesktopCommandActionProps & ComponentPropsWithoutRef<typeof Button>
+  HTMLButtonElement,
+  DesktopCommandActionProps & ComponentPropsWithoutRef<typeof Button>
 >(({ isLoading, onClickAskAI, onStopAskAI, onClose, ...props }, ref) => {
-    if (isLoading) {
-        return (
-            <Button
-                ref={ref}
-                variant="ghost"
-                size="iconSm"
-                className="shrink-0"
-                {...props}
-                onClick={composeEventHandlers(props.onClick, onStopAskAI, {
-                    checkForDefaultPrevented: true,
-                })}
-            >
-                <CircleStop />
-            </Button>
-        );
-    } else {
-        return (
-            <Button
-                ref={ref}
-                variant="ghost"
-                size="iconSm"
-                className="shrink-0"
-                {...props}
-                onClick={composeEventHandlers(props.onClick, onClickAskAI, {
-                    checkForDefaultPrevented: true,
-                })}
-            >
-                <CornerDownLeft />
-            </Button>
-        );
-    }
+  if (isLoading) {
+    return (
+      <Button
+        ref={ref}
+        variant="ghost"
+        size="iconSm"
+        className="shrink-0"
+        {...props}
+        onClick={composeEventHandlers(props.onClick, onStopAskAI, {
+          checkForDefaultPrevented: true,
+        })}
+      >
+        <CircleStop />
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        ref={ref}
+        variant="ghost"
+        size="iconSm"
+        className="shrink-0"
+        {...props}
+        onClick={composeEventHandlers(props.onClick, onClickAskAI, {
+          checkForDefaultPrevented: true,
+        })}
+      >
+        <CornerDownLeft />
+      </Button>
+    );
+  }
 });
 
 AskAiAction.displayName = "AskAiAction";

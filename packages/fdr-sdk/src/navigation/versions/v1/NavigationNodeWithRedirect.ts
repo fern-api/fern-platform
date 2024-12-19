@@ -7,7 +7,7 @@ import type { NavigationNode } from "./NavigationNode";
 export type NavigationNodeWithRedirect = Extract<NavigationNode, WithRedirect>;
 
 export function hasRedirect(
-    node: NavigationNode
+  node: NavigationNode
 ): node is NavigationNodeWithRedirect {
-    return typeof (node as NavigationNodeWithRedirect).pointsTo === "string";
+  return typeof (node as NavigationNodeWithRedirect).pointsTo === "string";
 }

@@ -5,6 +5,6 @@ import { ReactElement } from "react";
 import { NEXT_SEO_ATOM } from "../atoms";
 
 export const NextSeo = (): ReactElement => {
-    const props = useAtomValue(NEXT_SEO_ATOM);
-    return <Head>{buildTags(props)}</Head>;
+  const props = useAtomValue(NEXT_SEO_ATOM);
+  return <Head>{buildTags(props)}</Head>;
 };

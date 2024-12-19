@@ -6,32 +6,30 @@ import { HeaderTabs } from "../../header/HeaderTabs";
 import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
 
 interface HeaderContainerProps {
-    className?: string;
+  className?: string;
 }
 
 export const HeaderContainer = memo(function HeaderContainer({
-    className,
+  className,
 }: HeaderContainerProps): ReactElement {
-    const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
-    const showSearchBar =
-        useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER_TABS";
+  const showHeaderTabs = useAtomValue(HAS_HORIZONTAL_TABS);
+  const showSearchBar =
+    useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER_TABS";
 
-    return (
-        <header id="fern-header" className={className}>
-            <div className="fern-header-container width-before-scroll-bar">
-                <div className="fern-header">
-                    <Header className="mx-auto max-w-page-width" />
-                </div>
-                {showHeaderTabs && (
-                    <nav aria-label="tabs" className="fern-header-tabs">
-                        <HeaderTabs />
+  return (
+    <header id="fern-header" className={className}>
+      <div className="fern-header-container width-before-scroll-bar">
+        <div className="fern-header">
+          <Header className="mx-auto max-w-page-width" />
+        </div>
+        {showHeaderTabs && (
+          <nav aria-label="tabs" className="fern-header-tabs">
+            <HeaderTabs />
 
-                        {showSearchBar && (
-                            <SidebarSearchBar className="w-96 shrink" />
-                        )}
-                    </nav>
-                )}
-            </div>
-        </header>
-    );
+            {showSearchBar && <SidebarSearchBar className="w-96 shrink" />}
+          </nav>
+        )}
+      </div>
+    </header>
+  );
 });

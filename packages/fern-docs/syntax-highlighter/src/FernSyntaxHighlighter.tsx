@@ -1,7 +1,7 @@
 import { forwardRef, useMemo } from "react";
 import {
-    FernSyntaxHighlighterTokens,
-    ScrollToHandle,
+  FernSyntaxHighlighterTokens,
+  ScrollToHandle,
 } from "./FernSyntaxHighlighterTokens";
 import { FernSyntaxHighlighterTokensVirtualized } from "./FernSyntaxHighlighterTokensVirtualized";
 import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
@@ -10,52 +10,52 @@ import { createRawTokens, highlightTokens, useHighlighter } from "./fernShiki";
 type HighlightLine = number | [number, number];
 
 export interface FernSyntaxHighlighterProps {
-    className?: string;
-    style?: React.CSSProperties;
-    id?: string;
-    code: string;
-    language: string;
-    fontSize?: "sm" | "base" | "lg";
-    highlightLines?: HighlightLine[];
-    highlightStyle?: "highlight" | "focus";
-    viewportRef?: React.RefObject<ScrollToHandle>;
-    maxLines?: number;
-    wordWrap?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  id?: string;
+  code: string;
+  language: string;
+  fontSize?: "sm" | "base" | "lg";
+  highlightLines?: HighlightLine[];
+  highlightStyle?: "highlight" | "focus";
+  viewportRef?: React.RefObject<ScrollToHandle>;
+  maxLines?: number;
+  wordWrap?: boolean;
 }
 
 export const FernSyntaxHighlighter = forwardRef<
-    HTMLPreElement,
-    FernSyntaxHighlighterProps
+  HTMLPreElement,
+  FernSyntaxHighlighterProps
 >((props, ref) => {
-    const { id, code, language, ...innerProps } = props;
-    const highlighter = useHighlighter(language);
+  const { id, code, language, ...innerProps } = props;
+  const highlighter = useHighlighter(language);
 
-    const tokens = useMemo(() => {
-        if (highlighter == null) {
-            return createRawTokens(code, language);
-        }
-        try {
-            return highlightTokens(highlighter, code, language);
-        } catch (e) {
-            // TODO: sentry
-            // eslint-disable-next-line no-console
-            console.error("Error occurred while highlighting tokens", e);
-            return createRawTokens(code, language);
-        }
-    }, [code, highlighter, language]);
+  const tokens = useMemo(() => {
+    if (highlighter == null) {
+      return createRawTokens(code, language);
+    }
+    try {
+      return highlightTokens(highlighter, code, language);
+    } catch (e) {
+      // TODO: sentry
+      // eslint-disable-next-line no-console
+      console.error("Error occurred while highlighting tokens", e);
+      return createRawTokens(code, language);
+    }
+  }, [code, highlighter, language]);
 
-    const { maxLines } = innerProps;
+  const { maxLines } = innerProps;
 
-    const lines = code.split("\n").length;
+  const lines = code.split("\n").length;
 
-    const TokenRenderer =
-        (maxLines != null && lines <= maxLines + 100) ||
-        lines <= 500 ||
-        maxLines == null
-            ? FernSyntaxHighlighterTokens
-            : FernSyntaxHighlighterTokensVirtualized;
+  const TokenRenderer =
+    (maxLines != null && lines <= maxLines + 100) ||
+    lines <= 500 ||
+    maxLines == null
+      ? FernSyntaxHighlighterTokens
+      : FernSyntaxHighlighterTokensVirtualized;
 
-    return <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />;
+  return <TokenRenderer ref={ref} tokens={tokens} {...innerProps} />;
 });
 
 FernSyntaxHighlighter.displayName = "FernSyntaxHighlighter";

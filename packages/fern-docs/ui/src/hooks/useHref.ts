@@ -5,42 +5,42 @@ import urlJoin from "url-join";
 import { TRAILING_SLASH_ATOM } from "../atoms";
 
 export function getToHref(
-    includeTrailingSlash: boolean = false
+  includeTrailingSlash: boolean = false
 ): (slug: FernNavigation.Slug, host?: string) => string {
-    return (slug, host) => {
-        const path =
-            slug === "" ? "/" : includeTrailingSlash ? `/${slug}/` : `/${slug}`;
-        if (host == null) {
-            return path;
-        }
-        return urlJoin(withDefaultProtocol(host), path);
-    };
+  return (slug, host) => {
+    const path =
+      slug === "" ? "/" : includeTrailingSlash ? `/${slug}/` : `/${slug}`;
+    if (host == null) {
+      return path;
+    }
+    return urlJoin(withDefaultProtocol(host), path);
+  };
 }
 
 export function useToHref(): (slug: FernNavigation.Slug) => string {
-    return getToHref(useAtomValue(TRAILING_SLASH_ATOM));
+  return getToHref(useAtomValue(TRAILING_SLASH_ATOM));
 }
 
 export function useHref(slug: FernNavigation.Slug, anchor?: string): string;
 export function useHref(
-    slug: FernNavigation.Slug | undefined,
-    anchor?: string
+  slug: FernNavigation.Slug | undefined,
+  anchor?: string
 ): string | undefined;
 export function useHref(
-    slug: FernNavigation.Slug | undefined,
-    anchor?: string
+  slug: FernNavigation.Slug | undefined,
+  anchor?: string
 ): string | undefined {
-    const toHref = useToHref();
-    if (slug == null) {
-        return anchor;
-    }
-    const pathName = toHref(slug);
-    return anchor != null ? `${pathName}#${anchor}` : pathName;
+  const toHref = useToHref();
+  if (slug == null) {
+    return anchor;
+  }
+  const pathName = toHref(slug);
+  return anchor != null ? `${pathName}#${anchor}` : pathName;
 }
 
 export function selectHref(
-    get: <T>(atom: Atom<T>) => T,
-    slug: FernNavigation.Slug
+  get: <T>(atom: Atom<T>) => T,
+  slug: FernNavigation.Slug
 ): string {
-    return getToHref(get(TRAILING_SLASH_ATOM))(slug);
+  return getToHref(get(TRAILING_SLASH_ATOM))(slug);
 }

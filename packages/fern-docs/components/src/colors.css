@@ -130,29 +130,29 @@
 @import "@radix-ui/colors/sky-dark-alpha.css";
 
 :root {
-    --grayscale-1: var(--gray-1);
-    --grayscale-2: var(--gray-2);
-    --grayscale-3: var(--gray-3);
-    --grayscale-4: var(--gray-4);
-    --grayscale-5: var(--gray-5);
-    --grayscale-6: var(--gray-6);
-    --grayscale-7: var(--gray-7);
-    --grayscale-8: var(--gray-8);
-    --grayscale-9: var(--gray-9);
-    --grayscale-10: var(--gray-10);
-    --grayscale-11: var(--gray-11);
-    --grayscale-12: var(--gray-12);
+  --grayscale-1: var(--gray-1);
+  --grayscale-2: var(--gray-2);
+  --grayscale-3: var(--gray-3);
+  --grayscale-4: var(--gray-4);
+  --grayscale-5: var(--gray-5);
+  --grayscale-6: var(--gray-6);
+  --grayscale-7: var(--gray-7);
+  --grayscale-8: var(--gray-8);
+  --grayscale-9: var(--gray-9);
+  --grayscale-10: var(--gray-10);
+  --grayscale-11: var(--gray-11);
+  --grayscale-12: var(--gray-12);
 
-    --grayscale-a1: var(--gray-a1);
-    --grayscale-a2: var(--gray-a2);
-    --grayscale-a3: var(--gray-a3);
-    --grayscale-a4: var(--gray-a4);
-    --grayscale-a5: var(--gray-a5);
-    --grayscale-a6: var(--gray-a6);
-    --grayscale-a7: var(--gray-a7);
-    --grayscale-a8: var(--gray-a8);
-    --grayscale-a9: var(--gray-a9);
-    --grayscale-a10: var(--gray-a10);
-    --grayscale-a11: var(--gray-a11);
-    --grayscale-a12: var(--gray-a12);
+  --grayscale-a1: var(--gray-a1);
+  --grayscale-a2: var(--gray-a2);
+  --grayscale-a3: var(--gray-a3);
+  --grayscale-a4: var(--gray-a4);
+  --grayscale-a5: var(--gray-a5);
+  --grayscale-a6: var(--gray-a6);
+  --grayscale-a7: var(--gray-a7);
+  --grayscale-a8: var(--gray-a8);
+  --grayscale-a9: var(--gray-a9);
+  --grayscale-a10: var(--gray-a10);
+  --grayscale-a11: var(--gray-a11);
+  --grayscale-a12: var(--gray-a12);
 }

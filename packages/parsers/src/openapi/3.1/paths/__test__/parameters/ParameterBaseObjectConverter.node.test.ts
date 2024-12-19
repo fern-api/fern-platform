@@ -3,103 +3,103 @@ import { createMockContext } from "../../../../../__test__/createMockContext.uti
 import { ParameterBaseObjectConverterNode } from "../../parameters/ParameterBaseObjectConverter.node";
 
 describe("ParameterBaseObjectConverterNode", () => {
-    const mockContext = createMockContext();
+  const mockContext = createMockContext();
 
-    it("should handle reference objects", () => {
-        const input = {
-            $ref: "#/components/parameters/PetId",
-        };
+  it("should handle reference objects", () => {
+    const input = {
+      $ref: "#/components/parameters/PetId",
+    };
 
-        mockContext.document.components ??= {};
-        mockContext.document.components.parameters = {
-            PetId: {
-                name: "petId",
-                in: "path",
-                schema: { type: "integer" },
-            },
-        };
+    mockContext.document.components ??= {};
+    mockContext.document.components.parameters = {
+      PetId: {
+        name: "petId",
+        in: "path",
+        schema: { type: "integer" },
+      },
+    };
 
-        const converter = new ParameterBaseObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
-
-        expect(converter.schema).toBeDefined();
-        expect(converter.availability).toBeDefined();
-        expect(converter.required).toBeUndefined();
+    const converter = new ParameterBaseObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should handle parameter objects with schema", () => {
-        const input = {
-            name: "petId",
-            in: "path",
-            description: "ID of pet",
-            required: true,
-            schema: {
-                type: "integer" as const,
-                format: "int64",
-            },
-        };
+    expect(converter.schema).toBeDefined();
+    expect(converter.availability).toBeDefined();
+    expect(converter.required).toBeUndefined();
+  });
 
-        const converter = new ParameterBaseObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
+  it("should handle parameter objects with schema", () => {
+    const input = {
+      name: "petId",
+      in: "path",
+      description: "ID of pet",
+      required: true,
+      schema: {
+        type: "integer" as const,
+        format: "int64",
+      },
+    };
 
-        expect(converter.schema).toBeDefined();
-        expect(converter.availability).toBeDefined();
-        expect(converter.required).toBe(true);
-        expect(converter.description).toBe("ID of pet");
+    const converter = new ParameterBaseObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should log error when parameter has no schema", () => {
-        const input = {
-            name: "petId",
-            in: "path",
-        } as OpenAPIV3_1.ParameterBaseObject;
+    expect(converter.schema).toBeDefined();
+    expect(converter.availability).toBeDefined();
+    expect(converter.required).toBe(true);
+    expect(converter.description).toBe("ID of pet");
+  });
 
-        const converted = new ParameterBaseObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        }).convert();
+  it("should log error when parameter has no schema", () => {
+    const input = {
+      name: "petId",
+      in: "path",
+    } as OpenAPIV3_1.ParameterBaseObject;
 
-        expect(converted).toEqual({
-            type: "alias",
-            value: {
-                type: "primitive",
-                value: {
-                    type: "string",
-                },
-            },
-        });
+    const converted = new ParameterBaseObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
+    }).convert();
+
+    expect(converted).toEqual({
+      type: "alias",
+      value: {
+        type: "primitive",
+        value: {
+          type: "string",
+        },
+      },
+    });
+  });
+
+  it("should return schema conversion result in convert()", () => {
+    const input = {
+      name: "petId",
+      in: "path",
+      schema: {
+        type: "integer" as const,
+      },
+    };
+
+    const converter = new ParameterBaseObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should return schema conversion result in convert()", () => {
-        const input = {
-            name: "petId",
-            in: "path",
-            schema: {
-                type: "integer" as const,
-            },
-        };
-
-        const converter = new ParameterBaseObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
-
-        const result = converter.convert();
-        expect(result).toEqual({
-            type: "alias",
-            value: { type: "primitive", value: { type: "integer" } },
-        });
+    const result = converter.convert();
+    expect(result).toEqual({
+      type: "alias",
+      value: { type: "primitive", value: { type: "integer" } },
     });
+  });
 });

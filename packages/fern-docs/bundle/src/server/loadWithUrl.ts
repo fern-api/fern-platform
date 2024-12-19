@@ -3,8 +3,8 @@ import { withoutStaging } from "@fern-docs/utils";
 import { provideRegistryService } from "@fern-docs/ui";
 
 export type LoadWithUrlResponse = APIResponse<
-    FdrAPI.docs.v2.read.LoadDocsForUrlResponse,
-    FdrAPI.docs.v2.read.getDocsForUrl.Error
+  FdrAPI.docs.v2.read.LoadDocsForUrlResponse,
+  FdrAPI.docs.v2.read.getDocsForUrl.Error
 >;
 
 /**
@@ -12,7 +12,7 @@ export type LoadWithUrlResponse = APIResponse<
  * - Otherwise, we can use the getDocsForUrl endpoint (including custom auth).
  */
 export function loadWithUrl(url: string): Promise<LoadWithUrlResponse> {
-    return provideRegistryService().docs.v2.read.getDocsForUrl({
-        url: FdrAPI.Url(withoutStaging(url)),
-    });
+  return provideRegistryService().docs.v2.read.getDocsForUrl({
+    url: FdrAPI.Url(withoutStaging(url)),
+  });
 }

@@ -1,11 +1,11 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useCallback } from "react";
 import {
-    useIsApiReferenceShallowLink,
-    useIsChildSelected,
-    useIsExpandedSidebarNode,
-    useIsSelectedSidebarNode,
-    useToggleExpandedSidebarNode,
+  useIsApiReferenceShallowLink,
+  useIsChildSelected,
+  useIsExpandedSidebarNode,
+  useIsSelectedSidebarNode,
+  useToggleExpandedSidebarNode,
 } from "../../atoms";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -14,75 +14,71 @@ import { SidebarGroupApiReferenceNode } from "./SidebarGroupApiReferenceNode";
 import { SidebarPageNode } from "./SidebarPageNode";
 
 export interface SidebarApiPackageNodeProps {
-    node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
-    depth: number;
-    className?: string;
+  node: FernNavigation.ApiReferenceNode | FernNavigation.ApiPackageNode;
+  depth: number;
+  className?: string;
 }
 
 export function SidebarApiPackageNode({
-    node,
-    depth,
-    className,
+  node,
+  depth,
+  className,
 }: SidebarApiPackageNodeProps): React.ReactElement | null {
-    const selected = useIsSelectedSidebarNode(node.id);
-    const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
-    const childSelected = useIsChildSelected(node.id);
-    const expanded = useIsExpandedSidebarNode(node.id);
-    const shallow = useIsApiReferenceShallowLink(node);
+  const selected = useIsSelectedSidebarNode(node.id);
+  const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
+  const childSelected = useIsChildSelected(node.id);
+  const expanded = useIsExpandedSidebarNode(node.id);
+  const shallow = useIsApiReferenceShallowLink(node);
 
-    const renderNode = useCallback(
-        (node: FernNavigation.ApiPackageChild) => (
-            <SidebarApiPackageChild
-                node={node}
-                depth={depth + 1}
-                shallow={shallow}
-            />
-        ),
-        [depth, shallow]
-    );
+  const renderNode = useCallback(
+    (node: FernNavigation.ApiPackageChild) => (
+      <SidebarApiPackageChild node={node} depth={depth + 1} shallow={shallow} />
+    ),
+    [depth, shallow]
+  );
 
-    if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
-        return (
-            <SidebarPageNode
-                node={node}
-                depth={depth}
-                className={className}
-                shallow={shallow}
-            />
-        );
-    }
-
-    if (node.children.length === 0 || (node.hidden && !childSelected)) {
-        return null;
-    }
-
-    if (node.type === "apiReference" && node.hideTitle) {
-        return <SidebarGroupApiReferenceNode node={node} depth={depth} />;
-    }
-
-    const showIndicator = childSelected && !expanded;
-
+  if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
     return (
-        <CollapsibleSidebarGroup<FernNavigation.ApiPackageChild>
-            open={expanded}
-            nodes={node.children}
-            renderNode={renderNode}
-        >
-            <SidebarSlugLink
-                nodeId={node.id}
-                icon={node.icon}
-                className={className}
-                depth={Math.max(depth - 1, 0)}
-                title={node.title}
-                expanded={expanded}
-                toggleExpand={handleToggleExpand}
-                showIndicator={showIndicator}
-                hidden={node.hidden}
-                authed={node.authed}
-                slug={node.overviewPageId != null ? node.slug : undefined}
-                selected={selected}
-                shallow={shallow}
-            />
-        </CollapsibleSidebarGroup>
+      <SidebarPageNode
+        node={node}
+        depth={depth}
+        className={className}
+        shallow={shallow}
+      />
     );
+  }
+
+  if (node.children.length === 0 || (node.hidden && !childSelected)) {
+    return null;
+  }
+
+  if (node.type === "apiReference" && node.hideTitle) {
+    return <SidebarGroupApiReferenceNode node={node} depth={depth} />;
+  }
+
+  const showIndicator = childSelected && !expanded;
+
+  return (
+    <CollapsibleSidebarGroup<FernNavigation.ApiPackageChild>
+      open={expanded}
+      nodes={node.children}
+      renderNode={renderNode}
+    >
+      <SidebarSlugLink
+        nodeId={node.id}
+        icon={node.icon}
+        className={className}
+        depth={Math.max(depth - 1, 0)}
+        title={node.title}
+        expanded={expanded}
+        toggleExpand={handleToggleExpand}
+        showIndicator={showIndicator}
+        hidden={node.hidden}
+        authed={node.authed}
+        slug={node.overviewPageId != null ? node.slug : undefined}
+        selected={selected}
+        shallow={shallow}
+      />
+    </CollapsibleSidebarGroup>
+  );
 }

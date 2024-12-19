@@ -1,20 +1,20 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 
 interface WithPrunedSidebarOpts {
-    /**
-     * If provided, hidden nodes in this list will not be pruned
-     */
-    visibleNodeIds?: FernNavigation.NodeId[];
+  /**
+   * If provided, hidden nodes in this list will not be pruned
+   */
+  visibleNodeIds?: FernNavigation.NodeId[];
 
-    /**
-     * If true, authenticated pages will not be pruned
-     */
-    authed: boolean;
+  /**
+   * If true, authenticated pages will not be pruned
+   */
+  authed: boolean;
 
-    /**
-     * If true, authenticated pages will not be pruned because they are discoverable
-     */
-    discoverable?: true;
+  /**
+   * If true, authenticated pages will not be pruned because they are discoverable
+   */
+  discoverable?: true;
 }
 
 /**
@@ -22,40 +22,35 @@ interface WithPrunedSidebarOpts {
  * @returns true if the node should be included, false otherwise
  */
 export function pruneNavigationPredicate(
-    node: FernNavigation.NavigationNode,
-    { visibleNodeIds, authed, discoverable }: WithPrunedSidebarOpts
+  node: FernNavigation.NavigationNode,
+  { visibleNodeIds, authed, discoverable }: WithPrunedSidebarOpts
 ): boolean {
-    // prune authenticated pages (unless the discoverable flag is turned on)
-    if (
-        FernNavigation.isPage(node) &&
-        node.authed &&
-        !authed &&
-        !discoverable
-    ) {
-        return false;
-    }
+  // prune authenticated pages (unless the discoverable flag is turned on)
+  if (FernNavigation.isPage(node) && node.authed && !authed && !discoverable) {
+    return false;
+  }
 
-    // then, prune hidden nodes, unless it is the current node
-    if (FernNavigation.hasMetadata(node) && node.hidden) {
-        return visibleNodeIds?.includes(node.id) ?? false;
-    }
+  // then, prune hidden nodes, unless it is the current node
+  if (FernNavigation.hasMetadata(node) && node.hidden) {
+    return visibleNodeIds?.includes(node.id) ?? false;
+  }
 
-    // finally, prune nodes that are not pages and have no children (avoid pruning links)
-    if (!FernNavigation.isPage(node) && !FernNavigation.isLeaf(node)) {
-        return FernNavigation.getChildren(node).length > 0;
-    }
+  // finally, prune nodes that are not pages and have no children (avoid pruning links)
+  if (!FernNavigation.isPage(node) && !FernNavigation.isLeaf(node)) {
+    return FernNavigation.getChildren(node).length > 0;
+  }
 
-    return true;
+  return true;
 }
 
 export function withPrunedNavigation<
-    NODE extends FernNavigation.NavigationNode,
+  NODE extends FernNavigation.NavigationNode,
 >(node: NODE | undefined, opts: WithPrunedSidebarOpts): NODE | undefined {
-    if (!node) {
-        return node;
-    }
+  if (!node) {
+    return node;
+  }
 
-    return FernNavigation.Pruner.from(node)
-        .keep((n) => pruneNavigationPredicate(n, opts))
-        .get();
+  return FernNavigation.Pruner.from(node)
+    .keep((n) => pruneNavigationPredicate(n, opts))
+    .get();
 }

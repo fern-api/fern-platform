@@ -7,46 +7,38 @@ import { PlaygroundHeaderAuthForm } from "./PlaygroundHeaderAuthForm";
 import { PlaygroundOAuthForm } from "./PlaygroundOAuthForm";
 
 interface PlaygroundAuthorizationFormProps {
-    auth: APIV1Read.ApiAuth;
-    closeContainer: () => void;
-    disabled: boolean;
+  auth: APIV1Read.ApiAuth;
+  closeContainer: () => void;
+  disabled: boolean;
 }
 
 export const PlaygroundAuthorizationForm: FC<
-    PlaygroundAuthorizationFormProps
+  PlaygroundAuthorizationFormProps
 > = ({ auth, closeContainer, disabled }) => {
-    return (
-        <ul className="list-none px-4">
-            {visitDiscriminatedUnion(auth, "type")._visit<ReactElement | false>(
-                {
-                    bearerAuth: (bearerAuth) => (
-                        <PlaygroundBearerAuthForm
-                            bearerAuth={bearerAuth}
-                            disabled={disabled}
-                        />
-                    ),
-                    basicAuth: (basicAuth) => (
-                        <PlaygroundBasicAuthForm
-                            basicAuth={basicAuth}
-                            disabled={disabled}
-                        />
-                    ),
-                    header: (header) => (
-                        <PlaygroundHeaderAuthForm
-                            header={header}
-                            disabled={disabled}
-                        />
-                    ),
-                    oAuth: (oAuth) => (
-                        <PlaygroundOAuthForm
-                            oAuth={oAuth}
-                            closeContainer={closeContainer}
-                            disabled={disabled}
-                        />
-                    ),
-                    _other: () => false,
-                }
-            )}
-        </ul>
-    );
+  return (
+    <ul className="list-none px-4">
+      {visitDiscriminatedUnion(auth, "type")._visit<ReactElement | false>({
+        bearerAuth: (bearerAuth) => (
+          <PlaygroundBearerAuthForm
+            bearerAuth={bearerAuth}
+            disabled={disabled}
+          />
+        ),
+        basicAuth: (basicAuth) => (
+          <PlaygroundBasicAuthForm basicAuth={basicAuth} disabled={disabled} />
+        ),
+        header: (header) => (
+          <PlaygroundHeaderAuthForm header={header} disabled={disabled} />
+        ),
+        oAuth: (oAuth) => (
+          <PlaygroundOAuthForm
+            oAuth={oAuth}
+            closeContainer={closeContainer}
+            disabled={disabled}
+          />
+        ),
+        _other: () => false,
+      })}
+    </ul>
+  );
 };

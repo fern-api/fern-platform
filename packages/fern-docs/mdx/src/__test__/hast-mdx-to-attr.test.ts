@@ -3,18 +3,18 @@ import { hastMdxJsxElementHastToProps } from "../hast-utils/hast-mdx-to-props";
 import { unknownToMdxJsxAttributeValue } from "../mdx-utils/unknown-to-mdx-jsx-attr";
 
 describe("hast-mdx-to-attr", () => {
-    const { props } = hastMdxJsxElementHastToProps({
-        type: "mdxJsxTextElement",
-        name: "Testing",
-        attributes: [{ type: "mdxJsxAttribute", name: "test", value: "test" }],
-        children: [
-            h("h2", { type: "text", value: "Hello world" }),
-            { type: "text", value: "This should be wrapped in a <p> tag" },
-        ],
-    });
+  const { props } = hastMdxJsxElementHastToProps({
+    type: "mdxJsxTextElement",
+    name: "Testing",
+    attributes: [{ type: "mdxJsxAttribute", name: "test", value: "test" }],
+    children: [
+      h("h2", { type: "text", value: "Hello world" }),
+      { type: "text", value: "This should be wrapped in a <p> tag" },
+    ],
+  });
 
-    it("should convert hast to mdx jsx attribute", () => {
-        expect(props).toMatchInlineSnapshot(`
+  it("should convert hast to mdx jsx attribute", () => {
+    expect(props).toMatchInlineSnapshot(`
           {
             "children": {
               "data": {
@@ -120,16 +120,16 @@ describe("hast-mdx-to-attr", () => {
             "test": "test",
           }
         `);
-    });
+  });
 
-    it("should preserve original object", () => {
-        const test = unknownToMdxJsxAttributeValue(props.children);
-        expect(test).not.toBe(props);
-    });
+  it("should preserve original object", () => {
+    const test = unknownToMdxJsxAttributeValue(props.children);
+    expect(test).not.toBe(props);
+  });
 
-    it("should convert to mdx jsx attribute", () => {
-        const test = unknownToMdxJsxAttributeValue(props);
-        expect(test).toMatchInlineSnapshot(`
+  it("should convert to mdx jsx attribute", () => {
+    const test = unknownToMdxJsxAttributeValue(props);
+    expect(test).toMatchInlineSnapshot(`
           {
             "data": {
               "estree": {
@@ -262,11 +262,11 @@ describe("hast-mdx-to-attr", () => {
             "value": "__expression__",
           }
         `);
-    });
+  });
 
-    it("should unravel list", () => {
-        const test = unknownToMdxJsxAttributeValue([props]);
-        expect(test).toMatchInlineSnapshot(`
+  it("should unravel list", () => {
+    const test = unknownToMdxJsxAttributeValue([props]);
+    expect(test).toMatchInlineSnapshot(`
           {
             "data": {
               "estree": {
@@ -404,15 +404,15 @@ describe("hast-mdx-to-attr", () => {
             "value": "__expression__",
           }
         `);
-    });
+  });
 
-    it("should convert unravel object", () => {
-        const test = unknownToMdxJsxAttributeValue({
-            test: props,
-            unrelated: "string",
-            unrelated2: {},
-        });
-        expect(test).toMatchInlineSnapshot(`
+  it("should convert unravel object", () => {
+    const test = unknownToMdxJsxAttributeValue({
+      test: props,
+      unrelated: "string",
+      unrelated2: {},
+    });
+    expect(test).toMatchInlineSnapshot(`
           {
             "data": {
               "estree": {
@@ -591,15 +591,15 @@ describe("hast-mdx-to-attr", () => {
             "value": "__expression__",
           }
         `);
-    });
+  });
 
-    it("should convert unravel object with list", () => {
-        const test = unknownToMdxJsxAttributeValue({
-            test: [props, { unrelated: 3 }],
-            unrelated: "string",
-            unrelated2: {},
-        });
-        expect(test).toMatchInlineSnapshot(`
+  it("should convert unravel object with list", () => {
+    const test = unknownToMdxJsxAttributeValue({
+      test: [props, { unrelated: 3 }],
+      unrelated: "string",
+      unrelated2: {},
+    });
+    expect(test).toMatchInlineSnapshot(`
           {
             "data": {
               "estree": {
@@ -803,5 +803,5 @@ describe("hast-mdx-to-attr", () => {
             "value": "__expression__",
           }
         `);
-    });
+  });
 });

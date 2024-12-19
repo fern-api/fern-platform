@@ -1,24 +1,24 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 
 export function listItem(
-    position: number,
-    name: string,
-    item?: string
+  position: number,
+  name: string,
+  item?: string
 ): FernDocs.JsonLdBreadcrumbListElement {
-    return {
-        "@type": "ListItem",
-        position,
-        name,
-        item,
-    };
+  return {
+    "@type": "ListItem",
+    position,
+    name,
+    item,
+  };
 }
 
 export function breadcrumbList(
-    itemListElement: FernDocs.JsonLdBreadcrumbListElement[]
+  itemListElement: FernDocs.JsonLdBreadcrumbListElement[]
 ): FernDocs.JsonLdBreadcrumbList {
-    return {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        itemListElement,
-    };
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement,
+  };
 }

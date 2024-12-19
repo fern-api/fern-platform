@@ -1,13 +1,13 @@
 @layer components {
-    .fern-breadcrumb {
-        @apply inline-flex items-center font-semibold;
+  .fern-breadcrumb {
+    @apply inline-flex items-center font-semibold;
 
-        .fern-breadcrumb-item {
-            @apply t-accent shrink truncate whitespace-nowrap text-sm;
-        }
-
-        .fern-breadcrumb-arrow {
-            @apply mx-0.5 text-faded size-4;
-        }
+    .fern-breadcrumb-item {
+      @apply t-accent shrink truncate whitespace-nowrap text-sm;
     }
+
+    .fern-breadcrumb-arrow {
+      @apply mx-0.5 text-faded size-4;
+    }
+  }
 }

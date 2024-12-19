@@ -1,4 +1,4 @@
 export interface JsonVariant {
-    type: "json";
-    value: unknown;
+  type: "json";
+  value: unknown;
 }

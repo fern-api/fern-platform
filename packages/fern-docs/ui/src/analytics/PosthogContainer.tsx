@@ -3,8 +3,8 @@ import { ReactElement } from "react";
 import { useInitializePosthog } from "./posthog";
 
 export function Posthog(props: {
-    customerConfig?: DocsV1Read.PostHogConfig;
+  customerConfig?: DocsV1Read.PostHogConfig;
 }): ReactElement {
-    useInitializePosthog(props.customerConfig);
-    return <></>;
+  useInitializePosthog(props.customerConfig);
+  return <></>;
 }

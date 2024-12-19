@@ -1,6 +1,6 @@
 export {
-    visitObject,
-    type ObjectPropertiesVisitor,
+  visitObject,
+  type ObjectPropertiesVisitor,
 } from "./ObjectPropertiesVisitor";
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";

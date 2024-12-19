@@ -1,12 +1,12 @@
 import { getHighlighterInstance, highlightTokens } from "../fernShiki";
 
 describe("fernShiki", () => {
-    it("should highlight diff", async () => {
-        const highlighter = await getHighlighterInstance("diff");
-        expect(highlighter.getLoadedLanguages()).toContain("diff");
-        const result = highlightTokens(
-            highlighter,
-            `*** file1.txt   Thu Jan 11 08:52:37 2018                                                                                                         
+  it("should highlight diff", async () => {
+    const highlighter = await getHighlighterInstance("diff");
+    expect(highlighter.getLoadedLanguages()).toContain("diff");
+    const result = highlightTokens(
+      highlighter,
+      `*** file1.txt   Thu Jan 11 08:52:37 2018                                                                                                         
 --- file2.txt   Thu Jan 11 08:53:01 2018                                                                                                         
 ***************                                                                                                                                  
 *** 1,4 ****                                                                                                                                     
@@ -19,9 +19,9 @@ describe("fernShiki", () => {
   cp                                                                                                                                             
 + diff                                                                                                                                           
 + comm`,
-            "diff"
-        );
-        expect(result).toMatchInlineSnapshot(`
+      "diff"
+    );
+    expect(result).toMatchInlineSnapshot(`
           {
             "code": "*** file1.txt   Thu Jan 11 08:52:37 2018                                                                                                         
           --- file2.txt   Thu Jan 11 08:53:01 2018                                                                                                         
@@ -512,16 +512,12 @@ describe("fernShiki", () => {
             "lang": "diff",
           }
         `);
-    });
+  });
 
-    it("should highlight ts", async () => {
-        const highlighter = await getHighlighterInstance("typescript");
-        const result = highlightTokens(
-            highlighter,
-            "const a = 1",
-            "typescript"
-        );
-        expect(result).toMatchInlineSnapshot(`
+  it("should highlight ts", async () => {
+    const highlighter = await getHighlighterInstance("typescript");
+    const result = highlightTokens(highlighter, "const a = 1", "typescript");
+    expect(result).toMatchInlineSnapshot(`
           {
             "code": "const a = 1",
             "hast": {
@@ -611,5 +607,5 @@ describe("fernShiki", () => {
             "lang": "typescript",
           }
         `);
-    });
+  });
 });

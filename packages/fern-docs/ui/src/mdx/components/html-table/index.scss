@@ -1,54 +1,52 @@
 @layer components {
-    .fern-table-root {
-        @apply border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2 rounded-md;
-        @apply text-sm overflow-hidden backdrop-blur-2xl;
+  .fern-table-root {
+    @apply border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2 rounded-md;
+    @apply text-sm overflow-hidden backdrop-blur-2xl;
 
-        /* hack to make the table scrollable */
-        display: flex;
-        flex-direction: column;
+    /* hack to make the table scrollable */
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fern-table {
+    @apply w-full;
+
+    thead tr th {
+      @apply bg-tag-default-soft;
     }
 
-    .fern-table {
-        @apply w-full;
-
-        thead tr th {
-            @apply bg-tag-default-soft;
-        }
-
-        td,
-        th {
-            @apply h-9 p-2 text-left;
-            @apply border-b border-grayscale-a5;
-        }
-
-        tbody > tr:last-child > td {
-            @apply border-b-0;
-        }
-
-        tbody
-            > tr:has(td[rowspan]):not(:has(~ tr > td[rowspan]))
-            > td[rowspan] {
-            @apply border-b-0;
-        }
+    td,
+    th {
+      @apply h-9 p-2 text-left;
+      @apply border-b border-grayscale-a5;
     }
 
-    .fern-table-root.fullscreen .fern-table thead th {
-        @apply sticky top-0;
-
-        box-shadow: inset 0 -1px var(--grayscale-a5);
-        border-bottom: 0;
-
-        &::after {
-            @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
-        }
+    tbody > tr:last-child > td {
+      @apply border-b-0;
     }
 
-    .fern-table-root.fullscreen {
-        @apply text-base bg-background-translucent shadow-2xl rounded-lg;
-
-        .fern-table th,
-        .fern-table td {
-            @apply h-10 p-3 bg-background;
-        }
+    tbody > tr:has(td[rowspan]):not(:has(~ tr > td[rowspan])) > td[rowspan] {
+      @apply border-b-0;
     }
+  }
+
+  .fern-table-root.fullscreen .fern-table thead th {
+    @apply sticky top-0;
+
+    box-shadow: inset 0 -1px var(--grayscale-a5);
+    border-bottom: 0;
+
+    &::after {
+      @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
+    }
+  }
+
+  .fern-table-root.fullscreen {
+    @apply text-base bg-background-translucent shadow-2xl rounded-lg;
+
+    .fern-table th,
+    .fern-table td {
+      @apply h-10 p-3 bg-background;
+    }
+  }
 }

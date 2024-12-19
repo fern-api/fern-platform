@@ -2,14 +2,14 @@
  * The interface that the user-provided `CodeBlocks` children should adhere to.
  */
 export type ExpectedCodeBlockChildren = {
-    props?: {
-        children?: {
-            props?: {
-                className?: string;
-                children?: string;
-            };
-        };
+  props?: {
+    children?: {
+      props?: {
+        className?: string;
+        children?: string;
+      };
     };
+  };
 };
 
 // export function stringHasMarkdown(s: string): boolean {

@@ -3,22 +3,23 @@ import { JsonPropertyPath } from "../../examples/JsonPropertyPath";
 import { WebhookContext, WebhookContextValue } from "./WebhookContext";
 
 export const WebhookContextProvider: React.FC<React.PropsWithChildren> = ({
-    children,
+  children,
 }) => {
-    const [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath] =
-        useState<JsonPropertyPath | undefined>();
+  const [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath] = useState<
+    JsonPropertyPath | undefined
+  >();
 
-    const contextValue = useCallback(
-        (): WebhookContextValue => ({
-            hoveredPayloadPropertyPath,
-            setHoveredPayloadPropertyPath,
-        }),
-        [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath]
-    );
+  const contextValue = useCallback(
+    (): WebhookContextValue => ({
+      hoveredPayloadPropertyPath,
+      setHoveredPayloadPropertyPath,
+    }),
+    [hoveredPayloadPropertyPath, setHoveredPayloadPropertyPath]
+  );
 
-    return (
-        <WebhookContext.Provider value={contextValue}>
-            {children}
-        </WebhookContext.Provider>
-    );
+  return (
+    <WebhookContext.Provider value={contextValue}>
+      {children}
+    </WebhookContext.Provider>
+  );
 };

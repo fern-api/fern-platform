@@ -2,21 +2,21 @@ import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
 import { useDomain, useFeatureFlags } from "../atoms";
 
 export const BuiltWithFern: React.FC<{ className?: string }> = ({
-    className,
+  className,
 }) => {
-    const domain = useDomain();
-    const { isWhitelabeled } = useFeatureFlags();
+  const domain = useDomain();
+  const { isWhitelabeled } = useFeatureFlags();
 
-    if (isWhitelabeled) {
-        return null;
-    }
+  if (isWhitelabeled) {
+    return null;
+  }
 
-    return (
-        <BuiltWithFernComponent
-            utmCampaign="buildWith"
-            utmMedium="docs"
-            utmSource={domain}
-            className={className}
-        />
-    );
+  return (
+    <BuiltWithFernComponent
+      utmCampaign="buildWith"
+      utmMedium="docs"
+      utmSource={domain}
+      className={className}
+    />
+  );
 };

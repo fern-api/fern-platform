@@ -9,22 +9,20 @@ export const FILES_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.files, isEqual);
 FILES_ATOM.debugLabel = "FILES_ATOM";
 
 export function useFile(
-    fileId: DocsV1Read.FileId
+  fileId: DocsV1Read.FileId
 ): DocsV1Read.File_ | undefined {
-    return useAtomValue(
-        useMemoOne(
-            () =>
-                atom(
-                    (get) =>
-                        get(FILES_ATOM)[
-                            DocsV1Read.FileId(
-                                fileId.startsWith("file:")
-                                    ? fileId.slice(5)
-                                    : fileId
-                            )
-                        ]
-                ),
-            [fileId]
-        )
-    );
+  return useAtomValue(
+    useMemoOne(
+      () =>
+        atom(
+          (get) =>
+            get(FILES_ATOM)[
+              DocsV1Read.FileId(
+                fileId.startsWith("file:") ? fileId.slice(5) : fileId
+              )
+            ]
+        ),
+      [fileId]
+    )
+  );
 }

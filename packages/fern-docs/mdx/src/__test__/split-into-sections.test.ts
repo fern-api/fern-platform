@@ -1,8 +1,8 @@
 import { splitMarkdownIntoSections } from "../split-into-sections";
 
 describe("chunk", () => {
-    it("should chunk", () => {
-        const chunks = splitMarkdownIntoSections(`
+  it("should chunk", () => {
+    const chunks = splitMarkdownIntoSections(`
 Some content at the top
 
 # level 1 heading
@@ -55,7 +55,7 @@ This content should not be split, because it's not a direct child of the root
 
 Finished.
 `);
-        expect(chunks).toMatchInlineSnapshot(`
+    expect(chunks).toMatchInlineSnapshot(`
           [
             {
               "content": "Some content at the top",
@@ -273,5 +273,5 @@ Finished.
             },
           ]
         `);
-    });
+  });
 });

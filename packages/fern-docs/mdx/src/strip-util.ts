@@ -6,37 +6,34 @@ import { toTree } from "./parse.js";
 const TAG_NAMES_TO_STRIP = ["img", "video"];
 
 export function stripUtil(
-    markdown: string,
-    format: "md" | "mdx" = "mdx"
+  markdown: string,
+  format: "md" | "mdx" = "mdx"
 ): string {
-    const { hast } = toTree(markdown, { format });
+  const { hast } = toTree(markdown, { format });
 
-    visit(hast, (node, idx, parent) => {
-        if (idx == null || parent == null) {
-            return;
-        }
+  visit(hast, (node, idx, parent) => {
+    if (idx == null || parent == null) {
+      return;
+    }
 
-        // mdast image, and hast img
-        if (
-            node.type === "element" &&
-            TAG_NAMES_TO_STRIP.includes(node.tagName)
-        ) {
-            parent.children.splice(idx, 1);
-            return idx;
-        }
+    // mdast image, and hast img
+    if (node.type === "element" && TAG_NAMES_TO_STRIP.includes(node.tagName)) {
+      parent.children.splice(idx, 1);
+      return idx;
+    }
 
-        // jsx img
-        if (
-            isMdxJsxElementHast(node) &&
-            node.name &&
-            TAG_NAMES_TO_STRIP.includes(node.name)
-        ) {
-            parent.children.splice(idx, 1);
-            return idx;
-        }
-        return;
-    });
+    // jsx img
+    if (
+      isMdxJsxElementHast(node) &&
+      node.name &&
+      TAG_NAMES_TO_STRIP.includes(node.name)
+    ) {
+      parent.children.splice(idx, 1);
+      return idx;
+    }
+    return;
+  });
 
-    // TODO: (andrew), this might have some issues with formatting new lines
-    return toString(hast);
+  // TODO: (andrew), this might have some issues with formatting new lines
+  return toString(hast);
 }

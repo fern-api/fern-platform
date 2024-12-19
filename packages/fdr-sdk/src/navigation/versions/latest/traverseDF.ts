@@ -8,8 +8,8 @@ import { getChildren } from "./getChildren";
  * Traverse the navigation tree in a depth-first manner (pre-order).
  */
 export function traverseDF(
-    node: NavigationNode,
-    visit: TraverserVisit<NavigationNode, NavigationNodeParent>
+  node: NavigationNode,
+  visit: TraverserVisit<NavigationNode, NavigationNodeParent>
 ): void {
-    return dfs(node, visit, getChildren);
+  return dfs(node, visit, getChildren);
 }

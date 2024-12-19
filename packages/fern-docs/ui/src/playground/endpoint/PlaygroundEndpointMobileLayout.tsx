@@ -3,37 +3,37 @@ import { ReactElement, ReactNode, useState } from "react";
 import { useFeatureFlags } from "../../atoms";
 
 interface PlaygroundEndpointMobileLayoutProps {
-    form: ReactNode;
-    requestCard: ReactNode;
-    responseCard: ReactNode;
-    sendButton: ReactNode;
-    endpointId?: string;
+  form: ReactNode;
+  requestCard: ReactNode;
+  responseCard: ReactNode;
+  sendButton: ReactNode;
+  endpointId?: string;
 }
 
 export function PlaygroundEndpointMobileLayout({
-    endpointId,
-    form,
-    requestCard,
-    responseCard,
-    sendButton,
+  endpointId,
+  form,
+  requestCard,
+  responseCard,
+  sendButton,
 }: PlaygroundEndpointMobileLayoutProps): ReactElement {
-    const [tabValue, setTabValue] = useState<string>("0");
-    const { grpcEndpoints } = useFeatureFlags();
-    return (
-        <FernTabs
-            className="px-4"
-            defaultValue="0"
-            value={tabValue}
-            onValueChange={setTabValue}
-            tabs={[
-                {
-                    title: "Request",
-                    content: (
-                        <div className="space-y-4 pb-6">
-                            {form}
-                            <div className="border-default flex justify-end border-b pb-4">
-                                {sendButton}
-                                {/* <PlaygroundSendRequestButton
+  const [tabValue, setTabValue] = useState<string>("0");
+  const { grpcEndpoints } = useFeatureFlags();
+  return (
+    <FernTabs
+      className="px-4"
+      defaultValue="0"
+      value={tabValue}
+      onValueChange={setTabValue}
+      tabs={[
+        {
+          title: "Request",
+          content: (
+            <div className="space-y-4 pb-6">
+              {form}
+              <div className="border-default flex justify-end border-b pb-4">
+                {sendButton}
+                {/* <PlaygroundSendRequestButton
                                     sendRequest={() => {
                                         sendRequest();
                                         setTabValue("1");
@@ -42,15 +42,13 @@ export function PlaygroundEndpointMobileLayout({
                                         <SendSolid className="transition-transform group-hover:translate-x-0.5" />
                                     }
                                 /> */}
-                            </div>
-                            {endpointId &&
-                                grpcEndpoints?.includes(endpointId) &&
-                                requestCard}
-                        </div>
-                    ),
-                },
-                { title: "Response", content: responseCard },
-            ]}
-        />
-    );
+              </div>
+              {endpointId && grpcEndpoints?.includes(endpointId) && requestCard}
+            </div>
+          ),
+        },
+        { title: "Response", content: responseCard },
+      ]}
+    />
+  );
 }

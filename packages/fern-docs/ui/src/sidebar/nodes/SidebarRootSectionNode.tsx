@@ -6,36 +6,36 @@ import { SidebarPageNode } from "./SidebarPageNode";
 import { SidebarRootHeading } from "./SidebarRootHeading";
 
 interface SidebarRootSectionNodeProps {
-    node: FernNavigation.SectionNode;
-    className?: string;
+  node: FernNavigation.SectionNode;
+  className?: string;
 }
 
 export function SidebarRootSectionNode({
-    node,
-    className,
+  node,
+  className,
 }: SidebarRootSectionNodeProps): React.ReactElement | null {
-    const childSelected = useIsChildSelected(node.id);
+  const childSelected = useIsChildSelected(node.id);
 
-    // If the node has no children, it is a page node.
-    if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
-        return <SidebarPageNode node={node} depth={0} className={className} />;
-    }
+  // If the node has no children, it is a page node.
+  if (node.children.length === 0 && FernNavigation.hasMarkdown(node)) {
+    return <SidebarPageNode node={node} depth={0} className={className} />;
+  }
 
-    if (node.children.length === 0 || (node.hidden && !childSelected)) {
-        return null;
-    }
+  if (node.children.length === 0 || (node.hidden && !childSelected)) {
+    return null;
+  }
 
-    return (
-        <>
-            <SidebarRootHeading node={node} className={className} />
+  return (
+    <>
+      <SidebarRootHeading node={node} className={className} />
 
-            <ul className={clsx("fern-sidebar-group")}>
-                {node.children.map((child) => (
-                    <li key={child.id}>
-                        <SidebarNavigationChild node={child} depth={1} />
-                    </li>
-                ))}
-            </ul>
-        </>
-    );
+      <ul className={clsx("fern-sidebar-group")}>
+        {node.children.map((child) => (
+          <li key={child.id}>
+            <SidebarNavigationChild node={child} depth={1} />
+          </li>
+        ))}
+      </ul>
+    </>
+  );
 }

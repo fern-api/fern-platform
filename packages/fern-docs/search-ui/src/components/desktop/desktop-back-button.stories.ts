@@ -4,12 +4,12 @@ import { fn } from "@storybook/test";
 import { DesktopBackButton } from "./desktop-back-button";
 
 const meta: Meta<typeof DesktopBackButton> = {
-    title: "Desktop/DesktopBackButton",
-    component: DesktopBackButton,
-    args: {
-        pop: fn(),
-        clear: fn(),
-    },
+  title: "Desktop/DesktopBackButton",
+  component: DesktopBackButton,
+  args: {
+    pop: fn(),
+    clear: fn(),
+  },
 };
 
 export default meta;

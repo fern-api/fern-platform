@@ -5,25 +5,25 @@ import { useCallbackOne } from "use-memo-one";
 import { JUST_NAVIGATED_ATOM, SLUG_ATOM, useAtomEffect } from "../atoms";
 
 export function useApiPageCenterElement(
-    ref: RefObject<HTMLDivElement>,
-    slug: FernNavigation.Slug,
-    skip: boolean = false
+  ref: RefObject<HTMLDivElement>,
+  slug: FernNavigation.Slug,
+  skip: boolean = false
 ): void {
-    const isInView = useInView(ref, {
-        // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport
-        margin: "-50% 0px",
-    });
+  const isInView = useInView(ref, {
+    // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport
+    margin: "-50% 0px",
+  });
 
-    const shouldUpdateSlug = !skip && isInView;
+  const shouldUpdateSlug = !skip && isInView;
 
-    useAtomEffect(
-        useCallbackOne(
-            (get, set) => {
-                if (shouldUpdateSlug && !get.peek(JUST_NAVIGATED_ATOM)) {
-                    set(SLUG_ATOM, slug);
-                }
-            },
-            [shouldUpdateSlug, slug]
-        )
-    );
+  useAtomEffect(
+    useCallbackOne(
+      (get, set) => {
+        if (shouldUpdateSlug && !get.peek(JUST_NAVIGATED_ATOM)) {
+          set(SLUG_ATOM, slug);
+        }
+      },
+      [shouldUpdateSlug, slug]
+    )
+  );
 }

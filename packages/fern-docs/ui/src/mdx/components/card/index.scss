@@ -1,15 +1,15 @@
 @layer components {
-    .card-icon {
-        @apply size-6;
-    }
+  .card-icon {
+    @apply size-6;
+  }
 
-    .card-icon > svg,
-    .card-icon > .fa-icon,
-    .card-icon > img {
-        @apply size-full;
-    }
+  .card-icon > svg,
+  .card-icon > .fa-icon,
+  .card-icon > img {
+    @apply size-full;
+  }
 
-    .card-icon.fa-icon {
-        @apply bg-accent;
-    }
+  .card-icon.fa-icon {
+    @apply bg-accent;
+  }
 }

@@ -8,46 +8,46 @@ import { Endpoint } from "./Endpoint";
 import { EndpointStreamingEnabledToggle } from "./EndpointStreamingEnabledToggle";
 
 interface EndpointPairProps {
-    showErrors: boolean;
-    node: FernNavigation.EndpointPairNode;
-    apiDefinition: ApiDefinition;
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    last?: boolean;
+  showErrors: boolean;
+  node: FernNavigation.EndpointPairNode;
+  apiDefinition: ApiDefinition;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  last?: boolean;
 }
 
 export function EndpointPair({
-    showErrors,
-    node,
-    apiDefinition,
-    breadcrumb,
-    last,
+  showErrors,
+  node,
+  apiDefinition,
+  breadcrumb,
+  last,
 }: EndpointPairProps): ReactElement {
-    const isStream = useAtomValue(FERN_STREAM_ATOM);
+  const isStream = useAtomValue(FERN_STREAM_ATOM);
 
-    useAtomEffect(
-        useCallbackOne(
-            (get, set) => {
-                const slug = get(SLUG_ATOM);
-                if (node.nonStream.slug === slug) {
-                    set(FERN_STREAM_ATOM, false);
-                } else if (node.stream.slug === slug) {
-                    set(FERN_STREAM_ATOM, true);
-                }
-            },
-            [node.nonStream.slug, node.stream.slug]
-        )
-    );
+  useAtomEffect(
+    useCallbackOne(
+      (get, set) => {
+        const slug = get(SLUG_ATOM);
+        if (node.nonStream.slug === slug) {
+          set(FERN_STREAM_ATOM, false);
+        } else if (node.stream.slug === slug) {
+          set(FERN_STREAM_ATOM, true);
+        }
+      },
+      [node.nonStream.slug, node.stream.slug]
+    )
+  );
 
-    const endpointNode = isStream ? node.stream : node.nonStream;
+  const endpointNode = isStream ? node.stream : node.nonStream;
 
-    return (
-        <Endpoint
-            breadcrumb={breadcrumb}
-            showErrors={showErrors}
-            node={endpointNode}
-            apiDefinition={apiDefinition}
-            streamToggle={<EndpointStreamingEnabledToggle node={node} />}
-            last={last}
-        />
-    );
+  return (
+    <Endpoint
+      breadcrumb={breadcrumb}
+      showErrors={showErrors}
+      node={endpointNode}
+      apiDefinition={apiDefinition}
+      streamToggle={<EndpointStreamingEnabledToggle node={node} />}
+      last={last}
+    />
+  );
 }

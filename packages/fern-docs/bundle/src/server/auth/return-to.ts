@@ -6,13 +6,13 @@ import { AuthEdgeConfig } from "@fern-docs/auth";
 // TODO: we should think through how to make this better in the future, and reduce the security risks of leaving the state query parameter unvalidated.
 const DEFAULT_RETURN_TO_QUERY_PARAM = "state";
 export function getReturnToQueryParam(
-    authConfig?: AuthEdgeConfig | undefined
+  authConfig?: AuthEdgeConfig | undefined
 ): string {
-    if (authConfig?.type === "oauth2") {
-        return DEFAULT_RETURN_TO_QUERY_PARAM;
-    }
+  if (authConfig?.type === "oauth2") {
+    return DEFAULT_RETURN_TO_QUERY_PARAM;
+  }
 
-    return authConfig?.type === "basic_token_verification"
-        ? authConfig.returnToQueryParam ?? DEFAULT_RETURN_TO_QUERY_PARAM
-        : DEFAULT_RETURN_TO_QUERY_PARAM;
+  return authConfig?.type === "basic_token_verification"
+    ? authConfig.returnToQueryParam ?? DEFAULT_RETURN_TO_QUERY_PARAM
+    : DEFAULT_RETURN_TO_QUERY_PARAM;
 }

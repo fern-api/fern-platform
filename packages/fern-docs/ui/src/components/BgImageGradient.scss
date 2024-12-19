@@ -1,13 +1,13 @@
 @layer components {
-    .fern-background {
-        @apply fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none;
-    }
+  .fern-background {
+    @apply fixed inset-0 -z-10 bg-background pointer-events-none overscroll-y-none;
+  }
 }
 
 :not(.dark) .fern-background.fern-background-image,
 :is(.dark) .fern-background.fern-background-image-dark {
-    background-image: var(--docs-background-image);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+  background-image: var(--docs-background-image);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }

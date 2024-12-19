@@ -2,35 +2,35 @@ import { createMockContext } from "../../../../../__test__/createMockContext.uti
 import { XFernHeaderVariableNameConverterNode } from "../../auth/XFernHeaderVariableNameConverter.node";
 
 describe("XFernHeaderVariableNameConverterNode", () => {
-    const mockContext = createMockContext();
+  const mockContext = createMockContext();
 
-    it("should parse header variable name", () => {
-        const input = {
-            "x-fern-header-variable-name": "myHeader",
-        };
+  it("should parse header variable name", () => {
+    const input = {
+      "x-fern-header-variable-name": "myHeader",
+    };
 
-        const node = new XFernHeaderVariableNameConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
-
-        expect(node.headerVariableName).toBe("myHeader");
-        expect(node.convert()).toBe("myHeader");
+    const node = new XFernHeaderVariableNameConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should handle missing header variable name", () => {
-        const input = {};
+    expect(node.headerVariableName).toBe("myHeader");
+    expect(node.convert()).toBe("myHeader");
+  });
 
-        const node = new XFernHeaderVariableNameConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
+  it("should handle missing header variable name", () => {
+    const input = {};
 
-        expect(node.headerVariableName).toBeUndefined();
-        expect(node.convert()).toBeUndefined();
+    const node = new XFernHeaderVariableNameConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
+
+    expect(node.headerVariableName).toBeUndefined();
+    expect(node.convert()).toBeUndefined();
+  });
 });

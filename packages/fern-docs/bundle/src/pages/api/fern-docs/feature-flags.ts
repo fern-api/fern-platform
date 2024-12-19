@@ -6,8 +6,8 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export default async function handler(
-    req: NextRequest
+  req: NextRequest
 ): Promise<NextResponse<FeatureFlags>> {
-    const domain = getDocsDomainEdge(req);
-    return NextResponse.json(await getFeatureFlags(domain));
+  const domain = getDocsDomainEdge(req);
+  return NextResponse.json(await getFeatureFlags(domain));
 }

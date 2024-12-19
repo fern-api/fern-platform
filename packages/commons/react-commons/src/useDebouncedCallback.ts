@@ -3,22 +3,22 @@ import { useCallback, useEffect, useRef, type DependencyList } from "react";
 import useWillUnmount from "./useWillUnmount";
 
 interface DebounceOptions {
-    /**
-     * An optional AbortSignal to cancel the debounced function.
-     */
-    signal?: AbortSignal;
-    /**
-     * An optional array specifying whether the function should be invoked on the leading edge, trailing edge, or both.
-     * If `edges` includes "leading", the function will be invoked at the start of the delay period.
-     * If `edges` includes "trailing", the function will be invoked at the end of the delay period.
-     * If both "leading" and "trailing" are included, the function will be invoked at both the start and end of the delay period.
-     * @default ["trailing"]
-     */
-    edges?: Array<"leading" | "trailing">;
+  /**
+   * An optional AbortSignal to cancel the debounced function.
+   */
+  signal?: AbortSignal;
+  /**
+   * An optional array specifying whether the function should be invoked on the leading edge, trailing edge, or both.
+   * If `edges` includes "leading", the function will be invoked at the start of the delay period.
+   * If `edges` includes "trailing", the function will be invoked at the end of the delay period.
+   * If both "leading" and "trailing" are included, the function will be invoked at both the start and end of the delay period.
+   * @default ["trailing"]
+   */
+  edges?: Array<"leading" | "trailing">;
 }
 
 const defaultOptions: DebounceOptions = {
-    edges: ["trailing"],
+  edges: ["trailing"],
 };
 
 /**
@@ -28,27 +28,27 @@ const defaultOptions: DebounceOptions = {
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useDebouncedCallback = <TCallback extends (...args: any[]) => void>(
-    fn: TCallback,
-    dependencies?: DependencyList,
-    wait: number = 600,
-    options: DebounceOptions = defaultOptions
+  fn: TCallback,
+  dependencies?: DependencyList,
+  wait: number = 600,
+  options: DebounceOptions = defaultOptions
 ): TCallback & {
-    cancel: () => void;
-    schedule: () => void;
-    flush: () => void;
+  cancel: () => void;
+  schedule: () => void;
+  flush: () => void;
 } => {
-    const debounced = useRef(debounce<TCallback>(fn, wait, options));
+  const debounced = useRef(debounce<TCallback>(fn, wait, options));
 
-    useEffect(() => {
-        debounced.current = debounce(fn, wait, options);
-    }, [fn, wait, options]);
+  useEffect(() => {
+    debounced.current = debounce(fn, wait, options);
+  }, [fn, wait, options]);
 
-    useWillUnmount(() => {
-        debounced.current?.cancel();
-    });
+  useWillUnmount(() => {
+    debounced.current?.cancel();
+  });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any
-    return useCallback(debounced.current, dependencies ?? []) as any;
+  // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any
+  return useCallback(debounced.current, dependencies ?? []) as any;
 };
 
 export { useDebouncedCallback };

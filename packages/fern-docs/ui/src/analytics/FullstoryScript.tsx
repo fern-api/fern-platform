@@ -3,22 +3,22 @@ import Script from "next/script";
 import { ReactElement } from "react";
 
 export function FullstoryScript(props: {
-    config?: DocsV1Read.FullStoryAnalyticsConfig;
+  config?: DocsV1Read.FullStoryAnalyticsConfig;
 }): ReactElement {
-    if (!props.config) {
-        return <></>;
-    }
+  if (!props.config) {
+    return <></>;
+  }
 
-    return (
-        <Script
-            id="init-fullstory"
-            dangerouslySetInnerHTML={{ __html: initFullstory(props.config) }}
-        />
-    );
+  return (
+    <Script
+      id="init-fullstory"
+      dangerouslySetInnerHTML={{ __html: initFullstory(props.config) }}
+    />
+  );
 }
 
 function initFullstory(config: DocsV1Read.FullStoryAnalyticsConfig) {
-    return `window['_fs_host'] = 'fullstory.com';
+  return `window['_fs_host'] = 'fullstory.com';
 window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
 window['_fs_org'] = '${config.orgId}';
 window['_fs_namespace'] = 'FS';

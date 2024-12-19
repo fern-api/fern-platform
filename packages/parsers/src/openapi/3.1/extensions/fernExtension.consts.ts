@@ -6,9 +6,9 @@ export const xFernWebhookKey = "x-fern-webhook";
 export const xFernAccessTokenLocatorKey = "x-fern-access-token-locator";
 export const xFernBasicAuthKey = "x-fern-basic";
 export const xFernBasicUsernameVariableNameKey =
-    "x-fern-username-variable-name";
+  "x-fern-username-variable-name";
 export const xFernBasicPasswordVariableNameKey =
-    "x-fern-password-variable-name";
+  "x-fern-password-variable-name";
 export const xFernBearerTokenKey = "x-fern-bearer";
 export const xFernBearerTokenVariableNameKey = "x-fern-token-variable-name";
 export const xFernHeaderAuthKey = "x-fern-header";

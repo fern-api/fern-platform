@@ -1,31 +1,31 @@
 @layer components {
-    .playground-endpoint {
-        @apply flex min-w-0 flex-1 shrink items-start gap-2;
-        @apply max-sm:py-0 p-3 pb-0 w-full;
-    }
+  .playground-endpoint {
+    @apply flex min-w-0 flex-1 shrink items-start gap-2;
+    @apply max-sm:py-0 p-3 pb-0 w-full;
+  }
 
-    .playground-endpoint-url {
-        @apply truncate break-all font-mono text-xs;
-        @apply py-1;
-    }
+  .playground-endpoint-url {
+    @apply truncate break-all font-mono text-xs;
+    @apply py-1;
+  }
 
-    .playground-endpoint-url-with-switcher {
-        @apply truncate break-all font-mono text-xs;
-    }
+  .playground-endpoint-url-with-switcher {
+    @apply truncate break-all font-mono text-xs;
+  }
 
-    /* .playground-endpoint:hover .playground-endpoint-url {
+  /* .playground-endpoint:hover .playground-endpoint-url {
         @apply whitespace-normal;
     } */
 
-    .playground-endpoint-copy-button {
-        @apply -mt-1 ml-auto -mr-3;
-    }
+  .playground-endpoint-copy-button {
+    @apply -mt-1 ml-auto -mr-3;
+  }
 
-    .playground-endpoint-baseurl {
-        @apply text-faded;
-    }
+  .playground-endpoint-baseurl {
+    @apply text-faded;
+  }
 
-    .playground-endpoint:hover .playground-endpoint-baseurl {
-        @apply t-muted;
-    }
+  .playground-endpoint:hover .playground-endpoint-baseurl {
+    @apply t-muted;
+  }
 }

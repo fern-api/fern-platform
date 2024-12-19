@@ -1,35 +1,35 @@
 import {
-    BaseOpenApiV3_1ConverterNode,
-    BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNode,
+  BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
 import { xFernBasicPasswordVariableNameKey } from "../fernExtension.consts";
 
 export declare namespace XFernBasicPasswordVariableNameConverterNode {
-    export interface Input {
-        [xFernBasicPasswordVariableNameKey]?: string;
-    }
+  export interface Input {
+    [xFernBasicPasswordVariableNameKey]?: string;
+  }
 }
 
 export class XFernBasicPasswordVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<
-    unknown,
-    string
+  unknown,
+  string
 > {
-    passwordVariableName: string | undefined;
+  passwordVariableName: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
-        super(args);
-        this.safeParse();
-    }
+  constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
+    super(args);
+    this.safeParse();
+  }
 
-    parse(): void {
-        this.passwordVariableName =
-            extendType<XFernBasicPasswordVariableNameConverterNode.Input>(
-                this.input
-            )[xFernBasicPasswordVariableNameKey];
-    }
+  parse(): void {
+    this.passwordVariableName =
+      extendType<XFernBasicPasswordVariableNameConverterNode.Input>(this.input)[
+        xFernBasicPasswordVariableNameKey
+      ];
+  }
 
-    convert(): string | undefined {
-        return this.passwordVariableName;
-    }
+  convert(): string | undefined {
+    return this.passwordVariableName;
+  }
 }

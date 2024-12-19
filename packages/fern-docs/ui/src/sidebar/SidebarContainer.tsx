@@ -3,14 +3,14 @@ import clsx from "clsx";
 import { useAtom, useAtomValue } from "jotai";
 import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 import {
-    CURRENT_TAB_INDEX_ATOM,
-    DOCS_LAYOUT_ATOM,
-    MOBILE_SIDEBAR_ENABLED_ATOM,
-    SIDEBAR_SCROLL_CONTAINER_ATOM,
-    TABS_ATOM,
-    useInitSidebarExpandedNodes,
-    useIsMobileSidebarOpen,
-    useSidebarNodes,
+  CURRENT_TAB_INDEX_ATOM,
+  DOCS_LAYOUT_ATOM,
+  MOBILE_SIDEBAR_ENABLED_ATOM,
+  SIDEBAR_SCROLL_CONTAINER_ATOM,
+  TABS_ATOM,
+  useInitSidebarExpandedNodes,
+  useIsMobileSidebarOpen,
+  useSidebarNodes,
 } from "../atoms";
 import { useIsScrolled } from "../hooks/useIsScrolled";
 import { SearchSidebar } from "../search/SearchDialog";
@@ -20,70 +20,69 @@ import { SidebarTabButton } from "./SidebarTabButton";
 import { SidebarRootNode } from "./nodes/SidebarRootNode";
 
 interface SidebarContainerProps extends ComponentPropsWithoutRef<"nav"> {
-    className?: string;
+  className?: string;
 }
 
 const UnmemoizedSidebarContainer = forwardRef<
-    HTMLElement,
-    SidebarContainerProps
+  HTMLElement,
+  SidebarContainerProps
 >(function DesktopSidebar(props, ref) {
-    const layout = useAtomValue(DOCS_LAYOUT_ATOM);
-    const tabs = useAtomValue(TABS_ATOM);
-    const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
-    const sidebar = useSidebarNodes();
-    const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
-    const isScrolled = useIsScrolled({ current: scrollRef });
-    const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
-    const isMobileSidebarOpen = useIsMobileSidebarOpen();
-    useInitSidebarExpandedNodes();
+  const layout = useAtomValue(DOCS_LAYOUT_ATOM);
+  const tabs = useAtomValue(TABS_ATOM);
+  const currentTabIndex = useAtomValue(CURRENT_TAB_INDEX_ATOM);
+  const sidebar = useSidebarNodes();
+  const [scrollRef, setScrollRef] = useAtom(SIDEBAR_SCROLL_CONTAINER_ATOM);
+  const isScrolled = useIsScrolled({ current: scrollRef });
+  const isMobileSidebarEnabled = useAtomValue(MOBILE_SIDEBAR_ENABLED_ATOM);
+  const isMobileSidebarOpen = useIsMobileSidebarOpen();
+  useInitSidebarExpandedNodes();
 
-    return (
-        <nav
-            aria-label="secondary"
-            ref={ref}
-            {...props}
-            className={clsx("fern-sidebar-container", props.className)}
+  return (
+    <nav
+      aria-label="secondary"
+      ref={ref}
+      {...props}
+      className={clsx("fern-sidebar-container", props.className)}
+    >
+      <SidebarFixedItemsSection
+        showBorder={
+          isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)
+        }
+      />
+      <SearchSidebar>
+        <FernScrollArea
+          rootClassName="flex-1"
+          className={clsx("group/sidebar fern-sidebar-content", {
+            "overscroll-contain": layout?.disableHeader === true,
+          })}
+          scrollbars="vertical"
+          ref={setScrollRef}
         >
-            <SidebarFixedItemsSection
-                showBorder={
-                    isScrolled ||
-                    (isMobileSidebarOpen && isMobileSidebarEnabled)
-                }
-            />
-            <SearchSidebar>
-                <FernScrollArea
-                    rootClassName="flex-1"
-                    className={clsx("group/sidebar fern-sidebar-content", {
-                        "overscroll-contain": layout?.disableHeader === true,
-                    })}
-                    scrollbars="vertical"
-                    ref={setScrollRef}
-                >
-                    {tabs.length > 0 && (
-                        <ul
-                            className={clsx("fern-sidebar-tabs", {
-                                "lg:hidden":
-                                    layout?.disableHeader !== true &&
-                                    layout?.tabsPlacement === "HEADER",
-                            })}
-                        >
-                            {tabs.map((tab, idx) => (
-                                <SidebarTabButton
-                                    key={idx}
-                                    tab={tab}
-                                    selected={tab.index === currentTabIndex}
-                                />
-                            ))}
-                        </ul>
-                    )}
-                    <FernTooltipProvider>
-                        <SidebarRootNode node={sidebar} />
-                    </FernTooltipProvider>
-                    <MobileSidebarHeaderLinks />
-                </FernScrollArea>
-            </SearchSidebar>
-        </nav>
-    );
+          {tabs.length > 0 && (
+            <ul
+              className={clsx("fern-sidebar-tabs", {
+                "lg:hidden":
+                  layout?.disableHeader !== true &&
+                  layout?.tabsPlacement === "HEADER",
+              })}
+            >
+              {tabs.map((tab, idx) => (
+                <SidebarTabButton
+                  key={idx}
+                  tab={tab}
+                  selected={tab.index === currentTabIndex}
+                />
+              ))}
+            </ul>
+          )}
+          <FernTooltipProvider>
+            <SidebarRootNode node={sidebar} />
+          </FernTooltipProvider>
+          <MobileSidebarHeaderLinks />
+        </FernScrollArea>
+      </SearchSidebar>
+    </nav>
+  );
 });
 
 export const SidebarContainer = memo(UnmemoizedSidebarContainer);

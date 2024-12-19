@@ -15,26 +15,26 @@ export type CallbackSetter<TArgs> = (nextCallback: SomeCallback<TArgs>) => void;
  * Don't use this function to abstract hooks outside this library as it changes quite often
  */
 const createHandlerSetter = <TArgs, TResult = void>(
-    callback?: SomeCallback<TArgs, TResult>
+  callback?: SomeCallback<TArgs, TResult>
 ): [RefObject<SomeCallback<TArgs, TResult>>, CallbackSetter<TArgs>] => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const handlerRef = useRef(callback);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const handlerRef = useRef(callback);
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const setHandler = useRef((nextCallback: SomeCallback<TArgs, TResult>) => {
-        if (typeof nextCallback !== "function") {
-            throw new Error(
-                "the argument supplied to the 'setHandler' function should be of type function"
-            );
-        }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const setHandler = useRef((nextCallback: SomeCallback<TArgs, TResult>) => {
+    if (typeof nextCallback !== "function") {
+      throw new Error(
+        "the argument supplied to the 'setHandler' function should be of type function"
+      );
+    }
 
-        handlerRef.current = nextCallback;
-    });
+    handlerRef.current = nextCallback;
+  });
 
-    return [handlerRef, setHandler.current] as [
-        RefObject<SomeCallback<TArgs, TResult>>,
-        CallbackSetter<TArgs>,
-    ];
+  return [handlerRef, setHandler.current] as [
+    RefObject<SomeCallback<TArgs, TResult>>,
+    CallbackSetter<TArgs>,
+  ];
 };
 
 export default createHandlerSetter;

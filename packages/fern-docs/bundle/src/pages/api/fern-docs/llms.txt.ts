@@ -33,231 +33,221 @@ import { NextApiRequest, NextApiResponse } from "next";
  */
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ): Promise<unknown> {
-    if (req.method === "OPTIONS") {
-        return res
-            .status(200)
-            .setHeader("X-Robots-Tag", "noindex")
-            .setHeader("Allow", "OPTIONS, GET")
-            .end();
+  if (req.method === "OPTIONS") {
+    return res
+      .status(200)
+      .setHeader("X-Robots-Tag", "noindex")
+      .setHeader("Allow", "OPTIONS, GET")
+      .end();
+  }
+
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
+
+  const path = getStringParam(req, "path") ?? "/";
+  const domain = getDocsDomainNode(req);
+  const host = getHostNode(req) ?? domain;
+  const fern_token = req.cookies[COOKIE_FERN_TOKEN];
+  const featureFlags = await getFeatureFlags(domain);
+  const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
+    featureFlags
+  );
+
+  const root = getSectionRoot(await loader.root(), path);
+  const pages = await loader.pages();
+
+  if (root == null) {
+    return res.status(404).end();
+  }
+
+  const pageInfos: {
+    pageId: FernNavigation.PageId;
+    slug: FernNavigation.Slug;
+    nodeTitle: string;
+  }[] = [];
+
+  const endpointPageInfos: {
+    slug: FernNavigation.Slug;
+    breadcrumb: string[];
+    nodeTitle: string;
+    apiDefinitionId: FernNavigation.ApiDefinitionId;
+    endpointId: FernNavigation.EndpointId | undefined;
+    webhookId: FernNavigation.WebhookId | undefined;
+    websocketId: FernNavigation.WebSocketId | undefined;
+  }[] = [];
+
+  const landingPage = getLandingPage(root);
+  const markdown =
+    landingPage != null
+      ? await getMarkdownForPath(landingPage, loader, featureFlags)
+      : undefined;
+
+  // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
+  // in the order that they appear in the sidebar
+  FernNavigation.traverseDF(root, (node, parents) => {
+    // don't include the landing page in the list
+    if (landingPage != null && node.id === landingPage.id) {
+      return CONTINUE;
     }
 
-    if (req.method !== "GET") {
-        return res.status(405).end();
+    // if the node is hidden or authed, don't include it in the list
+    // TODO: include "hidden" nodes in `llms-full.txt`
+    if (FernNavigation.hasMetadata(node)) {
+      if (node.hidden || node.authed) {
+        return SKIP;
+      }
     }
 
-    const path = getStringParam(req, "path") ?? "/";
-    const domain = getDocsDomainNode(req);
-    const host = getHostNode(req) ?? domain;
-    const fern_token = req.cookies[COOKIE_FERN_TOKEN];
-    const featureFlags = await getFeatureFlags(domain);
-    const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
-        featureFlags
+    if (FernNavigation.hasMarkdown(node)) {
+      // if the node is noindexed, don't include it in the list
+      // TODO: include "noindexed" nodes in `llms-full.txt`
+      if (node.noindex) {
+        return SKIP;
+      }
+
+      const pageId = FernNavigation.getPageId(node);
+      if (pageId != null) {
+        pageInfos.push({
+          pageId,
+          nodeTitle: node.title,
+          slug: node.slug,
+        });
+      }
+    }
+
+    if (FernNavigation.isApiLeaf(node)) {
+      endpointPageInfos.push({
+        slug: node.slug,
+        nodeTitle: node.title,
+        apiDefinitionId: node.apiDefinitionId,
+        endpointId: node.type === "endpoint" ? node.endpointId : undefined,
+        webhookId: node.type === "webhook" ? node.webhookId : undefined,
+        websocketId: node.type === "webSocket" ? node.webSocketId : undefined,
+        breadcrumb: parents
+          .slice(parents.findLastIndex((p) => p.type === "apiReference"))
+          .map((p) => (FernNavigation.hasMetadata(p) ? p.title : undefined))
+          .filter(isNonNullish),
+      });
+    }
+
+    return CONTINUE;
+  });
+
+  const docs = pageInfos
+    .map(
+      (
+        pageInfo
+      ): {
+        title: string;
+        description: string | undefined;
+        href: string;
+      } => {
+        if (pageInfo.pageId != null) {
+          const page = pages[pageInfo.pageId];
+          if (page != null) {
+            const { title, description } = getLlmTxtMetadata(
+              page.markdown,
+              pageInfo.nodeTitle
+            );
+            return {
+              title,
+              description,
+              href: String(
+                new URL(
+                  addLeadingSlash(
+                    pageInfo.slug +
+                      (pageInfo.pageId.endsWith(".mdx") ? ".mdx" : ".md")
+                  ),
+                  withDefaultProtocol(domain)
+                )
+              ),
+            };
+          }
+        }
+
+        return {
+          title: pageInfo.nodeTitle,
+          description: undefined,
+          href: String(
+            new URL(addLeadingSlash(pageInfo.slug), withDefaultProtocol(domain))
+          ),
+        };
+      }
+    )
+    .map(
+      (doc) =>
+        `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`
     );
 
-    const root = getSectionRoot(await loader.root(), path);
-    const pages = await loader.pages();
+  const endpoints = endpointPageInfos
+    .map((endpointPageInfo) => {
+      return {
+        title: endpointPageInfo.nodeTitle,
+        href: String(
+          new URL(
+            addLeadingSlash(endpointPageInfo.slug) +
+              (endpointPageInfo.endpointId != null ? ".mdx" : ""),
+            withDefaultProtocol(domain)
+          )
+        ),
+        breadcrumb: endpointPageInfo.breadcrumb,
+      };
+    })
+    .map(
+      (endpoint) =>
+        `- ${endpoint.breadcrumb.join(" > ")} [${endpoint.title}](${endpoint.href})`
+    );
 
-    if (root == null) {
-        return res.status(404).end();
-    }
+  res
+    .status(200)
+    .setHeader("Content-Type", "text/plain; charset=utf-8")
+    // prevent search engines from indexing this page
+    .setHeader("X-Robots-Tag", "noindex")
+    // cannot guarantee that the content won't change, so we only cache for 60 seconds
+    .setHeader("Cache-Control", "s-maxage=60")
+    .send(
+      [
+        // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
+        markdown?.content ?? `# ${root.title}`,
+        docs.length > 0 ? `## Docs\n\n${docs.join("\n")}` : undefined,
+        endpoints.length > 0
+          ? `## API Docs\n\n${endpoints.join("\n")}`
+          : undefined,
+      ]
+        .filter(isNonNullish)
+        .join("\n\n")
+    );
 
-    const pageInfos: {
-        pageId: FernNavigation.PageId;
-        slug: FernNavigation.Slug;
-        nodeTitle: string;
-    }[] = [];
-
-    const endpointPageInfos: {
-        slug: FernNavigation.Slug;
-        breadcrumb: string[];
-        nodeTitle: string;
-        apiDefinitionId: FernNavigation.ApiDefinitionId;
-        endpointId: FernNavigation.EndpointId | undefined;
-        webhookId: FernNavigation.WebhookId | undefined;
-        websocketId: FernNavigation.WebSocketId | undefined;
-    }[] = [];
-
-    const landingPage = getLandingPage(root);
-    const markdown =
-        landingPage != null
-            ? await getMarkdownForPath(landingPage, loader, featureFlags)
-            : undefined;
-
-    // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
-    // in the order that they appear in the sidebar
-    FernNavigation.traverseDF(root, (node, parents) => {
-        // don't include the landing page in the list
-        if (landingPage != null && node.id === landingPage.id) {
-            return CONTINUE;
-        }
-
-        // if the node is hidden or authed, don't include it in the list
-        // TODO: include "hidden" nodes in `llms-full.txt`
-        if (FernNavigation.hasMetadata(node)) {
-            if (node.hidden || node.authed) {
-                return SKIP;
-            }
-        }
-
-        if (FernNavigation.hasMarkdown(node)) {
-            // if the node is noindexed, don't include it in the list
-            // TODO: include "noindexed" nodes in `llms-full.txt`
-            if (node.noindex) {
-                return SKIP;
-            }
-
-            const pageId = FernNavigation.getPageId(node);
-            if (pageId != null) {
-                pageInfos.push({
-                    pageId,
-                    nodeTitle: node.title,
-                    slug: node.slug,
-                });
-            }
-        }
-
-        if (FernNavigation.isApiLeaf(node)) {
-            endpointPageInfos.push({
-                slug: node.slug,
-                nodeTitle: node.title,
-                apiDefinitionId: node.apiDefinitionId,
-                endpointId:
-                    node.type === "endpoint" ? node.endpointId : undefined,
-                webhookId: node.type === "webhook" ? node.webhookId : undefined,
-                websocketId:
-                    node.type === "webSocket" ? node.webSocketId : undefined,
-                breadcrumb: parents
-                    .slice(
-                        parents.findLastIndex((p) => p.type === "apiReference")
-                    )
-                    .map((p) =>
-                        FernNavigation.hasMetadata(p) ? p.title : undefined
-                    )
-                    .filter(isNonNullish),
-            });
-        }
-
-        return CONTINUE;
-    });
-
-    const docs = pageInfos
-        .map(
-            (
-                pageInfo
-            ): {
-                title: string;
-                description: string | undefined;
-                href: string;
-            } => {
-                if (pageInfo.pageId != null) {
-                    const page = pages[pageInfo.pageId];
-                    if (page != null) {
-                        const { title, description } = getLlmTxtMetadata(
-                            page.markdown,
-                            pageInfo.nodeTitle
-                        );
-                        return {
-                            title,
-                            description,
-                            href: String(
-                                new URL(
-                                    addLeadingSlash(
-                                        pageInfo.slug +
-                                            (pageInfo.pageId.endsWith(".mdx")
-                                                ? ".mdx"
-                                                : ".md")
-                                    ),
-                                    withDefaultProtocol(domain)
-                                )
-                            ),
-                        };
-                    }
-                }
-
-                return {
-                    title: pageInfo.nodeTitle,
-                    description: undefined,
-                    href: String(
-                        new URL(
-                            addLeadingSlash(pageInfo.slug),
-                            withDefaultProtocol(domain)
-                        )
-                    ),
-                };
-            }
-        )
-        .map(
-            (doc) =>
-                `- [${doc.title}](${doc.href})${doc.description != null ? `: ${doc.description}` : ""}`
-        );
-
-    const endpoints = endpointPageInfos
-        .map((endpointPageInfo) => {
-            return {
-                title: endpointPageInfo.nodeTitle,
-                href: String(
-                    new URL(
-                        addLeadingSlash(endpointPageInfo.slug) +
-                            (endpointPageInfo.endpointId != null ? ".mdx" : ""),
-                        withDefaultProtocol(domain)
-                    )
-                ),
-                breadcrumb: endpointPageInfo.breadcrumb,
-            };
-        })
-        .map(
-            (endpoint) =>
-                `- ${endpoint.breadcrumb.join(" > ")} [${endpoint.title}](${endpoint.href})`
-        );
-
-    res.status(200)
-        .setHeader("Content-Type", "text/plain; charset=utf-8")
-        // prevent search engines from indexing this page
-        .setHeader("X-Robots-Tag", "noindex")
-        // cannot guarantee that the content won't change, so we only cache for 60 seconds
-        .setHeader("Cache-Control", "s-maxage=60")
-        .send(
-            [
-                // if there's a landing page, use the llm-friendly markdown version instead of the ${root.title}
-                markdown?.content ?? `# ${root.title}`,
-                docs.length > 0 ? `## Docs\n\n${docs.join("\n")}` : undefined,
-                endpoints.length > 0
-                    ? `## API Docs\n\n${endpoints.join("\n")}`
-                    : undefined,
-            ]
-                .filter(isNonNullish)
-                .join("\n\n")
-        );
-
-    return;
+  return;
 }
 
 function getLandingPage(
-    root: FernNavigation.NavigationNodeWithMetadata
+  root: FernNavigation.NavigationNodeWithMetadata
 ):
-    | FernNavigation.LandingPageNode
-    | FernNavigation.NavigationNodePage
-    | undefined {
-    if (root.type === "version") {
-        return root.landingPage;
-    } else if (root.type === "root") {
-        if (
-            root.child.type === "productgroup" ||
-            root.child.type === "unversioned"
-        ) {
-            return root.child.landingPage;
-        } else if (root.child.type === "versioned") {
-            // return the default version's landing page
-            return root.child.children.find((c) => c.default)?.landingPage;
-        }
+  | FernNavigation.LandingPageNode
+  | FernNavigation.NavigationNodePage
+  | undefined {
+  if (root.type === "version") {
+    return root.landingPage;
+  } else if (root.type === "root") {
+    if (
+      root.child.type === "productgroup" ||
+      root.child.type === "unversioned"
+    ) {
+      return root.child.landingPage;
+    } else if (root.child.type === "versioned") {
+      // return the default version's landing page
+      return root.child.children.find((c) => c.default)?.landingPage;
     }
+  }
 
-    if (FernNavigation.isPage(root)) {
-        return root;
-    }
+  if (FernNavigation.isPage(root)) {
+    return root;
+  }
 
-    return undefined;
+  return undefined;
 }

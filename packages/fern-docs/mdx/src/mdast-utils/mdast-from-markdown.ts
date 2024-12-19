@@ -9,21 +9,21 @@ import { mdxjs } from "micromark-extension-mdxjs";
 import { UnreachableCaseError } from "ts-essentials";
 
 export function mdastFromMarkdown(
-    content: string,
-    format: "mdx" | "md" = "mdx"
+  content: string,
+  format: "mdx" | "md" = "mdx"
 ): MdastRoot {
-    if (format === "md") {
-        return fromMarkdown(content);
-    } else if (format === "mdx") {
-        return fromMarkdown(content, {
-            extensions: [mdxjs(), math(), gfm()],
-            mdastExtensions: [
-                mdxFromMarkdown(),
-                mathFromMarkdown(),
-                gfmFromMarkdown(),
-            ],
-        });
-    } else {
-        throw new UnreachableCaseError(format);
-    }
+  if (format === "md") {
+    return fromMarkdown(content);
+  } else if (format === "mdx") {
+    return fromMarkdown(content, {
+      extensions: [mdxjs(), math(), gfm()],
+      mdastExtensions: [
+        mdxFromMarkdown(),
+        mathFromMarkdown(),
+        gfmFromMarkdown(),
+      ],
+    });
+  } else {
+    throw new UnreachableCaseError(format);
+  }
 }

@@ -5,26 +5,26 @@ import { ReactElement } from "react";
 import "./globals.scss";
 
 export const metadata: Metadata = {
-    title: "Create Next App",
+  title: "Create Next App",
 };
 
 export default function RootLayout({
-    children,
+  children,
 }: Readonly<{
-    children: React.ReactNode;
+  children: React.ReactNode;
 }>): ReactElement {
-    return (
-        <html lang="en">
-            <body className="antialiased">
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    {children}
-                </ThemeProvider>
-            </body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className="antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

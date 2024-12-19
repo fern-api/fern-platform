@@ -11,12 +11,12 @@ as styled JSX will only create one instance of global styles
 for each component.
 */
 export function ThemeStylesheet(): ReactElement {
-    const stylesheet = useAtomValue(STYLESHEET_ATOM);
-    return (
-        <style jsx global>
-            {`
-                ${stylesheet}
-            `}
-        </style>
-    );
+  const stylesheet = useAtomValue(STYLESHEET_ATOM);
+  return (
+    <style jsx global>
+      {`
+        ${stylesheet}
+      `}
+    </style>
+  );
 }

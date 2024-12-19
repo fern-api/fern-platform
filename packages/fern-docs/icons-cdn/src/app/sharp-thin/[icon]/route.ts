@@ -9,8 +9,8 @@ library.add(fast);
 export const runtime = "edge";
 
 export async function GET(
-    _req: NextRequest,
-    { params }: { params: { icon: string } }
+  _req: NextRequest,
+  { params }: { params: { icon: string } }
 ): Promise<NextResponse> {
-    return svgResponse(prefix, params.icon);
+  return svgResponse(prefix, params.icon);
 }

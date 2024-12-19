@@ -7,12 +7,12 @@ import { followRedirect } from "./followRedirect";
  * @param input will be mutated
  */
 export function mutableUpdatePointsTo(
-    input: FernNavigation.NavigationNode
+  input: FernNavigation.NavigationNode
 ): void {
-    FernNavigation.traverseDF(input, (node) => {
-        if (FernNavigation.hasPointsTo(node)) {
-            const pointsTo = followRedirect(node);
-            node.pointsTo = node.slug === pointsTo ? undefined : pointsTo;
-        }
-    });
+  FernNavigation.traverseDF(input, (node) => {
+    if (FernNavigation.hasPointsTo(node)) {
+      const pointsTo = followRedirect(node);
+      node.pointsTo = node.slug === pointsTo ? undefined : pointsTo;
+    }
+  });
 }

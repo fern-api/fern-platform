@@ -4,29 +4,29 @@ import { useIsLocalPreview } from "../contexts/local-preview";
 import { useApiRoute } from "../hooks/useApiRoute";
 
 export function LinkPreload({ href }: { href: string }): ReactElement {
-    return (
-        <Head>
-            <link
-                key={href}
-                rel="preload"
-                href={href}
-                as="fetch"
-                crossOrigin="anonymous"
-            />
-        </Head>
-    );
+  return (
+    <Head>
+      <link
+        key={href}
+        rel="preload"
+        href={href}
+        as="fetch"
+        crossOrigin="anonymous"
+      />
+    </Head>
+  );
 }
 
 type FernDocsApiRoute = `/api/fern-docs/${string}`;
 export function LinkPreloadApiRoute({
-    href,
+  href,
 }: {
-    href: FernDocsApiRoute;
+  href: FernDocsApiRoute;
 }): ReactElement | null {
-    const isLocalPreview = useIsLocalPreview();
-    const key = useApiRoute(href);
-    if (isLocalPreview) {
-        return null;
-    }
-    return <LinkPreload href={key} />;
+  const isLocalPreview = useIsLocalPreview();
+  const key = useApiRoute(href);
+  if (isLocalPreview) {
+    return null;
+  }
+  return <LinkPreload href={key} />;
 }

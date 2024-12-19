@@ -4,23 +4,23 @@ import { FC, memo, useMemo } from "react";
 import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 
 interface HastToJSXProps {
-    hast: Root | RootContent;
+  hast: Root | RootContent;
 }
 
 export const HastToJSX: FC<HastToJSXProps> = memo(({ hast }) => {
-    const result = useMemo(
-        () =>
-            toJsxRuntime(hast, {
-                Fragment,
-                // @ts-expect-error: the automatic react runtime is untyped.
-                jsx,
-                // @ts-expect-error: the automatic react runtime is untyped.
-                jsxs,
-            }),
-        [hast]
-    );
+  const result = useMemo(
+    () =>
+      toJsxRuntime(hast, {
+        Fragment,
+        // @ts-expect-error: the automatic react runtime is untyped.
+        jsx,
+        // @ts-expect-error: the automatic react runtime is untyped.
+        jsxs,
+      }),
+    [hast]
+  );
 
-    return result;
+  return result;
 });
 
 HastToJSX.displayName = "HastToJSX";

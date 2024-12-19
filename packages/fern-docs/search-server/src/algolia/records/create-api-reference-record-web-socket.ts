@@ -1,14 +1,14 @@
 import { ApiReferenceRecord, EndpointBaseRecord } from "../types";
 
 interface CreateApiReferenceRecordWebSocketOptions {
-    endpointBase: EndpointBaseRecord;
+  endpointBase: EndpointBaseRecord;
 }
 
 export function createApiReferenceRecordWebSocket({
-    endpointBase,
+  endpointBase,
 }: CreateApiReferenceRecordWebSocketOptions): ApiReferenceRecord {
-    return {
-        ...endpointBase,
-        type: "api-reference",
-    };
+  return {
+    ...endpointBase,
+    type: "api-reference",
+  };
 }

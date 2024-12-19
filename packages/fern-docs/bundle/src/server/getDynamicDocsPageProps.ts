@@ -7,18 +7,18 @@ import type { ComponentProps } from "react";
 import { getDocsPageProps } from "./getDocsPageProps";
 
 type GetServerSideDocsPagePropsResult = GetServerSidePropsResult<
-    ComponentProps<typeof DocsPage>
+  ComponentProps<typeof DocsPage>
 >;
 
 export async function getDynamicDocsPageProps(
-    domain: string,
-    host: string,
-    slug: FernNavigation.Slug,
-    cookies: NextApiRequestCookies
+  domain: string,
+  host: string,
+  slug: FernNavigation.Slug,
+  cookies: NextApiRequestCookies
 ): Promise<GetServerSideDocsPagePropsResult> {
-    /**
-     * Authenticated user is guaranteed to have a valid token because the middleware
-     * would have redirected them to the login page
-     */
-    return getDocsPageProps(domain, host, slug, cookies[COOKIE_FERN_TOKEN]);
+  /**
+   * Authenticated user is guaranteed to have a valid token because the middleware
+   * would have redirected them to the login page
+   */
+  return getDocsPageProps(domain, host, slug, cookies[COOKIE_FERN_TOKEN]);
 }

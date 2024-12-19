@@ -5,8 +5,8 @@ import { ErrorCollector } from "./ErrorCollector";
  * Provides logging and error collection capabilities.
  */
 export abstract class BaseApiConverterNodeContext {
-    public abstract readonly logger: Logger;
-    public readonly errors: ErrorCollector = new ErrorCollector();
+  public abstract readonly logger: Logger;
+  public readonly errors: ErrorCollector = new ErrorCollector();
 }
 /**
  * APIConverterNode is responsible for converting API concepts between different API definition formats.
@@ -18,21 +18,21 @@ export abstract class BaseApiConverterNodeContext {
  * @typeparam Output - The type from the target format
  */
 export abstract class BaseApiConverterNode<Input, Output> {
-    constructor(
-        protected readonly input: Input,
-        protected readonly context: BaseApiConverterNodeContext
-    ) {}
+  constructor(
+    protected readonly input: Input,
+    protected readonly context: BaseApiConverterNodeContext
+  ) {}
 
-    /**
-     * @returns The converted API definition in the target output format
-     */
-    public abstract convert(): Output | undefined;
+  /**
+   * @returns The converted API definition in the target output format
+   */
+  public abstract convert(): Output | undefined;
 
-    public errors(): ErrorCollector.ValidationError[] {
-        return this.context.errors.errors;
-    }
+  public errors(): ErrorCollector.ValidationError[] {
+    return this.context.errors.errors;
+  }
 
-    public warnings(): ErrorCollector.ValidationWarning[] {
-        return this.context.errors.warnings;
-    }
+  public warnings(): ErrorCollector.ValidationWarning[] {
+    return this.context.errors.warnings;
+  }
 }

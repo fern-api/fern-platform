@@ -1,25 +1,25 @@
 @layer components {
-    .toc-root {
-        @apply relative border-l-2 border-transparent pl-3;
-    }
+  .toc-root {
+    @apply relative border-l-2 border-transparent pl-3;
+  }
 
-    .toc-root::before,
-    .toc-root::after {
-        @apply rounded-full w-0.5 absolute top-0 -left-0.5;
+  .toc-root::before,
+  .toc-root::after {
+    @apply rounded-full w-0.5 absolute top-0 -left-0.5;
 
-        content: "";
-    }
+    content: "";
+  }
 
-    .toc-root::before {
-        @apply h-full bg-grayscale-a5;
-    }
+  .toc-root::before {
+    @apply h-full bg-grayscale-a5;
+  }
 
-    .toc-root::after {
-        @apply bg-accent;
+  .toc-root::after {
+    @apply bg-accent;
 
-        height: var(--height, 20px);
-        transform: translateY(calc(var(--top, 0px)));
-        transition: 0.25s;
-        transition-property: transform, height;
-    }
+    height: var(--height, 20px);
+    transform: translateY(calc(var(--top, 0px)));
+    transition: 0.25s;
+    transition-property: transform, height;
+  }
 }

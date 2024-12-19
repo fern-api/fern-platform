@@ -1,21 +1,21 @@
 @layer components {
-    .fern-header-searchbar {
-        @apply max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2;
+  .fern-header-searchbar {
+    @apply max-w-content-width w-full max-lg:hidden shrink min-w-0 mx-2;
+  }
+
+  .fern-header-right-menu {
+    @apply -mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4;
+
+    .lg-menu {
+      @apply hidden lg:block;
+
+      .fern-theme-button {
+        @apply hidden lg:flex;
+      }
     }
 
-    .fern-header-right-menu {
-        @apply -mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4;
-
-        .lg-menu {
-            @apply hidden lg:block;
-
-            .fern-theme-button {
-                @apply hidden lg:flex;
-            }
-        }
-
-        .max-lg-menu {
-            @apply flex items-center lg:hidden;
-        }
+    .max-lg-menu {
+      @apply flex items-center lg:hidden;
     }
+  }
 }

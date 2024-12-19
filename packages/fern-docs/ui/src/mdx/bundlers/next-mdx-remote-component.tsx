@@ -4,16 +4,16 @@ import { ReactElement } from "react";
 import { createMdxComponents } from "../components";
 
 export const NextMdxRemoteComponent = ({
-    code,
-    frontmatter,
-    jsxRefs,
+  code,
+  frontmatter,
+  jsxRefs,
 }: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
-    return (
-        <MDXRemote
-            scope={{}}
-            frontmatter={frontmatter}
-            compiledSource={code}
-            components={createMdxComponents(jsxRefs ?? [])}
-        />
-    );
+  return (
+    <MDXRemote
+      scope={{}}
+      frontmatter={frontmatter}
+      compiledSource={code}
+      components={createMdxComponents(jsxRefs ?? [])}
+    />
+  );
 };

@@ -6,18 +6,18 @@ import { useMemoOne } from "use-memo-one";
 import { DOCS_ATOM } from "./docs";
 
 export const FEATURE_FLAGS_ATOM = selectAtom(
-    DOCS_ATOM,
-    (docs) => docs.featureFlags,
-    isEqual
+  DOCS_ATOM,
+  (docs) => docs.featureFlags,
+  isEqual
 );
 FEATURE_FLAGS_ATOM.debugLabel = "FEATURE_FLAGS_ATOM";
 
 export function useFeatureFlags(): FeatureFlags {
-    return useAtomValue(FEATURE_FLAGS_ATOM);
+  return useAtomValue(FEATURE_FLAGS_ATOM);
 }
 
 export function useFeatureFlag(flag: keyof FeatureFlags): boolean {
-    return useAtomValue(
-        useMemoOne(() => atom((get) => !!get(FEATURE_FLAGS_ATOM)[flag]), [flag])
-    );
+  return useAtomValue(
+    useMemoOne(() => atom((get) => !!get(FEATURE_FLAGS_ATOM)[flag]), [flag])
+  );
 }

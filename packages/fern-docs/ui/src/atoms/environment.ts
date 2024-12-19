@@ -5,20 +5,20 @@ import { atomWithStorage } from "jotai/utils";
 export const ALL_ENVIRONMENTS_ATOM = atom<string[]>([]);
 
 export const useSetAllEnvironments = (allEnvironmentIds: string[]): void => {
-    const setAllEnvironments = useSetAtom(ALL_ENVIRONMENTS_ATOM);
-    setAllEnvironments(allEnvironmentIds);
+  const setAllEnvironments = useSetAtom(ALL_ENVIRONMENTS_ATOM);
+  setAllEnvironments(allEnvironmentIds);
 };
 
 // Get or select an environment
 export const SELECTED_ENVIRONMENT_ATOM = atomWithStorage<string | undefined>(
-    "selected-environment",
-    undefined
+  "selected-environment",
+  undefined
 );
 
 export const useSelectedEnvironmentId = (): string | undefined => {
-    return useAtomValue(SELECTED_ENVIRONMENT_ATOM);
+  return useAtomValue(SELECTED_ENVIRONMENT_ATOM);
 };
 
 export const useAllEnvironmentIds = (): string[] => {
-    return useAtomValue(ALL_ENVIRONMENTS_ATOM);
+  return useAtomValue(ALL_ENVIRONMENTS_ATOM);
 };

@@ -1,7 +1,7 @@
 import { FernNavigation } from "../../..";
 
 export function isTabbedNode(
-    node: FernNavigation.NavigationNode
+  node: FernNavigation.NavigationNode
 ): node is FernNavigation.TabbedNode {
-    return node.type === "tabbed";
+  return node.type === "tabbed";
 }

@@ -1,33 +1,33 @@
 @layer components {
-    .fern-accordion {
-        @apply fern-card divide-default divide-y rounded-lg m-mdx;
+  .fern-accordion {
+    @apply fern-card divide-default divide-y rounded-lg m-mdx;
 
-        li {
-            @apply list-outside;
-        }
+    li {
+      @apply list-outside;
+    }
+  }
+
+  .fern-accordion-item {
+    @apply scroll-mt-content-padded first:rounded-t-[inherit] last:rounded-b-[inherit];
+  }
+
+  .fern-accordion-trigger {
+    @apply flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none hover:bg-tag-default data-[state=open]:rounded-b-none cursor-pointer;
+
+    .fern-accordion-trigger-arrow {
+      @apply duration-[400ms] t-muted size-4 transition-transform ease-shift shrink-0;
     }
 
-    .fern-accordion-item {
-        @apply scroll-mt-content-padded first:rounded-t-[inherit] last:rounded-b-[inherit];
+    &[data-state="open"] .fern-accordion-trigger-arrow {
+      @apply rotate-90;
     }
 
-    .fern-accordion-trigger {
-        @apply flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none hover:bg-tag-default data-[state=open]:rounded-b-none cursor-pointer;
-
-        .fern-accordion-trigger-arrow {
-            @apply duration-[400ms] t-muted size-4 transition-transform ease-shift shrink-0;
-        }
-
-        &[data-state="open"] .fern-accordion-trigger-arrow {
-            @apply rotate-90;
-        }
-
-        .fern-accordion-trigger-title {
-            @apply t-default m-0 -mb-px flex max-w-max text-base leading-6 text-left;
-        }
+    .fern-accordion-trigger-title {
+      @apply t-default m-0 -mb-px flex max-w-max text-base leading-6 text-left;
     }
+  }
 
-    .fern-accordion-content {
-        @apply overflow-hidden fern-collapsible;
-    }
+  .fern-accordion-content {
+    @apply overflow-hidden fern-collapsible;
+  }
 }

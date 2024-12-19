@@ -12,30 +12,30 @@ import { unknownToMdxJsxAttribute } from "../mdx-utils/unknown-to-mdx-jsx-attr";
  * <div class="classname" /> -> <div className="classname" />
  */
 export function rehypeMdxClassStyle(): (root: Root) => void {
-    return (root) => {
-        visit(root, (node) => {
-            if (isMdxJsxElementHast(node)) {
-                node.attributes = node.attributes.map((attr) => {
-                    if (attr.type === "mdxJsxAttribute") {
-                        // convert class to className
-                        if (attr.name === "class") {
-                            return { ...attr, name: "className" };
-                        }
-
-                        // if the style attribute is a string, convert it to an object
-                        if (attr.name === "style") {
-                            if (typeof attr.value === "string") {
-                                return unknownToMdxJsxAttribute(
-                                    "style",
-                                    parseStringStyle(attr.value)
-                                );
-                            }
-                        }
-                    }
-
-                    return attr;
-                });
+  return (root) => {
+    visit(root, (node) => {
+      if (isMdxJsxElementHast(node)) {
+        node.attributes = node.attributes.map((attr) => {
+          if (attr.type === "mdxJsxAttribute") {
+            // convert class to className
+            if (attr.name === "class") {
+              return { ...attr, name: "className" };
             }
+
+            // if the style attribute is a string, convert it to an object
+            if (attr.name === "style") {
+              if (typeof attr.value === "string") {
+                return unknownToMdxJsxAttribute(
+                  "style",
+                  parseStringStyle(attr.value)
+                );
+              }
+            }
+          }
+
+          return attr;
         });
-    };
+      }
+    });
+  };
 }

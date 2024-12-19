@@ -1,7 +1,7 @@
 import {
-    FernUserSchema,
-    type AuthEdgeConfig,
-    type FernUser,
+  FernUserSchema,
+  type AuthEdgeConfig,
+  type FernUser,
 } from "@fern-docs/auth";
 import { SignJWT, jwtVerify } from "jose";
 import { getJwtSecretKey } from "./workos";
@@ -11,77 +11,75 @@ import { toFernUser } from "./workos-user-to-fern-user";
 // "user" is reserved for workos
 
 interface Opts {
-    secret?: string;
-    issuer?: string;
+  secret?: string;
+  issuer?: string;
 }
 export function signFernJWT(
-    fern: FernUser,
-    { secret, issuer }: Opts = {}
+  fern: FernUser,
+  { secret, issuer }: Opts = {}
 ): Promise<string> {
-    return new SignJWT({ fern })
-        .setProtectedHeader({ alg: "HS256", typ: "JWT" })
-        .setIssuedAt()
-        .setExpirationTime("30d")
-        .setIssuer(issuer ?? "https://buildwithfern.com")
-        .sign(getJwtTokenSecret(secret));
+  return new SignJWT({ fern })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setIssuedAt()
+    .setExpirationTime("30d")
+    .setIssuer(issuer ?? "https://buildwithfern.com")
+    .sign(getJwtTokenSecret(secret));
 }
 
 export async function verifyFernJWT(
-    token: string,
-    secret?: string,
-    issuer?: string
+  token: string,
+  secret?: string,
+  issuer?: string
 ): Promise<FernUser> {
-    const verified = await jwtVerify(token, getJwtTokenSecret(secret), {
-        issuer: issuer ?? "https://buildwithfern.com",
-    });
-    // if the token is undefined, FernUser will be an empty object
-    return FernUserSchema.optional().parse(verified.payload.fern) ?? {};
+  const verified = await jwtVerify(token, getJwtTokenSecret(secret), {
+    issuer: issuer ?? "https://buildwithfern.com",
+  });
+  // if the token is undefined, FernUser will be an empty object
+  return FernUserSchema.optional().parse(verified.payload.fern) ?? {};
 }
 
 export async function verifyFernJWTConfig(
-    token: string,
-    authConfig: AuthEdgeConfig | undefined
+  token: string,
+  authConfig: AuthEdgeConfig | undefined
 ): Promise<FernUser> {
-    if (!authConfig) {
-        throw new Error("Auth config is undefined");
-    }
+  if (!authConfig) {
+    throw new Error("Auth config is undefined");
+  }
 
-    if (authConfig.type === "basic_token_verification") {
-        return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
-    }
+  if (authConfig.type === "basic_token_verification") {
+    return verifyFernJWT(token, authConfig.secret, authConfig.issuer);
+  }
 
-    if (authConfig.type === "sso" && authConfig.partner === "workos") {
-        const session = await toSessionUserInfo(
-            await getSessionFromToken(token)
-        );
-        if (session.user) {
-            return toFernUser(session);
-        } else {
-            throw new Error("Invalid WorkOS session");
-        }
+  if (authConfig.type === "sso" && authConfig.partner === "workos") {
+    const session = await toSessionUserInfo(await getSessionFromToken(token));
+    if (session.user) {
+      return toFernUser(session);
+    } else {
+      throw new Error("Invalid WorkOS session");
     }
+  }
 
-    throw new Error("Auth config type is not supported");
+  throw new Error("Auth config type is not supported");
 }
 
 export async function safeVerifyFernJWTConfig(
-    token: string | undefined,
-    authConfig: AuthEdgeConfig | undefined
+  token: string | undefined,
+  authConfig: AuthEdgeConfig | undefined
 ): Promise<FernUser | undefined> {
-    try {
-        if (token) {
-            return await verifyFernJWTConfig(token, authConfig);
-        }
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.debug(String(e));
+  try {
+    if (token) {
+      return await verifyFernJWTConfig(token, authConfig);
     }
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.debug(String(e));
+  }
 
-    return undefined;
+  return undefined;
 }
 
 const encoder = new TextEncoder();
 
 function getJwtTokenSecret(secret?: string): Uint8Array {
-    return encoder.encode(secret ?? getJwtSecretKey());
+  return encoder.encode(secret ?? getJwtSecretKey());
 }

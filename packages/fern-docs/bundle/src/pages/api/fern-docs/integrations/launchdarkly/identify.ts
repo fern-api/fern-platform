@@ -7,15 +7,15 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export default async function handler(req: NextRequest): Promise<NextResponse> {
-    const email = req.nextUrl.searchParams.get(COOKIE_EMAIL);
+  const email = req.nextUrl.searchParams.get(COOKIE_EMAIL);
 
-    const res = FernNextResponse.redirect(req, {
-        destination: withDefaultProtocol(getHostEdge(req)),
-    });
+  const res = FernNextResponse.redirect(req, {
+    destination: withDefaultProtocol(getHostEdge(req)),
+  });
 
-    if (email) {
-        res.cookies.set({ name: COOKIE_EMAIL, value: email });
-    }
+  if (email) {
+    res.cookies.set({ name: COOKIE_EMAIL, value: email });
+  }
 
-    return res;
+  return res;
 }

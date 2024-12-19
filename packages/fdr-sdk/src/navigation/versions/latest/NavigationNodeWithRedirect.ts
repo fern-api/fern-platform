@@ -7,17 +7,17 @@ import type { NavigationNode } from "./NavigationNode";
 export type NavigationNodeWithPointsTo = Extract<NavigationNode, WithRedirect>;
 
 export function hasPointsTo(
-    node: NavigationNode
+  node: NavigationNode
 ): node is NavigationNodeWithPointsTo {
-    return (
-        node.type === "root" ||
-        node.type === "product" ||
-        node.type === "version" ||
-        node.type === "tab" ||
-        node.type === "section" ||
-        node.type === "apiReference" ||
-        node.type === "apiPackage"
-    );
+  return (
+    node.type === "root" ||
+    node.type === "product" ||
+    node.type === "version" ||
+    node.type === "tab" ||
+    node.type === "section" ||
+    node.type === "apiReference" ||
+    node.type === "apiPackage"
+  );
 }
 
 /**
@@ -25,10 +25,10 @@ export function hasPointsTo(
  */
 
 export function hasRedirect(
-    node: NavigationNode
+  node: NavigationNode
 ): node is NavigationNodeWithPointsTo & { pointsTo: Slug } {
-    if (!hasPointsTo(node)) {
-        return false;
-    }
-    return node.pointsTo != null;
+  if (!hasPointsTo(node)) {
+    return false;
+  }
+  return node.pointsTo != null;
 }

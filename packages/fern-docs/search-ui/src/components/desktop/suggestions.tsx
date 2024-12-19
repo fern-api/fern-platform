@@ -6,46 +6,46 @@ import { SuggestionsSchema } from "../../server/suggestions-schema";
 import * as Command from "../cmdk";
 
 export const Suggestions = ({
-    api,
-    body,
-    headers,
-    askAI,
+  api,
+  body,
+  headers,
+  askAI,
 }: {
-    api: string;
-    body?: object;
-    headers?: Record<string, string>;
-    askAI: (suggestion: string) => void;
+  api: string;
+  body?: object;
+  headers?: Record<string, string>;
+  askAI: (suggestion: string) => void;
 }): ReactNode => {
-    const { object, submit } = experimental_useObject({
-        api,
-        schema: SuggestionsSchema,
-        headers,
-    });
+  const { object, submit } = experimental_useObject({
+    api,
+    schema: SuggestionsSchema,
+    headers,
+  });
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSubmit = useMemo(() => debounce(submit, 500), []);
+
+  useEffect(() => {
+    debouncedSubmit(body);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const debouncedSubmit = useMemo(() => debounce(submit, 500), []);
+  }, []);
 
-    useEffect(() => {
-        debouncedSubmit(body);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  if (object?.suggestions == null) {
+    return false;
+  }
 
-    if (object?.suggestions == null) {
-        return false;
-    }
-
-    return (
-        <Command.Group forceMount heading="Suggestions">
-            {object?.suggestions?.filter(isNonNullish).map((suggestion) => (
-                <Command.Item
-                    key={suggestion}
-                    value={suggestion}
-                    onSelect={() => askAI(suggestion)}
-                    forceMount
-                >
-                    {suggestion}
-                </Command.Item>
-            ))}
-        </Command.Group>
-    );
+  return (
+    <Command.Group forceMount heading="Suggestions">
+      {object?.suggestions?.filter(isNonNullish).map((suggestion) => (
+        <Command.Item
+          key={suggestion}
+          value={suggestion}
+          onSelect={() => askAI(suggestion)}
+          forceMount
+        >
+          {suggestion}
+        </Command.Item>
+      ))}
+    </Command.Group>
+  );
 };

@@ -8,7 +8,7 @@ export const COOKIE_EMAIL = "email" as const; // for api key injection
 export const HEADER_X_FERN_HOST = "x-fern-host" as const;
 export const HEADER_X_MATCHED_PATH = "x-matched-path" as const;
 export const HEADER_X_VERCEL_PROTECTION_BYPASS =
-    "x-vercel-protection-bypass" as const;
+  "x-vercel-protection-bypass" as const;
 /**
  * The role that is used to represent everyone (including unauthenticated users)
  */
@@ -24,13 +24,13 @@ export const REVALIDATE_SECONDS = 60 * 60 * 24 * 6;
  * If the domain is `*.docs.buildwithfern.com`, it's a preview domain and SEO should be disabled.
  */
 export const FERN_DOCS_PREVIEW_DOMAINS = [
-    BUILDWITHFERN_COM,
-    "ferndocs.com",
-    "ferndocs.dev",
-    "buildwithfern.dev",
-    "vercel.app", // special case for Vercel preview deployments
+  BUILDWITHFERN_COM,
+  "ferndocs.com",
+  "ferndocs.dev",
+  "buildwithfern.dev",
+  "vercel.app", // special case for Vercel preview deployments
 ];
 export const FERN_DOCS_STAGING_BUILDWITHFERN_COM =
-    "docs.staging.buildwithfern.com";
+  "docs.staging.buildwithfern.com";
 export const FERN_DOCS_DEV_BUILDWITHFERN_COM = "docs.dev.buildwithfern.com";
 export const FERN_DOCS_BUILDWITHFERN_COM = "docs.buildwithfern.com";

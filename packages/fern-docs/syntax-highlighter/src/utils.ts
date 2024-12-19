@@ -2,33 +2,30 @@
 export type HighlightLine = number | [number, number];
 
 export function getLineHeight(fontSize: "sm" | "base" | "lg"): number {
-    return 1.625 * (fontSize === "sm" ? 12 : fontSize === "base" ? 14 : 16);
+  return 1.625 * (fontSize === "sm" ? 12 : fontSize === "base" ? 14 : 16);
 }
 
 export function getMaxHeight(
-    fontSize: "sm" | "base" | "lg",
-    maxLines?: number
+  fontSize: "sm" | "base" | "lg",
+  maxLines?: number
 ): number | undefined {
-    if (maxLines == null || maxLines <= 0) {
-        return undefined;
-    }
+  if (maxLines == null || maxLines <= 0) {
+    return undefined;
+  }
 
-    const lineHeight = getLineHeight(fontSize);
+  const lineHeight = getLineHeight(fontSize);
 
-    return maxLines * lineHeight + (fontSize === "sm" ? 8 : 12) * 2;
+  return maxLines * lineHeight + (fontSize === "sm" ? 8 : 12) * 2;
 }
 
 export function flattenHighlightLines(
-    highlightLines: HighlightLine[]
+  highlightLines: HighlightLine[]
 ): number[] {
-    return highlightLines.flatMap((lineNumber) => {
-        if (Array.isArray(lineNumber)) {
-            const [start, end] = lineNumber;
-            return Array.from(
-                { length: end - start + 1 },
-                (_, i) => start + i - 1
-            );
-        }
-        return [lineNumber - 1];
-    });
+  return highlightLines.flatMap((lineNumber) => {
+    if (Array.isArray(lineNumber)) {
+      const [start, end] = lineNumber;
+      return Array.from({ length: end - start + 1 }, (_, i) => start + i - 1);
+    }
+    return [lineNumber - 1];
+  });
 }

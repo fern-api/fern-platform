@@ -4,8 +4,8 @@ import { NavigationNode } from "./NavigationNode";
 import { getChildren } from "./getChildren";
 
 export function traverseDF(
-    node: NavigationNode,
-    visit: TraverserVisit<NavigationNode>
+  node: NavigationNode,
+  visit: TraverserVisit<NavigationNode>
 ): void {
-    return dfs(node, visit, getChildren);
+  return dfs(node, visit, getChildren);
 }

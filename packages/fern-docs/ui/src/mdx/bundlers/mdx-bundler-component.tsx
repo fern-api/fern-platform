@@ -4,9 +4,9 @@ import { ReactElement, useMemo } from "react";
 import { createMdxComponents } from "../components";
 
 export const MdxBundlerComponent = ({
-    code,
-    jsxRefs,
+  code,
+  jsxRefs,
 }: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
-    const Component = useMemo(() => getMDXComponent(code), [code]);
-    return <Component components={createMdxComponents(jsxRefs ?? [])} />;
+  const Component = useMemo(() => getMDXComponent(code), [code]);
+  return <Component components={createMdxComponents(jsxRefs ?? [])} />;
 };

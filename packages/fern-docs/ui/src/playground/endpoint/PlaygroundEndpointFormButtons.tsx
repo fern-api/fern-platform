@@ -10,48 +10,44 @@ const USE_EXAMPLE_TEXT = "Use example";
 const CLEAR_FORM_TEXT = "Clear form";
 
 interface PlaygroundEndpointFormButtonsProps {
-    node: FernNavigation.EndpointNode;
-    resetWithExample: () => void;
-    resetWithoutExample: () => void;
+  node: FernNavigation.EndpointNode;
+  resetWithExample: () => void;
+  resetWithoutExample: () => void;
 }
 
 export function PlaygroundEndpointFormButtons({
-    node,
-    resetWithExample,
-    resetWithoutExample,
+  node,
+  resetWithExample,
+  resetWithoutExample,
 }: PlaygroundEndpointFormButtonsProps): ReactElement {
-    const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
-    const apiReferenceId =
-        FernNavigation.utils.getApiReferenceId(activeNavigatable);
-    const closePlayground = useClosePlayground();
-    return (
-        <div className="flex justify-between items-center">
-            <FernButtonGroup>
-                <FernButton
-                    onClick={resetWithExample}
-                    size="small"
-                    variant="minimal"
-                >
-                    {USE_EXAMPLE_TEXT}
-                </FernButton>
-                <FernButton
-                    onClick={resetWithoutExample}
-                    size="small"
-                    variant="minimal"
-                >
-                    {CLEAR_FORM_TEXT}
-                </FernButton>
-            </FernButtonGroup>
+  const activeNavigatable = useAtomValue(CURRENT_NODE_ATOM);
+  const apiReferenceId =
+    FernNavigation.utils.getApiReferenceId(activeNavigatable);
+  const closePlayground = useClosePlayground();
+  return (
+    <div className="flex justify-between items-center">
+      <FernButtonGroup>
+        <FernButton onClick={resetWithExample} size="small" variant="minimal">
+          {USE_EXAMPLE_TEXT}
+        </FernButton>
+        <FernButton
+          onClick={resetWithoutExample}
+          size="small"
+          variant="minimal"
+        >
+          {CLEAR_FORM_TEXT}
+        </FernButton>
+      </FernButtonGroup>
 
-            <FernLink
-                href={`/${node.slug}`}
-                shallow={apiReferenceId === node.apiDefinitionId}
-                className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
-                onClick={closePlayground}
-            >
-                <span>View in API Reference</span>
-                <ArrowUpRight className="size-icon" />
-            </FernLink>
-        </div>
-    );
+      <FernLink
+        href={`/${node.slug}`}
+        shallow={apiReferenceId === node.apiDefinitionId}
+        className="t-muted inline-flex items-center gap-1 text-sm font-semibold underline decoration-1 underline-offset-4 hover:t-accent hover:decoration-2"
+        onClick={closePlayground}
+      >
+        <span>View in API Reference</span>
+        <ArrowUpRight className="size-icon" />
+      </FernLink>
+    </div>
+  );
 }

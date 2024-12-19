@@ -8,10 +8,10 @@ export * from "./mdx/types";
 export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";
 export type {
-    ProxyRequest,
-    ProxyResponse,
-    SerializableFile,
-    SerializableFormDataEntryValue,
+  ProxyRequest,
+  ProxyResponse,
+  SerializableFile,
+  SerializableFormDataEntryValue,
 } from "./playground/types";
 export type { DocsContent } from "./resolver/DocsContent";
 export { resolveDocsContent } from "./resolver/resolveDocsContent";

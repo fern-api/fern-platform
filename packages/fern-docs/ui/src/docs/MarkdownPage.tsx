@@ -4,10 +4,10 @@ import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
 import { DocsContent } from "../resolver/DocsContent";
 
 interface MarkdownPageProps {
-    content: DocsContent.MarkdownPage;
+  content: DocsContent.MarkdownPage;
 }
 
 export function MarkdownPage({ content }: MarkdownPageProps): ReactElement {
-    useWriteApiDefinitionsAtom(content.apis);
-    return <LayoutEvaluator {...content} />;
+  useWriteApiDefinitionsAtom(content.apis);
+  return <LayoutEvaluator {...content} />;
 }

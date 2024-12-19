@@ -21,86 +21,83 @@ import { NextApiRequest, NextApiResponse } from "next";
  */
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
+  req: NextApiRequest,
+  res: NextApiResponse
 ): Promise<unknown> {
-    if (req.method === "OPTIONS") {
-        return res
-            .status(200)
-            .setHeader("X-Robots-Tag", "noindex")
-            .setHeader("Allow", "OPTIONS, GET")
-            .end();
+  if (req.method === "OPTIONS") {
+    return res
+      .status(200)
+      .setHeader("X-Robots-Tag", "noindex")
+      .setHeader("Allow", "OPTIONS, GET")
+      .end();
+  }
+
+  if (req.method !== "GET") {
+    return res.status(405).end();
+  }
+
+  const path = getStringParam(req, "path") ?? "/";
+  const domain = getDocsDomainNode(req);
+  const host = getHostNode(req) ?? domain;
+  const fern_token = req.cookies[COOKIE_FERN_TOKEN];
+  const featureFlags = await getFeatureFlags(domain);
+  const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
+    featureFlags
+  );
+
+  const root = getSectionRoot(await loader.root(), path);
+
+  if (root == null) {
+    return res.status(404).end();
+  }
+
+  const nodes: FernNavigation.NavigationNodePage[] = [];
+
+  // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
+  // in the order that they appear in the sidebar
+  FernNavigation.traverseDF(root, (node) => {
+    // if the node is hidden or authed, don't include it in the list
+    // TODO: include "hidden" nodes in `llms-full.txt`
+    if (FernNavigation.hasMetadata(node)) {
+      if (node.hidden || node.authed) {
+        return SKIP;
+      }
     }
 
-    if (req.method !== "GET") {
-        return res.status(405).end();
+    if (FernNavigation.isPage(node)) {
+      nodes.push(node);
     }
 
-    const path = getStringParam(req, "path") ?? "/";
-    const domain = getDocsDomainNode(req);
-    const host = getHostNode(req) ?? domain;
-    const fern_token = req.cookies[COOKIE_FERN_TOKEN];
-    const featureFlags = await getFeatureFlags(domain);
-    const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
-        featureFlags
-    );
+    return CONTINUE;
+  });
 
-    const root = getSectionRoot(await loader.root(), path);
-
-    if (root == null) {
-        return res.status(404).end();
-    }
-
-    const nodes: FernNavigation.NavigationNodePage[] = [];
-
-    // traverse the tree in a depth-first manner to collect all the nodes that have markdown content
-    // in the order that they appear in the sidebar
-    FernNavigation.traverseDF(root, (node) => {
-        // if the node is hidden or authed, don't include it in the list
-        // TODO: include "hidden" nodes in `llms-full.txt`
-        if (FernNavigation.hasMetadata(node)) {
-            if (node.hidden || node.authed) {
-                return SKIP;
-            }
+  const markdowns = (
+    await Promise.all(
+      uniqBy(
+        nodes,
+        (a) => FernNavigation.getPageId(a) ?? a.canonicalSlug ?? a.slug
+      ).map(async (node) => {
+        const markdown = await getMarkdownForPath(node, loader, featureFlags);
+        if (markdown == null) {
+          return undefined;
         }
+        return markdown.content;
+      })
+    )
+  ).filter(isNonNullish);
 
-        if (FernNavigation.isPage(node)) {
-            nodes.push(node);
-        }
+  if (markdowns.length === 0) {
+    return res.status(404).end();
+  }
 
-        return CONTINUE;
-    });
+  res
+    .status(200)
+    .setHeader("Content-Type", "text/plain; charset=utf-8")
+    // prevent search engines from indexing this page
+    .setHeader("X-Robots-Tag", "noindex")
+    // cannot guarantee that the content won't change, so we only cache for 60 seconds
+    .setHeader("Cache-Control", "s-maxage=60")
+    .send(markdowns.join("\n\n"));
 
-    const markdowns = (
-        await Promise.all(
-            uniqBy(
-                nodes,
-                (a) => FernNavigation.getPageId(a) ?? a.canonicalSlug ?? a.slug
-            ).map(async (node) => {
-                const markdown = await getMarkdownForPath(
-                    node,
-                    loader,
-                    featureFlags
-                );
-                if (markdown == null) {
-                    return undefined;
-                }
-                return markdown.content;
-            })
-        )
-    ).filter(isNonNullish);
-
-    if (markdowns.length === 0) {
-        return res.status(404).end();
-    }
-
-    res.status(200)
-        .setHeader("Content-Type", "text/plain; charset=utf-8")
-        // prevent search engines from indexing this page
-        .setHeader("X-Robots-Tag", "noindex")
-        // cannot guarantee that the content won't change, so we only cache for 60 seconds
-        .setHeader("Cache-Control", "s-maxage=60")
-        .send(markdowns.join("\n\n"));
-
-    return;
+  return;
 }

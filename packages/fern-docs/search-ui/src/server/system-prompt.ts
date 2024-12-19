@@ -1,12 +1,12 @@
 import { template } from "es-toolkit/compat";
 
 export const createDefaultSystemPrompt = (data: {
-    date: string;
-    domain: string;
-    documents: string;
+  date: string;
+  domain: string;
+  documents: string;
 }): string =>
-    template(
-        `Today's date is {{date}}.
+  template(
+    `Today's date is {{date}}.
 You are an AI assistant. The user asking questions may be a developer, technical writer, or product manager. You can provide code examples.
 ONLY respond to questions using information from the documents. Stay on topic.
 If no relevant information is found in the documents, respond, "I'm sorry. I'm not able to assist with that."
@@ -22,5 +22,5 @@ Use the following documents to answer the user's question:
 
 {{documents}}
 `,
-        { interpolate: /{{([^}]+)}}/g }
-    )(data);
+    { interpolate: /{{([^}]+)}}/g }
+  )(data);

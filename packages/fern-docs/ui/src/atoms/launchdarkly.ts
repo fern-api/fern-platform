@@ -8,96 +8,93 @@ import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
 
 // TODO: consolidate the types with the edge-config package
 interface LaunchDarklyInfo {
-    clientSideId: string;
-    kind: "multi";
-    user:
-        | { anonymous: true }
-        | {
-              key: string;
-              email?: string;
-              name?: string;
-          };
-    device: {
+  clientSideId: string;
+  kind: "multi";
+  user:
+    | { anonymous: true }
+    | {
         key: string;
-        [key: string]: unknown;
-    };
+        email?: string;
+        name?: string;
+      };
+  device: {
+    key: string;
+    [key: string]: unknown;
+  };
 }
 
 // this is a singleton atom that initializes the LaunchDarkly client-side SDK
 const LD_CLIENT_ATOM = atom<LDClient.LDClient | undefined>(undefined);
 
 const SET_LAUNCH_DARKLY_INFO_ATOM = atom(
-    undefined,
-    async (get, set, info: LaunchDarklyInfo) => {
-        const client = get(LD_CLIENT_ATOM);
-        const { clientSideId, ...context } = info;
+  undefined,
+  async (get, set, info: LaunchDarklyInfo) => {
+    const client = get(LD_CLIENT_ATOM);
+    const { clientSideId, ...context } = info;
 
-        if (client) {
-            await client.identify(context);
-            return;
-        } else {
-            const client = LDClient.initialize(clientSideId, context);
-            await client.waitForInitialization();
-            set(LD_CLIENT_ATOM, client);
-        }
+    if (client) {
+      await client.identify(context);
+      return;
+    } else {
+      const client = LDClient.initialize(clientSideId, context);
+      await client.waitForInitialization();
+      set(LD_CLIENT_ATOM, client);
     }
+  }
 );
 
 // TODO: support non-boolean flags
 export const useLaunchDarklyFlag = (
-    flag: string,
-    equals = true,
-    not = false
+  flag: string,
+  equals = true,
+  not = false
 ): boolean => {
-    useInitLaunchDarklyClient();
+  useInitLaunchDarklyClient();
 
-    const client = useAtomValue(LD_CLIENT_ATOM);
+  const client = useAtomValue(LD_CLIENT_ATOM);
 
-    // TODO: bootstrap the flag value from the server, and/or local storage
-    const getFlagEnabled = useCallback(() => {
-        if (!client) {
-            return not;
-        }
-        // force the flag to be a boolean:
-        const isTrue = client.variation(flag, false) === equals;
-        return not ? !isTrue : isTrue;
-    }, [client, equals, flag, not]);
+  // TODO: bootstrap the flag value from the server, and/or local storage
+  const getFlagEnabled = useCallback(() => {
+    if (!client) {
+      return not;
+    }
+    // force the flag to be a boolean:
+    const isTrue = client.variation(flag, false) === equals;
+    return not ? !isTrue : isTrue;
+  }, [client, equals, flag, not]);
 
-    const [enabled, setEnabled] = useState(getFlagEnabled);
+  const [enabled, setEnabled] = useState(getFlagEnabled);
 
-    // listen for changes to the flag
-    useEffect(() => {
-        setEnabled(getFlagEnabled());
+  // listen for changes to the flag
+  useEffect(() => {
+    setEnabled(getFlagEnabled());
 
-        if (!client) {
-            return;
-        }
+    if (!client) {
+      return;
+    }
 
-        const listener = () => {
-            setEnabled(getFlagEnabled());
-        };
+    const listener = () => {
+      setEnabled(getFlagEnabled());
+    };
 
-        client.on("ready", listener);
-        client.on("change", listener);
+    client.on("ready", listener);
+    client.on("change", listener);
 
-        return () => {
-            client.off("ready", listener);
-            client.off("change", listener);
-        };
-    }, [client, flag, getFlagEnabled]);
+    return () => {
+      client.off("ready", listener);
+      client.off("change", listener);
+    };
+  }, [client, flag, getFlagEnabled]);
 
-    return enabled;
+  return enabled;
 };
 
 // since useSWR is cached globally, we can use this hook in multiple components without worrying about multiple requests
 function useInitLaunchDarklyClient() {
-    const setInfo = useSetAtom(SET_LAUNCH_DARKLY_INFO_ATOM);
-    useApiRouteSWR<LaunchDarklyInfo>(
-        "/api/fern-docs/integrations/launchdarkly",
-        {
-            onSuccess(data) {
-                void setInfo(data);
-            },
-        }
-    );
+  const setInfo = useSetAtom(SET_LAUNCH_DARKLY_INFO_ATOM);
+  useApiRouteSWR<LaunchDarklyInfo>("/api/fern-docs/integrations/launchdarkly", {
+    onSuccess(data) {
+      void setInfo(data);
+    },
+  });
 }

@@ -17,113 +17,108 @@ const ERROR_QUERY = "error";
 const ERROR_URI_QUERY = "error_uri";
 
 export default async function handler(req: NextRequest): Promise<NextResponse> {
-    if (req.method !== "GET") {
-        return new NextResponse(null, { status: 405 });
+  if (req.method !== "GET") {
+    return new NextResponse(null, { status: 405 });
+  }
+
+  const errorDescription = req.nextUrl.searchParams.get(
+    ERROR_DESCRIPTION_QUERY
+  );
+  const error = req.nextUrl.searchParams.get(ERROR_QUERY);
+  const errorUri = req.nextUrl.searchParams.get(ERROR_URI_QUERY); // note: this contains reference to the WorkOS docs
+
+  if (error != null) {
+    // TODO: store this login attempt in posthog
+    // eslint-disable-next-line no-console
+    console.error(error, errorDescription, errorUri);
+    return new NextResponse(null, { status: 400 });
+  }
+
+  // TODO: this is based on an incorrect implementation of the state param— we need to sign it with a JWT.
+  const return_to_param = getReturnToQueryParam();
+  const return_to = req.nextUrl.searchParams.get(return_to_param);
+  const url = safeUrl(return_to ?? req.nextUrl.origin);
+
+  if (url == null) {
+    // eslint-disable-next-line no-console
+    console.error(`Invalid ${return_to_param} param provided:`, return_to);
+    return new NextResponse(null, { status: 400 });
+  }
+
+  // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
+  // if the current url is app.buildwithfern.com, we should redirect to ***.docs.buildwithfern.com
+  if (req.nextUrl.host !== url.host && getDocsDomainEdge(req) !== url.host) {
+    if (
+      req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === req.nextUrl.host
+    ) {
+      // eslint-disable-next-line no-console
+      console.error(
+        FORWARDED_HOST_QUERY,
+        "is the same as the host:",
+        String(req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY))
+      );
+      return new NextResponse(null, { status: 400 });
     }
 
-    const errorDescription = req.nextUrl.searchParams.get(
-        ERROR_DESCRIPTION_QUERY
+    // TODO: need to support docs instances with subpaths (forward-proxied from the origin).
+    const destination = new URL(
+      `${req.nextUrl.pathname}${req.nextUrl.search}`,
+      url.origin
     );
-    const error = req.nextUrl.searchParams.get(ERROR_QUERY);
-    const errorUri = req.nextUrl.searchParams.get(ERROR_URI_QUERY); // note: this contains reference to the WorkOS docs
+    destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
+    return FernNextResponse.redirect(req, { destination });
+  }
 
-    if (error != null) {
-        // TODO: store this login attempt in posthog
-        // eslint-disable-next-line no-console
-        console.error(error, errorDescription, errorUri);
-        return new NextResponse(null, { status: 400 });
+  const code = req.nextUrl.searchParams.get(CODE_QUERY);
+
+  if (code == null) {
+    // eslint-disable-next-line no-console
+    console.error("No code param provided");
+    return new NextResponse(null, { status: 400 });
+  }
+
+  try {
+    const { accessToken, refreshToken, user, impersonator } =
+      await workos().userManagement.authenticateWithCode({
+        code,
+        clientId: getWorkOSClientId(),
+      });
+
+    if (!accessToken || !refreshToken) {
+      throw new Error("response is missing tokens");
     }
 
-    // TODO: this is based on an incorrect implementation of the state param— we need to sign it with a JWT.
-    const return_to_param = getReturnToQueryParam();
-    const return_to = req.nextUrl.searchParams.get(return_to_param);
-    const url = safeUrl(return_to ?? req.nextUrl.origin);
+    const session = await encryptSession({
+      accessToken,
+      refreshToken,
+      user,
+      impersonator,
+    });
 
-    if (url == null) {
-        // eslint-disable-next-line no-console
-        console.error(`Invalid ${return_to_param} param provided:`, return_to);
-        return new NextResponse(null, { status: 400 });
-    }
+    // TODO: check if we need to run `getAllowedRedirectUrls(config)` because we don't have the edge config imported here
+    const res = FernNextResponse.redirect(req, { destination: url });
+    res.cookies.set(COOKIE_FERN_TOKEN, session, withSecureCookie(url.origin));
 
-    // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
-    // if the current url is app.buildwithfern.com, we should redirect to ***.docs.buildwithfern.com
-    if (req.nextUrl.host !== url.host && getDocsDomainEdge(req) !== url.host) {
-        if (
-            req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) ===
-            req.nextUrl.host
-        ) {
-            // eslint-disable-next-line no-console
-            console.error(
-                FORWARDED_HOST_QUERY,
-                "is the same as the host:",
-                String(req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY))
-            );
-            return new NextResponse(null, { status: 400 });
-        }
+    return res;
+  } catch (error) {
+    const errorRes = {
+      error: error instanceof Error ? error.message : String(error),
+    };
 
-        // TODO: need to support docs instances with subpaths (forward-proxied from the origin).
-        const destination = new URL(
-            `${req.nextUrl.pathname}${req.nextUrl.search}`,
-            url.origin
-        );
-        destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
-        return FernNextResponse.redirect(req, { destination });
-    }
+    // eslint-disable-next-line no-console
+    console.error(errorRes);
 
-    const code = req.nextUrl.searchParams.get(CODE_QUERY);
-
-    if (code == null) {
-        // eslint-disable-next-line no-console
-        console.error("No code param provided");
-        return new NextResponse(null, { status: 400 });
-    }
-
-    try {
-        const { accessToken, refreshToken, user, impersonator } =
-            await workos().userManagement.authenticateWithCode({
-                code,
-                clientId: getWorkOSClientId(),
-            });
-
-        if (!accessToken || !refreshToken) {
-            throw new Error("response is missing tokens");
-        }
-
-        const session = await encryptSession({
-            accessToken,
-            refreshToken,
-            user,
-            impersonator,
-        });
-
-        // TODO: check if we need to run `getAllowedRedirectUrls(config)` because we don't have the edge config imported here
-        const res = FernNextResponse.redirect(req, { destination: url });
-        res.cookies.set(
-            COOKIE_FERN_TOKEN,
-            session,
-            withSecureCookie(url.origin)
-        );
-
-        return res;
-    } catch (error) {
-        const errorRes = {
-            error: error instanceof Error ? error.message : String(error),
-        };
-
-        // eslint-disable-next-line no-console
-        console.error(errorRes);
-
-        return errorResponse();
-    }
+    return errorResponse();
+  }
 }
 
 function errorResponse() {
-    const errorBody = {
-        error: {
-            message: "Something went wrong",
-            description:
-                "Couldn't sign in. If you are not sure what happened, please contact your organization admin.",
-        },
-    };
-    return NextResponse.json(errorBody, { status: 500 });
+  const errorBody = {
+    error: {
+      message: "Something went wrong",
+      description:
+        "Couldn't sign in. If you are not sure what happened, please contact your organization admin.",
+    },
+  };
+  return NextResponse.json(errorBody, { status: 500 });
 }

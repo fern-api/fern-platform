@@ -3,21 +3,21 @@ import { SemanticColor, SemanticColorMap } from "../colors";
 import { Badge, BadgeProps } from "./badge";
 
 export interface SemanticBadgeProps extends Omit<BadgeProps, "color"> {
-    intent?: SemanticColor;
+  intent?: SemanticColor;
 }
 
 export const SemanticBadge = forwardRef<
-    HTMLSpanElement & HTMLButtonElement,
-    SemanticBadgeProps
+  HTMLSpanElement & HTMLButtonElement,
+  SemanticBadgeProps
 >(({ intent, ...props }, ref) => {
-    return (
-        <Badge
-            {...props}
-            ref={ref}
-            color={intent ? SemanticColorMap[intent] : undefined}
-            data-intent={intent}
-        />
-    );
+  return (
+    <Badge
+      {...props}
+      ref={ref}
+      color={intent ? SemanticColorMap[intent] : undefined}
+      data-intent={intent}
+    />
+  );
 });
 
 SemanticBadge.displayName = "SemanticBadge";

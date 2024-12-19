@@ -6,33 +6,33 @@ import { DEFAULT_COLORS } from "../../themes/stylesheet/getColorVariables";
 import useInkeepSettings from "./useInkeepSettings";
 
 const ChatButton = dynamic(
-    () => import("@inkeep/widgets").then((mod) => mod.InkeepChatButton),
-    {
-        ssr: false,
-    }
+  () => import("@inkeep/widgets").then((mod) => mod.InkeepChatButton),
+  {
+    ssr: false,
+  }
 );
 
 function toString(rgba: DocsV1Read.RgbaColor): string {
-    if (rgba.a == null) {
-        return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`;
-    } else {
-        return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
-    }
+  if (rgba.a == null) {
+    return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`;
+  } else {
+    return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+  }
 }
 
 export function InkeepChatButton(): ReactElement | null {
-    const settings = useInkeepSettings();
-    const colors = useColors();
+  const settings = useInkeepSettings();
+  const colors = useColors();
 
-    if (settings == null) {
-        return null;
-    }
+  if (settings == null) {
+    return null;
+  }
 
-    return (
-        <ChatButton
-            {...settings}
-            stylesheets={[
-                <style key="0">{`
+  return (
+    <ChatButton
+      {...settings}
+      stylesheets={[
+        <style key="0">{`
                     .ikp-floating-button {
                         background-color: ${colors.dark?.background.type === "solid" ? toString(colors.dark.background) : toString(DEFAULT_COLORS.background.dark)};
                         color: white;
@@ -43,7 +43,7 @@ export function InkeepChatButton(): ReactElement | null {
                         color: black;
                     }
                 `}</style>,
-            ]}
-        />
-    );
+      ]}
+    />
+  );
 }

@@ -1,48 +1,48 @@
 @layer components {
-    .fern-web-socket-trigger {
-        @apply w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default data-[state=closed]:rounded-[inherit] transition-[background,border-radius] duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
-        @apply sticky top-0 z-10 backdrop-blur;
+  .fern-web-socket-trigger {
+    @apply w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default data-[state=closed]:rounded-[inherit] transition-[background,border-radius] duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+    @apply sticky top-0 z-10 backdrop-blur;
 
-        .fern-web-socket-client,
-        .fern-web-socket-server,
-        .fern-web-socket-end-sample {
-            @apply inline-block shrink-0 rounded-full p-0.5;
-        }
-
-        .fern-web-socket-client {
-            @apply t-success bg-tag-success;
-        }
-
-        .fern-web-socket-server {
-            @apply t-accent-aaa bg-tag-primary;
-        }
-
-        .fern-web-socket-end-sample {
-            @apply t-danger bg-tag-danger;
-        }
-
-        .fern-web-socket-type {
-            @apply flex-1 inline-flex justify-end;
-
-            .fern-web-socket-badge {
-                @apply t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap;
-            }
-        }
-
-        .fern-web-socket-trigger-data {
-            @apply flex-1 min-w-0 shrink truncate font-mono text-xs text-left;
-        }
-
-        .fern-web-socket-copy {
-            @apply -my-2 -ml-1 -mr-2;
-        }
-
-        .fern-web-socket-chevron {
-            @apply size-icon t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
-        }
+    .fern-web-socket-client,
+    .fern-web-socket-server,
+    .fern-web-socket-end-sample {
+      @apply inline-block shrink-0 rounded-full p-0.5;
     }
 
-    .fern-web-socket-content {
-        @apply overflow-hidden fern-collapsible;
+    .fern-web-socket-client {
+      @apply t-success bg-tag-success;
     }
+
+    .fern-web-socket-server {
+      @apply t-accent-aaa bg-tag-primary;
+    }
+
+    .fern-web-socket-end-sample {
+      @apply t-danger bg-tag-danger;
+    }
+
+    .fern-web-socket-type {
+      @apply flex-1 inline-flex justify-end;
+
+      .fern-web-socket-badge {
+        @apply t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap;
+      }
+    }
+
+    .fern-web-socket-trigger-data {
+      @apply flex-1 min-w-0 shrink truncate font-mono text-xs text-left;
+    }
+
+    .fern-web-socket-copy {
+      @apply -my-2 -ml-1 -mr-2;
+    }
+
+    .fern-web-socket-chevron {
+      @apply size-icon t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+    }
+  }
+
+  .fern-web-socket-content {
+    @apply overflow-hidden fern-collapsible;
+  }
 }

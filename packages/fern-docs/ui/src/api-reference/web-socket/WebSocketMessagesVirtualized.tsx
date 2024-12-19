@@ -2,7 +2,7 @@ import { FC } from "react";
 import { WebSocketMessages, WebSocketMessagesProps } from "./WebSocketMessages";
 
 export const WebSocketMessagesVirtualized: FC<WebSocketMessagesProps> = ({
-    messages,
+  messages,
 }) => {
-    return <WebSocketMessages messages={messages} virtualized />;
+  return <WebSocketMessages messages={messages} virtualized />;
 };

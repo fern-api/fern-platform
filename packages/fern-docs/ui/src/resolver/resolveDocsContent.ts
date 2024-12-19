@@ -16,170 +16,167 @@ import { resolveMarkdownPage } from "./resolveMarkdownPage";
 import { resolveSubtitle } from "./resolveSubtitle";
 
 interface ResolveDocsContentArgs {
-    /**
-     * This is x-fern-host (NOT the host of the current request)
-     */
-    domain: string;
-    node: FernNavigation.NavigationNodeWithMetadata;
-    version: FernNavigation.VersionNode | FernNavigation.RootNode;
-    apiReference: FernNavigation.ApiReferenceNode | undefined;
-    parents: readonly FernNavigation.NavigationNodeParent[];
-    breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-    prev: FernNavigation.NavigationNodeNeighbor | undefined;
-    next: FernNavigation.NavigationNodeNeighbor | undefined;
-    apis: Record<string, APIV1Read.ApiDefinition>;
-    pages: Record<string, DocsV1Read.PageContent>;
-    mdxOptions?: FernSerializeMdxOptions;
-    featureFlags: FeatureFlags;
-    serializeMdx: MDX_SERIALIZER;
-    engine: string;
+  /**
+   * This is x-fern-host (NOT the host of the current request)
+   */
+  domain: string;
+  node: FernNavigation.NavigationNodeWithMetadata;
+  version: FernNavigation.VersionNode | FernNavigation.RootNode;
+  apiReference: FernNavigation.ApiReferenceNode | undefined;
+  parents: readonly FernNavigation.NavigationNodeParent[];
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  prev: FernNavigation.NavigationNodeNeighbor | undefined;
+  next: FernNavigation.NavigationNodeNeighbor | undefined;
+  apis: Record<string, APIV1Read.ApiDefinition>;
+  pages: Record<string, DocsV1Read.PageContent>;
+  mdxOptions?: FernSerializeMdxOptions;
+  featureFlags: FeatureFlags;
+  serializeMdx: MDX_SERIALIZER;
+  engine: string;
 }
 
 export async function resolveDocsContent({
-    domain,
-    node,
-    version,
-    apiReference,
-    parents,
-    breadcrumb,
-    prev,
-    next,
-    apis,
-    pages,
-    mdxOptions,
-    featureFlags,
-    serializeMdx,
-    engine,
+  domain,
+  node,
+  version,
+  apiReference,
+  parents,
+  breadcrumb,
+  prev,
+  next,
+  apis,
+  pages,
+  mdxOptions,
+  featureFlags,
+  serializeMdx,
+  engine,
 }: ResolveDocsContentArgs): Promise<DocsContent | undefined> {
-    const neighbors = await getNeighbors({ prev, next }, pages, serializeMdx);
+  const neighbors = await getNeighbors({ prev, next }, pages, serializeMdx);
 
-    const markdownLoader = MarkdownLoader.create(domain)
-        .withPages(pages)
-        .withMdxBundler(
-            (mdx: string, pageId: FernNavigation.PageId | undefined) =>
-                serializeMdx(mdx, {
-                    ...mdxOptions,
-                    filename: pageId,
-                }),
-            engine
-        );
+  const markdownLoader = MarkdownLoader.create(domain)
+    .withPages(pages)
+    .withMdxBundler(
+      (mdx: string, pageId: FernNavigation.PageId | undefined) =>
+        serializeMdx(mdx, {
+          ...mdxOptions,
+          filename: pageId,
+        }),
+      engine
+    );
 
-    const apiLoaders = mapValues(apis, (api) => {
-        return ApiDefinitionLoader.create(domain, api.id)
-            .withMdxBundler(serializeMdx, engine)
-            .withFlags(featureFlags)
-            .withApiDefinition(
-                ApiDefinitionV1ToLatest.from(api, featureFlags).migrate()
-            )
-            .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-            .withResolveDescriptions();
+  const apiLoaders = mapValues(apis, (api) => {
+    return ApiDefinitionLoader.create(domain, api.id)
+      .withMdxBundler(serializeMdx, engine)
+      .withFlags(featureFlags)
+      .withApiDefinition(
+        ApiDefinitionV1ToLatest.from(api, featureFlags).migrate()
+      )
+      .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+      .withResolveDescriptions();
+  });
+
+  let result: DocsContent | undefined;
+
+  if (node.type === "changelog") {
+    result = await resolveChangelogPage({
+      node,
+      breadcrumb,
+      pages,
+      mdxOptions,
+      serializeMdx,
     });
-
-    let result: DocsContent | undefined;
-
-    if (node.type === "changelog") {
-        result = await resolveChangelogPage({
-            node,
-            breadcrumb,
-            pages,
-            mdxOptions,
-            serializeMdx,
-        });
-    } else if (node.type === "changelogEntry") {
-        result = await resolveChangelogEntryPage({
-            node,
-            parents,
-            breadcrumb,
-            pages,
-            serializeMdx,
-            mdxOptions,
-            neighbors,
-        });
-    } else if (
-        apiReference != null &&
-        apiReference.paginated &&
-        FernNavigation.hasMarkdown(node)
-    ) {
-        result = await resolveMarkdownPage({
-            node,
-            version,
-            breadcrumb,
-            apiLoaders,
-            neighbors,
-            markdownLoader,
-        });
-    } else if (apiReference != null) {
-        const loader = apiLoaders[apiReference.apiDefinitionId];
-        if (loader == null) {
-            console.error(
-                "API definition not found",
-                apiReference.apiDefinitionId
-            );
-            return;
-        }
-
-        if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
-            result = await resolveApiEndpointPage({
-                node,
-                parents,
-                apiDefinitionLoader: loader,
-                neighbors,
-                showErrors: apiReference.showErrors,
-            });
-        } else {
-            result = await resolveApiReferencePage({
-                node,
-                apiDefinitionLoader: loader,
-                apiReferenceNode: apiReference,
-                parents,
-                markdownLoader,
-            });
-        }
-    } else if (FernNavigation.hasMarkdown(node)) {
-        result = await resolveMarkdownPage({
-            node,
-            version,
-            breadcrumb,
-            apiLoaders,
-            neighbors,
-            markdownLoader,
-        });
+  } else if (node.type === "changelogEntry") {
+    result = await resolveChangelogEntryPage({
+      node,
+      parents,
+      breadcrumb,
+      pages,
+      serializeMdx,
+      mdxOptions,
+      neighbors,
+    });
+  } else if (
+    apiReference != null &&
+    apiReference.paginated &&
+    FernNavigation.hasMarkdown(node)
+  ) {
+    result = await resolveMarkdownPage({
+      node,
+      version,
+      breadcrumb,
+      apiLoaders,
+      neighbors,
+      markdownLoader,
+    });
+  } else if (apiReference != null) {
+    const loader = apiLoaders[apiReference.apiDefinitionId];
+    if (loader == null) {
+      console.error("API definition not found", apiReference.apiDefinitionId);
+      return;
     }
 
-    if (result === undefined) {
-        console.error(`Failed to resolve content for ${node.slug}`);
+    if (apiReference.paginated && FernNavigation.isApiLeaf(node)) {
+      result = await resolveApiEndpointPage({
+        node,
+        parents,
+        apiDefinitionLoader: loader,
+        neighbors,
+        showErrors: apiReference.showErrors,
+      });
+    } else {
+      result = await resolveApiReferencePage({
+        node,
+        apiDefinitionLoader: loader,
+        apiReferenceNode: apiReference,
+        parents,
+        markdownLoader,
+      });
     }
+  } else if (FernNavigation.hasMarkdown(node)) {
+    result = await resolveMarkdownPage({
+      node,
+      version,
+      breadcrumb,
+      apiLoaders,
+      neighbors,
+      markdownLoader,
+    });
+  }
 
-    return result;
+  if (result === undefined) {
+    console.error(`Failed to resolve content for ${node.slug}`);
+  }
+
+  return result;
 }
 
 async function getNeighbor(
-    node: FernNavigation.NavigationNodeNeighbor | undefined,
-    pages: Record<string, DocsV1Read.PageContent>,
-    serializeMdx: MDX_SERIALIZER
+  node: FernNavigation.NavigationNodeNeighbor | undefined,
+  pages: Record<string, DocsV1Read.PageContent>,
+  serializeMdx: MDX_SERIALIZER
 ): Promise<DocsContent.Neighbor | null> {
-    if (node == null) {
-        return null;
-    }
-    const excerpt = await resolveSubtitle(node, pages, serializeMdx);
-    return {
-        slug: node.slug,
-        title: node.title,
-        excerpt,
-    };
+  if (node == null) {
+    return null;
+  }
+  const excerpt = await resolveSubtitle(node, pages, serializeMdx);
+  return {
+    slug: node.slug,
+    title: node.title,
+    excerpt,
+  };
 }
 
 async function getNeighbors(
-    neighbors: {
-        prev: FernNavigation.NavigationNodeNeighbor | undefined;
-        next: FernNavigation.NavigationNodeNeighbor | undefined;
-    },
-    pages: Record<string, DocsV1Read.PageContent>,
-    serializeMdx: MDX_SERIALIZER
+  neighbors: {
+    prev: FernNavigation.NavigationNodeNeighbor | undefined;
+    next: FernNavigation.NavigationNodeNeighbor | undefined;
+  },
+  pages: Record<string, DocsV1Read.PageContent>,
+  serializeMdx: MDX_SERIALIZER
 ): Promise<DocsContent.Neighbors> {
-    const [prev, next] = await Promise.all([
-        getNeighbor(neighbors.prev, pages, serializeMdx),
-        getNeighbor(neighbors.next, pages, serializeMdx),
-    ]);
-    return { prev, next };
+  const [prev, next] = await Promise.all([
+    getNeighbor(neighbors.prev, pages, serializeMdx),
+    getNeighbor(neighbors.next, pages, serializeMdx),
+  ]);
+  return { prev, next };
 }

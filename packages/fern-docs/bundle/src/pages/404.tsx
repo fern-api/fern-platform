@@ -11,9 +11,9 @@ import { ReactElement, useEffect } from "react";
 // The middleware is unable to rewrite to the NextData page route, so it always returns {}.
 // If you use initial props, the middleware's response will probably cause a client-side error to be thrown.
 export default function Page(): ReactElement {
-    useEffect(() => {
-        capturePosthogEvent("not_found");
-    });
+  useEffect(() => {
+    capturePosthogEvent("not_found");
+  });
 
-    return <Error statusCode={404} />;
+  return <Error statusCode={404} />;
 }

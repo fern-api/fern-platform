@@ -1,13 +1,4 @@
 {
   "trailingComma": "es5",
-  "tabWidth": 4,
-  "overrides": [
-    {
-      "files": "*.{yml,yaml,json,md,mdx}",
-      "options": {
-        "tabWidth": 2
-      }
-    }
-  ],
   "plugins": ["prettier-plugin-packagejson"]
 }

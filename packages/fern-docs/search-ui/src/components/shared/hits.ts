@@ -1,15 +1,15 @@
 import { AlgoliaRecordHit } from "../../types";
 
 export interface GroupedHit {
-    title: string;
-    path: string;
-    icon?: string;
-    record?: AlgoliaRecordHit;
+  title: string;
+  path: string;
+  icon?: string;
+  record?: AlgoliaRecordHit;
 }
 
 export interface GroupedHits {
-    title?: string;
-    hits: GroupedHit[];
+  title?: string;
+  hits: GroupedHit[];
 }
 
 // type SegmentType = "markdown" | "changelog" | "parameter" | "http" | "webhook" | "websocket";
@@ -23,33 +23,33 @@ export interface GroupedHits {
 // };
 
 export function generateHits(items: AlgoliaRecordHit[]): GroupedHits[] {
-    // return Object.entries(
-    //     groupBy(items, (item): SegmentType => {
-    //         if (item.type === "api-reference") {
-    //             return item.api_type;
-    //         }
-    //         return item.type;
-    //     }),
-    // ).map(([type, hits]) => ({
-    //     title: SEGMENT_DISPLAY_NAMES[type as SegmentType] ?? type,
-    //     hits: hits.map((hit) => ({
-    //         title: hit.title,
-    //         path: `${hit.pathname}${hit.hash ?? ""}`,
-    //         icon: hit.icon,
-    //         record: hit,
-    //     })),
-    // }));
+  // return Object.entries(
+  //     groupBy(items, (item): SegmentType => {
+  //         if (item.type === "api-reference") {
+  //             return item.api_type;
+  //         }
+  //         return item.type;
+  //     }),
+  // ).map(([type, hits]) => ({
+  //     title: SEGMENT_DISPLAY_NAMES[type as SegmentType] ?? type,
+  //     hits: hits.map((hit) => ({
+  //         title: hit.title,
+  //         path: `${hit.pathname}${hit.hash ?? ""}`,
+  //         icon: hit.icon,
+  //         record: hit,
+  //     })),
+  // }));
 
-    return [
-        {
-            title: "Results",
-            hits: items.map((hit) => ({
-                title: hit.title,
-                path: `${hit.pathname}${hit.hash ?? ""}`,
-                // category: SEGMENT_DISPLAY_NAMES[hit.type === "api-reference" ? hit.api_type : hit.type],
-                icon: hit.icon,
-                record: hit,
-            })),
-        },
-    ];
+  return [
+    {
+      title: "Results",
+      hits: items.map((hit) => ({
+        title: hit.title,
+        path: `${hit.pathname}${hit.hash ?? ""}`,
+        // category: SEGMENT_DISPLAY_NAMES[hit.type === "api-reference" ? hit.api_type : hit.type],
+        icon: hit.icon,
+        record: hit,
+      })),
+    },
+  ];
 }

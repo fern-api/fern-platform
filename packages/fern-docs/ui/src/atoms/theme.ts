@@ -18,16 +18,16 @@ const MEDIA = "(prefers-color-scheme: dark)";
 type Theme = (typeof SYSTEM_THEMES)[number];
 
 const SETTABLE_THEME_ATOM = atomWithStorageString<Theme | typeof SYSTEM>(
-    STORAGE_KEY,
-    SYSTEM,
-    {
-        validate: z.union([
-            z.literal("system"),
-            z.literal("light"),
-            z.literal("dark"),
-        ]),
-        getOnInit: true,
-    }
+  STORAGE_KEY,
+  SYSTEM,
+  {
+    validate: z.union([
+      z.literal("system"),
+      z.literal("light"),
+      z.literal("dark"),
+    ]),
+    getOnInit: true,
+  }
 );
 SETTABLE_THEME_ATOM.debugLabel = "SETTABLE_THEME_ATOM";
 
@@ -35,153 +35,153 @@ const IS_SYSTEM_THEME_ATOM = atom((get) => get(SETTABLE_THEME_ATOM) === SYSTEM);
 IS_SYSTEM_THEME_ATOM.debugLabel = "IS_SYSTEM_THEME_ATOM";
 
 export const COLORS_ATOM = selectAtom(
-    DOCS_ATOM,
-    (docs) => docs.colors,
-    isEqual
+  DOCS_ATOM,
+  (docs) => docs.colors,
+  isEqual
 );
 COLORS_ATOM.debugLabel = "COLORS_ATOM";
 
 export const AVAILABLE_THEMES_ATOM = atom((get) =>
-    getAvailableThemes(get(COLORS_ATOM))
+  getAvailableThemes(get(COLORS_ATOM))
 );
 AVAILABLE_THEMES_ATOM.debugLabel = "AVAILABLE_THEMES_ATOM";
 
 export function useColors(): Partial<ColorsConfig> {
-    return useAtomValue(COLORS_ATOM);
+  return useAtomValue(COLORS_ATOM);
 }
 
 export const THEME_SWITCH_ENABLED_ATOM = atom((get) => {
-    const availableThemes = get(AVAILABLE_THEMES_ATOM);
-    return availableThemes.length > 1;
+  const availableThemes = get(AVAILABLE_THEMES_ATOM);
+  return availableThemes.length > 1;
 });
 THEME_SWITCH_ENABLED_ATOM.debugLabel = "THEME_SWITCH_ENABLED_ATOM";
 
 export const THEME_ATOM = atomWithRefresh(
-    (get): Theme => {
-        const storedTheme = get(SETTABLE_THEME_ATOM);
-        const availableThemes = get(AVAILABLE_THEMES_ATOM);
-        if (availableThemes.length === 1) {
-            return availableThemes[0];
-        } else if (storedTheme === SYSTEM) {
-            if (typeof window !== "undefined") {
-                return getSystemTheme();
-            }
-        } else {
-            return storedTheme;
-        }
-        return availableThemes[0];
-    },
-    (_get, set, theme: Theme | typeof SYSTEM) => {
-        set(SETTABLE_THEME_ATOM, theme);
+  (get): Theme => {
+    const storedTheme = get(SETTABLE_THEME_ATOM);
+    const availableThemes = get(AVAILABLE_THEMES_ATOM);
+    if (availableThemes.length === 1) {
+      return availableThemes[0];
+    } else if (storedTheme === SYSTEM) {
+      if (typeof window !== "undefined") {
+        return getSystemTheme();
+      }
+    } else {
+      return storedTheme;
     }
+    return availableThemes[0];
+  },
+  (_get, set, theme: Theme | typeof SYSTEM) => {
+    set(SETTABLE_THEME_ATOM, theme);
+  }
 );
 
 export function useTheme(): Theme {
-    return useAtomValue(THEME_ATOM);
+  return useAtomValue(THEME_ATOM);
 }
 
 export function useSetTheme(): (theme: Theme | typeof SYSTEM) => void {
-    return useAtom(SETTABLE_THEME_ATOM)[1];
+  return useAtom(SETTABLE_THEME_ATOM)[1];
 }
 
 export function useToggleTheme(): () => void {
-    const setTheme = useSetTheme();
-    const theme = useTheme();
-    return () => setTheme(theme === "dark" ? "light" : "dark");
+  const setTheme = useSetTheme();
+  const theme = useTheme();
+  return () => setTheme(theme === "dark" ? "light" : "dark");
 }
 
 export function useSetSystemTheme(): () => void {
-    const setTheme = useSetTheme();
-    return () => setTheme(SYSTEM);
+  const setTheme = useSetTheme();
+  return () => setTheme(SYSTEM);
 }
 
 export const THEME_BG_COLOR = atom((get) => {
-    const theme = get(THEME_ATOM);
-    const colors = get(COLORS_ATOM);
-    const config = colors[theme];
-    if (config == null) {
-        return undefined;
-    }
-    return getThemeColor(config);
+  const theme = get(THEME_ATOM);
+  const colors = get(COLORS_ATOM);
+  const config = colors[theme];
+  if (config == null) {
+    return undefined;
+  }
+  return getThemeColor(config);
 });
 THEME_BG_COLOR.debugLabel = "THEME_BG_COLOR";
 
 const disableAnimation = () => {
-    if (typeof document === "undefined") {
-        return noop;
-    }
+  if (typeof document === "undefined") {
+    return noop;
+  }
 
-    const css = document.createElement("style");
-    css.appendChild(
-        document.createTextNode(
-            "*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}"
-        )
-    );
-    document.head.appendChild(css);
+  const css = document.createElement("style");
+  css.appendChild(
+    document.createTextNode(
+      "*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}"
+    )
+  );
+  document.head.appendChild(css);
 
-    return () => {
-        // Force restyle
-        (() => window.getComputedStyle(document.body))();
+  return () => {
+    // Force restyle
+    (() => window.getComputedStyle(document.body))();
 
-        // Wait for next tick before removing
-        setTimeout(() => {
-            document.head.removeChild(css);
-        }, 1);
-    };
+    // Wait for next tick before removing
+    setTimeout(() => {
+      document.head.removeChild(css);
+    }, 1);
+  };
 };
 
 export type AvailableThemes = [Theme] | [Theme, Theme];
 const getAvailableThemes = (
-    colors: Partial<ColorsConfig> = {}
+  colors: Partial<ColorsConfig> = {}
 ): AvailableThemes => {
-    if (
-        (colors.dark != null && colors.light != null) ||
-        (colors.dark == null && colors.light == null)
-    ) {
-        return ["light", "dark"];
-    }
-    return colors.dark != null ? ["dark"] : ["light"];
+  if (
+    (colors.dark != null && colors.light != null) ||
+    (colors.dark == null && colors.light == null)
+  ) {
+    return ["light", "dark"];
+  }
+  return colors.dark != null ? ["dark"] : ["light"];
 };
 
 const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
-    if (!e) {
-        e = window.matchMedia(MEDIA);
-    }
-    const isDark = e.matches;
-    const systemTheme = isDark ? "dark" : "light";
-    return systemTheme;
+  if (!e) {
+    e = window.matchMedia(MEDIA);
+  }
+  const isDark = e.matches;
+  const systemTheme = isDark ? "dark" : "light";
+  return systemTheme;
 };
 
 export function useInitializeTheme(): void {
-    useAtomEffect(
-        useCallbackOne((get) => {
-            const enableAnimation = disableAnimation();
-            const theme = get(THEME_ATOM);
-            const d = document.documentElement;
-            d.classList.remove(...SYSTEM_THEMES);
-            d.classList.add(theme);
-            d.style.colorScheme = theme;
-            enableAnimation();
-        }, [])
-    );
+  useAtomEffect(
+    useCallbackOne((get) => {
+      const enableAnimation = disableAnimation();
+      const theme = get(THEME_ATOM);
+      const d = document.documentElement;
+      d.classList.remove(...SYSTEM_THEMES);
+      d.classList.add(theme);
+      d.style.colorScheme = theme;
+      enableAnimation();
+    }, [])
+  );
 
-    useAtomEffect(
-        useCallbackOne((get, set) => {
-            const handleMediaQuery = () => {
-                if (get.peek(IS_SYSTEM_THEME_ATOM)) {
-                    set(THEME_ATOM);
-                }
-            };
+  useAtomEffect(
+    useCallbackOne((get, set) => {
+      const handleMediaQuery = () => {
+        if (get.peek(IS_SYSTEM_THEME_ATOM)) {
+          set(THEME_ATOM);
+        }
+      };
 
-            const media = window.matchMedia(MEDIA);
+      const media = window.matchMedia(MEDIA);
 
-            // Intentionally use deprecated listener methods to support iOS & old browsers
-            // eslint-disable-next-line deprecation/deprecation
-            media.addListener(handleMediaQuery);
-            handleMediaQuery();
+      // Intentionally use deprecated listener methods to support iOS & old browsers
+      // eslint-disable-next-line deprecation/deprecation
+      media.addListener(handleMediaQuery);
+      handleMediaQuery();
 
-            // eslint-disable-next-line deprecation/deprecation
-            return () => media.removeListener(handleMediaQuery);
-        }, [])
-    );
+      // eslint-disable-next-line deprecation/deprecation
+      return () => media.removeListener(handleMediaQuery);
+    }, [])
+  );
 }

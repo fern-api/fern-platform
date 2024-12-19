@@ -1,6 +1,6 @@
 import type {
-    ApiDefinition,
-    WebSocketContext,
+  ApiDefinition,
+  WebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
 import { createWebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -10,8 +10,8 @@ import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
 import { useApiRouteSWRImmutable } from "../../hooks/useApiRouteSWR";
 
 interface LoadableWebSocketContext {
-    context: WebSocketContext | undefined;
-    isLoading: boolean;
+  context: WebSocketContext | undefined;
+  isLoading: boolean;
 }
 
 /**
@@ -19,24 +19,24 @@ interface LoadableWebSocketContext {
  * It should be refactored to store the resulting endpoint in a global state, so that it can be shared between components.
  */
 export function useWebSocketContext(
-    node: FernNavigation.WebSocketNode
+  node: FernNavigation.WebSocketNode
 ): LoadableWebSocketContext {
-    const { data: apiDefinition, isLoading } =
-        useApiRouteSWRImmutable<ApiDefinition>(
-            `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/websocket/${encodeURIComponent(node.webSocketId)}`,
-            { disabled: node == null }
-        );
-    const context = useMemo(
-        () => createWebSocketContext(node, apiDefinition),
-        [node, apiDefinition]
+  const { data: apiDefinition, isLoading } =
+    useApiRouteSWRImmutable<ApiDefinition>(
+      `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/websocket/${encodeURIComponent(node.webSocketId)}`,
+      { disabled: node == null }
     );
+  const context = useMemo(
+    () => createWebSocketContext(node, apiDefinition),
+    [node, apiDefinition]
+  );
 
-    const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
-    useEffect(() => {
-        if (apiDefinition != null) {
-            set(apiDefinition);
-        }
-    }, [apiDefinition, set]);
+  const set = useSetAtom(WRITE_API_DEFINITION_ATOM);
+  useEffect(() => {
+    if (apiDefinition != null) {
+      set(apiDefinition);
+    }
+  }, [apiDefinition, set]);
 
-    return { context, isLoading };
+  return { context, isLoading };
 }

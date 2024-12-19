@@ -13,12 +13,12 @@ type IntercomInitType = { app_id?: string; api_base?: string };
  * @returns
  */
 export function normalizeIntercomConfig(
-    config: DocsV1Read.IntercomConfig
+  config: DocsV1Read.IntercomConfig
 ): IntercomInitType {
-    return {
-        app_id: config.appId,
-        api_base: config.apiBase,
-    };
+  return {
+    app_id: config.appId,
+    api_base: config.apiBase,
+  };
 }
 
 /**
@@ -28,36 +28,36 @@ export function normalizeIntercomConfig(
  * @param config
  */
 export function useIntercomInitializer(
-    config?: DocsV1Read.IntercomConfig
+  config?: DocsV1Read.IntercomConfig
 ): void {
-    useEffect(() => {
-        if (config && window.Intercom) {
-            window.Intercom("boot", normalizeIntercomConfig(config));
-        }
-    }, [config]);
+  useEffect(() => {
+    if (config && window.Intercom) {
+      window.Intercom("boot", normalizeIntercomConfig(config));
+    }
+  }, [config]);
 }
 
 export function IntercomScript(props: {
-    config?: DocsV1Read.IntercomConfig;
+  config?: DocsV1Read.IntercomConfig;
 }): ReactElement {
-    useIntercomInitializer(props.config);
+  useIntercomInitializer(props.config);
 
-    if (!props.config) {
-        return <></>;
-    }
+  if (!props.config) {
+    return <></>;
+  }
 
-    return (
-        <>
-            <Script
-                id="init-intercom"
-                dangerouslySetInnerHTML={{
-                    __html: widgetBootstrapScript(props.config.appId),
-                }}
-            />
-        </>
-    );
+  return (
+    <>
+      <Script
+        id="init-intercom"
+        dangerouslySetInnerHTML={{
+          __html: widgetBootstrapScript(props.config.appId),
+        }}
+      />
+    </>
+  );
 }
 
 function widgetBootstrapScript(appId: string) {
-    return `(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/${appId}';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();`;
+  return `(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/${appId}';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();`;
 }

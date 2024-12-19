@@ -3,19 +3,19 @@ import useSWRImmutable from "swr/immutable";
 import { provideRegistryService } from "../../services/registry";
 
 export function useApiDefinition(
-    apiId: FdrAPI.ApiDefinitionId,
-    isSnippetTemplatesEnabled: boolean
+  apiId: FdrAPI.ApiDefinitionId,
+  isSnippetTemplatesEnabled: boolean
 ): APIV1Read.ApiDefinition | undefined {
-    const { data } = useSWRImmutable(apiId, (apiId) => {
-        if (!isSnippetTemplatesEnabled) {
-            return undefined;
-        }
-        return provideRegistryService().api.v1.read.getApi(apiId);
-    });
-
-    if (data?.ok) {
-        return data.body;
+  const { data } = useSWRImmutable(apiId, (apiId) => {
+    if (!isSnippetTemplatesEnabled) {
+      return undefined;
     }
+    return provideRegistryService().api.v1.read.getApi(apiId);
+  });
 
-    return undefined;
+  if (data?.ok) {
+    return data.body;
+  }
+
+  return undefined;
 }
