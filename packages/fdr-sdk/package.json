@@ -75,9 +75,9 @@
     "@types/tinycolor2": "^1.4.6",
     "@types/title": "^3.4.3",
     "@types/ungap__structured-clone": "^1.2.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.3.2",
-    "typescript": "5.4.3",
+    "eslint": "^9",
+    "prettier": "^3.4.2",
+    "typescript": "^5",
     "vitest": "^2.1.4"
   }
 }

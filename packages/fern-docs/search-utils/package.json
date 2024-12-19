@@ -38,13 +38,13 @@
     "@inkeep/widgets": "^0.2.288",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
-    "eslint": "^8.56.0",
+    "eslint": "^9",
     "instantsearch.js": "^4.75.4",
     "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "ts-essentials": "^10.0.1",
-    "typescript": "5.4.3",
+    "typescript": "^5",
     "vitest": "^2.1.4"
   }
 }
