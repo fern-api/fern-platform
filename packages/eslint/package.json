@@ -2,8 +2,12 @@
   "name": "@fern-api/eslint-config",
   "version": "0.0.0",
   "private": true,
-  "main": "src/index.js",
+  "type": "module",
+  "main": "src/index.mjs",
   "dependencies": {
+    "@eslint/compat": "^1.2.4",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.17.0",
     "@next/eslint-plugin-next": "14.2.9",
     "@typescript-eslint/eslint-plugin": "8.18.1",
     "@typescript-eslint/parser": "8.18.1",
@@ -14,7 +18,8 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-tailwindcss": "^3.17.5",
-    "eslint-plugin-vitest": "^0.5.4"
+    "eslint-plugin-vitest": "^0.5.4",
+    "globals": "^15.14.0"
   },
   "devDependencies": {
     "prettier": "^3.4.2"

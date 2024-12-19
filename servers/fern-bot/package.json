@@ -11,7 +11,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:fix": "pnpm lint --fix",
     "proxy": "smee -u https://smee.io/3DXoSvCO2NH87w8e",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix"
   },
   "engines": {

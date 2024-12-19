@@ -40,7 +40,7 @@ export default [
       "plugin:@typescript-eslint/recommended",
       "plugin:@typescript-eslint/strict",
       "plugin:@typescript-eslint/eslint-recommended",
-      "plugin:vitest/recommended",
+      // "plugin:vitest/recommended",
       "plugin:react/recommended",
       "plugin:react-hooks/recommended",
       "plugin:tailwindcss/recommended",
