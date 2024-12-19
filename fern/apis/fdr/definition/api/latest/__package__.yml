@@ -9,6 +9,21 @@ imports:
   rootCommons: ../../commons.yml
   auth: auth.yml
 
+service:
+  base-path: /registry/api/latest
+  auth: true
+  audiences:
+    - read
+  endpoints:
+    getApiLatest:
+      method: GET
+      path: /load/{apiDefinitionId}
+      path-parameters:
+        apiDefinitionId: rootCommons.ApiDefinitionId
+      response: ApiDefinition
+      errors:
+        - ApiDoesNotExistError
+
 types:
   ApiDefinition:
     properties:
@@ -20,3 +35,7 @@ types:
       subpackages: map<commons.SubpackageId, commons.SubpackageMetadata>
       auths: map<auth.AuthSchemeId, auth.AuthScheme>
       globalHeaders: optional<list<type.ObjectProperty>>
+
+errors:
+  ApiDoesNotExistError:
+    status-code: 404

@@ -54,6 +54,7 @@ export async function withResolvedDocsContent({
         next: featureFlags.isAuthenticatedPagesDiscoverable ? found.next : found.next?.authed ? undefined : found.next,
 
         apis: definition.apis,
+        apisV2: definition.apisV2,
         pages: definition.pages,
         featureFlags,
         mdxOptions: {

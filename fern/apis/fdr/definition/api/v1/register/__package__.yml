@@ -5,6 +5,7 @@ imports:
   type: type.yml
   rootCommons: ../../../commons.yml
   commons: ../commons.yml
+  latest: ../../latest/__package__.yml
   webhook: webhook.yml
   websocket: websocket.yml
 
@@ -23,7 +24,8 @@ service:
           properties:
             orgId: rootCommons.OrgId
             apiId: rootCommons.ApiId
-            definition: ApiDefinition
+            definition: optional<ApiDefinition>
+            definitionV2: optional<latest.ApiDefinition>
             sources: optional<map<SourceId, Source>>
       response: RegisterApiDefinitionResponse
       errors:
