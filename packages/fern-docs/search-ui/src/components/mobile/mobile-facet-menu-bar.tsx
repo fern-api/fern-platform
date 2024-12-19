@@ -39,7 +39,7 @@ export function MobileFacetMenuBar({
   }
 
   return (
-    <Menubar.Root className="overflow-x-auto overflow-y-hidden p-2 flex gap-2 [&::-webkit-scrollbar]:hidden">
+    <Menubar.Root className="flex gap-2 overflow-x-auto overflow-y-hidden p-2 [&::-webkit-scrollbar]:hidden">
       {facets.map((facet) => {
         const value = filters?.find((f) => f.facet === facet)?.value;
         return (
@@ -103,7 +103,7 @@ function MobileFacetMenu({
           side="bottom"
           avoidCollisions
           align="start"
-          className="min-w-[220px] rounded-lg bg-[var(--grayscale-a1)] backdrop-blur-lg border border-[var(--grayscale-a5)] p-0 shadow-lg z-50 absolute overflow-hidden"
+          className="absolute z-50 min-w-[220px] overflow-hidden rounded-lg border border-[var(--grayscale-a5)] bg-[var(--grayscale-a1)] p-0 shadow-lg backdrop-blur-lg"
           hidden={isLoading || optionsWithCurrent.length === 0}
         >
           <Menubar.RadioGroup value={value} onValueChange={updateFilter}>
@@ -118,7 +118,7 @@ function MobileFacetMenu({
                   asChild
                 >
                   <MenubarItem>
-                    <span className="inline-flex gap-1 items-baseline">
+                    <span className="inline-flex items-baseline gap-1">
                       {getFacetDisplay(facet, value, {
                         titleCase: true,
                       })}
@@ -217,7 +217,7 @@ const MenubarItem = forwardRef<HTMLDivElement, Menubar.MenubarItemProps>(
         ref={ref}
         {...props}
         className={cn(
-          "px-4 py-2 flex items-center justify-between focus:outline-none focus:bg-[var(--accent-a3)] cursor-pointer",
+          "flex cursor-pointer items-center justify-between px-4 py-2 focus:bg-[var(--accent-a3)] focus:outline-none",
           props.className
         )}
       />

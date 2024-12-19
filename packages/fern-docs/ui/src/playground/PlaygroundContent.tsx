@@ -43,8 +43,8 @@ export const PlaygroundContent = (): ReactElement => {
   }
 
   return (
-    <div className="size-full flex flex-col items-center justify-center">
-      <ArrowLeft className="size-8 mb-2 t-muted" />
+    <div className="flex size-full flex-col items-center justify-center">
+      <ArrowLeft className="t-muted mb-2 size-8" />
       <h6 className="t-muted">Select an endpoint to get started</h6>
     </div>
   );

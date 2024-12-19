@@ -44,7 +44,7 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({
       {/* anchor links should get additional padding to scroll to on initial load */}
       {!hydrated && <div className="h-full" />}
       <div className="pb-36" />
-      <div className="w-fit mx-auto my-8">
+      <div className="mx-auto my-8 w-fit">
         <BuiltWithFern />
       </div>
     </ApiPageContext.Provider>

@@ -6,7 +6,7 @@ export function ReferenceLayoutMain({
   children: ReactNode;
 }): ReactElement {
   return (
-    <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 break-words">
+    <div className="prose break-words dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0">
       {children}
     </div>
   );

@@ -45,10 +45,10 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
       <button
         ref={ref}
         className={clsx(
-          "font-mono inline-flex justify-center items-center leading-none cursor-default",
+          "inline-flex cursor-default items-center justify-center font-mono leading-none",
           {
-            "h-[18px] min-w-[18px] text-[10px] px-1.5": size === "sm",
-            "py-1 px-2 h-6 min-w-6 text-xs": size === "lg",
+            "h-[18px] min-w-[18px] px-1.5 text-[10px]": size === "sm",
+            "h-6 min-w-6 px-2 py-1 text-xs": size === "lg",
             "rounded-md": size === "sm" && !rounded,
             "rounded-lg": size === "lg" && !rounded,
             "rounded-full": rounded,
@@ -75,7 +75,7 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
             // Amber
             "bg-amber-a3 text-amber-a11 hover:bg-amber-a4":
               colorScheme === "amber" && variant === "subtle",
-            "bg-amber-a10 text-amber-1 dark:text-amber-12 hover:bg-amber-a11":
+            "bg-amber-a10 text-amber-1 hover:bg-amber-a11 dark:text-amber-12":
               colorScheme === "amber" && variant === "solid",
 
             // Red
@@ -87,7 +87,7 @@ export const FernChip = forwardRef<HTMLButtonElement, FernChipProps>(
             // Accent
             "bg-accent/20 text-accent-aaa hover:bg-accent/25":
               colorScheme === "accent" && variant === "subtle",
-            "bg-accent t-accent-contrast hover:bg-accent-tinted":
+            "t-accent-contrast bg-accent hover:bg-accent-tinted":
               colorScheme === "accent" && variant === "solid",
           },
           className

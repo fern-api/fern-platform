@@ -18,13 +18,13 @@
       "path": "../../commons/loadable"
     },
     {
-      "path": "../../commons/next-seo"
+      "path": "../next-seo"
     },
     {
-      "path": "../../commons/react/react-commons"
+      "path": "../../commons/react-commons"
     },
     {
-      "path": "../../commons/search-utils"
+      "path": "../search-utils"
     },
     {
       "path": "../../fdr-sdk/tsconfig.build.json"
@@ -33,22 +33,22 @@
       "path": "../../template-resolver"
     },
     {
-      "path": "../fern-docs-auth"
+      "path": "../auth"
     },
     {
-      "path": "../fern-docs-utils"
+      "path": "../utils"
     },
     {
-      "path": "../fern-docs-server"
+      "path": "../cache"
     },
     {
-      "path": "../fern-docs-mdx"
+      "path": "../mdx"
     },
     {
       "path": "../components"
     },
     {
-      "path": "../fern-docs-syntax-highlighter"
+      "path": "../syntax-highlighter"
     }
   ]
 }

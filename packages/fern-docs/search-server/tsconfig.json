@@ -16,10 +16,10 @@
       "path": "../../commons/core-utils"
     },
     {
-      "path": "../fern-docs-mdx"
+      "path": "../mdx"
     },
     {
-      "path": "../fern-docs-utils"
+      "path": "../utils"
     }
   ]
 }

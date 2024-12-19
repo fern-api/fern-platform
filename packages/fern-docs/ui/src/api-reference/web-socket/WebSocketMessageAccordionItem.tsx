@@ -74,7 +74,7 @@ export const WebsocketMessageAccordionItem: FC<
       </Accordion.Content>
       <div
         className={cn(
-          "mx-px group-focus-within:ring-1 ring-transparent ring-inset absolute inset-0 pointer-events-none z-auto rounded-[inherit]",
+          "pointer-events-none absolute inset-0 z-auto mx-px rounded-[inherit] ring-inset ring-transparent group-focus-within:ring-1",
           {
             "group-focus-within:ring-border-success":
               message.origin === APIV1Read.WebSocketMessageOrigin.Client,

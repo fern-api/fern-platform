@@ -18,7 +18,7 @@ export function MobileSidebarHeaderLinks(): ReactElement | null {
   }
   return (
     <div
-      className={cn("border-concealed list-none -mx-4 border-t p-4 mt-4", {
+      className={cn("border-concealed -mx-4 mt-4 list-none border-t p-4", {
         "lg:hidden": layout?.disableHeader !== true,
       })}
     >

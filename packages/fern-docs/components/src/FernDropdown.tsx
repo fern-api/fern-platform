@@ -209,7 +209,7 @@ function FernDropdownItemValue({
 
         {option.helperText != null && (
           <div
-            className="mt-0.5 ml-5 text-xs opacity-60 text-start leading-snug"
+            className="ml-5 mt-0.5 text-start text-xs leading-snug opacity-60"
             ref={helperTextRef}
           >
             {option.helperText}

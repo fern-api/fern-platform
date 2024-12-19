@@ -30,7 +30,7 @@ function Breadcrumb({ breadcrumb }: { breadcrumb: string[] }): ReactNode {
           <Fragment key={title}>
             <span>{title}</span>
             {idx < breadcrumb.length - 1 && (
-              <ChevronRight className="size-3 shrink-0 -mb-px" />
+              <ChevronRight className="-mb-px size-3 shrink-0" />
             )}
           </Fragment>
         ))}
@@ -63,8 +63,8 @@ function HitContentWithTitle({
   children: ReactNode;
 }): ReactElement {
   return (
-    <div className="flex-1 shrink min-w-0">
-      <div className="flex items-baseline gap-1 justify-between">
+    <div className="min-w-0 flex-1 shrink">
+      <div className="flex items-baseline justify-between gap-1">
         <span
           className={clsx("fern-search-hit-title", {
             deprecated:
@@ -90,7 +90,7 @@ function HitContentWithTitle({
             />
           )}
         </span>
-        <span className="text-[var(--grayscale-a10)] text-sm">
+        <span className="text-sm text-[var(--grayscale-a10)]">
           {
             SEGMENT_DISPLAY_NAMES[
               hit.type === "api-reference" ? hit.api_type : hit.type
@@ -139,7 +139,7 @@ function ApiReferenceHitContent({
 }): ReactElement {
   return (
     <HitContentWithTitle hit={hit}>
-      <div className="inline-flex items-baseline gap-1 max-w-full">
+      <div className="inline-flex max-w-full items-baseline gap-1">
         <HttpMethodBadge
           method={hit.method}
           size="sm"

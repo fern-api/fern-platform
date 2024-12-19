@@ -1,7 +1,7 @@
 @layer components {
   .playground-endpoint {
     @apply flex min-w-0 flex-1 shrink items-start gap-2;
-    @apply max-sm:py-0 p-3 pb-0 w-full;
+    @apply w-full p-3 pb-0 max-sm:py-0;
   }
 
   .playground-endpoint-url {
@@ -18,7 +18,7 @@
     } */
 
   .playground-endpoint-copy-button {
-    @apply -mt-1 ml-auto -mr-3;
+    @apply -mr-3 -mt-1 ml-auto;
   }
 
   .playground-endpoint-baseurl {

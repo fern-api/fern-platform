@@ -84,8 +84,8 @@ export function AppSidebar({
   const params = useSearchParams();
   const domain = params.get("domain");
   return (
-    <div {...props} className="inset-0 fixed flex flex-col">
-      <div className="p-2 px-4 shrink-0">
+    <div {...props} className="fixed inset-0 flex flex-col">
+      <div className="shrink-0 p-2 px-4">
         <h2 className="font-semibold">
           {domain ?? "buildwithfern.com"} Search Demo
         </h2>
@@ -103,7 +103,7 @@ export const AppSidebarContent = React.forwardRef<
     <div ref={ref} {...props} className="px-2 py-4">
       {data.navMain.map((item) => (
         <div key={item.title} className="mb-4">
-          <h5 className="font-semibold mx-2 h-[36px] flex items-center">
+          <h5 className="mx-2 flex h-[36px] items-center font-semibold">
             {item.title}
           </h5>
           <div>
@@ -111,7 +111,7 @@ export const AppSidebarContent = React.forwardRef<
               <a
                 href={item.url}
                 key={item.title}
-                className="flex items-center px-2 h-[36px] rounded-md hover:bg-[var(--accent-a3)] hover:text-[var(--accent-a11)] transition-colors hover:transition-none"
+                className="flex h-[36px] items-center rounded-md px-2 transition-colors hover:bg-[var(--accent-a3)] hover:text-[var(--accent-a11)] hover:transition-none"
               >
                 {item.title}
               </a>

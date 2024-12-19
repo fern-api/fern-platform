@@ -16,7 +16,7 @@ export function HeaderLogoSection(): ReactElement {
         <HeaderLogoContainer href={logoHref}>
           <HeaderLogoImage />
           {logoText != null && logoText.length > 0 && (
-            <span className="text-[1.5rem] lowercase font-heading ml-1 font-light text-accent">
+            <span className="font-heading ml-1 text-[1.5rem] font-light lowercase text-accent">
               {logoText}
             </span>
           )}

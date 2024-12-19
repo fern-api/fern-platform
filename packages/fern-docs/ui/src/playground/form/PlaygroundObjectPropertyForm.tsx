@@ -226,8 +226,8 @@ export const PlaygroundObjectPropertiesForm =
 
     return (
       <div
-        className={cn("flex-1 shrink min-w-0", {
-          "border-border-default-soft border-l pl-4": indent,
+        className={cn("min-w-0 flex-1 shrink", {
+          "border-l border-border-default-soft pl-4": indent,
         })}
       >
         {shownProperties.length > 0 && (

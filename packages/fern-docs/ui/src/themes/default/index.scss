@@ -1,27 +1,27 @@
 .fern-theme-default.fern-container {
-  @apply relative flex min-h-screen flex-1 flex-col z-0;
+  @apply relative z-0 flex min-h-screen flex-1 flex-col;
 
   #fern-header {
     @apply fixed inset-x-0 top-0 z-30;
   }
 
   .fern-header-container {
-    @apply shadow-none h-header-height-real lg:h-header-height;
+    @apply h-header-height-real shadow-none lg:h-header-height;
   }
 
   .fern-header-container:is(.light *):not(.has-background-light),
   .fern-header-container:is(.dark *):not(.has-background-dark) {
     @apply backdrop-blur-lg lg:backdrop-blur;
-    @apply data-[border=show]:dark:shadow-header-dark transition-shadow;
+    @apply transition-shadow data-[border=show]:dark:shadow-header-dark;
   }
 
   .fern-header,
   .fern-header-tabs {
-    @apply bg-header border-concealed border-b relative;
+    @apply bg-header border-concealed relative border-b;
   }
 
   .fern-header-content {
-    @apply flex justify-between items-center px-4 md:px-6 lg:px-8 shrink-0 h-full gap-4;
+    @apply flex h-full shrink-0 items-center justify-between gap-4 px-4 md:px-6 lg:px-8;
   }
 
   .fern-header {
@@ -80,7 +80,7 @@
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
-      @apply fixed mt-0 z-30 h-vh-minus-header;
+      @apply fixed z-30 mt-0 h-vh-minus-header;
     }
 
     @supports (height: 100dvh) {
@@ -94,15 +94,15 @@
     }
 
     .fern-sidebar-content {
-      @apply h-full w-full flex flex-col;
+      @apply flex h-full w-full flex-col;
     }
   }
 
   .fern-sidebar-container.dismissable {
-    @apply fixed left-0 bottom-0 top-header-offset mt-0;
+    @apply fixed bottom-0 left-0 top-header-offset mt-0;
     @apply bg-background-translucent backdrop-blur-lg;
     @apply sm:border-concealed sm:border-r;
-    @apply max-sm:w-full max-sm:inset-x-0;
+    @apply max-sm:inset-x-0 max-sm:w-full;
     @apply h-vh-minus-header;
   }
 
@@ -121,7 +121,7 @@
   }
 
   .fern-main {
-    @apply relative min-w-0 flex-1 mt-header-offset;
+    @apply relative mt-header-offset min-w-0 flex-1;
   }
 
   .fern-sidebar-content {
@@ -129,19 +129,19 @@
   }
 
   .fern-endpoint-content {
-    @apply mx-4 scroll-mt-content md:mx-6 lg:mx-8;
+    @apply scroll-mt-content mx-4 md:mx-6 lg:mx-8;
 
     .fern-endpoint-content-right {
       @apply max-w-content-width;
-      @apply md:flex-1 md:sticky md:self-start md:top-header-offset;
+      @apply md:sticky md:top-header-offset md:flex-1 md:self-start;
 
       // the 4rem is the same as the h-10 as the Header
-      @apply max-h-content py-8 flex;
+      @apply max-h-content flex py-8;
     }
   }
 
   .fern-endpoint-code-snippets {
-    @apply gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] w-full;
+    @apply grid w-full grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6;
   }
 
   // guide and overview layouts are centered using .fern-layout-toc
@@ -173,7 +173,7 @@
     @apply gap-8;
 
     .fern-layout-content {
-      @apply pt-8 mx-auto w-full xl:mx-auto pb-20 min-w-0;
+      @apply mx-auto w-full min-w-0 pb-20 pt-8 xl:mx-auto;
     }
 
     &:has(.fern-layout-toc) {
@@ -186,10 +186,10 @@
   }
 
   .fern-page-layout {
-    @apply pt-8 pb-20;
+    @apply pb-20 pt-8;
   }
 
   .fern-layout-toc {
-    @apply top-header-offset h-content w-sidebar-width sticky max-xl:hidden shrink-0;
+    @apply h-content sticky top-header-offset w-sidebar-width shrink-0 max-xl:hidden;
   }
 }

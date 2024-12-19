@@ -1,7 +1,7 @@
 @layer components {
   .fern-table-root {
-    @apply border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2 rounded-md;
-    @apply text-sm overflow-hidden backdrop-blur-2xl;
+    @apply rounded-md border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2;
+    @apply overflow-hidden text-sm backdrop-blur-2xl;
 
     /* hack to make the table scrollable */
     display: flex;
@@ -37,16 +37,16 @@
     border-bottom: 0;
 
     &::after {
-      @apply content-[''] absolute inset-0 pointer-events-none bg-grayscale-a2;
+      @apply pointer-events-none absolute inset-0 bg-grayscale-a2 content-[''];
     }
   }
 
   .fern-table-root.fullscreen {
-    @apply text-base bg-background-translucent shadow-2xl rounded-lg;
+    @apply bg-background-translucent rounded-lg text-base shadow-2xl;
 
     .fern-table th,
     .fern-table td {
-      @apply h-10 p-3 bg-background;
+      @apply h-10 bg-background p-3;
     }
   }
 }

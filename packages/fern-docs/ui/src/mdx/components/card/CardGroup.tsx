@@ -13,7 +13,7 @@ export const CardGroup: FC<PropsWithChildren<CardGroup.Props>> = ({
 }) => {
   return (
     <div
-      className={cn("grid gap-4 sm:gap-6 my-6 first:mt-0", {
+      className={cn("my-6 grid gap-4 first:mt-0 sm:gap-6", {
         "grid-cols-1": cols <= 1,
         "grid-cols-1 sm:grid-cols-2": cols === 2,
         "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3": cols === 3,

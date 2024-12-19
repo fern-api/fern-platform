@@ -1,19 +1,19 @@
 @layer components {
   .fern-sidebar-heading {
-    @apply flex min-h-[32px] lg:min-h-[36px] mb-1;
-    @apply px-4 lg:px-3 inline-flex items-center;
+    @apply mb-1 flex min-h-[32px] lg:min-h-[36px];
+    @apply inline-flex items-center px-4 lg:px-3;
 
     .fa-icon {
-      @apply mr-3 text-faded shrink-0;
+      @apply mr-3 shrink-0 text-faded;
     }
 
     .fern-sidebar-heading-content {
-      @apply m-0 text-base leading-6 lg:text-sm lg:leading-5 font-semibold;
+      @apply m-0 text-base font-semibold leading-6 lg:text-sm lg:leading-5;
     }
   }
 
   .fern-sidebar-group {
-    @apply list-none overflow-hidden fern-collapsible;
+    @apply fern-collapsible list-none overflow-hidden;
     @apply max-lg:-mx-4;
 
     .fern-sidebar-group {
@@ -26,7 +26,7 @@
   }
 
   .fern-sidebar-link-container {
-    @apply items-stretch relative flex min-h-[36px];
+    @apply relative flex min-h-[36px] items-stretch;
     @apply data-[state=active]:text-accented-a11;
 
     &:not(.top-level) {
@@ -35,16 +35,16 @@
   }
 
   .fern-sidebar-link-indent {
-    @apply relative flex-none w-4 lg:w-3 shrink-0 border-l border-default;
+    @apply border-default relative w-4 flex-none shrink-0 border-l lg:w-3;
   }
 
   .fern-sidebar-icon {
-    @apply mr-3 inline-flex items-center my-0.5;
+    @apply my-0.5 mr-3 inline-flex items-center;
   }
 
   .fern-sidebar-link-container[data-state="active"] {
     .fern-sidebar-link-indent::after {
-      @apply border-l border-accented-a7 absolute inset-y-1 -left-px;
+      @apply absolute inset-y-1 -left-px border-l border-accented-a7;
 
       content: "";
     }
@@ -69,7 +69,7 @@
   }
 
   .fern-sidebar-link {
-    @apply text-left relative inline-flex flex-1 content-between items-stretch lg:px-3 max-lg:px-4;
+    @apply relative inline-flex flex-1 content-between items-stretch text-left max-lg:px-4 lg:px-3;
     @apply max-lg:rounded-none lg:rounded-lg;
     @apply overflow-hidden;
   }
@@ -102,20 +102,20 @@
   }
 
   .fern-sidebar-link-expand {
-    @apply relative flex w-10 lg:w-6 justify-center items-center  rounded-none ease-out;
+    @apply relative flex w-10 items-center justify-center rounded-none ease-out lg:w-6;
     @apply lg:rounded-lg;
 
     &:last-child {
-      @apply flex -mr-3 ml-1;
+      @apply -mr-3 ml-1 flex;
     }
   }
 
   .fern-sidebar-link-expand[data-state="active"] {
-    @apply after:content-[''] after:absolute after:inset-1 after:rounded-xl lg:after:rounded-md after:bg-tag-primary t-accent after:pointer-events-none;
+    @apply t-accent after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:bg-tag-primary after:content-[''] lg:after:rounded-md;
   }
 
   .fern-sidebar-tabs {
-    @apply mt-5 mb-6 flex list-none flex-col;
+    @apply mb-6 mt-5 flex list-none flex-col;
   }
 
   .fern-sidebar-searchbar-container {

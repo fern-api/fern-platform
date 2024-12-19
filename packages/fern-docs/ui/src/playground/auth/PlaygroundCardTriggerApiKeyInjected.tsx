@@ -69,11 +69,11 @@ export function PlaygroundCardTriggerApiKeyInjected({
   if (apiKey != null && apiKey.trim().length > 0) {
     return (
       <FernCard
-        className="rounded-xl p-4 shadow-sm mb-3"
+        className="mb-3 rounded-xl p-4 shadow-sm"
         title="Login to send a real request"
       >
         <FernButton
-          className="w-full text-left pointer-events-none"
+          className="pointer-events-none w-full text-left"
           size="large"
           intent="success"
           variant="outlined"
@@ -89,7 +89,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
           />
         </div>
         {
-          <div className="flex justify-end  gap-2">
+          <div className="flex justify-end gap-2">
             {apiKey !== authState?.bearerAuth?.token && apiKey && (
               <FernButton
                 text="Reset token to default"
@@ -134,11 +134,11 @@ export function PlaygroundCardTriggerApiKeyInjected({
   }
 
   return (
-    <FernCard className="rounded-xl p-4 shadow-sm mb-2">
+    <FernCard className="mb-2 rounded-xl p-4 shadow-sm">
       {error && <Callout intent="error">{errorDescription ?? error}</Callout>}
 
       <h5 className="t-muted m-0">Login to send a real request</h5>
-      <div className="flex justify-center my-5 gap-2">
+      <div className="my-5 flex justify-center gap-2">
         <FernButton
           size="normal"
           intent="primary"

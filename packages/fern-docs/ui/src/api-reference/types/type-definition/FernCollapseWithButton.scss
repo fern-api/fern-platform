@@ -1,9 +1,9 @@
 @layer components {
   .fern-collapsible-card {
-    @apply border border-default max-md:rounded-xl rounded-lg overflow-clip;
+    @apply border-default overflow-clip rounded-lg border max-md:rounded-xl;
 
     .fern-collapse-trigger {
-      @apply rounded-none w-full;
+      @apply w-full rounded-none;
     }
 
     &[data-state="open"] {
@@ -15,7 +15,7 @@
     }
 
     .fern-collapsible-card-content {
-      @apply border-default border-t fern-collapsible;
+      @apply fern-collapsible border-default border-t;
     }
   }
 }

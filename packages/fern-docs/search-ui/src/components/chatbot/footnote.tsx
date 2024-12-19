@@ -66,7 +66,7 @@ export function FootnoteSup({
 
         <TooltipPortal>
           <TooltipContent className="not-prose">
-            <h5 className="font-semibold text-[var(--grayscale-12)] flex items-center gap-2">
+            <h5 className="flex items-center gap-2 font-semibold text-[var(--grayscale-12)]">
               <PageIcon
                 icon={fn.icon}
                 type={fn.api_type ?? fn.type}
@@ -77,7 +77,7 @@ export function FootnoteSup({
                 {fn.title}
               </a>
             </h5>
-            <p className="max-w-xs text-[var(--grayscale-a9)] leading-snug text-xs break-all">
+            <p className="max-w-xs break-all text-xs leading-snug text-[var(--grayscale-a9)]">
               <a
                 href={fn.url}
                 target="_blank"
@@ -163,7 +163,7 @@ export function FootnotesSection({
       <VisuallyHidden asChild>
         <h6>Footnotes</h6>
       </VisuallyHidden>
-      <div className="flex gap-1 flex-wrap">
+      <div className="flex flex-wrap gap-1">
         {footnotes.map(({ ids, url, title, icon, type, api_type }, index) => (
           <Badge key={ids[0] ?? index} asChild interactive rounded>
             <a href={url} target="_blank" rel="noreferrer">

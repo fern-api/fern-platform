@@ -40,7 +40,7 @@ export const CopyToClipboardButton: React.FC<CopyToClipboardButton.Props> = ({
           copyToClipboard?.();
         }) ?? (
           <FernButton
-            className={cn("group fern-copy-button", className)}
+            className={cn("fern-copy-button group", className)}
             disabled={copyToClipboard == null}
             onClickCapture={(e) => {
               onClick?.(e);

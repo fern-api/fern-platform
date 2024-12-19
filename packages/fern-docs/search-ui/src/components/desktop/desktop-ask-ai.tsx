@@ -348,7 +348,7 @@ const DesktopAskAIChat = ({
               a: ({ children, node, ...props }) => (
                 <a
                   {...props}
-                  className="hover:text-[var(--accent-a10)] font-semibold decoration-[var(--accent-a10)] hover:decoration-2"
+                  className="font-semibold decoration-[var(--accent-a10)] hover:text-[var(--accent-a10)] hover:decoration-2"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -411,7 +411,7 @@ const AskAIComposer = forwardRef<
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
-        className="border-t border-[var(--grayscale-a6)] cursor-text"
+        className="cursor-text border-t border-[var(--grayscale-a6)]"
         onClick={() => inputRef.current?.focus()}
       >
         <DesktopCommandInput asChild>
@@ -425,7 +425,7 @@ const AskAIComposer = forwardRef<
             padding={8}
             {...props}
             className={cn(
-              "w-full resize-none focus:outline-none block p-2",
+              "block w-full resize-none p-2 focus:outline-none",
               props.className
             )}
             style={{
@@ -468,7 +468,7 @@ const AskAIComposer = forwardRef<
             )}
           />
         </DesktopCommandInput>
-        <div className="flex items-center justify-between pb-2 px-2">
+        <div className="flex items-center justify-between px-2 pb-2">
           <div>{actions}</div>
           <Button
             size="icon"
@@ -542,7 +542,7 @@ const AskAICommandItems = memo<{
       return (
         <>
           <div className="flex gap-4 p-2">
-            <Sparkles className="size-4 shrink-0 my-1" />
+            <Sparkles className="my-1 size-4 shrink-0" />
             <div className="space-y-2">
               <p>
                 Hi, I&apos;m an AI assistant with access to documentation and
@@ -579,7 +579,7 @@ const AskAICommandItems = memo<{
                   scrollLogicalPosition="start"
                 >
                   <article>
-                    <div className="relative max-w-[70%] rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2 whitespace-pre-wrap ml-auto w-fit mb-2">
+                    <div className="relative mb-2 ml-auto w-fit max-w-[70%] whitespace-pre-wrap rounded-3xl bg-[var(--grayscale-a3)] px-5 py-2">
                       <section className="prose prose-sm dark:prose-invert cursor-auto">
                         <MarkdownContent components={components}>
                           {message.user?.content ?? "_No user message_"}
@@ -587,7 +587,7 @@ const AskAICommandItems = memo<{
                       </section>
                     </div>
                     <div className="flex items-start justify-start gap-4">
-                      <Sparkles className="size-4 shrink-0 my-1" />
+                      <Sparkles className="my-1 size-4 shrink-0" />
                       <section className="prose prose-sm dark:prose-invert flex-1 shrink cursor-text">
                         {message.assistant?.content && (
                           <MarkdownContent

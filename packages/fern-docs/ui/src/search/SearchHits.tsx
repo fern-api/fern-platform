@@ -22,7 +22,7 @@ import { SearchHit } from "./SearchHit";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="justify t-muted flex h-24 w-full flex-col hits-center py-3">
+    <div className="justify hits-center t-muted flex h-24 w-full flex-col py-3">
       {children}
     </div>
   );
@@ -43,7 +43,7 @@ const ExpandButton: React.FC<{
       className="text-left"
       variant="minimal"
       onClick={() => setExpanded(!expanded)}
-      icon={expanded ? <Minus /> : <Xmark className="transition rotate-45" />}
+      icon={expanded ? <Minus /> : <Xmark className="rotate-45 transition" />}
       size="small"
     >
       Show {expanded ? "Less" : "More"}
@@ -69,8 +69,8 @@ const SearchSection: React.FC<{
   setHoveredSearchHitId,
 }) => (
   <div className="pb-2">
-    <div className="flex justify-between items-center">
-      <div className="text-normal font-semibold pl-0.5">{title}</div>
+    <div className="flex items-center justify-between">
+      <div className="text-normal pl-0.5 font-semibold">{title}</div>
     </div>
     <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
     {expandHits(expanded, hits).map((hit) => (
@@ -100,7 +100,7 @@ const MobileSearchSection: React.FC<{
   refs: React.MutableRefObject<Map<string, HTMLAnchorElement>>;
 }> = ({ title, hits, expanded, setExpanded, refs }) => (
   <>
-    <h3 className="text-lg font-semibold mt-4 pl-0.5">{title}</h3>
+    <h3 className="mt-4 pl-0.5 text-lg font-semibold">{title}</h3>
     <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
     {expandHits(expanded, hits).map((hit) => (
       <SearchHit
@@ -292,7 +292,7 @@ export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
 
   if (hits.length === 0) {
     return (
-      <div className="justify t-muted flex w-full flex-col hits-center py-3">
+      <div className="justify hits-center t-muted flex w-full flex-col py-3">
         No results found
       </div>
     );

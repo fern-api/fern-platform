@@ -110,7 +110,7 @@ export const PlaygroundUniscriminatedUnionForm =
                 )
               }
               rightIcon={<NavArrowDown />}
-              className="w-full text-left mb-4"
+              className="mb-4 w-full text-left"
               variant="outlined"
               mono={true}
               disabled={disabled}

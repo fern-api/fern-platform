@@ -82,7 +82,7 @@ const FernSdkInstallCommand: React.FC<{
         </code>
       </pre>
       <CopyToClipboardButton
-        className="absolute top-2.5 right-2.5"
+        className="absolute right-2.5 top-2.5"
         content={command}
       />
     </>
@@ -127,7 +127,7 @@ export const FernSdk: React.FC<{
   const activeLanguage = normalizeLanguage(language);
   const activeSdk = activeLanguage && sdks[activeLanguage];
   return (
-    <div className="border border-default rounded-lg overflow-hidden">
+    <div className="border-default overflow-hidden rounded-lg border">
       <div className="bg-background">
         <div className="px-3 py-2 text-xs font-medium uppercase">
           Client libraries
@@ -138,7 +138,7 @@ export const FernSdk: React.FC<{
             return (
               <button
                 className={cn(
-                  "py-2 w-16 flex flex-col items-center gap-2 text-center border-b-2",
+                  "flex w-16 flex-col items-center gap-2 border-b-2 py-2 text-center",
                   activeLanguage === lang
                     ? "border-primary"
                     : "border-transparent"
@@ -155,13 +155,13 @@ export const FernSdk: React.FC<{
                   icon={icon}
                   size={6}
                 />
-                <div className="text-xs pb-0.5">{name}</div>
+                <div className="pb-0.5 text-xs">{name}</div>
               </button>
             );
           })}
         </div>
       </div>
-      <div className="bg-background-tertiary-light px-3 py-4 dark:bg-background-tertiary-dark border-t border-default text-sm relative">
+      <div className="border-default relative border-t bg-background-tertiary-light px-3 py-4 text-sm dark:bg-background-tertiary-dark">
         {activeSdk ? (
           <FernSdkInstallCommand
             installCommand={

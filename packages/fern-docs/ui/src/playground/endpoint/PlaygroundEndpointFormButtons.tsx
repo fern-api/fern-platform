@@ -25,7 +25,7 @@ export function PlaygroundEndpointFormButtons({
     FernNavigation.utils.getApiReferenceId(activeNavigatable);
   const closePlayground = useClosePlayground();
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex items-center justify-between">
       <FernButtonGroup>
         <FernButton onClick={resetWithExample} size="small" variant="minimal">
           {USE_EXAMPLE_TEXT}

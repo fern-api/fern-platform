@@ -49,7 +49,7 @@ export const Ol: FC<ComponentProps<"ol">> = ({ className, ...rest }) => {
   return (
     <ol
       {...rest}
-      className={cn(className, "list-outside list-decimal space-y-2 mb-3")}
+      className={cn(className, "mb-3 list-outside list-decimal space-y-2")}
     />
   );
 };
@@ -58,7 +58,7 @@ export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
   return (
     <ul
       {...rest}
-      className={cn(className, "list-outside list-disc space-y-2 mb-3")}
+      className={cn(className, "mb-3 list-outside list-disc space-y-2")}
     />
   );
 };

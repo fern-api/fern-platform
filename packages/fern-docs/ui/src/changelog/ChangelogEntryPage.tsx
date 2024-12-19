@@ -25,13 +25,13 @@ export function ChangelogEntryPage({
             id={content.date}
             className="flex items-stretch justify-between"
           >
-            <div className="max-xl:hidden w-sidebar-width" />
-            <div className="relative mr-6 max-w-content-width min-w-0 shrink flex-1 max-xl:mx-auto">
+            <div className="w-sidebar-width max-xl:hidden" />
+            <div className="relative mr-6 min-w-0 max-w-content-width flex-1 shrink max-xl:mx-auto">
               <header className="mb-8">
                 <div className="space-y-1">
                   <div className="not-prose">
                     <FernLink href={useHref(content.changelogSlug)}>
-                      <span className="t-accent shrink truncate whitespace-nowrap text-sm font-semibold inline-flex gap-1 items-center">
+                      <span className="t-accent inline-flex shrink items-center gap-1 truncate whitespace-nowrap text-sm font-semibold">
                         <ArrowLeft className="size-icon" />
                         Back to {content.changelogTitle}
                       </span>

@@ -126,7 +126,7 @@ function PlaygroundListItemForm({
       key={idx}
       className={clsx("min-h-12 w-full space-y-2", {
         "py-2": renderInline,
-        "pt-2 pb-4": !renderInline,
+        "pb-4 pt-2": !renderInline,
       })}
     >
       <div className="flex min-w-0 shrink items-center justify-between gap-2">

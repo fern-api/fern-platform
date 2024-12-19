@@ -101,7 +101,7 @@ export const InternalTypeDefinition = memo<InternalTypeDefinition.Props>(
     const renderContent = () => (
       <div
         className={cn(
-          "text-sm internal-type-definition-container",
+          "internal-type-definition-container text-sm",
           collapsableContent.elementNameSingular === "enum value"
             ? "enum-container"
             : undefined

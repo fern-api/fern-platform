@@ -31,10 +31,10 @@
       "path": "../components"
     },
     {
-      "path": "../fern-docs-syntax-highlighter"
+      "path": "../syntax-highlighter"
     },
     {
-      "path": "../../commons/react/react-commons"
+      "path": "../../commons/react-commons"
     }
   ],
   "include": [

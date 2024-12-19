@@ -4,14 +4,14 @@
 
 @layer components {
   .code-block-root {
-    @apply overflow-hidden flex flex-col w-full;
+    @apply flex w-full flex-col overflow-hidden;
 
     counter-reset: code-block-line;
     background-color: unset !important;
   }
 
   .code-block-root > .fern-scroll-area {
-    @apply shrink min-h-0;
+    @apply min-h-0 shrink;
   }
 
   .code-block,
@@ -30,11 +30,11 @@
   }
 
   .code-block-line-group {
-    @apply border-spacing-0 min-w-full;
+    @apply min-w-full border-spacing-0;
   }
 
   .code-block-line-gutter {
-    @apply p-0 align-top w-0 select-none;
+    @apply w-0 select-none p-0 align-top;
   }
 
   .code-block-line-gutter > span {
@@ -47,21 +47,21 @@
   }
 
   .code-block-line-group.word-wrap .code-block-line-content {
-    @apply break-all whitespace-pre-wrap;
+    @apply whitespace-pre-wrap break-all;
   }
 
   .code-block-line-group.highlight-focus .code-block-line:not(.highlight) {
-    @apply blur-[1.5px] opacity-40 dark:opacity-50 transition-[filter,opacity];
+    @apply opacity-40 blur-[1.5px] transition-[filter,opacity] dark:opacity-50;
   }
 
   .code-block:hover
     .code-block-line-group.highlight-focus
     .code-block-line:not(.highlight) {
-    @apply blur-0 opacity-100 dark:opacity-100;
+    @apply opacity-100 blur-0 dark:opacity-100;
   }
 
   .code-block-line-group:not(.highlight-focus) .code-block-line.highlight {
-    @apply transition-[background,shadow] shadow-transparent;
+    @apply shadow-transparent transition-[background,shadow];
     background-color: var(--accent-2);
   }
 

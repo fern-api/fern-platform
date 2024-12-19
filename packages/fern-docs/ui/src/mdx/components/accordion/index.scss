@@ -1,6 +1,6 @@
 @layer components {
   .fern-accordion {
-    @apply fern-card divide-default divide-y rounded-lg m-mdx;
+    @apply fern-card m-mdx divide-default divide-y rounded-lg;
 
     li {
       @apply list-outside;
@@ -12,10 +12,10 @@
   }
 
   .fern-accordion-trigger {
-    @apply flex w-full items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none hover:bg-tag-default data-[state=open]:rounded-b-none cursor-pointer;
+    @apply flex w-full cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:bg-tag-default hover:transition-none data-[state=open]:rounded-b-none;
 
     .fern-accordion-trigger-arrow {
-      @apply duration-[400ms] t-muted size-4 transition-transform ease-shift shrink-0;
+      @apply t-muted size-4 shrink-0 transition-transform duration-[400ms] ease-shift;
     }
 
     &[data-state="open"] .fern-accordion-trigger-arrow {
@@ -23,11 +23,11 @@
     }
 
     .fern-accordion-trigger-title {
-      @apply t-default m-0 -mb-px flex max-w-max text-base leading-6 text-left;
+      @apply t-default m-0 -mb-px flex max-w-max text-left text-base leading-6;
     }
   }
 
   .fern-accordion-content {
-    @apply overflow-hidden fern-collapsible;
+    @apply fern-collapsible overflow-hidden;
   }
 }

@@ -37,12 +37,12 @@ export function PlaygroundResponseCard({
           <div className="flex items-center gap-2 text-xs">
             <span
               className={clsx(
-                "font-mono flex items-center py-1 px-1.5 rounded-md h-5",
+                "flex h-5 items-center rounded-md px-1.5 py-1 font-mono",
                 {
-                  ["bg-method-get/10 text-method-get dark:bg-method-get-dark/10 dark:text-method-get-dark"]:
+                  ["bg-method-get/10 dark:bg-method-get-dark/10 dark:text-method-get-dark text-method-get"]:
                     response.value.response.status >= 200 &&
                     response.value.response.status < 300,
-                  ["bg-method-delete/10 text-method-delete dark:bg-method-delete-dark/10 dark:text-method-delete-dark"]:
+                  ["bg-method-delete/10 dark:bg-method-delete-dark/10 dark:text-method-delete-dark text-method-delete"]:
                     response.value.response.status > 300,
                 }
               )}

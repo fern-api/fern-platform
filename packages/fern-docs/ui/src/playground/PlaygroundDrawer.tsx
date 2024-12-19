@@ -97,7 +97,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
   );
 
   const renderMobileHeader = () => (
-    <div className="flex w-full justify-between h-10 px-4">
+    <div className="flex h-10 w-full justify-between px-4">
       <div className="flex items-center">
         <span className="inline-flex items-center gap-2 text-sm font-semibold">
           <span className="t-accent">API Playground</span>
@@ -135,7 +135,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
       >
         <Dialog.Portal>
           <Dialog.Content
-            className="data-[state=open]:animate-content-show-from-bottom fixed bottom-0 inset-x-0 bg-background-translucent backdrop-blur-2xl shadow-xl border-t border-default max-sm:h-full"
+            className="bg-background-translucent border-default fixed inset-x-0 bottom-0 border-t shadow-xl backdrop-blur-2xl data-[state=open]:animate-content-show-from-bottom max-sm:h-full"
             onInteractOutside={(e) => {
               e.preventDefault();
             }}
@@ -158,13 +158,13 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
               {!isMobileScreen ? (
                 <>
                   <div
-                    className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-[''] touch-none"
+                    className="group absolute inset-x-0 -top-0.5 h-0.5 cursor-row-resize touch-none after:absolute after:inset-x-0 after:-top-2 after:z-50 after:h-4 after:content-['']"
                     onMouseDown={resizeY.onMouseDown}
                     onTouchStart={resizeY.onTouchStart}
                   >
-                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                    <div className="absolute inset-0 bg-accent opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
                     <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
-                      <div className="bg-accent h-1 w-10 rounded-full" />
+                      <div className="h-1 w-10 rounded-full bg-accent" />
                     </div>
                   </div>
                 </>

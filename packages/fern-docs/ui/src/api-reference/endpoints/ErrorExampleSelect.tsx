@@ -71,8 +71,8 @@ export const ErrorExampleSelect: FC<
         </FernButton>
       </Select.Trigger>
       <Select.Portal>
-        <Select.Content className="overflow-hidden rounded-md bg-card backdrop-blur shadow-2xl ring-default ring-inset ring-1 z-50">
-          <Select.ScrollUpButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
+        <Select.Content className="bg-card ring-default z-50 overflow-hidden rounded-md shadow-2xl ring-1 ring-inset backdrop-blur">
+          <Select.ScrollUpButton className="t-accent bg-card flex h-8 cursor-default items-center justify-center">
             <NavArrowUp className="size-icon" />
           </Select.ScrollUpButton>
           <Select.Viewport className="p-[5px]">
@@ -80,7 +80,7 @@ export const ErrorExampleSelect: FC<
               ([statusCode, examples], idx) => (
                 <Fragment key={statusCode}>
                   {idx > 0 && (
-                    <Select.Separator className="bg-tag-default m-[5px] h-px" />
+                    <Select.Separator className="m-[5px] h-px bg-tag-default" />
                   )}
                   <Select.Group>
                     {examples.map((example, j) => {
@@ -99,7 +99,7 @@ export const ErrorExampleSelect: FC<
               )
             )}
           </Select.Viewport>
-          <Select.ScrollDownButton className="t-accent flex h-8 cursor-default items-center justify-center bg-card">
+          <Select.ScrollDownButton className="t-accent bg-card flex h-8 cursor-default items-center justify-center">
             <NavArrowDown className="size-icon" />
           </Select.ScrollDownButton>
         </Select.Content>
@@ -118,7 +118,7 @@ export const FernSelectItem = forwardRef<
   return (
     <Select.Item
       className={clsx(
-        "text-text-default data-[disabled]:text-text-disabled relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none data-[disabled]:pointer-events-none data-[highlighted]:outline-none",
+        "relative flex h-8 select-none items-center rounded-[3px] pl-2 pr-4 text-sm leading-none text-text-default data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled data-[highlighted]:outline-none",
         {
           "data-[highlighted]:bg-tag-default":
             intent === "none" || intent === "primary",

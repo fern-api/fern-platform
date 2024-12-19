@@ -1,6 +1,6 @@
 @layer components {
   .fern-input-focus {
-    @apply ring-border-primary ring-2 outline-none;
+    @apply ring-border-primary outline-none ring-2;
   }
 
   .fern-input {
@@ -10,8 +10,8 @@
   }
 
   .fern-textarea {
-    @apply form-textarea resize-none w-full;
-    @apply outline-none ring-0 bg-transparent border-none #{!important};
+    @apply form-textarea w-full resize-none;
+    @apply border-none bg-transparent outline-none ring-0 #{!important};
   }
 
   .fern-textarea-group,
@@ -19,21 +19,21 @@
   .fern-numeric-input-group {
     @apply flex items-center overflow-hidden;
     @apply focus-within:fern-input-focus;
-    @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
+    @apply ring-default rounded-lg bg-white shadow-inner ring-1 ring-inset dark:bg-tag-default-soft;
   }
 
   .fern-input-icon {
     @apply flex items-center justify-center;
-    @apply w-8 h-full shrink-0;
+    @apply h-full w-8 shrink-0;
   }
 
   .fern-input-icon + .fern-input {
-    @apply pl-8 -ml-8;
+    @apply -ml-8 pl-8;
   }
 
   .fern-input-right-element {
     @apply flex items-center justify-center;
-    @apply min-w-8 h-full shrink-0 px-0 -ml-2;
+    @apply -ml-2 h-full min-w-8 shrink-0 px-0;
   }
 
   .fern-input-group,
@@ -42,12 +42,12 @@
   }
 
   .fern-numeric-input-group .fern-numeric-input-step {
-    @apply h-full rounded-none border-default;
+    @apply border-default h-full rounded-none;
   }
 
   .fern-numeric-input-group:focus-within
     .fern-numeric-input-step:not(:disabled) {
-    @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
+    @apply t-accent border-primary ring-accent hover:t-accent hover:bg-tag-primary;
   }
 
   .fern-numeric-input-group .fern-numeric-input-step:first-child {
@@ -60,7 +60,7 @@
 
   .fern-input,
   .fern-textarea {
-    @apply caret-accent py-2 px-2.5 text-sm;
+    @apply px-2.5 py-2 text-sm caret-accent;
     @apply max-sm:text-base;
   }
 

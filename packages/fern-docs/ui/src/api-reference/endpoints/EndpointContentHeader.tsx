@@ -23,7 +23,7 @@ export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
           <span>
             <h1 className="fern-page-heading">{node.title}</h1>
             {endpoint.availability != null && (
-              <span className="inline-block ml-2 align-text-bottom">
+              <span className="ml-2 inline-block align-text-bottom">
                 <AvailabilityBadge
                   availability={endpoint.availability}
                   rounded

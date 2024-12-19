@@ -112,9 +112,9 @@ export const DiscriminatedUnionVariant: React.FC<
     <div
       ref={ref}
       id={href}
-      className={cn("scroll-mt-content-padded flex flex-col py-3 gap-2", {
+      className={cn("scroll-mt-content-padded flex flex-col gap-2 py-3", {
         "px-3": !isRootTypeDefinition,
-        "outline-accent outline-1 outline outline-offset-4 rounded-sm":
+        "rounded-sm outline outline-1 outline-offset-4 outline-accent":
           isActive,
       })}
     >

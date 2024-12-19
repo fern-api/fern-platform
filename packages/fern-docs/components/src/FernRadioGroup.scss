@@ -24,11 +24,11 @@
   }
 
   .fern-radio-indicator {
-    @apply size-4 bg-accent flex items-center justify-center rounded-full;
+    @apply flex size-4 items-center justify-center rounded-full bg-accent;
   }
 
   .fern-radio-indicator::after {
-    @apply bg-background absolute size-2 rounded-full;
+    @apply absolute size-2 rounded-full bg-background;
 
     content: "";
   }

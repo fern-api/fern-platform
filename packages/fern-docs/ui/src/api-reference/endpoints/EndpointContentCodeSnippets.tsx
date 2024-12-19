@@ -142,7 +142,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         getExampleId={getExampleId}
       />
     ) : (
-      <span className="text-sm t-muted line-clamp-1">
+      <span className="t-muted line-clamp-1 text-sm">
         {getExampleId(selectedExample)}
       </span>
     );

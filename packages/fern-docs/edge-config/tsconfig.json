@@ -7,13 +7,13 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../fern-docs-auth"
+      "path": "../auth"
     },
     {
-      "path": "../fern-docs-utils"
+      "path": "../utils"
     },
     {
-      "path": "../../commons/search-utils"
+      "path": "../search-utils"
     }
   ]
 }

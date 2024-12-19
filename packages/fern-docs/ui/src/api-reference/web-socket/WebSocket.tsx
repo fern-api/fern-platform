@@ -135,9 +135,9 @@ const WebhookContent: FC<WebhookContentProps> = ({
     <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
       <article
         className={cn(
-          "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto",
+          "scroll-mt-content mx-auto max-w-content-width md:max-w-endpoint-width",
           {
-            "border-default border-b mb-px pb-20": !last,
+            "border-default mb-px border-b pb-20": !last,
           }
         )}
       >
@@ -146,7 +146,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
           <div>
             <h1 className="fern-page-heading">{node.title}</h1>
             {channel.availability != null && (
-              <span className="inline-block ml-2 align-text-bottom">
+              <span className="ml-2 inline-block align-text-bottom">
                 <AvailabilityBadge
                   availability={channel.availability}
                   rounded
@@ -362,7 +362,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
           </section>
           <aside className="max-w-content-width">
             {
-              <div className="sticky top-header-offset flex max-h-content scroll-mt-content flex-col gap-6 py-8">
+              <div className="max-h-content scroll-mt-content sticky top-header-offset flex flex-col gap-6 py-8">
                 <TitledExample
                   title={"Handshake"}
                   actions={

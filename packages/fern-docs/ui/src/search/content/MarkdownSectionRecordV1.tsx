@@ -19,7 +19,7 @@ export const MarkdownSectionRecordV1: React.FC<
     <div className="flex w-full flex-col space-y-1.5">
       <div className="flex justify-between">
         <span
-          className={cn("line-clamp-1 text-base text-start", {
+          className={cn("line-clamp-1 text-start text-base", {
             "t-default": !isHovered,
             "t-accent-aaa": isHovered,
           })}

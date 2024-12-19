@@ -205,7 +205,7 @@ export function ChangelogPage({
         )}
 
         <div className="h-48" />
-        <div className="w-fit mx-auto my-8">
+        <div className="mx-auto my-8 w-fit">
           <BuiltWithFern />
         </div>
       </main>

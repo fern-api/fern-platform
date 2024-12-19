@@ -33,13 +33,13 @@ export const AskAIText = forwardRef<HTMLSpanElement, { query: string }>(
     return (
       <span
         ref={ref}
-        className="whitespace-nowrap inline-flex items-baseline overflow-hidden"
+        className="inline-flex items-baseline overflow-hidden whitespace-nowrap"
       >
         Ask AI
         {query.trimStart().length > 0 && (
           <>
             <span className="ms-1">&ldquo;</span>
-            <span className="font-semibold text-ellipsis shrink min-w-0 overflow-hidden">
+            <span className="min-w-0 shrink overflow-hidden text-ellipsis font-semibold">
               {query}
             </span>
             <span>&rdquo;</span>

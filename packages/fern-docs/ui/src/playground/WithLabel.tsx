@@ -145,7 +145,7 @@ export const WithLabelInternal: FC<
 
       <div
         className={cn("flex", {
-          "flex-1 shrink min-w-0": !isBoolean,
+          "min-w-0 flex-1 shrink": !isBoolean,
         })}
       >
         {children}

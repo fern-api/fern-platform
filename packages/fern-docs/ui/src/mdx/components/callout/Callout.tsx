@@ -49,7 +49,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
   return (
     <div
       className={cn(
-        "p-4 mt-4 first:mt-0 mb-6 rounded-lg", // pb-0 to compensate for the ::after margin
+        "mb-6 mt-4 rounded-lg p-4 first:mt-0", // pb-0 to compensate for the ::after margin
         visitDiscriminatedUnion({ intent }, "intent")._visit({
           info: () => "callout-outlined",
           warning: () => "callout-outlined-warning",
@@ -82,7 +82,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
           ) : (
             visitDiscriminatedUnion({ intent }, "intent")._visit({
               info: () => (
-                <InfoCircle className="size-icon-md text-intent-default" />
+                <InfoCircle className="text-intent-default size-icon-md" />
               ),
               warning: () => (
                 <Bell className="size-icon-md text-intent-warning" />
@@ -100,7 +100,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                 <Check className="size-icon-md text-intent-success" />
               ),
               _other: () => (
-                <InfoCircle className="size-icon-md text-intent-default" />
+                <InfoCircle className="text-intent-default size-icon-md" />
               ),
             })
           )}
@@ -108,7 +108,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
 
         <div
           className={cn(
-            "flex-1 prose-sm prose dark:prose-invert overflow-x-auto -my-4 after:block after:mt-4 before:block before:mb-4" // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
+            "prose prose-sm -my-4 flex-1 overflow-x-auto dark:prose-invert before:mb-4 before:block after:mt-4 after:block" // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
           )}
         >
           <div

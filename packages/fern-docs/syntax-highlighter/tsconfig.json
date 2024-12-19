@@ -7,7 +7,7 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../fern-docs-mdx/tsconfig.json"
+      "path": "../mdx/tsconfig.json"
     },
     {
       "path": "../components/tsconfig.json"

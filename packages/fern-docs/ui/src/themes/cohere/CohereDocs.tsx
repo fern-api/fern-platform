@@ -113,7 +113,7 @@ function UnmemoizedCohereDocs({
   return (
     <>
       <CohereDocsStyle />
-      <Announcement className="fixed top-0 inset-x-0" />
+      <Announcement className="fixed inset-x-0 top-0" />
       {fernDocs}
     </>
   );

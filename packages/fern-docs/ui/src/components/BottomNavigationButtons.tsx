@@ -23,7 +23,7 @@ export const BottomNavigationButtons: FC<BottomNavigationButtonsProps> = ({
     <div
       className={
         isGridEnabled
-          ? "not-prose grid gap-6 md:gap-8 lg:gap-12 grid-cols-2"
+          ? "not-prose grid grid-cols-2 gap-6 md:gap-8 lg:gap-12"
           : "not-prose grid grid-cols-1"
       }
     >

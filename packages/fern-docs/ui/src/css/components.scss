@@ -1,10 +1,10 @@
 @layer components {
   .fern-search-bar {
     @apply cursor-pointer;
-    @apply text-sm border-default flex items-center rounded-lg border-none px-2.5 py-2 t-muted;
+    @apply t-muted border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
     @apply bg-tag-default;
-    @apply hover:bg-tag-default-hover transition-[background,shadow];
-    @apply ring-inset ring-default hover:ring-default ring-1;
+    @apply transition-[background,shadow] hover:bg-tag-default-hover;
+    @apply ring-default ring-1 ring-inset hover:ring-default;
     @apply max-sm:h-10 max-sm:text-base;
 
     .search-placeholder {
@@ -16,8 +16,8 @@
     }
 
     .keyboard-shortcut-hint {
-      @apply t-muted ring-card-border shadow-card-light inline-flex size-icon-md items-center justify-center rounded ring-1 font-mono text-xs leading-none;
-      @apply dark:shadow-card-dark bg-card;
+      @apply t-muted inline-flex size-icon-md items-center justify-center rounded font-mono text-xs leading-none shadow-card-light ring-1 ring-card-border;
+      @apply bg-card dark:shadow-card-dark;
     }
 
     &:hover .keyboard-shortcut-hint {
@@ -25,12 +25,12 @@
     }
 
     &:disabled {
-      @apply shadow-none bg-tag-default-soft cursor-default;
+      @apply cursor-default bg-tag-default-soft shadow-none;
     }
   }
 
   .fern-mdx-link {
-    @apply t-accent-aaa underline underline-offset-4 decoration-1 hover:decoration-2 decoration-accent-aa;
+    @apply t-accent-aaa underline decoration-accent-aa decoration-1 underline-offset-4 hover:decoration-2;
     @apply font-semibold;
 
     h1 &,
@@ -49,7 +49,7 @@
     }
 
     svg.external-link-icon {
-      @apply ml-0.5 inline-block text-text-muted size-3.5;
+      @apply ml-0.5 inline-block size-3.5 text-text-muted;
     }
 
     &:hover {
@@ -60,7 +60,7 @@
   }
 
   .fern-api-property {
-    @apply py-4 space-y-4;
+    @apply space-y-4 py-4;
 
     p:last-child {
       @apply mb-0;
@@ -72,7 +72,7 @@
   }
 
   .fern-api-property-key {
-    @apply font-mono t-default font-semibold text-sm;
+    @apply t-default font-mono text-sm font-semibold;
   }
 
   .fern-api-property-meta {

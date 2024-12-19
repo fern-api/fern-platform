@@ -18,9 +18,9 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
   return (
     <div
       className={cn(className, "fern-background", {
-        "from-accent/10 bg-gradient-to-b to-transparent":
+        "bg-gradient-to-b from-accent/10 to-transparent":
           lightBackground?.type === "gradient" && lightBackgroundImage == null,
-        "dark:from-accent/10 dark:bg-gradient-to-b dark:to-transparent":
+        "dark:bg-gradient-to-b dark:from-accent/10 dark:to-transparent":
           darkBackground?.type === "gradient" && darkBackgroundImage == null,
         "dark:from-transparent":
           darkBackground?.type === "solid" && darkBackgroundImage == null,

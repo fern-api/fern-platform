@@ -5,7 +5,7 @@
 
   .toc-root::before,
   .toc-root::after {
-    @apply rounded-full w-0.5 absolute top-0 -left-0.5;
+    @apply absolute -left-0.5 top-0 w-0.5 rounded-full;
 
     content: "";
   }

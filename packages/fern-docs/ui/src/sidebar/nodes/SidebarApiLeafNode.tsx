@@ -72,7 +72,7 @@ export function SidebarApiLeafNode({
       title={
         <span
           className={clsx({
-            "opacity-70 line-through": node.availability === "Deprecated",
+            "line-through opacity-70": node.availability === "Deprecated",
           })}
         >
           {node.title}

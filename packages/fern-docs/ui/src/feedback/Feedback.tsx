@@ -90,7 +90,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
   return (
     <div className={className} ref={ref}>
       {!sent ? (
-        <div className="flex items-center justify-start flex-wrap gap-4">
+        <div className="flex flex-wrap items-center justify-start gap-4">
           <span className="t-muted text-sm font-medium">
             Was this page helpful?
           </span>

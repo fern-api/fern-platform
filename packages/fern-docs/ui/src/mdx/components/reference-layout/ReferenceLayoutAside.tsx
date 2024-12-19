@@ -7,7 +7,7 @@ export function ReferenceLayoutAside({
 }): ReactElement {
   return (
     <aside className="relative max-md:-order-1">
-      <div className="md:top-header-offset md:sticky md:py-8 md:-my-8 prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 break-words">
+      <div className="prose break-words dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 md:sticky md:top-header-offset md:-my-8 md:py-8">
         {children}
       </div>
     </aside>

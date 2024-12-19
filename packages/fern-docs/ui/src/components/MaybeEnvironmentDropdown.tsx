@@ -93,7 +93,7 @@ export function MaybeEnvironmentDropdown({
       {isEditingEnvironment.value ? (
         <span
           key="url"
-          className="inline-flex whitespace-nowrap max-sm:hidden font-mono"
+          className="inline-flex whitespace-nowrap font-mono max-sm:hidden"
         >
           <FernInput
             autoFocus={isEditingEnvironment.value}
@@ -177,7 +177,7 @@ export function MaybeEnvironmentDropdown({
                 value={selectedEnvironment?.id ?? environmentId}
               >
                 <FernButton
-                  className="py-0 px-1 h-auto"
+                  className="h-auto px-1 py-0"
                   text={
                     <span
                       key="protocol"
@@ -207,7 +207,7 @@ export function MaybeEnvironmentDropdown({
             ) : (
               <span
                 key="url"
-                className="whitespace-nowrap max-sm:hidden font-mono"
+                className="whitespace-nowrap font-mono max-sm:hidden"
               >
                 {editable ? (
                   <span

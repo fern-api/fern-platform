@@ -47,8 +47,8 @@ export const Card: React.FC<Card.Props> = ({
       )}
       <div
         className={cn("flex items-start", {
-          "space-y-3 flex-col": iconPosition === "top",
-          "space-x-3 flex-row": iconPosition === "left",
+          "flex-col space-y-3": iconPosition === "top",
+          "flex-row space-x-3": iconPosition === "left",
         })}
       >
         {typeof icon === "string" ? (
@@ -71,7 +71,7 @@ export const Card: React.FC<Card.Props> = ({
             {icon}
           </span>
         ) : null}
-        <div className="space-y-1 w-full overflow-hidden">
+        <div className="w-full space-y-1 overflow-hidden">
           <div className="t-default text-base font-semibold">{title}</div>
           {children != null && <div className="t-muted">{children}</div>}
         </div>

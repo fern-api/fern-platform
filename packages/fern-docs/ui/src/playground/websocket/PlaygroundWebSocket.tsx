@@ -192,7 +192,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
   return (
     <FernTooltipProvider>
-      <div className="flex min-h-0 flex-1 shrink flex-col h-full">
+      <div className="flex h-full min-h-0 flex-1 shrink flex-col">
         <div className="flex-0">
           <PlaygroundEndpointPath
             method={undefined}

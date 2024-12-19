@@ -8,7 +8,7 @@ export function ButtonGroup(
   return (
     <FernButtonGroup
       {...props}
-      className={clsx(props.className, "flex-wrap m-mdx")}
+      className={clsx(props.className, "m-mdx flex-wrap")}
     />
   );
 }

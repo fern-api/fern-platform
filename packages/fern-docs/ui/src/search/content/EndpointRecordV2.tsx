@@ -20,7 +20,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({
       <div className="flex justify-between">
         <div
           className={cn(
-            "line-clamp-1 flex space-x-1 items-center text-sm text-start",
+            "line-clamp-1 flex items-center space-x-1 text-start text-sm",
             {
               "t-muted": !isHovered,
               "t-accent": isHovered,
@@ -29,7 +29,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({
         >
           <div
             className={cn(
-              "flex font-mono shrink-0 items-center justify-center rounded-lg px-2 py-0.5 text-sm uppercase",
+              "flex shrink-0 items-center justify-center rounded-lg px-2 py-0.5 font-mono text-sm uppercase",
               {
                 "bg-tag-default": !isHovered,
                 "bg-white/20 dark:bg-black/20": isHovered,
@@ -51,7 +51,7 @@ export const EndpointRecordV2: React.FC<EndpointRecordV2.Props> = ({
                   pathParameter: (part) => (
                     <span
                       className={cn(
-                        "items-center justify-center mx-0.5 rounded px-1 py-0.5 text-sm",
+                        "mx-0.5 items-center justify-center rounded px-1 py-0.5 text-sm",
                         {
                           "bg-tag-default": !isHovered,
                           "bg-white/20 dark:bg-black/20": isHovered,

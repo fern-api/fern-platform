@@ -18,7 +18,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
           "flex flex-col items-center justify-center rounded-md border p-1",
           {
             "border-default": !isHovered,
-            "border-white dark:border-black bg-white dark:bg-black text-black":
+            "border-white bg-white text-black dark:border-black dark:bg-black":
               isHovered,
           }
         )}

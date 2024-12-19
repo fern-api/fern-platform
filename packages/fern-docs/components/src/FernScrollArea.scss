@@ -1,10 +1,10 @@
 @layer components {
   .fern-scroll-area {
-    @apply h-full w-full overflow-hidden flex flex-col z-0;
+    @apply z-0 flex h-full w-full flex-col overflow-hidden;
   }
 
   .fern-scroll-area-viewport {
-    @apply h-full w-full shrink flex flex-col min-h-0;
+    @apply flex h-full min-h-0 w-full shrink flex-col;
 
     border-radius: inherit;
 
@@ -28,7 +28,7 @@
   }
 
   .fern-scroll-area-scrollbar {
-    @apply flex select-none touch-none m-1 transition-all ease-out z-10 rounded-full;
+    @apply z-10 m-1 flex touch-none select-none rounded-full transition-all ease-out;
     @apply bg-tag-default;
   }
 
@@ -37,16 +37,16 @@
   }
 
   .fern-scroll-area-scrollbar[data-orientation="vertical"] {
-    @apply w-[4px] hover:w-[6px] my-[5px];
+    @apply my-[5px] w-[4px] hover:w-[6px];
   }
 
   .fern-scroll-area-scrollbar[data-orientation="horizontal"] {
-    @apply flex-col h-[4px] hover:h-[6px] mx-[5px];
+    @apply mx-[5px] h-[4px] flex-col hover:h-[6px];
   }
 
   .fern-scroll-area-thumb {
-    @apply flex relative z-auto;
-    @apply bg-border-accent-muted flex-1 rounded-full;
+    @apply relative z-auto flex;
+    @apply flex-1 rounded-full bg-border-accent-muted;
   }
 
   /* increase target size for touch devices https://www.w3.org/WAI/WCAG21/Understanding/target-size.html */

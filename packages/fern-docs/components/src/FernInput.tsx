@@ -142,7 +142,7 @@ function FernInputRightElement({
             </div>
           }
         >
-          <FernInputResetButton onClick={onReset} className="shrink-0 mr-0.5" />
+          <FernInputResetButton onClick={onReset} className="mr-0.5 shrink-0" />
         </FernTooltip>
       </FernTooltipProvider>
     );

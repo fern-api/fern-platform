@@ -104,7 +104,7 @@ export function PlaygroundAdditionalProperties({
   );
 
   return (
-    <div className={clsx("flex-1 shrink min-w-0 mt-8")}>
+    <div className={clsx("mt-8 min-w-0 flex-1 shrink")}>
       <WithLabel
         property={{
           key: ApiDefinition.PropertyKey("Optional Extra Properties"),

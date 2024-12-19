@@ -304,9 +304,9 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     >
       <div
         className={cn(
-          "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto",
+          "scroll-mt-content mx-auto max-w-content-width md:max-w-endpoint-width",
           {
-            "border-default border-b mb-px pb-12": !last,
+            "border-default mb-px border-b pb-12": !last,
           }
         )}
       >

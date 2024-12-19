@@ -1,6 +1,6 @@
 @layer components {
   .fern-web-socket-trigger {
-    @apply w-full flex items-center gap-2 px-3 py-2 hover:data-[state=closed]:bg-tag-default cursor-default data-[state=closed]:rounded-[inherit] transition-[background,border-radius] duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+    @apply flex w-full cursor-default items-center gap-2 px-3 py-2 transition-[background,border-radius] duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)] data-[state=closed]:rounded-[inherit] hover:data-[state=closed]:bg-tag-default;
     @apply sticky top-0 z-10 backdrop-blur;
 
     .fern-web-socket-client,
@@ -22,15 +22,15 @@
     }
 
     .fern-web-socket-type {
-      @apply flex-1 inline-flex justify-end;
+      @apply inline-flex flex-1 justify-end;
 
       .fern-web-socket-badge {
-        @apply t-muted h-5 rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none whitespace-nowrap;
+        @apply t-muted h-5 whitespace-nowrap rounded-md bg-tag-default px-1.5 py-1 text-xs leading-none;
       }
     }
 
     .fern-web-socket-trigger-data {
-      @apply flex-1 min-w-0 shrink truncate font-mono text-xs text-left;
+      @apply min-w-0 flex-1 shrink truncate text-left font-mono text-xs;
     }
 
     .fern-web-socket-copy {
@@ -38,11 +38,11 @@
     }
 
     .fern-web-socket-chevron {
-      @apply size-icon t-muted shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+      @apply t-muted size-icon shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
     }
   }
 
   .fern-web-socket-content {
-    @apply overflow-hidden fern-collapsible;
+    @apply fern-collapsible overflow-hidden;
   }
 }

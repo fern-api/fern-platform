@@ -74,7 +74,7 @@ function FoundOAuthReferencedEndpointForm({
   ];
 
   return value.isLoggingIn ? (
-    <li className="-mx-4 space-y-2 p-4 pt-8 flex flex-1 items-center justify-center">
+    <li className="-mx-4 flex flex-1 items-center justify-center space-y-2 p-4 pt-8">
       Loading...
     </li>
   ) : (
@@ -120,10 +120,10 @@ function FoundOAuthReferencedEndpointForm({
               <FernTooltipProvider>
                 <div className="flex min-w-0 flex-1 shrink items-center justify-between gap-2">
                   <label className="inline-flex items-baseline gap-2 truncate">
-                    <span className="font-mono text-sm inline-flex">
+                    <span className="inline-flex font-mono text-sm">
                       Generated OAuth Token
                       <FernTooltip content="This bearer token was generated from an OAuth API call, and as a result cannot be edited">
-                        <HelpCircle className="t-muted size-4 self-center ml-2" />
+                        <HelpCircle className="t-muted ml-2 size-4 self-center" />
                       </FernTooltip>
                     </span>
                   </label>

@@ -44,7 +44,7 @@ export const CodeExampleClientDropdown: React.FC<
         <FernButton
           icon={
             <RemoteFontAwesomeIcon
-              className="bg-accent size-4"
+              className="size-4 bg-accent"
               icon={getIconForClient(value)}
             />
           }

@@ -43,7 +43,7 @@ export const Toaster: React.FC<ToasterProps> = ({
         warning: <WarningCircle className="size-icon text-text-muted" />,
         error: <XmarkCircle className="size-icon text-text-muted" />,
         loading: (
-          <SystemRestart className="animate-spin size-icon text-text-muted" />
+          <SystemRestart className="size-icon animate-spin text-text-muted" />
         ),
       }}
     />

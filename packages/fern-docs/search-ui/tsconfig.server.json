@@ -12,7 +12,7 @@
   "include": ["./src/server/**/*.ts"],
   "references": [
     {
-      "path": "../fern-docs-search-server"
+      "path": "../search-server"
     }
   ]
 }

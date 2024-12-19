@@ -70,13 +70,13 @@ export function VerticalSplitPane({
         {above}
       </div>
       <div
-        className="shink-0 group relative flex h-3 flex-none cursor-row-resize items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300 touch-none"
+        className="shink-0 group relative flex h-3 flex-none cursor-row-resize touch-none items-center px-3 opacity-0 transition-opacity after:absolute after:inset-x-0 after:-top-1 after:h-6 after:content-[''] hover:opacity-100 hover:delay-300"
         onMouseDown={resizeY.onMouseDown}
         onTouchStart={resizeY.onTouchStart}
       >
         <div className="bg-border-primary relative z-10 mx-auto h-0.5 w-full rounded-full group-active:bg-accent group-active:transition-[background]" />
       </div>
-      <div className={cn(belowClassName, "flex-1 shrink min-h-0")}>{below}</div>
+      <div className={cn(belowClassName, "min-h-0 flex-1 shrink")}>{below}</div>
     </div>
   );
 }
@@ -136,7 +136,7 @@ export function HorizontalSplitPane({
   return (
     <div
       ref={ref}
-      className={cn("flex justify-stretch shrink", className)}
+      className={cn("flex shrink justify-stretch", className)}
       {...props}
     >
       <div
@@ -149,7 +149,7 @@ export function HorizontalSplitPane({
       </div>
       <div
         className={clsx(
-          "shink-0 group sticky top-0 z-10 flex w-3 flex-none cursor-col-resize items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300 touch-none",
+          "shink-0 group sticky top-0 z-10 flex w-3 flex-none cursor-col-resize touch-none items-center justify-center opacity-0 transition-opacity after:absolute after:inset-y-0 after:-left-1 after:w-6 after:content-[''] hover:opacity-100 hover:delay-300",
           {
             "py-8": rizeBarHeight != null,
             "-mx-1.5": rizeBarHeight == null,
@@ -161,7 +161,7 @@ export function HorizontalSplitPane({
       >
         <div className="bg-border-primary relative z-10 h-full w-0.5 rounded-full group-active:bg-accent group-active:transition-[background]" />
       </div>
-      <div className={cn(rightClassName, "flex-1 shrink min-w-0 relative")}>
+      <div className={cn(rightClassName, "relative min-w-0 flex-1 shrink")}>
         {right}
       </div>
     </div>

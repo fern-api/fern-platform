@@ -20,7 +20,7 @@ export const PageRecordV4: React.FC<PageRecordV4.Props> = ({
     <div className="flex w-full flex-col space-y-1.5">
       <div className="flex justify-between">
         <span
-          className={cn("line-clamp-1 text-sm text-start", {
+          className={cn("line-clamp-1 text-start text-sm", {
             "t-default": !isHovered,
             "t-accent-aaa": isHovered,
           })}

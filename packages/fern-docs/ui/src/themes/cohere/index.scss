@@ -7,14 +7,14 @@
   }
 
   .fern-body {
-    @apply flex gap-3 flex-1 min-h-0;
+    @apply flex min-h-0 flex-1 gap-3;
   }
 
   .fern-main,
   .fern-header,
   .fern-header-tabs,
   .fern-sidebar-container {
-    @apply rounded-lg border-concealed border;
+    @apply border-concealed rounded-lg border;
   }
 
   .fern-sidebar-container {
@@ -23,8 +23,8 @@
   }
 
   .fern-sidebar-container.dismissable {
-    @apply fixed left-3 bottom-3;
-    @apply max-sm:w-auto max-sm:right-3;
+    @apply fixed bottom-3 left-3;
+    @apply max-sm:right-3 max-sm:w-auto;
     @apply shadow-xl;
 
     top: calc(var(--spacing-header-height-real) + 1.5rem);
@@ -39,7 +39,7 @@
   }
 
   .fern-main {
-    @apply bg-sidebar flex-1 min-w-0;
+    @apply bg-sidebar min-w-0 flex-1;
   }
 
   .fern-header-container {
@@ -52,7 +52,7 @@
   }
 
   .fern-header-content {
-    @apply flex justify-between items-center px-4 shrink-0 h-full gap-4;
+    @apply flex h-full shrink-0 items-center justify-between gap-4 px-4;
     @apply max-lg:pr-2;
   }
 
@@ -65,14 +65,14 @@
   }
 
   .fern-header-tabs {
-    @apply max-lg:hidden p-3 flex gap-3 justify-between;
+    @apply flex justify-between gap-3 p-3 max-lg:hidden;
 
     .fern-header-tabs-list {
       @apply flex gap-3;
     }
 
     .fern-header-tab-button {
-      @apply flex h-[40px] select-none items-center px-3 text-sm border rounded-lg;
+      @apply flex h-[40px] select-none items-center rounded-lg border px-3 text-sm;
 
       .fa-icon {
         @apply size-3.5;
@@ -110,7 +110,7 @@
 
     .fern-endpoint-content-right {
       @apply max-w-content-width;
-      @apply md:flex-1 md:sticky md:self-start md:top-0;
+      @apply md:sticky md:top-0 md:flex-1 md:self-start;
 
       // the 4rem is the same as the h-10 as the Header
       @apply max-h-content;
@@ -126,11 +126,11 @@
   }
 
   .fern-endpoint-code-snippets {
-    @apply gap-6 grid grid-rows-[repeat(auto-fit,minmax(0,min-content))] w-full;
+    @apply grid w-full grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6;
   }
 
   .fern-layout-toc {
-    @apply top-header-offset h-content w-sidebar-width sticky max-xl:hidden shrink-0;
+    @apply h-content sticky top-header-offset w-sidebar-width shrink-0 max-xl:hidden;
   }
 
   .fern-guide-layout,
@@ -141,16 +141,16 @@
 
   .fern-guide-layout,
   .fern-overview-layout {
-    @apply flex flex-row-reverse max-w-fit mx-auto lg:max-xl:ml-0 gap-3;
+    @apply mx-auto flex max-w-fit flex-row-reverse gap-3 lg:max-xl:ml-0;
   }
 
   .fern-page-layout {
-    @apply pt-8 pb-20;
-    @apply px-4 sm:px-6 lg:px-10 w-full shrink min-w-0;
+    @apply pb-20 pt-8;
+    @apply w-full min-w-0 shrink px-4 sm:px-6 lg:px-10;
   }
 
   .fern-layout-content {
-    @apply pt-8 pb-20 min-w-0;
+    @apply min-w-0 pb-20 pt-8;
   }
 
   .fern-guide-layout {
@@ -162,7 +162,7 @@
 
     .fern-guide-layout,
     .fern-overview-layout {
-      @apply xl:pl-3 xl:pr-0 lg:max-xl:mx-auto;
+      @apply lg:max-xl:mx-auto xl:pl-3 xl:pr-0;
     }
   }
 }

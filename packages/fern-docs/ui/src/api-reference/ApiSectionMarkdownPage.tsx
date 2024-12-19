@@ -30,7 +30,7 @@ function ApiSectionMarkdownContent({
 
       {/* TODO: the following ensures that the bottom line matches the rest of the api reference, but this isn't very graceful */}
       <div className="fern-endpoint-content">
-        <div className={clsx({ "border-default border-b mb-px": !last })} />
+        <div className={clsx({ "border-default mb-px border-b": !last })} />
       </div>
     </div>
   );

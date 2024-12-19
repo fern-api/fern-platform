@@ -13,7 +13,7 @@
       "path": "../../commons/core-utils"
     },
     {
-      "path": "../fern-docs-utils"
+      "path": "../utils"
     }
   ]
 }

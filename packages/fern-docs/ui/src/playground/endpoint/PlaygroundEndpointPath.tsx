@@ -59,7 +59,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
 
   return (
     <div className="playground-endpoint">
-      <div className="flex h-10 min-w-0 flex-1 shrink gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px] items-center">
+      <div className="flex h-10 min-w-0 flex-1 shrink items-center gap-2 rounded-lg bg-tag-default px-4 py-2 max-sm:h-8 max-sm:px-2 max-sm:py-1 sm:rounded-[20px]">
         {method != null && (
           <HttpMethodBadge
             method={method}
@@ -71,7 +71,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
             environmentIds.length > 1
               ? "playground-endpoint-url-with-switcher"
               : "playground-endpoint-url",
-            "flex flex-row w-full",
+            "flex w-full flex-row",
             "items-baseline"
           )}
         >
@@ -98,7 +98,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
                   <span
                     key={idx}
                     className={cn({
-                      "bg-accent-highlight t-accent px-1 rounded before:content-[':']":
+                      "t-accent rounded bg-accent-highlight px-1 before:content-[':']":
                         stateValue.length === 0,
                       "t-accent font-semibold": stateValue.length > 0,
                     })}

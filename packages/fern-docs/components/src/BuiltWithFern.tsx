@@ -56,7 +56,7 @@ export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
             )}
             onMouseMove={composeEventHandlers(props.onMouseMove, onMouseMove)}
           >
-            <span className="text-xs t-muted whitespace-nowrap">
+            <span className="t-muted whitespace-nowrap text-xs">
               Built with
             </span>
             <FernLogo

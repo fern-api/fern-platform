@@ -49,9 +49,9 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
     <div className="fern-endpoint-content">
       <div
         className={cn(
-          "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
+          "scroll-mt-content mx-auto max-w-content-width md:grid md:max-w-endpoint-width md:grid-cols-2 md:gap-8 lg:gap-12",
           {
-            "border-default border-b mb-px pb-20": !last,
+            "border-default mb-px border-b pb-20": !last,
           }
         )}
         ref={ref}
@@ -133,7 +133,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
         <div
           className={cn(
             "max-w-content-width",
-            "flex-1 sticky self-start top-header-offset",
+            "sticky top-header-offset flex-1 self-start",
             // the py-10 is the same as the 40px below
             "pb-10 pt-8",
             // the 4rem is the same as the h-10 as the Header

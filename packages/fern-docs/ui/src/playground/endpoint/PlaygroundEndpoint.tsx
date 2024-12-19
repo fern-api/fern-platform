@@ -282,7 +282,7 @@ export const PlaygroundEndpoint = ({
 
   return (
     <FernTooltipProvider>
-      <div className="flex min-h-0 flex-1 shrink flex-col size-full">
+      <div className="flex size-full min-h-0 flex-1 shrink flex-col">
         <div className="flex-0">
           <PlaygroundEndpointPath
             method={endpoint.method}

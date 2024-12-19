@@ -45,7 +45,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
             title
           )}
         </FernAnchor>
-        <Markdown className="text-base mb-2" mdx={description} />
+        <Markdown className="mb-2 text-base" mdx={description} />
         {children}
       </div>
     </FernErrorBoundary>

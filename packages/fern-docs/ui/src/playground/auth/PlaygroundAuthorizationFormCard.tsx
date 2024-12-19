@@ -62,7 +62,7 @@ export function PlaygroundAuthorizationFormCard({
               disabled={disabled}
             />
 
-            <div className="flex justify-end p-4 pt-2 gap-2">
+            <div className="flex justify-end gap-2 p-4 pt-2">
               {auth.type !== "oAuth" && (
                 <FernButton
                   text="Done"
