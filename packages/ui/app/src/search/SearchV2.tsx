@@ -31,14 +31,14 @@ import {
     HAS_API_PLAYGROUND,
     THEME_SWITCH_ENABLED_ATOM,
     atomWithStorageString,
+    useApiRoute,
+    useApiRouteSWRImmutable,
     useFeatureFlags,
     useFernUser,
     useIsPlaygroundOpen,
     useSetTheme,
     useTogglePlayground,
 } from "../atoms";
-import { useApiRoute } from "../hooks/useApiRoute";
-import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 

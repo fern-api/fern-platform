@@ -1,8 +1,7 @@
 import { createEndpointContext, type ApiDefinition, type EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useMemo } from "react";
-import { useWriteApiDefinitionAtom } from "../../atoms";
-import { useApiRouteSWRImmutable } from "../../hooks/useApiRouteSWR";
+import { useApiRouteSWRImmutable, useWriteApiDefinitionAtom } from "../../atoms";
 
 interface LoadableEndpointContext {
     context: EndpointContext | undefined;

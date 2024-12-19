@@ -6,8 +6,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useSearchParams } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 import urlJoin from "url-join";
-import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM } from "../../atoms";
-import { useApiRoute } from "../../hooks/useApiRoute";
+import { PLAYGROUND_AUTH_STATE_ATOM, PLAYGROUND_AUTH_STATE_BEARER_TOKEN_ATOM, useApiRoute } from "../../atoms";
 import { Callout } from "../../mdx/components/callout";
 import { PlaygroundAuthorizationForm } from "./PlaygroundAuthorizationForm";
 

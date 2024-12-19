@@ -1,9 +1,8 @@
-export { capturePosthogEvent } from "./analytics/posthog";
-export { type CustomerAnalytics } from "./analytics/types";
+export { EMPTY_ANALYTICS_CONFIG } from "./atoms";
 export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
-export { getApiRouteSupplier } from "./hooks/useApiRoute";
+export { NotFoundPage } from "./docs/NotFoundPage";
 export * from "./mdx/types";
 export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";

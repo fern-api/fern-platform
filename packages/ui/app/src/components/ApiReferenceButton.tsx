@@ -1,7 +1,7 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-ui/components";
 import { ArrowUpRight } from "iconoir-react";
-import { useHref } from "../hooks/useHref";
+import { useHref } from "../atoms";
 import { FernLinkButton } from "./FernLinkButton";
 
 export const ApiReferenceButton: React.FC<{ slug: FernNavigation.Slug }> = ({ slug }) => {

@@ -3,8 +3,7 @@ import { createWebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useSetAtom } from "jotai";
 import { useEffect, useMemo } from "react";
-import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
-import { useApiRouteSWRImmutable } from "../../hooks/useApiRouteSWR";
+import { WRITE_API_DEFINITION_ATOM, useApiRouteSWRImmutable } from "../../atoms";
 
 interface LoadableWebSocketContext {
     context: WebSocketContext | undefined;

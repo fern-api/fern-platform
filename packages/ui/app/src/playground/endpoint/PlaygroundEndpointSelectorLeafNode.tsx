@@ -5,9 +5,8 @@ import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
 import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
-import { getApiDefinitionAtom, useOpenPlayground } from "../../atoms";
+import { getApiDefinitionAtom, useOpenPlayground, usePreloadApiLeaf } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
-import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
 
 interface PlaygroundEndpointSelectorLeafNodeProps {
     node: FernNavigation.EndpointNode | FernNavigation.WebSocketNode;

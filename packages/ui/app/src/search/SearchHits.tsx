@@ -6,9 +6,8 @@ import { Minus, Xmark } from "iconoir-react";
 import { useRouter } from "next/router";
 import React, { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch";
-import { useBasePath, useCloseSearchDialog } from "../atoms";
+import { useBasePath, useCloseSearchDialog, useToHref } from "../atoms";
 import { Separator } from "../components/Separator";
-import { useToHref } from "../hooks/useHref";
 import { SearchHit } from "./SearchHit";
 
 export const EmptyStateView: React.FC<PropsWithChildren> = ({ children }) => {

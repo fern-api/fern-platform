@@ -1,7 +1,7 @@
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import * as LDClient from "launchdarkly-js-client-sdk";
 import { useCallback, useEffect, useState } from "react";
-import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
+import { useApiRouteSWR } from "./navigation";
 
 // NOTE do not export this file in any index.ts file so that it can be properly tree-shaken
 // otherwise we risk importing launchdarkly-js-client-sdk in all of our bundles

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import type { SearchConfig } from "@fern-ui/search-utils";
+import { useApiRouteSWR } from "../atoms";
 import { useIsLocalPreview } from "../contexts/local-preview";
-import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
 
 export type SearchCredentials = {
     appId: string;

@@ -4,7 +4,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { assertNonNullish, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { getFrontmatter, markdownToString } from "@fern-ui/fern-docs-mdx";
 import type { LinkTag, MetaTag, NextSeoProps } from "@fern-ui/next-seo";
-import { getToHref } from "../hooks/useHref";
+import { getToHref } from "../atoms";
 import { getFontExtension } from "../themes/stylesheet/getFontVariables";
 import { getBreadcrumbList } from "./getBreadcrumbList";
 

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
-import { capturePosthogEvent } from "../analytics/posthog";
+import { track } from "../analytics";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";
 
@@ -82,7 +82,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
 
         const handleThumbsUp = useCallback(() => {
             setIsHelpful(true);
-            capturePosthogEvent("feedback_voted", {
+            track("feedback_voted", {
                 satisfied: true,
                 selectedText: selection?.toString().trim(),
             });
@@ -90,7 +90,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
 
         const handleThumbsDown = useCallback(() => {
             setIsHelpful(false);
-            capturePosthogEvent("feedback_voted", {
+            track("feedback_voted", {
                 satisfied: false,
                 selectedText: selection?.toString().trim(),
             });
@@ -105,7 +105,7 @@ export const FeedbackPopover = forwardRef<SelectionTextToolbarElement, Selection
                 email: string;
                 showEmailInput: boolean | "indeterminate";
             }) => {
-                capturePosthogEvent("feedback_submitted", {
+                track("feedback_submitted", {
                     satisfied: isHelpful,
                     feedback: feedbackId,
                     selectedText: selection?.toString().trim(),
