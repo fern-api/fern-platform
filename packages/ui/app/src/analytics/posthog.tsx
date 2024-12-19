@@ -1,7 +1,6 @@
 import posthog, { type PostHog } from "posthog-js";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
-import { useApiRoute } from "../hooks/useApiRoute";
+import { useApiRoute, useFernUser } from "../atoms";
 import { useRouteChangeComplete } from "../hooks/useRouteChanged";
 import { useSafeListenTrackEvents } from "./track";
 

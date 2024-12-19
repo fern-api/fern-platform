@@ -3,7 +3,6 @@ export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { NotFoundPage } from "./docs/NotFoundPage";
-export { getApiRouteSupplier } from "./hooks/useApiRoute";
 export * from "./mdx/types";
 export { Stream } from "./playground/Stream";
 export { ProxyRequestSchema } from "./playground/types";

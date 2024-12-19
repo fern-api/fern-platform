@@ -1,20 +1,25 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { visitDiscriminatedUnion, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import type { SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-utils";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { isEqual } from "es-toolkit/predicate";
-import { Atom, atom, useAtomValue } from "jotai";
+import { atom, useAtomValue, type Atom, type Getter } from "jotai";
 import { atomWithLocation } from "jotai-location";
 import { selectAtom, useAtomCallback } from "jotai/utils";
 import { Router } from "next/router";
 import { useCallback } from "react";
+import useSWR, { preload, type Fetcher, type SWRConfiguration, type SWRResponse } from "swr";
+import useSWRImmutable from "swr/immutable";
 import urlJoin from "url-join";
 import { useCallbackOne } from "use-memo-one";
+import { z } from "zod";
 import type { DocsContent } from "../resolver/DocsContent";
+import { withSkewProtection } from "../util/withSkewProtection";
+import { WRITE_API_DEFINITION_ATOM } from "./apis";
 import { DOCS_ATOM } from "./docs";
 import { useAtomEffect } from "./hooks";
-import { NavbarLink } from "./types";
+import type { NavbarLink } from "./types";
 
 export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
@@ -275,4 +280,108 @@ export function useHref(slug: FernNavigation.Slug | undefined, anchor?: string):
 
 export function selectHref(get: <T>(atom: Atom<T>) => T, slug: FernNavigation.Slug): string {
     return getToHref(get(TRAILING_SLASH_ATOM))(slug);
+}
+
+export type FernDocsApiRoute = `/api/fern-docs/${string}`;
+
+// see useHref.ts for a similar pattern
+export function getApiRouteSupplier({
+    includeTrailingSlash,
+    basepath,
+}: {
+    includeTrailingSlash?: boolean;
+    basepath?: string;
+}): (route: FernDocsApiRoute) => string {
+    return (route) => {
+        // note: if the first argument of urjoin is "", it will strip the leading slash. `|| "/"` ensures "" -> "/"
+        if (includeTrailingSlash) {
+            return urlJoin(basepath || "/", route, "/");
+        } else {
+            return urlJoin(basepath || "/", route);
+        }
+    };
+}
+
+export function useApiRoute(
+    route: FernDocsApiRoute,
+    options?: {
+        includeTrailingSlash?: boolean;
+        basepath?: string;
+    },
+): string {
+    const basepath = useAtomValue(BASEPATH_ATOM);
+    const includeTrailingSlash = useAtomValue(TRAILING_SLASH_ATOM);
+    return getApiRouteSupplier({ includeTrailingSlash, basepath, ...options })(route);
+}
+
+export function selectApiRoute(
+    get: Getter,
+    route: FernDocsApiRoute,
+    options?: {
+        includeTrailingSlash?: boolean;
+        basepath?: string;
+    },
+): string {
+    const basepath = get(BASEPATH_ATOM);
+    const includeTrailingSlash = get(TRAILING_SLASH_ATOM);
+    return getApiRouteSupplier({ includeTrailingSlash, basepath, ...options })(route);
+}
+
+interface Options<T> extends SWRConfiguration<T, Error, Fetcher<T>> {
+    disabled?: boolean;
+    request?: RequestInit & { headers?: Record<string, string> };
+    validate?: z.ZodType<T>;
+}
+
+function createFetcher<T>(
+    init?: RequestInit & { headers?: Record<string, string> },
+    validate?: z.ZodType<T>,
+): (url: string) => Promise<T> {
+    return async (url: string): Promise<T> => {
+        const request = { ...init, headers: withSkewProtection(init?.headers) };
+        const r = await fetch(url, request);
+        const data = await r.json();
+        if (validate) {
+            return validate.parse(data);
+        }
+        return data;
+    };
+}
+
+export function useApiRouteSWR<T>(
+    route: FernDocsApiRoute,
+    { disabled, request, validate, ...options }: Options<T> = {},
+): SWRResponse<T> {
+    const key = useApiRoute(route);
+    return useSWR(disabled ? null : key, createFetcher(request, validate), options);
+}
+
+export function useApiRouteSWRImmutable<T>(
+    route: FernDocsApiRoute,
+    { disabled, request, validate, ...options }: Options<T> = {},
+): SWRResponse<T> {
+    const key = useApiRoute(route);
+    return useSWRImmutable(disabled ? null : key, createFetcher(request, validate), options);
+}
+
+const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) => res.json());
+
+export function usePreloadApiLeaf(): (node: FernNavigation.NavigationNodeApiLeaf) => Promise<ApiDefinition> {
+    return useAtomCallback(
+        useCallbackOne(async (get, set, node: FernNavigation.NavigationNodeApiLeaf) => {
+            const route = selectApiRoute(
+                get,
+                `/api/fern-docs/api-definition/${encodeURIComponent(node.apiDefinitionId)}/${visitDiscriminatedUnion(
+                    node,
+                )._visit({
+                    endpoint: (node) => `endpoint/${encodeURIComponent(node.endpointId)}`,
+                    webSocket: (node) => `websocket/${encodeURIComponent(node.webSocketId)}`,
+                    webhook: (node) => `webhook/${encodeURIComponent(node.webhookId)}`,
+                })}`,
+            );
+            const apiDefinition = await preload(route, fetcher);
+            set(WRITE_API_DEFINITION_ATOM, apiDefinition);
+            return apiDefinition;
+        }, []),
+    );
 }
