@@ -61,7 +61,10 @@ export function getInitialEndpointRequestFormStateWithExample(
                     : exampleCall?.requestBody?.type === "bytes"
                       ? { type: "octet-stream", value: undefined }
                       : { type: "json", value: exampleCall?.requestBody?.value }
-                : getEmptyValueForHttpRequestBody(context?.endpoint.request?.body, context?.types ?? EMPTY_OBJECT),
+                : getEmptyValueForHttpRequestBody(
+                      context?.endpoint.requests?.[0]?.body,
+                      context?.types ?? EMPTY_OBJECT,
+                  ),
     };
 }
 

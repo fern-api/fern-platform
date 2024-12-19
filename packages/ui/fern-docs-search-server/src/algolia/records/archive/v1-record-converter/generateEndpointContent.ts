@@ -90,31 +90,31 @@ export function generateEndpointContent(endpoint: EndpointDefinition, types: Rec
         });
     }
 
-    if (endpoint.request != null) {
+    if (endpoint.requests?.[0] != null) {
         contents.push("## Request\n");
-        if (endpoint.request.description != null) {
-            contents.push(`${endpoint.request.description}\n`);
+        if (endpoint.requests[0].description != null) {
+            contents.push(`${endpoint.requests[0].description}\n`);
         }
 
         contents.push("### Body\n");
 
-        if (endpoint.request.body.type === "alias") {
+        if (endpoint.requests[0].body.type === "alias") {
             contents.push(
-                `${stringifyTypeRef(endpoint.request.body.value, types)}: ${convertMarkdownToText(endpoint.request.description)}`,
+                `${stringifyTypeRef(endpoint.requests[0].body.value, types)}: ${convertMarkdownToText(endpoint.requests[0].description)}`,
             );
-        } else if (endpoint.request.body.type === "formData") {
-            endpoint.request.body.fields.forEach((property) => {
+        } else if (endpoint.requests[0].body.type === "formData") {
+            endpoint.requests[0].body.fields.forEach((property) => {
                 if (property.type === "property") {
                     contents.push(
                         `- ${property.key}=${stringifyTypeShape(property.valueShape, types)} ${convertMarkdownToText(property.description)}`,
                     );
                 }
             });
-        } else if (endpoint.request.body.type === "object") {
-            endpoint.request.body.extends.forEach((extend) => {
+        } else if (endpoint.requests[0].body.type === "object") {
+            endpoint.requests[0].body.extends.forEach((extend) => {
                 contents.push(`- ${extend}`);
             });
-            endpoint.request.body.properties.forEach((property) => {
+            endpoint.requests[0].body.properties.forEach((property) => {
                 contents.push(
                     `- ${property.key}=${stringifyTypeShape(property.valueShape, types)} ${convertMarkdownToText(property.description)}`,
                 );
@@ -122,23 +122,23 @@ export function generateEndpointContent(endpoint: EndpointDefinition, types: Rec
         }
     }
 
-    if (endpoint.response != null) {
+    if (endpoint.responses?.[0] != null) {
         contents.push("## Response\n");
-        if (endpoint.response.description != null) {
-            contents.push(`${endpoint.response.description}\n`);
+        if (endpoint.responses[0].description != null) {
+            contents.push(`${endpoint.responses[0].description}\n`);
         }
 
         contents.push("### Body\n");
 
-        if (endpoint.response.body.type === "alias") {
+        if (endpoint.responses[0].body.type === "alias") {
             contents.push(
-                `${stringifyTypeRef(endpoint.response.body.value, types)}: ${convertMarkdownToText(endpoint.response.description)}`,
+                `${stringifyTypeRef(endpoint.responses[0].body.value, types)}: ${convertMarkdownToText(endpoint.responses[0].description)}`,
             );
-        } else if (endpoint.response.body.type === "object") {
-            endpoint.response.body.extends.forEach((extend) => {
+        } else if (endpoint.responses[0].body.type === "object") {
+            endpoint.responses[0].body.extends.forEach((extend) => {
                 contents.push(`- ${extend}`);
             });
-            endpoint.response.body.properties.forEach((property) => {
+            endpoint.responses[0].body.properties.forEach((property) => {
                 contents.push(
                     `- ${property.key}=${stringifyTypeShape(property.valueShape, types)} ${convertMarkdownToText(property.description)}`,
                 );

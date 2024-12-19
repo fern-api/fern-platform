@@ -2,11 +2,12 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-    BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
+    BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProperties";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
+import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
@@ -16,7 +17,7 @@ export declare namespace ObjectConverterNode {
     }
 }
 
-export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     ObjectConverterNode.Input,
     FernRegistry.api.latest.TypeShape.Object_
 > {
@@ -73,7 +74,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                             this.properties = {
                                 ...this.properties,
                                 ...Object.fromEntries(
-                                    Object.entries(this.input.properties ?? {}).map(([key, property]) => {
+                                    Object.entries(type.properties ?? {}).map(([key, property]) => {
                                         return [
                                             key,
                                             new SchemaConverterNode({
@@ -137,5 +138,46 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             properties,
             extraProperties: this.convertExtraProperties(),
         };
+    }
+
+    example(): Record<string, unknown> | undefined {
+        let objectWithAllProperties = {
+            ...this.properties,
+        };
+        this.input.allOf?.forEach((type) => {
+            const resolvedType = resolveSchemaReference(type, this.context.document);
+            if (resolvedType == null) {
+                return;
+            }
+            objectWithAllProperties = {
+                ...objectWithAllProperties,
+                ...Object.fromEntries(
+                    Object.entries(resolvedType.properties ?? {}).map(([key, property]) => {
+                        return [
+                            key,
+                            new SchemaConverterNode({
+                                input: property,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            }),
+                        ];
+                    }),
+                ),
+            };
+        });
+        return (
+            this.input.example ??
+            this.input.examples?.[0] ??
+            (this.requiredProperties != null && this.requiredProperties.length > 0
+                ? this.requiredProperties?.reduce<Record<string, unknown>>((acc, property) => {
+                      acc[property] = objectWithAllProperties?.[property]?.example();
+                      return acc;
+                  }, {})
+                : Object.entries(objectWithAllProperties).reduce<Record<string, unknown>>((acc, [key, value]) => {
+                      acc[key] = value?.example();
+                      return acc;
+                  }, {}))
+        );
     }
 }
