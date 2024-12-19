@@ -6,6 +6,7 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
+import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { isWebhookDefinition } from "../guards/isWebhookDefinition";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
@@ -27,6 +28,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject>,
         protected readonly servers: ServerObjectConverterNode[] | undefined,
+        protected readonly globalAuth: SecurityRequirementObjectConverterNode | undefined,
         protected readonly basePath: XFernBasePathConverterNode | undefined,
     ) {
         super(args);
@@ -47,6 +49,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                         pathId: path,
                     },
                     coalesceServers(this.servers, pathItem.servers, this.context, this.accessPath),
+                    this.globalAuth,
                     this.basePath,
                     undefined,
                 );

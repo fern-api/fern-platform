@@ -86,6 +86,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.context.logger.info(
                     "Accessing first response from ResponseMediaTypeObjectConverterNode conversion.",
                 );
+
+                // TODO: resolve reference here, if not done already
                 const schema = response.responses?.[0]?.schema;
                 const shape = schema?.convert();
 
@@ -99,7 +101,25 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     description: response.description ?? schema.description,
                     availability: schema.availability?.convert(),
                     name: schema.name ?? STATUS_CODE_MESSAGES[parseInt(statusCode)] ?? "UNKNOWN ERROR",
-                    examples: undefined,
+                    examples: Array.isArray(schema.examples)
+                        ? schema.examples.map((example) => ({
+                              name: schema.name,
+                              description: schema.description,
+                              responseBody: {
+                                  type: "json" as const,
+                                  value: example,
+                              },
+                          }))
+                        : [
+                              {
+                                  name: schema.name,
+                                  description: schema.description,
+                                  responseBody: {
+                                      type: "json" as const,
+                                      value: schema.examples,
+                                  },
+                              },
+                          ],
                 };
             })
             .filter(isNonNullish);
