@@ -20,6 +20,7 @@ overrides:
   react: 18.3.1
   react-dom: 18.3.1
   '@babel/core': 7.26.0
+  nanoid: 3.3.8
 
 importers:
 
@@ -2070,8 +2071,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       pnpm:
-        specifier: ^9.12.1
-        version: 9.12.1
+        specifier: ^9.15.0
+        version: 9.15.0
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
@@ -2152,8 +2153,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.2
       pnpm:
-        specifier: ^9.12.1
-        version: 9.12.1
+        specifier: ^9.15.0
+        version: 9.15.0
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.4.3)
@@ -12688,11 +12689,6 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  nanoid@3.3.7:
-    resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
-    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-
   nanoid@3.3.8:
     resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -13243,8 +13239,8 @@ packages:
     resolution: {integrity: sha512-2Rb3vm+EXble/sMXNSu6eoBx8e79gKqhNq9F5ZWW6ERNCTE/Q0wQNne5541tE5vKjfM8hpNCYL+LGc1YTfI0dg==}
     engines: {node: '>=6'}
 
-  pnpm@9.12.1:
-    resolution: {integrity: sha512-5aflKkGDoC1ZMQV/eg2/+dXpzjFh4z+miuOSElt5KCqKikcKUd/IoO2GIhRC6y+1cBmwmQ7ST6tRm/DhvFzPxA==}
+  pnpm@9.15.0:
+    resolution: {integrity: sha512-duI3l2CkMo7EQVgVvNZije5yevN3mqpMkU45RBVsQpmSGon5djge4QfUHxLPpLZmgcqccY8GaPoIMe1MbYulbA==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -29613,8 +29609,6 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  nanoid@3.3.7: {}
-
   nanoid@3.3.8: {}
 
   natural-compare@1.4.0: {}
@@ -30240,7 +30234,7 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  pnpm@9.12.1: {}
+  pnpm@9.15.0: {}
 
   points-on-curve@0.2.0: {}
 
@@ -30520,7 +30514,7 @@ snapshots:
 
   postcss@8.4.31:
     dependencies:
-      nanoid: 3.3.7
+      nanoid: 3.3.8
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
