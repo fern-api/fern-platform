@@ -4,7 +4,7 @@ import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function SegmentScript(props: snippet.Options): ReactNode {
+export function SegmentScript(props: snippet.Options): ReactNode {
     const user = useFernUser();
 
     useEffect(() => {

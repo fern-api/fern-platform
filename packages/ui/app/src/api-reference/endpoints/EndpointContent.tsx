@@ -17,8 +17,8 @@ import {
     MOBILE_SIDEBAR_ENABLED_ATOM,
     store,
     useAtomEffect,
+    useHref,
 } from "../../atoms";
-import { useHref } from "../../hooks/useHref";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";

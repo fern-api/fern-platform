@@ -4,7 +4,7 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { useAtomCallback } from "jotai/utils";
 import { preload } from "swr";
 import { useCallbackOne } from "use-memo-one";
-import { WRITE_API_DEFINITION_ATOM } from "../../atoms";
+import { WRITE_API_DEFINITION_ATOM } from "../../atoms/apis";
 import { selectApiRoute } from "../../hooks/useApiRoute";
 
 const fetcher = (url: string): Promise<ApiDefinition> => fetch(url).then((res) => res.json());

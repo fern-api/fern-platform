@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function HeapScript({ appId }: { appId: string }): ReactNode {
+export function HeapScript({ appId }: { appId: string }): ReactNode {
     useSafeListenTrackEvents(({ event, properties }) => {
         if (window.heap) {
             window.heap.track(event, properties);

@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function DatadogRumScript(props: RumInitConfiguration): ReactNode {
+export function DatadogRumScript(props: RumInitConfiguration): ReactNode {
     useEffect(() => {
         datadogRum.init(props);
         // eslint-disable-next-line react-hooks/exhaustive-deps

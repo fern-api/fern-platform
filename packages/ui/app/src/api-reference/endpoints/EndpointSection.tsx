@@ -2,9 +2,9 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
+import { useHref } from "../../atoms";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
-import { useHref } from "../../hooks/useHref";
 import { getAnchorId } from "../../util/anchor";
 
 const Markdown = dynamic(() => import("../../mdx/Markdown").then(({ Markdown }) => Markdown), {

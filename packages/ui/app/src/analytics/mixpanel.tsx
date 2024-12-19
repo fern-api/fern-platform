@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function MixpanelScript({ token }: { token: string }): ReactNode {
+export function MixpanelScript({ token }: { token: string }): ReactNode {
     useEffect(() => {
         mixpanel.init(token, {
             track_pageview: true,

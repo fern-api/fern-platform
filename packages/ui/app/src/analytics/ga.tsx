@@ -10,7 +10,7 @@ type GAParams = {
     nonce?: string;
 };
 
-export default function GoogleAnalytics(props: GAParams): ReactNode {
+export function GoogleAnalytics(props: GAParams): ReactNode {
     const { gaId, debugMode, dataLayerName = "dataLayer", nonce } = props;
     useEffect(() => {
         // performance.mark is being used as a feature use signal. While it is traditionally used for performance

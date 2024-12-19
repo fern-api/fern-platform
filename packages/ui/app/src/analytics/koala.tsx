@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function KoalaScript({ apiKey }: { apiKey: string }): ReactNode {
+export function KoalaScript({ apiKey }: { apiKey: string }): ReactNode {
     const user = useFernUser();
 
     useEffect(() => {

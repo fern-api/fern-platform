@@ -24,7 +24,7 @@ function posthogHasCustomer(instance: PostHog): instance is PostHogWithCustomer 
     return Boolean((instance as PostHogWithCustomer).customer);
 }
 
-export default function Posthog(): ReactNode {
+export function Posthog(): ReactNode {
     const route = useApiRoute("/api/fern-docs/analytics/posthog");
 
     // initialize the posthog instance

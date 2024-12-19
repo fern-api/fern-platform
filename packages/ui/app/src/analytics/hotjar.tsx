@@ -4,7 +4,7 @@ import { useFernUser } from "../atoms";
 import { useRouteChangeComplete } from "../hooks/useRouteChanged";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function HotjarScript({ id, version }: { id: string; version: string }): ReactNode {
+export function HotjarScript({ id, version }: { id: string; version: string }): ReactNode {
     useEffect(() => {
         Hotjar.init(Number(id), Number(version));
     }, [id, version]);

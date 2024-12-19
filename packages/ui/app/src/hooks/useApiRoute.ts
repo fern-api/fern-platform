@@ -1,6 +1,6 @@
-import { Getter, useAtomValue } from "jotai";
+import { useAtomValue, type Getter } from "jotai";
 import urlJoin from "url-join";
-import { BASEPATH_ATOM, TRAILING_SLASH_ATOM } from "../atoms";
+import { BASEPATH_ATOM, TRAILING_SLASH_ATOM } from "../atoms/navigation";
 
 export type FernDocsApiRoute = `/api/fern-docs/${string}`;
 

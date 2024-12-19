@@ -35,7 +35,7 @@ interface IntercomSettings {
     installation_type?: string;
 }
 
-export default function IntercomScript(props: IntercomSettings): ReactElement {
+export function IntercomScript(props: IntercomSettings): ReactElement {
     useIntercomInitializer(props);
     return <Script id="intercom" dangerouslySetInnerHTML={{ __html: widgetBootstrapScript(props.app_id) }} />;
 }

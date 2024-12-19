@@ -8,28 +8,24 @@ declare global {
     }
 }
 
-const AmplitudeScript = dynamic(() => import("./amplitude").then((mod) => mod.default), { ssr: true });
-const ClearbitScript = dynamic(() => import("./clearbit").then((mod) => mod.default), { ssr: true });
+const AmplitudeScript = dynamic(() => import("./amplitude").then((mod) => mod.AmplitudeScript), { ssr: true });
+const ClearbitScript = dynamic(() => import("./clearbit").then((mod) => mod.ClearbitScript), { ssr: true });
 const CustomerPosthogScript = dynamic(() => import("./posthog").then((mod) => mod.CustomerPosthog), { ssr: true });
-const DatadogRumScript = dynamic(() => import("./datadog-rum").then((mod) => mod.default), { ssr: true });
+const DatadogRumScript = dynamic(() => import("./datadog-rum").then((mod) => mod.DatadogRumScript), { ssr: true });
 const FathomScript = dynamic(() => import("./fathom").then((mod) => mod.FathomScript), { ssr: true });
-const FullstoryScript = dynamic(() => import("./fullstory").then((mod) => mod.default), { ssr: true });
-const GoogleAnalytics = dynamic(() => import("./ga").then((mod) => mod.default), {
-    ssr: true,
-});
-const GoogleTagManager = dynamic(() => import("./gtm").then((mod) => mod.default), {
-    ssr: true,
-});
-const HeapScript = dynamic(() => import("./heap").then((mod) => mod.default), { ssr: true });
-const HotjarScript = dynamic(() => import("./hotjar").then((mod) => mod.default), { ssr: true });
-const IntercomScript = dynamic(() => import("./intercom").then((mod) => mod.default), { ssr: true });
-const KoalaScript = dynamic(() => import("./koala").then((mod) => mod.default), { ssr: true });
-const LogRocketScript = dynamic(() => import("./logrocket").then((mod) => mod.default), { ssr: true });
-const MixpanelScript = dynamic(() => import("./mixpanel").then((mod) => mod.default), { ssr: true });
-const PirschScript = dynamic(() => import("./pirsch").then((mod) => mod.default), { ssr: true });
-const PlausibleScript = dynamic(() => import("./plausible").then((mod) => mod.default), { ssr: true });
-const PosthogScript = dynamic(() => import("./posthog").then((mod) => mod.default), { ssr: true });
-const SegmentScript = dynamic(() => import("./segment").then((mod) => mod.default), { ssr: true });
+const FullstoryScript = dynamic(() => import("./fullstory").then((mod) => mod.FullstoryScript), { ssr: true });
+const GoogleAnalytics = dynamic(() => import("./ga").then((mod) => mod.GoogleAnalytics), { ssr: true });
+const GoogleTagManager = dynamic(() => import("./gtm").then((mod) => mod.GoogleTagManager), { ssr: true });
+const HeapScript = dynamic(() => import("./heap").then((mod) => mod.HeapScript), { ssr: true });
+const HotjarScript = dynamic(() => import("./hotjar").then((mod) => mod.HotjarScript), { ssr: true });
+const IntercomScript = dynamic(() => import("./intercom").then((mod) => mod.IntercomScript), { ssr: true });
+const KoalaScript = dynamic(() => import("./koala").then((mod) => mod.KoalaScript), { ssr: true });
+const LogRocketScript = dynamic(() => import("./logrocket").then((mod) => mod.LogRocketScript), { ssr: true });
+const MixpanelScript = dynamic(() => import("./mixpanel").then((mod) => mod.MixpanelScript), { ssr: true });
+const PirschScript = dynamic(() => import("./pirsch").then((mod) => mod.PirschScript), { ssr: true });
+const PlausibleScript = dynamic(() => import("./plausible").then((mod) => mod.PlausibleScript), { ssr: true });
+const PosthogScript = dynamic(() => import("./posthog").then((mod) => mod.Posthog), { ssr: true });
+const SegmentScript = dynamic(() => import("./segment").then((mod) => mod.SegmentScript), { ssr: true });
 
 export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement | null {
     const config = useAnalyticsConfig();
@@ -68,5 +64,3 @@ export const CustomerAnalytics = memo(function CustomerAnalytics(): ReactElement
         </>
     );
 });
-
-export { track, trackInternal } from "./track";

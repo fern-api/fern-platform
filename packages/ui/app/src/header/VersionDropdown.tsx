@@ -2,9 +2,8 @@ import { FernButton } from "@fern-ui/components";
 import { getVersionAvailabilityLabel } from "@fern-ui/fdr-utils";
 import { Lock, NavArrowDown } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms";
+import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM, useToHref } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
-import { useToHref } from "../hooks/useHref";
 
 export declare namespace VersionDropdown {
     export interface Props {}

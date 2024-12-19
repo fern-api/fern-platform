@@ -1,11 +1,11 @@
-import * as amplitude from "@amplitude/analytics-browser";
+import { init, track } from "@amplitude/analytics-browser";
 import { ReactNode, useEffect } from "react";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function AmplitudeScript({ apiKey }: { apiKey: string }): ReactNode {
+export function AmplitudeScript({ apiKey }: { apiKey: string }): ReactNode {
     useEffect(() => {
         try {
-            amplitude.init(apiKey, undefined, {
+            init(apiKey, undefined, {
                 autocapture: true,
             });
         } catch (e) {
@@ -15,7 +15,7 @@ export default function AmplitudeScript({ apiKey }: { apiKey: string }): ReactNo
     }, [apiKey]);
 
     useSafeListenTrackEvents(({ event, properties }) => {
-        amplitude.track(event, properties);
+        track(event, properties);
     });
 
     return false;

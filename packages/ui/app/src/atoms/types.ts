@@ -5,8 +5,8 @@ import { ColorsConfig, SidebarTab, VersionSwitcherInfo } from "@fern-ui/fdr-util
 import type { FernUser } from "@fern-ui/fern-docs-auth";
 import type { FeatureFlags } from "@fern-ui/fern-docs-utils";
 import { NextSeoProps } from "@fern-ui/next-seo";
-import { DocsContent } from "../resolver/DocsContent";
-import { FernTheme } from "../themes/ThemedDocs";
+import type { DocsContent } from "../resolver/DocsContent";
+import type { FernTheme } from "../themes/ThemedDocs";
 
 export interface NavigationProps {
     currentTabIndex: number | undefined;

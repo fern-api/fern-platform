@@ -1,5 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { getToHref } from "../useHref";
+import { getToHref } from "../../atoms";
 
 const toHrefWithLeadingSlash = getToHref(true);
 const toHrefWithoutLeadingSlash = getToHref(false);

@@ -8,7 +8,6 @@ export * from "./flags";
 export * from "./hooks";
 export * from "./lang";
 export * from "./layout";
-export * from "./location";
 export * from "./logo";
 export * from "./navigation";
 export * from "./playground";

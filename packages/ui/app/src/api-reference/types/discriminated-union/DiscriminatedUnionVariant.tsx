@@ -8,9 +8,8 @@ import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { trackInternal } from "../../../analytics";
-import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
+import { useHref, useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
-import { useHref } from "../../../hooks/useHref";
 import { Markdown } from "../../../mdx/Markdown";
 import { getAnchorId } from "../../../util/anchor";
 import {

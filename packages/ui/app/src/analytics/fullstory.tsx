@@ -3,7 +3,7 @@ import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./track";
 
-export default function FullstoryScript(props: { orgId: string }): ReactNode {
+export function FullstoryScript(props: { orgId: string }): ReactNode {
     useSafeListenTrackEvents(({ event, properties }) => {
         if (typeof window.FS === "function") {
             // https://developer.fullstory.com/browser/capture-events/analytics-events/
