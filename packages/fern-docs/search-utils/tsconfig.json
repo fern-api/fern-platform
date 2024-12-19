@@ -11,7 +11,7 @@
       "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {
-      "path": "../core-utils"
+      "path": "../../commons/core-utils"
     }
   ]
 }
