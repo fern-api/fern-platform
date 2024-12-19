@@ -4,8 +4,12 @@
     "**/.yarn": true
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": ["source.fixAll", "source.organizeImports", "source.sortMembers"],
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": [
+    "source.fixAll",
+    "source.organizeImports",
+    "source.sortMembers",
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
