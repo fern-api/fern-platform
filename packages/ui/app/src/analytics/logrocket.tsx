@@ -1,6 +1,6 @@
 import LogRocket from "logrocket";
 import { ReactNode, useEffect } from "react";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 export function LogRocketScript({ appId }: { appId: string }): ReactNode {
     useEffect(() => {

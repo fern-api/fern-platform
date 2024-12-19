@@ -1,7 +1,7 @@
 import mixpanel from "mixpanel-browser";
 import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 export function MixpanelScript({ token }: { token: string }): ReactNode {
     useEffect(() => {

@@ -2,7 +2,7 @@ import Hotjar from "@hotjar/browser";
 import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
 import { useRouteChangeComplete } from "../hooks/useRouteChanged";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 export function HotjarScript({ id, version }: { id: string; version: string }): ReactNode {
     useEffect(() => {

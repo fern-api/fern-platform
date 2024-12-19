@@ -1,7 +1,7 @@
 import { datadogRum, type RumInitConfiguration } from "@datadog/browser-rum";
 import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 export function DatadogRumScript(props: RumInitConfiguration): ReactNode {
     useEffect(() => {

@@ -1,7 +1,7 @@
 import Script from "next/script";
 import { ReactElement, useEffect } from "react";
 import { useFernUser } from "../atoms";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 // copied from @intercom/messenger-js-sdk
 interface IntercomSettings {

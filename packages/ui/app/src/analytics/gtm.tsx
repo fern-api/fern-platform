@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { ReactNode, useEffect } from "react";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 type GTMParams = {
     gtmId: string;

@@ -2,7 +2,7 @@ import posthog, { type PostHog } from "posthog-js";
 import { ReactNode, useEffect } from "react";
 import { useApiRoute, useFernUser } from "../atoms";
 import { useRouteChangeComplete } from "../hooks/useRouteChanged";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 /**
  * Posthog natively allows us to define additional capture objects with distinct configs on the global instance,

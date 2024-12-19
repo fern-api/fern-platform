@@ -1,7 +1,7 @@
 import Script from "next/script";
 import { ReactNode, useEffect } from "react";
 import { useFernUser } from "../atoms";
-import { useSafeListenTrackEvents } from "./track";
+import { useSafeListenTrackEvents } from "./use-track";
 
 export function KoalaScript({ apiKey }: { apiKey: string }): ReactNode {
     const user = useFernUser();
