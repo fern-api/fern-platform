@@ -65,6 +65,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             this.contentSubtype = resolveSchemaReference(this.input.schema, this.context.document)?.contentMediaType;
         }
 
+        // TODO: This can all be moved upstream if there is a way to correlate the requests and responses (probably with ref-based config)
         Object.entries(this.input.examples ?? {}).forEach(([exampleName, exampleObject], i) => {
             this.examples ??= [];
             this.examples.push(
@@ -94,39 +95,6 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         if (this.contentType != null) {
             const resolvedSchema = resolveSchemaReference(this.input.schema, this.context.document);
             this.examples ??= [];
-            const example =
-                resolvedSchema?.example ?? resolvedSchema != null
-                    ? new SchemaConverterNode({
-                          input: resolvedSchema,
-                          context: this.context,
-                          accessPath: this.accessPath,
-                          pathId: "example",
-                      }).example()
-                    : undefined;
-            if (example != null) {
-                this.examples.push(
-                    new ExampleObjectConverterNode(
-                        {
-                            input: {
-                                requestExample: undefined,
-                                responseExample: example,
-                            },
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: "example",
-                        },
-                        this.path,
-                        this.statusCode,
-                        undefined,
-                        undefined,
-                        this,
-                        // undefined,
-                        // undefined,
-                        // undefined,
-                        this.redocExamplesNode,
-                    ),
-                );
-            }
             resolvedSchema?.examples?.forEach((example, i) => {
                 if (typeof example !== "object" || !("value" in example)) {
                     this.context.errors.warning({
@@ -158,6 +126,64 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                     ),
                 );
             });
+
+            if (this.examples.length === 0 && resolvedSchema != null) {
+                if (resolvedSchema.example != null) {
+                    this.examples.push(
+                        new ExampleObjectConverterNode(
+                            {
+                                input: {
+                                    requestExample: undefined,
+                                    responseExample: resolvedSchema.example,
+                                },
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: "example",
+                            },
+                            this.path,
+                            this.statusCode,
+                            undefined,
+                            undefined,
+                            this,
+                            // undefined,
+                            // undefined,
+                            // undefined,
+                            this.redocExamplesNode,
+                        ),
+                    );
+                } else {
+                    const fallbackExample = new SchemaConverterNode({
+                        input: resolvedSchema,
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                    }).example();
+                    if (fallbackExample != null) {
+                        this.examples.push(
+                            new ExampleObjectConverterNode(
+                                {
+                                    input: {
+                                        requestExample: undefined,
+                                        responseExample: fallbackExample,
+                                    },
+                                    context: this.context,
+                                    accessPath: this.accessPath,
+                                    pathId: this.pathId,
+                                },
+                                this.path,
+                                this.statusCode,
+                                undefined,
+                                undefined,
+                                this,
+                                // undefined,
+                                // undefined,
+                                // undefined,
+                                this.redocExamplesNode,
+                            ),
+                        );
+                    }
+                }
+            }
         }
     }
 

@@ -14,10 +14,12 @@ import { RequestMediaTypeObjectConverterNode } from "./request/RequestMediaTypeO
 import { ResponseMediaTypeObjectConverterNode } from "./response/ResponseMediaTypeObjectConverter.node";
 
 export declare namespace ExampleObjectConverterNode {
-    export type Input = {
-        requestExample: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined;
-        responseExample: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined;
-    };
+    export type Input =
+        | {
+              requestExample: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined;
+              responseExample: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined;
+          }
+        | undefined;
 }
 
 export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -75,8 +77,8 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     parse(): void {
-        this.resolvedRequestInput = resolveExampleReference(this.input.requestExample, this.context.document);
-        this.resolvedResponseInput = resolveExampleReference(this.input.responseExample, this.context.document);
+        this.resolvedRequestInput = resolveExampleReference(this.input?.requestExample, this.context.document);
+        this.resolvedResponseInput = resolveExampleReference(this.input?.responseExample, this.context.document);
 
         // TODO: align on terse examples
         // if (!new Ajv().validate(this.requestBody.resolvedSchema, this.input.value)) {

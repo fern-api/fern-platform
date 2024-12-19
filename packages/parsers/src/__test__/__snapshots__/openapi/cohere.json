@@ -13699,7 +13699,13 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "path": "/v1/embed-jobs/{id}/cancel",
+          "responseStatusCode": 200,
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_.rerank": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
@@ -20480,22 +20486,6 @@
                   "version": "1"
                 }
               }
-            }
-          },
-          "snippets": {}
-        },
-        {
-          "path": "/v1/tokenize",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "tokens": [
-                0
-              ],
-              "token_strings": [
-                "string"
-              ]
             }
           },
           "snippets": {}

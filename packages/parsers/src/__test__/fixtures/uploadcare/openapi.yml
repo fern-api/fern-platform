@@ -115,6 +115,11 @@
               "x-codeSamples":
                 [
                   {
+                    "lang": "curl",
+                    "label": "curl",
+                    "source": "curl -X GET 'https://api.uploadcare.com/files/?limit=10&ordering=-datetime_uploaded&stored=true' -H 'Authorization: Api-Key YOUR_API_KEY'",
+                  },
+                  {
                     "lang": "JavaScript",
                     "label": "JS",
                     "source": "import {\n  listOfFiles,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await listOfFiles(\n  {},\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
