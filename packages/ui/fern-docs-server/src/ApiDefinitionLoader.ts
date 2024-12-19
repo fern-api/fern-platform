@@ -101,15 +101,6 @@ export class ApiDefinitionLoader {
         // }
 
         const latest = await this.#getClient().api.latest.getApiLatest(this.apiDefinitionId);
-        if (!latest.ok) {
-            if (latest.error.error === "ApiDoesNotExistError") {
-                return undefined;
-            } else {
-                // eslint-disable-next-line no-console
-                console.error(latest?.error?.content);
-                throw new Error("Failed to load API definition");
-            }
-        }
         if (latest.ok) {
             return latest.body;
         }
@@ -126,6 +117,16 @@ export class ApiDefinitionLoader {
         }
         if (v1.ok) {
             return ApiDefinitionV1ToLatest.from(v1.body, this.flags).migrate();
+        }
+
+        if (!latest.ok) {
+            if (latest.error.error === "ApiDoesNotExistError") {
+                return undefined;
+            } else {
+                // eslint-disable-next-line no-console
+                console.error(latest?.error?.content);
+                throw new Error("Failed to load API definition");
+            }
         }
 
         return undefined;
