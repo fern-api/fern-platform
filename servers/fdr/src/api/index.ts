@@ -1,4 +1,5 @@
 export * as Algolia from "./generated/api/resources/algolia";
+export { LatestService as APILatestService } from "./generated/api/resources/api/resources/latest/service/LatestService";
 export { ReadService as APIV1ReadService } from "./generated/api/resources/api/resources/v1/resources/read/service/ReadService";
 export { RegisterService as APIV1WriteService } from "./generated/api/resources/api/resources/v1/resources/register/service/RegisterService";
 export { DiffService } from "./generated/api/resources/diff/service/DiffService";

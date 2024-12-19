@@ -100,18 +100,36 @@ export class ApiDefinitionLoader {
         //     return apiDefinition;
         // }
 
+        const latest = await this.#getClient().api.latest.getApiLatest(this.apiDefinitionId);
+        if (!latest.ok) {
+            if (latest.error.error === "ApiDoesNotExistError") {
+                return undefined;
+            } else {
+                // eslint-disable-next-line no-console
+                console.error(latest?.error?.content);
+                throw new Error("Failed to load API definition");
+            }
+        }
+        if (latest.ok) {
+            return latest.body;
+        }
+
         const v1 = await this.#getClient().api.v1.read.getApi(this.apiDefinitionId);
         if (!v1.ok) {
             if (v1.error.error === "ApiDoesNotExistError") {
                 return undefined;
             } else {
                 // eslint-disable-next-line no-console
-                console.error(v1.error.content);
+                console.error(v1?.error?.content);
                 throw new Error("Failed to load API definition");
             }
         }
+        if (v1.ok) {
+            return ApiDefinitionV1ToLatest.from(v1.body, this.flags).migrate();
+        }
 
-        return ApiDefinitionV1ToLatest.from(v1.body, this.flags).migrate();
+        return undefined;
+
         // await this.cache.setApiDefinition(apiDefinition);
         // return apiDefinition;
     };

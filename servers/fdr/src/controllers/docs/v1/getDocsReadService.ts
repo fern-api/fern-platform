@@ -115,8 +115,15 @@ export async function getDocsDefinition({
     docsDbDefinition: DocsV1Db.DocsDefinitionDb;
     docsV2: LoadDocsDefinitionByUrlResponse | null;
 }): Promise<DocsV1Read.DocsDefinition> {
-    const [apiDefinitions, searchInfo] = await Promise.all([
+    const [apiDefinitions, apiV2Definitions, searchInfo] = await Promise.all([
         app.services.db.prisma.apiDefinitionsV2.findMany({
+            where: {
+                apiDefinitionId: {
+                    in: Array.from(docsDbDefinition.referencedApis),
+                },
+            },
+        }),
+        app.services.db.prisma.apiDefinitionsLatest.findMany({
             where: {
                 apiDefinitionId: {
                     in: Array.from(docsDbDefinition.referencedApis),
@@ -138,11 +145,17 @@ export async function getDocsDefinition({
         convertDbApiDefinitionToRead(def.definition),
     );
 
+    const apiV2DefinitionsById = mapValues(
+        keyBy(apiV2Definitions, (def) => FernNavigation.ApiDefinitionId(def.apiDefinitionId)),
+        (def) => readBuffer(def.definition) as FdrAPI.api.latest.ApiDefinition,
+    );
+
     return convertDocsDefinitionToRead({
         docsDbDefinition,
         algoliaSearchIndex: docsV2?.algoliaIndex ?? undefined,
         filesV2,
         apis: apiDefinitionsById,
+        apisV2: apiV2DefinitionsById,
         id: docsV2?.docsConfigInstanceId ?? undefined,
         search: searchInfo,
     });

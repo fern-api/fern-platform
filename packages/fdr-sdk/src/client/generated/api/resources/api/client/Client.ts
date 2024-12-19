@@ -4,6 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
+import { Latest } from "../resources/latest/client/Client";
 import { V1 } from "../resources/v1/client/Client";
 
 export declare namespace Api {
@@ -26,6 +27,12 @@ export declare namespace Api {
 
 export class Api {
     constructor(protected readonly _options: Api.Options = {}) {}
+
+    protected _latest: Latest | undefined;
+
+    public get latest(): Latest {
+        return (this._latest ??= new Latest(this._options));
+    }
 
     protected _v1: V1 | undefined;
 
