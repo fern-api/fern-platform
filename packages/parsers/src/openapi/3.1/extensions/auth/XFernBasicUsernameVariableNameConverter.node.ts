@@ -11,7 +11,10 @@ export declare namespace XFernBasicUsernameVariableNameConverterNode {
     }
 }
 
-export class XFernBasicUsernameVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string> {
+export class XFernBasicUsernameVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    string
+> {
     usernameVariableName: string | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -20,9 +23,10 @@ export class XFernBasicUsernameVariableNameConverterNode extends BaseOpenApiV3_1
     }
 
     parse(): void {
-        this.usernameVariableName = extendType<XFernBasicUsernameVariableNameConverterNode.Input>(this.input)[
-            xFernBasicUsernameVariableNameKey
-        ];
+        this.usernameVariableName =
+            extendType<XFernBasicUsernameVariableNameConverterNode.Input>(
+                this.input
+            )[xFernBasicUsernameVariableNameKey];
     }
 
     convert(): string | undefined {

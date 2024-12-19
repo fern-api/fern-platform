@@ -17,8 +17,10 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     webhooks: Record<string, PathItemObjectConverterNode> | undefined;
 
     constructor(
-        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document["webhooks"]>,
-        protected readonly basePath: XFernBasePathConverterNode | undefined,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+            OpenAPIV3_1.Document["webhooks"]
+        >,
+        protected readonly basePath: XFernBasePathConverterNode | undefined
     ) {
         super(args);
         this.safeParse();
@@ -28,7 +30,10 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.webhooks = Object.fromEntries(
             Object.entries(this.input ?? {})
                 .map(([operation, operationItem]) => {
-                    const resolvedOperationItem = resolveWebhookReference(operationItem, this.context.document);
+                    const resolvedOperationItem = resolveWebhookReference(
+                        operationItem,
+                        this.context.document
+                    );
                     if (resolvedOperationItem == null) {
                         return undefined;
                     }
@@ -43,11 +48,11 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                             },
                             undefined,
                             this.basePath,
-                            true,
+                            true
                         ),
                     ];
                 })
-                .filter(isNonNullish),
+                .filter(isNonNullish)
         );
     }
 

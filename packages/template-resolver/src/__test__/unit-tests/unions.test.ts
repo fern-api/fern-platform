@@ -18,7 +18,8 @@ describe("Snippet Template Resolver", () => {
             },
             endpointSnippetTemplate: UNIONS_SNIPPET,
         });
-        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+        const customSnippet =
+            await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");
@@ -42,7 +43,8 @@ describe("Snippet Template Resolver", () => {
             },
             endpointSnippetTemplate: UNIONS_SNIPPET,
         });
-        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+        const customSnippet =
+            await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");
@@ -70,7 +72,8 @@ describe("Snippet Template Resolver", () => {
             },
             endpointSnippetTemplate: UNIONS_SNIPPET,
         });
-        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+        const customSnippet =
+            await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");
@@ -98,7 +101,8 @@ describe("Snippet Template Resolver", () => {
             },
             endpointSnippetTemplate: UNIONS_SNIPPET,
         });
-        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+        const customSnippet =
+            await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");
@@ -125,7 +129,8 @@ describe("Snippet Template Resolver", () => {
             },
             endpointSnippetTemplate: UNIONS_SNIPPET,
         });
-        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+        const customSnippet =
+            await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");
@@ -152,7 +157,8 @@ describe("Snippet Template Resolver", () => {
             },
             endpointSnippetTemplate: UNIONS_SNIPPET,
         });
-        const customSnippet = await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
+        const customSnippet =
+            await resolver.resolveWithFormatting(IMDB_API_DEFINITION);
 
         if (customSnippet.type !== "typescript") {
             throw new Error("Expected snippet to be typescript");

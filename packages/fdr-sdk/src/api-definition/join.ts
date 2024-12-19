@@ -9,8 +9,11 @@ import * as Latest from "./latest";
  * @returns a new API definition that is the result of joining the input API definitions
  */
 export function joiner(
-    force = false,
-): (first: Latest.ApiDefinition, ...apis: Latest.ApiDefinition[]) => Latest.ApiDefinition {
+    force = false
+): (
+    first: Latest.ApiDefinition,
+    ...apis: Latest.ApiDefinition[]
+) => Latest.ApiDefinition {
     return (first, ...apis) => {
         const joined: Latest.ApiDefinition = {
             id: first.id,
@@ -20,24 +23,38 @@ export function joiner(
             types: { ...first.types },
             subpackages: { ...first.subpackages },
             auths: { ...first.auths },
-            globalHeaders: first.globalHeaders ? [...first.globalHeaders] : undefined,
+            globalHeaders: first.globalHeaders
+                ? [...first.globalHeaders]
+                : undefined,
         };
 
         let isJoined = false;
         for (const api of apis) {
             if (api.id !== joined.id) {
-                throw new Error("Cannot join API definitions with different IDs");
+                throw new Error(
+                    "Cannot join API definitions with different IDs"
+                );
             }
 
-            for (const [endpointId, endpoint] of Object.entries(api.endpoints)) {
-                if (!isJoined && !first.endpoints[Latest.EndpointId(endpointId)]) {
+            for (const [endpointId, endpoint] of Object.entries(
+                api.endpoints
+            )) {
+                if (
+                    !isJoined &&
+                    !first.endpoints[Latest.EndpointId(endpointId)]
+                ) {
                     isJoined = true;
                 }
                 joined.endpoints[Latest.EndpointId(endpointId)] = endpoint;
             }
 
-            for (const [webSocketId, webSocket] of Object.entries(api.websockets)) {
-                if (!isJoined && !first.websockets[Latest.WebSocketId(webSocketId)]) {
+            for (const [webSocketId, webSocket] of Object.entries(
+                api.websockets
+            )) {
+                if (
+                    !isJoined &&
+                    !first.websockets[Latest.WebSocketId(webSocketId)]
+                ) {
                     isJoined = true;
                 }
                 joined.websockets[Latest.WebSocketId(webSocketId)] = webSocket;
@@ -57,11 +74,17 @@ export function joiner(
                 joined.types[Latest.TypeId(typeId)] = type;
             }
 
-            for (const [subpackageId, subpackage] of Object.entries(api.subpackages)) {
-                if (!isJoined && !first.subpackages[Latest.SubpackageId(subpackageId)]) {
+            for (const [subpackageId, subpackage] of Object.entries(
+                api.subpackages
+            )) {
+                if (
+                    !isJoined &&
+                    !first.subpackages[Latest.SubpackageId(subpackageId)]
+                ) {
                     isJoined = true;
                 }
-                joined.subpackages[Latest.SubpackageId(subpackageId)] = subpackage;
+                joined.subpackages[Latest.SubpackageId(subpackageId)] =
+                    subpackage;
             }
 
             for (const [authId, auth] of Object.entries(api.auths)) {

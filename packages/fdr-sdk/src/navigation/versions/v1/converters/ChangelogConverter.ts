@@ -13,30 +13,46 @@ export class ChangelogNavigationConverter {
         fullSlugMap: Record<FernNavigation.V1.PageId, FernNavigation.V1.Slug>,
         noindexMap: Record<FernNavigation.V1.PageId, boolean>,
         slug: SlugGenerator,
-        idgen: NodeIdGenerator,
+        idgen: NodeIdGenerator
     ): FernNavigation.V1.ChangelogNode {
-        return new ChangelogNavigationConverter(idgen, fullSlugMap, noindexMap).convert(changelog, slug);
+        return new ChangelogNavigationConverter(
+            idgen,
+            fullSlugMap,
+            noindexMap
+        ).convert(changelog, slug);
     }
 
     #idgen: NodeIdGenerator;
     private constructor(
         idgen: NodeIdGenerator,
-        private fullSlugMap: Record<FernNavigation.V1.PageId, FernNavigation.V1.Slug>,
-        private noindexMap: Record<FernNavigation.V1.PageId, boolean>,
+        private fullSlugMap: Record<
+            FernNavigation.V1.PageId,
+            FernNavigation.V1.Slug
+        >,
+        private noindexMap: Record<FernNavigation.V1.PageId, boolean>
     ) {
         this.#idgen = idgen;
     }
 
     private convert(
         changelog: DocsV1Read.ChangelogSection,
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.ChangelogNode {
         return this.#idgen.with("log", (id) => {
             let slug = parentSlug.apply(changelog);
-            const overviewPageId = changelog.pageId != null ? FernNavigation.V1.PageId(changelog.pageId) : undefined;
-            const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
+            const overviewPageId =
+                changelog.pageId != null
+                    ? FernNavigation.V1.PageId(changelog.pageId)
+                    : undefined;
+            const noindex =
+                overviewPageId != null
+                    ? this.noindexMap[overviewPageId]
+                    : undefined;
 
-            const frontmatterSlug = overviewPageId != null ? this.fullSlugMap[overviewPageId] : undefined;
+            const frontmatterSlug =
+                overviewPageId != null
+                    ? this.fullSlugMap[overviewPageId]
+                    : undefined;
             if (frontmatterSlug != null) {
                 slug = parentSlug.set(frontmatterSlug);
             }
@@ -58,17 +74,20 @@ export class ChangelogNavigationConverter {
         });
     }
 
-    private convertYear(items: DocsV1Read.ChangelogItem[], slug: SlugGenerator): FernNavigation.V1.ChangelogYearNode[] {
+    private convertYear(
+        items: DocsV1Read.ChangelogItem[],
+        slug: SlugGenerator
+    ): FernNavigation.V1.ChangelogYearNode[] {
         const entries = orderBy(
             items.map((item) => this.convertChangelogEntry(item, slug)),
             (entry) => entry.date,
-            "desc",
+            "desc"
         );
         return this.groupByYear(entries, slug);
     }
     private groupByYear(
         entries: FernNavigation.V1.ChangelogEntryNode[],
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.ChangelogYearNode[] {
         const years = groupByYear(entries);
         return orderBy(
@@ -88,16 +107,16 @@ export class ChangelogNavigationConverter {
                         viewers: undefined,
                         orphaned: undefined,
                     };
-                }),
+                })
             ),
             "year",
-            "desc",
+            "desc"
         );
     }
 
     private groupByMonth(
         entries: FernNavigation.V1.ChangelogEntryNode[],
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.ChangelogMonthNode[] {
         const months = groupByMonth(entries);
         return orderBy(
@@ -114,16 +133,16 @@ export class ChangelogNavigationConverter {
                     authed: undefined,
                     viewers: undefined,
                     orphaned: undefined,
-                })),
+                }))
             ),
             "month",
-            "desc",
+            "desc"
         );
     }
 
     private convertChangelogEntry(
         item: DocsV1Read.ChangelogItem,
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.ChangelogEntryNode {
         const date = dayjs.utc(item.date);
         return this.#idgen.with(date.format("YYYY-M-D"), (id) => {
@@ -150,13 +169,17 @@ export class ChangelogNavigationConverter {
 function orderBy<K extends string, T extends Record<K, string | number>>(
     items: T[],
     key: K,
-    order?: "asc" | "desc",
+    order?: "asc" | "desc"
 ): T[];
-function orderBy<T>(items: T[], key: (item: T) => string | number, order?: "asc" | "desc"): T[];
+function orderBy<T>(
+    items: T[],
+    key: (item: T) => string | number,
+    order?: "asc" | "desc"
+): T[];
 function orderBy<K extends string, T extends Record<K, string | number>>(
     items: T[],
     key: K | ((item: T) => string | number),
-    order: "asc" | "desc" = "asc",
+    order: "asc" | "desc" = "asc"
 ): T[] {
     return items.concat().sort((a, b) => {
         const aValue = typeof key === "function" ? key(a) : a[key];
@@ -182,7 +205,10 @@ export function groupByYear(entries: FernNavigation.V1.ChangelogEntryNode[]) {
 }
 
 export function groupByMonth(entries: FernNavigation.V1.ChangelogEntryNode[]) {
-    const months = new Map<number, [number, FernNavigation.V1.ChangelogEntryNode[]]>();
+    const months = new Map<
+        number,
+        [number, FernNavigation.V1.ChangelogEntryNode[]]
+    >();
     for (const entry of entries) {
         const date = dayjs.utc(entry.date);
         const month = date.month() + 1;

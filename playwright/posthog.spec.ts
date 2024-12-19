@@ -7,10 +7,9 @@ test.skip("Posthog loads successfully", () => {
      */
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function posthogLoads(page: Page) {
-        const [fernPosthogExists, customerPosthogExists] = await page.evaluate(() => [
-            Boolean(window.posthog),
-            Boolean(window.posthog.customer),
-        ]);
+        const [fernPosthogExists, customerPosthogExists] = await page.evaluate(
+            () => [Boolean(window.posthog), Boolean(window.posthog.customer)]
+        );
 
         expect(fernPosthogExists).toBeTruthy();
         expect(customerPosthogExists).toBeTruthy();

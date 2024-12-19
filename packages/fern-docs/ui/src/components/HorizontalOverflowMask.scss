@@ -1,0 +1,65 @@
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .fern-x-overflow::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .fern-x-overflow {
+        @apply overflow-x-auto;
+
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    /*
+    .fern-x-overflow:not(.left-mask):hover {
+        animation-name: bounce-left;
+        animation-duration: 0.5s;
+        animation-timing-function: ease;
+        animation-fill-mode: forwards;
+        animation-iteration-count: 1;
+    }
+
+    @keyframes bounce-left {
+        0% {
+            transform: translateX(0);
+        }
+
+        50% {
+            transform: translateX(-5px);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
+    }
+    */
+
+    .fern-x-overflow.right-mask {
+        mask-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 100%) 85%,
+            transparent 100%
+        );
+    }
+
+    .fern-x-overflow.left-mask {
+        mask-image: linear-gradient(
+            to left,
+            rgba(0, 0, 0, 100%) 85%,
+            transparent 100%
+        );
+    }
+
+    .fern-x-overflow.left-mask.right-mask {
+        mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            rgba(0, 0, 0, 100%) 10%,
+            rgba(0, 0, 0, 100%) 90%,
+            transparent 100%
+        );
+    }
+}

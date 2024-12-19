@@ -10,7 +10,7 @@ import { delay } from "./delay";
 export async function withMinimumTime<T>(
     promise: Promise<T>,
     ms: number,
-    { alwaysDelay = false }: { alwaysDelay?: boolean } = {},
+    { alwaysDelay = false }: { alwaysDelay?: boolean } = {}
 ): Promise<T> {
     const delayPromise = delay(ms);
 

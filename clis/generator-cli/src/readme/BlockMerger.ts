@@ -6,7 +6,13 @@ export class BlockMerger {
     private updated: Block[];
     private updatedByID: Record<string, Block> = {};
 
-    constructor({ original, updated }: { original: Block[]; updated: Block[] }) {
+    constructor({
+        original,
+        updated,
+    }: {
+        original: Block[];
+        updated: Block[];
+    }) {
         this.original = original;
         this.original.map((block) => {
             this.originalByID[block.id] = block;
@@ -23,7 +29,10 @@ export class BlockMerger {
         let updatedIndex = 0;
 
         const merged: BlockList = new BlockList();
-        while (originalIndex < this.original.length && updatedIndex < this.updated.length) {
+        while (
+            originalIndex < this.original.length &&
+            updatedIndex < this.updated.length
+        ) {
             const originalBlock = this.getOriginalBlock(originalIndex);
             const updatedBlock = this.getUpdatedBlock(updatedIndex);
             if (originalBlock.id === updatedBlock.id) {
@@ -35,7 +44,8 @@ export class BlockMerger {
 
             if (originalIndex <= updatedIndex) {
                 while (originalIndex < this.original.length) {
-                    const nextOriginalBlock = this.getOriginalBlock(originalIndex);
+                    const nextOriginalBlock =
+                        this.getOriginalBlock(originalIndex);
                     originalIndex++;
                     if (!this.blockExistsInUpdated(nextOriginalBlock)) {
                         merged.addBlock(nextOriginalBlock);

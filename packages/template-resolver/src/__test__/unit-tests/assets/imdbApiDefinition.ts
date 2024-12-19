@@ -221,7 +221,9 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
                     {
                         type: {
                             type: "id",
-                            value: FernRegistry.TypeId("type_imdb:DetailedMovieReview"),
+                            value: FernRegistry.TypeId(
+                                "type_imdb:DetailedMovieReview"
+                            ),
                             default: undefined,
                         },
                         availability: undefined,
@@ -231,7 +233,9 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
                     {
                         type: {
                             type: "id",
-                            value: FernRegistry.TypeId("type_imdb:AgressiveMovieReview"),
+                            value: FernRegistry.TypeId(
+                                "type_imdb:AgressiveMovieReview"
+                            ),
                             default: undefined,
                         },
                         availability: undefined,
@@ -332,7 +336,9 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
                             type: "reference",
                             value: {
                                 type: "id",
-                                value: FernRegistry.TypeId("type_imdb:CreateMovieRequest"),
+                                value: FernRegistry.TypeId(
+                                    "type_imdb:CreateMovieRequest"
+                                ),
                                 default: undefined,
                             },
                         },

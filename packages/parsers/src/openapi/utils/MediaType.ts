@@ -8,7 +8,7 @@ export class MediaType {
         readonly essence: string,
         readonly parameters: WhatwgMIMEType.MIMETypeParameters,
         private mimeType: WhatwgMIMEType,
-        private input: string,
+        private input: string
     ) {}
 
     static APPLICATION_JSON = "application/json";
@@ -23,7 +23,14 @@ export class MediaType {
         if (parsed == null) {
             return null;
         }
-        return new MediaType(parsed.type, parsed.subtype, parsed.essence, parsed.parameters, parsed, input);
+        return new MediaType(
+            parsed.type,
+            parsed.subtype,
+            parsed.essence,
+            parsed.parameters,
+            parsed,
+            input
+        );
     }
 
     public toString(): string {

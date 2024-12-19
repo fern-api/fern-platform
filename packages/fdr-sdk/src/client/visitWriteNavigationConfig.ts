@@ -12,7 +12,7 @@ export interface WriteUnversionedNavigationConfigVisitor<T> {
 
 export function visitWriteNavigationConfig<T>(
     config: DocsV1Write.NavigationConfig,
-    visitor: WriteNavigationConfigVisitor<T>,
+    visitor: WriteNavigationConfigVisitor<T>
 ): T {
     if (isVersionedNavigationConfig(config)) {
         return visitor.versioned(config);
@@ -23,7 +23,7 @@ export function visitWriteNavigationConfig<T>(
 
 export function visitUnversionedWriteNavigationConfig<T>(
     config: DocsV1Write.UnversionedNavigationConfig,
-    visitor: WriteUnversionedNavigationConfigVisitor<T>,
+    visitor: WriteUnversionedNavigationConfigVisitor<T>
 ): T {
     if (isTabbedNavigationConfig(config)) {
         return visitor.tabbed(config);
@@ -33,16 +33,22 @@ export function visitUnversionedWriteNavigationConfig<T>(
 }
 
 function isVersionedNavigationConfig(
-    config: DocsV1Write.NavigationConfig,
+    config: DocsV1Write.NavigationConfig
 ): config is DocsV1Write.VersionedNavigationConfig {
-    return Array.isArray((config as DocsV1Write.VersionedNavigationConfig).versions);
+    return Array.isArray(
+        (config as DocsV1Write.VersionedNavigationConfig).versions
+    );
 }
 
 export function isTabbedNavigationConfig(
-    config: DocsV1Write.UnversionedNavigationConfig,
+    config: DocsV1Write.UnversionedNavigationConfig
 ): config is DocsV1Write.UnversionedTabbedNavigationConfig {
     return (
-        Array.isArray((config as DocsV1Write.UnversionedTabbedNavigationConfig).tabs) ||
-        Array.isArray((config as DocsV1Write.UnversionedTabbedNavigationConfig).tabsV2)
+        Array.isArray(
+            (config as DocsV1Write.UnversionedTabbedNavigationConfig).tabs
+        ) ||
+        Array.isArray(
+            (config as DocsV1Write.UnversionedTabbedNavigationConfig).tabsV2
+        )
     );
 }

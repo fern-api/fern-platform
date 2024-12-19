@@ -2,7 +2,9 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import { noop } from "ts-essentials";
 import { FernNavigation } from "../..";
 
-export function createBreadcrumb(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.BreadcrumbItem[] {
+export function createBreadcrumb(
+    nodes: readonly FernNavigation.NavigationNode[]
+): FernNavigation.BreadcrumbItem[] {
     const breadcrumb: FernNavigation.BreadcrumbItem[] = [];
     nodes.forEach((node) => {
         if (!FernNavigation.hasMetadata(node) || FernNavigation.isLeaf(node)) {
@@ -16,14 +18,20 @@ export function createBreadcrumb(nodes: readonly FernNavigation.NavigationNode[]
             section: (section) => {
                 breadcrumb.push({
                     title: section.title,
-                    pointsTo: section.overviewPageId != null ? section.slug : section.pointsTo,
+                    pointsTo:
+                        section.overviewPageId != null
+                            ? section.slug
+                            : section.pointsTo,
                 });
             },
             apiReference: (apiReference) => {
                 if (!apiReference.hideTitle) {
                     breadcrumb.push({
                         title: apiReference.title,
-                        pointsTo: apiReference.overviewPageId != null ? apiReference.slug : apiReference.pointsTo,
+                        pointsTo:
+                            apiReference.overviewPageId != null
+                                ? apiReference.slug
+                                : apiReference.pointsTo,
                     });
                 }
             },
@@ -48,7 +56,10 @@ export function createBreadcrumb(nodes: readonly FernNavigation.NavigationNode[]
             apiPackage: (apiPackage) => {
                 breadcrumb.push({
                     title: apiPackage.title,
-                    pointsTo: apiPackage.overviewPageId != null ? apiPackage.slug : apiPackage.pointsTo,
+                    pointsTo:
+                        apiPackage.overviewPageId != null
+                            ? apiPackage.slug
+                            : apiPackage.pointsTo,
                 });
             },
         });

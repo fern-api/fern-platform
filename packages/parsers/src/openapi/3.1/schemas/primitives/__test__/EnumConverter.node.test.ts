@@ -88,8 +88,16 @@ describe("EnumConverterNode", () => {
             expect(node.convert()).toEqual({
                 type: "enum",
                 values: [
-                    { value: "ONE", description: undefined, availability: undefined },
-                    { value: "TWO", description: undefined, availability: undefined },
+                    {
+                        value: "ONE",
+                        description: undefined,
+                        availability: undefined,
+                    },
+                    {
+                        value: "TWO",
+                        description: undefined,
+                        availability: undefined,
+                    },
                 ],
                 default: "ONE",
             });

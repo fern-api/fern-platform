@@ -8,7 +8,10 @@ import { OpenApiDocumentConverterNode } from "../openapi/3.1/OpenApiDocumentConv
 import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
 
 function replaceEndpointUUIDs(json: string): string {
-    return json.replace(/"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/g, '"test-uuid-replacement"');
+    return json.replace(
+        /"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/g,
+        '"test-uuid-replacement"'
+    );
 }
 
 describe("OpenAPI snapshot tests", () => {
@@ -66,9 +69,9 @@ describe("OpenAPI snapshot tests", () => {
             }
             // @ts-expect-error id is not part of the expected output
             converted.id = "test-uuid-replacement";
-            await expect(replaceEndpointUUIDs(JSON.stringify(converted, null, 2))).toMatchFileSnapshot(
-                `./__snapshots__/openapi/${directory}.json`,
-            );
+            await expect(
+                replaceEndpointUUIDs(JSON.stringify(converted, null, 2))
+            ).toMatchFileSnapshot(`./__snapshots__/openapi/${directory}.json`);
         });
     });
 });

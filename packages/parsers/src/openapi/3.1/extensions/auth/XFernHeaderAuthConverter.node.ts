@@ -12,7 +12,10 @@ export declare namespace XFernHeaderAuthConverterNode {
     }
 }
 
-export class XFernHeaderAuthConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, HeaderTokenSecurityScheme> {
+export class XFernHeaderAuthConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    HeaderTokenSecurityScheme
+> {
     headerVariableName: string | undefined;
     headerEnvVar: string | undefined;
     headerPrefix: string | undefined;
@@ -23,7 +26,9 @@ export class XFernHeaderAuthConverterNode extends BaseOpenApiV3_1ConverterNode<u
     }
 
     parse(): void {
-        const headerAuth = extendType<XFernHeaderAuthConverterNode.Input>(this.input)[xFernHeaderAuthKey];
+        const headerAuth = extendType<XFernHeaderAuthConverterNode.Input>(
+            this.input
+        )[xFernHeaderAuthKey];
         this.headerVariableName = headerAuth?.name;
         this.headerEnvVar = headerAuth?.env;
         this.headerPrefix = headerAuth?.prefix;

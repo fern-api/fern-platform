@@ -11,7 +11,9 @@ class ApiDefinitionPruner {
     static instances = new WeakMap<Latest.ApiDefinition, ApiDefinitionPruner>();
 
     static from(api: Latest.ApiDefinition): ApiDefinitionPruner {
-        const toRet = ApiDefinitionPruner.instances.get(api) ?? new ApiDefinitionPruner(api);
+        const toRet =
+            ApiDefinitionPruner.instances.get(api) ??
+            new ApiDefinitionPruner(api);
         ApiDefinitionPruner.instances.set(api, toRet);
         return toRet;
     }
@@ -44,21 +46,31 @@ class ApiDefinitionPruner {
                 const found = this.api.endpoints[node.endpointId];
                 if (found) {
                     toRet.endpoints[node.endpointId] = found;
-                    found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
-                    found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
+                    found.namespace?.forEach((subpackageId) =>
+                        namespaces.add(subpackageId)
+                    );
+                    found.auth?.forEach((authSchemeId) =>
+                        authSchemes.add(authSchemeId)
+                    );
                 }
             } else if (node.type === "webSocket") {
                 const found = this.api.websockets[node.webSocketId];
                 if (found) {
                     toRet.websockets[node.webSocketId] = found;
-                    found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
-                    found.auth?.forEach((authSchemeId) => authSchemes.add(authSchemeId));
+                    found.namespace?.forEach((subpackageId) =>
+                        namespaces.add(subpackageId)
+                    );
+                    found.auth?.forEach((authSchemeId) =>
+                        authSchemes.add(authSchemeId)
+                    );
                 }
             } else if (node.type === "webhook") {
                 const found = this.api.webhooks[node.webhookId];
                 if (found) {
                     toRet.webhooks[node.webhookId] = found;
-                    found.namespace?.forEach((subpackageId) => namespaces.add(subpackageId));
+                    found.namespace?.forEach((subpackageId) =>
+                        namespaces.add(subpackageId)
+                    );
                 }
             }
         }
@@ -80,22 +92,32 @@ class ApiDefinitionPruner {
         return toRet;
     }
 
-    private pruneTypes(partiallyPrunedApi: Latest.ApiDefinition): Record<string, Latest.TypeDefinition> {
+    private pruneTypes(
+        partiallyPrunedApi: Latest.ApiDefinition
+    ): Record<string, Latest.TypeDefinition> {
         let typeIds = new Set<Latest.TypeId>();
         partiallyPrunedApi.globalHeaders?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeShape(header.valueShape, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitTypeShape(header.valueShape, (typeId) =>
+                typeIds.add(typeId)
+            );
         });
 
         for (const endpoint of Object.values(partiallyPrunedApi.endpoints)) {
-            ApiTypeIdVisitor.visitEndpointDefinition(endpoint, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitEndpointDefinition(endpoint, (typeId) =>
+                typeIds.add(typeId)
+            );
         }
 
         for (const websocket of Object.values(partiallyPrunedApi.websockets)) {
-            ApiTypeIdVisitor.visitWebSocketChannel(websocket, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitWebSocketChannel(websocket, (typeId) =>
+                typeIds.add(typeId)
+            );
         }
 
         for (const webhook of Object.values(partiallyPrunedApi.webhooks)) {
-            ApiTypeIdVisitor.visitWebhookDefinition(webhook, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitWebhookDefinition(webhook, (typeId) =>
+                typeIds.add(typeId)
+            );
         }
 
         typeIds = this.expandTypeIds(typeIds);
@@ -112,14 +134,18 @@ class ApiDefinitionPruner {
         return types;
     }
 
-    private expandTypeIds(typeIds: ReadonlySet<Latest.TypeId>): Set<Latest.TypeId> {
+    private expandTypeIds(
+        typeIds: ReadonlySet<Latest.TypeId>
+    ): Set<Latest.TypeId> {
         const visitedTypeIds = new Set<Latest.TypeId>();
         const queue = Array.from(typeIds);
 
         let loop = 0;
         while (queue.length > 0) {
             if (loop > LARGE_LOOP_TOLERANCE + typeIds.size) {
-                throw new Error("Infinite loop detected while expanding type references.");
+                throw new Error(
+                    "Infinite loop detected while expanding type references."
+                );
             }
 
             const typeId = queue.pop();
@@ -127,9 +153,12 @@ class ApiDefinitionPruner {
                 visitedTypeIds.add(typeId);
                 const type = this.api.types[typeId];
                 if (type) {
-                    ApiTypeIdVisitor.visitTypeDefinition(type, (nestedTypeId) => {
-                        queue.push(nestedTypeId);
-                    });
+                    ApiTypeIdVisitor.visitTypeDefinition(
+                        type,
+                        (nestedTypeId) => {
+                            queue.push(nestedTypeId);
+                        }
+                    );
                 }
             }
 
@@ -140,6 +169,9 @@ class ApiDefinitionPruner {
     }
 }
 
-export function prune(api: Latest.ApiDefinition, ...nodes: PruningNodeType[]): Latest.ApiDefinition {
+export function prune(
+    api: Latest.ApiDefinition,
+    ...nodes: PruningNodeType[]
+): Latest.ApiDefinition {
     return ApiDefinitionPruner.from(api).prune(...nodes);
 }

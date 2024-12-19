@@ -18,17 +18,25 @@ export async function revalidateAllCommand({
 }: RevalidateAllArgs): Promise<void> {
     if (!deployment) {
         if (!deploymentIdOrUrl) {
-            throw new Error("Either deployment or deploymentIdOrUrl must be provided");
+            throw new Error(
+                "Either deployment or deploymentIdOrUrl must be provided"
+            );
         }
 
         const vercel = new VercelClient({ token });
-        deployment = await vercel.deployments.getDeployment(cleanDeploymentId(deploymentIdOrUrl));
+        deployment = await vercel.deployments.getDeployment(
+            cleanDeploymentId(deploymentIdOrUrl)
+        );
     }
 
     if (!deployment.project) {
         throw new Error("Deployment does not have a project");
     }
 
-    const revalidator = new FernDocsRevalidator({ token, project: deployment.project.id, teamId });
+    const revalidator = new FernDocsRevalidator({
+        token,
+        project: deployment.project.id,
+        teamId,
+    });
     await revalidator.revalidateAll();
 }

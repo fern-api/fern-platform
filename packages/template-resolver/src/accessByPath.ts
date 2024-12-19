@@ -1,4 +1,7 @@
-export function accessByPath(object: unknown, path: string[] | string): unknown {
+export function accessByPath(
+    object: unknown,
+    path: string[] | string
+): unknown {
     try {
         let res = object;
         const indices = typeof path === "string" ? splitPath(path) : path;
@@ -6,7 +9,10 @@ export function accessByPath(object: unknown, path: string[] | string): unknown 
             if (res == null) {
                 return undefined;
             }
-            if ((Array.isArray(res) || res instanceof Array) && !isNaN(Number(idx))) {
+            if (
+                (Array.isArray(res) || res instanceof Array) &&
+                !isNaN(Number(idx))
+            ) {
                 res = res[Number(idx)];
             } else {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -20,7 +26,10 @@ export function accessByPath(object: unknown, path: string[] | string): unknown 
     return undefined;
 }
 
-export function accessByPathNonNull(jsonObject: unknown, path?: string | string[]): unknown {
+export function accessByPathNonNull(
+    jsonObject: unknown,
+    path?: string | string[]
+): unknown {
     if (path != null && jsonObject != null && path.length > 0) {
         return accessByPath(jsonObject, path);
     }

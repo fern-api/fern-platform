@@ -11,7 +11,9 @@ export class ServerObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
     url: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ServerObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ServerObject>
+    ) {
         super(args);
         this.safeParse();
     }

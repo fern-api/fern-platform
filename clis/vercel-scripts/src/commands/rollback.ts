@@ -5,7 +5,13 @@ import { VercelClient } from "@fern-fern/vercel";
  *
  * This should be used ONLY when a production deployment has failed.
  */
-export async function rollbackCommand({ projectId, token }: { projectId: string; token: string }): Promise<void> {
+export async function rollbackCommand({
+    projectId,
+    token,
+}: {
+    projectId: string;
+    token: string;
+}): Promise<void> {
     const vercel = new VercelClient({ token });
 
     const { deployments } = await vercel.deployments.getDeployments({

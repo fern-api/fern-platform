@@ -26,7 +26,9 @@ describe("resolveSecurityScheme", () => {
                 },
             },
         };
-        expect(resolveSecurityScheme("basicAuth", document)).toBe(securityScheme);
+        expect(resolveSecurityScheme("basicAuth", document)).toBe(
+            securityScheme
+        );
     });
 
     it("resolves referenced security scheme", () => {
@@ -41,12 +43,16 @@ describe("resolveSecurityScheme", () => {
             paths: {},
             components: {
                 securitySchemes: {
-                    apiKey: { $ref: "#/components/securitySchemes/referencedApiKey" },
+                    apiKey: {
+                        $ref: "#/components/securitySchemes/referencedApiKey",
+                    },
                     referencedApiKey: referencedScheme,
                 },
             },
         };
-        expect(resolveSecurityScheme("apiKey", document)).toEqual(referencedScheme);
+        expect(resolveSecurityScheme("apiKey", document)).toEqual(
+            referencedScheme
+        );
     });
 
     it("returns undefined when referenced security scheme doesn't exist", () => {
@@ -56,7 +62,9 @@ describe("resolveSecurityScheme", () => {
             paths: {},
             components: {
                 securitySchemes: {
-                    apiKey: { $ref: "#/components/securitySchemes/nonexistent" },
+                    apiKey: {
+                        $ref: "#/components/securitySchemes/nonexistent",
+                    },
                 },
             },
         };

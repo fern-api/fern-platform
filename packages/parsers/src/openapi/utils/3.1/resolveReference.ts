@@ -4,7 +4,7 @@ import { isReferenceObject } from "../../3.1/guards/isReferenceObject";
 export function resolveReference<Output>(
     referenceObject: OpenAPIV3_1.ReferenceObject,
     document: OpenAPIV3_1.Document,
-    defaultOutput: Output,
+    defaultOutput: Output
 ): Output {
     const keys = referenceObject.$ref
         .substring(2)
@@ -25,7 +25,11 @@ export function resolveReference<Output>(
 
     // Step 3: If the result is another reference object, make a recursive call
     if (isReferenceObject(resolvedSchema)) {
-        resolvedSchema = resolveReference(resolvedSchema, document, defaultOutput);
+        resolvedSchema = resolveReference(
+            resolvedSchema,
+            document,
+            defaultOutput
+        );
     }
 
     // Step 4: If the result is a schema object, return it

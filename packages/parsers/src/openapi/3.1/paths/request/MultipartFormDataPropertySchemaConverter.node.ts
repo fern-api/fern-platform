@@ -2,7 +2,10 @@
 
 import { OpenAPIV3_1 } from "openapi-types";
 import { BaseOpenApiV3_1ConverterNodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, SUPPORTED_MULTIPART_TYPES } from "../../../types/format.types";
+import {
+    ConstArrayToType,
+    SUPPORTED_MULTIPART_TYPES,
+} from "../../../types/format.types";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
@@ -13,14 +16,19 @@ export class MultipartFormDataPropertySchemaConverterNode extends SchemaConverte
     multipartType: MultipartType | undefined;
     contentType: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>
+    ) {
         super(args);
         this.safeParse();
     }
 
     override parse(): void {
         super.parse();
-        const propertyObject = resolveSchemaReference(this.input, this.context.document);
+        const propertyObject = resolveSchemaReference(
+            this.input,
+            this.context.document
+        );
         if (propertyObject == null) {
             this.context.errors.error({
                 message: `Expected multipart form data property definition. ${isReferenceObject(this.input) ? `Received undefined reference: ${this.input.$ref}` : ""}`,
@@ -28,11 +36,17 @@ export class MultipartFormDataPropertySchemaConverterNode extends SchemaConverte
             });
             return;
         }
-        if (propertyObject.type === "string" && propertyObject.format === "binary") {
+        if (
+            propertyObject.type === "string" &&
+            propertyObject.format === "binary"
+        ) {
             this.multipartType = "file";
             this.contentType = propertyObject.contentMediaType;
         } else if (propertyObject.type === "array") {
-            const items = resolveSchemaReference(propertyObject.items, this.context.document);
+            const items = resolveSchemaReference(
+                propertyObject.items,
+                this.context.document
+            );
             if (items?.type === "string" && items?.format === "binary") {
                 this.multipartType = "files";
                 this.contentType = items?.contentMediaType;

@@ -1,0 +1,80 @@
+@layer components {
+    .fern-input-focus {
+        @apply ring-border-primary ring-2 outline-none;
+    }
+
+    .fern-input {
+        @apply form-input w-full;
+        @apply border-none bg-transparent #{!important};
+        @apply outline-none ring-0 #{!important};
+    }
+
+    .fern-textarea {
+        @apply form-textarea resize-none w-full;
+        @apply outline-none ring-0 bg-transparent border-none #{!important};
+    }
+
+    .fern-textarea-group,
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply flex items-center overflow-hidden;
+        @apply focus-within:fern-input-focus;
+        @apply ring-default rounded-lg ring-1 ring-inset bg-white dark:bg-tag-default-soft shadow-inner;
+    }
+
+    .fern-input-icon {
+        @apply flex items-center justify-center;
+        @apply w-8 h-full shrink-0;
+    }
+
+    .fern-input-icon + .fern-input {
+        @apply pl-8 -ml-8;
+    }
+
+    .fern-input-right-element {
+        @apply flex items-center justify-center;
+        @apply min-w-8 h-full shrink-0 px-0 -ml-2;
+    }
+
+    .fern-input-group,
+    .fern-numeric-input-group {
+        @apply h-10 sm:h-8;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step {
+        @apply h-full rounded-none border-default;
+    }
+
+    .fern-numeric-input-group:focus-within
+        .fern-numeric-input-step:not(:disabled) {
+        @apply ring-accent hover:bg-tag-primary t-accent hover:t-accent border-primary;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step:first-child {
+        @apply rounded-l-md border-r;
+    }
+
+    .fern-numeric-input-group .fern-numeric-input-step:last-child {
+        @apply rounded-r-md border-l;
+    }
+
+    .fern-input,
+    .fern-textarea {
+        @apply caret-accent py-2 px-2.5 text-sm;
+        @apply max-sm:text-base;
+    }
+
+    input.fern-input::-webkit-outer-spin-button,
+    input.fern-input::-webkit-inner-spin-button {
+        appearance: none;
+        margin: 0;
+    }
+
+    input.fern-input[type="number"] {
+        appearance: textfield;
+    }
+
+    .fern-input-group.error {
+        background: rgba(252, 100, 100, 63%);
+    }
+}

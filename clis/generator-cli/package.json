@@ -1,28 +1,31 @@
 {
   "name": "@fern-api/generator-cli",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "source": "src/index.ts",
   "main": "dist/cli.cjs",
+  "source": "src/index.ts",
   "bin": {
     "generator-cli": "dist/cli.cjs"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsup ./src/cli.ts --format cjs && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
-    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
-    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
+  },
+  "dependencies": {
+    "es-toolkit": "^1.30.0"
   },
   "devDependencies": {
     "@fern-api/fs-utils": "0.15.0-rc63",
@@ -42,8 +45,5 @@
     "typescript": "4.9.5",
     "vitest": "^2.1.4",
     "yargs": "^17.4.1"
-  },
-  "dependencies": {
-    "es-toolkit": "^1.30.0"
   }
 }

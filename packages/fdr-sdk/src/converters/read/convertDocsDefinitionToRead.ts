@@ -25,7 +25,10 @@ export function convertDocsDefinitionToRead({
         apis,
         files: mapValues(filesV2, (fileV2) => fileV2.url),
         filesV2,
-        jsFiles: docsDbDefinition.type === "v3" ? docsDbDefinition.jsFiles : undefined,
+        jsFiles:
+            docsDbDefinition.type === "v3"
+                ? docsDbDefinition.jsFiles
+                : undefined,
         id,
         config: convertDbDocsConfigToRead({ dbShape: docsDbDefinition.config }),
         search,

@@ -1,11 +1,21 @@
 import { assertNever } from "@fern-api/ui-core-utils";
-import { isFailed, isLoaded, isLoading, isNotStartedLoading, Loadable } from "./Loadable";
+import {
+    isFailed,
+    isLoaded,
+    isLoading,
+    isNotStartedLoading,
+    Loadable,
+} from "./Loadable";
 
 export function visitLoadable<V, U, E = unknown>(
     loadable: Loadable<V, E> | undefined,
-    visitor: LoadableVisitor<V, U, E>,
+    visitor: LoadableVisitor<V, U, E>
 ): U {
-    if (loadable == null || isNotStartedLoading(loadable) || isLoading(loadable)) {
+    if (
+        loadable == null ||
+        isNotStartedLoading(loadable) ||
+        isLoading(loadable)
+    ) {
         return visitor.loading();
     }
     if (isLoaded(loadable)) {

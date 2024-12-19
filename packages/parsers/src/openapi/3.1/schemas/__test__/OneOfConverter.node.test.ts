@@ -59,7 +59,9 @@ describe("OneOfConverterNode", () => {
             });
             expect(node.discriminated).toBe(true);
             expect(node.discriminant).toBe("type");
-            expect(Object.keys(node.discriminatedMapping || {})).toContain("dog");
+            expect(Object.keys(node.discriminatedMapping || {})).toContain(
+                "dog"
+            );
         });
     });
 

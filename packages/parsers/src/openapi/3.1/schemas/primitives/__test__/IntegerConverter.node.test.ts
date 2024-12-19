@@ -54,7 +54,8 @@ describe("IntegerConverterNode", () => {
             });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "Expected default value to be an integer. Received not-an-integer",
+                message:
+                    "Expected default value to be an integer. Received not-an-integer",
                 path: ["test"],
             });
         });

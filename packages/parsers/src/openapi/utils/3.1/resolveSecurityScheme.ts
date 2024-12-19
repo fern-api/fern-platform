@@ -4,14 +4,19 @@ import { resolveReference } from "./resolveReference";
 
 export function resolveSecurityScheme(
     securitySchemeId: string,
-    document: OpenAPIV3_1.Document,
+    document: OpenAPIV3_1.Document
 ): OpenAPIV3_1.SecuritySchemeObject | undefined {
-    const securityScheme = document.components?.securitySchemes?.[securitySchemeId];
+    const securityScheme =
+        document.components?.securitySchemes?.[securitySchemeId];
     if (securityScheme == null) {
         return undefined;
     }
     if (isReferenceObject(securityScheme)) {
-        return resolveReference<OpenAPIV3_1.SecuritySchemeObject | undefined>(securityScheme, document, undefined);
+        return resolveReference<OpenAPIV3_1.SecuritySchemeObject | undefined>(
+            securityScheme,
+            document,
+            undefined
+        );
     }
 
     return securityScheme;

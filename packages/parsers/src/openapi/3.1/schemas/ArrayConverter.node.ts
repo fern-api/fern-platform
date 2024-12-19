@@ -22,7 +22,9 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
     item: SchemaConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ArrayConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ArrayConverterNode.Input>
+    ) {
         super(args);
         this.safeParse();
     }

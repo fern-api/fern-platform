@@ -1,0 +1,198 @@
+:root {
+    --collapse-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@layer utilities {
+    .mask-grad-top-1 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 4px);
+    }
+
+    .mask-grad-top-2 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 8px);
+    }
+
+    .mask-grad-top-3 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 12px);
+    }
+
+    .mask-grad-top-4 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 16px);
+    }
+
+    .mask-grad-top-5 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 20px);
+    }
+
+    .mask-grad-top-6 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 24px);
+    }
+
+    .mask-grad-y-6 {
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0,
+            black 24px,
+            black calc(100% - 24px),
+            transparent 100%
+        );
+    }
+
+    .mask-grad-top-7 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 28px);
+    }
+
+    .mask-grad-top-8 {
+        mask-image: linear-gradient(to bottom, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-6 {
+        mask-image: linear-gradient(to top, transparent 0, black 24px);
+    }
+
+    .mask-grad-bottom-7 {
+        mask-image: linear-gradient(to top, transparent 0, black 28px);
+    }
+
+    .mask-grad-bottom-8 {
+        mask-image: linear-gradient(to top, transparent 0, black 32px);
+    }
+
+    .mask-grad-bottom-9 {
+        mask-image: linear-gradient(to top, transparent 0, black 36px);
+    }
+
+    .mask-grad-bottom-10 {
+        mask-image: linear-gradient(to top, transparent 0, black 40px);
+    }
+
+    .clipped-background {
+        @apply pointer-events-none absolute top-0 -z-10 h-full w-full overflow-hidden;
+
+        clip-path: inset(0);
+    }
+
+    .description-mask {
+        @apply overflow-hidden line-clamp-3;
+
+        text-overflow: -o-ellipsis-lastline;
+    }
+
+    .font-mono {
+        font-family: var(
+            --typography-code-font-family,
+            var(--code-font-fallback)
+        ) !important;
+    }
+
+    .font-body {
+        font-family: var(
+            --typography-body-font-family,
+            var(--body-font-fallback)
+        ) !important;
+    }
+
+    .font-heading {
+        font-family: var(
+            --typography-heading-font-family,
+            var(--heading-font-fallback)
+        ) !important;
+    }
+
+    .scroll-mt-content {
+        scroll-margin-top: var(--header-offset, 0);
+    }
+
+    .scroll-mt-content-padded {
+        scroll-margin-top: calc(var(--header-offset, 0px) + 1rem);
+    }
+
+    .h-content {
+        height: var(--content-height, 100vh);
+    }
+
+    .max-h-content {
+        max-height: var(--content-height, 100vh);
+    }
+
+    .h-content-padded {
+        height: calc(var(--content-height, 100vh) - 1rem);
+    }
+
+    :root {
+        --bg-translucent: rgba(var(--background), 0.7);
+    }
+
+    .bg-search-dialog {
+        background-color: var(--bg-color-search-dialog, var(--bg-translucent));
+    }
+
+    .m-mdx {
+        @apply mt-4 mb-6 first:mt-0;
+    }
+
+    @keyframes collapsible-closed {
+        0% {
+            height: var(--radix-collapsible-content-height);
+            opacity: 1;
+        }
+
+        100% {
+            height: 0;
+            opacity: 0;
+        }
+    }
+
+    @keyframes collapsible-open {
+        0% {
+            height: 0;
+            opacity: 0;
+        }
+
+        100% {
+            height: var(--radix-collapsible-content-height);
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-up {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-100%);
+        }
+    }
+
+    @keyframes slide-down {
+        0% {
+            transform: translateY(-100%);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    .fern-collapsible {
+        overflow: hidden;
+
+        &[data-state="open"] {
+            animation: collapsible-open 0.18s var(--collapse-ease) none;
+
+            .fern-collapsible-child {
+                animation: slide-down 0.18s var(--collapse-ease) none;
+                width: var(--radix-collapsible-content-width);
+            }
+        }
+
+        &[data-state="closed"] {
+            animation: collapsible-closed 0.18s var(--collapse-ease) none;
+
+            .fern-collapsible-child {
+                animation: slide-up 0.18s var(--collapse-ease) none;
+                width: var(--radix-collapsible-content-width);
+            }
+        }
+    }
+}

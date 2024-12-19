@@ -15,13 +15,18 @@ const DELETER = (parent: Record | undefined, child: Record): DeleterAction => {
     return "deleted";
 };
 
-const testPruner = (predicate: (node: Record) => boolean): Record | undefined => {
-    const [pruned] = prunetree<Record, Record, Record, number>(structuredClone(FIXTURE), {
-        predicate,
-        getChildren: (node) => node.children,
-        deleter: DELETER,
-        getPointer: (node) => node.id,
-    });
+const testPruner = (
+    predicate: (node: Record) => boolean
+): Record | undefined => {
+    const [pruned] = prunetree<Record, Record, Record, number>(
+        structuredClone(FIXTURE),
+        {
+            predicate,
+            getChildren: (node) => node.children,
+            deleter: DELETER,
+            getPointer: (node) => node.id,
+        }
+    );
     return pruned;
 };
 

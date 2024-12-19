@@ -14,8 +14,12 @@ describe("getLatestTag", () => {
             expect(reference.owner).toBe("fern-api");
             expect(reference.repo).toBe("fern");
             expect(reference.repoUrl).toBe("https://github.com/fern-api/fern");
-            expect(reference.cloneUrl).toBe("https://github.com/fern-api/fern.git");
-            expect(reference.getAuthedCloneUrl("xyz")).toBe("https://x-access-token:xyz@github.com/fern-api/fern.git");
+            expect(reference.cloneUrl).toBe(
+                "https://github.com/fern-api/fern.git"
+            );
+            expect(reference.getAuthedCloneUrl("xyz")).toBe(
+                "https://x-access-token:xyz@github.com/fern-api/fern.git"
+            );
         }
     });
     it("invalid remote", async () => {

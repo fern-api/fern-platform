@@ -3,7 +3,7 @@ import { FernNavigation } from "../../..";
 import { FdrAPI } from "../../../client/types";
 
 export function convertAvailability(
-    availability: FdrAPI.Availability | undefined,
+    availability: FdrAPI.Availability | undefined
 ): FernNavigation.V1.NavigationV1Availability | undefined {
     if (availability == null) {
         return undefined;
@@ -14,7 +14,8 @@ export function convertAvailability(
         case FdrAPI.Availability.Stable:
             return FernNavigation.V1.NavigationV1Availability.Stable;
         case FdrAPI.Availability.GenerallyAvailable:
-            return FernNavigation.V1.NavigationV1Availability.GenerallyAvailable;
+            return FernNavigation.V1.NavigationV1Availability
+                .GenerallyAvailable;
         case FdrAPI.Availability.Deprecated:
             return FernNavigation.V1.NavigationV1Availability.Deprecated;
         case FdrAPI.Availability.InDevelopment:

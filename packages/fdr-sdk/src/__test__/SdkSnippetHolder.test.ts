@@ -8,9 +8,11 @@ describe("SDK Snippet Holder", () => {
                 "python|acme|0.0.1": {
                     "endpoint_connectors.list": [
                         {
-                            async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
+                            async_client:
+                                "client = AsyncAcme(api_key='YOUR_API_KEY')",
                             sdk: { package: "acme", version: "0.0.1" },
-                            sync_client: "client = Acme(api_key='YOUR_API_KEY')",
+                            sync_client:
+                                "client = Acme(api_key='YOUR_API_KEY')",
                             type: "python",
                             exampleIdentifier: undefined,
                         },
@@ -24,9 +26,11 @@ describe("SDK Snippet Holder", () => {
                         DELETE: [],
                         GET: [
                             {
-                                async_client: "client = AsyncAcme(api_key='YOUR_API_KEY')",
+                                async_client:
+                                    "client = AsyncAcme(api_key='YOUR_API_KEY')",
                                 sdk: { package: "acme", version: "0.0.1" },
-                                sync_client: "client = Acme(api_key='YOUR_API_KEY')",
+                                sync_client:
+                                    "client = Acme(api_key='YOUR_API_KEY')",
                                 type: "python",
                                 exampleIdentifier: undefined,
                             },
@@ -52,6 +56,8 @@ describe("SDK Snippet Holder", () => {
             endpointId: "endpoint_connectors.list",
             exampleId: undefined,
         });
-        expect(snippet?.async_client).toEqual("client = AsyncAcme(api_key='YOUR_API_KEY')");
+        expect(snippet?.async_client).toEqual(
+            "client = AsyncAcme(api_key='YOUR_API_KEY')"
+        );
     });
 });

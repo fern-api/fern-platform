@@ -11,7 +11,7 @@ import { isReferenceObject } from "../../guards/isReferenceObject";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 
 export function convertOperationObjectProperties(
-    properties: Record<string, ParameterBaseObjectConverterNode> | undefined,
+    properties: Record<string, ParameterBaseObjectConverterNode> | undefined
 ): FernRegistry.api.latest.ObjectProperty[] | undefined {
     if (properties == null) {
         return undefined;
@@ -21,7 +21,7 @@ export function convertOperationObjectProperties(
         properties,
         Object.entries(properties ?? {})
             .map(([key, header]) => (header.required ? key : undefined))
-            .filter(isNonNullish),
+            .filter(isNonNullish)
     );
 }
 
@@ -37,7 +37,7 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
             OpenAPIV3_1.ParameterBaseObject | OpenAPIV3_1.ReferenceObject
-        >,
+        >
     ) {
         super(args);
         this.safeParse();
@@ -46,7 +46,10 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     parse(): void {
         this.description = this.input.description;
 
-        let schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject | undefined;
+        let schema:
+            | OpenAPIV3_1.SchemaObject
+            | OpenAPIV3_1.ReferenceObject
+            | undefined;
         if (isReferenceObject(this.input)) {
             schema = this.input;
         } else {

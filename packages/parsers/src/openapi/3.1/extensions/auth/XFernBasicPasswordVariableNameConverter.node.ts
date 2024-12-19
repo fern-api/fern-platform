@@ -11,7 +11,10 @@ export declare namespace XFernBasicPasswordVariableNameConverterNode {
     }
 }
 
-export class XFernBasicPasswordVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string> {
+export class XFernBasicPasswordVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    string
+> {
     passwordVariableName: string | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -20,9 +23,10 @@ export class XFernBasicPasswordVariableNameConverterNode extends BaseOpenApiV3_1
     }
 
     parse(): void {
-        this.passwordVariableName = extendType<XFernBasicPasswordVariableNameConverterNode.Input>(this.input)[
-            xFernBasicPasswordVariableNameKey
-        ];
+        this.passwordVariableName =
+            extendType<XFernBasicPasswordVariableNameConverterNode.Input>(
+                this.input
+            )[xFernBasicPasswordVariableNameKey];
     }
 
     convert(): string | undefined {

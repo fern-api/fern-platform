@@ -82,10 +82,14 @@ export const STATUS_CODE_MESSAGES_METHOD_OVERRIDES: StatusCodeMessages = {
     },
 };
 
-export function getMessageForStatus(statusCode: number, method?: APIV1Read.HttpMethod): string {
+export function getMessageForStatus(
+    statusCode: number,
+    method?: APIV1Read.HttpMethod
+): string {
     // return the method-specific message if it exists
     if (method != null) {
-        const methodOverrides = STATUS_CODE_MESSAGES_METHOD_OVERRIDES[statusCode];
+        const methodOverrides =
+            STATUS_CODE_MESSAGES_METHOD_OVERRIDES[statusCode];
         if (methodOverrides != null) {
             const message = methodOverrides[method];
             if (message != null) {

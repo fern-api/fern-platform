@@ -13,7 +13,9 @@ describe("unknownToString", () => {
     it("should convert numbers to strings", () => {
         expect(unknownToString(42)).toBe("42");
         expect(unknownToString(3.14)).toBe("3.14");
-        expect(unknownToString(1_000_000_000_000_000_000)).toBe("1000000000000000000");
+        expect(unknownToString(1_000_000_000_000_000_000)).toBe(
+            "1000000000000000000"
+        );
     });
 
     it("should convert nulls", () => {

@@ -4,7 +4,7 @@ export function bfs<N, P extends N = N>(
     root: N,
     visit: TraverserVisit<N, P>,
     getChildren: TraverserGetChildren<N, P>,
-    isParent: (node: N) => node is P = (node): node is P => true,
+    isParent: (node: N) => node is P = (node): node is P => true
 ): void {
     const queue: [N, P[]][] = [[root, []]];
     while (queue.length > 0) {

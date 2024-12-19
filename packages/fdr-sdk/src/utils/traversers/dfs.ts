@@ -4,7 +4,7 @@ export function dfs<N, P extends N = N>(
     root: N,
     visit: TraverserVisit<N, P>,
     getChildren: TraverserGetChildren<N, P>,
-    isParent: (node: N) => node is P = (node): node is P => true,
+    isParent: (node: N) => node is P = (node): node is P => true
 ): void {
     const stack: [N, P[]][] = [[root, []]];
     while (stack.length > 0) {

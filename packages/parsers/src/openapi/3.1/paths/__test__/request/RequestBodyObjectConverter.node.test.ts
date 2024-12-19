@@ -51,7 +51,9 @@ describe("RequestBodyObjectConverterNode", () => {
         });
 
         expect(converter.requestBodiesByContentType).toBeDefined();
-        expect(converter.requestBodiesByContentType?.["application/json"]).toBeDefined();
+        expect(
+            converter.requestBodiesByContentType?.["application/json"]
+        ).toBeDefined();
     });
 
     it("should handle multiple content types", () => {
@@ -73,7 +75,9 @@ describe("RequestBodyObjectConverterNode", () => {
             pathId: "test",
         });
 
-        expect(Object.keys(converter.requestBodiesByContentType ?? {})).toHaveLength(2);
+        expect(
+            Object.keys(converter.requestBodiesByContentType ?? {})
+        ).toHaveLength(2);
     });
 
     it("should convert to HttpRequest array", () => {

@@ -16,7 +16,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
         functionInvocation: {
             imports: [],
             isOptional: true,
-            templateString: "await client.text_gen.create_chat_completion_stream(\n$FERN_INPUT\n)",
+            templateString:
+                "await client.text_gen.create_chat_completion_stream(\n$FERN_INPUT\n)",
             templateInputs: [
                 {
                     type: "template",
@@ -52,7 +53,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                     value: {
                                         imports: [],
                                         isOptional: true,
-                                        templateString: "description=$FERN_INPUT",
+                                        templateString:
+                                            "description=$FERN_INPUT",
                                         templateInputs: [
                                             {
                                                 location: "BODY",
@@ -86,7 +88,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                     value: {
                                         imports: [],
                                         isOptional: true,
-                                        templateString: "parameters=$FERN_INPUT",
+                                        templateString:
+                                            "parameters=$FERN_INPUT",
                                         templateInputs: [
                                             {
                                                 location: "BODY",
@@ -218,16 +221,20 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                 {
                                     type: "template",
                                     value: {
-                                        imports: ["from .chat_fn_call import ChatFnCall"],
+                                        imports: [
+                                            "from .chat_fn_call import ChatFnCall",
+                                        ],
                                         isOptional: true,
-                                        templateString: "function_call=ChatFnCall(\n$FERN_INPUT\n)",
+                                        templateString:
+                                            "function_call=ChatFnCall(\n$FERN_INPUT\n)",
                                         templateInputs: [
                                             {
                                                 type: "template",
                                                 value: {
                                                     imports: [],
                                                     isOptional: true,
-                                                    templateString: "arguments=$FERN_INPUT",
+                                                    templateString:
+                                                        "arguments=$FERN_INPUT",
                                                     templateInputs: [
                                                         {
                                                             location: "BODY",
@@ -244,7 +251,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                 value: {
                                                     imports: [],
                                                     isOptional: true,
-                                                    templateString: "name=$FERN_INPUT",
+                                                    templateString:
+                                                        "name=$FERN_INPUT",
                                                     templateInputs: [
                                                         {
                                                             location: "BODY",
@@ -326,16 +334,20 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                 {
                     type: "template",
                     value: {
-                        imports: ["from .chat_completion_request_ext import ChatCompletionRequestExt"],
+                        imports: [
+                            "from .chat_completion_request_ext import ChatCompletionRequestExt",
+                        ],
                         isOptional: true,
-                        templateString: "octoai=ChatCompletionRequestExt(\n$FERN_INPUT\n)",
+                        templateString:
+                            "octoai=ChatCompletionRequestExt(\n$FERN_INPUT\n)",
                         templateInputs: [
                             {
                                 type: "template",
                                 value: {
                                     imports: [],
                                     isOptional: true,
-                                    containerTemplateString: "loras=[$FERN_INPUT]",
+                                    containerTemplateString:
+                                        "loras=[$FERN_INPUT]",
                                     delimiter: ", ",
                                     innerTemplate: {
                                         imports: [],
@@ -365,14 +377,16 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         "from .chat_completion_request_ext_vllm import ChatCompletionRequestExtVllm",
                                     ],
                                     isOptional: true,
-                                    templateString: "vllm=ChatCompletionRequestExtVllm(\n$FERN_INPUT\n)",
+                                    templateString:
+                                        "vllm=ChatCompletionRequestExtVllm(\n$FERN_INPUT\n)",
                                     templateInputs: [
                                         {
                                             type: "template",
                                             value: {
                                                 imports: [],
                                                 isOptional: true,
-                                                templateString: "best_of=$FERN_INPUT",
+                                                templateString:
+                                                    "best_of=$FERN_INPUT",
                                                 templateInputs: [
                                                     {
                                                         location: "BODY",
@@ -389,7 +403,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             value: {
                                                 imports: [],
                                                 isOptional: true,
-                                                templateString: "ignore_eos=$FERN_INPUT",
+                                                templateString:
+                                                    "ignore_eos=$FERN_INPUT",
                                                 templateInputs: [
                                                     {
                                                         location: "BODY",
@@ -406,7 +421,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             value: {
                                                 imports: [],
                                                 isOptional: true,
-                                                templateString: "skip_special_tokens=$FERN_INPUT",
+                                                templateString:
+                                                    "skip_special_tokens=$FERN_INPUT",
                                                 templateInputs: [
                                                     {
                                                         location: "BODY",
@@ -423,12 +439,14 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             value: {
                                                 imports: [],
                                                 isOptional: true,
-                                                containerTemplateString: "stop_token_ids=[$FERN_INPUT]",
+                                                containerTemplateString:
+                                                    "stop_token_ids=[$FERN_INPUT]",
                                                 delimiter: ", ",
                                                 innerTemplate: {
                                                     imports: [],
                                                     isOptional: true,
-                                                    templateString: "$FERN_INPUT",
+                                                    templateString:
+                                                        "$FERN_INPUT",
                                                     templateInputs: [
                                                         {
                                                             location: "BODY",
@@ -451,7 +469,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             value: {
                                                 imports: [],
                                                 isOptional: true,
-                                                templateString: "top_k=$FERN_INPUT",
+                                                templateString:
+                                                    "top_k=$FERN_INPUT",
                                                 templateInputs: [
                                                     {
                                                         location: "BODY",
@@ -468,7 +487,8 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                             value: {
                                                 imports: [],
                                                 isOptional: true,
-                                                templateString: "use_beam_search=$FERN_INPUT",
+                                                templateString:
+                                                    "use_beam_search=$FERN_INPUT",
                                                 templateInputs: [
                                                     {
                                                         location: "BODY",
@@ -527,16 +547,20 @@ export const CHAT_COMPLETION_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                 {
                     type: "template",
                     value: {
-                        imports: ["from .chat_completion_response_format import ChatCompletionResponseFormat"],
+                        imports: [
+                            "from .chat_completion_response_format import ChatCompletionResponseFormat",
+                        ],
                         isOptional: true,
-                        templateString: "response_format=ChatCompletionResponseFormat(\n$FERN_INPUT\n)",
+                        templateString:
+                            "response_format=ChatCompletionResponseFormat(\n$FERN_INPUT\n)",
                         templateInputs: [
                             {
                                 type: "template",
                                 value: {
                                     imports: [],
                                     isOptional: true,
-                                    containerTemplateString: "schema={$FERN_INPUT}",
+                                    containerTemplateString:
+                                        "schema={$FERN_INPUT}",
                                     delimiter: ", ",
                                     keyTemplate: {
                                         imports: [],

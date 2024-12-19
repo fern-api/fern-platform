@@ -1,20 +1,27 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { APIV1Db, APIV1Read } from "../../client";
 
-export function convertDbAPIDefinitionsToRead(dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>) {
+export function convertDbAPIDefinitionsToRead(
+    dbApiDefinitions: Record<string, APIV1Db.DbApiDefinition>
+) {
     return Object.fromEntries(
         Object.entries(dbApiDefinitions).map(([id, dbDefinition]) => {
-            const parsedApiDefinition = convertDbAPIDefinitionToRead(dbDefinition);
+            const parsedApiDefinition =
+                convertDbAPIDefinitionToRead(dbDefinition);
             return [id, parsedApiDefinition];
-        }),
+        })
     );
 }
 
-export function convertDbAPIDefinitionToRead(dbShape: APIV1Db.DbApiDefinition): APIV1Read.ApiDefinition {
+export function convertDbAPIDefinitionToRead(
+    dbShape: APIV1Db.DbApiDefinition
+): APIV1Read.ApiDefinition {
     return {
         id: dbShape.id,
         rootPackage: {
-            endpoints: dbShape.rootPackage.endpoints.map((endpoint) => transformEndpoint({ dbShape: endpoint })),
+            endpoints: dbShape.rootPackage.endpoints.map((endpoint) =>
+                transformEndpoint({ dbShape: endpoint })
+            ),
             subpackages: dbShape.rootPackage.subpackages,
             types: dbShape.rootPackage.types,
             webhooks: dbShape.rootPackage.webhooks ?? [],
@@ -25,7 +32,7 @@ export function convertDbAPIDefinitionToRead(dbShape: APIV1Db.DbApiDefinition): 
         subpackages: Object.fromEntries(
             Object.entries(dbShape.subpackages).map(([id, subpackage]) => {
                 return [id, transformSubpackage({ dbShape: subpackage })];
-            }),
+            })
         ),
         auth: dbShape.auth,
         hasMultipleBaseUrls: dbShape.hasMultipleBaseUrls,
@@ -43,7 +50,9 @@ function transformSubpackage({
         subpackageId: dbShape.subpackageId,
         parent: dbShape.parent,
         name: dbShape.name,
-        endpoints: dbShape.endpoints.map((endpoint) => transformEndpoint({ dbShape: endpoint })),
+        endpoints: dbShape.endpoints.map((endpoint) =>
+            transformEndpoint({ dbShape: endpoint })
+        ),
         types: dbShape.types,
         subpackages: dbShape.subpackages,
         pointsTo: dbShape.pointsTo,
@@ -57,7 +66,11 @@ function transformSubpackage({
     };
 }
 
-function transformEndpoint({ dbShape }: { dbShape: APIV1Db.DbEndpointDefinition }): APIV1Read.EndpointDefinition {
+function transformEndpoint({
+    dbShape,
+}: {
+    dbShape: APIV1Db.DbEndpointDefinition;
+}): APIV1Read.EndpointDefinition {
     return {
         environments: dbShape.environments ?? [],
         availability: dbShape.availability,
@@ -71,11 +84,16 @@ function transformEndpoint({ dbShape }: { dbShape: APIV1Db.DbEndpointDefinition 
         path: dbShape.path,
         queryParameters: dbShape.queryParameters,
         headers: dbShape.headers,
-        request: dbShape.request != null ? transformHttpRequest({ dbShape: dbShape.request }) : undefined,
+        request:
+            dbShape.request != null
+                ? transformHttpRequest({ dbShape: dbShape.request })
+                : undefined,
         response: dbShape.response,
         errors: dbShape.errors ?? [],
         errorsV2: transformErrorsV2(dbShape),
-        examples: dbShape.examples.map((example) => convertExampleEndpointCall({ dbShape: example })),
+        examples: dbShape.examples.map((example) =>
+            convertExampleEndpointCall({ dbShape: example })
+        ),
         description: dbShape.description,
         // htmlDescription: dbShape.htmlDescription,
         authed: dbShape.authed ?? false,
@@ -84,7 +102,9 @@ function transformEndpoint({ dbShape }: { dbShape: APIV1Db.DbEndpointDefinition 
     };
 }
 
-function transformErrorsV2(dbShape: APIV1Db.DbEndpointDefinition): APIV1Read.ErrorDeclarationV2[] | undefined {
+function transformErrorsV2(
+    dbShape: APIV1Db.DbEndpointDefinition
+): APIV1Read.ErrorDeclarationV2[] | undefined {
     if (dbShape.errorsV2 != null) {
         return dbShape.errorsV2;
     }
@@ -107,7 +127,11 @@ function transformErrorsV2(dbShape: APIV1Db.DbEndpointDefinition): APIV1Read.Err
     return undefined;
 }
 
-function transformHttpRequest({ dbShape }: { dbShape: APIV1Db.DbHttpRequest }): APIV1Read.HttpRequest {
+function transformHttpRequest({
+    dbShape,
+}: {
+    dbShape: APIV1Db.DbHttpRequest;
+}): APIV1Read.HttpRequest {
     switch (dbShape.type.type) {
         case "object":
         case "reference":

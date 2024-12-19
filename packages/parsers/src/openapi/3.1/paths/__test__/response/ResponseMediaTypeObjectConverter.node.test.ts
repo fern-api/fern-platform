@@ -24,7 +24,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
                 pathId: "test",
             },
             "application/json",
-            undefined,
+            undefined
         );
 
         expect(converter.contentType).toBe("application/json");
@@ -48,7 +48,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
                 pathId: "test",
             },
             "application/octet-stream",
-            undefined,
+            undefined
         );
 
         expect(converter.contentType).toBe("application/octet-stream");
@@ -73,7 +73,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
                 pathId: "test",
             },
             "application/json",
-            "json",
+            "json"
         );
 
         expect(converter.contentType).toBe("application/json");
@@ -92,7 +92,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
                 pathId: "test",
             },
             "text/event-stream",
-            "sse",
+            "sse"
         );
 
         const result = converter.convert();
@@ -110,7 +110,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
                 pathId: "test",
             },
             "application/json",
-            undefined,
+            undefined
         );
 
         expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -144,7 +144,7 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
                 pathId: "test",
             },
             "application/json",
-            undefined,
+            undefined
         );
 
         expect(converter.schema).toBeDefined();

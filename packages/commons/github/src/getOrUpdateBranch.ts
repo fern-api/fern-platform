@@ -5,7 +5,7 @@ import { DEFAULT_REMOTE_NAME } from "./constants";
 export async function getOrUpdateBranch(
     git: SimpleGit,
     defaultBranchName: string,
-    branchToCheckoutName: string,
+    branchToCheckoutName: string
 ): Promise<void> {
     try {
         // If you can fetch the branch, checkout the branch
@@ -20,7 +20,9 @@ export async function getOrUpdateBranch(
         // to the same branch that are not OpenAPI related, that we'd lose if we deleted and reupdated the spec.
         await git.merge(["-X", "theirs", defaultBranchName]);
     } catch (e) {
-        console.log(`Branch (${branchToCheckoutName}) does not exist, create and checkout`);
+        console.log(
+            `Branch (${branchToCheckoutName}) does not exist, create and checkout`
+        );
         await git.checkoutBranch(branchToCheckoutName, defaultBranchName);
     }
 }

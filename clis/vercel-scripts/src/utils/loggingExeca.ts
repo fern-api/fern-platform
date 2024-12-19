@@ -14,18 +14,25 @@ export async function loggingExeca(
     title: string,
     executable: string,
     args: string[] = [],
-    { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {},
+    {
+        doNotPipeOutput = false,
+        secrets = [],
+        substitutions = {},
+        ...execaOptions
+    }: loggingExeca.Options = {}
 ): Promise<Result> {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
             [secret]: "<redacted>",
         }),
-        substitutions,
+        substitutions
     );
 
     let logLine = [executable, ...args].join(" ");
-    for (const [substitutionKey, substitutionValue] of Object.entries(allSubstitutions)) {
+    for (const [substitutionKey, substitutionValue] of Object.entries(
+        allSubstitutions
+    )) {
         logLine = logLine.replaceAll(substitutionKey, substitutionValue);
     }
 

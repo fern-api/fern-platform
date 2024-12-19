@@ -2,10 +2,11 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import { FernNavigation } from "../..";
 
 const RETURN_UNDEFINED = () => undefined;
-const RETURN_API_DEFINITION_ID = (node: FernNavigation.WithApiDefinitionId) => node.apiDefinitionId;
+const RETURN_API_DEFINITION_ID = (node: FernNavigation.WithApiDefinitionId) =>
+    node.apiDefinitionId;
 
 export function getApiReferenceId(
-    node: FernNavigation.NavigationNode | undefined,
+    node: FernNavigation.NavigationNode | undefined
 ): FernNavigation.ApiDefinitionId | undefined {
     if (node == null) {
         return undefined;

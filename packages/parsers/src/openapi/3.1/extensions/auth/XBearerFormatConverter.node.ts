@@ -11,7 +11,10 @@ export declare namespace XBearerFormatConverterNode {
     }
 }
 
-export class XBearerFormatConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string | undefined> {
+export class XBearerFormatConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    string | undefined
+> {
     bearerFormat: string | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -20,7 +23,9 @@ export class XBearerFormatConverterNode extends BaseOpenApiV3_1ConverterNode<unk
     }
 
     parse(): void {
-        this.bearerFormat = extendType<XBearerFormatConverterNode.Input>(this.input)[xBearerFormatKey];
+        this.bearerFormat = extendType<XBearerFormatConverterNode.Input>(
+            this.input
+        )[xBearerFormatKey];
     }
 
     convert(): string | undefined {

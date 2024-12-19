@@ -23,7 +23,8 @@ void yargs(hideBin(process.argv))
                     requred: true,
                 }),
         async (argv) => {
-            const urls = argv.url != null ? [argv.url] : await getAllFernDocsWebsites();
+            const urls =
+                argv.url != null ? [argv.url] : await getAllFernDocsWebsites();
             let failure = false;
             const resultsWithUrl: { url: string; results: RuleResult[] }[] = [];
             for (const url of urls) {
@@ -42,7 +43,7 @@ void yargs(hideBin(process.argv))
             }
             printResults(resultsWithUrl);
             process.exit(failure ? 1 : 0);
-        },
+        }
     )
     .demandCommand()
     .showHelpOnFail(true)

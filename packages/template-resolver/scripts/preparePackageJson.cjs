@@ -28,14 +28,18 @@ function preparePackageJson(newVersion) {
         }
 
         // Write the updated package.json back to the file
-        fs.writeFile(packagePath, JSON.stringify(packageJson, null, 2), (err) => {
-            if (err) {
-                console.error(`Error writing package.json: ${err}`);
-                return;
-            }
+        fs.writeFile(
+            packagePath,
+            JSON.stringify(packageJson, null, 2),
+            (err) => {
+                if (err) {
+                    console.error(`Error writing package.json: ${err}`);
+                    return;
+                }
 
-            console.log("package.json has been updated successfully.");
-        });
+                console.log("package.json has been updated successfully.");
+            }
+        );
     });
 }
 

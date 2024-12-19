@@ -74,7 +74,8 @@ describe("SecuritySchemeConverterNode", () => {
             node.convert();
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "Basic auth should specify either a username or a username variable name",
+                message:
+                    "Basic auth should specify either a username or a username variable name",
                 path: ["test"],
             });
         });
@@ -231,7 +232,8 @@ describe("SecuritySchemeConverterNode", () => {
             node.convert();
 
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Expected 'x-fern-access-token-locator' property to be specified",
+                message:
+                    "Expected 'x-fern-access-token-locator' property to be specified",
                 path: ["test"],
             });
         });
@@ -241,7 +243,8 @@ describe("SecuritySchemeConverterNode", () => {
         it("should parse OpenID Connect as bearer auth", () => {
             const input = {
                 type: "openIdConnect",
-                openIdConnectUrl: "https://example.com/.well-known/openid-configuration",
+                openIdConnectUrl:
+                    "https://example.com/.well-known/openid-configuration",
             } as OpenAPIV3_1.OpenIdSecurityScheme;
 
             const node = new SecuritySchemeConverterNode({

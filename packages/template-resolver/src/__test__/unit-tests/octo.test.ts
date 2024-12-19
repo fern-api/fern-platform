@@ -43,7 +43,13 @@ describe("Snippet Template Resolver", () => {
                 keyTemplate: {
                     type: "generic",
                     templateString: "$FERN_INPUT",
-                    templateInputs: [{ type: "payload", location: "RELATIVE", path: undefined }],
+                    templateInputs: [
+                        {
+                            type: "payload",
+                            location: "RELATIVE",
+                            path: undefined,
+                        },
+                    ],
                     isOptional: false,
                     inputDelimiter: undefined,
                     imports: undefined,
@@ -51,7 +57,13 @@ describe("Snippet Template Resolver", () => {
                 valueTemplate: {
                     type: "generic",
                     templateString: "$FERN_INPUT",
-                    templateInputs: [{ type: "payload", location: "RELATIVE", path: undefined }],
+                    templateInputs: [
+                        {
+                            type: "payload",
+                            location: "RELATIVE",
+                            path: undefined,
+                        },
+                    ],
                     isOptional: false,
                     inputDelimiter: undefined,
                     imports: undefined,
@@ -65,16 +77,25 @@ describe("Snippet Template Resolver", () => {
         const generateSdxlRequestTemplate: FernRegistry.TemplateInput = {
             type: "template",
             value: {
-                imports: ["from octoai.image_gen import ImageGenerationRequest"],
+                imports: [
+                    "from octoai.image_gen import ImageGenerationRequest",
+                ],
                 type: "generic",
-                templateString: "\tImageGenerationRequest(\n\t\t$FERN_INPUT\n\t)",
+                templateString:
+                    "\tImageGenerationRequest(\n\t\t$FERN_INPUT\n\t)",
                 templateInputs: [
                     {
                         type: "template",
                         value: {
                             type: "generic",
                             templateString: "prompt=$FERN_INPUT",
-                            templateInputs: [{ type: "payload", location: "BODY", path: "prompt" }],
+                            templateInputs: [
+                                {
+                                    type: "payload",
+                                    location: "BODY",
+                                    path: "prompt",
+                                },
+                            ],
                             isOptional: false,
                             inputDelimiter: undefined,
                             imports: undefined,
@@ -85,7 +106,13 @@ describe("Snippet Template Resolver", () => {
                         value: {
                             type: "generic",
                             templateString: "negative_prompt=$FERN_INPUT",
-                            templateInputs: [{ type: "payload", location: "BODY", path: "negative_prompt" }],
+                            templateInputs: [
+                                {
+                                    type: "payload",
+                                    location: "BODY",
+                                    path: "negative_prompt",
+                                },
+                            ],
                             isOptional: false,
                             inputDelimiter: undefined,
                             imports: undefined,
@@ -176,13 +203,17 @@ describe("Snippet Template Resolver", () => {
             },
             snippetTemplate: {
                 type: "v1",
-                clientInstantiation: "from octoai import AsyncAcme\n\nclient = AsyncAcme(api_key='YOUR_API_KEY')",
+                clientInstantiation:
+                    "from octoai import AsyncAcme\n\nclient = AsyncAcme(api_key='YOUR_API_KEY')",
                 functionInvocation: functionInvocationTemplate,
             },
             apiDefinitionId: undefined,
             additionalTemplates: undefined,
         };
-        const resolver = new SnippetTemplateResolver({ payload, endpointSnippetTemplate });
+        const resolver = new SnippetTemplateResolver({
+            payload,
+            endpointSnippetTemplate,
+        });
         const customSnippet = await resolver.resolveWithFormatting();
 
         if (customSnippet.type !== "python") {
@@ -207,7 +238,8 @@ describe("Snippet Template Resolver", () => {
                     functionInvocation: {
                         imports: [],
                         isOptional: true,
-                        templateString: "await client.voices.get_all(\n\t$FERN_INPUT\n)",
+                        templateString:
+                            "await client.voices.get_all(\n\t$FERN_INPUT\n)",
                         templateInputs: [],
                         inputDelimiter: ",\n\t",
                         type: "generic",

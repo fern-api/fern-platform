@@ -1,35 +1,35 @@
 {
-  "name": "@fern-ui/fdr-utils",
+  "name": "@fern-platform/fdr-utils",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/commons/fdr-utils"
   },
-  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "src/index.ts",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --run --passWithNoTests --globals",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck",
-    "dev": "tsc --watch",
-    "docs:dev": "pnpm dev"
+    "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",

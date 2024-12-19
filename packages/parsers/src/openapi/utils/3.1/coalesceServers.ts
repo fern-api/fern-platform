@@ -6,7 +6,7 @@ export function coalesceServers(
     existingServers: ServerObjectConverterNode[] | undefined,
     serversToAdd: OpenAPIV3_1.ServerObject[] | undefined,
     context: BaseOpenApiV3_1ConverterNodeContext,
-    accessPath: string[],
+    accessPath: string[]
 ): ServerObjectConverterNode[] {
     return [
         ...(existingServers ?? []),
@@ -17,7 +17,7 @@ export function coalesceServers(
                     context,
                     accessPath,
                     pathId: `servers[${index}]`,
-                }),
+                })
         ),
     ];
 }

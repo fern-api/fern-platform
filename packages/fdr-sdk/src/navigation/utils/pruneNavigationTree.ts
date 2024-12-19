@@ -4,13 +4,17 @@ import { prunetree } from "../../utils/traversers/prunetree";
 import { mutableDeleteChild } from "./deleteChild";
 import { mutableUpdatePointsTo } from "./updatePointsTo";
 
-type Predicate<T extends FernNavigation.NavigationNode = FernNavigation.NavigationNode> = (
+type Predicate<
+    T extends FernNavigation.NavigationNode = FernNavigation.NavigationNode,
+> = (
     node: T,
-    parents: readonly FernNavigation.NavigationNodeParent[],
+    parents: readonly FernNavigation.NavigationNodeParent[]
 ) => boolean;
 
 export class Pruner<ROOT extends FernNavigation.NavigationNode> {
-    public static from<ROOT extends FernNavigation.NavigationNode>(tree: ROOT): Pruner<ROOT> {
+    public static from<ROOT extends FernNavigation.NavigationNode>(
+        tree: ROOT
+    ): Pruner<ROOT> {
         return new Pruner(tree);
     }
 
@@ -37,7 +41,9 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
         return this.keep((node, parents) => !predicate(node, parents));
     }
 
-    public hide(predicate: Predicate<FernNavigation.NavigationNodeWithMetadata>): this {
+    public hide(
+        predicate: Predicate<FernNavigation.NavigationNodeWithMetadata>
+    ): this {
         if (this.tree == null) {
             return this;
         }
@@ -74,7 +80,10 @@ export class Pruner<ROOT extends FernNavigation.NavigationNode> {
         // Note: sections with overview pages are skipped here because the pages need to be filtered out
         // by the mutableDeleteChild function, which relies on the authed flag in a separate pass.
         for (const parent of unauthedParents) {
-            if (FernNavigation.hasMetadata(parent) && !FernNavigation.isPage(parent)) {
+            if (
+                FernNavigation.hasMetadata(parent) &&
+                !FernNavigation.isPage(parent)
+            ) {
                 parent.authed = undefined;
             }
         }

@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/docs-bundle
+name: Deploy @fern-docs/bundle
 
 on:
   push:

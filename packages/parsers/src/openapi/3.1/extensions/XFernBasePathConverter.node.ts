@@ -11,16 +11,23 @@ export declare namespace XFernBasePathConverterNode {
     }
 }
 
-export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<OpenAPIV3_1.Document, string | undefined> {
+export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<
+    OpenAPIV3_1.Document,
+    string | undefined
+> {
     basePath?: string;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>
+    ) {
         super(args);
         this.safeParse();
     }
 
     parse(): void {
-        this.basePath = extendType<XFernBasePathConverterNode.Input>(this.input)[xFernBasePathKey];
+        this.basePath = extendType<XFernBasePathConverterNode.Input>(
+            this.input
+        )[xFernBasePathKey];
 
         if (this.basePath != null) {
             if (this.basePath.startsWith("/")) {

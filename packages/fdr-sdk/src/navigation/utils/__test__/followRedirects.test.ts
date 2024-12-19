@@ -2,7 +2,8 @@ import { FernNavigation } from "../../..";
 import { followRedirect } from "../followRedirect";
 
 function sectionNode(
-    section: Partial<FernNavigation.SectionNode> & Pick<FernNavigation.SectionNode, "slug">,
+    section: Partial<FernNavigation.SectionNode> &
+        Pick<FernNavigation.SectionNode, "slug">
 ): FernNavigation.SectionNode {
     return {
         type: "section",
@@ -24,7 +25,8 @@ function sectionNode(
 }
 
 function pageNode(
-    page: Partial<FernNavigation.PageNode> & Pick<FernNavigation.PageNode, "slug">,
+    page: Partial<FernNavigation.PageNode> &
+        Pick<FernNavigation.PageNode, "slug">
 ): FernNavigation.PageNode {
     return {
         type: "page",
@@ -49,8 +51,8 @@ describe("followRedirect", () => {
                 sectionNode({
                     id: FernNavigation.NodeId("1"),
                     slug: FernNavigation.Slug("section"),
-                }),
-            ),
+                })
+            )
         ).toBe(undefined);
     });
 
@@ -60,17 +62,19 @@ describe("followRedirect", () => {
                 pageNode({
                     id: FernNavigation.NodeId("1"),
                     slug: FernNavigation.Slug("path/to/page"),
-                }),
-            ),
+                })
+            )
         ).toBe("path/to/page");
 
         expect(
             followRedirect(
                 sectionNode({
                     slug: FernNavigation.Slug("path/to/section"),
-                    overviewPageId: FernNavigation.PageId("path/to/section/overview.mdx"),
-                }),
-            ),
+                    overviewPageId: FernNavigation.PageId(
+                        "path/to/section/overview.mdx"
+                    ),
+                })
+            )
         ).toBe("path/to/section");
     });
 
@@ -85,8 +89,8 @@ describe("followRedirect", () => {
                         }),
                     ],
                     slug: FernNavigation.Slug("section"),
-                }),
-            ),
+                })
+            )
         ).toBe("path/to/page");
 
         expect(
@@ -102,8 +106,8 @@ describe("followRedirect", () => {
                         }),
                     ],
                     slug: FernNavigation.Slug("section"),
-                }),
-            ),
+                })
+            )
         ).toBe("path/to/page");
     });
 
@@ -128,8 +132,8 @@ describe("followRedirect", () => {
                         }),
                     ],
                     slug: FernNavigation.Slug("section"),
-                }),
-            ),
+                })
+            )
         ).toBe("path/to/page");
     });
 
@@ -137,10 +141,15 @@ describe("followRedirect", () => {
         expect(
             followRedirect(
                 sectionNode({
-                    children: [pageNode({ slug: FernNavigation.Slug("path/to/page"), authed: true })],
+                    children: [
+                        pageNode({
+                            slug: FernNavigation.Slug("path/to/page"),
+                            authed: true,
+                        }),
+                    ],
                     slug: FernNavigation.Slug("section"),
-                }),
-            ),
+                })
+            )
         ).toBe(undefined);
     });
 
@@ -160,8 +169,8 @@ describe("followRedirect", () => {
                         }),
                     ],
                     slug: FernNavigation.Slug("section"),
-                }),
-            ),
+                })
+            )
         ).toBe("path/to/page");
     });
 });

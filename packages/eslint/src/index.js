@@ -66,7 +66,11 @@ module.exports = {
         "@typescript-eslint/no-empty-function": [
             "error",
             {
-                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
+                allow: [
+                    "private-constructors",
+                    "protected-constructors",
+                    "decoratedFunctions",
+                ],
             },
         ],
         "@typescript-eslint/await-thenable": "error",
@@ -98,7 +102,7 @@ module.exports = {
         "import/no-internal-modules": [
             "error",
             {
-                forbid: ["@fern-ui/*/**"],
+                forbid: ["@fern-ui/*/**", "@fern-docs/*/**"],
             },
         ],
         eqeqeq: [

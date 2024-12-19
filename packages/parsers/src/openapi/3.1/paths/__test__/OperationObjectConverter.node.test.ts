@@ -29,7 +29,7 @@ describe("OperationObjectConverterNode", () => {
                 undefined,
                 "/pets/{petId}",
                 "GET",
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -40,7 +40,10 @@ describe("OperationObjectConverterNode", () => {
                 method: "GET",
                 path: [
                     { type: "literal", value: "pets" },
-                    { type: "pathParameter", value: FernRegistry.PropertyKey("petId") },
+                    {
+                        type: "pathParameter",
+                        value: FernRegistry.PropertyKey("petId"),
+                    },
                 ],
                 environments: [],
                 pathParameters: [
@@ -82,7 +85,7 @@ describe("OperationObjectConverterNode", () => {
                 undefined,
                 undefined,
                 "GET",
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -102,16 +105,22 @@ describe("OperationObjectConverterNode", () => {
                 undefined,
                 "/users/{userId}/posts/{postId}",
                 "GET",
-                undefined,
+                undefined
             );
 
             const result = node.convertPathToPathParts();
 
             expect(result).toEqual([
                 { type: "literal", value: "users" },
-                { type: "pathParameter", value: FernRegistry.PropertyKey("userId") },
+                {
+                    type: "pathParameter",
+                    value: FernRegistry.PropertyKey("userId"),
+                },
                 { type: "literal", value: "posts" },
-                { type: "pathParameter", value: FernRegistry.PropertyKey("postId") },
+                {
+                    type: "pathParameter",
+                    value: FernRegistry.PropertyKey("postId"),
+                },
             ]);
         });
     });

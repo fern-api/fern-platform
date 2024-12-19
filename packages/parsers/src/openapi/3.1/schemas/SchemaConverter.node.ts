@@ -39,14 +39,21 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
     FernRegistry.api.latest.TypeShape | undefined
 > {
-    typeShapeNode: BaseOpenApiV3_1ConverterNode<unknown, FernRegistry.api.latest.TypeShape | undefined> | undefined;
+    typeShapeNode:
+        | BaseOpenApiV3_1ConverterNode<
+              unknown,
+              FernRegistry.api.latest.TypeShape | undefined
+          >
+        | undefined;
 
     description: string | undefined;
     name: string | undefined;
     availability: AvailabilityConverterNode | undefined;
 
     constructor(
-        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject>,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+            OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
+        >
     ) {
         super(args);
         this.safeParse();
@@ -87,7 +94,10 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
                     accessPath: this.accessPath,
                     pathId: this.pathId,
                 });
-            } else if (isNonArraySchema(this.input) && this.input.oneOf != null) {
+            } else if (
+                isNonArraySchema(this.input) &&
+                this.input.oneOf != null
+            ) {
                 this.typeShapeNode = new OneOfConverterNode({
                     input: this.input,
                     context: this.context,
@@ -103,7 +113,10 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
                     accessPath: this.accessPath,
                     pathId: this.pathId,
                 });
-            } else if (isNonArraySchema(this.input) && this.input.enum != null) {
+            } else if (
+                isNonArraySchema(this.input) &&
+                this.input.enum != null
+            ) {
                 this.typeShapeNode = new EnumConverterNode({
                     input: this.input,
                     context: this.context,

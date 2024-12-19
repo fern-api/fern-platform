@@ -16,13 +16,16 @@ export class NavigationConfigConverter {
     private constructor(
         private title: string | undefined,
         private config: DocsV1Read.NavigationConfig,
-        private fullSlugMap: Record<FernNavigation.V1.PageId, FernNavigation.V1.Slug>,
+        private fullSlugMap: Record<
+            FernNavigation.V1.PageId,
+            FernNavigation.V1.Slug
+        >,
         private noindexMap: Record<FernNavigation.V1.PageId, boolean>,
         private apis: Record<string, APIV1Read.ApiDefinition>,
         private basePath: string | undefined,
         private lexicographic?: boolean,
         private disableEndpointPairs?: boolean,
-        private paginated?: boolean,
+        private paginated?: boolean
     ) {}
 
     public static convert(
@@ -34,7 +37,7 @@ export class NavigationConfigConverter {
         basePath: string | undefined,
         lexicographic?: boolean,
         disableEndpointPairs?: boolean,
-        paginated?: boolean,
+        paginated?: boolean
     ): FernNavigation.V1.RootNode {
         return new NavigationConfigConverter(
             title,
@@ -45,7 +48,7 @@ export class NavigationConfigConverter {
             basePath,
             lexicographic,
             disableEndpointPairs,
-            paginated,
+            paginated
         ).convert();
     }
 
@@ -53,15 +56,31 @@ export class NavigationConfigConverter {
     private convert(): FernNavigation.V1.RootNode {
         return this.#idgen.with("root", (id) => {
             const baseSlug = SlugGenerator.init(this.basePath ?? "");
-            const child = visitReadNavigationConfig<FernNavigation.V1.RootChild>(this.config, {
-                versioned: (versioned) => this.convertVersionedNavigationConfig(versioned, baseSlug),
-                unversioned: (unversioned) => this.convertUnversionedNavigationConfig(unversioned, baseSlug),
-            });
+            const child =
+                visitReadNavigationConfig<FernNavigation.V1.RootChild>(
+                    this.config,
+                    {
+                        versioned: (versioned) =>
+                            this.convertVersionedNavigationConfig(
+                                versioned,
+                                baseSlug
+                            ),
+                        unversioned: (unversioned) =>
+                            this.convertUnversionedNavigationConfig(
+                                unversioned,
+                                baseSlug
+                            ),
+                    }
+                );
             let pointsTo = FernNavigation.V1.followRedirect(child);
             if (pointsTo != null && child.type === "versioned") {
                 const defaultVersion = child.children.find((v) => v.default);
                 if (defaultVersion != null) {
-                    pointsTo = FernNavigation.V1.toDefaultSlug(pointsTo, baseSlug.get(), defaultVersion.slug);
+                    pointsTo = FernNavigation.V1.toDefaultSlug(
+                        pointsTo,
+                        baseSlug.get(),
+                        defaultVersion.slug
+                    );
                 }
             }
 
@@ -86,7 +105,11 @@ export class NavigationConfigConverter {
             FernNavigation.V1.traverseDF(toRet, (node, parents) => {
                 if (
                     FernNavigation.V1.hasMetadata(node) &&
-                    parents.some((p) => FernNavigation.V1.hasMetadata(p) && p.hidden === true)
+                    parents.some(
+                        (p) =>
+                            FernNavigation.V1.hasMetadata(p) &&
+                            p.hidden === true
+                    )
                 ) {
                     node.hidden = true;
                 }
@@ -98,108 +121,156 @@ export class NavigationConfigConverter {
 
     private convertVersionedNavigationConfig(
         versioned: DocsV1Read.VersionedNavigationConfig,
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.VersionedNode {
         return this.#idgen.with("", (id) => {
-            const children = versioned.versions.map((version, idx): FernNavigation.V1.VersionNode => {
-                const slug = parentSlug.setVersionSlug(version.urlSlug);
-                return this.#idgen.with(version.urlSlug, (id): FernNavigation.V1.VersionNode => {
-                    const child = this.convertUnversionedNavigationConfig(version.config, slug);
-                    const pointsTo = FernNavigation.V1.followRedirect(child);
-                    return {
-                        id,
-                        type: "version",
-                        title: version.version,
-                        default: idx === 0,
-                        // the versionId must match `indexSegmentsByVersionId`
-                        versionId: FernNavigation.V1.VersionId(version.version),
-                        slug: slug.get(),
-                        icon: undefined,
-                        hidden: false,
-                        child: child.child,
-                        availability: FernNavigation.V1.convertAvailability(version.availability),
-                        pointsTo,
-                        landingPage: child.landingPage,
-                        authed: undefined,
-                        viewers: undefined,
-                        orphaned: undefined,
-                    };
-                });
-            });
+            const children = versioned.versions.map(
+                (version, idx): FernNavigation.V1.VersionNode => {
+                    const slug = parentSlug.setVersionSlug(version.urlSlug);
+                    return this.#idgen.with(
+                        version.urlSlug,
+                        (id): FernNavigation.V1.VersionNode => {
+                            const child =
+                                this.convertUnversionedNavigationConfig(
+                                    version.config,
+                                    slug
+                                );
+                            const pointsTo =
+                                FernNavigation.V1.followRedirect(child);
+                            return {
+                                id,
+                                type: "version",
+                                title: version.version,
+                                default: idx === 0,
+                                // the versionId must match `indexSegmentsByVersionId`
+                                versionId: FernNavigation.V1.VersionId(
+                                    version.version
+                                ),
+                                slug: slug.get(),
+                                icon: undefined,
+                                hidden: false,
+                                child: child.child,
+                                availability:
+                                    FernNavigation.V1.convertAvailability(
+                                        version.availability
+                                    ),
+                                pointsTo,
+                                landingPage: child.landingPage,
+                                authed: undefined,
+                                viewers: undefined,
+                                orphaned: undefined,
+                            };
+                        }
+                    );
+                }
+            );
             return { id, type: "versioned", children };
         });
     }
 
     private convertUnversionedNavigationConfig(
         unversioned: DocsV1Read.UnversionedNavigationConfig,
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.UnversionedNode {
         return this.#idgen.with("uv", (id) => {
-            const child = visitUnversionedReadNavigationConfig<FernNavigation.V1.VersionChild>(unversioned, {
-                tabbed: (tabbed) => ({
-                    id,
-                    type: "tabbed",
-                    children: tabbed.tabs.map((tab): FernNavigation.V1.TabChild => {
-                        if (tab.type === "group" || tab.type == null) {
-                            return this.#idgen.with(tab.urlSlug, (id) => {
-                                const slug = parentSlug.apply(tab);
-                                const child: FernNavigation.V1.SidebarRootNode = this.#idgen.with(
-                                    tab.urlSlug,
-                                    (id) => ({
-                                        id,
-                                        type: "sidebarRoot",
-                                        children: this.groupSidebarRootChildren(
-                                            tab.items.map((item) => this.convertNavigationItem(item, slug)),
-                                        ),
-                                    }),
-                                );
-                                const pointsTo = FernNavigation.V1.followRedirect(child);
-                                return {
-                                    id,
-                                    type: "tab",
-                                    title: tab.title,
-                                    slug: slug.get(),
-                                    icon: tab.icon,
-                                    hidden: tab.hidden,
-                                    child,
-                                    pointsTo,
-                                    authed: undefined,
-                                    viewers: undefined,
-                                    orphaned: undefined,
-                                };
-                            });
-                        } else if (tab.type === "link") {
-                            return this.#idgen.with("link", (id) => ({
-                                id,
-                                type: "link",
-                                title: tab.title,
-                                url: FernNavigation.V1.Url(tab.url),
-                                icon: tab.icon,
-                            }));
-                        } else if (tab.type === "changelog") {
-                            const slug = parentSlug.apply(tab);
-                            return ChangelogNavigationConverter.convert(
-                                tab,
-                                this.fullSlugMap,
-                                this.noindexMap,
-                                slug,
-                                this.#idgen,
-                            );
-                        } else if (tab.type === "changelogV3") {
-                            return tab.node as unknown as FernNavigation.V1.ChangelogNode;
-                        } else {
-                            assertNever(tab as never);
-                        }
-                    }),
-                }),
-                untabbed: (untabbed) => ({
-                    id,
-                    type: "sidebarRoot",
-                    children: this.groupSidebarRootChildren(
-                        untabbed.items.map((item) => this.convertNavigationItem(item, parentSlug)),
-                    ),
-                }),
-            });
+            const child =
+                visitUnversionedReadNavigationConfig<FernNavigation.V1.VersionChild>(
+                    unversioned,
+                    {
+                        tabbed: (tabbed) => ({
+                            id,
+                            type: "tabbed",
+                            children: tabbed.tabs.map(
+                                (tab): FernNavigation.V1.TabChild => {
+                                    if (
+                                        tab.type === "group" ||
+                                        tab.type == null
+                                    ) {
+                                        return this.#idgen.with(
+                                            tab.urlSlug,
+                                            (id) => {
+                                                const slug =
+                                                    parentSlug.apply(tab);
+                                                const child: FernNavigation.V1.SidebarRootNode =
+                                                    this.#idgen.with(
+                                                        tab.urlSlug,
+                                                        (id) => ({
+                                                            id,
+                                                            type: "sidebarRoot",
+                                                            children:
+                                                                this.groupSidebarRootChildren(
+                                                                    tab.items.map(
+                                                                        (
+                                                                            item
+                                                                        ) =>
+                                                                            this.convertNavigationItem(
+                                                                                item,
+                                                                                slug
+                                                                            )
+                                                                    )
+                                                                ),
+                                                        })
+                                                    );
+                                                const pointsTo =
+                                                    FernNavigation.V1.followRedirect(
+                                                        child
+                                                    );
+                                                return {
+                                                    id,
+                                                    type: "tab",
+                                                    title: tab.title,
+                                                    slug: slug.get(),
+                                                    icon: tab.icon,
+                                                    hidden: tab.hidden,
+                                                    child,
+                                                    pointsTo,
+                                                    authed: undefined,
+                                                    viewers: undefined,
+                                                    orphaned: undefined,
+                                                };
+                                            }
+                                        );
+                                    } else if (tab.type === "link") {
+                                        return this.#idgen.with(
+                                            "link",
+                                            (id) => ({
+                                                id,
+                                                type: "link",
+                                                title: tab.title,
+                                                url: FernNavigation.V1.Url(
+                                                    tab.url
+                                                ),
+                                                icon: tab.icon,
+                                            })
+                                        );
+                                    } else if (tab.type === "changelog") {
+                                        const slug = parentSlug.apply(tab);
+                                        return ChangelogNavigationConverter.convert(
+                                            tab,
+                                            this.fullSlugMap,
+                                            this.noindexMap,
+                                            slug,
+                                            this.#idgen
+                                        );
+                                    } else if (tab.type === "changelogV3") {
+                                        return tab.node as unknown as FernNavigation.V1.ChangelogNode;
+                                    } else {
+                                        assertNever(tab as never);
+                                    }
+                                }
+                            ),
+                        }),
+                        untabbed: (untabbed) => ({
+                            id,
+                            type: "sidebarRoot",
+                            children: this.groupSidebarRootChildren(
+                                untabbed.items.map((item) =>
+                                    this.convertNavigationItem(item, parentSlug)
+                                )
+                            ),
+                        }),
+                    }
+                );
             return {
                 id,
                 type: "unversioned",
@@ -209,7 +280,9 @@ export class NavigationConfigConverter {
                         return undefined;
                     }
 
-                    const pageId = FernNavigation.V1.PageId(unversioned.landingPage.id);
+                    const pageId = FernNavigation.V1.PageId(
+                        unversioned.landingPage.id
+                    );
                     return {
                         id,
                         type: "landingPage",
@@ -232,7 +305,7 @@ export class NavigationConfigConverter {
     }
 
     private groupSidebarRootChildren(
-        children: FernNavigation.V1.NavigationChild[],
+        children: FernNavigation.V1.NavigationChild[]
     ): FernNavigation.V1.SidebarRootChild[] {
         const grouped: FernNavigation.V1.SidebarRootChild[] = [];
         children.forEach((child) => {
@@ -246,7 +319,8 @@ export class NavigationConfigConverter {
                 return;
             }
 
-            const lastChild = grouped.length > 0 ? grouped[grouped.length - 1] : undefined;
+            const lastChild =
+                grouped.length > 0 ? grouped[grouped.length - 1] : undefined;
             let sidebarGroup: FernNavigation.V1.SidebarGroupNode;
             if (lastChild?.type === "sidebarGroup") {
                 sidebarGroup = lastChild;
@@ -266,9 +340,12 @@ export class NavigationConfigConverter {
 
     private convertNavigationItem(
         item: DocsV1Read.NavigationItem,
-        parentSlug: SlugGenerator,
+        parentSlug: SlugGenerator
     ): FernNavigation.V1.NavigationChild {
-        return visitDiscriminatedUnion(item, "type")._visit<FernNavigation.V1.NavigationChild>({
+        return visitDiscriminatedUnion(
+            item,
+            "type"
+        )._visit<FernNavigation.V1.NavigationChild>({
             page: (page) =>
                 this.#idgen.with(page.urlSlug, (id) => {
                     const pageId = FernNavigation.V1.PageId(page.id);
@@ -298,13 +375,24 @@ export class NavigationConfigConverter {
                 this.#idgen.with(section.urlSlug, (id) => {
                     let slug = parentSlug.apply(section);
 
-                    const children = section.items.map((item) => this.convertNavigationItem(item, slug));
-                    const pointsTo = FernNavigation.V1.followRedirects(children);
+                    const children = section.items.map((item) =>
+                        this.convertNavigationItem(item, slug)
+                    );
+                    const pointsTo =
+                        FernNavigation.V1.followRedirects(children);
                     const overviewPageId =
-                        section.overviewPageId != null ? FernNavigation.V1.PageId(section.overviewPageId) : undefined;
-                    const noindex = overviewPageId != null ? this.noindexMap[overviewPageId] : undefined;
+                        section.overviewPageId != null
+                            ? FernNavigation.V1.PageId(section.overviewPageId)
+                            : undefined;
+                    const noindex =
+                        overviewPageId != null
+                            ? this.noindexMap[overviewPageId]
+                            : undefined;
 
-                    const frontmatterSlug = overviewPageId != null ? this.fullSlugMap[overviewPageId] : undefined;
+                    const frontmatterSlug =
+                        overviewPageId != null
+                            ? this.fullSlugMap[overviewPageId]
+                            : undefined;
                     if (frontmatterSlug != null) {
                         slug = parentSlug.set(frontmatterSlug);
                     }
@@ -340,7 +428,7 @@ export class NavigationConfigConverter {
                     this.#idgen,
                     this.lexicographic,
                     this.disableEndpointPairs,
-                    this.paginated,
+                    this.paginated
                 );
             },
             changelog: (changelog) =>
@@ -349,17 +437,19 @@ export class NavigationConfigConverter {
                     this.fullSlugMap,
                     this.noindexMap,
                     parentSlug,
-                    this.#idgen,
+                    this.#idgen
                 ),
             // Note: apiSection.node is imported from `navigation`, and is guaranteed to be a FernNavigation.V1.ApiReferenceNode
             apiV2: (apiSection) => {
-                const node = apiSection.node as unknown as FernNavigation.V1.ApiReferenceNode;
+                const node =
+                    apiSection.node as unknown as FernNavigation.V1.ApiReferenceNode;
                 if (this.paginated) {
                     node.paginated = true;
                 }
                 return node;
             },
-            changelogV3: (changelog) => changelog.node as unknown as FernNavigation.V1.ChangelogNode,
+            changelogV3: (changelog) =>
+                changelog.node as unknown as FernNavigation.V1.ChangelogNode,
             _other: (value) => assertNever(value as never),
         });
     }

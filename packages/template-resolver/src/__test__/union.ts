@@ -95,13 +95,16 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         {
                                             type: {
                                                 type: "id",
-                                                value: FernRegistry.TypeId("type_imdb:DetailedMovieReview"),
+                                                value: FernRegistry.TypeId(
+                                                    "type_imdb:DetailedMovieReview"
+                                                ),
                                                 default: undefined,
                                             },
                                             template: {
                                                 type: "generic",
                                                 imports: [],
-                                                templateString: "{ $FERN_INPUT }",
+                                                templateString:
+                                                    "{ $FERN_INPUT }",
                                                 isOptional: true,
                                                 templateInputs: [
                                                     {
@@ -109,16 +112,19 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "yourSummary: $FERN_INPUT",
+                                                            templateString:
+                                                                "yourSummary: $FERN_INPUT",
                                                             isOptional: true,
                                                             templateInputs: [
                                                                 {
                                                                     type: "payload",
-                                                                    location: "RELATIVE",
+                                                                    location:
+                                                                        "RELATIVE",
                                                                     path: "summary",
                                                                 },
                                                             ],
-                                                            inputDelimiter: undefined,
+                                                            inputDelimiter:
+                                                                undefined,
                                                         },
                                                     },
                                                     {
@@ -126,16 +132,19 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "yourNotes: $FERN_INPUT",
+                                                            templateString:
+                                                                "yourNotes: $FERN_INPUT",
                                                             isOptional: true,
                                                             templateInputs: [
                                                                 {
                                                                     type: "payload",
-                                                                    location: "RELATIVE",
+                                                                    location:
+                                                                        "RELATIVE",
                                                                     path: "notes",
                                                                 },
                                                             ],
-                                                            inputDelimiter: undefined,
+                                                            inputDelimiter:
+                                                                undefined,
                                                         },
                                                     },
                                                     {
@@ -143,16 +152,19 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "starRatings: $FERN_INPUT",
+                                                            templateString:
+                                                                "starRatings: $FERN_INPUT",
                                                             isOptional: true,
                                                             templateInputs: [
                                                                 {
                                                                     type: "payload",
-                                                                    location: "RELATIVE",
+                                                                    location:
+                                                                        "RELATIVE",
                                                                     path: "stars",
                                                                 },
                                                             ],
-                                                            inputDelimiter: undefined,
+                                                            inputDelimiter:
+                                                                undefined,
                                                         },
                                                     },
                                                 ],
@@ -162,13 +174,16 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                         {
                                             type: {
                                                 type: "id",
-                                                value: FernRegistry.TypeId("type_imdb:AgressiveMovieReview"),
+                                                value: FernRegistry.TypeId(
+                                                    "type_imdb:AgressiveMovieReview"
+                                                ),
                                                 default: undefined,
                                             },
                                             template: {
                                                 type: "generic",
                                                 imports: [],
-                                                templateString: "{ $FERN_INPUT }",
+                                                templateString:
+                                                    "{ $FERN_INPUT }",
                                                 isOptional: true,
                                                 templateInputs: [
                                                     {
@@ -176,16 +191,19 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "yourReallyAngrySummary: $FERN_INPUT",
+                                                            templateString:
+                                                                "yourReallyAngrySummary: $FERN_INPUT",
                                                             isOptional: true,
                                                             templateInputs: [
                                                                 {
                                                                     type: "payload",
-                                                                    location: "RELATIVE",
+                                                                    location:
+                                                                        "RELATIVE",
                                                                     path: "reallyAngrySummary",
                                                                 },
                                                             ],
-                                                            inputDelimiter: undefined,
+                                                            inputDelimiter:
+                                                                undefined,
                                                         },
                                                     },
                                                     {
@@ -193,16 +211,19 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "yourAngryNotes: $FERN_INPUT",
+                                                            templateString:
+                                                                "yourAngryNotes: $FERN_INPUT",
                                                             isOptional: true,
                                                             templateInputs: [
                                                                 {
                                                                     type: "payload",
-                                                                    location: "RELATIVE",
+                                                                    location:
+                                                                        "RELATIVE",
                                                                     path: "notes",
                                                                 },
                                                             ],
-                                                            inputDelimiter: undefined,
+                                                            inputDelimiter:
+                                                                undefined,
                                                         },
                                                     },
                                                     {
@@ -210,16 +231,19 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                                                         value: {
                                                             type: "generic",
                                                             imports: [],
-                                                            templateString: "angryStarRatings: $FERN_INPUT",
+                                                            templateString:
+                                                                "angryStarRatings: $FERN_INPUT",
                                                             isOptional: true,
                                                             templateInputs: [
                                                                 {
                                                                     type: "payload",
-                                                                    location: "RELATIVE",
+                                                                    location:
+                                                                        "RELATIVE",
                                                                     path: "stars",
                                                                 },
                                                             ],
-                                                            inputDelimiter: undefined,
+                                                            inputDelimiter:
+                                                                undefined,
                                                         },
                                                     },
                                                 ],

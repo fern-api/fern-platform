@@ -3,7 +3,9 @@ import fs from "fs";
 import path from "path";
 
 test.skip("multipart-form upload", async ({ request }) => {
-    const bitmap = fs.readFileSync(path.join(__dirname, "assets", "david_hume.jpeg"));
+    const bitmap = fs.readFileSync(
+        path.join(__dirname, "assets", "david_hume.jpeg")
+    );
     const base64Image = bitmap.toString("base64");
     const mimeType = "image/jpeg";
     const dataUrl = `data:${mimeType};base64,${base64Image}`;
@@ -61,5 +63,7 @@ test.skip("json request", async ({ request }) => {
 
     expect(response.response.ok).toEqual(true);
     const headers = new Headers(response.response.headers);
-    expect(headers.get("content-type")).toEqual("application/json; charset=utf-8");
+    expect(headers.get("content-type")).toEqual(
+        "application/json; charset=utf-8"
+    );
 });

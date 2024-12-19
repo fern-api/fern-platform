@@ -12,7 +12,10 @@ import {
     visitWriteNavigationConfig,
 } from "../../client";
 import { isNavigationTabLink } from "../../client/visitNavigationTab";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
+import {
+    DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+    DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+} from "../utils/colors";
 
 export interface S3FileInfo {
     presignedUrl: DocsV1Write.FileS3UploadUrl;
@@ -38,10 +41,12 @@ export function convertDocsDefinitionToDb({
     writeShape: DocsV1Write.DocsDefinition;
     files: Record<DocsV1Write.FilePath, S3FileInfo>;
 }): ConvertedDocsDefinition {
-    const navigationConfig: DocsV1Db.NavigationConfig | undefined = writeShape.config.navigation
+    const navigationConfig: DocsV1Db.NavigationConfig | undefined = writeShape
+        .config.navigation
         ? transformNavigationConfigForDb(writeShape.config.navigation)
         : undefined;
-    const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfoV2> = {};
+    const transformedFiles: Record<DocsV1Write.FileId, DocsV1Db.DbFileInfoV2> =
+        {};
     Object.entries(files).forEach(([, s3FileInfo]) => {
         transformedFiles[s3FileInfo.presignedUrl.fileId] =
             s3FileInfo.imageMetadata != null
@@ -82,7 +87,10 @@ export function convertDocsDefinitionToDb({
 
     return {
         type: "v3",
-        referencedApis: getReferencedApiDefinitionIds(navigationConfig, writeShape.config.root),
+        referencedApis: getReferencedApiDefinitionIds(
+            navigationConfig,
+            writeShape.config.root
+        ),
         files: transformedFiles,
         config: {
             navigation: navigationConfig,
@@ -95,7 +103,10 @@ export function convertDocsDefinitionToDb({
             colorsV2,
             colorsV3:
                 writeShape.config.colorsV3 != null
-                    ? transformColorsV3ForDb({ writeShape: writeShape.config.colorsV3, docsConfig: writeShape.config })
+                    ? transformColorsV3ForDb({
+                          writeShape: writeShape.config.colorsV3,
+                          docsConfig: writeShape.config,
+                      })
                     : undefined,
             navbarLinks: writeShape.config.navbarLinks,
             footerLinks: writeShape.config.footerLinks,
@@ -119,7 +130,9 @@ export function convertDocsDefinitionToDb({
     };
 }
 
-export function transformNavigationConfigForDb(writeShape: DocsV1Write.NavigationConfig): DocsV1Db.NavigationConfig {
+export function transformNavigationConfigForDb(
+    writeShape: DocsV1Write.NavigationConfig
+): DocsV1Db.NavigationConfig {
     return visitWriteNavigationConfig<DocsV1Db.NavigationConfig>(writeShape, {
         unversioned: (config) => {
             return transformUnversionedNavigationConfigForDb(config);
@@ -131,7 +144,7 @@ export function transformNavigationConfigForDb(writeShape: DocsV1Write.Navigatio
 }
 
 function transformVersionedNavigationConfigForDb(
-    config: DocsV1Write.VersionedNavigationConfig,
+    config: DocsV1Write.VersionedNavigationConfig
 ): DocsV1Db.VersionedNavigationConfig {
     return {
         versions: config.versions.map(
@@ -139,51 +152,68 @@ function transformVersionedNavigationConfigForDb(
                 urlSlug: version.urlSlugOverride ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,
-                config: transformUnversionedNavigationConfigForDb(version.config),
-            }),
+                config: transformUnversionedNavigationConfigForDb(
+                    version.config
+                ),
+            })
         ),
     };
 }
 
 function transformUnversionedNavigationConfigForDb(
-    writeShape: DocsV1Write.UnversionedNavigationConfig,
+    writeShape: DocsV1Write.UnversionedNavigationConfig
 ): DocsV1Db.UnversionedNavigationConfig {
-    return visitUnversionedWriteNavigationConfig<DocsV1Db.UnversionedNavigationConfig>(writeShape, {
-        untabbed: (config) => {
-            return {
-                items: config.items?.map(transformNavigationItemForDb),
-                // landing page's slug should be "" because it's the root
-                landingPage: transformPageNavigationItemForDb(config.landingPage, ""),
-            };
-        },
-        tabbed: (config) => {
-            return {
-                tabs: config.tabs?.map(transformNavigationTabForDb),
-                tabsV2: config.tabsV2?.map(transformNavigationTabV2ForDb),
-                landingPage: transformPageNavigationItemForDb(config.landingPage, ""),
-            };
-        },
-    });
+    return visitUnversionedWriteNavigationConfig<DocsV1Db.UnversionedNavigationConfig>(
+        writeShape,
+        {
+            untabbed: (config) => {
+                return {
+                    items: config.items?.map(transformNavigationItemForDb),
+                    // landing page's slug should be "" because it's the root
+                    landingPage: transformPageNavigationItemForDb(
+                        config.landingPage,
+                        ""
+                    ),
+                };
+            },
+            tabbed: (config) => {
+                return {
+                    tabs: config.tabs?.map(transformNavigationTabForDb),
+                    tabsV2: config.tabsV2?.map(transformNavigationTabV2ForDb),
+                    landingPage: transformPageNavigationItemForDb(
+                        config.landingPage,
+                        ""
+                    ),
+                };
+            },
+        }
+    );
 }
 
-export function transformNavigationTabForDb(writeShape: DocsV1Write.NavigationTab): DocsV1Db.NavigationTab {
+export function transformNavigationTabForDb(
+    writeShape: DocsV1Write.NavigationTab
+): DocsV1Db.NavigationTab {
     if (isNavigationTabLink(writeShape)) {
         return writeShape;
     }
     return {
         ...writeShape,
         items: writeShape.items?.map(transformNavigationItemForDb),
-        urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title ?? ""),
+        urlSlug:
+            writeShape.urlSlugOverride ?? kebabCase(writeShape.title ?? ""),
     };
 }
 
-function transformNavigationTabV2ForDb(writeShape: DocsV1Write.NavigationTabV2): DocsV1Db.NavigationTabV2 {
+function transformNavigationTabV2ForDb(
+    writeShape: DocsV1Write.NavigationTabV2
+): DocsV1Db.NavigationTabV2 {
     switch (writeShape.type) {
         case "group":
             return {
                 ...writeShape,
                 items: writeShape.items.map(transformNavigationItemForDb),
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                urlSlug:
+                    writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
             };
         case "link":
             return writeShape;
@@ -196,7 +226,9 @@ function transformNavigationTabV2ForDb(writeShape: DocsV1Write.NavigationTabV2):
     }
 }
 
-function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): DocsV1Read.ChangelogSection {
+function toChangelogDb(
+    writeShape: DocsV1Write.ChangelogSectionV2
+): DocsV1Read.ChangelogSection {
     return {
         title: writeShape.title,
         icon: writeShape.icon,
@@ -207,12 +239,18 @@ function toChangelogDb(writeShape: DocsV1Write.ChangelogSectionV2): DocsV1Read.C
             pageId: item.pageId,
         })),
         pageId: writeShape.pageId,
-        urlSlug: writeShape.urlSlugOverride ?? (writeShape.title != null ? kebabCase(writeShape.title) : "changelog"),
+        urlSlug:
+            writeShape.urlSlugOverride ??
+            (writeShape.title != null
+                ? kebabCase(writeShape.title)
+                : "changelog"),
         fullSlug: writeShape.fullSlug,
     };
 }
 
-export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationItem): DocsV1Db.NavigationItem {
+export function transformNavigationItemForDb(
+    writeShape: DocsV1Write.NavigationItem
+): DocsV1Db.NavigationItem {
     switch (writeShape.type) {
         case "api":
             return {
@@ -222,9 +260,12 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                 longScrolling: writeShape.longScrolling,
                 flattened: writeShape.flattened,
                 fullSlug: writeShape.fullSlug,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                urlSlug:
+                    writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 artifacts:
-                    writeShape.artifacts != null ? transformArtifactsForReading(writeShape.artifacts) : undefined,
+                    writeShape.artifacts != null
+                        ? transformArtifactsForReading(writeShape.artifacts)
+                        : undefined,
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
                 showErrors: writeShape.showErrors ?? false,
                 changelog:
@@ -243,7 +284,9 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                               hidden: writeShape.changelog.hidden ?? false,
                           }
                         : undefined,
-                navigation: transformApiSectionNavigationForDb(writeShape.navigation),
+                navigation: transformApiSectionNavigationForDb(
+                    writeShape.navigation
+                ),
             };
         case "page":
             return transformPageNavigationItemForDb(writeShape);
@@ -252,10 +295,13 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
                 type: "section",
                 title: writeShape.title,
                 icon: writeShape.icon,
-                urlSlug: writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
+                urlSlug:
+                    writeShape.urlSlugOverride ?? kebabCase(writeShape.title),
                 collapsed: writeShape.collapsed ?? false,
                 hidden: writeShape.hidden ?? false,
-                items: writeShape.items.map((item) => transformNavigationItemForDb(item)),
+                items: writeShape.items.map((item) =>
+                    transformNavigationItemForDb(item)
+                ),
                 skipUrlSlug: writeShape.skipUrlSlug ?? false,
                 fullSlug: writeShape.fullSlug,
                 overviewPageId: writeShape.overviewPageId,
@@ -280,19 +326,25 @@ export function transformNavigationItemForDb(writeShape: DocsV1Write.NavigationI
 
 export function getReferencedApiDefinitionIds(
     navigationConfig: DocsV1Db.NavigationConfig | undefined,
-    root: FernNavigation.V1.RootNode | undefined,
+    root: FernNavigation.V1.RootNode | undefined
 ): FdrAPI.ApiDefinitionId[] {
     if (root != null) {
-        const latest = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(root);
-        return FernNavigation.utils.collectApiReferences(latest).map((reference) => reference.apiDefinitionId);
+        const latest =
+            FernNavigation.migrate.FernNavigationV1ToLatest.create().root(root);
+        return FernNavigation.utils
+            .collectApiReferences(latest)
+            .map((reference) => reference.apiDefinitionId);
     }
 
     if (navigationConfig != null) {
         return visitDbNavigationConfig(navigationConfig, {
-            unversioned: (config) => getReferencedApiDefinitionIdsForUnversionedReadConfig(config),
+            unversioned: (config) =>
+                getReferencedApiDefinitionIdsForUnversionedReadConfig(config),
             versioned: (config) =>
                 config.versions.flatMap((version) =>
-                    getReferencedApiDefinitionIdsForUnversionedReadConfig(version.config),
+                    getReferencedApiDefinitionIdsForUnversionedReadConfig(
+                        version.config
+                    )
                 ),
         });
     }
@@ -301,41 +353,57 @@ export function getReferencedApiDefinitionIds(
 }
 
 function getReferencedApiDefinitionIdsForUnversionedReadConfig(
-    config: DocsV1Db.UnversionedNavigationConfig,
+    config: DocsV1Db.UnversionedNavigationConfig
 ): FdrAPI.ApiDefinitionId[] {
-    return visitUnversionedDbNavigationConfig<FdrAPI.ApiDefinitionId[]>(config, {
-        untabbed: (config) => config.items.flatMap(getReferencedApiDefinitionIdFromItem),
-        tabbed: (config) => {
-            const toRet: FdrAPI.ApiDefinitionId[] = [];
-            config.tabs?.forEach((tab) => {
-                if (isNavigationTabLink(tab)) {
-                    return;
-                } else {
-                    if (tab.items) {
-                        toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+    return visitUnversionedDbNavigationConfig<FdrAPI.ApiDefinitionId[]>(
+        config,
+        {
+            untabbed: (config) =>
+                config.items.flatMap(getReferencedApiDefinitionIdFromItem),
+            tabbed: (config) => {
+                const toRet: FdrAPI.ApiDefinitionId[] = [];
+                config.tabs?.forEach((tab) => {
+                    if (isNavigationTabLink(tab)) {
+                        return;
+                    } else {
+                        if (tab.items) {
+                            toRet.push(
+                                ...tab.items.flatMap(
+                                    getReferencedApiDefinitionIdFromItem
+                                )
+                            );
+                        }
                     }
-                }
-            });
-            config.tabsV2?.forEach((tab) => {
-                if (tab.type === "group") {
-                    if (tab.items) {
-                        toRet.push(...tab.items.flatMap(getReferencedApiDefinitionIdFromItem));
+                });
+                config.tabsV2?.forEach((tab) => {
+                    if (tab.type === "group") {
+                        if (tab.items) {
+                            toRet.push(
+                                ...tab.items.flatMap(
+                                    getReferencedApiDefinitionIdFromItem
+                                )
+                            );
+                        }
                     }
-                }
-            });
-            return toRet;
-        },
-    });
+                });
+                return toRet;
+            },
+        }
+    );
 }
 
-function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): FdrAPI.ApiDefinitionId[] {
+function getReferencedApiDefinitionIdFromItem(
+    item: DocsV1Db.NavigationItem
+): FdrAPI.ApiDefinitionId[] {
     switch (item.type) {
         case "api":
             return [item.api];
         case "page":
             return [];
         case "section":
-            return item.items.flatMap((sectionItem) => getReferencedApiDefinitionIdFromItem(sectionItem));
+            return item.items.flatMap((sectionItem) =>
+                getReferencedApiDefinitionIdFromItem(sectionItem)
+            );
         case "link":
             return [];
         case "changelog":
@@ -349,15 +417,25 @@ function getReferencedApiDefinitionIdFromItem(item: DocsV1Db.NavigationItem): Fd
     }
 }
 
-function transformArtifactsForReading(writeShape: DocsV1Write.ApiArtifacts): DocsV1Read.ApiArtifacts {
+function transformArtifactsForReading(
+    writeShape: DocsV1Write.ApiArtifacts
+): DocsV1Read.ApiArtifacts {
     return {
-        sdks: writeShape.sdks.map((sdk) => transformPublishedSdkForReading(sdk)),
+        sdks: writeShape.sdks.map((sdk) =>
+            transformPublishedSdkForReading(sdk)
+        ),
         postman:
-            writeShape.postman != null ? transformPublishedPostmanCollectionForReading(writeShape.postman) : undefined,
+            writeShape.postman != null
+                ? transformPublishedPostmanCollectionForReading(
+                      writeShape.postman
+                  )
+                : undefined,
     };
 }
 
-function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): DocsV1Read.PublishedSdk {
+function transformPublishedSdkForReading(
+    writeShape: DocsV1Write.PublishedSdk
+): DocsV1Read.PublishedSdk {
     switch (writeShape.type) {
         case "maven":
             return {
@@ -365,7 +443,9 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
                 coordinate: writeShape.coordinate,
                 githubRepo: {
                     name: writeShape.githubRepoName,
-                    url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
+                    url: FdrAPI.Url(
+                        `https://github.com/${writeShape.githubRepoName}`
+                    ),
                 },
                 version: writeShape.version,
             };
@@ -375,7 +455,9 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
                 packageName: writeShape.packageName,
                 githubRepo: {
                     name: writeShape.githubRepoName,
-                    url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
+                    url: FdrAPI.Url(
+                        `https://github.com/${writeShape.githubRepoName}`
+                    ),
                 },
                 version: writeShape.version,
             };
@@ -385,7 +467,9 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
                 packageName: writeShape.packageName,
                 githubRepo: {
                     name: writeShape.githubRepoName,
-                    url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
+                    url: FdrAPI.Url(
+                        `https://github.com/${writeShape.githubRepoName}`
+                    ),
                 },
                 version: writeShape.version,
             };
@@ -393,7 +477,7 @@ function transformPublishedSdkForReading(writeShape: DocsV1Write.PublishedSdk): 
 }
 
 function transformPublishedPostmanCollectionForReading(
-    writeShape: DocsV1Write.PublishedPostmanCollection,
+    writeShape: DocsV1Write.PublishedPostmanCollection
 ): DocsV1Read.PublishedPostmanCollection {
     return {
         url: writeShape.url,
@@ -401,7 +485,9 @@ function transformPublishedPostmanCollectionForReading(
             writeShape.githubRepoName != null
                 ? {
                       name: writeShape.githubRepoName,
-                      url: FdrAPI.Url(`https://github.com/${writeShape.githubRepoName}`),
+                      url: FdrAPI.Url(
+                          `https://github.com/${writeShape.githubRepoName}`
+                      ),
                   }
                 : undefined,
     };
@@ -418,11 +504,19 @@ function transformColorsV3ForDb({
         case "dark":
             return {
                 type: "dark",
-                accentPrimary: writeShape.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
-                logo: writeShape.logo ?? docsConfig.logoV2?.dark ?? docsConfig.logo,
+                accentPrimary:
+                    writeShape.accentPrimary ??
+                    DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                logo:
+                    writeShape.logo ??
+                    docsConfig.logoV2?.dark ??
+                    docsConfig.logo,
                 background:
-                    writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
-                backgroundImage: writeShape.backgroundImage ?? docsConfig.backgroundImage,
+                    writeShape.background != null
+                        ? { type: "solid", ...writeShape.background }
+                        : { type: "gradient" },
+                backgroundImage:
+                    writeShape.backgroundImage ?? docsConfig.backgroundImage,
                 border: writeShape.border,
                 cardBackground: writeShape.cardBackground,
                 sidebarBackground: writeShape.sidebarBackground,
@@ -431,11 +525,19 @@ function transformColorsV3ForDb({
         case "light":
             return {
                 type: "light",
-                accentPrimary: writeShape.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
-                logo: writeShape.logo ?? docsConfig.logoV2?.dark ?? docsConfig.logo,
+                accentPrimary:
+                    writeShape.accentPrimary ??
+                    DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                logo:
+                    writeShape.logo ??
+                    docsConfig.logoV2?.dark ??
+                    docsConfig.logo,
                 background:
-                    writeShape.background != null ? { type: "solid", ...writeShape.background } : { type: "gradient" },
-                backgroundImage: writeShape.backgroundImage ?? docsConfig.backgroundImage,
+                    writeShape.background != null
+                        ? { type: "solid", ...writeShape.background }
+                        : { type: "gradient" },
+                backgroundImage:
+                    writeShape.backgroundImage ?? docsConfig.backgroundImage,
                 border: writeShape.border,
                 cardBackground: writeShape.cardBackground,
                 sidebarBackground: writeShape.sidebarBackground,
@@ -445,26 +547,40 @@ function transformColorsV3ForDb({
             return {
                 type: "darkAndLight",
                 light: {
-                    accentPrimary: writeShape.light.accentPrimary ?? DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
-                    logo: writeShape.light.logo ?? docsConfig.logoV2?.light ?? docsConfig.logo,
+                    accentPrimary:
+                        writeShape.light.accentPrimary ??
+                        DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+                    logo:
+                        writeShape.light.logo ??
+                        docsConfig.logoV2?.light ??
+                        docsConfig.logo,
                     background:
                         writeShape.light.background != null
                             ? { type: "solid", ...writeShape.light.background }
                             : { type: "gradient" },
-                    backgroundImage: writeShape.light.backgroundImage ?? docsConfig.backgroundImage,
+                    backgroundImage:
+                        writeShape.light.backgroundImage ??
+                        docsConfig.backgroundImage,
                     border: writeShape.light.border,
                     cardBackground: writeShape.light.cardBackground,
                     sidebarBackground: writeShape.light.sidebarBackground,
                     headerBackground: writeShape.light.headerBackground,
                 },
                 dark: {
-                    accentPrimary: writeShape.dark.accentPrimary ?? DEFAULT_DARK_MODE_ACCENT_PRIMARY,
-                    logo: writeShape.dark.logo ?? docsConfig.logoV2?.dark ?? docsConfig.logo,
+                    accentPrimary:
+                        writeShape.dark.accentPrimary ??
+                        DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+                    logo:
+                        writeShape.dark.logo ??
+                        docsConfig.logoV2?.dark ??
+                        docsConfig.logo,
                     background:
                         writeShape.dark.background != null
                             ? { type: "solid", ...writeShape.dark.background }
                             : { type: "gradient" },
-                    backgroundImage: writeShape.dark.backgroundImage ?? docsConfig.backgroundImage,
+                    backgroundImage:
+                        writeShape.dark.backgroundImage ??
+                        docsConfig.backgroundImage,
                     border: writeShape.dark.border,
                     cardBackground: writeShape.dark.cardBackground,
                     sidebarBackground: writeShape.dark.sidebarBackground,
@@ -478,15 +594,15 @@ function transformColorsV3ForDb({
 
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata,
-    defaultSlug?: string,
+    defaultSlug?: string
 ): DocsV1Read.NavigationItem.Page;
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
-    defaultSlug?: string,
+    defaultSlug?: string
 ): DocsV1Read.NavigationItem.Page | undefined;
 function transformPageNavigationItemForDb(
     writeShape: DocsV1Write.PageMetadata | undefined,
-    defaultSlug?: string,
+    defaultSlug?: string
 ): DocsV1Read.NavigationItem.Page | undefined {
     if (writeShape == null) {
         return undefined;
@@ -496,14 +612,17 @@ function transformPageNavigationItemForDb(
         id: writeShape.id,
         title: writeShape.title,
         icon: writeShape.icon,
-        urlSlug: writeShape.urlSlugOverride ?? defaultSlug ?? kebabCase(writeShape.title),
+        urlSlug:
+            writeShape.urlSlugOverride ??
+            defaultSlug ??
+            kebabCase(writeShape.title),
         fullSlug: writeShape.fullSlug,
         hidden: writeShape.hidden ?? false,
     };
 }
 
 function transformApiSectionNavigationForDb(
-    writeShape: DocsV1Write.ApiNavigationConfigRoot | undefined,
+    writeShape: DocsV1Write.ApiNavigationConfigRoot | undefined
 ): DocsV1Db.ApiSection["navigation"] | undefined {
     if (writeShape == null) {
         return undefined;

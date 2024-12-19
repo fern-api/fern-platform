@@ -19,10 +19,14 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         errors: FernRegistry.api.latest.ErrorResponse[];
     }
 > {
-    responsesByStatusCode: Record<string, ResponseObjectConverterNode> | undefined;
+    responsesByStatusCode:
+        | Record<string, ResponseObjectConverterNode>
+        | undefined;
     errorsByStatusCode: Record<string, ResponseObjectConverterNode> | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponsesObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponsesObject>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -32,26 +36,28 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         Object.entries(this.input).forEach(([statusCode, response]) => {
             if (parseInt(statusCode) >= 400) {
                 this.errorsByStatusCode ??= {};
-                this.errorsByStatusCode[statusCode] = new ResponseObjectConverterNode({
-                    input: {
-                        ...defaultResponse,
-                        ...response,
-                    },
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "errors",
-                });
+                this.errorsByStatusCode[statusCode] =
+                    new ResponseObjectConverterNode({
+                        input: {
+                            ...defaultResponse,
+                            ...response,
+                        },
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: "errors",
+                    });
             } else {
                 this.responsesByStatusCode ??= {};
-                this.responsesByStatusCode[statusCode] = new ResponseObjectConverterNode({
-                    input: {
-                        ...defaultResponse,
-                        ...response,
-                    },
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "responses",
-                });
+                this.responsesByStatusCode[statusCode] =
+                    new ResponseObjectConverterNode({
+                        input: {
+                            ...defaultResponse,
+                            ...response,
+                        },
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: "responses",
+                    });
             }
         });
     }
@@ -63,7 +69,9 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return Object.entries(this.responsesByStatusCode ?? {})
             .map(([statusCode, response]) => {
                 // TODO: support multiple response types per response status code
-                this.context.logger.info("Accessing first response from ResponsesObjectConverterNode conversion.");
+                this.context.logger.info(
+                    "Accessing first response from ResponsesObjectConverterNode conversion."
+                );
                 const body = response.convert()?.[0];
                 if (body == null) {
                     return undefined;
@@ -84,7 +92,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return Object.entries(this.errorsByStatusCode ?? {})
             .map(([statusCode, response]) => {
                 this.context.logger.info(
-                    "Accessing first response from ResponseMediaTypeObjectConverterNode conversion.",
+                    "Accessing first response from ResponseMediaTypeObjectConverterNode conversion."
                 );
                 const schema = response.responses?.[0]?.schema;
                 const shape = schema?.convert();
@@ -98,7 +106,10 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     shape,
                     description: response.description ?? schema.description,
                     availability: schema.availability?.convert(),
-                    name: schema.name ?? STATUS_CODE_MESSAGES[parseInt(statusCode)] ?? "UNKNOWN ERROR",
+                    name:
+                        schema.name ??
+                        STATUS_CODE_MESSAGES[parseInt(statusCode)] ??
+                        "UNKNOWN ERROR",
                     examples: undefined,
                 };
             })

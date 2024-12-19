@@ -13,7 +13,10 @@ import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
 export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.PathItemObject,
-    (FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition)[]
+    (
+        | FernRegistry.api.latest.EndpointDefinition
+        | FernRegistry.api.latest.WebhookDefinition
+    )[]
 > {
     description: string | undefined;
     get: OperationObjectConverterNode | undefined;
@@ -27,7 +30,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathItemObject>,
         protected servers: ServerObjectConverterNode[] | undefined,
         protected basePath: XFernBasePathConverterNode | undefined,
-        protected isWebhook: boolean | undefined,
+        protected isWebhook: boolean | undefined
     ) {
         super(args);
         this.safeParse();
@@ -43,7 +46,12 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             }).isWebhook || this.isWebhook;
 
         this.description = this.input.description;
-        this.servers = coalesceServers(this.servers, this.input.servers, this.context, this.accessPath);
+        this.servers = coalesceServers(
+            this.servers,
+            this.input.servers,
+            this.context,
+            this.accessPath
+        );
 
         if (this.input.get != null) {
             this.get = new OperationObjectConverterNode(
@@ -57,7 +65,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.pathId,
                 "GET",
                 this.basePath,
-                isWebhook,
+                isWebhook
             );
         }
         if (this.input.post != null) {
@@ -72,7 +80,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.pathId,
                 "POST",
                 this.basePath,
-                isWebhook,
+                isWebhook
             );
         }
         if (this.input.put != null) {
@@ -86,7 +94,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "PUT",
-                this.basePath,
+                this.basePath
             );
         }
         if (this.input.delete != null) {
@@ -100,14 +108,22 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 this.servers,
                 this.pathId,
                 "DELETE",
-                this.basePath,
+                this.basePath
             );
         }
     }
 
-    convert(): (FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition)[] | undefined {
-        return [this.get?.convert(), this.post?.convert(), this.put?.convert(), this.delete?.convert()].filter(
-            isNonNullish,
-        );
+    convert():
+        | (
+              | FernRegistry.api.latest.EndpointDefinition
+              | FernRegistry.api.latest.WebhookDefinition
+          )[]
+        | undefined {
+        return [
+            this.get?.convert(),
+            this.post?.convert(),
+            this.put?.convert(),
+            this.delete?.convert(),
+        ].filter(isNonNullish);
     }
 }

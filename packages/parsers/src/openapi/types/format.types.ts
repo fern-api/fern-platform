@@ -10,7 +10,14 @@ export const OPENAPI_NUMBER_TYPE_FORMAT = [
     "float",
     "sf-decimal",
 ] as const;
-export const OPENAPI_INTEGER_TYPE_FORMAT = ["int16", "int32", "int64", "int8", "sf-integer", "uint8"] as const;
+export const OPENAPI_INTEGER_TYPE_FORMAT = [
+    "int16",
+    "int32",
+    "int64",
+    "int8",
+    "sf-integer",
+    "uint8",
+] as const;
 export const OPENAPI_STRING_TYPE_FORMAT = [
     "base64url",
     "binary",
@@ -55,7 +62,11 @@ export const SUPPORTED_X_FERN_AVAILABILITY_VALUES = [
     "generally-available",
     "deprecated",
 ] as const;
-export const SUPPORTED_REQUEST_CONTENT_TYPES = ["json", "form-data", "stream"] as const;
+export const SUPPORTED_REQUEST_CONTENT_TYPES = [
+    "json",
+    "form-data",
+    "stream",
+] as const;
 export const SUPPORTED_RESPONSE_CONTENT_TYPES = [
     "application/json",
     "text/event-stream",

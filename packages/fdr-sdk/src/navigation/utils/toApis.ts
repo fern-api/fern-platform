@@ -8,6 +8,6 @@ export function toApis(docs: DocsV2Read.LoadDocsForUrlResponse) {
             useJavaScriptAsTypeScript: false,
             alwaysEnableJavaScriptFetch: false,
             usesApplicationJsonInFormDataValue: false,
-        }).migrate(),
+        }).migrate()
     );
 }

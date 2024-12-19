@@ -2,7 +2,7 @@ import { UnreachableCaseError } from "ts-essentials";
 import { FernNavigation } from "../..";
 
 export function followRedirect(
-    nodeToFollow: FernNavigation.NavigationNode | undefined,
+    nodeToFollow: FernNavigation.NavigationNode | undefined
 ): FernNavigation.Slug | undefined {
     if (nodeToFollow == null) {
         return undefined;
@@ -25,7 +25,9 @@ export function followRedirect(
          */
         case "productgroup":
         case "versioned":
-            return followRedirects([...nodeToFollow.children].sort(defaultFirst));
+            return followRedirects(
+                [...nodeToFollow.children].sort(defaultFirst)
+            );
         case "apiReference":
         case "apiPackage":
         case "changelogMonth": // note: changelog month nodes don't exist yet as pages
@@ -47,7 +49,9 @@ export function followRedirect(
     }
 }
 
-export function followRedirects(nodes: readonly FernNavigation.NavigationNode[]): FernNavigation.Slug | undefined {
+export function followRedirects(
+    nodes: readonly FernNavigation.NavigationNode[]
+): FernNavigation.Slug | undefined {
     for (const node of nodes) {
         // skip hidden nodes
         if (FernNavigation.hasMetadata(node) && node.hidden) {
@@ -62,10 +66,14 @@ export function followRedirects(nodes: readonly FernNavigation.NavigationNode[])
     return;
 }
 
-function rank<T extends { default: boolean; hidden: boolean | undefined }>(node: T): number {
+function rank<T extends { default: boolean; hidden: boolean | undefined }>(
+    node: T
+): number {
     return node.default && !node.hidden ? 1 : node.hidden ? -1 : 0;
 }
 
-function defaultFirst<T extends { default: boolean; hidden: boolean | undefined }>(a: T, b: T): number {
+function defaultFirst<
+    T extends { default: boolean; hidden: boolean | undefined },
+>(a: T, b: T): number {
     return rank(b) - rank(a);
 }

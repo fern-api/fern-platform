@@ -26,13 +26,20 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     basePath: XFernBasePathConverterNode | undefined;
     fernGroups: XFernGroupsConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>
+    ) {
         super(args);
         this.safeParse();
     }
 
     parse(): void {
-        this.servers = coalesceServers(this.servers, this.input.servers, this.context, this.accessPath);
+        this.servers = coalesceServers(
+            this.servers,
+            this.input.servers,
+            this.context,
+            this.accessPath
+        );
         this.basePath = new XFernBasePathConverterNode({
             input: this.input,
             context: this.context,
@@ -42,7 +49,8 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         if (this.input.paths == null && this.input.webhooks == null) {
             this.context.errors.warning({
-                message: "Expected 'paths' or 'webhooks' property to be specified",
+                message:
+                    "Expected 'paths' or 'webhooks' property to be specified",
                 path: this.accessPath,
             });
         }
@@ -56,7 +64,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                     pathId: "paths",
                 },
                 this.servers,
-                this.basePath,
+                this.basePath
             );
         }
 
@@ -68,7 +76,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
                     accessPath: this.accessPath,
                     pathId: "webhooks",
                 },
-                this.basePath,
+                this.basePath
             );
         }
 
@@ -118,7 +126,10 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             endpoints: endpoints ?? {},
             // Websockets are not implemented in OAS, but are in AsyncAPI
             websockets: {},
-            webhooks: { ...(this.webhooks?.convert() ?? {}), ...(webhookEndpoints ?? {}) },
+            webhooks: {
+                ...(this.webhooks?.convert() ?? {}),
+                ...(webhookEndpoints ?? {}),
+            },
             types,
             // This is not necessary and will be removed
             subpackages: {},

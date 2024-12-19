@@ -1,5 +1,8 @@
 import { SnippetTemplateResolver } from "../../SnippetTemplateResolver";
-import { CHAT_COMPLETION_SNIPPET, CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION } from "../cohere";
+import {
+    CHAT_COMPLETION_SNIPPET,
+    CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION,
+} from "../cohere";
 
 describe("Snippet Template Resolver", () => {
     it("Test Chat Completion snippet", async () => {
@@ -102,7 +105,8 @@ describe("Snippet Template Resolver", () => {
                 pathParameters: undefined,
                 queryParameters: undefined,
             },
-            endpointSnippetTemplate: CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION,
+            endpointSnippetTemplate:
+                CHAT_COMPLETION_SNIPPET_WITH_LEGACY_CLIENT_INSTANTIATION,
         });
         const customSnippet = await resolver.resolveWithFormatting();
 

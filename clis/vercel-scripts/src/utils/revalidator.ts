@@ -8,7 +8,15 @@ export class FernDocsRevalidator {
     private vercel: VercelClient;
     private project: string;
     private teamId: string;
-    constructor({ token, project, teamId }: { token: string; project: string; teamId: string }) {
+    constructor({
+        token,
+        project,
+        teamId,
+    }: {
+        token: string;
+        project: string;
+        teamId: string;
+    }) {
         if (!token) {
             throw new Error("VERCEL_TOKEN is required");
         }
@@ -18,19 +26,28 @@ export class FernDocsRevalidator {
     }
 
     // TODO: this should not be using vercel as the source of truth for domains becuase vercel's domain list does not include all subpath (proxied) domains.
-    private async *getProductionDomains(): AsyncGenerator<Vercel.GetProjectDomainsResponseDomainsItem, void, unknown> {
+    private async *getProductionDomains(): AsyncGenerator<
+        Vercel.GetProjectDomainsResponseDomainsItem,
+        void,
+        unknown
+    > {
         let cursor: number | undefined = undefined;
         do {
-            const res = await this.vercel.projects.getProjectDomains(this.project, {
-                teamId: this.teamId,
-                production: "true",
-                verified: "true",
-                limit: 50,
-                order: "ASC",
-                since: cursor ? cursor + 1 : undefined,
-            });
+            const res = await this.vercel.projects.getProjectDomains(
+                this.project,
+                {
+                    teamId: this.teamId,
+                    production: "true",
+                    verified: "true",
+                    limit: 50,
+                    order: "ASC",
+                    since: cursor ? cursor + 1 : undefined,
+                }
+            );
 
-            for (const domain of res.domains.filter((domain) => !BANNED_DOMAINS.includes(domain.apexName))) {
+            for (const domain of res.domains.filter(
+                (domain) => !BANNED_DOMAINS.includes(domain.apexName)
+            )) {
                 yield domain;
             }
             cursor = res.pagination.next;
@@ -45,7 +62,9 @@ export class FernDocsRevalidator {
         return domains.sort();
     }
 
-    async getPreviewUrls(deploymentUrl: string): Promise<{ url: string; name: string }[]> {
+    async getPreviewUrls(
+        deploymentUrl: string
+    ): Promise<{ url: string; name: string }[]> {
         const url = new URL("/api/fern-docs/preview", deploymentUrl);
 
         const urls: { url: string; name: string }[] = [];
@@ -74,13 +93,20 @@ export class FernDocsRevalidator {
             });
 
             try {
-                const results = await client.revalidation.revalidateAllV4({ limit: 100 });
+                const results = await client.revalidation.revalidateAllV4({
+                    limit: 100,
+                });
 
-                const revalidationSummary = (summary[domain.name] = { success: 0, failed: 0 });
+                const revalidationSummary = (summary[domain.name] = {
+                    success: 0,
+                    failed: 0,
+                });
                 for await (const result of results) {
                     if (!result.success) {
                         // eslint-disable-next-line no-console
-                        console.warn(`[${domain.name}] Failed to revalidate ${result.url}: ${result.error}`);
+                        console.warn(
+                            `[${domain.name}] Failed to revalidate ${result.url}: ${result.error}`
+                        );
                         revalidationSummary.failed++;
                     } else {
                         revalidationSummary.success++;

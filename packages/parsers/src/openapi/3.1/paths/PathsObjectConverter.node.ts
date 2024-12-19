@@ -13,8 +13,14 @@ import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
 export declare namespace PathsObjectConverterNode {
     export interface Output {
-        endpoints: Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition>;
-        webhookEndpoints: Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition>;
+        endpoints: Record<
+            FernRegistry.EndpointId,
+            FernRegistry.api.latest.EndpointDefinition
+        >;
+        webhookEndpoints: Record<
+            FernRegistry.WebhookId,
+            FernRegistry.api.latest.WebhookDefinition
+        >;
     }
 }
 
@@ -27,7 +33,7 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathsObject>,
         protected readonly servers: ServerObjectConverterNode[] | undefined,
-        protected readonly basePath: XFernBasePathConverterNode | undefined,
+        protected readonly basePath: XFernBasePathConverterNode | undefined
     ) {
         super(args);
         this.safeParse();
@@ -46,9 +52,14 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                         accessPath: this.accessPath,
                         pathId: path,
                     },
-                    coalesceServers(this.servers, pathItem.servers, this.context, this.accessPath),
+                    coalesceServers(
+                        this.servers,
+                        pathItem.servers,
+                        this.context,
+                        this.accessPath
+                    ),
                     this.basePath,
-                    undefined,
+                    undefined
                 );
             })
             .filter(isNonNullish);
@@ -59,8 +70,14 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             return undefined;
         }
 
-        const endpoints: Record<FernRegistry.EndpointId, FernRegistry.api.latest.EndpointDefinition> = {};
-        const webhookEndpoints: Record<FernRegistry.WebhookId, FernRegistry.api.latest.WebhookDefinition> = {};
+        const endpoints: Record<
+            FernRegistry.EndpointId,
+            FernRegistry.api.latest.EndpointDefinition
+        > = {};
+        const webhookEndpoints: Record<
+            FernRegistry.WebhookId,
+            FernRegistry.api.latest.WebhookDefinition
+        > = {};
 
         this.paths.forEach((pathItem) => {
             const pathItemDefinitions = pathItem.convert();
@@ -70,9 +87,11 @@ export class PathsObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
             pathItemDefinitions.forEach((definition) => {
                 if (isWebhookDefinition(definition)) {
-                    webhookEndpoints[FernRegistry.WebhookId(definition.id)] = definition;
+                    webhookEndpoints[FernRegistry.WebhookId(definition.id)] =
+                        definition;
                 } else {
-                    endpoints[FernRegistry.EndpointId(definition.id)] = definition;
+                    endpoints[FernRegistry.EndpointId(definition.id)] =
+                        definition;
                 }
             });
         });

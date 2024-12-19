@@ -14,7 +14,9 @@ export class ConstConverterNode extends BaseOpenApiV3_1ConverterNode<
     description: string | undefined;
     availability: AvailabilityConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>
+    ) {
         super(args);
         this.safeParse();
     }

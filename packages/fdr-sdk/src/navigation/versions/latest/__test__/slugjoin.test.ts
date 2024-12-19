@@ -7,7 +7,9 @@ describe("slugjoin", () => {
         expect(slugjoin("a", "b", "/c")).toBe("a/b/c");
         expect(slugjoin("/a", "//b", "/c/d/e")).toBe("a/b/c/d/e");
         expect(slugjoin("a", "b", "c", "d")).toBe("a/b/c/d");
-        expect(slugjoin("a  ", " b", "c/ ", "", " / d", "e ")).toBe("a/b/c/ d/e");
+        expect(slugjoin("a  ", " b", "c/ ", "", " / d", "e ")).toBe(
+            "a/b/c/ d/e"
+        );
         expect(slugjoin("a", " ", " ", " / / ", "e")).toBe("a/ /e");
     });
 
@@ -18,6 +20,8 @@ describe("slugjoin", () => {
         expect(slugjoin(null, null, "a")).toBe("a");
         expect(slugjoin("a")).toBe("a");
         expect(slugjoin(["a", "b"])).toBe("a/b");
-        expect(slugjoin(undefined, ["a", "b"], null, ["c"], "d")).toBe("a/b/c/d");
+        expect(slugjoin(undefined, ["a", "b"], null, ["c"], "d")).toBe(
+            "a/b/c/d"
+        );
     });
 });

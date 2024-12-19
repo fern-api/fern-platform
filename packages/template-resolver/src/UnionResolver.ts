@@ -6,7 +6,7 @@ import { isPlainObject } from "./isPlainObject";
 export class UnionMatcher {
     constructor(
         private readonly apiDefinition: FernRegistry.api.v1.read.ApiDefinition,
-        private readonly objectFlattener: ObjectFlattener,
+        private readonly objectFlattener: ObjectFlattener
     ) {}
 
     // Evaluating a primitive:
@@ -60,7 +60,8 @@ export class UnionMatcher {
                 if (typeof payloadOverride === "boolean") {
                     return 1;
                 } else if (typeof payloadOverride === "string") {
-                    return payloadOverride.toLowerCase() === "true" || payloadOverride.toLowerCase() === "false"
+                    return payloadOverride.toLowerCase() === "true" ||
+                        payloadOverride.toLowerCase() === "false"
                         ? 1
                         : -10;
                 }
@@ -85,12 +86,18 @@ export class UnionMatcher {
             // This is actually a typeId, despite it's name as a "typeReferenceId"
             // So we delegate to scoreObject
             case "id":
-                return this.scoreType({ typeId: typeReference.value, payloadOverride });
+                return this.scoreType({
+                    typeId: typeReference.value,
+                    payloadOverride,
+                });
 
             // Evaluating an Optional:
             // Strip the optional and evaluate the score of the inner type.
             case "optional":
-                return this.scoreTypeReference({ typeReference: typeReference.itemType, payloadOverride });
+                return this.scoreTypeReference({
+                    typeReference: typeReference.itemType,
+                    payloadOverride,
+                });
             // Evaluating a List:
             // 0. If the payload is not an array, then it should not be a list type: -10
             // 1. If the payload is an array, score each element with scoreTypeReference and sum the scores
@@ -110,7 +117,10 @@ export class UnionMatcher {
             }
             // Evaluating a set: (same as List)
             case "set": {
-                if (!Array.isArray(payloadOverride) && !(payloadOverride instanceof Set)) {
+                if (
+                    !Array.isArray(payloadOverride) &&
+                    !(payloadOverride instanceof Set)
+                ) {
                     return -10;
                 }
 
@@ -152,7 +162,10 @@ export class UnionMatcher {
                 return rollingScore / payloadObject.length;
             }
             case "primitive":
-                return this.scorePrimitive({ primitive: typeReference.value, payloadOverride });
+                return this.scorePrimitive({
+                    primitive: typeReference.value,
+                    payloadOverride,
+                });
 
             // Evaluating a Literal:
             // 0. If the payload is not a string or boolean, then it should not be a literal type: -10
@@ -161,7 +174,10 @@ export class UnionMatcher {
             case "literal": {
                 const literalValue = typeReference.value.value;
 
-                if (typeof literalValue !== "string" && typeof literalValue !== "boolean") {
+                if (
+                    typeof literalValue !== "string" &&
+                    typeof literalValue !== "boolean"
+                ) {
                     return -10;
                 }
 
@@ -206,7 +222,12 @@ export class UnionMatcher {
         payloadOverride: unknown;
     }): number {
         return Math.max(
-            ...variants.map((variant) => this.scoreTypeReference({ typeReference: variant.type, payloadOverride })),
+            ...variants.map((variant) =>
+                this.scoreTypeReference({
+                    typeReference: variant.type,
+                    payloadOverride,
+                })
+            )
         );
     }
 
@@ -228,11 +249,17 @@ export class UnionMatcher {
         }
 
         // Flatten properties and score each property with scoreObjectProperty
-        const properties = this.objectFlattener.getFlattenedObjectPropertiesFromObjectType(object);
+        const properties =
+            this.objectFlattener.getFlattenedObjectPropertiesFromObjectType(
+                object
+            );
 
         return properties.reduce((acc, property) => {
             // Get the payload for the property
-            const propertyPayload = accessByPathNonNull(payloadOverride, property.key);
+            const propertyPayload = accessByPathNonNull(
+                payloadOverride,
+                property.key
+            );
             let score;
 
             if (propertyPayload == null) {
@@ -267,11 +294,14 @@ export class UnionMatcher {
         }
 
         if (union.discriminant in payloadOverride) {
-            const payloadDiscriminantValue = payloadOverride[union.discriminant];
+            const payloadDiscriminantValue =
+                payloadOverride[union.discriminant];
             if (typeof payloadDiscriminantValue === "string") {
                 // If the discriminant is there and valid, this is a success
                 // no need to check the rest of the object
-                const valudDiscriminants = union.variants.map((variant) => variant.discriminantValue);
+                const valudDiscriminants = union.variants.map(
+                    (variant) => variant.discriminantValue
+                );
                 if (valudDiscriminants.includes(payloadDiscriminantValue)) {
                     return 1;
                 }
@@ -307,19 +337,37 @@ export class UnionMatcher {
 
         switch (typeShape.type) {
             case "alias":
-                return this.scoreTypeReference({ typeReference: typeShape.value, payloadOverride });
+                return this.scoreTypeReference({
+                    typeReference: typeShape.value,
+                    payloadOverride,
+                });
             case "enum":
-                return this.scoreEnum({ values: typeShape.values, payloadOverride });
+                return this.scoreEnum({
+                    values: typeShape.values,
+                    payloadOverride,
+                });
             case "undiscriminatedUnion":
-                return this.scoreUndiscriminatedUnion({ variants: typeShape.variants, payloadOverride });
+                return this.scoreUndiscriminatedUnion({
+                    variants: typeShape.variants,
+                    payloadOverride,
+                });
             case "discriminatedUnion":
-                return this.scoreDiscriminatedUnion({ union: typeShape, payloadOverride });
+                return this.scoreDiscriminatedUnion({
+                    union: typeShape,
+                    payloadOverride,
+                });
             case "object":
                 return this.scoreObject({ object: typeShape, payloadOverride });
         }
     }
 
-    private scoreType({ typeId, payloadOverride }: { typeId: FernRegistry.TypeId; payloadOverride?: unknown }): number {
+    private scoreType({
+        typeId,
+        payloadOverride,
+    }: {
+        typeId: FernRegistry.TypeId;
+        payloadOverride?: unknown;
+    }): number {
         const maybeType = this.apiDefinition.types[typeId];
         if (maybeType == null) {
             // If the type doesn't even exist, it shouldn't be an option. We only
@@ -327,7 +375,10 @@ export class UnionMatcher {
             return -9999;
         }
 
-        return this.scoreTypeShape({ typeShape: maybeType.shape, payloadOverride });
+        return this.scoreTypeShape({
+            typeShape: maybeType.shape,
+            payloadOverride,
+        });
     }
 
     public getBestFitTemplate({
@@ -341,12 +392,16 @@ export class UnionMatcher {
             // Score each template against the payload
             const scoredTemplates = members.map((member) => ({
                 template: member.template,
-                score: this.scoreTypeReference({ typeReference: member.type, payloadOverride }),
+                score: this.scoreTypeReference({
+                    typeReference: member.type,
+                    payloadOverride,
+                }),
             }));
 
             // Return the template with the highest score
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            return scoredTemplates.sort((a, b) => b.score - a.score)[0]!.template;
+            return scoredTemplates.sort((a, b) => b.score - a.score)[0]!
+                .template;
             // This is a safe assertion given templates length > 0
         }
 

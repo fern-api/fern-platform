@@ -1,12 +1,18 @@
 const DEFAULT_CONFIG = require("./.eslintrc.js");
 
 const TYPESCRIPT_ESLINT = "@typescript-eslint";
-const TYPESCRIPT_ESLINT_PARSER_OPTIONS = new Set(["project", "allowAutomaticSingleRunInference", "tsconfigRootDir"]);
+const TYPESCRIPT_ESLINT_PARSER_OPTIONS = new Set([
+    "project",
+    "allowAutomaticSingleRunInference",
+    "tsconfigRootDir",
+]);
 
 module.exports = {
     ...DEFAULT_CONFIG,
     extends: [
-        ...DEFAULT_CONFIG.extends.filter((extended) => !extended.startsWith(`plugin:${TYPESCRIPT_ESLINT}/`)),
+        ...DEFAULT_CONFIG.extends.filter(
+            (extended) => !extended.startsWith(`plugin:${TYPESCRIPT_ESLINT}/`)
+        ),
         // needed to disable recommended eslint rules that don't apply
         "plugin:@typescript-eslint/eslint-recommended",
     ],
@@ -17,7 +23,7 @@ module.exports = {
             }
             return newParserOptions;
         },
-        {},
+        {}
     ),
     rules: Object.entries(DEFAULT_CONFIG.rules).reduce(
         (newRules, [ruleId, rule]) => {
@@ -28,7 +34,7 @@ module.exports = {
         },
         {
             "no-unused-vars": "off",
-        },
+        }
     ),
 };
 

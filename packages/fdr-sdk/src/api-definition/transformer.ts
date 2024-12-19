@@ -9,38 +9,83 @@ import * as Latest from "./latest";
  */
 export interface ApiDefinitionVisitor {
     // endpoints
-    EndpointDefinition(endpoint: Latest.EndpointDefinition, key: string): Latest.EndpointDefinition;
+    EndpointDefinition(
+        endpoint: Latest.EndpointDefinition,
+        key: string
+    ): Latest.EndpointDefinition;
     HttpRequest(request: Latest.HttpRequest, key: string): Latest.HttpRequest;
-    HttpResponse(response: Latest.HttpResponse, key: string): Latest.HttpResponse;
-    ErrorResponse(error: Latest.ErrorResponse, key: string): Latest.ErrorResponse;
-    ExampleEndpointCall(example: Latest.ExampleEndpointCall, key: string): Latest.ExampleEndpointCall;
+    HttpResponse(
+        response: Latest.HttpResponse,
+        key: string
+    ): Latest.HttpResponse;
+    ErrorResponse(
+        error: Latest.ErrorResponse,
+        key: string
+    ): Latest.ErrorResponse;
+    ExampleEndpointCall(
+        example: Latest.ExampleEndpointCall,
+        key: string
+    ): Latest.ExampleEndpointCall;
     CodeSnippet(snippet: Latest.CodeSnippet, key: string): Latest.CodeSnippet;
     ErrorExample(error: Latest.ErrorExample, key: string): Latest.ErrorExample;
 
     // webhooks
-    WebhookDefinition(webhook: Latest.WebhookDefinition, key: string): Latest.WebhookDefinition;
-    WebhookPayload(payload: Latest.WebhookPayload, key: string): Latest.WebhookPayload;
+    WebhookDefinition(
+        webhook: Latest.WebhookDefinition,
+        key: string
+    ): Latest.WebhookDefinition;
+    WebhookPayload(
+        payload: Latest.WebhookPayload,
+        key: string
+    ): Latest.WebhookPayload;
 
     // websockets
-    WebSocketChannel(channel: Latest.WebSocketChannel, key: string): Latest.WebSocketChannel;
-    WebSocketMessage(message: Latest.WebSocketMessage, key: string): Latest.WebSocketMessage;
-    ExampleWebSocketSession(session: Latest.ExampleWebSocketSession, key: string): Latest.ExampleWebSocketSession;
+    WebSocketChannel(
+        channel: Latest.WebSocketChannel,
+        key: string
+    ): Latest.WebSocketChannel;
+    WebSocketMessage(
+        message: Latest.WebSocketMessage,
+        key: string
+    ): Latest.WebSocketMessage;
+    ExampleWebSocketSession(
+        session: Latest.ExampleWebSocketSession,
+        key: string
+    ): Latest.ExampleWebSocketSession;
 
     // types
-    TypeDefinition(type: Latest.TypeDefinition, key: string): Latest.TypeDefinition;
+    TypeDefinition(
+        type: Latest.TypeDefinition,
+        key: string
+    ): Latest.TypeDefinition;
     TypeShape(shape: Latest.TypeShape, key: string): Latest.TypeShape;
     ObjectType(property: Latest.ObjectType, key: string): Latest.ObjectType;
-    ObjectProperty(property: Latest.ObjectProperty, key: string): Latest.ObjectProperty;
+    ObjectProperty(
+        property: Latest.ObjectProperty,
+        key: string
+    ): Latest.ObjectProperty;
     EnumValue(value: Latest.EnumValue, key: string): Latest.EnumValue;
     UndiscriminatedUnionVariant(
         variant: Latest.UndiscriminatedUnionVariant,
-        key: string,
+        key: string
     ): Latest.UndiscriminatedUnionVariant;
-    DiscriminatedUnionVariant(variant: Latest.DiscriminatedUnionVariant, key: string): Latest.DiscriminatedUnionVariant;
-    FormDataRequest(request: Latest.FormDataRequest, key: string): Latest.FormDataRequest;
-    FormDataField(field: Latest.FormDataField, key: string): Latest.FormDataField;
+    DiscriminatedUnionVariant(
+        variant: Latest.DiscriminatedUnionVariant,
+        key: string
+    ): Latest.DiscriminatedUnionVariant;
+    FormDataRequest(
+        request: Latest.FormDataRequest,
+        key: string
+    ): Latest.FormDataRequest;
+    FormDataField(
+        field: Latest.FormDataField,
+        key: string
+    ): Latest.FormDataField;
     FormDataFile(file: Latest.FormDataFile, key: string): Latest.FormDataFile;
-    FormDataFiles(files: Latest.FormDataFiles, key: string): Latest.FormDataFiles;
+    FormDataFiles(
+        files: Latest.FormDataFiles,
+        key: string
+    ): Latest.FormDataFiles;
 }
 
 export class Transformer {
@@ -57,14 +102,17 @@ export class Transformer {
             WebhookPayload: visitor.WebhookPayload ?? identity,
             WebSocketChannel: visitor.WebSocketChannel ?? identity,
             WebSocketMessage: visitor.WebSocketMessage ?? identity,
-            ExampleWebSocketSession: visitor.ExampleWebSocketSession ?? identity,
+            ExampleWebSocketSession:
+                visitor.ExampleWebSocketSession ?? identity,
             TypeDefinition: visitor.TypeDefinition ?? identity,
             TypeShape: visitor.TypeShape ?? identity,
             ObjectType: visitor.ObjectType ?? identity,
             ObjectProperty: visitor.ObjectProperty ?? identity,
             EnumValue: visitor.EnumValue ?? identity,
-            UndiscriminatedUnionVariant: visitor.UndiscriminatedUnionVariant ?? identity,
-            DiscriminatedUnionVariant: visitor.DiscriminatedUnionVariant ?? identity,
+            UndiscriminatedUnionVariant:
+                visitor.UndiscriminatedUnionVariant ?? identity,
+            DiscriminatedUnionVariant:
+                visitor.DiscriminatedUnionVariant ?? identity,
             FormDataRequest: visitor.FormDataRequest ?? identity,
             FormDataField: visitor.FormDataField ?? identity,
             FormDataFile: visitor.FormDataFile ?? identity,
@@ -73,11 +121,19 @@ export class Transformer {
     }
 
     public static descriptions(
-        transformer: (description: FernDocs.MarkdownText, key: string) => FernDocs.MarkdownText,
+        transformer: (
+            description: FernDocs.MarkdownText,
+            key: string
+        ) => FernDocs.MarkdownText
     ): Transformer {
-        function internalTransformer<T extends Latest.WithDescription>(withDescription: T, key: string): T {
+        function internalTransformer<T extends Latest.WithDescription>(
+            withDescription: T,
+            key: string
+        ): T {
             const description =
-                withDescription.description != null ? transformer(withDescription.description, key) : undefined;
+                withDescription.description != null
+                    ? transformer(withDescription.description, key)
+                    : undefined;
             return { ...withDescription, description };
         }
 
@@ -156,15 +212,25 @@ export class Transformer {
      * @returns the API definition with the visitor transformations applied
      */
     apiDefinition = (api: Latest.ApiDefinition): Latest.ApiDefinition => {
-        const endpoints = Object.entries(api.endpoints).map(([id, endpoint]) => [
-            id,
-            this.visitor.EndpointDefinition(endpoint, `${api.id}/endpoint/${id}`),
-        ]);
+        const endpoints = Object.entries(api.endpoints).map(
+            ([id, endpoint]) => [
+                id,
+                this.visitor.EndpointDefinition(
+                    endpoint,
+                    `${api.id}/endpoint/${id}`
+                ),
+            ]
+        );
 
-        const websockets = Object.entries(api.websockets).map(([id, websocket]) => [
-            id,
-            this.visitor.WebSocketChannel(websocket, `${api.id}/websocket/${id}`),
-        ]);
+        const websockets = Object.entries(api.websockets).map(
+            ([id, websocket]) => [
+                id,
+                this.visitor.WebSocketChannel(
+                    websocket,
+                    `${api.id}/websocket/${id}`
+                ),
+            ]
+        );
 
         const webhooks = Object.entries(api.webhooks).map(([id, webhook]) => [
             id,
@@ -173,12 +239,18 @@ export class Transformer {
 
         const types = Object.entries(api.types).map(([id, type]) => [
             id,
-            this.visitor.TypeDefinition(type, `${api.id}/type-definition/${id}`),
+            this.visitor.TypeDefinition(
+                type,
+                `${api.id}/type-definition/${id}`
+            ),
         ]);
 
         const globalHeaders =
             api.globalHeaders?.map((header) =>
-                this.visitor.ObjectProperty(header, `${api.id}/global-headers/${header.key}`),
+                this.visitor.ObjectProperty(
+                    header,
+                    `${api.id}/global-headers/${header.key}`
+                )
             ) ?? [];
 
         return {
@@ -212,65 +284,124 @@ export class Transformer {
              * The following types have nested types that need to be visited.
              */
 
-            EndpointDefinition: (endpoint, key) => visitor.EndpointDefinition(this.endpoint(endpoint, key), key),
-            HttpRequest: (request, key) => visitor.HttpRequest(this.httpRequest(request, key), key),
-            HttpResponse: (response, key) => visitor.HttpResponse(this.httpResponse(response, key), key),
-            ErrorResponse: (error, key) => visitor.ErrorResponse(this.errorResponse(error, key), key),
+            EndpointDefinition: (endpoint, key) =>
+                visitor.EndpointDefinition(this.endpoint(endpoint, key), key),
+            HttpRequest: (request, key) =>
+                visitor.HttpRequest(this.httpRequest(request, key), key),
+            HttpResponse: (response, key) =>
+                visitor.HttpResponse(this.httpResponse(response, key), key),
+            ErrorResponse: (error, key) =>
+                visitor.ErrorResponse(this.errorResponse(error, key), key),
             ExampleEndpointCall: (example, key) =>
-                visitor.ExampleEndpointCall(this.exampleEndpointCall(example, key), key),
-            WebhookDefinition: (webhook, key) => visitor.WebhookDefinition(this.webhookDefinition(webhook, key), key),
-            WebhookPayload: (payload, key) => visitor.WebhookPayload(this.webhookPayload(payload, key), key),
-            WebSocketChannel: (channel, key) => visitor.WebSocketChannel(this.webSocketChannel(channel, key), key),
-            WebSocketMessage: (message, key) => visitor.WebSocketMessage(this.webSocketMessage(message, key), key),
-            TypeDefinition: (type, key) => visitor.TypeDefinition(this.typeDefinition(type, key), key),
-            TypeShape: (shape, key) => visitor.TypeShape(this.typeShape(shape, key), key),
-            ObjectType: (type, key) => visitor.ObjectType(this.objectType(type, key), key),
+                visitor.ExampleEndpointCall(
+                    this.exampleEndpointCall(example, key),
+                    key
+                ),
+            WebhookDefinition: (webhook, key) =>
+                visitor.WebhookDefinition(
+                    this.webhookDefinition(webhook, key),
+                    key
+                ),
+            WebhookPayload: (payload, key) =>
+                visitor.WebhookPayload(this.webhookPayload(payload, key), key),
+            WebSocketChannel: (channel, key) =>
+                visitor.WebSocketChannel(
+                    this.webSocketChannel(channel, key),
+                    key
+                ),
+            WebSocketMessage: (message, key) =>
+                visitor.WebSocketMessage(
+                    this.webSocketMessage(message, key),
+                    key
+                ),
+            TypeDefinition: (type, key) =>
+                visitor.TypeDefinition(this.typeDefinition(type, key), key),
+            TypeShape: (shape, key) =>
+                visitor.TypeShape(this.typeShape(shape, key), key),
+            ObjectType: (type, key) =>
+                visitor.ObjectType(this.objectType(type, key), key),
             DiscriminatedUnionVariant: (variant, key) =>
-                visitor.DiscriminatedUnionVariant(this.objectType(variant, key), key),
-            FormDataRequest: (request, key) => visitor.FormDataRequest(this.formDataRequest(request, key), key),
-            FormDataField: (field, key) => visitor.FormDataField(this.formDataField(field, key), key),
+                visitor.DiscriminatedUnionVariant(
+                    this.objectType(variant, key),
+                    key
+                ),
+            FormDataRequest: (request, key) =>
+                visitor.FormDataRequest(
+                    this.formDataRequest(request, key),
+                    key
+                ),
+            FormDataField: (field, key) =>
+                visitor.FormDataField(this.formDataField(field, key), key),
         };
         return innerVisitor;
     };
 
-    endpoint = (endpoint: Latest.EndpointDefinition, parentKey: string): Latest.EndpointDefinition => {
+    endpoint = (
+        endpoint: Latest.EndpointDefinition,
+        parentKey: string
+    ): Latest.EndpointDefinition => {
         const pathParameters =
             endpoint.pathParameters?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/path/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/path/${param.key}`
+                )
             ) ?? [];
         const queryParameters =
             endpoint.queryParameters?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/query/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/query/${param.key}`
+                )
             ) ?? [];
         const requestHeaders =
             endpoint.requestHeaders?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/requestHeader/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/requestHeader/${param.key}`
+                )
             ) ?? [];
         const responseHeaders =
             endpoint.responseHeaders?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/responseHeader/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/responseHeader/${param.key}`
+                )
             ) ?? [];
         const request = endpoint.request
             ? this.visitor.HttpRequest(endpoint.request, `${parentKey}/request`)
             : undefined;
         const response = endpoint.response
-            ? this.visitor.HttpResponse(endpoint.response, `${parentKey}/response`)
+            ? this.visitor.HttpResponse(
+                  endpoint.response,
+                  `${parentKey}/response`
+              )
             : undefined;
         const errors =
             endpoint.errors?.map((error, i) =>
-                this.visitor.ErrorResponse(error, `${parentKey}/error/${i}/${error.statusCode}`),
+                this.visitor.ErrorResponse(
+                    error,
+                    `${parentKey}/error/${i}/${error.statusCode}`
+                )
             ) ?? [];
         const examples =
             endpoint.examples?.map((example, i) =>
-                this.visitor.ExampleEndpointCall(example, `${parentKey}/example/${i}`),
+                this.visitor.ExampleEndpointCall(
+                    example,
+                    `${parentKey}/example/${i}`
+                )
             ) ?? [];
 
         return {
             ...endpoint,
-            pathParameters: pathParameters.length > 0 ? pathParameters : undefined,
-            queryParameters: queryParameters.length > 0 ? queryParameters : undefined,
-            requestHeaders: requestHeaders.length > 0 ? requestHeaders : undefined,
-            responseHeaders: responseHeaders.length > 0 ? responseHeaders : undefined,
+            pathParameters:
+                pathParameters.length > 0 ? pathParameters : undefined,
+            queryParameters:
+                queryParameters.length > 0 ? queryParameters : undefined,
+            requestHeaders:
+                requestHeaders.length > 0 ? requestHeaders : undefined,
+            responseHeaders:
+                responseHeaders.length > 0 ? responseHeaders : undefined,
             request,
             response,
             errors: errors.length > 0 ? errors : undefined,
@@ -278,9 +409,17 @@ export class Transformer {
         };
     };
 
-    httpRequest = (request: Latest.HttpRequest, parentKey: string): Latest.HttpRequest => {
-        const body = visitDiscriminatedUnion(request.body)._visit<Latest.HttpRequestBodyShape>({
-            object: (value) => ({ ...value, ...this.visitor.ObjectType(value, `${parentKey}/object`) }),
+    httpRequest = (
+        request: Latest.HttpRequest,
+        parentKey: string
+    ): Latest.HttpRequest => {
+        const body = visitDiscriminatedUnion(
+            request.body
+        )._visit<Latest.HttpRequestBodyShape>({
+            object: (value) => ({
+                ...value,
+                ...this.visitor.ObjectType(value, `${parentKey}/object`),
+            }),
             alias: identity,
             bytes: identity,
             formData: (value) => ({
@@ -291,61 +430,107 @@ export class Transformer {
         return { ...request, body };
     };
 
-    formDataField = (field: Latest.FormDataField, parentKey: string): Latest.FormDataField => {
+    formDataField = (
+        field: Latest.FormDataField,
+        parentKey: string
+    ): Latest.FormDataField => {
         return visitDiscriminatedUnion(field)._visit<Latest.FormDataField>({
             file: (value) => ({
                 ...value,
-                ...this.visitor.FormDataFile(value, `${parentKey}/file/${value.key}`),
+                ...this.visitor.FormDataFile(
+                    value,
+                    `${parentKey}/file/${value.key}`
+                ),
             }),
             files: (value) => ({
                 ...value,
-                ...this.visitor.FormDataFiles(value, `${parentKey}/files/${value.key}`),
+                ...this.visitor.FormDataFiles(
+                    value,
+                    `${parentKey}/files/${value.key}`
+                ),
             }),
             property: (value) => ({
                 ...value,
-                ...this.visitor.ObjectProperty(value, `${parentKey}/property/${value.key}`),
+                ...this.visitor.ObjectProperty(
+                    value,
+                    `${parentKey}/property/${value.key}`
+                ),
             }),
         });
     };
 
-    httpResponse = (response: Latest.HttpResponse, parentKey: string): Latest.HttpResponse => {
-        const body = visitDiscriminatedUnion(response.body)._visit<Latest.HttpResponseBodyShape>({
-            object: (value) => ({ ...value, ...this.visitor.ObjectType(value, `${parentKey}/object`) }),
+    httpResponse = (
+        response: Latest.HttpResponse,
+        parentKey: string
+    ): Latest.HttpResponse => {
+        const body = visitDiscriminatedUnion(
+            response.body
+        )._visit<Latest.HttpResponseBodyShape>({
+            object: (value) => ({
+                ...value,
+                ...this.visitor.ObjectType(value, `${parentKey}/object`),
+            }),
             alias: identity,
             fileDownload: identity,
             streamingText: identity,
             stream: (value) => ({
                 ...value,
-                shape: this.visitor.TypeShape(value.shape, `${parentKey}/stream/shape`),
+                shape: this.visitor.TypeShape(
+                    value.shape,
+                    `${parentKey}/stream/shape`
+                ),
             }),
         });
         return { ...response, body };
     };
 
-    objectType = <T extends Latest.ObjectType>(type: T, parentKey: string): T => {
+    objectType = <T extends Latest.ObjectType>(
+        type: T,
+        parentKey: string
+    ): T => {
         const properties = type.properties.map((prop) =>
-            this.visitor.ObjectProperty(prop, `${parentKey}/property/${prop.key}`),
+            this.visitor.ObjectProperty(
+                prop,
+                `${parentKey}/property/${prop.key}`
+            )
         );
         return { ...type, properties };
     };
 
-    errorResponse = (error: Latest.ErrorResponse, parentKey: string): Latest.ErrorResponse => {
-        const shape = error.shape ? this.visitor.TypeShape(error.shape, `${parentKey}/error/shape`) : undefined;
+    errorResponse = (
+        error: Latest.ErrorResponse,
+        parentKey: string
+    ): Latest.ErrorResponse => {
+        const shape = error.shape
+            ? this.visitor.TypeShape(error.shape, `${parentKey}/error/shape`)
+            : undefined;
         const examples =
-            error.examples?.map((example, i) => this.visitor.ErrorExample(example, `${parentKey}/example/${i}`)) ?? [];
-        return { ...error, shape, examples: examples.length > 0 ? examples : undefined };
+            error.examples?.map((example, i) =>
+                this.visitor.ErrorExample(example, `${parentKey}/example/${i}`)
+            ) ?? [];
+        return {
+            ...error,
+            shape,
+            examples: examples.length > 0 ? examples : undefined,
+        };
     };
 
-    exampleEndpointCall = (example: Latest.ExampleEndpointCall, parentKey: string): Latest.ExampleEndpointCall => {
+    exampleEndpointCall = (
+        example: Latest.ExampleEndpointCall,
+        parentKey: string
+    ): Latest.ExampleEndpointCall => {
         const snippetsEntries = Object.entries(example.snippets ?? {})
             .map(
                 ([language, snippets]) =>
                     [
                         language,
                         snippets.map((snippet, i) =>
-                            this.visitor.CodeSnippet(snippet, `${parentKey}/snippet/${language}/${i}`),
+                            this.visitor.CodeSnippet(
+                                snippet,
+                                `${parentKey}/snippet/${language}/${i}`
+                            )
                         ),
-                    ] as const,
+                    ] as const
             )
             .filter(([, snippets]) => snippets.length > 0);
 
@@ -356,12 +541,23 @@ export class Transformer {
         };
     };
 
-    webhookDefinition = (webhook: Latest.WebhookDefinition, parentKey: string): Latest.WebhookDefinition => {
+    webhookDefinition = (
+        webhook: Latest.WebhookDefinition,
+        parentKey: string
+    ): Latest.WebhookDefinition => {
         const payload =
-            webhook.payload != null ? this.visitor.WebhookPayload(webhook.payload, `${parentKey}/payload`) : undefined;
+            webhook.payload != null
+                ? this.visitor.WebhookPayload(
+                      webhook.payload,
+                      `${parentKey}/payload`
+                  )
+                : undefined;
         const headers =
             webhook.headers?.map((header) =>
-                this.visitor.ObjectProperty(header, `${parentKey}/header/${header.key}`),
+                this.visitor.ObjectProperty(
+                    header,
+                    `${parentKey}/header/${header.key}`
+                )
             ) ?? [];
         return {
             ...webhook,
@@ -370,47 +566,80 @@ export class Transformer {
         };
     };
 
-    webhookPayload = (payload: Latest.WebhookPayload, parentKey: string): Latest.WebhookPayload => {
-        const shape = this.visitor.TypeShape(payload.shape, `${parentKey}/shape`);
+    webhookPayload = (
+        payload: Latest.WebhookPayload,
+        parentKey: string
+    ): Latest.WebhookPayload => {
+        const shape = this.visitor.TypeShape(
+            payload.shape,
+            `${parentKey}/shape`
+        );
         return { ...payload, shape };
     };
 
-    webSocketChannel = (channel: Latest.WebSocketChannel, parentKey: string): Latest.WebSocketChannel => {
+    webSocketChannel = (
+        channel: Latest.WebSocketChannel,
+        parentKey: string
+    ): Latest.WebSocketChannel => {
         const pathParameters =
             channel.pathParameters?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/path/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/path/${param.key}`
+                )
             ) ?? [];
         const queryParameters =
             channel.queryParameters?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/query/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/query/${param.key}`
+                )
             ) ?? [];
         const requestHeaders =
             channel.requestHeaders?.map((param) =>
-                this.visitor.ObjectProperty(param, `${parentKey}/requestHeader/${param.key}`),
+                this.visitor.ObjectProperty(
+                    param,
+                    `${parentKey}/requestHeader/${param.key}`
+                )
             ) ?? [];
         const messages = channel.messages.map((message) =>
-            this.visitor.WebSocketMessage(message, `${parentKey}/message/${message.origin}/${message.type}`),
+            this.visitor.WebSocketMessage(
+                message,
+                `${parentKey}/message/${message.origin}/${message.type}`
+            )
         );
         const examples =
             channel.examples?.map((example, i) =>
-                this.visitor.ExampleWebSocketSession(example, `${parentKey}/example/${i}`),
+                this.visitor.ExampleWebSocketSession(
+                    example,
+                    `${parentKey}/example/${i}`
+                )
             ) ?? [];
         return {
             ...channel,
-            pathParameters: pathParameters.length > 0 ? pathParameters : undefined,
-            queryParameters: queryParameters.length > 0 ? queryParameters : undefined,
-            requestHeaders: requestHeaders.length > 0 ? requestHeaders : undefined,
+            pathParameters:
+                pathParameters.length > 0 ? pathParameters : undefined,
+            queryParameters:
+                queryParameters.length > 0 ? queryParameters : undefined,
+            requestHeaders:
+                requestHeaders.length > 0 ? requestHeaders : undefined,
             messages,
             examples: examples.length > 0 ? examples : undefined,
         };
     };
 
-    webSocketMessage = (message: Latest.WebSocketMessage, parentKey: string): Latest.WebSocketMessage => {
+    webSocketMessage = (
+        message: Latest.WebSocketMessage,
+        parentKey: string
+    ): Latest.WebSocketMessage => {
         const body = this.visitor.TypeShape(message.body, `${parentKey}/body`);
         return { ...message, body };
     };
 
-    typeShape = (shape: Latest.TypeShape, parentKey: string): Latest.TypeShape => {
+    typeShape = (
+        shape: Latest.TypeShape,
+        parentKey: string
+    ): Latest.TypeShape => {
         return visitDiscriminatedUnion(shape)._visit<Latest.TypeShape>({
             object: (value) => ({
                 ...value,
@@ -420,13 +649,19 @@ export class Transformer {
             enum: (value) => ({
                 ...value,
                 values: value.values.map((enumValue) =>
-                    this.visitor.EnumValue(enumValue, `${parentKey}/enum/value/${enumValue.value}`),
+                    this.visitor.EnumValue(
+                        enumValue,
+                        `${parentKey}/enum/value/${enumValue.value}`
+                    )
                 ),
             }),
             undiscriminatedUnion: (value) => ({
                 ...value,
                 variants: value.variants.map((variant, i) =>
-                    this.visitor.UndiscriminatedUnionVariant(variant, `${parentKey}/undiscriminatedUnion/variant/${i}`),
+                    this.visitor.UndiscriminatedUnionVariant(
+                        variant,
+                        `${parentKey}/undiscriminatedUnion/variant/${i}`
+                    )
                 ),
             }),
             discriminatedUnion: (value) => ({
@@ -434,21 +669,32 @@ export class Transformer {
                 variants: value.variants.map((variant) =>
                     this.visitor.DiscriminatedUnionVariant(
                         variant,
-                        `${parentKey}/discriminatedUnion/variant/${variant.discriminantValue}`,
-                    ),
+                        `${parentKey}/discriminatedUnion/variant/${variant.discriminantValue}`
+                    )
                 ),
             }),
         });
     };
 
-    formDataRequest = (request: Latest.FormDataRequest, parentKey: string): Latest.FormDataRequest => {
+    formDataRequest = (
+        request: Latest.FormDataRequest,
+        parentKey: string
+    ): Latest.FormDataRequest => {
         return {
             ...request,
-            fields: request.fields.map((field) => this.visitor.FormDataField(field, `${parentKey}/field/${field.key}`)),
+            fields: request.fields.map((field) =>
+                this.visitor.FormDataField(
+                    field,
+                    `${parentKey}/field/${field.key}`
+                )
+            ),
         };
     };
 
-    typeDefinition = (type: Latest.TypeDefinition, parentKey: string): Latest.TypeDefinition => {
+    typeDefinition = (
+        type: Latest.TypeDefinition,
+        parentKey: string
+    ): Latest.TypeDefinition => {
         return {
             ...type,
             shape: this.visitor.TypeShape(type.shape, `${parentKey}/shape`),

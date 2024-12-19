@@ -7,7 +7,9 @@ test("should contain ?dpl= or x-deployment-id header on all scripts and prefetch
     page,
     context,
 }) => {
-    await context.addCookies([{ name: "_fern_docs_preview", url: origin, value: "buildwithfern.com" }]);
+    await context.addCookies([
+        { name: "_fern_docs_preview", url: origin, value: "buildwithfern.com" },
+    ]);
 
     await page.goto(`${origin}/learn/home`);
 
@@ -45,9 +47,13 @@ test("should contain ?dpl= or x-deployment-id header on all scripts and prefetch
 
     await page.waitForTimeout(10_000);
 
-    const allPrefetchHeaders = (await Promise.all(requests.map((req) => req.allHeaders()))).filter(
-        (headers) => headers["x-nextjs-data"] === "1",
-    );
+    const allPrefetchHeaders = (
+        await Promise.all(requests.map((req) => req.allHeaders()))
+    ).filter((headers) => headers["x-nextjs-data"] === "1");
     expect(allPrefetchHeaders.length).toBeGreaterThan(0);
-    expect(allPrefetchHeaders.every((headers) => headers["x-deployment-id"] === dpl)).toBe(true);
+    expect(
+        allPrefetchHeaders.every(
+            (headers) => headers["x-deployment-id"] === dpl
+        )
+    ).toBe(true);
 });

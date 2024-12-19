@@ -5,7 +5,10 @@ import * as FernDocs from "../docs";
 import { AvailabilityOrder, coalesceAvailability } from "./availability";
 import { LOOP_TOLERANCE } from "./const";
 import * as Latest from "./latest";
-import type { DereferencedNonOptionalTypeShapeOrReference, TypeShapeOrReference } from "./types";
+import type {
+    DereferencedNonOptionalTypeShapeOrReference,
+    TypeShapeOrReference,
+} from "./types";
 
 export type UnwrappedReference = {
     shape: DereferencedNonOptionalTypeShapeOrReference;
@@ -30,7 +33,10 @@ type InternalDefaultValue =
 /**
  * Cache for unwrapped references. Perform the unwrapping only once.
  */
-const UnwrapReferenceCache = new WeakMap<TypeShapeOrReference, UnwrappedReference>();
+const UnwrapReferenceCache = new WeakMap<
+    TypeShapeOrReference,
+    UnwrappedReference
+>();
 
 /**
  * A TypeShape or TypeReference might be an alias or reference to another type.
@@ -48,15 +54,15 @@ const UnwrapReferenceCache = new WeakMap<TypeShapeOrReference, UnwrappedReferenc
  */
 export function unwrapReference(
     typeRef: TypeShapeOrReference,
-    types: Record<string, Latest.TypeDefinition>,
+    types: Record<string, Latest.TypeDefinition>
 ): UnwrappedReference;
 export function unwrapReference(
     typeRef: TypeShapeOrReference | undefined,
-    types: Record<string, Latest.TypeDefinition>,
+    types: Record<string, Latest.TypeDefinition>
 ): UnwrappedReference | undefined;
 export function unwrapReference(
     typeRef: TypeShapeOrReference | undefined,
-    types: Record<string, Latest.TypeDefinition>,
+    types: Record<string, Latest.TypeDefinition>
 ): UnwrappedReference | undefined {
     if (typeRef == null) {
         return undefined;
@@ -86,7 +92,10 @@ export function unwrapReference(
         if (internalTypeRef.type === "optional") {
             isOptional = true;
             if (internalTypeRef.default != null) {
-                defaults.push({ type: "unknown", value: internalTypeRef.default });
+                defaults.push({
+                    type: "unknown",
+                    value: internalTypeRef.default,
+                });
             }
             internalTypeRef = internalTypeRef.shape;
         } else if (internalTypeRef.type === "alias") {
@@ -100,9 +109,13 @@ export function unwrapReference(
             }
 
             if (internalTypeRef.default != null) {
-                defaults.push({ type: "typeReferenceId", value: internalTypeRef.default });
+                defaults.push({
+                    type: "typeReferenceId",
+                    value: internalTypeRef.default,
+                });
             }
-            const typeDef: Latest.TypeDefinition | undefined = types[internalTypeRef.id];
+            const typeDef: Latest.TypeDefinition | undefined =
+                types[internalTypeRef.id];
             visitedTypeIds.add(internalTypeRef.id);
             internalTypeRef = typeDef?.shape;
             if (typeDef != null) {
@@ -126,12 +139,12 @@ export function unwrapReference(
         if (circularReference) {
             // eslint-disable-next-line no-console
             console.error(
-                `Circular reference detected. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`,
+                `Circular reference detected. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`
             );
         } else {
             // eslint-disable-next-line no-console
             console.error(
-                `Type reference is invalid. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`,
+                `Type reference is invalid. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`
             );
         }
     }
@@ -152,7 +165,7 @@ export function unwrapReference(
 
 function selectDefaultValue(
     shape: DereferencedNonOptionalTypeShapeOrReference | undefined,
-    defaults: InternalDefaultValue[],
+    defaults: InternalDefaultValue[]
 ): unknown | undefined {
     // If the shape is a literal, the default value will always be the literal value
     if (shape?.type === "literal") {
@@ -191,7 +204,10 @@ function selectDefaultValue(
     }
 }
 
-const UnwrapObjectTypeCache = new WeakMap<Latest.ObjectType, UnwrappedObjectType>();
+const UnwrapObjectTypeCache = new WeakMap<
+    Latest.ObjectType,
+    UnwrappedObjectType
+>();
 
 /**
  * Dereferences extended objects and returns all properties of the object.
@@ -205,7 +221,7 @@ const UnwrapObjectTypeCache = new WeakMap<Latest.ObjectType, UnwrappedObjectType
 export function unwrapObjectType(
     object: Latest.ObjectType,
     types: Record<Latest.TypeId, Latest.TypeDefinition>,
-    parentVisitedTypeIds?: Set<Latest.TypeId>,
+    parentVisitedTypeIds?: Set<Latest.TypeId>
 ): UnwrappedObjectType {
     const cached = UnwrapObjectTypeCache.get(object);
     if (cached != null) {
@@ -216,64 +232,96 @@ export function unwrapObjectType(
     const extraProperties = object.extraProperties;
     const descriptions: FernDocs.MarkdownText[] = [];
     const visitedTypeIds = new Set<Latest.TypeId>();
-    const extendedProperties = object.extends.flatMap((typeId): Latest.ObjectProperty[] => {
-        if (parentVisitedTypeIds?.has(typeId)) {
-            // eslint-disable-next-line no-console
-            console.error(`Circular reference detected. Cannot extend type=${typeId}`);
-            return [];
+    const extendedProperties = object.extends.flatMap(
+        (typeId): Latest.ObjectProperty[] => {
+            if (parentVisitedTypeIds?.has(typeId)) {
+                // eslint-disable-next-line no-console
+                console.error(
+                    `Circular reference detected. Cannot extend type=${typeId}`
+                );
+                return [];
+            }
+
+            const typeDef = types[typeId];
+            visitedTypeIds.add(typeId);
+            if (typeDef?.description) {
+                descriptions.push(typeDef.description);
+            }
+
+            const unwrapped = unwrapReference(typeDef?.shape, types);
+            unwrapped?.descriptions.forEach((description) =>
+                descriptions.push(description)
+            );
+            unwrapped?.visitedTypeIds.forEach((typeId) =>
+                visitedTypeIds.add(typeId)
+            );
+
+            // TODO: should we be able to extend discriminated and undiscriminated unions?
+            if (unwrapped?.shape.type !== "object") {
+                // eslint-disable-next-line no-console
+                console.error("Object extends non-object", typeId);
+                return [];
+            }
+            const extended = unwrapObjectType(
+                unwrapped.shape,
+                types,
+                visitedTypeIds
+            );
+            extended.visitedTypeIds.forEach((typeId) =>
+                visitedTypeIds.add(typeId)
+            );
+
+            // merge the availability of the extended object with the availability of the properties
+            extended.properties = extended.properties.map((property) => {
+                return {
+                    ...property,
+                    availability: coalesceAvailability(
+                        compact([
+                            typeDef?.availability,
+                            unwrapped.availability,
+                            property.availability,
+                        ])
+                    ),
+                };
+            });
+
+            descriptions.push(...extended.descriptions);
+
+            if (!unwrapped.isOptional) {
+                return extended.properties;
+            }
+
+            // if the extended object is optional, we need to make all properties optional
+            return extended.properties.map(
+                (property): Latest.ObjectProperty => {
+                    // if a default value is present for the referenced object, we can find the default value for this property
+                    const defaultProperty = isPlainObject(unwrapped.default)
+                        ? unwrapped.default[property.key]
+                        : undefined;
+
+                    const valueShape: Latest.TypeReference.Optional =
+                        property.valueShape.type === "alias" &&
+                        property.valueShape.value.type === "optional"
+                            ? {
+                                  ...property.valueShape.value,
+                                  default:
+                                      defaultProperty ??
+                                      property.valueShape.value.default,
+                              }
+                            : {
+                                  type: "optional",
+                                  shape: property.valueShape,
+                                  default: defaultProperty,
+                              };
+
+                    return {
+                        ...property,
+                        valueShape: { type: "alias", value: valueShape },
+                    };
+                }
+            );
         }
-
-        const typeDef = types[typeId];
-        visitedTypeIds.add(typeId);
-        if (typeDef?.description) {
-            descriptions.push(typeDef.description);
-        }
-
-        const unwrapped = unwrapReference(typeDef?.shape, types);
-        unwrapped?.descriptions.forEach((description) => descriptions.push(description));
-        unwrapped?.visitedTypeIds.forEach((typeId) => visitedTypeIds.add(typeId));
-
-        // TODO: should we be able to extend discriminated and undiscriminated unions?
-        if (unwrapped?.shape.type !== "object") {
-            // eslint-disable-next-line no-console
-            console.error("Object extends non-object", typeId);
-            return [];
-        }
-        const extended = unwrapObjectType(unwrapped.shape, types, visitedTypeIds);
-        extended.visitedTypeIds.forEach((typeId) => visitedTypeIds.add(typeId));
-
-        // merge the availability of the extended object with the availability of the properties
-        extended.properties = extended.properties.map((property) => {
-            return {
-                ...property,
-                availability: coalesceAvailability(
-                    compact([typeDef?.availability, unwrapped.availability, property.availability]),
-                ),
-            };
-        });
-
-        descriptions.push(...extended.descriptions);
-
-        if (!unwrapped.isOptional) {
-            return extended.properties;
-        }
-
-        // if the extended object is optional, we need to make all properties optional
-        return extended.properties.map((property): Latest.ObjectProperty => {
-            // if a default value is present for the referenced object, we can find the default value for this property
-            const defaultProperty = isPlainObject(unwrapped.default) ? unwrapped.default[property.key] : undefined;
-
-            const valueShape: Latest.TypeReference.Optional =
-                property.valueShape.type === "alias" && property.valueShape.value.type === "optional"
-                    ? { ...property.valueShape.value, default: defaultProperty ?? property.valueShape.value.default }
-                    : { type: "optional", shape: property.valueShape, default: defaultProperty };
-
-            return {
-                ...property,
-                valueShape: { type: "alias", value: valueShape },
-            };
-        });
-    });
+    );
 
     // TODO: for extended properties, we should check for duplicates, and merge them if necessary
     if (extendedProperties.length === 0) {
@@ -283,17 +331,28 @@ export function unwrapObjectType(
         const properties = sortBy(
             [...directProperties],
             [
-                (property) => unwrapReference(property.valueShape, types)?.isOptional,
-                (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
-            ],
+                (property) =>
+                    unwrapReference(property.valueShape, types)?.isOptional,
+                (property) =>
+                    AvailabilityOrder.indexOf(
+                        property.availability ?? Latest.Availability.Stable
+                    ),
+            ]
         );
-        const toRet = { properties, descriptions, extraProperties, visitedTypeIds };
+        const toRet = {
+            properties,
+            descriptions,
+            extraProperties,
+            visitedTypeIds,
+        };
         UnwrapObjectTypeCache.set(object, toRet);
         return toRet;
     }
-    const propertyKeys = new Set(object.properties.map((property) => property.key));
+    const propertyKeys = new Set(
+        object.properties.map((property) => property.key)
+    );
     const filteredExtendedProperties = extendedProperties.filter(
-        (extendedProperty) => !propertyKeys.has(extendedProperty.key),
+        (extendedProperty) => !propertyKeys.has(extendedProperty.key)
     );
 
     // required properties should come before optional properties
@@ -301,10 +360,14 @@ export function unwrapObjectType(
     const properties = sortBy(
         [...directProperties, ...filteredExtendedProperties],
         [
-            (property) => unwrapReference(property.valueShape, types)?.isOptional,
-            (property) => AvailabilityOrder.indexOf(property.availability ?? Latest.Availability.Stable),
+            (property) =>
+                unwrapReference(property.valueShape, types)?.isOptional,
+            (property) =>
+                AvailabilityOrder.indexOf(
+                    property.availability ?? Latest.Availability.Stable
+                ),
             (property) => property.key,
-        ],
+        ]
     );
     const toRet = { properties, descriptions, extraProperties, visitedTypeIds };
     UnwrapObjectTypeCache.set(object, toRet);
@@ -317,16 +380,25 @@ export function unwrapObjectType(
 export function unwrapDiscriminatedUnionVariant(
     union: Pick<Latest.DiscriminatedUnionType, "discriminant">,
     variant: Latest.DiscriminatedUnionVariant,
-    types: Record<string, Latest.TypeDefinition>,
+    types: Record<string, Latest.TypeDefinition>
 ): UnwrappedObjectType {
-    const { properties, descriptions, visitedTypeIds } = unwrapObjectType(variant, types); // this is already cached
+    const { properties, descriptions, visitedTypeIds } = unwrapObjectType(
+        variant,
+        types
+    ); // this is already cached
     return {
         properties: [
             {
                 key: union.discriminant,
                 valueShape: {
                     type: "alias",
-                    value: { type: "literal", value: { type: "stringLiteral", value: variant.discriminantValue } },
+                    value: {
+                        type: "literal",
+                        value: {
+                            type: "stringLiteral",
+                            value: variant.discriminantValue,
+                        },
+                    },
                 },
 
                 // the description and availability of the discriminant should not be included here

@@ -17,7 +17,10 @@ export declare namespace XFernGroupsConverterNode {
     }
 }
 
-export class XFernGroupsConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, void> {
+export class XFernGroupsConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    void
+> {
     groups?: Record<string, XFernGroupsConverterNode.Group>[];
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -26,7 +29,9 @@ export class XFernGroupsConverterNode extends BaseOpenApiV3_1ConverterNode<unkno
     }
 
     parse(): void {
-        this.groups = extendType<XFernGroupsConverterNode.Input>(this.input)[xFernGroupsKey];
+        this.groups = extendType<XFernGroupsConverterNode.Input>(this.input)[
+            xFernGroupsKey
+        ];
     }
 
     convert(): void | undefined {

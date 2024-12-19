@@ -10,26 +10,44 @@ export interface SnippetsConfigWithSdkId {
 
 export interface SdkSnippetHolderArgs {
     // Legacy format for snippets leveraging path and method (which is not unique enough for some cases)
-    snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>>;
+    snippetsBySdkId: Record<
+        string,
+        Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>
+    >;
     // If these are present for the SDK ID, use these, otherwise use snippetsBySdkId
-    snippetsBySdkIdAndEndpointId: Record<string, Record<string, FdrAPI.Snippet[]>>;
+    snippetsBySdkIdAndEndpointId: Record<
+        string,
+        Record<string, FdrAPI.Snippet[]>
+    >;
     snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
     snippetTemplatesByEndpoint: Record<
         FdrAPI.EndpointPathLiteral,
         Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >;
-    snippetTemplatesByEndpointId: Record<string, APIV1Read.EndpointSnippetTemplates>;
+    snippetTemplatesByEndpointId: Record<
+        string,
+        APIV1Read.EndpointSnippetTemplates
+    >;
 }
 
 export class SDKSnippetHolder {
-    private snippetsBySdkId: Record<string, Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>>;
-    private snippetsBySdkIdAndEndpointId: Record<string, Record<string, FdrAPI.Snippet[]>>;
+    private snippetsBySdkId: Record<
+        string,
+        Record<FdrAPI.EndpointPathLiteral, FdrAPI.SnippetsByEndpointMethod>
+    >;
+    private snippetsBySdkIdAndEndpointId: Record<
+        string,
+        Record<string, FdrAPI.Snippet[]>
+    >;
     private snippetsConfigWithSdkId: SnippetsConfigWithSdkId;
     private snippetTemplatesByEndpoint: Record<
         FdrAPI.EndpointPathLiteral,
         Record<FdrAPI.HttpMethod, APIV1Read.EndpointSnippetTemplates>
     >;
-    private snippetTemplatesByEndpointId: Record<string, APIV1Read.EndpointSnippetTemplates>;
+    private snippetTemplatesByEndpointId: Record<
+        string,
+        APIV1Read.EndpointSnippetTemplates
+    >;
 
     constructor({
         snippetsBySdkId,
@@ -66,7 +84,9 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.pythonSdk,
             getSnippet: (snippet) => {
-                return snippet.type === "python" ? { ...snippet, install: undefined } : undefined;
+                return snippet.type === "python"
+                    ? { ...snippet, install: undefined }
+                    : undefined;
             },
         });
     }
@@ -92,7 +112,9 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.typescriptSdk,
             getSnippet: (snippet) => {
-                return snippet.type === "typescript" ? { ...snippet, install: undefined } : undefined;
+                return snippet.type === "typescript"
+                    ? { ...snippet, install: undefined }
+                    : undefined;
             },
         });
     }
@@ -118,7 +140,9 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.goSdk,
             getSnippet: (snippet) => {
-                return snippet.type === "go" ? { ...snippet, install: undefined } : undefined;
+                return snippet.type === "go"
+                    ? { ...snippet, install: undefined }
+                    : undefined;
             },
         });
     }
@@ -144,7 +168,9 @@ export class SDKSnippetHolder {
             exampleId,
             getSdk: (config) => config.rubySdk,
             getSnippet: (snippet) => {
-                return snippet.type === "ruby" ? { ...snippet, install: undefined } : undefined;
+                return snippet.type === "ruby"
+                    ? { ...snippet, install: undefined }
+                    : undefined;
             },
         });
     }
@@ -161,7 +187,9 @@ export class SDKSnippetHolder {
         endpointMethod: FdrAPI.HttpMethod;
         endpointId: string | undefined;
         exampleId: string | undefined;
-        getSdk: (config: SnippetsConfigWithSdkId) => { sdkId: string } | undefined;
+        getSdk: (
+            config: SnippetsConfigWithSdkId
+        ) => { sdkId: string } | undefined;
         getSnippet: (snippet: FdrAPI.Snippet) => T | undefined;
     }): T | undefined {
         const sdk = getSdk(this.snippetsConfigWithSdkId);
@@ -172,11 +200,14 @@ export class SDKSnippetHolder {
         const sdkId = sdk.sdkId;
         let snippetsForEndpoint: FdrAPI.Snippet[] = [];
         if (endpointId != null) {
-            snippetsForEndpoint = this.snippetsBySdkIdAndEndpointId[sdkId]?.[endpointId] ?? [];
+            snippetsForEndpoint =
+                this.snippetsBySdkIdAndEndpointId[sdkId]?.[endpointId] ?? [];
         }
 
         if (endpointId == null || snippetsForEndpoint.length === 0) {
-            snippetsForEndpoint = this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod] ?? [];
+            snippetsForEndpoint =
+                this.snippetsBySdkId[sdkId]?.[endpointPath]?.[endpointMethod] ??
+                [];
         }
 
         let snippets = snippetsForEndpoint.filter((snippet) => {
@@ -207,8 +238,12 @@ export class SDKSnippetHolder {
             snippetsForEndpoint = this.snippetTemplatesByEndpointId[endpointId];
         }
 
-        if (endpointId == null || this.snippetTemplatesByEndpointId[endpointId] == null) {
-            snippetsForEndpoint = this.snippetTemplatesByEndpoint[endpointPath]?.[endpointMethod];
+        if (
+            endpointId == null ||
+            this.snippetTemplatesByEndpointId[endpointId] == null
+        ) {
+            snippetsForEndpoint =
+                this.snippetTemplatesByEndpoint[endpointPath]?.[endpointMethod];
         }
         return snippetsForEndpoint;
     }

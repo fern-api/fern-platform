@@ -49,108 +49,175 @@ void yargs(hideBin(process.argv))
                     default: "preview",
                     choices: ["preview" as const, "production" as const],
                 })
-                .option("skip-deploy", { type: "boolean", description: "Skip the deploy step" })
+                .option("skip-deploy", {
+                    type: "boolean",
+                    description: "Skip the deploy step",
+                })
                 .option("output", {
                     type: "string",
                     description: "The output file to write the preview URLs to",
                     default: "deployment-url.txt",
                 }),
-        async ({ project, environment, token, teamName, teamId, output, skipDeploy }) => {
-            await deployCommand({ project, environment, token, teamName, teamId, output, skipDeploy });
+        async ({
+            project,
+            environment,
+            token,
+            teamName,
+            teamId,
+            output,
+            skipDeploy,
+        }) => {
+            await deployCommand({
+                project,
+                environment,
+                token,
+                teamName,
+                teamId,
+                output,
+                skipDeploy,
+            });
 
             process.exit(0);
-        },
+        }
     )
     .command(
         "promote <deploymentUrl>",
         "Promote a deployment to production",
         (argv) =>
-            argv.positional("deploymentUrl", { type: "string", demandOption: true }).option("revalidate-all", {
-                type: "boolean",
-                description: "Revalidate the deployment (if it's fern docs)",
-            }),
+            argv
+                .positional("deploymentUrl", {
+                    type: "string",
+                    demandOption: true,
+                })
+                .option("revalidate-all", {
+                    type: "boolean",
+                    description:
+                        "Revalidate the deployment (if it's fern docs)",
+                }),
         async ({ deploymentUrl, token, teamId, revalidateAll }) => {
-            await promoteCommand({ deploymentIdOrUrl: deploymentUrl, token, teamId, revalidateAll });
+            await promoteCommand({
+                deploymentIdOrUrl: deploymentUrl,
+                token,
+                teamId,
+                revalidateAll,
+            });
             process.exit(0);
-        },
+        }
     )
     .command(
         "rollback <projectId>",
         "Rollback to the previous deployment",
-        (argv) => argv.positional("projectId", { type: "string", demandOption: true }),
+        (argv) =>
+            argv.positional("projectId", {
+                type: "string",
+                demandOption: true,
+            }),
         async ({ projectId, token }) => {
             await rollbackCommand({ projectId, token });
             process.exit(0);
-        },
+        }
     )
     .command(
         "revalidate-all <deploymentUrl>",
         "Revalidate all docs for a deployment",
-        (argv) => argv.positional("deploymentUrl", { type: "string", demandOption: true }),
+        (argv) =>
+            argv.positional("deploymentUrl", {
+                type: "string",
+                demandOption: true,
+            }),
         async ({ deploymentUrl, token, teamId }) => {
-            await revalidateAllCommand({ token, teamId, deploymentIdOrUrl: deploymentUrl });
+            await revalidateAllCommand({
+                token,
+                teamId,
+                deploymentIdOrUrl: deploymentUrl,
+            });
             process.exit(0);
-        },
+        }
     )
     .command(
         "preview.txt <deploymentUrl>",
         "Get preview URLs for a deployment",
         (argv) =>
-            argv.positional("deploymentUrl", { type: "string", demandOption: true }).option("output", {
-                type: "string",
-                description: "The output file to write the preview URLs to",
-                default: "preview.txt",
-            }),
+            argv
+                .positional("deploymentUrl", {
+                    type: "string",
+                    demandOption: true,
+                })
+                .option("output", {
+                    type: "string",
+                    description: "The output file to write the preview URLs to",
+                    default: "preview.txt",
+                }),
         async ({ deploymentUrl, token, teamId, output }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                cleanDeploymentId(deploymentUrl),
-                { teamId, withGitRepoInfo: "false" },
-            );
+            const deployment = await new VercelClient({
+                token,
+            }).deployments.getDeployment(cleanDeploymentId(deploymentUrl), {
+                teamId,
+                withGitRepoInfo: "false",
+            });
 
             if (!deployment.project) {
                 throw new Error("Deployment does not have a project");
             }
 
-            const revalidator = new FernDocsRevalidator({ token, project: deployment.project.name, teamId });
+            const revalidator = new FernDocsRevalidator({
+                token,
+                project: deployment.project.name,
+                teamId,
+            });
 
             const urls = await revalidator.getPreviewUrls(deploymentUrl);
 
-            await writefs(output, `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`);
+            await writefs(
+                output,
+                `## PR Preview\n\n${urls.map((d) => `- [ ] [${d.name}](${d.url})`).join("\n")}`
+            );
 
             process.exit(0);
-        },
+        }
     )
     .command(
         "domains.txt <deploymentUrl>",
         "Get domains for a deployment",
         (argv) =>
-            argv.positional("deploymentUrl", { type: "string", demandOption: true }).option("output", {
-                type: "string",
-                description: "The output file to write the preview URLs to",
-                default: "domains.txt",
-            }),
+            argv
+                .positional("deploymentUrl", {
+                    type: "string",
+                    demandOption: true,
+                })
+                .option("output", {
+                    type: "string",
+                    description: "The output file to write the preview URLs to",
+                    default: "domains.txt",
+                }),
         async ({ deploymentUrl, token, teamId, output }) => {
             if (!token) {
                 throw new Error("VERCEL_TOKEN is required");
             }
 
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(
-                cleanDeploymentId(deploymentUrl),
-                { teamId, withGitRepoInfo: "false" },
-            );
+            const deployment = await new VercelClient({
+                token,
+            }).deployments.getDeployment(cleanDeploymentId(deploymentUrl), {
+                teamId,
+                withGitRepoInfo: "false",
+            });
 
             if (!deployment.project) {
                 throw new Error("Deployment does not have a project");
             }
 
-            const revalidator = new FernDocsRevalidator({ token, project: deployment.project.name, teamId });
+            const revalidator = new FernDocsRevalidator({
+                token,
+                project: deployment.project.name,
+                teamId,
+            });
 
             const urls = await revalidator.getDomains();
 
             await writefs(output, urls.join("\n"));
 
             process.exit(0);
-        },
+        }
     )
     .command(
         "last-deploy.txt <project>",
@@ -175,16 +242,28 @@ void yargs(hideBin(process.argv))
                     default: "last-deploy.txt",
                 }),
         async ({ project, token, branch, output, environment }) => {
-            await getLastDeployCommand({ project, token, branch, output, environment });
+            await getLastDeployCommand({
+                project,
+                token,
+                branch,
+                output,
+                environment,
+            });
             process.exit(0);
-        },
+        }
     )
     .command(
         "get-deployment <deploymentId>",
         "Get a deployment",
-        (argv) => argv.positional("deploymentId", { type: "string", demandOption: true }),
+        (argv) =>
+            argv.positional("deploymentId", {
+                type: "string",
+                demandOption: true,
+            }),
         async ({ deploymentId, token, teamId }) => {
-            const deployment = await new VercelClient({ token }).deployments.getDeployment(deploymentId, {
+            const deployment = await new VercelClient({
+                token,
+            }).deployments.getDeployment(deploymentId, {
                 teamId,
                 withGitRepoInfo: "false",
             });
@@ -193,7 +272,7 @@ void yargs(hideBin(process.argv))
             console.log(JSON.stringify(deployment, null, 2));
 
             process.exit(0);
-        },
+        }
     )
     .showHelpOnFail(false)
     .parse();

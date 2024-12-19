@@ -11,7 +11,10 @@ export declare namespace XFernBearerTokenVariableNameConverterNode {
     }
 }
 
-export class XFernBearerTokenVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string> {
+export class XFernBearerTokenVariableNameConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    string
+> {
     tokenVariableName: string | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -20,9 +23,10 @@ export class XFernBearerTokenVariableNameConverterNode extends BaseOpenApiV3_1Co
     }
 
     parse(): void {
-        this.tokenVariableName = extendType<XFernBearerTokenVariableNameConverterNode.Input>(this.input)[
-            xFernBearerTokenVariableNameKey
-        ];
+        this.tokenVariableName =
+            extendType<XFernBearerTokenVariableNameConverterNode.Input>(
+                this.input
+            )[xFernBearerTokenVariableNameKey];
     }
 
     convert(): string | undefined {

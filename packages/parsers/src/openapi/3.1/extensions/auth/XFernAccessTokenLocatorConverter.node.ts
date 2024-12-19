@@ -12,7 +12,10 @@ export declare namespace XFernAccessTokenLocatorConverterNode {
     }
 }
 
-export class XFernAccessTokenLocatorConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, string> {
+export class XFernAccessTokenLocatorConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    string
+> {
     accessTokenLocator: string | undefined;
 
     constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
@@ -21,13 +24,15 @@ export class XFernAccessTokenLocatorConverterNode extends BaseOpenApiV3_1Convert
     }
 
     parse(): void {
-        this.accessTokenLocator = extendType<XFernAccessTokenLocatorConverterNode.Input>(this.input)[
-            xFernAccessTokenLocatorKey
-        ];
+        this.accessTokenLocator =
+            extendType<XFernAccessTokenLocatorConverterNode.Input>(this.input)[
+                xFernAccessTokenLocatorKey
+            ];
         if (this.accessTokenLocator != null) {
             if (!isValidJsonPath(this.accessTokenLocator)) {
                 this.context.errors.error({
-                    message: "Invalid access token locator, must be a valid jq path",
+                    message:
+                        "Invalid access token locator, must be a valid jq path",
                     path: this.accessPath,
                 });
                 this.accessTokenLocator = undefined;

@@ -8,7 +8,10 @@ import {
 import { resolveResponseReference } from "../../../utils/3.1/resolveResponseReference";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ParameterBaseObjectConverterNode } from "../parameters/ParameterBaseObjectConverter.node";
-import { ResponseMediaTypeObjectConverterNode, ResponseStreamingFormat } from "./ResponseMediaTypeObjectConverter.node";
+import {
+    ResponseMediaTypeObjectConverterNode,
+    ResponseStreamingFormat,
+} from "./ResponseMediaTypeObjectConverter.node";
 
 export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.ResponseObject | OpenAPIV3_1.ReferenceObject,
@@ -19,7 +22,9 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     description: string | undefined;
 
     constructor(
-        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponseObject | OpenAPIV3_1.ReferenceObject>,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+            OpenAPIV3_1.ResponseObject | OpenAPIV3_1.ReferenceObject
+        >
     ) {
         super(args);
         this.safeParse();
@@ -27,7 +32,10 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     parse(streamingFormat: ResponseStreamingFormat | undefined): void {
         this.description = this.input.description;
-        const input = resolveResponseReference(this.input, this.context.document);
+        const input = resolveResponseReference(
+            this.input,
+            this.context.document
+        );
 
         if (input == null) {
             this.context.errors.error({
@@ -48,24 +56,28 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 pathId: "headers",
             });
         });
-        Object.entries(input.content ?? {}).forEach(([contentType, contentTypeObject]) => {
-            this.responses ??= [];
-            this.responses.push(
-                new ResponseMediaTypeObjectConverterNode(
-                    {
-                        input: contentTypeObject,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: "content",
-                    },
-                    contentType,
-                    streamingFormat,
-                ),
-            );
-        });
+        Object.entries(input.content ?? {}).forEach(
+            ([contentType, contentTypeObject]) => {
+                this.responses ??= [];
+                this.responses.push(
+                    new ResponseMediaTypeObjectConverterNode(
+                        {
+                            input: contentTypeObject,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: "content",
+                        },
+                        contentType,
+                        streamingFormat
+                    )
+                );
+            }
+        );
     }
 
     convert(): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
-        return this.responses?.map((response) => response.convert()).filter(isNonNullish);
+        return this.responses
+            ?.map((response) => response.convert())
+            .filter(isNonNullish);
     }
 }

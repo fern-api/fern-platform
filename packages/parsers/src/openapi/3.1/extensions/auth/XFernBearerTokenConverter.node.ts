@@ -30,7 +30,9 @@ export class XFernBearerTokenConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     parse(): void {
-        const bearerToken = extendType<XFernBearerTokenConverterNode.Input>(this.input)[xFernBearerTokenKey];
+        const bearerToken = extendType<XFernBearerTokenConverterNode.Input>(
+            this.input
+        )[xFernBearerTokenKey];
         this.bearerTokenVariableName = bearerToken?.name;
         this.bearerTokenEnvVar = bearerToken?.env;
     }

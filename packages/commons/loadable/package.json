@@ -1,33 +1,33 @@
 {
   "name": "@fern-ui/loadable",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/commons/loadable"
   },
-  "private": true,
+  "sideEffects": false,
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "source": "src/index.ts",
+  "types": "src/index.ts",
   "files": [
     "dist"
   ],
-  "type": "module",
-  "source": "src/index.ts",
-  "module": "src/index.ts",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
-  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --run --passWithNoTests --globals",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
     "@fern-api/ui-core-utils": "workspace:*"
@@ -37,10 +37,10 @@
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "vitest": "^2.1.4",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
-    "typescript": "5.4.3"
+    "typescript": "5.4.3",
+    "vitest": "^2.1.4"
   }
 }

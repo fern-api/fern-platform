@@ -6,18 +6,26 @@ import type * as Latest from "./latest";
 import { TypeShapeOrReference } from "./types";
 import { unwrapDiscriminatedUnionVariant, unwrapObjectType } from "./unwrap";
 
-function sortKeysBy(obj: Record<string, unknown>, order: string[]): Record<string, unknown> {
+function sortKeysBy(
+    obj: Record<string, unknown>,
+    order: string[]
+): Record<string, unknown> {
     return mapValues(
         // difference() is used to ensure that all keys are included in the result
         keyBy([...order, ...difference(Object.keys(obj), order)], (key) => key),
-        (key) => obj[key],
+        (key) => obj[key]
     );
 }
 
 export function sortKeysByShape(
     obj: unknown,
-    shape: TypeShapeOrReference | Latest.HttpRequestBodyShape | Latest.HttpResponseBodyShape | null | undefined,
-    types: Record<string, Latest.TypeDefinition>,
+    shape:
+        | TypeShapeOrReference
+        | Latest.HttpRequestBodyShape
+        | Latest.HttpResponseBodyShape
+        | null
+        | undefined,
+    types: Record<string, Latest.TypeDefinition>
 ): unknown {
     if ((!isPlainObject(obj) && !Array.isArray(obj)) || shape == null) {
         return obj;
@@ -27,10 +35,20 @@ export function sortKeysByShape(
         primitive: () => obj,
         literal: () => obj,
         optional: ({ shape }) => sortKeysByShape(obj, shape, types),
-        list: ({ itemShape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, itemShape, types)) : obj),
-        set: ({ itemShape }) => (Array.isArray(obj) ? obj.map((o) => sortKeysByShape(o, itemShape, types)) : obj),
+        list: ({ itemShape }) =>
+            Array.isArray(obj)
+                ? obj.map((o) => sortKeysByShape(o, itemShape, types))
+                : obj,
+        set: ({ itemShape }) =>
+            Array.isArray(obj)
+                ? obj.map((o) => sortKeysByShape(o, itemShape, types))
+                : obj,
         map: ({ valueShape }) =>
-            isPlainObject(obj) ? mapValues(obj, (value) => sortKeysByShape(value, valueShape, types)) : obj,
+            isPlainObject(obj)
+                ? mapValues(obj, (value) =>
+                      sortKeysByShape(value, valueShape, types)
+                  )
+                : obj,
         unknown: () => obj,
         object: (object) => {
             const objectProperties = unwrapObjectType(object, types).properties;
@@ -38,15 +56,21 @@ export function sortKeysByShape(
                 ? mapValues(
                       sortKeysBy(
                           obj,
-                          objectProperties.map((p) => p.key),
+                          objectProperties.map((p) => p.key)
                       ),
                       (value, key) => {
-                          const property = objectProperties.find((p) => p.key === key);
+                          const property = objectProperties.find(
+                              (p) => p.key === key
+                          );
                           if (property == null) {
                               return value;
                           }
-                          return sortKeysByShape(value, property?.valueShape, types);
-                      },
+                          return sortKeysByShape(
+                              value,
+                              property?.valueShape,
+                              types
+                          );
+                      }
                   )
                 : obj;
         },
@@ -60,21 +84,35 @@ export function sortKeysByShape(
             if (variant == null) {
                 return obj;
             }
-            const variantShape = variants.find((v) => v.discriminantValue === variant);
+            const variantShape = variants.find(
+                (v) => v.discriminantValue === variant
+            );
             if (variantShape == null) {
                 return obj;
             }
-            const variantProperties = unwrapDiscriminatedUnionVariant(union, variantShape, types).properties;
-            return mapValues(sortKeysBy(obj, [discriminant, ...variantProperties.map((p) => p.key)]), (value, key) => {
-                if (key === discriminant) {
-                    return value;
+            const variantProperties = unwrapDiscriminatedUnionVariant(
+                union,
+                variantShape,
+                types
+            ).properties;
+            return mapValues(
+                sortKeysBy(obj, [
+                    discriminant,
+                    ...variantProperties.map((p) => p.key),
+                ]),
+                (value, key) => {
+                    if (key === discriminant) {
+                        return value;
+                    }
+                    const property = variantProperties.find(
+                        (p) => p.key === key
+                    );
+                    if (property == null) {
+                        return value;
+                    }
+                    return sortKeysByShape(value, property.valueShape, types);
                 }
-                const property = variantProperties.find((p) => p.key === key);
-                if (property == null) {
-                    return value;
-                }
-                return sortKeysByShape(value, property.valueShape, types);
-            });
+            );
         },
         enum: () => obj,
         alias: ({ value: typeRef }) => sortKeysByShape(obj, typeRef, types),
@@ -86,7 +124,7 @@ export function sortKeysByShape(
             return mapValues(
                 sortKeysBy(
                     obj,
-                    fields.map((p) => p.key),
+                    fields.map((p) => p.key)
                 ),
                 (v, key) => {
                     const property = fields.find((p) => p.key === key);
@@ -100,7 +138,7 @@ export function sortKeysByShape(
                     }
 
                     return undefined;
-                },
+                }
             );
         },
         bytes: () => obj,
@@ -113,8 +151,13 @@ export function sortKeysByShape(
 
 export function safeSortKeysByShape(
     value: unknown,
-    shape: TypeShapeOrReference | Latest.HttpRequestBodyShape | Latest.HttpResponseBodyShape | null | undefined,
-    types: Record<string, Latest.TypeDefinition>,
+    shape:
+        | TypeShapeOrReference
+        | Latest.HttpRequestBodyShape
+        | Latest.HttpResponseBodyShape
+        | null
+        | undefined,
+    types: Record<string, Latest.TypeDefinition>
 ): unknown {
     if (value == null) {
         return value;

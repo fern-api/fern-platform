@@ -26,11 +26,15 @@ export function generatePreviewContext(uri: string): PreviewContext {
         previewUrl: toPreviewUrl(deploymentUrl.host, uri),
         originalHost: url.host,
         deploymentHost: deploymentUrl.host,
-        createPreviewUrl: (url: string) => toPreviewUrl(deploymentUrl.host, url),
+        createPreviewUrl: (url: string) =>
+            toPreviewUrl(deploymentUrl.host, url),
     };
 }
 
-export function addPreviewCookie(context: BrowserContext, previewContext: PreviewContext): Promise<void> {
+export function addPreviewCookie(
+    context: BrowserContext,
+    previewContext: PreviewContext
+): Promise<void> {
     return context.addCookies([
         {
             name: "_fern_docs_preview",

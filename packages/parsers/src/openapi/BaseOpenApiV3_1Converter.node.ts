@@ -1,5 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseApiConverterNode, BaseApiConverterNodeContext } from "../BaseApiConverter.node";
+import {
+    BaseApiConverterNode,
+    BaseApiConverterNodeContext,
+} from "../BaseApiConverter.node";
 import { toOpenApiPath } from "./utils/toOpenApiPath";
 
 export abstract class BaseOpenApiV3_1ConverterNodeContext extends BaseApiConverterNodeContext {
@@ -13,19 +16,30 @@ export type BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> = {
     readonly pathId: string;
 };
 
-export abstract class BaseOpenApiV3_1ConverterNode<Input, Output> extends BaseApiConverterNode<Input, Output> {
+export abstract class BaseOpenApiV3_1ConverterNode<
+    Input,
+    Output,
+> extends BaseApiConverterNode<Input, Output> {
     protected override readonly context: BaseOpenApiV3_1ConverterNodeContext;
     protected readonly accessPath: string[];
     protected readonly pathId: string;
 
-    constructor({ input, context, accessPath, pathId }: BaseOpenApiV3_1ConverterNodeConstructorArgs<Input>) {
+    constructor({
+        input,
+        context,
+        accessPath,
+        pathId,
+    }: BaseOpenApiV3_1ConverterNodeConstructorArgs<Input>) {
         super(input, context);
 
         this.context = context;
         this.accessPath = [...accessPath];
         this.pathId = pathId;
 
-        if (this.pathId && this.pathId !== this.accessPath[this.accessPath.length - 1]) {
+        if (
+            this.pathId &&
+            this.pathId !== this.accessPath[this.accessPath.length - 1]
+        ) {
             this.accessPath.push(this.pathId);
             context.logger.info(`Processing ${toOpenApiPath(this.accessPath)}`);
         }
@@ -38,7 +52,8 @@ export abstract class BaseOpenApiV3_1ConverterNode<Input, Output> extends BaseAp
             this.parse(...additionalArgs);
         } catch (error: Error | unknown) {
             this.context.errors.error({
-                message: "Error converting node. Please contact support if the error persists",
+                message:
+                    "Error converting node. Please contact support if the error persists",
                 path: this.accessPath,
             });
         }

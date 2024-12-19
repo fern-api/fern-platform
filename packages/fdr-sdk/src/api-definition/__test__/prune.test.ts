@@ -228,7 +228,10 @@ describe("prune", () => {
 
         expect(Object.keys(pruned.endpoints)).toStrictEqual([endpoint1.id]);
         expect(Object.keys(pruned.websockets)).toStrictEqual([]);
-        expect(Object.keys(pruned.types)).toStrictEqual([type1.name, type4.name]);
+        expect(Object.keys(pruned.types)).toStrictEqual([
+            type1.name,
+            type4.name,
+        ]);
         expect(Object.keys(pruned.auths)).toStrictEqual([]);
     });
 
@@ -239,7 +242,10 @@ describe("prune", () => {
         });
         expect(Object.keys(pruned.endpoints)).toStrictEqual([endpoint2.id]);
         expect(Object.keys(pruned.websockets)).toStrictEqual([]);
-        expect(Object.keys(pruned.types)).toStrictEqual([type2.name, type4.name]);
+        expect(Object.keys(pruned.types)).toStrictEqual([
+            type2.name,
+            type4.name,
+        ]);
         expect(Object.keys(pruned.auths)).toStrictEqual(["auth"]);
     });
 
@@ -250,7 +256,10 @@ describe("prune", () => {
         });
         expect(Object.keys(pruned.endpoints)).toStrictEqual([]);
         expect(Object.keys(pruned.websockets)).toStrictEqual([websocket1.id]);
-        expect(Object.keys(pruned.types)).toStrictEqual([type3.name, type4.name]);
+        expect(Object.keys(pruned.types)).toStrictEqual([
+            type3.name,
+            type4.name,
+        ]);
         expect(Object.keys(pruned.auths)).toStrictEqual([]);
     });
 });

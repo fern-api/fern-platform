@@ -26,11 +26,21 @@ interface PruneTreeOptions<NODE, PARENT extends NODE = NODE, POINTER = NODE> {
     getPointer?: (node: NODE) => POINTER;
 }
 
-export function prunetree<NODE, ROOT extends NODE = NODE, PARENT extends NODE = NODE, POINTER = NODE>(
+export function prunetree<
+    NODE,
+    ROOT extends NODE = NODE,
+    PARENT extends NODE = NODE,
+    POINTER = NODE,
+>(
     root: ROOT,
-    opts: PruneTreeOptions<NODE, PARENT, POINTER>,
+    opts: PruneTreeOptions<NODE, PARENT, POINTER>
 ): [result: ROOT | undefined, deleted: ReadonlySet<POINTER>] {
-    const { predicate, getChildren, deleter, getPointer = (node) => node as unknown as POINTER } = opts;
+    const {
+        predicate,
+        getChildren,
+        deleter,
+        getPointer = (node) => node as unknown as POINTER,
+    } = opts;
 
     const deleted = new Set<POINTER>();
 
@@ -42,7 +52,7 @@ export function prunetree<NODE, ROOT extends NODE = NODE, PARENT extends NODE = 
         (node, parents) => {
             nodes.unshift([node, parents]);
         },
-        getChildren,
+        getChildren
     );
 
     nodes.forEach(([node, parents]) => {

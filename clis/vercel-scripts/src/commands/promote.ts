@@ -10,13 +10,21 @@ interface PromoteArgs {
     revalidateAll?: boolean;
 }
 
-export async function promoteCommand({ deploymentIdOrUrl, token, teamId, revalidateAll }: PromoteArgs): Promise<void> {
+export async function promoteCommand({
+    deploymentIdOrUrl,
+    token,
+    teamId,
+    revalidateAll,
+}: PromoteArgs): Promise<void> {
     const vercel = new VercelClient({ token });
 
-    const deployment = await vercel.deployments.getDeployment(cleanDeploymentId(deploymentIdOrUrl), {
-        teamId,
-        withGitRepoInfo: "false",
-    });
+    const deployment = await vercel.deployments.getDeployment(
+        cleanDeploymentId(deploymentIdOrUrl),
+        {
+            teamId,
+            withGitRepoInfo: "false",
+        }
+    );
 
     await requestPromote(token, deployment);
 

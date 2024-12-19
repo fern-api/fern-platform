@@ -18,12 +18,20 @@ describe("coalesceServers", () => {
             accessPath: [],
             pathId: "servers[0]",
         });
-        const result = coalesceServers([existingServer], undefined, mockContext, []);
+        const result = coalesceServers(
+            [existingServer],
+            undefined,
+            mockContext,
+            []
+        );
         expect(result).toEqual([existingServer]);
     });
 
     it("should return new servers when no existing servers", () => {
-        const newServers: OpenAPIV3_1.ServerObject[] = [{ url: "https://new1.com" }, { url: "https://new2.com" }];
+        const newServers: OpenAPIV3_1.ServerObject[] = [
+            { url: "https://new1.com" },
+            { url: "https://new2.com" },
+        ];
         const result = coalesceServers(undefined, newServers, mockContext, []);
         expect(result).toHaveLength(2);
         expect(result[0]).toBeInstanceOf(ServerObjectConverterNode);
@@ -37,8 +45,15 @@ describe("coalesceServers", () => {
             accessPath: [],
             pathId: "servers[0]",
         });
-        const newServers: OpenAPIV3_1.ServerObject[] = [{ url: "https://new.com" }];
-        const result = coalesceServers([existingServer], newServers, mockContext, []);
+        const newServers: OpenAPIV3_1.ServerObject[] = [
+            { url: "https://new.com" },
+        ];
+        const result = coalesceServers(
+            [existingServer],
+            newServers,
+            mockContext,
+            []
+        );
         expect(result).toHaveLength(2);
         expect(result[0]).toBe(existingServer);
         expect(result[1]).toBeInstanceOf(ServerObjectConverterNode);

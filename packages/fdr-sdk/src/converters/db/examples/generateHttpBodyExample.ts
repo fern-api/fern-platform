@@ -1,17 +1,31 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { APIV1Write } from "../../../client";
 
-export type ResolveTypeById = (typeId: APIV1Write.TypeId) => APIV1Write.TypeDefinition;
+export type ResolveTypeById = (
+    typeId: APIV1Write.TypeId
+) => APIV1Write.TypeDefinition;
 
 export function generateWebhookPayloadExample(
     shape: APIV1Write.WebhookPayloadShape,
-    resolveTypeById: ResolveTypeById,
+    resolveTypeById: ResolveTypeById
 ): unknown {
     switch (shape.type) {
         case "object":
-            return generateExampleObject(shape, resolveTypeById, false, new Set(), 0);
+            return generateExampleObject(
+                shape,
+                resolveTypeById,
+                false,
+                new Set(),
+                0
+            );
         case "reference":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById, false, new Set(), 0);
+            return generateExampleFromTypeReference(
+                shape.value,
+                resolveTypeById,
+                false,
+                new Set(),
+                0
+            );
         default:
             assertNever(shape);
     }
@@ -19,21 +33,39 @@ export function generateWebhookPayloadExample(
 
 export function generateHttpRequestBodyExample(
     type: APIV1Write.HttpRequestBodyShape,
-    resolveTypeById: ResolveTypeById,
+    resolveTypeById: ResolveTypeById
 ): APIV1Write.ExampleEndpointRequest | undefined {
     switch (type.type) {
         case "object": {
-            const value = generateExampleObject(type, resolveTypeById, true, new Set(), 0);
+            const value = generateExampleObject(
+                type,
+                resolveTypeById,
+                true,
+                new Set(),
+                0
+            );
             return { type: "json", value };
         }
         case "reference": {
-            const value = generateExampleFromTypeReference(type.value, resolveTypeById, true, new Set(), 0);
+            const value = generateExampleFromTypeReference(
+                type.value,
+                resolveTypeById,
+                true,
+                new Set(),
+                0
+            );
             return { type: "json", value };
         }
         case "json":
-            return generateHttpJsonRequestBodyExample(type.shape, resolveTypeById);
+            return generateHttpJsonRequestBodyExample(
+                type.shape,
+                resolveTypeById
+            );
         case "fileUpload": // deprecated
-            return generateFormDataRequestBodyExample(type.value, resolveTypeById);
+            return generateFormDataRequestBodyExample(
+                type.value,
+                resolveTypeById
+            );
         case "formData":
             return generateFormDataRequestBodyExample(type, resolveTypeById);
         case "bytes": {
@@ -51,7 +83,7 @@ export function generateHttpRequestBodyExample(
 
 function generateFormDataRequestBodyExample(
     FormDataRequest: APIV1Write.FormDataRequest | undefined,
-    resolveTypeById: ResolveTypeById,
+    resolveTypeById: ResolveTypeById
 ): APIV1Write.ExampleEndpointRequest {
     if (FormDataRequest == null) {
         return { type: "form", value: {} }; // old (deprecated) behavior
@@ -80,7 +112,13 @@ function generateFormDataRequestBodyExample(
             case "bodyProperty": {
                 example[property.key] = {
                     type: "json",
-                    value: generateExampleFromTypeReference(property.valueType, resolveTypeById, true, new Set(), 0),
+                    value: generateExampleFromTypeReference(
+                        property.valueType,
+                        resolveTypeById,
+                        true,
+                        new Set(),
+                        0
+                    ),
                 };
                 break;
             }
@@ -92,15 +130,27 @@ function generateFormDataRequestBodyExample(
 
 function generateHttpJsonRequestBodyExample(
     shape: APIV1Write.JsonBodyShape,
-    resolveTypeById: ResolveTypeById,
+    resolveTypeById: ResolveTypeById
 ): APIV1Write.ExampleEndpointRequest {
     switch (shape.type) {
         case "object": {
-            const value = generateExampleObject(shape, resolveTypeById, true, new Set(), 0);
+            const value = generateExampleObject(
+                shape,
+                resolveTypeById,
+                true,
+                new Set(),
+                0
+            );
             return { type: "json", value };
         }
         case "reference": {
-            const value = generateExampleFromTypeReference(shape.value, resolveTypeById, true, new Set(), 0);
+            const value = generateExampleFromTypeReference(
+                shape.value,
+                resolveTypeById,
+                true,
+                new Set(),
+                0
+            );
             return { type: "json", value };
         }
         default:
@@ -110,18 +160,30 @@ function generateHttpJsonRequestBodyExample(
 
 export function generateHttpResponseBodyExample(
     type: APIV1Write.HttpResponseBodyShape,
-    resolveTypeById: ResolveTypeById,
+    resolveTypeById: ResolveTypeById
 ): APIV1Write.ExampleEndpointResponse | undefined {
     switch (type.type) {
         case "object":
             return {
                 type: "json",
-                value: generateExampleObject(type, resolveTypeById, false, new Set(), 0),
+                value: generateExampleObject(
+                    type,
+                    resolveTypeById,
+                    false,
+                    new Set(),
+                    0
+                ),
             };
         case "reference":
             return {
                 type: "json",
-                value: generateExampleFromTypeReference(type.value, resolveTypeById, false, new Set(), 0),
+                value: generateExampleFromTypeReference(
+                    type.value,
+                    resolveTypeById,
+                    false,
+                    new Set(),
+                    0
+                ),
             };
         case "fileDownload":
             return { type: "filename", value: "<filename>" };
@@ -131,7 +193,13 @@ export function generateHttpResponseBodyExample(
         case "stream": {
             switch (type.shape.type) {
                 case "object": {
-                    const chunk = generateExampleObject(type.shape, resolveTypeById, false, new Set(), 0);
+                    const chunk = generateExampleObject(
+                        type.shape,
+                        resolveTypeById,
+                        false,
+                        new Set(),
+                        0
+                    );
                     return {
                         type: "stream",
                         value: [chunk, chunk],
@@ -143,7 +211,7 @@ export function generateHttpResponseBodyExample(
                         resolveTypeById,
                         false,
                         new Set(),
-                        0,
+                        0
                     );
                     return {
                         type: "stream",
@@ -160,7 +228,7 @@ function generateExampleObject(
     resolveTypeById: ResolveTypeById,
     ignoreOptionals: boolean,
     visited: Set<string>,
-    depth: number,
+    depth: number
 ): Record<string, unknown> {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
@@ -169,7 +237,7 @@ function generateExampleObject(
             resolveTypeById,
             ignoreOptionals,
             depth === 0 ? new Set() : new Set(visited),
-            depth + 1,
+            depth + 1
         );
         if (value != null) {
             example[property.key] = value;
@@ -183,7 +251,7 @@ export function generateExampleFromTypeReference(
     resolveTypeById: ResolveTypeById,
     ignoreOptionals: boolean,
     visited: Set<string>,
-    depth: number,
+    depth: number
 ): unknown {
     let example;
 
@@ -193,7 +261,13 @@ export function generateExampleFromTypeReference(
             break;
         case "id": {
             visited.add(reference.value);
-            example = generateExampleFromId(reference.value, resolveTypeById, ignoreOptionals, visited, depth);
+            example = generateExampleFromId(
+                reference.value,
+                resolveTypeById,
+                ignoreOptionals,
+                visited,
+                depth
+            );
             break;
         }
         case "optional":
@@ -215,7 +289,7 @@ export function generateExampleFromTypeReference(
                         resolveTypeById,
                         ignoreOptionals,
                         visited,
-                        depth,
+                        depth
                     );
             }
             break;
@@ -229,12 +303,24 @@ export function generateExampleFromTypeReference(
                 }
             }
             example = [
-                generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals, visited, depth),
+                generateExampleFromTypeReference(
+                    reference.itemType,
+                    resolveTypeById,
+                    ignoreOptionals,
+                    visited,
+                    depth
+                ),
             ];
             break;
         case "set":
             example = [
-                generateExampleFromTypeReference(reference.itemType, resolveTypeById, ignoreOptionals, visited, depth),
+                generateExampleFromTypeReference(
+                    reference.itemType,
+                    resolveTypeById,
+                    ignoreOptionals,
+                    visited,
+                    depth
+                ),
             ];
             break;
         case "map":
@@ -244,13 +330,13 @@ export function generateExampleFromTypeReference(
                     resolveTypeById,
                     ignoreOptionals,
                     visited,
-                    depth + 1,
+                    depth + 1
                 ) as string]: generateExampleFromTypeReference(
                     reference.valueType,
                     resolveTypeById,
                     ignoreOptionals,
                     visited,
-                    depth + 1,
+                    depth + 1
                 ),
             };
             break;
@@ -272,10 +358,16 @@ function generateExampleFromId(
     resolveTypeById: ResolveTypeById,
     ignoreOptionals: boolean,
     visited: Set<string>,
-    depth: number,
+    depth: number
 ): unknown {
     const shape = resolveTypeById(id).shape;
-    return generateExampleFromTypeShape(shape, resolveTypeById, ignoreOptionals, visited, depth);
+    return generateExampleFromTypeShape(
+        shape,
+        resolveTypeById,
+        ignoreOptionals,
+        visited,
+        depth
+    );
 }
 
 export function generateExampleFromTypeShape(
@@ -283,11 +375,17 @@ export function generateExampleFromTypeShape(
     resolveTypeById: ResolveTypeById,
     ignoreOptionals: boolean,
     visited: Set<string>,
-    depth: number,
+    depth: number
 ): unknown {
     switch (shape.type) {
         case "object":
-            return generateExampleObject(shape, resolveTypeById, ignoreOptionals, visited, depth);
+            return generateExampleObject(
+                shape,
+                resolveTypeById,
+                ignoreOptionals,
+                visited,
+                depth
+            );
         case "undiscriminatedUnion":
             if (shape.variants[0] == null) {
                 return {};
@@ -297,7 +395,7 @@ export function generateExampleFromTypeShape(
                 resolveTypeById,
                 ignoreOptionals,
                 visited,
-                depth,
+                depth
             );
         case "discriminatedUnion":
             if (shape.variants[0] == null) {
@@ -310,21 +408,31 @@ export function generateExampleFromTypeShape(
                     resolveTypeById,
                     ignoreOptionals,
                     visited,
-                    depth,
+                    depth
                 ),
             };
         case "alias":
-            return generateExampleFromTypeReference(shape.value, resolveTypeById, ignoreOptionals, visited, depth);
+            return generateExampleFromTypeReference(
+                shape.value,
+                resolveTypeById,
+                ignoreOptionals,
+                visited,
+                depth
+            );
         case "enum":
             return shape.values[0]?.value ?? "";
     }
 }
 
-export function generateExampleFromLiteral(reference: APIV1Write.LiteralType): boolean | string {
+export function generateExampleFromLiteral(
+    reference: APIV1Write.LiteralType
+): boolean | string {
     return reference.value;
 }
 
-function generateExamplePrimitive(reference: APIV1Write.PrimitiveType): string | number | boolean | null {
+function generateExamplePrimitive(
+    reference: APIV1Write.PrimitiveType
+): string | number | boolean | null {
     switch (reference.type) {
         case "string":
             return "string";
@@ -355,7 +463,7 @@ function generateExamplePrimitive(reference: APIV1Write.PrimitiveType): string |
 
 function getAllObjectProperties(
     object: APIV1Write.ObjectType,
-    resolveTypeById: ResolveTypeById,
+    resolveTypeById: ResolveTypeById
 ): APIV1Write.ObjectProperty[] {
     return [
         ...object.properties,
@@ -372,9 +480,15 @@ function getAllObjectProperties(
     ];
 }
 
-function resolveAlias(typeId: APIV1Write.TypeId, resolveTypeById: ResolveTypeById) {
+function resolveAlias(
+    typeId: APIV1Write.TypeId,
+    resolveTypeById: ResolveTypeById
+) {
     const resolvedTypeDefinition = resolveTypeById(typeId);
-    if (resolvedTypeDefinition.shape.type === "alias" && resolvedTypeDefinition.shape.value.type === "id") {
+    if (
+        resolvedTypeDefinition.shape.type === "alias" &&
+        resolvedTypeDefinition.shape.value.type === "id"
+    ) {
         return resolveTypeById(resolvedTypeDefinition.shape.value.value);
     }
     return resolvedTypeDefinition;

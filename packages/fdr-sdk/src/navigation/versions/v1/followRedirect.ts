@@ -3,12 +3,14 @@ import { FernNavigation } from "../../..";
 import { hasMetadata } from "./NavigationNodeWithMetadata";
 
 export function followRedirect(
-    nodeToFollow: FernNavigation.V1.NavigationNode | undefined,
+    nodeToFollow: FernNavigation.V1.NavigationNode | undefined
 ): FernNavigation.V1.Slug | undefined {
     if (nodeToFollow == null) {
         return undefined;
     }
-    return visitDiscriminatedUnion(nodeToFollow)._visit<FernNavigation.V1.Slug | undefined>({
+    return visitDiscriminatedUnion(nodeToFollow)._visit<
+        FernNavigation.V1.Slug | undefined
+    >({
         link: () => undefined,
 
         // leaf nodes
@@ -23,14 +25,25 @@ export function followRedirect(
         landingPage: (node) => node.slug,
 
         // nodes with overview
-        apiPackage: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
-        section: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
-        apiReference: (node) => (node.overviewPageId != null ? node.slug : followRedirects(node.children)),
+        apiPackage: (node) =>
+            node.overviewPageId != null
+                ? node.slug
+                : followRedirects(node.children),
+        section: (node) =>
+            node.overviewPageId != null
+                ? node.slug
+                : followRedirects(node.children),
+        apiReference: (node) =>
+            node.overviewPageId != null
+                ? node.slug
+                : followRedirects(node.children),
 
         // version is a special case where it should only consider it's first child (the first version)
         product: (node) => followRedirect(node.child),
-        productgroup: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
-        versioned: (node) => followRedirect(node.children.filter((node) => !node.hidden)[0]),
+        productgroup: (node) =>
+            followRedirect(node.children.filter((node) => !node.hidden)[0]),
+        versioned: (node) =>
+            followRedirect(node.children.filter((node) => !node.hidden)[0]),
         unversioned: (node) => followRedirect(node.landingPage ?? node.child),
         tabbed: (node) => followRedirects(node.children),
         sidebarRoot: (node) => followRedirects(node.children),
@@ -42,7 +55,9 @@ export function followRedirect(
     });
 }
 
-export function followRedirects(nodes: FernNavigation.V1.NavigationNode[]): FernNavigation.V1.Slug | undefined {
+export function followRedirects(
+    nodes: FernNavigation.V1.NavigationNode[]
+): FernNavigation.V1.Slug | undefined {
     for (const node of nodes) {
         // skip hidden nodes
         if (hasMetadata(node) && node.hidden) {

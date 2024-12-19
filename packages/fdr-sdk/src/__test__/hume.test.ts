@@ -6,7 +6,12 @@ import { testGetAllUrlsFromDocsConfig } from "./testGetAllUrlsFromDocsConfig";
 import { testGetNavigationRoot } from "./testGetNavigationRoot";
 
 const FIXTURE = "hume";
-const slugs = ["support", "reference", "docs", "reference/expression-measurement-api/stream"];
+const slugs = [
+    "support",
+    "reference",
+    "docs",
+    "reference/expression-measurement-api/stream",
+];
 
 // eslint-disable-next-line vitest/valid-title
 describe(FIXTURE, () => {

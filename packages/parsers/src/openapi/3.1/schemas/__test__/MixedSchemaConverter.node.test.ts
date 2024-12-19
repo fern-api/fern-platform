@@ -11,7 +11,10 @@ describe("MixedSchemaConverterNode", () => {
 
     describe("constructor", () => {
         it("should handle mixed schema with null type", () => {
-            const input: MixedSchemaConverterNode.Input = [{ type: "null" }, { type: "string" }];
+            const input: MixedSchemaConverterNode.Input = [
+                { type: "null" },
+                { type: "string" },
+            ];
 
             const node = new MixedSchemaConverterNode({
                 input,
@@ -25,7 +28,10 @@ describe("MixedSchemaConverterNode", () => {
         });
 
         it("should handle mixed schema with multiple non-null types", () => {
-            const input: MixedSchemaConverterNode.Input = [{ type: "string" }, { type: "number" }];
+            const input: MixedSchemaConverterNode.Input = [
+                { type: "string" },
+                { type: "number" },
+            ];
 
             const node = new MixedSchemaConverterNode({
                 input,
@@ -41,7 +47,10 @@ describe("MixedSchemaConverterNode", () => {
 
     describe("convert", () => {
         it("should convert to undiscriminatedUnion when not nullable", () => {
-            const input: MixedSchemaConverterNode.Input = [{ type: "string" }, { type: "number" }];
+            const input: MixedSchemaConverterNode.Input = [
+                { type: "string" },
+                { type: "number" },
+            ];
 
             const node = new MixedSchemaConverterNode({
                 input,
@@ -52,11 +61,18 @@ describe("MixedSchemaConverterNode", () => {
 
             const result = node.convert();
             expect(result?.type).toBe("undiscriminatedUnion");
-            expect((result as FernRegistry.api.latest.TypeShape.UndiscriminatedUnion)?.variants?.length).toBe(2);
+            expect(
+                (
+                    result as FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
+                )?.variants?.length
+            ).toBe(2);
         });
 
         it("should convert to optional alias when nullable", () => {
-            const input: MixedSchemaConverterNode.Input = [{ type: "null" }, { type: "string" }];
+            const input: MixedSchemaConverterNode.Input = [
+                { type: "null" },
+                { type: "string" },
+            ];
 
             const node = new MixedSchemaConverterNode({
                 input,
@@ -67,7 +83,9 @@ describe("MixedSchemaConverterNode", () => {
 
             const result = node.convert();
             expect(result?.type).toBe("alias");
-            expect((result as FernRegistry.api.latest.TypeShape.Alias)?.value?.type).toBe("optional");
+            expect(
+                (result as FernRegistry.api.latest.TypeShape.Alias)?.value?.type
+            ).toBe("optional");
         });
 
         it("should return undefined when typeNodes is null", () => {

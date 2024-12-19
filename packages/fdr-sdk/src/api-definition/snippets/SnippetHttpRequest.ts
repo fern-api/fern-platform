@@ -56,10 +56,12 @@ export interface SnippetHttpRequest {
 export function toSnippetHttpRequest(
     endpoint: Latest.EndpointDefinition,
     example: Latest.ExampleEndpointCall,
-    auth: Latest.AuthScheme | undefined,
+    auth: Latest.AuthScheme | undefined
 ): SnippetHttpRequest {
     const environmentUrl = (
-        endpoint.environments?.find((env) => env.id === endpoint.defaultEnvironment) ?? endpoint.environments?.[0]
+        endpoint.environments?.find(
+            (env) => env.id === endpoint.defaultEnvironment
+        ) ?? endpoint.environments?.[0]
     )?.baseUrl;
     const url = urljoin(compact([environmentUrl, example.path]));
 
@@ -69,14 +71,27 @@ export function toSnippetHttpRequest(
 
     if (endpoint.auth && endpoint.auth.length > 0 && auth) {
         visitDiscriminatedUnion(auth, "type")._visit({
-            basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
-                basicAuth = { username: `<${usernameName}>`, password: `<${passwordName}>` };
+            basicAuth: ({
+                usernameName = "username",
+                passwordName = "password",
+            }) => {
+                basicAuth = {
+                    username: `<${usernameName}>`,
+                    password: `<${passwordName}>`,
+                };
             },
             bearerAuth: ({ tokenName = "token" }) => {
                 headers.Authorization = `Bearer <${tokenName}>`;
             },
-            header: ({ headerWireValue, nameOverride = headerWireValue, prefix }) => {
-                headers[headerWireValue] = prefix != null ? `${prefix} <${nameOverride}>` : `<${nameOverride}>`;
+            header: ({
+                headerWireValue,
+                nameOverride = headerWireValue,
+                prefix,
+            }) => {
+                headers[headerWireValue] =
+                    prefix != null
+                        ? `${prefix} <${nameOverride}>`
+                        : `<${nameOverride}>`;
             },
             oAuth: ({ value: clientCredentials }) => {
                 visitDiscriminatedUnion(clientCredentials, "type")._visit({
@@ -113,12 +128,21 @@ export function toSnippetHttpRequest(
         body:
             body == null
                 ? undefined
-                : visitDiscriminatedUnion(body)._visit<SnippetHttpRequestBody | undefined>({
+                : visitDiscriminatedUnion(body)._visit<
+                      SnippetHttpRequestBody | undefined
+                  >({
                       json: (value) => value,
                       form: (value) => {
-                          const toRet: Record<string, SnippetHttpRequestBodyFormValue> = {};
-                          for (const [key, val] of Object.entries(value.value)) {
-                              toRet[key] = visitDiscriminatedUnion(val)._visit<SnippetHttpRequestBodyFormValue>({
+                          const toRet: Record<
+                              string,
+                              SnippetHttpRequestBodyFormValue
+                          > = {};
+                          for (const [key, val] of Object.entries(
+                              value.value
+                          )) {
+                              toRet[key] = visitDiscriminatedUnion(
+                                  val
+                              )._visit<SnippetHttpRequestBodyFormValue>({
                                   json: (value) => value,
                                   filename: (value) => ({
                                       type: "filename",
@@ -139,10 +163,12 @@ export function toSnippetHttpRequest(
                                   }),
                                   filenamesWithData: (value) => ({
                                       type: "filenames",
-                                      files: value.value.map(({ filename }) => ({
-                                          filename,
-                                          contentType: undefined, // TODO: infer content type?
-                                      })),
+                                      files: value.value.map(
+                                          ({ filename }) => ({
+                                              filename,
+                                              contentType: undefined, // TODO: infer content type?
+                                          })
+                                      ),
                                   }),
                               });
                           }

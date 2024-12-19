@@ -25,7 +25,9 @@ export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     // This would be used to set a member on the node
     parse(): void {
-        this.groupName = extendType<XFernGroupNameConverterNode.Input>(this.input)[xFernGroupNameKey];
+        this.groupName = extendType<XFernGroupNameConverterNode.Input>(
+            this.input
+        )[xFernGroupNameKey];
     }
 
     convert(): FernRegistry.api.latest.SubpackageId[] | undefined {
@@ -40,6 +42,8 @@ export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<
             subpackagePath = [this.groupName];
         }
 
-        return subpackagePath.map((path) => FernRegistry.api.v1.SubpackageId(path));
+        return subpackagePath.map((path) =>
+            FernRegistry.api.v1.SubpackageId(path)
+        );
     }
 }

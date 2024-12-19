@@ -7,7 +7,7 @@ export class SlugGenerator {
     private constructor(
         private baseSlug: string,
         private versionSlug: string | undefined,
-        private slug: string,
+        private slug: string
     ) {}
 
     public get(): FernNavigation.V1.Slug {
@@ -16,7 +16,10 @@ export class SlugGenerator {
 
     public setVersionSlug(versionSlug: string): SlugGenerator {
         if (this.versionSlug != null) {
-            if (this.versionSlug === FernNavigation.V1.slugjoin(this.baseSlug, versionSlug)) {
+            if (
+                this.versionSlug ===
+                FernNavigation.V1.slugjoin(this.baseSlug, versionSlug)
+            ) {
                 return this;
             }
             throw new Error("Version already set");
@@ -29,7 +32,11 @@ export class SlugGenerator {
     }
 
     public append(slug: string): SlugGenerator {
-        return new SlugGenerator(this.baseSlug, this.versionSlug, FernNavigation.V1.slugjoin(this.slug, slug));
+        return new SlugGenerator(
+            this.baseSlug,
+            this.versionSlug,
+            FernNavigation.V1.slugjoin(this.slug, slug)
+        );
     }
 
     public set(slug: string): SlugGenerator {
@@ -37,17 +44,23 @@ export class SlugGenerator {
         if (this.versionSlug != null) {
             if (slug.startsWith(this.versionSlug)) {
                 return new SlugGenerator(this.baseSlug, this.versionSlug, slug);
-            } else if (this.baseSlug.length > 0 && slug.startsWith(this.baseSlug)) {
+            } else if (
+                this.baseSlug.length > 0 &&
+                slug.startsWith(this.baseSlug)
+            ) {
                 return new SlugGenerator(
                     this.baseSlug,
                     this.versionSlug,
-                    FernNavigation.V1.slugjoin(this.versionSlug, slug.substring(this.baseSlug.length)),
+                    FernNavigation.V1.slugjoin(
+                        this.versionSlug,
+                        slug.substring(this.baseSlug.length)
+                    )
                 );
             } else {
                 return new SlugGenerator(
                     this.baseSlug,
                     this.versionSlug,
-                    FernNavigation.V1.slugjoin(this.versionSlug, slug),
+                    FernNavigation.V1.slugjoin(this.versionSlug, slug)
                 );
             }
         }
@@ -58,7 +71,7 @@ export class SlugGenerator {
                 return new SlugGenerator(
                     this.baseSlug,
                     this.versionSlug,
-                    FernNavigation.V1.slugjoin(this.baseSlug, slug),
+                    FernNavigation.V1.slugjoin(this.baseSlug, slug)
                 );
             }
         }

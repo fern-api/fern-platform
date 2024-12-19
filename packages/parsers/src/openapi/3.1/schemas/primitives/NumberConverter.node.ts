@@ -6,7 +6,10 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, OPENAPI_NUMBER_TYPE_FORMAT } from "../../../types/format.types";
+import {
+    ConstArrayToType,
+    OPENAPI_NUMBER_TYPE_FORMAT,
+} from "../../../types/format.types";
 
 export declare namespace NumberConverterNode {
     export interface Input extends OpenAPIV3_1.NonArraySchemaObject {
@@ -21,8 +24,12 @@ export declare namespace NumberConverterNode {
     }
 }
 
-function isOpenApiNumberTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> {
-    return OPENAPI_NUMBER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT>);
+function isOpenApiNumberTypeFormat(
+    format: unknown
+): format is ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT> {
+    return OPENAPI_NUMBER_TYPE_FORMAT.includes(
+        format as ConstArrayToType<typeof OPENAPI_NUMBER_TYPE_FORMAT>
+    );
 }
 
 export class NumberConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -34,7 +41,9 @@ export class NumberConverterNode extends BaseOpenApiV3_1ConverterNode<
     maximum: number | undefined;
     default: number | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<NumberConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<NumberConverterNode.Input>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -42,7 +51,10 @@ export class NumberConverterNode extends BaseOpenApiV3_1ConverterNode<
     parse(): void {
         this.minimum = this.input.minimum;
         this.maximum = this.input.maximum;
-        if (this.input.default != null && typeof this.input.default !== "number") {
+        if (
+            this.input.default != null &&
+            typeof this.input.default !== "number"
+        ) {
             this.context.errors.warning({
                 message: `Expected default value to be a number. Received ${this.input.default}`,
                 path: this.accessPath,

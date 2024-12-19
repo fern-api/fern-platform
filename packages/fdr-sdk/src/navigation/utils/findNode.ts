@@ -18,7 +18,10 @@ export declare namespace Node {
         root: FernNavigation.RootNode;
         versions: readonly FernNavigation.VersionNode[];
         currentVersion: FernNavigation.VersionNode | undefined;
-        currentTab: FernNavigation.TabNode | FernNavigation.ChangelogNode | undefined;
+        currentTab:
+            | FernNavigation.TabNode
+            | FernNavigation.ChangelogNode
+            | undefined;
         tabs: readonly FernNavigation.TabChild[];
         sidebar: FernNavigation.SidebarRootNode | undefined;
         apiReference: FernNavigation.ApiReferenceNode | undefined;
@@ -47,13 +50,18 @@ export declare namespace Node {
     }
 }
 
-export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slug): Node {
+export function findNode(
+    root: FernNavigation.RootNode,
+    slug: FernNavigation.Slug
+): Node {
     const collector = NodeCollector.collect(root);
     const found = collector.getSlugMapWithParents().get(slug);
 
     // if the slug points to a node that doesn't exist, we should redirect to the first likely node
     if (found == null) {
-        let maybeVersionNode: FernNavigation.RootNode | FernNavigation.VersionNode = root;
+        let maybeVersionNode:
+            | FernNavigation.RootNode
+            | FernNavigation.VersionNode = root;
 
         // the 404 behavior should be version-aware
         for (const versionNode of collector.getVersionNodes()) {
@@ -63,7 +71,11 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
             }
         }
 
-        return { type: "notFound", redirect: maybeVersionNode.pointsTo, authed: maybeVersionNode.authed };
+        return {
+            type: "notFound",
+            redirect: maybeVersionNode.pointsTo,
+            authed: maybeVersionNode.authed,
+        };
     }
 
     const sidebar = found.parents.find(isSidebarRootNode);
@@ -75,16 +87,24 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     const tabbedNode =
         found.parents.find(isTabbedNode) ??
         // fallback to the version child because the current node may be a landing page
-        (versionChild != null && isTabbedNode(versionChild) ? versionChild : undefined);
+        (versionChild != null && isTabbedNode(versionChild)
+            ? versionChild
+            : undefined);
 
     const apiReference =
-        found.parents.find(isApiReferenceNode) ?? (found.node.type === "apiReference" ? found.node : undefined);
+        found.parents.find(isApiReferenceNode) ??
+        (found.node.type === "apiReference" ? found.node : undefined);
 
     // if the node is visible (becaues it's a page), return it as "found"
     if (FernNavigation.isPage(found.node)) {
         const parentsAndNode = [...found.parents, found.node];
-        const tabbedNodeIndex = parentsAndNode.findIndex((node) => node === tabbedNode);
-        const currentTabNode = tabbedNodeIndex !== -1 ? parentsAndNode[tabbedNodeIndex + 1] : undefined;
+        const tabbedNodeIndex = parentsAndNode.findIndex(
+            (node) => node === tabbedNode
+        );
+        const currentTabNode =
+            tabbedNodeIndex !== -1
+                ? parentsAndNode[tabbedNodeIndex + 1]
+                : undefined;
         const versions = collector.getVersionNodes().map((node) => {
             if (node.default) {
                 // if we're currently viewing the default version, we may be viewing the non-pruned version
@@ -97,9 +117,14 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
             return node;
         });
         const currentTab =
-            currentTabNode?.type === "tab" || currentTabNode?.type === "changelog" ? currentTabNode : undefined;
+            currentTabNode?.type === "tab" ||
+            currentTabNode?.type === "changelog"
+                ? currentTabNode
+                : undefined;
         const slugPrefix = currentVersion?.slug ?? root.slug;
-        const unversionedSlug = FernNavigation.Slug(found.node.slug.replace(new RegExp(`^${slugPrefix}/?`), ""));
+        const unversionedSlug = FernNavigation.Slug(
+            found.node.slug.replace(new RegExp(`^${slugPrefix}/?`), "")
+        );
         return {
             type: "found",
             node: found.node,
@@ -131,5 +156,9 @@ export function findNode(root: FernNavigation.RootNode, slug: FernNavigation.Slu
     }
 
     // if the node does not have a redirect, return a 404
-    return { type: "notFound", redirect: currentVersion?.pointsTo ?? root.pointsTo, authed: found.node.authed };
+    return {
+        type: "notFound",
+        redirect: currentVersion?.pointsTo ?? root.pointsTo,
+        authed: found.node.authed,
+    };
 }

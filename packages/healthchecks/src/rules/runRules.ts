@@ -24,9 +24,16 @@ function getAllRules(): Rule[] {
     return [new AllPagesLoadRule(), new SearchSlugsCorrectRule()];
 }
 
-const FDR_CLIENT = new FdrClient({ environment: "https://registry.buildwithfern.com", token: process.env.FERN_TOKEN });
+const FDR_CLIENT = new FdrClient({
+    environment: "https://registry.buildwithfern.com",
+    token: process.env.FERN_TOKEN,
+});
 
-export async function runRules({ url }: { url: string }): Promise<RuleResult[]> {
+export async function runRules({
+    url,
+}: {
+    url: string;
+}): Promise<RuleResult[]> {
     const rules = getAllRules();
     const results: RuleResult[] = [];
     for (const rule of rules) {
@@ -37,7 +44,10 @@ export async function runRules({ url }: { url: string }): Promise<RuleResult[]> 
             });
             results.push(result);
         } catch (error) {
-            console.error(`Error running rule ${rule.name}`, JSON.stringify(error));
+            console.error(
+                `Error running rule ${rule.name}`,
+                JSON.stringify(error)
+            );
         }
     }
     return results;

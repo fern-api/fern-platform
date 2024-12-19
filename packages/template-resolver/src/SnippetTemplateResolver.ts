@@ -34,13 +34,18 @@ class DefaultedV1Snippet {
             case "union":
             case "union_v2":
             case "enum":
-                defaulted_invocation = template.templateString?.replace(TemplateSentinel, "") ?? "";
+                defaulted_invocation =
+                    template.templateString?.replace(TemplateSentinel, "") ??
+                    "";
                 break;
             case "dict":
                 defaulted_invocation = "{}";
                 break;
             case "iterable":
-                defaulted_invocation = template.containerTemplateString.replace(TemplateSentinel, "");
+                defaulted_invocation = template.containerTemplateString.replace(
+                    TemplateSentinel,
+                    ""
+                );
                 break;
         }
 
@@ -58,11 +63,15 @@ const TemplateSentinel = "$FERN_INPUT";
 export class SnippetTemplateResolver {
     private payload: FernRegistry.CustomSnippetPayload;
     private endpointSnippetTemplate: FernRegistry.EndpointSnippetTemplate;
-    private maybeApiDefinition: FernRegistry.api.v1.read.ApiDefinition | undefined;
+    private maybeApiDefinition:
+        | FernRegistry.api.v1.read.ApiDefinition
+        | undefined;
     private maybeObjectFlattener: ObjectFlattener | undefined;
     private maybeApiDefinitionId: FernRegistry.ApiDefinitionId | undefined;
     private apiDefinitionHasBeenRequested: boolean;
-    private apiDefinitionGetter: ((id: string) => Promise<FernRegistry.api.v1.read.ApiDefinition>) | undefined;
+    private apiDefinitionGetter:
+        | ((id: string) => Promise<FernRegistry.api.v1.read.ApiDefinition>)
+        | undefined;
 
     constructor({
         payload,
@@ -71,13 +80,16 @@ export class SnippetTemplateResolver {
     }: {
         payload: FernRegistry.CustomSnippetPayload;
         endpointSnippetTemplate: FernRegistry.EndpointSnippetTemplate;
-        apiDefinitionGetter?: (id: string) => Promise<FernRegistry.api.v1.read.ApiDefinition>;
+        apiDefinitionGetter?: (
+            id: string
+        ) => Promise<FernRegistry.api.v1.read.ApiDefinition>;
     }) {
         this.payload = payload;
         this.endpointSnippetTemplate = endpointSnippetTemplate;
 
         // maybeApiDefinitionId is the ID of the API definition, stored on the template itself, used as a fallback
-        this.maybeApiDefinitionId = this.endpointSnippetTemplate.apiDefinitionId;
+        this.maybeApiDefinitionId =
+            this.endpointSnippetTemplate.apiDefinitionId;
         // If we have already attempted to get the API definition
         // We only do this to be able to delay requesting the definition unless we really need to (ie if there's a union template)
         this.apiDefinitionHasBeenRequested = false;
@@ -86,13 +98,15 @@ export class SnippetTemplateResolver {
 
     private accessParameterPayloadByPath(
         parameterPayloads?: FernRegistry.ParameterPayload[],
-        locationPath?: string,
+        locationPath?: string
     ): unknown | undefined {
         const splitPath = locationPath?.split(".") ?? [];
         const parameterName = splitPath.shift();
 
         if (parameterName != null && parameterPayloads != null) {
-            const selectedParameter = parameterPayloads.find((parameter) => parameter.name === parameterName);
+            const selectedParameter = parameterPayloads.find(
+                (parameter) => parameter.name === parameterName
+            );
             if (selectedParameter != null) {
                 return accessByPathNonNull(selectedParameter.value, splitPath);
             }
@@ -101,40 +115,67 @@ export class SnippetTemplateResolver {
         return undefined;
     }
 
-    private accessAuthPayloadByPath(authPayload?: FernRegistry.AuthPayload, locationPath?: string): unknown {
+    private accessAuthPayloadByPath(
+        authPayload?: FernRegistry.AuthPayload,
+        locationPath?: string
+    ): unknown {
         if (authPayload != null) {
             return accessByPathNonNull(authPayload, locationPath);
         }
-        const maybePayloadName = locationPath?.replace(/\[.*?\]/g, "")?.split(".")[0];
+        const maybePayloadName = locationPath
+            ?.replace(/\[.*?\]/g, "")
+            ?.split(".")[0];
 
         return `YOUR_${(maybePayloadName ?? "variable").toUpperCase()}`;
     }
 
-    private getPayloadValue(location: FernRegistry.PayloadInput, payloadOverride?: unknown): unknown | undefined {
+    private getPayloadValue(
+        location: FernRegistry.PayloadInput,
+        payloadOverride?: unknown
+    ): unknown | undefined {
         if (location.location === "RELATIVE" && payloadOverride != null) {
             return accessByPathNonNull(payloadOverride, location.path);
         }
 
         switch (location.location) {
             case "BODY":
-                return accessByPathNonNull(this.payload.requestBody, location.path);
+                return accessByPathNonNull(
+                    this.payload.requestBody,
+                    location.path
+                );
             case "RELATIVE":
                 // If you're here you don't have a payload, so return undefined
                 return undefined;
             case "QUERY":
-                return this.accessParameterPayloadByPath(this.payload.queryParameters, location.path);
+                return this.accessParameterPayloadByPath(
+                    this.payload.queryParameters,
+                    location.path
+                );
             case "PATH":
-                return this.accessParameterPayloadByPath(this.payload.pathParameters, location.path);
+                return this.accessParameterPayloadByPath(
+                    this.payload.pathParameters,
+                    location.path
+                );
             case "HEADERS":
-                return this.accessParameterPayloadByPath(this.payload.headers, location.path);
+                return this.accessParameterPayloadByPath(
+                    this.payload.headers,
+                    location.path
+                );
             case "AUTH":
-                return this.accessAuthPayloadByPath(this.payload.auth, location.path);
+                return this.accessAuthPayloadByPath(
+                    this.payload.auth,
+                    location.path
+                );
             default:
-                throw new Error(`Unknown payload input type: ${location.location}`);
+                throw new Error(
+                    `Unknown payload input type: ${location.location}`
+                );
         }
     }
 
-    private async getApiDefinition(): Promise<FernRegistry.api.v1.read.ApiDefinition | undefined> {
+    private async getApiDefinition(): Promise<
+        FernRegistry.api.v1.read.ApiDefinition | undefined
+    > {
         if (this.maybeApiDefinition != null) {
             return this.maybeApiDefinition;
         }
@@ -148,7 +189,10 @@ export class SnippetTemplateResolver {
             this.apiDefinitionHasBeenRequested = true;
             if (this.maybeApiDefinitionId != null) {
                 try {
-                    const apiDefinitionResponse = await this.apiDefinitionGetter(this.maybeApiDefinitionId);
+                    const apiDefinitionResponse =
+                        await this.apiDefinitionGetter(
+                            this.maybeApiDefinitionId
+                        );
                     this.maybeApiDefinition = apiDefinitionResponse;
                 } catch (err) {}
             }
@@ -157,7 +201,9 @@ export class SnippetTemplateResolver {
         return;
     }
 
-    private getObjectFlattener(apiDefinition: FernRegistry.api.v1.read.ApiDefinition): ObjectFlattener {
+    private getObjectFlattener(
+        apiDefinition: FernRegistry.api.v1.read.ApiDefinition
+    ): ObjectFlattener {
         if (this.maybeObjectFlattener != null) {
             return this.maybeObjectFlattener;
         }
@@ -178,14 +224,20 @@ export class SnippetTemplateResolver {
         const imports: string[] = template.imports ?? [];
         switch (template.type) {
             case "generic": {
-                if (template.templateInputs == null || template.templateInputs.length === 0) {
+                if (
+                    template.templateInputs == null ||
+                    template.templateInputs.length === 0
+                ) {
                     // TODO: If the field is required return SOMETHING, ideally from the default example
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const input of template.templateInputs) {
                     if (input.type === "payload") {
-                        const evaluatedPayload = this.getPayloadValue(input, payloadOverride);
+                        const evaluatedPayload = this.getPayloadValue(
+                            input,
+                            payloadOverride
+                        );
                         if (evaluatedPayload != null) {
                             evaluatedInputs.push({
                                 imports,
@@ -208,11 +260,15 @@ export class SnippetTemplateResolver {
                 return new DefaultedV1Snippet({
                     template,
                     isRequired,
-                    imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
+                    imports: imports.concat(
+                        evaluatedInputs.flatMap((input) => input.imports)
+                    ),
                     invocation: template.templateString.replace(
                         // TODO: fix the typescript generator to create literals not as types
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.inputDelimiter ?? ", "),
+                        evaluatedInputs
+                            .map((input) => input.invocation)
+                            .join(template.inputDelimiter ?? ", ")
                     ),
                 });
             }
@@ -220,7 +276,10 @@ export class SnippetTemplateResolver {
                 if (template.templateInput == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
-                const payloadValue = this.getPayloadValue(template.templateInput, payloadOverride);
+                const payloadValue = this.getPayloadValue(
+                    template.templateInput,
+                    payloadOverride
+                );
                 if (!Array.isArray(payloadValue)) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
@@ -238,10 +297,14 @@ export class SnippetTemplateResolver {
                 return new DefaultedV1Snippet({
                     template,
                     isRequired,
-                    imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
+                    imports: imports.concat(
+                        evaluatedInputs.flatMap((input) => input.imports)
+                    ),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs
+                            .map((input) => input.invocation)
+                            .join(template.delimiter ?? ", ")
                     ),
                 });
             }
@@ -249,14 +312,22 @@ export class SnippetTemplateResolver {
                 if (template.templateInput == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
-                const payloadValue = this.getPayloadValue(template.templateInput, payloadOverride);
-                if (payloadValue == null || Array.isArray(payloadValue) || typeof payloadValue !== "object") {
+                const payloadValue = this.getPayloadValue(
+                    template.templateInput,
+                    payloadOverride
+                );
+                if (
+                    payloadValue == null ||
+                    Array.isArray(payloadValue) ||
+                    typeof payloadValue !== "object"
+                ) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
                 const evaluatedInputs: V1Snippet[] = [];
                 for (const key in payloadValue) {
-                    const value = payloadValue[key as keyof typeof payloadValue];
+                    const value =
+                        payloadValue[key as keyof typeof payloadValue];
                     const keySnippet = this.resolveV1Template({
                         template: template.keyTemplate,
                         payloadOverride: key,
@@ -267,7 +338,9 @@ export class SnippetTemplateResolver {
                     }).snippet;
                     if (keySnippet != null && valueSnippet != null) {
                         evaluatedInputs.push({
-                            imports: keySnippet.imports.concat(valueSnippet.imports),
+                            imports: keySnippet.imports.concat(
+                                valueSnippet.imports
+                            ),
                             invocation: `${keySnippet.invocation}${template.keyValueSeparator}${valueSnippet.invocation}`,
                         });
                     }
@@ -275,10 +348,14 @@ export class SnippetTemplateResolver {
                 return new DefaultedV1Snippet({
                     template,
                     isRequired,
-                    imports: imports.concat(evaluatedInputs.flatMap((input) => input.imports)),
+                    imports: imports.concat(
+                        evaluatedInputs.flatMap((input) => input.imports)
+                    ),
                     invocation: template.containerTemplateString.replace(
                         TemplateSentinel,
-                        evaluatedInputs.map((input) => input.invocation).join(template.delimiter ?? ", "),
+                        evaluatedInputs
+                            .map((input) => input.invocation)
+                            .join(template.delimiter ?? ", ")
                     ),
                 });
             }
@@ -286,23 +363,34 @@ export class SnippetTemplateResolver {
                 const enumValues = template.values;
                 const enumSdkValues = Object.values(template.values);
                 const defaultEnumValue = enumSdkValues[0];
-                if (template.templateInput == null || defaultEnumValue == null) {
+                if (
+                    template.templateInput == null ||
+                    defaultEnumValue == null
+                ) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
-                const maybeEnumWireValue = this.getPayloadValue(template.templateInput, payloadOverride);
+                const maybeEnumWireValue = this.getPayloadValue(
+                    template.templateInput,
+                    payloadOverride
+                );
 
                 if (maybeEnumWireValue == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
                 const enumSdkValue =
-                    (typeof maybeEnumWireValue === "string" ? enumValues[maybeEnumWireValue] : undefined) ??
-                    defaultEnumValue;
+                    (typeof maybeEnumWireValue === "string"
+                        ? enumValues[maybeEnumWireValue]
+                        : undefined) ?? defaultEnumValue;
                 return new DefaultedV1Snippet({
                     template,
                     isRequired,
                     imports,
-                    invocation: template.templateString?.replace(TemplateSentinel, enumSdkValue) ?? enumSdkValue,
+                    invocation:
+                        template.templateString?.replace(
+                            TemplateSentinel,
+                            enumSdkValue
+                        ) ?? enumSdkValue,
                 });
             }
             case "discriminatedUnion": {
@@ -311,10 +399,17 @@ export class SnippetTemplateResolver {
 
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
-                    template.templateInput ?? { location: FernRegistry.PayloadLocation.Relative, path: undefined },
-                    payloadOverride,
+                    template.templateInput ?? {
+                        location: FernRegistry.PayloadLocation.Relative,
+                        path: undefined,
+                    },
+                    payloadOverride
                 );
-                if (maybeUnionValue == null || !isPlainObject(maybeUnionValue) || !(discriminator in maybeUnionValue)) {
+                if (
+                    maybeUnionValue == null ||
+                    !isPlainObject(maybeUnionValue) ||
+                    !(discriminator in maybeUnionValue)
+                ) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
@@ -329,10 +424,11 @@ export class SnippetTemplateResolver {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
-                const evaluatedMember: V1Snippet | undefined = this.resolveV1Template({
-                    template: selectedMemberTemplate,
-                    payloadOverride,
-                }).snippet;
+                const evaluatedMember: V1Snippet | undefined =
+                    this.resolveV1Template({
+                        template: selectedMemberTemplate,
+                        payloadOverride,
+                    }).snippet;
                 if (evaluatedMember == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
@@ -341,7 +437,10 @@ export class SnippetTemplateResolver {
                     template,
                     isRequired,
                     imports: imports.concat(evaluatedMember.imports),
-                    invocation: template.templateString.replace(TemplateSentinel, evaluatedMember.invocation),
+                    invocation: template.templateString.replace(
+                        TemplateSentinel,
+                        evaluatedMember.invocation
+                    ),
                 });
             }
             case "union": {
@@ -355,12 +454,20 @@ export class SnippetTemplateResolver {
 
                 const maybeUnionValue = this.getPayloadValue(
                     // Defaults to relative since the python generator didn't specify this on historical templates
-                    template.templateInput ?? { location: FernRegistry.PayloadLocation.Relative, path: undefined },
-                    payloadOverride,
+                    template.templateInput ?? {
+                        location: FernRegistry.PayloadLocation.Relative,
+                        path: undefined,
+                    },
+                    payloadOverride
                 );
 
-                const objectFlattener = this.getObjectFlattener(this.maybeApiDefinition);
-                const unionMatcher = new UnionMatcher(this.maybeApiDefinition, objectFlattener);
+                const objectFlattener = this.getObjectFlattener(
+                    this.maybeApiDefinition
+                );
+                const unionMatcher = new UnionMatcher(
+                    this.maybeApiDefinition,
+                    objectFlattener
+                );
                 const bestFitTemplate = unionMatcher.getBestFitTemplate({
                     members: template.members,
                     payloadOverride: maybeUnionValue,
@@ -370,10 +477,11 @@ export class SnippetTemplateResolver {
                     return new DefaultedV1Snippet({ template, isRequired });
                 }
 
-                const evaluatedTemplate: V1Snippet | undefined = this.resolveV1Template({
-                    template: bestFitTemplate,
-                    payloadOverride: maybeUnionValue,
-                }).snippet;
+                const evaluatedTemplate: V1Snippet | undefined =
+                    this.resolveV1Template({
+                        template: bestFitTemplate,
+                        payloadOverride: maybeUnionValue,
+                    }).snippet;
 
                 if (evaluatedTemplate == null) {
                     return new DefaultedV1Snippet({ template, isRequired });
@@ -383,17 +491,25 @@ export class SnippetTemplateResolver {
                     template,
                     isRequired,
                     imports: imports.concat(evaluatedTemplate.imports),
-                    invocation: template.templateString.replace(TemplateSentinel, evaluatedTemplate.invocation),
+                    invocation: template.templateString.replace(
+                        TemplateSentinel,
+                        evaluatedTemplate.invocation
+                    ),
                 });
             }
         }
     }
 
-    private resolveSnippetV1TemplateString(template: FernRegistry.SnippetTemplate): string {
+    private resolveSnippetV1TemplateString(
+        template: FernRegistry.SnippetTemplate
+    ): string {
         const clientSnippet =
             typeof template.clientInstantiation === "string"
                 ? template.clientInstantiation
-                : this.resolveV1Template({ template: template.clientInstantiation, isRequired: true }).snippet;
+                : this.resolveV1Template({
+                      template: template.clientInstantiation,
+                      isRequired: true,
+                  }).snippet;
 
         const endpointSnippet = this.resolveV1Template({
             template: template.functionInvocation,
@@ -421,19 +537,25 @@ ${endpointSnippet?.invocation}
 
     private resolveSnippetV1TemplateToSnippet(
         sdk: FernRegistry.Sdk,
-        template: FernRegistry.SnippetTemplate,
+        template: FernRegistry.SnippetTemplate
     ): FernRegistry.Snippet {
         const snippet = this.resolveSnippetV1TemplateString(template);
 
         switch (sdk.type) {
             case "typescript":
-                return { type: "typescript", sdk, client: snippet, exampleIdentifier: undefined };
+                return {
+                    type: "typescript",
+                    sdk,
+                    client: snippet,
+                    exampleIdentifier: undefined,
+                };
             case "python":
                 return {
                     type: "python",
                     sdk,
                     sync_client: snippet,
-                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
+                    async_client:
+                        this.resolveAdditionalTemplate("async") ?? snippet,
                     exampleIdentifier: undefined,
                 };
             case "java":
@@ -441,23 +563,39 @@ ${endpointSnippet?.invocation}
                     type: "java",
                     sdk,
                     sync_client: snippet,
-                    async_client: this.resolveAdditionalTemplate("async") ?? snippet,
+                    async_client:
+                        this.resolveAdditionalTemplate("async") ?? snippet,
                     exampleIdentifier: undefined,
                 };
             case "go":
-                return { type: "go", sdk, client: snippet, exampleIdentifier: undefined };
+                return {
+                    type: "go",
+                    sdk,
+                    client: snippet,
+                    exampleIdentifier: undefined,
+                };
             case "ruby":
-                return { type: "ruby", sdk, client: snippet, exampleIdentifier: undefined };
+                return {
+                    type: "ruby",
+                    sdk,
+                    client: snippet,
+                    exampleIdentifier: undefined,
+                };
             default:
-                throw new Error("Encountered unexpected SDK type in snippet generation, failing hard.");
+                throw new Error(
+                    "Encountered unexpected SDK type in snippet generation, failing hard."
+                );
         }
     }
 
-    public resolve(apiDefinition?: FernRegistry.api.v1.read.ApiDefinition): FernRegistry.Snippet {
+    public resolve(
+        apiDefinition?: FernRegistry.api.v1.read.ApiDefinition
+    ): FernRegistry.Snippet {
         this.maybeApiDefinition = apiDefinition;
 
         const sdk: FernRegistry.Sdk = this.endpointSnippetTemplate.sdk;
-        const template: FernRegistry.VersionedSnippetTemplate = this.endpointSnippetTemplate.snippetTemplate;
+        const template: FernRegistry.VersionedSnippetTemplate =
+            this.endpointSnippetTemplate.snippetTemplate;
         switch (template.type) {
             case "v1":
                 return this.resolveSnippetV1TemplateToSnippet(sdk, template);
@@ -467,7 +605,7 @@ ${endpointSnippet?.invocation}
     }
 
     public async resolveWithFormatting(
-        apiDefinition?: FernRegistry.api.v1.read.ApiDefinition,
+        apiDefinition?: FernRegistry.api.v1.read.ApiDefinition
     ): Promise<FernRegistry.Snippet> {
         const { formatSnippet } = await import("./formatSnippet");
         apiDefinition = apiDefinition ?? (await this.getApiDefinition());
@@ -489,7 +627,9 @@ ${endpointSnippet?.invocation}
                 case "v1":
                     return this.resolveSnippetV1TemplateString(template);
                 default:
-                    throw new Error(`Unknown template version: ${template.type}`);
+                    throw new Error(
+                        `Unknown template version: ${template.type}`
+                    );
             }
         }
         return undefined;

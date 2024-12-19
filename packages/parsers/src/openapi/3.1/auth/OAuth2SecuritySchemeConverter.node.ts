@@ -18,7 +18,9 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
 
     accessTokenLocatorNode: XFernAccessTokenLocatorConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OAuth2SecurityScheme>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OAuth2SecurityScheme>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -41,12 +43,13 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
                 accessPath: this.accessPath,
                 pathId: this.pathId,
             });
-            this.accessTokenLocatorNode = new XFernAccessTokenLocatorConverterNode({
-                input: this.input,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: this.pathId,
-            });
+            this.accessTokenLocatorNode =
+                new XFernAccessTokenLocatorConverterNode({
+                    input: this.input,
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: this.pathId,
+                });
 
             if (this.authorizationUrl == null) {
                 this.context.errors.error({
@@ -57,7 +60,8 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
 
             if (this.accessTokenLocatorNode?.accessTokenLocator == null) {
                 this.context.errors.error({
-                    message: "Expected 'x-fern-access-token-locator' property to be specified",
+                    message:
+                        "Expected 'x-fern-access-token-locator' property to be specified",
                     path: this.accessPath,
                 });
             }
@@ -76,8 +80,11 @@ export class OAuth2SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
                 type: "clientCredentials",
                 value: {
                     type: "referencedEndpoint",
-                    endpointId: FernRegistry.EndpointId(getEndpointId("post", this.authorizationUrl)),
-                    accessTokenLocator: FernRegistry.JqString(accessTokenLocator),
+                    endpointId: FernRegistry.EndpointId(
+                        getEndpointId("post", this.authorizationUrl)
+                    ),
+                    accessTokenLocator:
+                        FernRegistry.JqString(accessTokenLocator),
                     headerName: this.headerAuthNode?.convert()?.headerWireValue,
                     tokenPrefix: this.headerAuthNode?.convert()?.prefix,
                 },

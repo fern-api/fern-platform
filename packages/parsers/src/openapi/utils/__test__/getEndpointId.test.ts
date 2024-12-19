@@ -6,7 +6,9 @@ describe("getEndpointId", () => {
     });
 
     it("handles multiple path segments", () => {
-        expect(getEndpointId("POST", "/users/orders/items")).toBe("post-users-orders-items");
+        expect(getEndpointId("POST", "/users/orders/items")).toBe(
+            "post-users-orders-items"
+        );
     });
 
     it("handles uppercase methods", () => {
@@ -14,7 +16,9 @@ describe("getEndpointId", () => {
     });
 
     it("handles path parameters", () => {
-        expect(getEndpointId("PUT", "/users/{userId}")).toBe("put-users-user-id");
+        expect(getEndpointId("PUT", "/users/{userId}")).toBe(
+            "put-users-user-id"
+        );
     });
 
     it("handles empty path", () => {

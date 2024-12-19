@@ -1,4 +1,9 @@
-import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    cwd,
+    doesPathExist,
+    resolve,
+} from "@fern-api/fs-utils";
 import fs from "fs";
 import { mkdir, readFile } from "fs/promises";
 import path from "path";
@@ -32,7 +37,9 @@ void yargs(hideBin(process.argv))
                 }),
         async (argv) => {
             if (argv.config == null) {
-                process.stderr.write("missing required arguments; please specify the --config flag\n");
+                process.stderr.write(
+                    "missing required arguments; please specify the --config flag\n"
+                );
                 process.exit(1);
             }
             const wd = cwd();
@@ -42,13 +49,16 @@ void yargs(hideBin(process.argv))
             const generator = new ReadmeGenerator({
                 readmeParser: new ReadmeParser(),
                 readmeConfig,
-                originalReadme: argv.originalReadme != null ? await readFile(argv.originalReadme, "utf8") : undefined,
+                originalReadme:
+                    argv.originalReadme != null
+                        ? await readFile(argv.originalReadme, "utf8")
+                        : undefined,
             });
             await generator.generateReadme({
                 output: await createWriteStream(argv.output),
             });
             process.exit(0);
-        },
+        }
     )
     .command(
         "generate-reference",
@@ -65,7 +75,9 @@ void yargs(hideBin(process.argv))
                 }),
         async (argv) => {
             if (argv.config == null) {
-                process.stderr.write("missing required arguments; please specify the --config flag\n");
+                process.stderr.write(
+                    "missing required arguments; please specify the --config flag\n"
+                );
                 process.exit(1);
             }
             const wd = cwd();
@@ -79,19 +91,23 @@ void yargs(hideBin(process.argv))
                 output: await createWriteStream(argv.output),
             });
             process.exit(0);
-        },
+        }
     )
     .demandCommand()
     .showHelpOnFail(true)
     .parse();
 
-async function createWriteStream(outputPath: string | undefined): Promise<fs.WriteStream> {
+async function createWriteStream(
+    outputPath: string | undefined
+): Promise<fs.WriteStream> {
     return outputPath != null
         ? await createWriteStreamFromFile(resolve(cwd(), outputPath))
         : (process.stdout as unknown as fs.WriteStream);
 }
 
-async function createWriteStreamFromFile(filepath: AbsoluteFilePath): Promise<fs.WriteStream> {
+async function createWriteStreamFromFile(
+    filepath: AbsoluteFilePath
+): Promise<fs.WriteStream> {
     if (!doesPathExist(filepath)) {
         await mkdir(path.dirname(filepath), { recursive: true });
     }

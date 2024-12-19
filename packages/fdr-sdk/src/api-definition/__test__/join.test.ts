@@ -278,12 +278,17 @@ describe("join", () => {
     it("should prune endpoint1 and its types", () => {
         const pruned = joiner()(api1, api2, api3);
 
-        expect(Object.keys(pruned.endpoints)).toStrictEqual([endpoint1.id, endpoint2.id]);
+        expect(Object.keys(pruned.endpoints)).toStrictEqual([
+            endpoint1.id,
+            endpoint2.id,
+        ]);
         expect(Object.keys(pruned.websockets)).toStrictEqual([websocket1.id]);
         expect(new Set(Object.keys(pruned.types))).toStrictEqual(
-            new Set([type1.name, type2.name, type3.name, type4.name]),
+            new Set([type1.name, type2.name, type3.name, type4.name])
         );
-        expect(Object.keys(pruned.auths)).toStrictEqual([Latest.AuthSchemeId("auth")]);
+        expect(Object.keys(pruned.auths)).toStrictEqual([
+            Latest.AuthSchemeId("auth"),
+        ]);
         expect(pruned.globalHeaders).toStrictEqual([
             {
                 key: Latest.PropertyKey("global"),

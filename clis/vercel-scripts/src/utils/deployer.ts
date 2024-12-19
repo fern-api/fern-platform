@@ -56,31 +56,59 @@ export class VercelDeployer {
     }
 
     private async pull(project: { id: string; name: string }): Promise<void> {
-        const args = ["vercel", "pull", "--yes", `--environment=${this.environment}`, `--token=${this.token}`];
-        await loggingExeca(`[${this.environmentName}] Pull ${project.name} from Vercel (${project.id})`, "pnpx", args, {
-            env: this.env(project.id),
-            cwd: this.cwd,
-        });
+        const args = [
+            "vercel",
+            "pull",
+            "--yes",
+            `--environment=${this.environment}`,
+            `--token=${this.token}`,
+        ];
+        await loggingExeca(
+            `[${this.environmentName}] Pull ${project.name} from Vercel (${project.id})`,
+            "pnpx",
+            args,
+            {
+                env: this.env(project.id),
+                cwd: this.cwd,
+            }
+        );
     }
 
     private async build(project: { id: string; name: string }): Promise<void> {
         // let command = `pnpx vercel build --yes --token=${this.token} --debug`;
-        const args = ["vercel", "build", "--yes", `--token=${this.token}`, "--debug"];
+        const args = [
+            "vercel",
+            "build",
+            "--yes",
+            `--token=${this.token}`,
+            "--debug",
+        ];
         if (this.environment === "production") {
             args.push("--prod");
         }
-        await loggingExeca(`[${this.environmentName}] Build bundle for ${project.name}`, "pnpx", args, {
-            env: this.env(project.id),
-            cwd: this.cwd,
-        });
+        await loggingExeca(
+            `[${this.environmentName}] Build bundle for ${project.name}`,
+            "pnpx",
+            args,
+            {
+                env: this.env(project.id),
+                cwd: this.cwd,
+            }
+        );
     }
 
     private async deploy(
         project: { id: string; name: string },
-        opts?: { prebuilt?: boolean },
+        opts?: { prebuilt?: boolean }
     ): Promise<Vercel.GetDeploymentResponse> {
         // let command = `pnpx vercel deploy --yes --token=${this.token} --archive=tgz`;
-        const args = ["vercel", "deploy", "--yes", `--token=${this.token}`, "--archive=tgz"];
+        const args = [
+            "vercel",
+            "deploy",
+            "--yes",
+            `--token=${this.token}`,
+            "--archive=tgz",
+        ];
 
         if (opts?.prebuilt) {
             args.push("--prebuilt");
@@ -96,7 +124,7 @@ export class VercelDeployer {
             {
                 env: this.env(project.id),
                 cwd: this.cwd,
-            },
+            }
         );
 
         const deploymentUrl = String(result.stdout).trim();
@@ -105,7 +133,9 @@ export class VercelDeployer {
             throw new Error("Deployment failed: no deployment URL returned");
         }
 
-        const deployment = await this.vercel.deployments.getDeployment(cleanDeploymentId(deploymentUrl));
+        const deployment = await this.vercel.deployments.getDeployment(
+            cleanDeploymentId(deploymentUrl)
+        );
 
         // logCommand(`[${this.environmentName}] Deployment URL: https://${deployment.url}`);
 
@@ -119,9 +149,13 @@ export class VercelDeployer {
         return deployment;
     }
 
-    private async promote(deployment: Vercel.GetDeploymentResponse): Promise<void> {
+    private async promote(
+        deployment: Vercel.GetDeploymentResponse
+    ): Promise<void> {
         if (this.environment === "production") {
-            const isDev2 = this.loadEnvFile().includes("registry-dev2.buildwithfern.com");
+            const isDev2 = this.loadEnvFile().includes(
+                "registry-dev2.buildwithfern.com"
+            );
             if (!isDev2) {
                 return;
             }
@@ -131,9 +165,11 @@ export class VercelDeployer {
 
     public async buildAndDeployToVercel(
         project: string,
-        { skipDeploy = false }: { skipDeploy?: boolean } = {},
+        { skipDeploy = false }: { skipDeploy?: boolean } = {}
     ): Promise<Vercel.GetDeploymentResponse | undefined> {
-        const prj = await this.vercel.projects.getProject(project, { teamId: this.teamId });
+        const prj = await this.vercel.projects.getProject(project, {
+            teamId: this.teamId,
+        });
 
         await this.pull(prj);
 

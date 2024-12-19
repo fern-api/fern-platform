@@ -10,7 +10,8 @@ export function startProxyServer(target: string, origin: string): http.Server {
     };
 
     if (process.env.APP_BUILDWITHFERN_COM_PROTECTION_BYPASS) {
-        headers["x-vercel-protection-bypass"] = process.env.APP_BUILDWITHFERN_COM_PROTECTION_BYPASS;
+        headers["x-vercel-protection-bypass"] =
+            process.env.APP_BUILDWITHFERN_COM_PROTECTION_BYPASS;
     }
 
     const proxyMiddleware = createProxyMiddleware({

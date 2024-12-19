@@ -1,7 +1,10 @@
 import { Vercel } from "@fern-fern/vercel";
 import { logCommand } from "./loggingExeca.js";
 
-export async function requestPromote(token: string, deployment: Vercel.GetDeploymentResponse): Promise<void> {
+export async function requestPromote(
+    token: string,
+    deployment: Vercel.GetDeploymentResponse
+): Promise<void> {
     logCommand(`[Production] Promote ${deployment.url}`);
 
     if (deployment.target !== "production") {
@@ -32,16 +35,21 @@ export async function requestPromote(token: string, deployment: Vercel.GetDeploy
      * Note: the fern-generated SDK doesn't work for this, so we have to use fetch directly
      */
     // await vercel.projects.requestPromote(deployment.project.id, deployment.id, { teamId });
-    await fetch(`https://api.vercel.com/v10/projects/${deployment.project.id}/promote/${deployment.id}`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-        },
-        // required
-        body: JSON.stringify({}),
-    });
+    await fetch(
+        `https://api.vercel.com/v10/projects/${deployment.project.id}/promote/${deployment.id}`,
+        {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            // required
+            body: JSON.stringify({}),
+        }
+    );
 
     // eslint-disable-next-line no-console
-    console.log(`Successfully requested promote of ${deployment.name} to ${deployment.project.name}`);
+    console.log(
+        `Successfully requested promote of ${deployment.name} to ${deployment.project.name}`
+    );
 }

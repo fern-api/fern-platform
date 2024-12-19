@@ -22,7 +22,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             },
-            "application/json",
+            "application/json"
         );
 
         expect(converter.contentType).toBe("json");
@@ -43,7 +43,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             },
-            "application/octet-stream",
+            "application/octet-stream"
         );
 
         expect(converter.contentType).toBe("stream");
@@ -71,7 +71,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             },
-            "multipart/form-data",
+            "multipart/form-data"
         );
 
         expect(converter.contentType).toBe("form-data");
@@ -98,7 +98,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             },
-            "application/json",
+            "application/json"
         );
 
         expect(converter.schema).toBeDefined();
@@ -114,7 +114,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             },
-            "application/json",
+            "application/json"
         );
 
         expect(converter.schema).toBeUndefined();
@@ -135,7 +135,7 @@ describe("RequestMediaTypeObjectConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             },
-            "application/xml",
+            "application/xml"
         );
 
         expect(converter.contentType).toBeUndefined();

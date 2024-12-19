@@ -38,12 +38,17 @@ const samples = [
 ].map(generatePreviewContext);
 
 samples.forEach((sample) => {
-    test(`Check if ${sample.originalUrl} is online`, async ({ page, context }) => {
+    test(`Check if ${sample.originalUrl} is online`, async ({
+        page,
+        context,
+    }) => {
         // 1. set the preview cookie
         await addPreviewCookie(context, sample);
 
         // 2. navigate to the page and check if it is online
-        const response = await page.goto(sample.previewUrl, { waitUntil: "domcontentloaded" });
+        const response = await page.goto(sample.previewUrl, {
+            waitUntil: "domcontentloaded",
+        });
         expect(response?.status()).toBe(200);
 
         // 3. check if the version dropdown is present
@@ -51,13 +56,19 @@ samples.forEach((sample) => {
         await versionDropdown.click();
 
         // 4. collect all links from the version dropdown
-        const versionDropdownContent = page.getByTestId("version-dropdown-content");
+        const versionDropdownContent = page.getByTestId(
+            "version-dropdown-content"
+        );
         await versionDropdownContent.waitFor({ state: "attached" });
-        const options = await versionDropdownContent.getByRole("menuitemradio", { checked: false }).all();
+        const options = await versionDropdownContent
+            .getByRole("menuitemradio", { checked: false })
+            .all();
         expect(options.length).toBeGreaterThan(0);
 
         // 5. check if all links are online
-        const hrefs = await Promise.all(options.map((option) => option.getAttribute("href")));
+        const hrefs = await Promise.all(
+            options.map((option) => option.getAttribute("href"))
+        );
         for (const href of hrefs) {
             expect(href).not.toBeNull();
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

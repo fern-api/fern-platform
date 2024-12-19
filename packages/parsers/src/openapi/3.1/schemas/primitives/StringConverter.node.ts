@@ -6,7 +6,10 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, OPENAPI_STRING_TYPE_FORMAT } from "../../../types/format.types";
+import {
+    ConstArrayToType,
+    OPENAPI_STRING_TYPE_FORMAT,
+} from "../../../types/format.types";
 import { EnumConverterNode } from "./EnumConverter.node";
 
 export declare namespace StringConverterNode {
@@ -22,8 +25,12 @@ export declare namespace StringConverterNode {
     }
 }
 
-function isOpenApiStringTypeFormat(format: unknown): format is ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT> {
-    return OPENAPI_STRING_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>);
+function isOpenApiStringTypeFormat(
+    format: unknown
+): format is ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT> {
+    return OPENAPI_STRING_TYPE_FORMAT.includes(
+        format as ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>
+    );
 }
 
 export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -37,12 +44,16 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
     maxLength: number | undefined;
     enum: EnumConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>
+    ) {
         super(args);
         this.safeParse();
     }
 
-    mapToFdrType(format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>): FdrStringType["type"] {
+    mapToFdrType(
+        format: ConstArrayToType<typeof OPENAPI_STRING_TYPE_FORMAT>
+    ): FdrStringType["type"] {
         switch (format) {
             case "base64url":
             case "binary":
@@ -93,7 +104,10 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     parse(): void {
-        if (this.input.default != null && typeof this.input.default !== "string") {
+        if (
+            this.input.default != null &&
+            typeof this.input.default !== "string"
+        ) {
             this.context.errors.warning({
                 message: `Expected default value to be a string. Received ${this.input.default}`,
                 path: this.accessPath,
@@ -122,7 +136,10 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
     }
 
-    convert(): StringConverterNode.Output | FernRegistry.api.latest.TypeShape.Enum | undefined {
+    convert():
+        | StringConverterNode.Output
+        | FernRegistry.api.latest.TypeShape.Enum
+        | undefined {
         if (this.enum != null) {
             return this.enum.convert();
         }

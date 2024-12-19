@@ -19,7 +19,7 @@
     "@fern-api/venus-api-sdk": "^0.10.1-5-ged06d22",
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-fern/revalidation-sdk": "0.0.9",
-    "@fern-ui/fern-docs-search-server": "workspace:*",
+    "@fern-docs/search-server": "workspace:*",
     "@prisma/client": "5.13.0",
     "@sentry/cli": "^2.31.0",
     "@sentry/node": "^7.112.2",

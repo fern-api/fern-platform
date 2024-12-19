@@ -1,5 +1,5 @@
 {
-  "printWidth": 120,
+  "trailingComma": "es5",
   "tabWidth": 4,
   "overrides": [
     {
@@ -7,12 +7,7 @@
       "options": {
         "tabWidth": 2
       }
-    },
-    {
-      "files": "*.{json,cjs}",
-      "options": {
-        "trailingComma": "none"
-      }
     }
-  ]
+  ],
+  "plugins": ["prettier-plugin-packagejson"]
 }

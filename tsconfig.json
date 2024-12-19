@@ -23,22 +23,13 @@
       "path": "packages/commons/loadable"
     },
     {
-      "path": "packages/commons/next-seo"
+      "path": "packages/fern-docs/next-seo"
     },
     {
-      "path": "packages/commons/react/common-components"
+      "path": "packages/commons/react-commons"
     },
     {
-      "path": "packages/commons/react/fonts"
-    },
-    {
-      "path": "packages/commons/react/react-commons"
-    },
-    {
-      "path": "packages/commons/react/react-query-utils"
-    },
-    {
-      "path": "packages/commons/search-utils"
+      "path": "packages/fern-docs/search-utils"
     },
     {
       "path": "packages/fdr-sdk"
@@ -53,22 +44,19 @@
       "path": "packages/template-resolver"
     },
     {
-      "path": "packages/ui/app"
+      "path": "packages/fern-docs/ui"
     },
     {
-      "path": "packages/ui/components"
+      "path": "packages/fern-docs/components"
     },
     {
-      "path": "packages/ui/docs-bundle"
+      "path": "packages/fern-docs/bundle"
     },
     {
-      "path": "packages/ui/fern-dashboard"
+      "path": "packages/fern-docs/icons-cdn"
     },
     {
-      "path": "packages/ui/fontawesome-cdn"
-    },
-    {
-      "path": "packages/ui/local-preview-bundle"
+      "path": "packages/fern-docs/local-preview-bundle"
     },
     {
       "path": "servers/fdr-deploy"

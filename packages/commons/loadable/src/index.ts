@@ -8,7 +8,14 @@ export {
     loading,
     notStartedLoading,
 } from "./Loadable";
-export type { Failed, Loadable, Loaded, Loading, NotFailed, NotStartedLoading } from "./Loadable";
+export type {
+    Failed,
+    Loadable,
+    Loaded,
+    Loading,
+    NotFailed,
+    NotStartedLoading,
+} from "./Loadable";
 export {
     flatMapLoadable,
     getLoadableValue,

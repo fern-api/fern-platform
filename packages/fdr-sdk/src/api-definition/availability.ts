@@ -19,7 +19,7 @@ export const AvailabilityOrder = [
  * @returns the **least** stable availability level from the input array
  */
 export function coalesceAvailability(
-    availabilities: (Latest.Availability | undefined)[],
+    availabilities: (Latest.Availability | undefined)[]
 ): Latest.Availability | undefined {
     for (const availability of [...AvailabilityOrder].reverse()) {
         if (availabilities.includes(availability)) {
@@ -30,11 +30,15 @@ export function coalesceAvailability(
 }
 
 // the following code is used to check that the contents of the AvailabilityOrder array contains all the values of the Availability enum
-type AvailabilityValues = (typeof Latest.Availability)[keyof typeof Latest.Availability];
-type CheckAvailabilityOrder<T extends readonly AvailabilityValues[]> = T[number] extends AvailabilityValues
-    ? AvailabilityValues extends T[number]
-        ? true
-        : false
-    : false;
+type AvailabilityValues =
+    (typeof Latest.Availability)[keyof typeof Latest.Availability];
+type CheckAvailabilityOrder<T extends readonly AvailabilityValues[]> =
+    T[number] extends AvailabilityValues
+        ? AvailabilityValues extends T[number]
+            ? true
+            : false
+        : false;
 type Assert<T extends true> = T;
-export type CheckAssert = Assert<CheckAvailabilityOrder<typeof AvailabilityOrder>>;
+export type CheckAssert = Assert<
+    CheckAvailabilityOrder<typeof AvailabilityOrder>
+>;

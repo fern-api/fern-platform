@@ -11,7 +11,10 @@ interface EndpointDefinitionVisitor {
     ErrorExample: (error: Latest.ErrorExample) => void;
 }
 
-export function visitEndpointDefinition(endpoint: Latest.EndpointDefinition, visitor: EndpointDefinitionVisitor): void {
+export function visitEndpointDefinition(
+    endpoint: Latest.EndpointDefinition,
+    visitor: EndpointDefinitionVisitor
+): void {
     Transformer.with({
         EndpointDefinition: (endpoint) => {
             visitor.EndpointDefinition(endpoint);
@@ -49,7 +52,10 @@ interface WebhookDefinitionVisitor {
     WebhookPayload: (payload: Latest.WebhookPayload) => void;
 }
 
-export function visitWebhookDefinition(webhook: Latest.WebhookDefinition, visitor: WebhookDefinitionVisitor): void {
+export function visitWebhookDefinition(
+    webhook: Latest.WebhookDefinition,
+    visitor: WebhookDefinitionVisitor
+): void {
     Transformer.with({
         WebhookDefinition: (webhook) => {
             visitor.WebhookDefinition(webhook);
@@ -68,7 +74,10 @@ interface WebSocketChannelVisitor {
     ExampleWebSocketSession: (session: Latest.ExampleWebSocketSession) => void;
 }
 
-export function visitWebSocketChannel(channel: Latest.WebSocketChannel, visitor: WebSocketChannelVisitor): void {
+export function visitWebSocketChannel(
+    channel: Latest.WebSocketChannel,
+    visitor: WebSocketChannelVisitor
+): void {
     Transformer.with({
         WebSocketChannel: (channel) => {
             visitor.WebSocketChannel(channel);

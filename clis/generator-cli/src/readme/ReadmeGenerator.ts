@@ -35,10 +35,16 @@ export class ReadmeGenerator {
         this.readmeConfig = readmeConfig;
         this.originalReadme = originalReadme;
         this.languageTitle = languageToTitle(this.readmeConfig.language);
-        this.organizationPascalCase = pascalCase(this.readmeConfig.organization);
+        this.organizationPascalCase = pascalCase(
+            this.readmeConfig.organization
+        );
     }
 
-    public async generateReadme({ output }: { output: fs.WriteStream }): Promise<void> {
+    public async generateReadme({
+        output,
+    }: {
+        output: fs.WriteStream;
+    }): Promise<void> {
         const blocks = this.generateBlocks();
 
         const writer = new StreamWriter(output);
@@ -56,20 +62,45 @@ export class ReadmeGenerator {
         const blocks: Block[] = [];
 
         if (this.readmeConfig.apiReferenceLink != null) {
-            blocks.push(this.generateDocumentation({ docsLink: this.readmeConfig.apiReferenceLink }));
+            blocks.push(
+                this.generateDocumentation({
+                    docsLink: this.readmeConfig.apiReferenceLink,
+                })
+            );
         }
         if (this.readmeConfig.requirements != null) {
-            blocks.push(this.generateRequirements({ requirements: this.readmeConfig.requirements }));
+            blocks.push(
+                this.generateRequirements({
+                    requirements: this.readmeConfig.requirements,
+                })
+            );
         }
-        if (this.readmeConfig.language != null && this.readmeConfig.language.publishInfo != null) {
-            blocks.push(this.generateInstallation({ language: this.readmeConfig.language }));
+        if (
+            this.readmeConfig.language != null &&
+            this.readmeConfig.language.publishInfo != null
+        ) {
+            blocks.push(
+                this.generateInstallation({
+                    language: this.readmeConfig.language,
+                })
+            );
         }
         if (this.readmeConfig.referenceMarkdownPath != null) {
-            blocks.push(this.generateReference({ referenceFile: this.readmeConfig.referenceMarkdownPath }));
+            blocks.push(
+                this.generateReference({
+                    referenceFile: this.readmeConfig.referenceMarkdownPath,
+                })
+            );
         }
 
-        const coreFeatures = this.readmeConfig.features?.filter((feat) => !this.isAdvanced(feat)) ?? [];
-        const advancedFeatures = this.readmeConfig.features?.filter((feat) => this.isAdvanced(feat)) ?? [];
+        const coreFeatures =
+            this.readmeConfig.features?.filter(
+                (feat) => !this.isAdvanced(feat)
+            ) ?? [];
+        const advancedFeatures =
+            this.readmeConfig.features?.filter((feat) =>
+                this.isAdvanced(feat)
+            ) ?? [];
 
         for (const feature of coreFeatures) {
             if (this.shouldSkipFeature({ feature })) {
@@ -78,7 +109,7 @@ export class ReadmeGenerator {
             blocks.push(
                 this.generateFeatureBlock({
                     feature,
-                }),
+                })
             );
         }
 
@@ -164,12 +195,18 @@ export class ReadmeGenerator {
         });
     }
 
-    private async mergeBlocks({ blocks }: { blocks: Block[] }): Promise<Block[]> {
+    private async mergeBlocks({
+        blocks,
+    }: {
+        blocks: Block[];
+    }): Promise<Block[]> {
         const originalReadmeContent = await this.getOriginalReadmeContent();
         if (originalReadmeContent == null) {
             return blocks;
         }
-        const parsed = this.readmeParser.parse({ content: originalReadmeContent });
+        const parsed = this.readmeParser.parse({
+            content: originalReadmeContent,
+        });
         const merger = new BlockMerger({
             original: parsed.blocks,
             updated: blocks,
@@ -191,17 +228,28 @@ export class ReadmeGenerator {
         return undefined;
     }
 
-    private writeBlocks({ writer, blocks }: { writer: Writer; blocks: Block[] }): void {
+    private writeBlocks({
+        writer,
+        blocks,
+    }: {
+        writer: Writer;
+        blocks: Block[];
+    }): void {
         for (const block of blocks) {
             block.write(writer);
         }
     }
 
     private writeHeader({ writer }: { writer: Writer }): void {
-        writer.writeLine(`# ${this.organizationPascalCase} ${this.languageTitle} Library`);
+        writer.writeLine(
+            `# ${this.organizationPascalCase} ${this.languageTitle} Library`
+        );
         writer.writeLine();
         if (this.readmeConfig.bannerLink != null) {
-            this.writeBanner({ writer, bannerLink: this.readmeConfig.bannerLink });
+            this.writeBanner({
+                writer,
+                bannerLink: this.readmeConfig.bannerLink,
+            });
         }
         this.writeFernShield({ writer });
         if (this.readmeConfig.language != null) {
@@ -214,15 +262,23 @@ export class ReadmeGenerator {
         this.writeIntroudction({ writer });
     }
 
-    private writeBanner({ writer, bannerLink }: { writer: Writer; bannerLink: string }): void {
+    private writeBanner({
+        writer,
+        bannerLink,
+    }: {
+        writer: Writer;
+        bannerLink: string;
+    }): void {
         writer.writeLine(`![](${bannerLink})`);
         writer.writeLine();
     }
 
     private writeFernShield({ writer }: { writer: Writer }): void {
-        const repoSource = this.readmeConfig.remote?.repoUrl ?? `${this.organizationPascalCase}/${this.languageTitle}`;
+        const repoSource =
+            this.readmeConfig.remote?.repoUrl ??
+            `${this.organizationPascalCase}/${this.languageTitle}`;
         writer.writeLine(
-            `[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=${encodeURIComponent(repoSource)})`,
+            `[![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=${encodeURIComponent(repoSource)})`
         );
     }
 
@@ -230,7 +286,7 @@ export class ReadmeGenerator {
         writer.writeLine(
             this.readmeConfig.introduction != null
                 ? this.readmeConfig.introduction
-                : `The ${this.organizationPascalCase} ${this.languageTitle} library provides convenient access to the ${this.organizationPascalCase} API from ${this.languageTitle}.`,
+                : `The ${this.organizationPascalCase} ${this.languageTitle} library provides convenient access to the ${this.organizationPascalCase} API from ${this.languageTitle}.`
         );
         writer.writeLine();
     }
@@ -239,7 +295,9 @@ export class ReadmeGenerator {
         const writer = new StringWriter();
         writer.writeLine("## Documentation");
         writer.writeLine();
-        writer.writeLine(`API reference documentation is available [here](${docsLink}).`);
+        writer.writeLine(
+            `API reference documentation is available [here](${docsLink}).`
+        );
         writer.writeLine();
         return new Block({
             id: "DOCUMENTATION",
@@ -247,11 +305,17 @@ export class ReadmeGenerator {
         });
     }
 
-    private generateReference({ referenceFile }: { referenceFile: string }): Block {
+    private generateReference({
+        referenceFile,
+    }: {
+        referenceFile: string;
+    }): Block {
         const writer = new StringWriter();
         writer.writeLine("## Reference");
         writer.writeLine();
-        writer.writeLine(`A full reference for this library is available [here](${referenceFile}).`);
+        writer.writeLine(
+            `A full reference for this library is available [here](${referenceFile}).`
+        );
         writer.writeLine();
         return new Block({
             id: "REFERENCE",
@@ -259,7 +323,11 @@ export class ReadmeGenerator {
         });
     }
 
-    private generateRequirements({ requirements }: { requirements: string[] }): Block {
+    private generateRequirements({
+        requirements,
+    }: {
+        requirements: string[];
+    }): Block {
         const writer = new StringWriter();
         writer.writeLine("## Requirements");
         writer.writeLine();
@@ -278,10 +346,16 @@ export class ReadmeGenerator {
         });
     }
 
-    private generateInstallation({ language }: { language: FernGeneratorCli.LanguageInfo }): Block {
+    private generateInstallation({
+        language,
+    }: {
+        language: FernGeneratorCli.LanguageInfo;
+    }): Block {
         if (language.publishInfo == null) {
             // This should be unreachable.
-            throw new Error("publish information is required for installation block");
+            throw new Error(
+                "publish information is required for installation block"
+            );
         }
         const writer = new StringWriter();
         writer.writeLine("## Installation");
@@ -332,7 +406,13 @@ export class ReadmeGenerator {
         });
     }
 
-    private writeInstallationForNPM({ writer, npm }: { writer: Writer; npm: FernGeneratorCli.NpmPublishInfo }): void {
+    private writeInstallationForNPM({
+        writer,
+        npm,
+    }: {
+        writer: Writer;
+        npm: FernGeneratorCli.NpmPublishInfo;
+    }): void {
         writer.writeLine("```sh");
         writer.writeLine(`npm i -s ${npm.packageName}`);
         writer.writeLine("```");
@@ -384,7 +464,13 @@ export class ReadmeGenerator {
         writer.writeLine();
     }
 
-    private writeInstallationForGo({ writer, go }: { writer: Writer; go: FernGeneratorCli.GoPublishInfo }): void {
+    private writeInstallationForGo({
+        writer,
+        go,
+    }: {
+        writer: Writer;
+        go: FernGeneratorCli.GoPublishInfo;
+    }): void {
         writer.writeLine("```sh");
         writer.write(`go get github.com/${go.owner}/${go.repo}`);
         const majorVersion = getMajorVersion(go.version);
@@ -423,7 +509,13 @@ export class ReadmeGenerator {
         writer.writeLine();
     }
 
-    private writeShield({ writer, language }: { writer: Writer; language: FernGeneratorCli.LanguageInfo }): void {
+    private writeShield({
+        writer,
+        language,
+    }: {
+        writer: Writer;
+        language: FernGeneratorCli.LanguageInfo;
+    }): void {
         switch (language.type) {
             case "typescript": {
                 const npm = language.publishInfo;
@@ -496,28 +588,58 @@ export class ReadmeGenerator {
         }
     }
 
-    private writeShieldForNPM({ writer, npm }: { writer: Writer; npm: FernGeneratorCli.NpmPublishInfo }): void {
+    private writeShieldForNPM({
+        writer,
+        npm,
+    }: {
+        writer: Writer;
+        npm: FernGeneratorCli.NpmPublishInfo;
+    }): void {
         writer.write("[![npm shield]");
         writer.write(`(https://img.shields.io/npm/v/${npm.packageName})]`);
         writer.writeLine(`(https://www.npmjs.com/package/${npm.packageName})`);
     }
 
-    private writeShieldForPyPi({ writer, pypi }: { writer: Writer; pypi: FernGeneratorCli.PypiPublishInfo }): void {
+    private writeShieldForPyPi({
+        writer,
+        pypi,
+    }: {
+        writer: Writer;
+        pypi: FernGeneratorCli.PypiPublishInfo;
+    }): void {
         writer.write("[![pypi]");
         writer.write(`(https://img.shields.io/pypi/v/${pypi.packageName})]`);
         writer.writeLine(`(https://pypi.python.org/pypi/${pypi.packageName})`);
     }
 
-    private writeShieldForMaven({ writer, maven }: { writer: Writer; maven: FernGeneratorCli.MavenPublishInfo }): void {
+    private writeShieldForMaven({
+        writer,
+        maven,
+    }: {
+        writer: Writer;
+        maven: FernGeneratorCli.MavenPublishInfo;
+    }): void {
         writer.write("[![Maven Central]");
-        writer.write(`(https://img.shields.io/maven-central/v/${maven.artifact})]`);
-        writer.writeLine(`(https://central.sonatype.com/artifact/${maven.group}/${maven.artifact})`);
+        writer.write(
+            `(https://img.shields.io/maven-central/v/${maven.artifact})]`
+        );
+        writer.writeLine(
+            `(https://central.sonatype.com/artifact/${maven.group}/${maven.artifact})`
+        );
     }
 
-    private writeShieldForGo({ writer, go }: { writer: Writer; go: FernGeneratorCli.GoPublishInfo }): void {
+    private writeShieldForGo({
+        writer,
+        go,
+    }: {
+        writer: Writer;
+        go: FernGeneratorCli.GoPublishInfo;
+    }): void {
         writer.write("[![go shield]");
         writer.write("(https://img.shields.io/badge/go-docs-blue)]");
-        writer.writeLine(`(https://pkg.go.dev/github.com/${go.owner}/${go.repo})`);
+        writer.writeLine(
+            `(https://pkg.go.dev/github.com/${go.owner}/${go.repo})`
+        );
     }
 
     private writeShieldForRubyGems({
@@ -532,7 +654,13 @@ export class ReadmeGenerator {
         writer.writeLine(`(https://rubygems.org/gems/${rubyGems.packageName})`);
     }
 
-    private writeShieldForNuget({ writer, nuget }: { writer: Writer; nuget: FernGeneratorCli.NugetPublishInfo }): void {
+    private writeShieldForNuget({
+        writer,
+        nuget,
+    }: {
+        writer: Writer;
+        nuget: FernGeneratorCli.NugetPublishInfo;
+    }): void {
         writer.write("[![nuget shield]");
         writer.write(`(https://img.shields.io/nuget/v/${nuget.packageName})]`);
         writer.writeLine(`(https://nuget.org/packages/${nuget.packageName})`);
@@ -554,11 +682,22 @@ On the other hand, contributions to the README are always very welcome!
         });
     }
 
-    private shouldSkipFeature({ feature }: { feature: FernGeneratorCli.ReadmeFeature }): boolean {
-        return !feature.snippetsAreOptional && (feature.snippets == null || feature.snippets.length === 0);
+    private shouldSkipFeature({
+        feature,
+    }: {
+        feature: FernGeneratorCli.ReadmeFeature;
+    }): boolean {
+        return (
+            !feature.snippetsAreOptional &&
+            (feature.snippets == null || feature.snippets.length === 0)
+        );
     }
 
-    private shouldGenerateFeatures({ features }: { features: FernGeneratorCli.ReadmeFeature[] }): boolean {
+    private shouldGenerateFeatures({
+        features,
+    }: {
+        features: FernGeneratorCli.ReadmeFeature[];
+    }): boolean {
         return features.some((feature) => !this.shouldSkipFeature({ feature }));
     }
 }

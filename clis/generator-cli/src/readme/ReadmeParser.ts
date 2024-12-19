@@ -44,8 +44,10 @@ function sectionNameToID(sectionName: string): string {
                 if (index === 0) {
                     return word;
                 }
-                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+                return (
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+                );
             })
-            .join(""),
+            .join("")
     ).toUpperCase();
 }

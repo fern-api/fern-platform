@@ -20,7 +20,7 @@ export abstract class BaseApiConverterNodeContext {
 export abstract class BaseApiConverterNode<Input, Output> {
     constructor(
         protected readonly input: Input,
-        protected readonly context: BaseApiConverterNodeContext,
+        protected readonly context: BaseApiConverterNodeContext
     ) {}
 
     /**

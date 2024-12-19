@@ -1,6 +1,11 @@
 import { FdrAPI, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
 import { assertNever } from "@fern-api/ui-core-utils";
-import { SearchClient, SearchForFacetValuesResponse, SearchResponse, algoliasearch } from "algoliasearch";
+import {
+    SearchClient,
+    SearchForFacetValuesResponse,
+    SearchResponse,
+    algoliasearch,
+} from "algoliasearch";
 import { Rule, RuleArgs, RuleResult } from "../runRules";
 
 export class SearchSlugsCorrectRule implements Rule {
@@ -19,7 +24,9 @@ export class SearchSlugsCorrectRule implements Rule {
             };
         }
 
-        const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
+        const node = FernNavigation.utils.toRootNode(
+            getDocsForUrlResponse.body
+        );
         const collector = FernNavigation.NodeCollector.collect(node);
         const slugs = new Set(collector.indexablePageSlugs);
 
@@ -27,13 +34,21 @@ export class SearchSlugsCorrectRule implements Rule {
 
         switch (searchInfo.type) {
             case "legacyMultiAlgoliaIndex":
-                return { name: this.name, success: false, message: "Skipped querying legacy multi algolia index" };
+                return {
+                    name: this.name,
+                    success: false,
+                    message: "Skipped querying legacy multi algolia index",
+                };
             case "singleAlgoliaIndex":
                 switch (searchInfo.value.type) {
                     case "unversioned": {
                         const algolia = algoliasearch(
                             process.env.ALGOLIA_APP_ID ?? "",
-                            await getApiKeyForSegmentIndex({ fdr, indexSegmentId: searchInfo.value.indexSegment.id }),
+                            await getApiKeyForSegmentIndex({
+                                fdr,
+                                indexSegmentId:
+                                    searchInfo.value.indexSegment.id,
+                            })
                         );
                         const value = await sampleRecordsFromIndexSegement({
                             algolia,
@@ -52,10 +67,15 @@ export class SearchSlugsCorrectRule implements Rule {
                     }
                     case "versioned": {
                         const invalidSlugs: string[] = [];
-                        for (const [_, segmentId] of Object.entries(searchInfo.value.indexSegmentsByVersionId)) {
+                        for (const [_, segmentId] of Object.entries(
+                            searchInfo.value.indexSegmentsByVersionId
+                        )) {
                             const algolia = algoliasearch(
                                 process.env.ALGOLIA_APP_ID ?? "",
-                                await getApiKeyForSegmentIndex({ fdr, indexSegmentId: segmentId.id }),
+                                await getApiKeyForSegmentIndex({
+                                    fdr,
+                                    indexSegmentId: segmentId.id,
+                                })
                             );
                             const value = await sampleRecordsFromIndexSegement({
                                 algolia,
@@ -135,7 +155,9 @@ export async function sampleRecordsFromIndexSegement({
             }
         }
     }
-    return invalidSlugs.length > 0 ? { type: "invalid", invalidSlugs } : { type: "valid" };
+    return invalidSlugs.length > 0
+        ? { type: "invalid", invalidSlugs }
+        : { type: "valid" };
 }
 
 function getSlugFromAlgoliaRecord(algoliaRecord: FdrAPI.AlgoliaRecord): string {
@@ -171,6 +193,8 @@ function getSlugFromAlgoliaRecord(algoliaRecord: FdrAPI.AlgoliaRecord): string {
     }
 }
 
-function isSearchHit<T>(value: SearchResponse<T> | SearchForFacetValuesResponse): value is SearchResponse<T> {
+function isSearchHit<T>(
+    value: SearchResponse<T> | SearchForFacetValuesResponse
+): value is SearchResponse<T> {
     return (value as SearchResponse)?.page != null;
 }

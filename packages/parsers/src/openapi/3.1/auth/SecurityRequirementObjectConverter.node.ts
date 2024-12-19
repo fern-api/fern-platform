@@ -14,7 +14,11 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
 > {
     authNodesMap: Record<string, SecuritySchemeConverterNode> | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SecurityRequirementObject[]>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+            OpenAPIV3_1.SecurityRequirementObject[]
+        >
+    ) {
         super(args);
         this.safeParse();
     }
@@ -22,7 +26,10 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
     parse(): void {
         this.input.map((securityScheme, index) =>
             Object.keys(securityScheme).map((key) => {
-                const resolvedSecurityScheme = resolveSecurityScheme(key, this.context.document);
+                const resolvedSecurityScheme = resolveSecurityScheme(
+                    key,
+                    this.context.document
+                );
                 if (resolvedSecurityScheme == null) {
                     this.context.errors.warning({
                         message: `No auth scheme found for ${key}`,
@@ -47,7 +54,7 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
                         path: this.accessPath,
                     });
                 }
-            }),
+            })
         );
     }
 
@@ -61,7 +68,7 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
                     }
                     return [key, convertedValue];
                 })
-                .filter(isNonNullish),
+                .filter(isNonNullish)
         );
     }
 }

@@ -62,7 +62,11 @@ module.exports = {
         "@typescript-eslint/no-empty-function": [
             "error",
             {
-                allow: ["private-constructors", "protected-constructors", "decoratedFunctions"],
+                allow: [
+                    "private-constructors",
+                    "protected-constructors",
+                    "decoratedFunctions",
+                ],
             },
         ],
         "@typescript-eslint/await-thenable": "error",
@@ -127,7 +131,11 @@ module.exports = {
             },
         },
         {
-            files: ["packages/fdr-sdk/**/*", "servers/fdr-deploy/**/*", "servers/fdr/**/*"],
+            files: [
+                "packages/fdr-sdk/**/*",
+                "servers/fdr-deploy/**/*",
+                "servers/fdr/**/*",
+            ],
             rules: {
                 "@typescript-eslint/explicit-module-boundary-types": "off",
                 "@typescript-eslint/no-explicit-any": "off",
@@ -144,7 +152,7 @@ module.exports = {
             },
         },
         {
-            files: ["packages/ui/**/*"],
+            files: ["packages/fern-docs/**/*"],
             rules: {
                 "@typescript-eslint/no-explicit-any": "off",
             },

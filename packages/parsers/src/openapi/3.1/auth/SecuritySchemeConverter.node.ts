@@ -27,20 +27,28 @@ export class SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterNode<
     // x-fern-bearer
     bearerTokenNode: XFernBearerTokenConverterNode | undefined;
     // x-fern-token-variable-name
-    bearerTokenVariableNameNode: XFernBearerTokenVariableNameConverterNode | undefined;
+    bearerTokenVariableNameNode:
+        | XFernBearerTokenVariableNameConverterNode
+        | undefined;
 
     // Basic auth
     // x-fern-basic
     basicAuthNode: XFernBasicAuthNode | undefined;
     // x-fern-username-variable-name
-    basicUsernameVariableNameNode: XFernBasicUsernameVariableNameConverterNode | undefined;
+    basicUsernameVariableNameNode:
+        | XFernBasicUsernameVariableNameConverterNode
+        | undefined;
     // x-fern-password-variable-name
-    basicPasswordVariableNameNode: XFernBasicPasswordVariableNameConverterNode | undefined;
+    basicPasswordVariableNameNode:
+        | XFernBasicPasswordVariableNameConverterNode
+        | undefined;
 
     // OAuth2
     oauth2Node: OAuth2SecuritySchemeConverterNode | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SecuritySchemeObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SecuritySchemeObject>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -57,28 +65,33 @@ export class SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterNode<
                             accessPath: this.accessPath,
                             pathId: this.pathId,
                         });
-                        this.basicUsernameVariableNameNode = new XFernBasicUsernameVariableNameConverterNode({
-                            input: this.input,
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
-                        });
-                        this.basicPasswordVariableNameNode = new XFernBasicPasswordVariableNameConverterNode({
-                            input: this.input,
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
-                        });
+                        this.basicUsernameVariableNameNode =
+                            new XFernBasicUsernameVariableNameConverterNode({
+                                input: this.input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
+                        this.basicPasswordVariableNameNode =
+                            new XFernBasicPasswordVariableNameConverterNode({
+                                input: this.input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
 
                         if (
                             this.basicAuthNode == null ||
                             (this.basicAuthNode.username == null &&
-                                this.basicUsernameVariableNameNode?.usernameVariableName == null) ||
+                                this.basicUsernameVariableNameNode
+                                    ?.usernameVariableName == null) ||
                             (this.basicAuthNode.password == null &&
-                                this.basicPasswordVariableNameNode?.passwordVariableName == null)
+                                this.basicPasswordVariableNameNode
+                                    ?.passwordVariableName == null)
                         ) {
                             this.context.errors.warning({
-                                message: "Basic auth should specify either a username or a username variable name",
+                                message:
+                                    "Basic auth should specify either a username or a username variable name",
                                 path: this.accessPath,
                             });
                         }
@@ -86,18 +99,20 @@ export class SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterNode<
                     }
                     case "bearer": {
                         this.authScheme = "bearer";
-                        this.bearerTokenNode = new XFernBearerTokenConverterNode({
-                            input: this.input,
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
-                        });
-                        this.bearerTokenVariableNameNode = new XFernBearerTokenVariableNameConverterNode({
-                            input: this.input,
-                            context: this.context,
-                            accessPath: this.accessPath,
-                            pathId: this.pathId,
-                        });
+                        this.bearerTokenNode =
+                            new XFernBearerTokenConverterNode({
+                                input: this.input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
+                        this.bearerTokenVariableNameNode =
+                            new XFernBearerTokenVariableNameConverterNode({
+                                input: this.input,
+                                context: this.context,
+                                accessPath: this.accessPath,
+                                pathId: this.pathId,
+                            });
                         break;
                     }
                     default: {
@@ -117,12 +132,14 @@ export class SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterNode<
                     });
                 } else {
                     this.authScheme = "header";
-                    this.headerAuthNode = new HeaderSecuritySchemeConverterNode({
-                        input: this.input,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: this.pathId,
-                    });
+                    this.headerAuthNode = new HeaderSecuritySchemeConverterNode(
+                        {
+                            input: this.input,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: this.pathId,
+                        }
+                    );
                 }
                 break;
             }
@@ -149,15 +166,21 @@ export class SecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterNode<
                 const basicAuth = this.basicAuthNode?.convert();
                 return {
                     type: "basicAuth",
-                    usernameName: basicAuth?.username?.name ?? this.basicUsernameVariableNameNode?.convert(),
-                    passwordName: basicAuth?.password?.name ?? this.basicPasswordVariableNameNode?.convert(),
+                    usernameName:
+                        basicAuth?.username?.name ??
+                        this.basicUsernameVariableNameNode?.convert(),
+                    passwordName:
+                        basicAuth?.password?.name ??
+                        this.basicPasswordVariableNameNode?.convert(),
                 };
             }
             case "bearer": {
                 const bearerAuth = this.bearerTokenNode?.convert();
                 return {
                     type: "bearerAuth",
-                    tokenName: bearerAuth?.tokenVariableName ?? this.bearerTokenVariableNameNode?.convert(),
+                    tokenName:
+                        bearerAuth?.tokenVariableName ??
+                        this.bearerTokenVariableNameNode?.convert(),
                 };
             }
             case "header": {

@@ -15,9 +15,12 @@ import { SDKSnippetHolder } from "./snippets/SDKSnippetHolder";
 export function convertAPIDefinitionToDb(
     writeShape: APIV1Write.ApiDefinition,
     id: FdrAPI.ApiDefinitionId,
-    snippets: SDKSnippetHolder,
+    snippets: SDKSnippetHolder
 ): APIV1Db.DbApiDefinition {
-    const subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId> = {};
+    const subpackageToParent: Record<
+        APIV1Write.SubpackageId,
+        APIV1Write.SubpackageId
+    > = {};
     for (const [parentId, parentContents] of entries(writeShape.subpackages)) {
         for (const subpackageId of parentContents.subpackages) {
             subpackageToParent[subpackageId] = parentId;
@@ -34,23 +37,30 @@ export function convertAPIDefinitionToDb(
                         apiDefinition: writeShape,
                         context,
                         snippets,
-                    }) ?? [],
+                    }) ?? []
             ),
             webhooks:
                 writeShape.rootPackage.webhooks?.map((webhook) =>
-                    transformWebhook({ writeShape: webhook, apiDefinition: writeShape }),
+                    transformWebhook({
+                        writeShape: webhook,
+                        apiDefinition: writeShape,
+                    })
                 ) ?? [],
             websockets:
-                writeShape.rootPackage.websockets?.map((websocket) => transformWebsocket({ writeShape: websocket })) ??
-                [],
+                writeShape.rootPackage.websockets?.map((websocket) =>
+                    transformWebsocket({ writeShape: websocket })
+                ) ?? [],
             subpackages: writeShape.rootPackage.subpackages,
             types: writeShape.rootPackage.types,
             pointsTo: undefined,
         },
         types: Object.fromEntries(
             Object.entries(writeShape.types).map(([typeId, typeDefinition]) => {
-                return [typeId, transformTypeDefinition({ writeShape: typeDefinition })];
-            }),
+                return [
+                    typeId,
+                    transformTypeDefinition({ writeShape: typeDefinition }),
+                ];
+            })
         ),
         subpackages: entries(writeShape.subpackages).reduce<
             Record<APIV1Read.SubpackageId, APIV1Db.DbApiDefinitionSubpackage>
@@ -82,17 +92,29 @@ function transformSubpackage({
 }: {
     writeShape: APIV1Write.ApiDefinitionSubpackage;
     id: APIV1Write.SubpackageId;
-    subpackageToParent: Record<APIV1Write.SubpackageId, APIV1Write.SubpackageId>;
+    subpackageToParent: Record<
+        APIV1Write.SubpackageId,
+        APIV1Write.SubpackageId
+    >;
     apiDefinition: APIV1Write.ApiDefinition;
     context: ApiDefinitionTransformationContext;
     snippets: SDKSnippetHolder;
 }): APIV1Db.DbApiDefinitionSubpackage {
     const parent = subpackageToParent[id];
     const endpoints = writeShape.endpoints.map((endpoint) =>
-        transformEndpoint({ writeShape: endpoint, apiDefinition, context, snippets }),
+        transformEndpoint({
+            writeShape: endpoint,
+            apiDefinition,
+            context,
+            snippets,
+        })
     );
-    const webhooks = writeShape.webhooks?.map((webhook) => transformWebhook({ writeShape: webhook, apiDefinition }));
-    const websockets = writeShape.websockets?.map((websocket) => transformWebsocket({ writeShape: websocket }));
+    const webhooks = writeShape.webhooks?.map((webhook) =>
+        transformWebhook({ writeShape: webhook, apiDefinition })
+    );
+    const websockets = writeShape.websockets?.map((websocket) =>
+        transformWebsocket({ writeShape: websocket })
+    );
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         subpackageId: id,
@@ -150,7 +172,9 @@ function transformWebhook({
     const oldUrlSlug = kebabCase(writeShape.name ?? writeShape.id);
     return {
         urlSlug,
-        migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
+        migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug)
+            ? [oldUrlSlug]
+            : undefined,
         description: writeShape.description,
         // htmlDescription,
         // descriptionContainsMarkdown: true,
@@ -163,7 +187,12 @@ function transformWebhook({
         examples:
             writeShape.examples.length > 0
                 ? writeShape.examples
-                : [generateWebhookExample({ webhookDefinition: writeShape, apiDefinition })],
+                : [
+                      generateWebhookExample({
+                          webhookDefinition: writeShape,
+                          apiDefinition,
+                      }),
+                  ],
     };
 }
 
@@ -190,7 +219,9 @@ function transformEndpoint({
         urlSlug,
         // id is more unique than name, so we use that as the url slug
         // keep name as a fallback for backwards compatibility (via redirects)
-        migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug) ? [oldUrlSlug] : undefined,
+        migratedFromUrlSlugs: !isEqual(oldUrlSlug, urlSlug)
+            ? [oldUrlSlug]
+            : undefined,
         method: writeShape.method,
         id: writeShape.id,
         originalEndpointId: writeShape.originalEndpointId,
@@ -198,7 +229,10 @@ function transformEndpoint({
         path: writeShape.path,
         queryParameters: writeShape.queryParameters,
         headers: writeShape.headers,
-        request: writeShape.request != null ? transformHttpRequestToDb({ writeShape: writeShape.request }) : undefined,
+        request:
+            writeShape.request != null
+                ? transformHttpRequestToDb({ writeShape: writeShape.request })
+                : undefined,
         response:
             writeShape.response != null
                 ? convertResponseToDb({
@@ -227,15 +261,25 @@ function transformEndpoint({
     };
 }
 
-function transformErrorsV2(writeShape: APIV1Write.EndpointDefinition): APIV1Read.ErrorDeclarationV2[] | undefined {
+function transformErrorsV2(
+    writeShape: APIV1Write.EndpointDefinition
+): APIV1Read.ErrorDeclarationV2[] | undefined {
     if (writeShape.errorsV2 != null) {
-        return writeShape.errorsV2.map((errorV2): APIV1Read.ErrorDeclarationV2 => {
-            return {
-                ...errorV2,
-                name: errorV2.name != null ? titleCase(errorV2.name) : undefined,
-                type: errorV2.type != null ? transformShape({ writeShape: errorV2.type }) : undefined,
-            };
-        });
+        return writeShape.errorsV2.map(
+            (errorV2): APIV1Read.ErrorDeclarationV2 => {
+                return {
+                    ...errorV2,
+                    name:
+                        errorV2.name != null
+                            ? titleCase(errorV2.name)
+                            : undefined,
+                    type:
+                        errorV2.type != null
+                            ? transformShape({ writeShape: errorV2.type })
+                            : undefined,
+                };
+            }
+        );
     }
     if (writeShape.errors != null) {
         return writeShape.errors.map((error): APIV1Read.ErrorDeclarationV2 => {
@@ -357,8 +401,10 @@ function getExampleEndpointCalls({
 }): FdrAPI.api.v1.read.ExampleEndpointCall[] {
     const examples: APIV1Write.ExampleEndpointCall[] = [];
 
-    const { successExamples: registeredSuccessExamples, errorExamples: registeredErrorExamples } =
-        groupExamplesByStatusCode(writeShape.examples);
+    const {
+        successExamples: registeredSuccessExamples,
+        errorExamples: registeredErrorExamples,
+    } = groupExamplesByStatusCode(writeShape.examples);
 
     if (registeredSuccessExamples.length > 0) {
         examples.push(...registeredSuccessExamples);
@@ -370,16 +416,19 @@ function getExampleEndpointCalls({
         examples.push(generatedSuccessExample);
     }
 
-    const registeredErrorExampleStatusCodes = new Set(registeredErrorExamples.map((e) => e.responseStatusCode));
-    const errorsMissingAnExample = (writeShape.errorsV2 ?? []).filter(
-        (e) => !registeredErrorExampleStatusCodes.has(e.statusCode),
+    const registeredErrorExampleStatusCodes = new Set(
+        registeredErrorExamples.map((e) => e.responseStatusCode)
     );
-    const generatedErrorExamples = errorsMissingAnExample.map((errorDeclaration) =>
-        generateEndpointErrorExample({
-            endpointDefinition: writeShape,
-            apiDefinition,
-            errorDeclaration,
-        }),
+    const errorsMissingAnExample = (writeShape.errorsV2 ?? []).filter(
+        (e) => !registeredErrorExampleStatusCodes.has(e.statusCode)
+    );
+    const generatedErrorExamples = errorsMissingAnExample.map(
+        (errorDeclaration) =>
+            generateEndpointErrorExample({
+                endpointDefinition: writeShape,
+                apiDefinition,
+                errorDeclaration,
+            })
     );
 
     examples.push(...registeredErrorExamples, ...generatedErrorExamples);
@@ -389,7 +438,7 @@ function getExampleEndpointCalls({
             writeShape: example,
             endpointDefinition: writeShape,
             snippets,
-        }),
+        })
     );
 }
 
@@ -406,7 +455,11 @@ function groupExamplesByStatusCode(examples: APIV1Write.ExampleEndpointCall[]) {
     return { successExamples, errorExamples };
 }
 
-function transformHttpRequestToDb({ writeShape }: { writeShape: APIV1Write.HttpRequest }): APIV1Db.DbHttpRequest {
+function transformHttpRequestToDb({
+    writeShape,
+}: {
+    writeShape: APIV1Write.HttpRequest;
+}): APIV1Db.DbHttpRequest {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     switch (writeShape.type.type) {
         case "object":
@@ -507,12 +560,14 @@ function transformCodeExamples({
         endpointId: endpointDefinition.originalEndpointId,
         exampleId,
     });
-    const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint({
-        endpointMethod: endpointDefinition.method,
-        endpointPath: getEndpointPathAsString(endpointDefinition),
-        endpointId: endpointDefinition.originalEndpointId,
-        exampleId,
-    });
+    const maybeTypescriptSnippet = snippets.getTypeScriptCodeSnippetForEndpoint(
+        {
+            endpointMethod: endpointDefinition.method,
+            endpointPath: getEndpointPathAsString(endpointDefinition),
+            endpointId: endpointDefinition.originalEndpointId,
+            exampleId,
+        }
+    );
     const maybeGoSnippet = snippets.getGoCodeSnippetForEndpoint({
         endpointMethod: endpointDefinition.method,
         endpointPath: getEndpointPathAsString(endpointDefinition),
@@ -534,7 +589,9 @@ function transformCodeExamples({
     };
 }
 
-function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition): FdrAPI.EndpointPathLiteral {
+function getEndpointPathAsString(
+    endpoint: APIV1Write.EndpointDefinition
+): FdrAPI.EndpointPathLiteral {
     let endpointPath = "";
     for (const part of endpoint.path.parts) {
         if (part.type === "literal") {
@@ -562,13 +619,19 @@ function transformTypeDefinition({
     };
 }
 
-function transformShape({ writeShape }: { writeShape: APIV1Write.TypeShape }): FdrAPI.api.v1.read.TypeShape {
+function transformShape({
+    writeShape,
+}: {
+    writeShape: APIV1Write.TypeShape;
+}): FdrAPI.api.v1.read.TypeShape {
     switch (writeShape.type) {
         case "object":
             return {
                 type: "object",
                 extends: writeShape.extends,
-                properties: writeShape.properties.map((property) => transformProperty({ writeShape: property })),
+                properties: writeShape.properties.map((property) =>
+                    transformProperty({ writeShape: property })
+                ),
                 extraProperties: writeShape.extraProperties,
             };
         case "alias":
@@ -580,19 +643,23 @@ function transformShape({ writeShape }: { writeShape: APIV1Write.TypeShape }): F
             return {
                 type: "enum",
                 default: writeShape.default,
-                values: writeShape.values.map((enumValue) => transformEnumValue({ writeShape: enumValue })),
+                values: writeShape.values.map((enumValue) =>
+                    transformEnumValue({ writeShape: enumValue })
+                ),
             };
         case "discriminatedUnion":
             return {
                 type: "discriminatedUnion",
                 discriminant: writeShape.discriminant,
-                variants: writeShape.variants.map((variant) => transformDiscriminatedVariant({ writeShape: variant })),
+                variants: writeShape.variants.map((variant) =>
+                    transformDiscriminatedVariant({ writeShape: variant })
+                ),
             };
         case "undiscriminatedUnion":
             return {
                 type: "undiscriminatedUnion",
                 variants: writeShape.variants.map((variant) =>
-                    transformUnDiscriminatedVariant({ writeShape: variant }),
+                    transformUnDiscriminatedVariant({ writeShape: variant })
                 ),
             };
         default:
@@ -616,7 +683,11 @@ function transformProperty({
     };
 }
 
-function transformEnumValue({ writeShape }: { writeShape: APIV1Write.EnumValue }): FdrAPI.api.v1.read.EnumValue {
+function transformEnumValue({
+    writeShape,
+}: {
+    writeShape: APIV1Write.EnumValue;
+}): FdrAPI.api.v1.read.EnumValue {
     // const htmlDescription = getHtmlDescription(writeShape.description);
     return {
         availability: writeShape.availability,
@@ -642,8 +713,8 @@ function transformDiscriminatedVariant({
         discriminantValue: writeShape.discriminantValue,
         additionalProperties: {
             extends: writeShape.additionalProperties.extends,
-            properties: writeShape.additionalProperties.properties.map((property) =>
-                transformProperty({ writeShape: property }),
+            properties: writeShape.additionalProperties.properties.map(
+                (property) => transformProperty({ writeShape: property })
             ),
             extraProperties: writeShape.additionalProperties.extraProperties,
         },
@@ -661,7 +732,10 @@ function transformUnDiscriminatedVariant({
         availability: writeShape.availability,
         // htmlDescription,
         type: writeShape.type,
-        displayName: writeShape.typeName != null ? titleCase(writeShape.typeName) : undefined,
+        displayName:
+            writeShape.typeName != null
+                ? titleCase(writeShape.typeName)
+                : undefined,
         // descriptionContainsMarkdown: true,
     };
 }
@@ -679,7 +753,9 @@ class ApiDefinitionTransformationContext {
             if (entry != null) {
                 entry.add(this.getHost(environment.baseUrl));
             } else {
-                this.uniqueBaseUrls[environment.id] = new Set([this.getHost(environment.baseUrl)]);
+                this.uniqueBaseUrls[environment.id] = new Set([
+                    this.getHost(environment.baseUrl),
+                ]);
             }
         }
     }

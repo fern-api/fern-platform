@@ -1,20 +1,20 @@
 {
-  "name": "@fern-ui/cdk",
+  "name": "@fern-platform/cdk",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/cdk"
   },
-  "private": true,
+  "sideEffects": false,
+  "type": "commonjs",
+  "main": "dist/cdk.js",
+  "source": "src/cdk.ts",
+  "types": "dist/cdk.d.ts",
   "files": [
     "dist"
   ],
-  "type": "commonjs",
-  "source": "src/cdk.ts",
-  "main": "dist/cdk.js",
-  "types": "dist/cdk.d.ts",
-  "sideEffects": false,
   "scripts": {
     "cdk": "cdk",
     "deploy:dev2": "cdk deploy local-preview-bundle2-dev2 --require-approval never --progress events",

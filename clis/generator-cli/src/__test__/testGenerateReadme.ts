@@ -20,13 +20,29 @@ export function testGenerateReadme({
     describe(fixtureName, () => {
         it("generate readme", async () => {
             const file = await tmp.file();
-            const json = JSON.stringify(await serializers.ReadmeConfig.jsonOrThrow(config), undefined, 2);
+            const json = JSON.stringify(
+                await serializers.ReadmeConfig.jsonOrThrow(config),
+                undefined,
+                2
+            );
             await writeFile(file.path, json);
 
-            const args = [path.join(__dirname, "../../dist/cli.cjs"), "generate", "readme", "--config", file.path];
+            const args = [
+                path.join(__dirname, "../../dist/cli.cjs"),
+                "generate",
+                "readme",
+                "--config",
+                file.path,
+            ];
             if (originalReadme != null) {
                 args.push(
-                    ...["--original-readme", getAbsolutePathToFixtureFile({ fixtureName, filepath: originalReadme })],
+                    ...[
+                        "--original-readme",
+                        getAbsolutePathToFixtureFile({
+                            fixtureName,
+                            filepath: originalReadme,
+                        }),
+                    ]
                 );
             }
             const { stdout } = await execa("node", args);
@@ -35,6 +51,12 @@ export function testGenerateReadme({
     });
 }
 
-function getAbsolutePathToFixtureFile({ fixtureName, filepath }: { fixtureName: string; filepath: string }): string {
+function getAbsolutePathToFixtureFile({
+    fixtureName,
+    filepath,
+}: {
+    fixtureName: string;
+    filepath: string;
+}): string {
     return path.join(FIXTURES_PATH, fixtureName, filepath);
 }

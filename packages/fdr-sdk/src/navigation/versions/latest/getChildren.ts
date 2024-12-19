@@ -23,14 +23,23 @@ export function getChildren(node: NavigationNode): readonly NavigationNode[] {
         case "tab":
             return [node.child];
         case "apiReference":
-            return [...node.children, ...(node.changelog ? [node.changelog] : [])];
+            return [
+                ...node.children,
+                ...(node.changelog ? [node.changelog] : []),
+            ];
         case "endpointPair":
             return [node.nonStream, node.stream];
         case "productgroup":
-            return [...(node.landingPage ? [node.landingPage] : []), ...node.children];
+            return [
+                ...(node.landingPage ? [node.landingPage] : []),
+                ...node.children,
+            ];
         case "unversioned":
         case "version":
-            return [...(node.landingPage ? [node.landingPage] : []), node.child];
+            return [
+                ...(node.landingPage ? [node.landingPage] : []),
+                node.child,
+            ];
         default:
             throw new UnreachableCaseError(node);
     }

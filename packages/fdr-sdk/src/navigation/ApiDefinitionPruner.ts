@@ -7,11 +7,17 @@ export class ApiDefinitionPruner {
     constructor(private api: APIV1Read.ApiDefinition) {}
 
     public prune(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode
     ): APIV1Read.ApiDefinition {
         const rootPackage = this.pruneRootPackage(node);
         const subpackages = this.pruneSubpackages(node);
-        const types = this.pruneTypes(rootPackage, subpackages, this.api.globalHeaders);
+        const types = this.pruneTypes(
+            rootPackage,
+            subpackages,
+            this.api.globalHeaders
+        );
 
         return {
             id: this.api.id,
@@ -28,11 +34,13 @@ export class ApiDefinitionPruner {
     private pruneTypes(
         rootPackage: APIV1Read.ApiDefinitionPackage,
         subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage>,
-        globalHeaders: APIV1Read.Header[] | undefined,
+        globalHeaders: APIV1Read.Header[] | undefined
     ): Record<string, APIV1Read.TypeDefinition> {
         let typeIds = new Set<APIV1Read.TypeId>();
         globalHeaders?.forEach((header) => {
-            ApiTypeIdVisitor.visitTypeReference(header.type, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitTypeReference(header.type, (typeId) =>
+                typeIds.add(typeId)
+            );
         });
         typeIds = this.expandTypeIds(typeIds);
 
@@ -52,7 +60,9 @@ export class ApiDefinitionPruner {
         return types;
     }
 
-    private expandTypeIds(typeIds: Set<APIV1Read.TypeId>): Set<APIV1Read.TypeId> {
+    private expandTypeIds(
+        typeIds: Set<APIV1Read.TypeId>
+    ): Set<APIV1Read.TypeId> {
         const visitedTypeIds = new Set<APIV1Read.TypeId>();
         const queue = Array.from(typeIds);
 
@@ -62,9 +72,12 @@ export class ApiDefinitionPruner {
                 visitedTypeIds.add(typeId);
                 const type = this.api.types[typeId];
                 if (type) {
-                    ApiTypeIdVisitor.visitTypeDefinition(type, (nestedTypeId) => {
-                        queue.push(nestedTypeId);
-                    });
+                    ApiTypeIdVisitor.visitTypeDefinition(
+                        type,
+                        (nestedTypeId) => {
+                            queue.push(nestedTypeId);
+                        }
+                    );
                 }
             }
         }
@@ -73,40 +86,67 @@ export class ApiDefinitionPruner {
     }
 
     private pruneRootPackage(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode
     ): APIV1Read.ApiDefinitionPackage {
         return this.prunePackage(node, this.api.rootPackage);
     }
 
     private pruneSubpackages(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode
     ): Record<string, APIV1Read.ApiDefinitionSubpackage> {
-        const subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage> = {};
+        const subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage> =
+            {};
 
-        for (const [subpackageId, subpackage] of Object.entries(this.api.subpackages)) {
-            subpackages[subpackageId] = this.prunePackage(node, subpackage, subpackageId);
+        for (const [subpackageId, subpackage] of Object.entries(
+            this.api.subpackages
+        )) {
+            subpackages[subpackageId] = this.prunePackage(
+                node,
+                subpackage,
+                subpackageId
+            );
         }
 
         return subpackages;
     }
 
     private prunePackage<T extends APIV1Read.ApiDefinitionPackage>(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode,
         pkg: T,
-        subpackageId?: string,
+        subpackageId?: string
     ): T {
-        const endpoints = this.pruneEndpoints(node, pkg.endpoints, subpackageId);
-        const websockets = this.pruneWebSockets(node, pkg.websockets, subpackageId);
+        const endpoints = this.pruneEndpoints(
+            node,
+            pkg.endpoints,
+            subpackageId
+        );
+        const websockets = this.pruneWebSockets(
+            node,
+            pkg.websockets,
+            subpackageId
+        );
         const webhooks = this.pruneWebhooks(node, pkg.webhooks, subpackageId);
         const typeIds = new Set<APIV1Read.TypeId>();
         endpoints.forEach((endpoint) => {
-            ApiTypeIdVisitor.visitEndpointDefinition(endpoint, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitEndpointDefinition(endpoint, (typeId) =>
+                typeIds.add(typeId)
+            );
         });
         websockets.forEach((websocket) => {
-            ApiTypeIdVisitor.visitWebSocketChannel(websocket, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitWebSocketChannel(websocket, (typeId) =>
+                typeIds.add(typeId)
+            );
         });
         webhooks.forEach((webhook) => {
-            ApiTypeIdVisitor.visitWebhookDefinition(webhook, (typeId) => typeIds.add(typeId));
+            ApiTypeIdVisitor.visitWebhookDefinition(webhook, (typeId) =>
+                typeIds.add(typeId)
+            );
         });
         const expandedTypeIds = this.expandTypeIds(typeIds);
         return {
@@ -119,9 +159,11 @@ export class ApiDefinitionPruner {
     }
 
     private pruneEndpoints(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode,
         endpoints: APIV1Read.EndpointDefinition[],
-        subpackageId?: string,
+        subpackageId?: string
     ): APIV1Read.EndpointDefinition[] {
         if (node.type !== "endpoint" && node.type !== "endpointPair") {
             return [];
@@ -136,16 +178,20 @@ export class ApiDefinitionPruner {
 
         const endpointId = node.endpointId;
         const found = endpoints.find(
-            (endpoint) => ApiDefinitionHolder.createEndpointId(endpoint, subpackageId) === endpointId,
+            (endpoint) =>
+                ApiDefinitionHolder.createEndpointId(endpoint, subpackageId) ===
+                endpointId
         );
 
         return found ? [found] : [];
     }
 
     private pruneWebSockets(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode,
         websockets: APIV1Read.WebSocketChannel[],
-        subpackageId?: string,
+        subpackageId?: string
     ): APIV1Read.WebSocketChannel[] {
         if (node.type !== "webSocket") {
             return [];
@@ -153,16 +199,22 @@ export class ApiDefinitionPruner {
 
         const websocketId = node.webSocketId;
         const found = websockets.find(
-            (websocket) => ApiDefinitionHolder.createWebSocketId(websocket, subpackageId) === websocketId,
+            (websocket) =>
+                ApiDefinitionHolder.createWebSocketId(
+                    websocket,
+                    subpackageId
+                ) === websocketId
         );
 
         return found ? [found] : [];
     }
 
     private pruneWebhooks(
-        node: FernNavigation.NavigationNodeApiLeaf | FernNavigation.EndpointPairNode,
+        node:
+            | FernNavigation.NavigationNodeApiLeaf
+            | FernNavigation.EndpointPairNode,
         webhooks: APIV1Read.WebhookDefinition[],
-        subpackageId?: string,
+        subpackageId?: string
     ): APIV1Read.WebhookDefinition[] {
         if (node.type !== "webhook") {
             return [];
@@ -170,7 +222,9 @@ export class ApiDefinitionPruner {
 
         const webhookId = node.webhookId;
         const found = webhooks.find(
-            (webhook) => ApiDefinitionHolder.createWebhookId(webhook, subpackageId) === webhookId,
+            (webhook) =>
+                ApiDefinitionHolder.createWebhookId(webhook, subpackageId) ===
+                webhookId
         );
 
         return found ? [found] : [];

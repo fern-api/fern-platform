@@ -12,7 +12,9 @@ async function main() {
     }
     const environments = await getEnvironments();
     const app = new cdk.App();
-    for (const [environmentType, environmentInfo] of Object.entries(environments)) {
+    for (const [environmentType, environmentInfo] of Object.entries(
+        environments
+    )) {
         if (environmentInfo == null) {
             throw new Error(`No info for environment ${environmentType}`);
         }
@@ -37,7 +39,7 @@ async function main() {
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
-                    },
+                    }
                 );
                 break;
             case EnvironmentType.Prod:
@@ -59,7 +61,7 @@ async function main() {
                     },
                     {
                         env: { account: "985111089818", region: "us-east-1" },
-                    },
+                    }
                 );
                 break;
             default:
@@ -76,7 +78,7 @@ async function getEnvironments(): Promise<Environments> {
             headers: {
                 Authorization: "Bearer " + process.env["GITHUB_TOKEN"],
             },
-        },
+        }
     );
     return (await response.json()) as Environments;
 }

@@ -15,7 +15,11 @@ export class ClonedRepository {
         return await this.readFile({ relativeFilePath: README_FILEPATH });
     }
 
-    private async readFile({ relativeFilePath }: { relativeFilePath: string }): Promise<string | undefined> {
+    private async readFile({
+        relativeFilePath,
+    }: {
+        relativeFilePath: string;
+    }): Promise<string | undefined> {
         const absoluteFilePath = path.join(this.clonePath, relativeFilePath);
         if (!(await doesPathExist(absoluteFilePath))) {
             return undefined;

@@ -1,17 +1,23 @@
 import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 
 export class ObjectFlattener {
-    private flattenedObjects: Map<FernRegistry.TypeId, FernRegistry.api.v1.read.ObjectProperty[]> = new Map<
+    private flattenedObjects: Map<
+        FernRegistry.TypeId,
+        FernRegistry.api.v1.read.ObjectProperty[]
+    > = new Map<
         FernRegistry.TypeId,
         FernRegistry.api.v1.read.ObjectProperty[]
     >();
 
-    constructor(private readonly apiDefinition: FernRegistry.api.v1.read.ApiDefinition) {}
+    constructor(
+        private readonly apiDefinition: FernRegistry.api.v1.read.ApiDefinition
+    ) {}
 
     public getFlattenedObjectPropertiesFromObjectType(
-        objectType: FernRegistry.api.v1.read.ObjectType,
+        objectType: FernRegistry.api.v1.read.ObjectType
     ): FernRegistry.api.v1.read.ObjectProperty[] {
-        const flattenedProperties: FernRegistry.api.v1.read.ObjectProperty[] = [];
+        const flattenedProperties: FernRegistry.api.v1.read.ObjectProperty[] =
+            [];
         flattenedProperties.push(...objectType.properties);
         objectType.extends.forEach((ext) => {
             flattenedProperties.push(...this.getFlattenedObjectProperties(ext));
@@ -20,7 +26,9 @@ export class ObjectFlattener {
         return flattenedProperties;
     }
 
-    public getFlattenedObjectProperties(typeId: FernRegistry.TypeId): FernRegistry.api.v1.read.ObjectProperty[] {
+    public getFlattenedObjectProperties(
+        typeId: FernRegistry.TypeId
+    ): FernRegistry.api.v1.read.ObjectProperty[] {
         if (this.flattenedObjects.has(typeId)) {
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             return this.flattenedObjects.get(typeId)!;
@@ -31,12 +39,15 @@ export class ObjectFlattener {
             return [];
         }
 
-        const flattenedProperties: FernRegistry.api.v1.read.ObjectProperty[] = [];
+        const flattenedProperties: FernRegistry.api.v1.read.ObjectProperty[] =
+            [];
         switch (maybeType.shape.type) {
             case "object":
                 flattenedProperties.push(...maybeType.shape.properties);
                 maybeType.shape.extends.forEach((ext) => {
-                    flattenedProperties.push(...this.getFlattenedObjectProperties(ext));
+                    flattenedProperties.push(
+                        ...this.getFlattenedObjectProperties(ext)
+                    );
                 });
                 break;
             default:

@@ -6,7 +6,9 @@ export interface YarnPackage {
     location: string;
 }
 
-export async function getAllPackages({ since = false }: { since?: boolean } = {}): Promise<YarnPackage[]> {
+export async function getAllPackages({
+    since = false,
+}: { since?: boolean } = {}): Promise<YarnPackage[]> {
     const args = ["workspaces", "list", "--json"];
     if (since) {
         args.push("--since", "--recursive");

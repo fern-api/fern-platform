@@ -25,7 +25,9 @@ test("home page", async ({ page }) => {
 });
 
 test("capture the flag", async ({ page }) => {
-    const response = await page.goto(new URL("/subpath", getNextServerUrl(port)).toString());
+    const response = await page.goto(
+        new URL("/subpath", getNextServerUrl(port)).toString()
+    );
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -40,12 +42,19 @@ test("capture the flag", async ({ page }) => {
 
     await page.waitForURL(/(capture-the-flag)/);
     expect(await page.content()).not.toContain("Application error");
-    expect(page.url()).toEqual(`${getNextServerUrl(port)}/subpath/capture-the-flag`);
+    expect(page.url()).toEqual(
+        `${getNextServerUrl(port)}/subpath/capture-the-flag`
+    );
     expect(await page.content()).toContain("capture_the_flag");
 });
 
 test("redirect", async ({ page }) => {
-    const response = await page.goto(new URL("/subpath/test-capture-the-flag", getNextServerUrl(port)).toString());
+    const response = await page.goto(
+        new URL(
+            "/subpath/test-capture-the-flag",
+            getNextServerUrl(port)
+        ).toString()
+    );
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;
@@ -54,7 +63,9 @@ test("redirect", async ({ page }) => {
 });
 
 test("404", async ({ page }) => {
-    const response = await page.goto(new URL("/subpath/test-3", getNextServerUrl(port)).toString());
+    const response = await page.goto(
+        new URL("/subpath/test-3", getNextServerUrl(port)).toString()
+    );
     expect(response).toBeDefined();
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const definedResponse = response!;

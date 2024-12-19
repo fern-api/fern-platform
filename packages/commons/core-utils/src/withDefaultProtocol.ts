@@ -5,9 +5,18 @@
  * @param defaultProtocol defaults to "https://"
  * @returns the endpoint, which will always have a protocol
  */
-export function withDefaultProtocol(endpoint: string, defaultProtocol?: string): string;
-export function withDefaultProtocol(endpoint: string | undefined, defaultProtocol?: string): string | undefined;
-export function withDefaultProtocol(endpoint: string | undefined, defaultProtocol = "https://"): string | undefined {
+export function withDefaultProtocol(
+    endpoint: string,
+    defaultProtocol?: string
+): string;
+export function withDefaultProtocol(
+    endpoint: string | undefined,
+    defaultProtocol?: string
+): string | undefined;
+export function withDefaultProtocol(
+    endpoint: string | undefined,
+    defaultProtocol = "https://"
+): string | undefined {
     if (endpoint == null) {
         return undefined;
     }

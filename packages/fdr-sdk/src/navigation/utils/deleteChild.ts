@@ -9,7 +9,7 @@ import { DeleterAction } from "../../utils/traversers/types";
  */
 export function mutableDeleteChild(
     parent: FernNavigation.NavigationNodeParent | undefined,
-    node: FernNavigation.NavigationNode,
+    node: FernNavigation.NavigationNode
 ): DeleterAction {
     /**
      * The idea here is we should only delete leaf nodes (we're treating changelogs here like a leaf node)
@@ -25,7 +25,9 @@ export function mutableDeleteChild(
     ) {
         // if the node to be deleted is a section, remove the overviewPageId
         if (FernNavigation.isSectionOverview(node)) {
-            (node as MarkOptional<typeof node, "overviewPageId">).overviewPageId = undefined;
+            (
+                node as MarkOptional<typeof node, "overviewPageId">
+            ).overviewPageId = undefined;
 
             if (node.children.length === 0) {
                 return "deleted";
@@ -38,7 +40,10 @@ export function mutableDeleteChild(
     }
 
     // if the node is not a leaf node, don't delete it from the parent unless it has no children
-    if (!FernNavigation.isLeaf(node) && FernNavigation.getChildren(node).length > 0) {
+    if (
+        !FernNavigation.isLeaf(node) &&
+        FernNavigation.getChildren(node).length > 0
+    ) {
         return "noop";
     }
 
@@ -48,26 +53,42 @@ export function mutableDeleteChild(
 
     switch (parent.type) {
         case "apiPackage":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "apiReference":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
-            parent.changelog = parent.changelog?.id === node.id ? undefined : parent.changelog;
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
+            parent.changelog =
+                parent.changelog?.id === node.id ? undefined : parent.changelog;
             break;
         case "changelog":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "changelogYear":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "changelogMonth":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "endpointPair":
             return "should-delete-parent";
         case "productgroup":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
-            parent.landingPage = parent.landingPage?.id === node.id ? undefined : parent.landingPage;
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
+            parent.landingPage =
+                parent.landingPage?.id === node.id
+                    ? undefined
+                    : parent.landingPage;
             break;
         case "product":
         case "root":
@@ -78,18 +99,26 @@ export function mutableDeleteChild(
             }
             break;
         case "section":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "sidebarGroup":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "tab":
             return "should-delete-parent";
         case "sidebarRoot":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "tabbed":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         case "version":
             if (node.id === parent.landingPage?.id) {
@@ -97,7 +126,9 @@ export function mutableDeleteChild(
             }
             break;
         case "versioned":
-            parent.children = parent.children.filter((child) => child.id !== node.id);
+            parent.children = parent.children.filter(
+                (child) => child.id !== node.id
+            );
             break;
         default:
             throw new UnreachableCaseError(parent);

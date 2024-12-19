@@ -1,7 +1,10 @@
 import { FernNavigation } from "..";
 import { findNode } from "../navigation/utils";
 
-export function testGetNavigationRoot(root: FernNavigation.RootNode, slug: string): void {
+export function testGetNavigationRoot(
+    root: FernNavigation.RootNode,
+    slug: string
+): void {
     it("gets navigation root for /" + slug, async () => {
         const found = findNode(root, FernNavigation.slugjoin(slug));
 

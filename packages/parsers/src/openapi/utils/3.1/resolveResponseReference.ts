@@ -4,10 +4,12 @@ import { resolveReference } from "./resolveReference";
 
 export function resolveResponseReference(
     referenceObject: OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ResponseObject,
-    document: OpenAPIV3_1.Document,
+    document: OpenAPIV3_1.Document
 ): OpenAPIV3_1.ResponseObject | undefined {
     if (isReferenceObject(referenceObject)) {
-        const resolved = resolveReference<OpenAPIV3_1.ResponseObject | undefined>(referenceObject, document, undefined);
+        const resolved = resolveReference<
+            OpenAPIV3_1.ResponseObject | undefined
+        >(referenceObject, document, undefined);
         if (resolved == null) {
             return undefined;
         }

@@ -9,7 +9,9 @@ export function generateWebhookExample({
     apiDefinition: APIV1Write.ApiDefinition;
 }): APIV1Write.ExampleWebhookPayload {
     try {
-        const resolveTypeById = (typeId: APIV1Write.TypeId): APIV1Write.TypeDefinition => {
+        const resolveTypeById = (
+            typeId: APIV1Write.TypeId
+        ): APIV1Write.TypeDefinition => {
             const typeDefinition = apiDefinition.types[typeId];
             if (typeDefinition == null) {
                 throw new Error(`Failed to find ${typeId}`);
@@ -17,7 +19,10 @@ export function generateWebhookExample({
             return typeDefinition;
         };
         return {
-            payload: generateWebhookPayloadExample(webhookDefinition.payload.type, resolveTypeById),
+            payload: generateWebhookPayloadExample(
+                webhookDefinition.payload.type,
+                resolveTypeById
+            ),
         };
     } catch (e) {
         throw new Error();

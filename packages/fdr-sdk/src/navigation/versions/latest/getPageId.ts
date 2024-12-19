@@ -2,7 +2,8 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import type { NavigationNodePage, PageId } from ".";
 
 const RETURN_PAGEID = (node: { pageId: PageId }) => node.pageId;
-const RETURN_OVERVIEW_PAGEID = (node: { overviewPageId?: PageId }) => node.overviewPageId;
+const RETURN_OVERVIEW_PAGEID = (node: { overviewPageId?: PageId }) =>
+    node.overviewPageId;
 const RETURN_UNDEFINED = () => undefined;
 
 export function getPageId(node: NavigationNodePage): PageId | undefined {

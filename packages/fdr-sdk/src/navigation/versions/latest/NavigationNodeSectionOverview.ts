@@ -9,8 +9,11 @@ type WithRequiredOverviewPage<T extends WithOverviewPage> = T & {
 /**
  * A navigation node that isn't a leaf node and contains markdown content
  */
-export type NavigationNodeSectionOverview = WithRequiredOverviewPage<NavigationNodeSection>;
+export type NavigationNodeSectionOverview =
+    WithRequiredOverviewPage<NavigationNodeSection>;
 
-export function isSectionOverview(node: NavigationNode): node is NavigationNodeSectionOverview {
+export function isSectionOverview(
+    node: NavigationNode
+): node is NavigationNodeSectionOverview {
     return isSection(node) && node.overviewPageId != null;
 }

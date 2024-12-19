@@ -10,7 +10,7 @@ describe("dfs", () => {
             (n, p) => {
                 visited.push([n.id, p.map((n) => n.id)]);
             },
-            (n) => n.children,
+            (n) => n.children
         );
 
         expect(visited).toStrictEqual([
@@ -36,7 +36,7 @@ describe("dfs", () => {
                 }
                 return;
             },
-            (p) => p.children,
+            (p) => p.children
         );
 
         expect(visited).toStrictEqual([
@@ -58,7 +58,7 @@ describe("dfs", () => {
                 }
                 return;
             },
-            (p) => p.children,
+            (p) => p.children
         );
 
         expect(visited).toStrictEqual([

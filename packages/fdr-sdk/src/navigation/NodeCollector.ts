@@ -10,17 +10,31 @@ interface NavigationNodeWithMetadataAndParents {
     prev: FernNavigation.NavigationNodeNeighbor | undefined;
 }
 
-const NodeCollectorInstances = new WeakMap<FernNavigation.NavigationNode, NodeCollector>();
+const NodeCollectorInstances = new WeakMap<
+    FernNavigation.NavigationNode,
+    NodeCollector
+>();
 
 export class NodeCollector {
     private static readonly EMPTY = new NodeCollector(undefined);
     private nodesInOrder: FernNavigation.NavigationNode[] = [];
-    private idToNode = new Map<FernNavigation.NodeId, FernNavigation.NavigationNode>();
-    private idToNodeParents = new Map<FernNavigation.NodeId, readonly FernNavigation.NavigationNodeParent[]>();
-    private slugToNode = new Map<FernNavigation.Slug, NavigationNodeWithMetadataAndParents>();
+    private idToNode = new Map<
+        FernNavigation.NodeId,
+        FernNavigation.NavigationNode
+    >();
+    private idToNodeParents = new Map<
+        FernNavigation.NodeId,
+        readonly FernNavigation.NavigationNodeParent[]
+    >();
+    private slugToNode = new Map<
+        FernNavigation.Slug,
+        NavigationNodeWithMetadataAndParents
+    >();
     private orphanedNodes: FernNavigation.NavigationNodeWithMetadata[] = [];
 
-    public static collect(rootNode: FernNavigation.NavigationNode | undefined): NodeCollector {
+    public static collect(
+        rootNode: FernNavigation.NavigationNode | undefined
+    ): NodeCollector {
         if (rootNode == null) {
             return NodeCollector.EMPTY;
         }
@@ -38,9 +52,14 @@ export class NodeCollector {
     #setNode(
         slug: FernNavigation.Slug,
         node: FernNavigation.NavigationNodeWithMetadata,
-        parents: readonly FernNavigation.NavigationNodeParent[],
+        parents: readonly FernNavigation.NavigationNodeParent[]
     ) {
-        const toSet = { node, parents, prev: this.#lastNeighboringNode, next: undefined };
+        const toSet = {
+            node,
+            parents,
+            prev: this.#lastNeighboringNode,
+            next: undefined,
+        };
         this.slugToNode.set(slug, toSet);
 
         if (FernNavigation.isNeighbor(node) && !node.hidden) {
@@ -64,12 +83,29 @@ export class NodeCollector {
                 this.versionNodes.push(node);
             }
 
-            if (node.type === "version" && node.default && rootNode.type === "root") {
-                const copy = JSON.parse(JSON.stringify(node)) as FernNavigation.VersionNode;
-                this.defaultVersion = pruneVersionNode(copy, rootNode.slug, node.slug);
-                FernNavigation.traverseDF(this.defaultVersion, (node, innerParents) => {
-                    this.visitNode(node, [...parents, ...innerParents], true);
-                });
+            if (
+                node.type === "version" &&
+                node.default &&
+                rootNode.type === "root"
+            ) {
+                const copy = JSON.parse(
+                    JSON.stringify(node)
+                ) as FernNavigation.VersionNode;
+                this.defaultVersion = pruneVersionNode(
+                    copy,
+                    rootNode.slug,
+                    node.slug
+                );
+                FernNavigation.traverseDF(
+                    this.defaultVersion,
+                    (node, innerParents) => {
+                        this.visitNode(
+                            node,
+                            [...parents, ...innerParents],
+                            true
+                        );
+                    }
+                );
             }
 
             this.visitNode(node, parents);
@@ -79,7 +115,7 @@ export class NodeCollector {
     private visitNode(
         node: FernNavigation.NavigationNode,
         parents: readonly FernNavigation.NavigationNodeParent[],
-        isDefaultVersion = false,
+        isDefaultVersion = false
     ): void {
         if (!this.idToNode.has(node.id) || isDefaultVersion) {
             this.idToNode.set(node.id, node);
@@ -93,7 +129,11 @@ export class NodeCollector {
         }
 
         // there's currently no visitable page for changelog months and years
-        if (!FernNavigation.hasMetadata(node) || node.type === "changelogMonth" || node.type === "changelogYear") {
+        if (
+            !FernNavigation.hasMetadata(node) ||
+            node.type === "changelogMonth" ||
+            node.type === "changelogYear"
+        ) {
             return;
         }
 
@@ -120,13 +160,22 @@ export class NodeCollector {
         return this.orphanedNodes;
     }
 
-    public getOrphanedPages = once((): FernNavigation.NavigationNodeWithMetadata[] => {
-        return this.orphanedNodes.filter(FernNavigation.isPage);
-    });
+    public getOrphanedPages = once(
+        (): FernNavigation.NavigationNodeWithMetadata[] => {
+            return this.orphanedNodes.filter(FernNavigation.isPage);
+        }
+    );
 
-    private getSlugMap = once((): Map<string, FernNavigation.NavigationNodeWithMetadata> => {
-        return new Map([...this.slugToNode.entries()].map(([slug, { node }]) => [slug, node]));
-    });
+    private getSlugMap = once(
+        (): Map<string, FernNavigation.NavigationNodeWithMetadata> => {
+            return new Map(
+                [...this.slugToNode.entries()].map(([slug, { node }]) => [
+                    slug,
+                    node,
+                ])
+            );
+        }
+    );
 
     get slugMap(): Map<string, FernNavigation.NavigationNodeWithMetadata> {
         return this.getSlugMap();
@@ -136,15 +185,22 @@ export class NodeCollector {
         return this.defaultVersion;
     }
 
-    public get(id: FernNavigation.NodeId): FernNavigation.NavigationNode | undefined {
+    public get(
+        id: FernNavigation.NodeId
+    ): FernNavigation.NavigationNode | undefined {
         return this.idToNode.get(id);
     }
 
-    public getParents(id: FernNavigation.NodeId): readonly FernNavigation.NavigationNodeParent[] {
+    public getParents(
+        id: FernNavigation.NodeId
+    ): readonly FernNavigation.NavigationNodeParent[] {
         return this.idToNodeParents.get(id) ?? EMPTY_ARRAY;
     }
 
-    public getSlugMapWithParents = (): ReadonlyMap<FernNavigation.Slug, NavigationNodeWithMetadataAndParents> => {
+    public getSlugMapWithParents = (): ReadonlyMap<
+        FernNavigation.Slug,
+        NavigationNodeWithMetadataAndParents
+    > => {
         return this.slugToNode;
     };
 
@@ -168,8 +224,8 @@ export class NodeCollector {
                 [...this.slugToNode.values()]
                     .filter(({ node }) => FernNavigation.isPage(node))
                     .filter(({ node }) => !node.authed)
-                    .map(({ node }) => node.slug),
-            ),
+                    .map(({ node }) => node.slug)
+            )
         );
     });
     get staticPageSlugs(): string[] {
@@ -187,9 +243,11 @@ export class NodeCollector {
                 [...this.slugToNode.values()]
                     .filter(({ node }) => FernNavigation.isPage(node))
                     .filter(({ node }) => !node.hidden && !node.authed)
-                    .filter(({ node }) => (FernNavigation.hasMarkdown(node) ? !node.noindex : true))
-                    .map(({ node }) => node.canonicalSlug ?? node.slug),
-            ),
+                    .filter(({ node }) =>
+                        FernNavigation.hasMarkdown(node) ? !node.noindex : true
+                    )
+                    .map(({ node }) => node.canonicalSlug ?? node.slug)
+            )
         );
     });
     get indexablePageSlugs(): string[] {

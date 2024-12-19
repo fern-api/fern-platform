@@ -8,11 +8,16 @@ export declare namespace XFernWebhookConverterNode {
     }
 }
 
-export class XFernWebhookConverterNode extends BaseOpenApiV3_1ConverterNode<unknown, boolean> {
+export class XFernWebhookConverterNode extends BaseOpenApiV3_1ConverterNode<
+    unknown,
+    boolean
+> {
     isWebhook?: boolean;
 
     parse(): void {
-        this.isWebhook = extendType<XFernWebhookConverterNode.Input>(this.input)[xFernWebhookKey];
+        this.isWebhook = extendType<XFernWebhookConverterNode.Input>(
+            this.input
+        )[xFernWebhookKey];
     }
     convert(): boolean | undefined {
         return this.isWebhook ? undefined : undefined;

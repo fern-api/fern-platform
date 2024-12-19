@@ -5,12 +5,17 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, SUPPORTED_X_FERN_AVAILABILITY_VALUES } from "../../types/format.types";
+import {
+    ConstArrayToType,
+    SUPPORTED_X_FERN_AVAILABILITY_VALUES,
+} from "../../types/format.types";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { extendType } from "../../utils/extendType";
 import { xFernAvailabilityKey } from "./fernExtension.consts";
 
-export type Availability = ConstArrayToType<typeof SUPPORTED_X_FERN_AVAILABILITY_VALUES>;
+export type Availability = ConstArrayToType<
+    typeof SUPPORTED_X_FERN_AVAILABILITY_VALUES
+>;
 
 export declare namespace AvailabilityConverterNode {
     export interface Input {
@@ -19,13 +24,17 @@ export declare namespace AvailabilityConverterNode {
 }
 
 export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
-    { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.SchemaObject,
+    | { deprecated?: boolean }
+    | OpenAPIV3_1.ReferenceObject
+    | OpenAPIV3_1.SchemaObject,
     FernRegistry.Availability | undefined
 > {
     availability?: Availability;
 
     constructor(
-        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<{ deprecated?: boolean } | OpenAPIV3_1.ReferenceObject>,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+            { deprecated?: boolean } | OpenAPIV3_1.ReferenceObject
+        >
     ) {
         super(args);
         this.safeParse();
@@ -37,9 +46,16 @@ export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (input?.deprecated) {
             this.availability = "deprecated";
         } else {
-            const maybeAvailability = extendType<AvailabilityConverterNode.Input>(this.input)[xFernAvailabilityKey];
+            const maybeAvailability =
+                extendType<AvailabilityConverterNode.Input>(this.input)[
+                    xFernAvailabilityKey
+                ];
             if (maybeAvailability != null) {
-                if (SUPPORTED_X_FERN_AVAILABILITY_VALUES.includes(maybeAvailability)) {
+                if (
+                    SUPPORTED_X_FERN_AVAILABILITY_VALUES.includes(
+                        maybeAvailability
+                    )
+                ) {
                     this.availability = maybeAvailability;
                 } else {
                     this.context.errors.warning({

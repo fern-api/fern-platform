@@ -21,13 +21,23 @@ export function generateEndpointErrorExample({
 }): APIV1Write.ExampleEndpointCall {
     const resolveTypeById = getResolveByTypeId(apiDefinition);
     return {
-        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        ...generateBaseEndpointExample({
+            endpointDefinition,
+            apiDefinition,
+            resolveTypeById,
+        }),
         responseStatusCode: errorDeclaration.statusCode,
         responseBodyV3:
             errorDeclaration.type != null
                 ? {
                       type: "json",
-                      value: generateExampleFromTypeShape(errorDeclaration.type, resolveTypeById, false, new Set(), 0),
+                      value: generateExampleFromTypeShape(
+                          errorDeclaration.type,
+                          resolveTypeById,
+                          false,
+                          new Set(),
+                          0
+                      ),
                   }
                 : undefined,
     };
@@ -44,9 +54,16 @@ export function generateEndpointNonStreamResponseExample({
 }): APIV1Write.ExampleEndpointCall {
     const resolveTypeById = getResolveByTypeId(apiDefinition);
     return {
-        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        ...generateBaseEndpointExample({
+            endpointDefinition,
+            apiDefinition,
+            resolveTypeById,
+        }),
         responseStatusCode: 200,
-        responseBodyV3: generateHttpResponseBodyExample(nonStreamResponse.shape, resolveTypeById),
+        responseBodyV3: generateHttpResponseBodyExample(
+            nonStreamResponse.shape,
+            resolveTypeById
+        ),
     };
 }
 
@@ -62,9 +79,16 @@ export function generateEndpointStreamResponseExample({
     const resolveTypeById = getResolveByTypeId(apiDefinition);
 
     return {
-        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        ...generateBaseEndpointExample({
+            endpointDefinition,
+            apiDefinition,
+            resolveTypeById,
+        }),
         responseStatusCode: 200,
-        responseBodyV3: generateHttpResponseBodyExample(streamResponse.shape, resolveTypeById),
+        responseBodyV3: generateHttpResponseBodyExample(
+            streamResponse.shape,
+            resolveTypeById
+        ),
     };
 }
 
@@ -77,11 +101,18 @@ export function generateEndpointSuccessExample({
 }): APIV1Write.ExampleEndpointCall {
     const resolveTypeById = getResolveByTypeId(apiDefinition);
     return {
-        ...generateBaseEndpointExample({ endpointDefinition, apiDefinition, resolveTypeById }),
+        ...generateBaseEndpointExample({
+            endpointDefinition,
+            apiDefinition,
+            resolveTypeById,
+        }),
         responseStatusCode: 200,
         responseBodyV3:
             endpointDefinition.response != null
-                ? generateHttpResponseBodyExample(endpointDefinition.response.type, resolveTypeById)
+                ? generateHttpResponseBodyExample(
+                      endpointDefinition.response.type,
+                      resolveTypeById
+                  )
                 : undefined,
     };
 }
@@ -106,12 +137,18 @@ function generateBaseEndpointExample({
         queryParameters: endpointDefinition.queryParameters,
     });
     const headers = generateHeaderExamples({
-        headers: [...(apiDefinition.globalHeaders ?? []), ...endpointDefinition.headers],
+        headers: [
+            ...(apiDefinition.globalHeaders ?? []),
+            ...endpointDefinition.headers,
+        ],
         resolveTypeById,
     });
     const requestBodyV3 =
         endpointDefinition.request != null
-            ? generateHttpRequestBodyExample(endpointDefinition.request.type, resolveTypeById)
+            ? generateHttpRequestBodyExample(
+                  endpointDefinition.request.type,
+                  resolveTypeById
+              )
             : undefined;
     return {
         path,
@@ -147,7 +184,13 @@ function generatePathParameterExamples({
             ...acc,
             [pathParameter.key]: isString
                 ? `:${pathParameter.key}`
-                : generateExampleFromTypeReference(pathParameter.type, resolveTypeById, false, new Set(), 0),
+                : generateExampleFromTypeReference(
+                      pathParameter.type,
+                      resolveTypeById,
+                      false,
+                      new Set(),
+                      0
+                  ),
         };
     }, {});
 }
@@ -167,7 +210,7 @@ function generateQueryParameterExamples({
             resolveTypeById,
             optionalCount >= MAX_OPTIONAL_EXAMPLES_FOR_QUERY_PARAMS,
             new Set(),
-            0,
+            0
         );
         if (queryParameter.type.type === "optional") {
             optionalCount += 1;
@@ -185,7 +228,13 @@ function generateHeaderExamples({
     resolveTypeById: ResolveTypeById;
 }): Record<string, unknown> {
     return headers.reduce((acc, header) => {
-        const value = generateExampleFromTypeReference(header.type, resolveTypeById, false, new Set(), 0);
+        const value = generateExampleFromTypeReference(
+            header.type,
+            resolveTypeById,
+            false,
+            new Set(),
+            0
+        );
         if (value == null) {
             return acc;
         }
@@ -196,7 +245,9 @@ function generateHeaderExamples({
     }, {});
 }
 
-function getResolveByTypeId(apiDefinition: APIV1Write.ApiDefinition): ResolveTypeById {
+function getResolveByTypeId(
+    apiDefinition: APIV1Write.ApiDefinition
+): ResolveTypeById {
     return (typeId: APIV1Write.TypeId): APIV1Write.TypeDefinition => {
         const typeDefinition = apiDefinition.types[typeId];
         if (typeDefinition == null) {
@@ -206,7 +257,10 @@ function getResolveByTypeId(apiDefinition: APIV1Write.ApiDefinition): ResolveTyp
     };
 }
 
-function generatePath(path: APIV1Write.EndpointPath, pathParameters: Record<string, unknown>): string {
+function generatePath(
+    path: APIV1Write.EndpointPath,
+    pathParameters: Record<string, unknown>
+): string {
     let pathString = "";
     for (const part of path.parts) {
         switch (part.type) {
@@ -217,7 +271,9 @@ function generatePath(path: APIV1Write.EndpointPath, pathParameters: Record<stri
                 {
                     const value = pathParameters[part.value];
                     if (value == null) {
-                        throw new Error("Path parameter is missing: " + part.value);
+                        throw new Error(
+                            "Path parameter is missing: " + part.value
+                        );
                     }
                     pathString += value;
                 }
@@ -236,12 +292,18 @@ function isTypeReferenceString({
     typeReference: APIV1Write.TypeReference;
     types: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
 }): boolean {
-    if (typeReference.type === "primitive" && typeReference.value.type === "string") {
+    if (
+        typeReference.type === "primitive" &&
+        typeReference.value.type === "string"
+    ) {
         return true;
     } else if (typeReference.type === "id") {
         const typeDef = types[typeReference.value];
         if (typeDef != null && typeDef.shape.type === "alias") {
-            return isTypeReferenceString({ typeReference: typeDef.shape.value, types });
+            return isTypeReferenceString({
+                typeReference: typeDef.shape.value,
+                types,
+            });
         }
     }
     return false;

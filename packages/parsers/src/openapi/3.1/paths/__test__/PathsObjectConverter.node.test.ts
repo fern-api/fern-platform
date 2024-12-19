@@ -45,7 +45,7 @@ describe("PathsObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert() ?? { endpoints: {} };
@@ -56,7 +56,7 @@ describe("PathsObjectConverterNode", () => {
                 expect(endpoint).toEqual(
                     expect.objectContaining({
                         method: "GET",
-                    }),
+                    })
                 );
             });
         });
@@ -72,7 +72,7 @@ describe("PathsObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -95,7 +95,7 @@ describe("PathsObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -132,7 +132,7 @@ describe("PathsObjectConverterNode", () => {
                     pathId: "test",
                 },
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert() ?? { endpoints: {} };

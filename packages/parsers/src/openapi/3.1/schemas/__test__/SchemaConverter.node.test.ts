@@ -139,7 +139,10 @@ describe("SchemaConverterNode", () => {
         it("should handle allOf type", () => {
             const input: OpenAPIV3_1.SchemaObject = {
                 allOf: [
-                    { type: "object", properties: { name: { type: "string" } } },
+                    {
+                        type: "object",
+                        properties: { name: { type: "string" } },
+                    },
                     { type: "object", properties: { age: { type: "number" } } },
                 ],
             };

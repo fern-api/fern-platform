@@ -32,7 +32,9 @@ describe("ResponsesObjectConverterNode", () => {
         const result = converter.convert();
         expect(result?.responses).toBeDefined();
         expect(result?.responses[0]?.response.statusCode).toBe(200);
-        expect(result?.responses[0]?.response.description).toBe("Success response");
+        expect(result?.responses[0]?.response.description).toBe(
+            "Success response"
+        );
     });
 
     it("should handle error responses", () => {

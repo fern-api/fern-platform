@@ -5,7 +5,10 @@ export interface DbNavigationTabVisitor<T> {
     group: (config: DocsV1Db.NavigationTabGroup) => T;
 }
 
-export function visitDbNavigationTab<T>(config: DocsV1Db.NavigationTab, visitor: DbNavigationTabVisitor<T>): T {
+export function visitDbNavigationTab<T>(
+    config: DocsV1Db.NavigationTab,
+    visitor: DbNavigationTabVisitor<T>
+): T {
     if (isNavigationTabLink(config)) {
         return visitor.link(config);
     } else {
@@ -20,7 +23,7 @@ export interface WriteNavigationTabVisitor<T> {
 
 export function visitWriteNavigationTab<T>(
     config: DocsV1Write.NavigationTab,
-    visitor: WriteNavigationTabVisitor<T>,
+    visitor: WriteNavigationTabVisitor<T>
 ): T {
     if (isNavigationTabLink(config)) {
         return visitor.link(config);
@@ -30,7 +33,7 @@ export function visitWriteNavigationTab<T>(
 }
 
 export function isNavigationTabLink(
-    config: DocsV1Db.NavigationTab | DocsV1Write.NavigationTab,
+    config: DocsV1Db.NavigationTab | DocsV1Write.NavigationTab
 ): config is DocsV1Write.NavigationTabLink {
     return "url" in config && typeof config.url === "string";
 }

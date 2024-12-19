@@ -31,8 +31,9 @@ export class HeaderSecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
-            HeaderSecuritySchemeConverterNode.Input | OpenAPIV3_1.OAuth2SecurityScheme
-        >,
+            | HeaderSecuritySchemeConverterNode.Input
+            | OpenAPIV3_1.OAuth2SecurityScheme
+        >
     ) {
         super(args);
         this.safeParse();
@@ -72,7 +73,8 @@ export class HeaderSecuritySchemeConverterNode extends BaseOpenApiV3_1ConverterN
             type: "header",
             nameOverride: headerAuth?.name,
             headerWireValue: this.headerName ?? "Authorization",
-            prefix: headerAuth?.prefix ?? this.headerBearerFormatNode?.convert(),
+            prefix:
+                headerAuth?.prefix ?? this.headerBearerFormatNode?.convert(),
         };
     }
 }

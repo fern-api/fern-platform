@@ -10,7 +10,8 @@ import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.NonArraySchemaObject,
-    FernRegistry.api.latest.TypeShape.DiscriminatedUnion | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
+    | FernRegistry.api.latest.TypeShape.DiscriminatedUnion
+    | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
 > {
     discriminated: boolean | undefined;
     discriminant: string | undefined;
@@ -18,7 +19,9 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -27,14 +30,16 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (this.input.oneOf != null) {
             if (this.input.discriminator == null) {
                 this.discriminated = false;
-                this.undiscriminatedMapping = this.input.oneOf?.map((schema) => {
-                    return new SchemaConverterNode({
-                        input: schema,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: this.pathId,
-                    });
-                });
+                this.undiscriminatedMapping = this.input.oneOf?.map(
+                    (schema) => {
+                        return new SchemaConverterNode({
+                            input: schema,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: this.pathId,
+                        });
+                    }
+                );
             } else {
                 const maybeMapping = this.input.discriminator.mapping;
                 if (maybeMapping != null) {
@@ -46,18 +51,31 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
                     const discriminatedMapping = this.discriminatedMapping;
 
                     Object.entries(maybeMapping).map(([key, value]) => {
-                        const schema = resolveSchemaReference({ $ref: value }, this.context.document);
+                        const schema = resolveSchemaReference(
+                            { $ref: value },
+                            this.context.document
+                        );
                         if (schema == null) {
                             this.context.errors.warning({
                                 message: `Expected schema reference. Received undefined reference: ${value}`,
-                                path: [...this.accessPath, "discriminator", "mapping", key],
+                                path: [
+                                    ...this.accessPath,
+                                    "discriminator",
+                                    "mapping",
+                                    key,
+                                ],
                             });
                             return;
                         }
                         discriminatedMapping[key] = new SchemaConverterNode({
                             input: schema,
                             context: this.context,
-                            accessPath: [...this.accessPath, "discriminator", "mapping", key],
+                            accessPath: [
+                                ...this.accessPath,
+                                "discriminator",
+                                "mapping",
+                                key,
+                            ],
                             pathId: key,
                         });
                     });
@@ -74,20 +92,27 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
             // If no decision has been made, bail
             this.discriminated == null ||
             // If the union is discriminated, we need to have a discriminant and mapping
-            (this.discriminated && (this.discriminant == null || this.discriminatedMapping == null)) ||
+            (this.discriminated &&
+                (this.discriminant == null ||
+                    this.discriminatedMapping == null)) ||
             // If the union is undiscriminated, we should not have a discriminant or mapping
             (!this.discriminated && this.undiscriminatedMapping == null)
         ) {
             return undefined;
         }
-        return this.discriminated && this.discriminant != null && this.discriminatedMapping != null
+        return this.discriminated &&
+            this.discriminant != null &&
+            this.discriminatedMapping != null
             ? {
                   type: "discriminatedUnion",
                   discriminant: FernRegistry.PropertyKey(this.discriminant),
                   variants: Object.entries(this.discriminatedMapping)
                       .map(([key, node]) => {
                           const convertedShape = node.convert();
-                          if (convertedShape == null || convertedShape.type !== "object") {
+                          if (
+                              convertedShape == null ||
+                              convertedShape.type !== "object"
+                          ) {
                               return undefined;
                           }
                           return {
@@ -108,7 +133,10 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
                     variants: this.undiscriminatedMapping
                         .map((node) => {
                             const convertedShape = node.convert();
-                            if (convertedShape == null || convertedShape.type !== "object") {
+                            if (
+                                convertedShape == null ||
+                                convertedShape.type !== "object"
+                            ) {
                                 return undefined;
                             }
                             return {

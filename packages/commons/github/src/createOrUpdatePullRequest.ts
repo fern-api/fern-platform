@@ -16,7 +16,9 @@ interface RepoMetadata {
 function parseRepository(repository: string): RepoMetadata {
     const [owner, repo] = repository.split("/");
     if (owner == null || repo == null) {
-        throw new Error(`Failed to parse repository into owner and repo: ${repository}`);
+        throw new Error(
+            `Failed to parse repository into owner and repo: ${repository}`
+        );
     }
     return {
         owner,
@@ -36,7 +38,7 @@ export async function createOrUpdatePullRequest(
     inputs: CreatePRRequest,
     baseRepository: string,
     headRepository: string,
-    branchName: string,
+    branchName: string
 ): Promise<string> {
     const [headOwner] = headRepository.split("/");
     const headBranch = `${headOwner}:${branchName}`;
@@ -54,11 +56,13 @@ export async function createOrUpdatePullRequest(
             draft: inputs.draft,
         });
         console.log(
-            `Created pull request #${pull.number} (${headBranch} => ${inputs.base}), with info ${JSON.stringify({
-                number: pull.number,
-                html_url: pull.html_url,
-                created: true,
-            })}`,
+            `Created pull request #${pull.number} (${headBranch} => ${inputs.base}), with info ${JSON.stringify(
+                {
+                    number: pull.number,
+                    html_url: pull.html_url,
+                    created: true,
+                }
+            )}`
         );
 
         return pull.html_url;
@@ -82,7 +86,9 @@ export async function createOrUpdatePullRequest(
 
     const pullNumber = pulls[0]?.number;
     if (pullNumber == null) {
-        throw new Error(`Failed to retrieve pull request number: ${JSON.stringify(pulls)}`);
+        throw new Error(
+            `Failed to retrieve pull request number: ${JSON.stringify(pulls)}`
+        );
     }
 
     const { data: pull } = await octokit.rest.pulls.update({
@@ -92,11 +98,13 @@ export async function createOrUpdatePullRequest(
         body: inputs.body,
     });
     console.log(
-        `Updated pull request #${pull.number} (${headBranch} => ${inputs.base}) with information ${JSON.stringify({
-            number: pull.number,
-            html_url: pull.html_url,
-            created: false,
-        })}`,
+        `Updated pull request #${pull.number} (${headBranch} => ${inputs.base}) with information ${JSON.stringify(
+            {
+                number: pull.number,
+                html_url: pull.html_url,
+                created: false,
+            }
+        )}`
     );
 
     return pull.html_url;

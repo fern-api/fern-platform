@@ -16,9 +16,13 @@ export class AllPagesLoadRule implements Rule {
                 message: `Failed to load docs for ${url} from FDR`,
             };
         }
-        const node = FernNavigation.utils.toRootNode(getDocsForUrlResponse.body);
+        const node = FernNavigation.utils.toRootNode(
+            getDocsForUrlResponse.body
+        );
         const collector = FernNavigation.NodeCollector.collect(node);
-        const urls = collector.staticPageSlugs.map((slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`);
+        const urls = collector.staticPageSlugs.map(
+            (slug) => `${getDocsForUrlResponse.body.baseUrl.domain}/${slug}`
+        );
 
         const responses = await Promise.all(
             urls.map(async (url) => {
@@ -28,9 +32,11 @@ export class AllPagesLoadRule implements Rule {
                     }),
                     url,
                 };
-            }),
+            })
         );
-        const failedURLs = responses.filter((promise) => promise.res.status >= 400).map((res) => res.url);
+        const failedURLs = responses
+            .filter((promise) => promise.res.status >= 400)
+            .map((res) => res.url);
 
         if (failedURLs.length > 0) {
             return {

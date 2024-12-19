@@ -1,4 +1,10 @@
-import { PropertyKey, TypeDefinition, TypeId, TypeReference, TypeShape } from "../latest";
+import {
+    PropertyKey,
+    TypeDefinition,
+    TypeId,
+    TypeReference,
+    TypeShape,
+} from "../latest";
 import { TypeShapeOrReference } from "../types";
 import { unwrapObjectType, unwrapReference } from "../unwrap";
 
@@ -18,7 +24,9 @@ const PRIMITIVE_SHAPE: TypeShape = {
 
 describe("unwrapReference", () => {
     it("should noop for a non-reference", () => {
-        expect(unwrapReference(PRIMITIVE_SHAPE["value"], {})).toMatchInlineSnapshot(
+        expect(
+            unwrapReference(PRIMITIVE_SHAPE["value"], {})
+        ).toMatchInlineSnapshot(
             `
           {
             "availability": undefined,
@@ -37,7 +45,7 @@ describe("unwrapReference", () => {
             },
             "visitedTypeIds": Set {},
           }
-        `,
+        `
         );
     });
 
@@ -76,7 +84,7 @@ describe("unwrapReference", () => {
               "foo",
             },
           }
-        `,
+        `
         );
     });
 
@@ -145,7 +153,7 @@ describe("unwrapReference", () => {
               "foo",
             },
           }
-        `,
+        `
         );
     });
 
@@ -245,7 +253,11 @@ describe("unwrapReference", () => {
                         type: "optional",
                         shape: {
                             type: "alias",
-                            value: { type: "id", id: TypeId("c"), default: undefined },
+                            value: {
+                                type: "id",
+                                id: TypeId("c"),
+                                default: undefined,
+                            },
                         },
                         default: undefined,
                     },
@@ -274,8 +286,16 @@ describe("unwrapReference", () => {
                 shape: {
                     type: "enum",
                     values: [
-                        { value: "a", description: undefined, availability: undefined },
-                        { value: "b", description: undefined, availability: undefined },
+                        {
+                            value: "a",
+                            description: undefined,
+                            availability: undefined,
+                        },
+                        {
+                            value: "b",
+                            description: undefined,
+                            availability: undefined,
+                        },
                     ],
                     default: "a",
                 },
@@ -291,8 +311,8 @@ describe("unwrapReference", () => {
                     id: TypeId("a"),
                     default: undefined,
                 },
-                types,
-            ).default,
+                types
+            ).default
         ).toBe("a");
 
         expect(
@@ -306,8 +326,8 @@ describe("unwrapReference", () => {
                         value: "b",
                     },
                 },
-                types,
-            ).default,
+                types
+            ).default
         ).toBe("b");
     });
 });
@@ -360,7 +380,9 @@ describe("unwrapObjectType", () => {
             extraProperties: undefined,
         };
 
-        expect(unwrapObjectType(shape, {}).properties.map((p) => p.key)).toStrictEqual([
+        expect(
+            unwrapObjectType(shape, {}).properties.map((p) => p.key)
+        ).toStrictEqual([
             PropertyKey("c"),
             PropertyKey("b"),
             PropertyKey("d"),
@@ -433,7 +455,9 @@ describe("unwrapObjectType", () => {
                 availability: undefined,
             },
         };
-        expect(unwrapObjectType(shape, types).properties.map((p) => p.key)).toStrictEqual([
+        expect(
+            unwrapObjectType(shape, types).properties.map((p) => p.key)
+        ).toStrictEqual([
             PropertyKey("a"),
             PropertyKey("b"),
             PropertyKey("c"),
@@ -549,7 +573,10 @@ describe("unwrapObjectType", () => {
             },
         ]);
 
-        expect(unwrapped.descriptions).toStrictEqual(["description-1", "description-2"]);
+        expect(unwrapped.descriptions).toStrictEqual([
+            "description-1",
+            "description-2",
+        ]);
     });
 
     it("should gracefully handle circular reference", () => {
@@ -571,7 +598,7 @@ describe("unwrapObjectType", () => {
                     description: undefined,
                     availability: undefined,
                 },
-            },
+            }
         );
 
         expect(unwrapped.properties.length).toBe(0);

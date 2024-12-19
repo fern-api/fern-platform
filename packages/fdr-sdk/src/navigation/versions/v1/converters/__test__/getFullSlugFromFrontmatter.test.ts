@@ -12,14 +12,18 @@ slug: a/b/c
         const frontmatter = `
 slug: "path1/3/sdk-s/version-12"
 `;
-        expect(getFullSlugFromFrontmatter(frontmatter)).toEqual("path1/3/sdk-s/version-12");
+        expect(getFullSlugFromFrontmatter(frontmatter)).toEqual(
+            "path1/3/sdk-s/version-12"
+        );
     });
 
     it("should strip leading and trailing slashes from the slug", () => {
         const frontmatter = `
 slug: /a-path/to/some/thing/
 `;
-        expect(getFullSlugFromFrontmatter(frontmatter)).toEqual("a-path/to/some/thing");
+        expect(getFullSlugFromFrontmatter(frontmatter)).toEqual(
+            "a-path/to/some/thing"
+        );
     });
 
     it("should return undefined if slug is not present", () => {

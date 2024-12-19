@@ -9,10 +9,13 @@ import { getFullSlugFromFrontmatter } from "./getFullSlugFromFrontmatter";
 export function toRootNode(
     response: DocsV2Read.LoadDocsForUrlResponse,
     disableEndpointPairs: boolean = false,
-    paginated?: boolean,
+    paginated?: boolean
 ): FernNavigation.V1.RootNode {
     const noindexMap: Record<FernNavigation.V1.PageId, boolean> = {};
-    const fullSlugMap: Record<FernNavigation.V1.PageId, FernNavigation.V1.Slug> = {};
+    const fullSlugMap: Record<
+        FernNavigation.V1.PageId,
+        FernNavigation.V1.Slug
+    > = {};
     Object.entries(response.definition.pages).forEach(([pageId, page]) => {
         const frontmatter = getFrontmatter(page.markdown);
         if (frontmatter == null) {
@@ -43,7 +46,7 @@ export function toRootNode(
             response.baseUrl.basePath,
             isLexicographicSortEnabled(response.baseUrl.domain),
             disableEndpointPairs,
-            paginated,
+            paginated
         );
     } else {
         // eslint-disable-next-line no-console
@@ -83,7 +86,7 @@ function isLexicographicSortEnabled(domain: string): boolean {
 
 function hackReorderApis(
     apis: Record<string, APIV1Read.ApiDefinition>,
-    domain: string,
+    domain: string
 ): Record<string, APIV1Read.ApiDefinition> {
     if (!domain.includes("assemblyai")) {
         return apis;
@@ -92,7 +95,9 @@ function hackReorderApis(
     return mapValues(apis, (api) => hackReorderAssemblyApi(api));
 }
 
-function hackReorderAssemblyApi(api: APIV1Read.ApiDefinition): APIV1Read.ApiDefinition {
+function hackReorderAssemblyApi(
+    api: APIV1Read.ApiDefinition
+): APIV1Read.ApiDefinition {
     const SUBPACKAGE_REALTIME = APIV1Read.SubpackageId("subpackage_realtime");
     const SUBPACKAGE_STREAMING = APIV1Read.SubpackageId("subpackage_streaming");
 
@@ -111,7 +116,7 @@ function hackReorderAssemblyApi(api: APIV1Read.ApiDefinition): APIV1Read.ApiDefi
     delete api.subpackages[SUBPACKAGE_REALTIME];
 
     api.rootPackage.subpackages = api.rootPackage.subpackages.filter(
-        (subpackageId) => subpackageId !== SUBPACKAGE_REALTIME,
+        (subpackageId) => subpackageId !== SUBPACKAGE_REALTIME
     );
 
     return api;

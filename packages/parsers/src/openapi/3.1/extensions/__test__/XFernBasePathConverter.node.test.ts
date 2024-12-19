@@ -9,7 +9,9 @@ describe("XFernGroupNameConverterNode", () => {
     describe("parse", () => {
         it(`sets basePath from ${xFernBasePathKey} when present`, () => {
             const converter = new XFernBasePathConverterNode({
-                input: { [xFernBasePathKey]: "/v1" } as unknown as OpenAPIV3_1.Document,
+                input: {
+                    [xFernBasePathKey]: "/v1",
+                } as unknown as OpenAPIV3_1.Document,
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
@@ -19,7 +21,9 @@ describe("XFernGroupNameConverterNode", () => {
 
         it(`properly formats ${xFernBasePathKey} with slashes`, () => {
             const converter = new XFernBasePathConverterNode({
-                input: { [xFernBasePathKey]: "/v1/" } as unknown as OpenAPIV3_1.Document,
+                input: {
+                    [xFernBasePathKey]: "/v1/",
+                } as unknown as OpenAPIV3_1.Document,
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
@@ -39,7 +43,9 @@ describe("XFernGroupNameConverterNode", () => {
 
         it(`sets basePath to undefined when ${xFernBasePathKey} is explicitly null`, () => {
             const converter = new XFernBasePathConverterNode({
-                input: { [xFernBasePathKey]: null } as unknown as OpenAPIV3_1.Document,
+                input: {
+                    [xFernBasePathKey]: null,
+                } as unknown as OpenAPIV3_1.Document,
                 context: mockContext,
                 accessPath: [],
                 pathId: "",
@@ -51,7 +57,9 @@ describe("XFernGroupNameConverterNode", () => {
     describe("convert", () => {
         it("returns the basePath value", () => {
             const converter = new XFernBasePathConverterNode({
-                input: { [xFernBasePathKey]: "/v1" } as unknown as OpenAPIV3_1.Document,
+                input: {
+                    [xFernBasePathKey]: "/v1",
+                } as unknown as OpenAPIV3_1.Document,
                 context: mockContext,
                 accessPath: [],
                 pathId: "",

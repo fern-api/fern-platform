@@ -8,17 +8,24 @@ import {
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace MixedSchemaConverterNode {
-    export type Input = (OpenAPIV3_1.ArraySchemaObject | OpenAPIV3_1.NonArraySchemaObject | { type: "null" })[];
+    export type Input = (
+        | OpenAPIV3_1.ArraySchemaObject
+        | OpenAPIV3_1.NonArraySchemaObject
+        | { type: "null" }
+    )[];
 }
 
 export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
     MixedSchemaConverterNode.Input,
-    FernRegistry.api.latest.TypeShape.UndiscriminatedUnion | FernRegistry.api.latest.TypeShape.Alias
+    | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
+    | FernRegistry.api.latest.TypeShape.Alias
 > {
     typeNodes: SchemaConverterNode[] | undefined;
     nullable: boolean | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<MixedSchemaConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<MixedSchemaConverterNode.Input>
+    ) {
         super(args);
         this.parse();
     }

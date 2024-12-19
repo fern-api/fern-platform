@@ -22,7 +22,7 @@ interface Flags {
 
     /**
      * If true, avoid generating Typescript SDK snippets.
-     * In @fern-ui/ui's resolver, we generate http-snippets for JavaScript.
+     * In @fern-docs/ui's resolver, we generate http-snippets for JavaScript.
      */
     alwaysEnableJavaScriptFetch: boolean;
 
@@ -32,40 +32,53 @@ interface Flags {
     usesApplicationJsonInFormDataValue: boolean;
 }
 
-function isSubpackage(package_: APIV1Read.ApiDefinitionPackage): package_ is APIV1Read.ApiDefinitionSubpackage {
-    return typeof (package_ as APIV1Read.ApiDefinitionSubpackage).subpackageId === "string";
+function isSubpackage(
+    package_: APIV1Read.ApiDefinitionPackage
+): package_ is APIV1Read.ApiDefinitionSubpackage {
+    return (
+        typeof (package_ as APIV1Read.ApiDefinitionSubpackage).subpackageId ===
+        "string"
+    );
 }
 
 const AUTH_SCHEME_ID = V2.AuthSchemeId("default");
 
 export class ApiDefinitionV1ToLatest {
-    static from(v1: APIV1Read.ApiDefinition, flags: Flags): ApiDefinitionV1ToLatest {
+    static from(
+        v1: APIV1Read.ApiDefinition,
+        flags: Flags
+    ): ApiDefinitionV1ToLatest {
         return new ApiDefinitionV1ToLatest(v1, flags);
     }
 
     private auth: APIV1Read.ApiAuth | undefined;
     private constructor(
         private readonly v1: APIV1Read.ApiDefinition,
-        private readonly flags: Flags,
+        private readonly flags: Flags
     ) {
         this.auth = v1.auth;
     }
 
     static createEndpointId(
         endpoint: APIV1Read.EndpointDefinition,
-        subpackageId: string = ROOT_PACKAGE_ID,
+        subpackageId: string = ROOT_PACKAGE_ID
     ): V2.EndpointId {
-        return V2.EndpointId(endpoint.originalEndpointId ?? `${subpackageId}.${endpoint.id}`);
+        return V2.EndpointId(
+            endpoint.originalEndpointId ?? `${subpackageId}.${endpoint.id}`
+        );
     }
 
     static createWebSocketId(
         webSocket: APIV1Read.WebSocketChannel,
-        subpackageId: string = ROOT_PACKAGE_ID,
+        subpackageId: string = ROOT_PACKAGE_ID
     ): V2.WebSocketId {
         return V2.WebSocketId(`${subpackageId}.${webSocket.id}`);
     }
 
-    static createWebhookId(webhook: APIV1Read.WebhookDefinition, subpackageId: string = ROOT_PACKAGE_ID): V2.WebhookId {
+    static createWebhookId(
+        webhook: APIV1Read.WebhookDefinition,
+        subpackageId: string = ROOT_PACKAGE_ID
+    ): V2.WebhookId {
         return V2.WebhookId(`${subpackageId}.${webhook.id}`);
     }
 
@@ -84,24 +97,51 @@ export class ApiDefinitionV1ToLatest {
             };
         });
 
-        [this.v1.rootPackage, ...Object.values(this.v1.subpackages)].forEach((pkg) => {
-            const [subpackageId, namespace] = this.collectNamespace(pkg, this.v1.subpackages);
-            pkg.endpoints.forEach((endpoint) => {
-                const id = ApiDefinitionV1ToLatest.createEndpointId(endpoint, subpackageId);
-                this.endpoints[id] = this.migrateEndpoint(id, endpoint, namespace);
-            });
-            pkg.websockets.forEach((webSocket) => {
-                const id = ApiDefinitionV1ToLatest.createWebSocketId(webSocket, subpackageId);
-                this.websockets[id] = this.migrateWebSocket(id, webSocket, namespace);
-            });
-            pkg.webhooks.forEach((webhook) => {
-                const id = ApiDefinitionV1ToLatest.createWebhookId(webhook, subpackageId);
-                this.webhooks[id] = this.migrateWebhook(id, webhook, namespace);
-            });
-        });
+        [this.v1.rootPackage, ...Object.values(this.v1.subpackages)].forEach(
+            (pkg) => {
+                const [subpackageId, namespace] = this.collectNamespace(
+                    pkg,
+                    this.v1.subpackages
+                );
+                pkg.endpoints.forEach((endpoint) => {
+                    const id = ApiDefinitionV1ToLatest.createEndpointId(
+                        endpoint,
+                        subpackageId
+                    );
+                    this.endpoints[id] = this.migrateEndpoint(
+                        id,
+                        endpoint,
+                        namespace
+                    );
+                });
+                pkg.websockets.forEach((webSocket) => {
+                    const id = ApiDefinitionV1ToLatest.createWebSocketId(
+                        webSocket,
+                        subpackageId
+                    );
+                    this.websockets[id] = this.migrateWebSocket(
+                        id,
+                        webSocket,
+                        namespace
+                    );
+                });
+                pkg.webhooks.forEach((webhook) => {
+                    const id = ApiDefinitionV1ToLatest.createWebhookId(
+                        webhook,
+                        subpackageId
+                    );
+                    this.webhooks[id] = this.migrateWebhook(
+                        id,
+                        webhook,
+                        namespace
+                    );
+                });
+            }
+        );
 
         Object.values(this.v1.subpackages).forEach((subpackage) => {
-            this.subpackages[subpackage.subpackageId] = this.migrateSubpackage(subpackage);
+            this.subpackages[subpackage.subpackageId] =
+                this.migrateSubpackage(subpackage);
         });
 
         return {
@@ -118,7 +158,7 @@ export class ApiDefinitionV1ToLatest {
 
     collectNamespace = (
         pkg: APIV1Read.ApiDefinitionPackage,
-        subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage>,
+        subpackages: Record<string, APIV1Read.ApiDefinitionSubpackage>
     ): [string, V2.SubpackageId[]] => {
         if (!isSubpackage(pkg)) {
             return [ROOT_PACKAGE_ID, []];
@@ -147,7 +187,7 @@ export class ApiDefinitionV1ToLatest {
     migrateEndpoint = (
         id: V2.EndpointId,
         v1: APIV1Read.EndpointDefinition,
-        namespace: V2.SubpackageId[],
+        namespace: V2.SubpackageId[]
     ): V2.EndpointDefinition => {
         const toRet: V2.EndpointDefinition = {
             id,
@@ -178,7 +218,7 @@ export class ApiDefinitionV1ToLatest {
     migrateWebSocket = (
         id: V2.WebSocketId,
         v1: APIV1Read.WebSocketChannel,
-        namespace: V2.SubpackageId[],
+        namespace: V2.SubpackageId[]
     ): V2.WebSocketChannel => {
         const messages = this.migrateChannelMessages(v1.messages);
         return {
@@ -201,7 +241,7 @@ export class ApiDefinitionV1ToLatest {
     migrateWebhook = (
         id: V2.WebhookId,
         v1: APIV1Read.WebhookDefinition,
-        namespace: V2.SubpackageId[],
+        namespace: V2.SubpackageId[]
     ): V2.WebhookDefinition => {
         const payload = this.migrateWebhookPayload(v1.payload);
         return {
@@ -215,12 +255,18 @@ export class ApiDefinitionV1ToLatest {
             payload,
             examples: v1.examples.map((example) => ({
                 ...example,
-                payload: sortKeysByShape(example.payload, payload.shape, this.types),
+                payload: sortKeysByShape(
+                    example.payload,
+                    payload.shape,
+                    this.types
+                ),
             })),
         };
     };
 
-    migrateSubpackage = (subpackage: APIV1Read.ApiDefinitionSubpackage): V2.SubpackageMetadata => {
+    migrateSubpackage = (
+        subpackage: APIV1Read.ApiDefinitionSubpackage
+    ): V2.SubpackageMetadata => {
         return {
             id: subpackage.subpackageId,
             name: subpackage.name,
@@ -229,7 +275,11 @@ export class ApiDefinitionV1ToLatest {
     };
 
     migrateParameters = (
-        v1: APIV1Read.PathParameter[] | APIV1Read.QueryParameter[] | APIV1Read.Header[] | undefined,
+        v1:
+            | APIV1Read.PathParameter[]
+            | APIV1Read.QueryParameter[]
+            | APIV1Read.Header[]
+            | undefined
     ): V2.ObjectProperty[] | undefined => {
         if (v1 == null || v1.length === 0) {
             return undefined;
@@ -245,7 +295,9 @@ export class ApiDefinitionV1ToLatest {
         }));
     };
 
-    migrateTypeReference = (typeRef: APIV1Read.TypeReference): V2.TypeReference => {
+    migrateTypeReference = (
+        typeRef: APIV1Read.TypeReference
+    ): V2.TypeReference => {
         return visitDiscriminatedUnion(typeRef)._visit<V2.TypeReference>({
             map: (value) => ({
                 type: "map",
@@ -301,7 +353,9 @@ export class ApiDefinitionV1ToLatest {
                 extends: value.extends,
                 properties: this.migrateObjectProperties(value.properties),
                 extraProperties:
-                    value.extraProperties != null ? this.migrateTypeReference(value.extraProperties) : undefined,
+                    value.extraProperties != null
+                        ? this.migrateTypeReference(value.extraProperties)
+                        : undefined,
             }),
             alias: (value) => ({
                 type: "alias",
@@ -329,14 +383,18 @@ export class ApiDefinitionV1ToLatest {
                     description: variant.description,
                     availability: variant.availability,
                     extends: variant.additionalProperties.extends,
-                    properties: this.migrateObjectProperties(variant.additionalProperties.properties),
+                    properties: this.migrateObjectProperties(
+                        variant.additionalProperties.properties
+                    ),
                     extraProperties: undefined,
                 })),
             }),
         });
     };
 
-    migrateObjectProperties = (properties: APIV1Read.ObjectProperty[]): V2.ObjectProperty[] => {
+    migrateObjectProperties = (
+        properties: APIV1Read.ObjectProperty[]
+    ): V2.ObjectProperty[] => {
         return properties.map((value) => ({
             key: V2.PropertyKey(value.key),
             valueShape: {
@@ -351,11 +409,16 @@ export class ApiDefinitionV1ToLatest {
     migrateJsonShape = (shape: APIV1Read.JsonBodyShape): V2.TypeShape => {
         return visitDiscriminatedUnion(shape)._visit<V2.TypeShape>({
             object: this.migrateTypeShape,
-            reference: (ref) => ({ type: "alias", value: this.migrateTypeReference(ref.value) }),
+            reference: (ref) => ({
+                type: "alias",
+                value: this.migrateTypeReference(ref.value),
+            }),
         });
     };
 
-    migrateWebhookPayload = (payload: APIV1Read.WebhookPayload): V2.WebhookPayload => {
+    migrateWebhookPayload = (
+        payload: APIV1Read.WebhookPayload
+    ): V2.WebhookPayload => {
         return {
             description: payload.description,
             shape: this.migrateJsonShape(payload.type),
@@ -364,7 +427,7 @@ export class ApiDefinitionV1ToLatest {
 
     migrateChannelExamples = (
         examples: APIV1Read.ExampleWebSocketSession[],
-        messages: V2.WebSocketMessage[],
+        messages: V2.WebSocketMessage[]
     ): V2.ExampleWebSocketSession[] | undefined => {
         if (examples.length === 0) {
             return undefined;
@@ -381,14 +444,17 @@ export class ApiDefinitionV1ToLatest {
                 ...example,
                 body: sortKeysByShape(
                     example.body,
-                    messages.find((message) => message.type === example.type)?.body,
-                    this.types,
+                    messages.find((message) => message.type === example.type)
+                        ?.body,
+                    this.types
                 ),
             })),
         }));
     };
 
-    migrateChannelMessages = (messages: APIV1Read.WebSocketMessage[]): V2.WebSocketMessage[] => {
+    migrateChannelMessages = (
+        messages: APIV1Read.WebSocketMessage[]
+    ): V2.WebSocketMessage[] => {
         return messages.map((message) => ({
             type: message.type,
             displayName: message.displayName,
@@ -401,7 +467,7 @@ export class ApiDefinitionV1ToLatest {
 
     migrateHttpExamples = (
         examples: APIV1Read.ExampleEndpointCall[],
-        endpoint: V2.EndpointDefinition,
+        endpoint: V2.EndpointDefinition
     ): V2.ExampleEndpointCall[] | undefined => {
         if (examples.length === 0) {
             return undefined;
@@ -422,32 +488,47 @@ export class ApiDefinitionV1ToLatest {
 
             if (example.requestBodyV3) {
                 toRet.requestBody = visitDiscriminatedUnion(
-                    example.requestBodyV3,
+                    example.requestBodyV3
                 )._visit<APIV1Read.ExampleEndpointRequest>({
                     bytes: (value) => value,
                     json: (value) => ({
                         type: "json",
-                        value: sortKeysByShape(value.value, endpoint.request?.body, this.types),
+                        value: sortKeysByShape(
+                            value.value,
+                            endpoint.request?.body,
+                            this.types
+                        ),
                     }),
                     form: (value) => ({
                         type: "form",
-                        value: mapValues(value.value, (formValue, key): APIV1Read.FormValue => {
-                            if (formValue.type === "json") {
-                                const shape =
-                                    endpoint.request?.body.type === "formData"
-                                        ? endpoint.request.body.fields.find(
-                                              (field): field is V2.FormDataField.Property =>
-                                                  field.key === key && field.type === "property",
-                                          )?.valueShape
-                                        : undefined;
-                                return {
-                                    type: "json",
-                                    value: sortKeysByShape(formValue.value, shape, this.types),
-                                };
-                            } else {
-                                return formValue;
+                        value: mapValues(
+                            value.value,
+                            (formValue, key): APIV1Read.FormValue => {
+                                if (formValue.type === "json") {
+                                    const shape =
+                                        endpoint.request?.body.type ===
+                                        "formData"
+                                            ? endpoint.request.body.fields.find(
+                                                  (
+                                                      field
+                                                  ): field is V2.FormDataField.Property =>
+                                                      field.key === key &&
+                                                      field.type === "property"
+                                              )?.valueShape
+                                            : undefined;
+                                    return {
+                                        type: "json",
+                                        value: sortKeysByShape(
+                                            formValue.value,
+                                            shape,
+                                            this.types
+                                        ),
+                                    };
+                                } else {
+                                    return formValue;
+                                }
                             }
-                        }),
+                        ),
                     }),
                 });
             }
@@ -456,7 +537,7 @@ export class ApiDefinitionV1ToLatest {
                 toRet.responseBody.value = sortKeysByShape(
                     toRet.responseBody.value,
                     endpoint.response?.body,
-                    this.types,
+                    this.types
                 );
             }
 
@@ -465,24 +546,31 @@ export class ApiDefinitionV1ToLatest {
                 toRet,
                 example.codeSamples,
                 example.codeExamples,
-                this.flags,
+                this.flags
             );
 
             return toRet;
         });
     };
 
-    migrateHttpErrors = (errors: APIV1Read.ErrorDeclarationV2[] | undefined): V2.ErrorResponse[] | undefined => {
+    migrateHttpErrors = (
+        errors: APIV1Read.ErrorDeclarationV2[] | undefined
+    ): V2.ErrorResponse[] | undefined => {
         if (errors == null || errors.length === 0) {
             return undefined;
         }
 
         return errors.map((value) => {
-            const shape = value.type != null ? this.migrateTypeShape(value.type) : undefined;
+            const shape =
+                value.type != null
+                    ? this.migrateTypeShape(value.type)
+                    : undefined;
             return {
                 description: value.description,
                 availability: value.availability,
-                name: (value.name != null ? titleCase(value.name) : undefined) ?? getMessageForStatus(value.statusCode),
+                name:
+                    (value.name != null ? titleCase(value.name) : undefined) ??
+                    getMessageForStatus(value.statusCode),
                 statusCode: value.statusCode,
                 shape,
                 examples: value.examples?.map(
@@ -491,15 +579,21 @@ export class ApiDefinitionV1ToLatest {
                         name: example.name,
                         responseBody: {
                             type: "json" as const,
-                            value: sortKeysByShape(example.responseBody.value, shape, this.types),
+                            value: sortKeysByShape(
+                                example.responseBody.value,
+                                shape,
+                                this.types
+                            ),
                         },
-                    }),
+                    })
                 ),
             };
         });
     };
 
-    migrateHttpResponse = (response: APIV1Read.HttpResponse | undefined): V2.HttpResponse | undefined => {
+    migrateHttpResponse = (
+        response: APIV1Read.HttpResponse | undefined
+    ): V2.HttpResponse | undefined => {
         if (response == null) {
             return undefined;
         }
@@ -507,7 +601,9 @@ export class ApiDefinitionV1ToLatest {
         return {
             description: response.description,
             statusCode: response.statusCode ?? 200,
-            body: visitDiscriminatedUnion(response.type)._visit<V2.HttpResponseBodyShape>({
+            body: visitDiscriminatedUnion(
+                response.type
+            )._visit<V2.HttpResponseBodyShape>({
                 object: (value) => ({
                     type: "object",
                     extends: value.extends,
@@ -536,7 +632,9 @@ export class ApiDefinitionV1ToLatest {
         };
     };
 
-    migrateHttpRequest = (request: APIV1Read.HttpRequest | undefined): V2.HttpRequest | undefined => {
+    migrateHttpRequest = (
+        request: APIV1Read.HttpRequest | undefined
+    ): V2.HttpRequest | undefined => {
         if (request == null) {
             return undefined;
         }
@@ -544,7 +642,9 @@ export class ApiDefinitionV1ToLatest {
         return {
             description: request.description,
             contentType: request.contentType,
-            body: visitDiscriminatedUnion(request.type)._visit<V2.HttpRequestBodyShape>({
+            body: visitDiscriminatedUnion(
+                request.type
+            )._visit<V2.HttpRequestBodyShape>({
                 object: (value) => ({
                     type: "object",
                     extends: value.extends,
@@ -570,17 +670,23 @@ export class ApiDefinitionV1ToLatest {
                     type: "formData",
                     description: value.value?.description,
                     availability: value.value?.availability,
-                    fields: this.migrateFormDataProperties(value.value?.properties ?? []),
+                    fields: this.migrateFormDataProperties(
+                        value.value?.properties ?? []
+                    ),
                 }),
             }),
         };
     };
 
-    migrateFormDataProperties = (properties: APIV1Read.FormDataProperty[]): V2.FormDataField[] => {
+    migrateFormDataProperties = (
+        properties: APIV1Read.FormDataProperty[]
+    ): V2.FormDataField[] => {
         return properties.map((prop) =>
             visitDiscriminatedUnion(prop)._visit<V2.FormDataField>({
                 file: (file) =>
-                    visitDiscriminatedUnion(file.value)._visit<V2.FormDataField>({
+                    visitDiscriminatedUnion(
+                        file.value
+                    )._visit<V2.FormDataField>({
                         file: (single) => ({
                             type: "file",
                             key: single.key,
@@ -609,7 +715,7 @@ export class ApiDefinitionV1ToLatest {
                         value: this.migrateTypeReference(bodyProp.valueType),
                     },
                 }),
-            }),
+            })
         );
     };
 
@@ -618,7 +724,7 @@ export class ApiDefinitionV1ToLatest {
         example: V2.ExampleEndpointCall,
         codeSamples: APIV1Read.CustomCodeSample[],
         codeExamples: APIV1Read.CodeExamples,
-        flags: Flags,
+        flags: Flags
     ): Record<string, V2.CodeSnippet[]> {
         const toRet: Record<string, V2.CodeSnippet[]> = {};
         function push(language: string, snippet: V2.CodeSnippet) {
@@ -643,7 +749,10 @@ export class ApiDefinitionV1ToLatest {
         });
 
         if (!userProvidedLanguages.has(SupportedLanguage.Curl)) {
-            const code = convertToCurl(toSnippetHttpRequest(endpoint, example, this.auth), flags);
+            const code = convertToCurl(
+                toSnippetHttpRequest(endpoint, example, this.auth),
+                flags
+            );
             push(SupportedLanguage.Curl, {
                 language: SupportedLanguage.Curl,
                 code,
@@ -654,7 +763,10 @@ export class ApiDefinitionV1ToLatest {
             });
         }
 
-        if (!userProvidedLanguages.has(SupportedLanguage.Python) && codeExamples.pythonSdk != null) {
+        if (
+            !userProvidedLanguages.has(SupportedLanguage.Python) &&
+            codeExamples.pythonSdk != null
+        ) {
             push(SupportedLanguage.Python, {
                 name: undefined,
                 language: SupportedLanguage.Python,
@@ -665,8 +777,12 @@ export class ApiDefinitionV1ToLatest {
             });
         }
 
-        const jsLang = flags.useJavaScriptAsTypeScript ? SupportedLanguage.Javascript : SupportedLanguage.Typescript;
-        const jsLangName = flags.useJavaScriptAsTypeScript ? "JavaScript" : "TypeScript";
+        const jsLang = flags.useJavaScriptAsTypeScript
+            ? SupportedLanguage.Javascript
+            : SupportedLanguage.Typescript;
+        const jsLangName = flags.useJavaScriptAsTypeScript
+            ? "JavaScript"
+            : "TypeScript";
         if (
             !flags.alwaysEnableJavaScriptFetch &&
             !userProvidedLanguages.has(jsLang) &&
@@ -682,7 +798,10 @@ export class ApiDefinitionV1ToLatest {
             });
         }
 
-        if (!userProvidedLanguages.has(SupportedLanguage.Go) && codeExamples.goSdk != null) {
+        if (
+            !userProvidedLanguages.has(SupportedLanguage.Go) &&
+            codeExamples.goSdk != null
+        ) {
             push(SupportedLanguage.Go, {
                 name: undefined,
                 language: SupportedLanguage.Go,
@@ -693,7 +812,10 @@ export class ApiDefinitionV1ToLatest {
             });
         }
 
-        if (!userProvidedLanguages.has(SupportedLanguage.Ruby) && codeExamples.rubySdk != null) {
+        if (
+            !userProvidedLanguages.has(SupportedLanguage.Ruby) &&
+            codeExamples.rubySdk != null
+        ) {
             push(SupportedLanguage.Ruby, {
                 name: undefined,
                 language: SupportedLanguage.Ruby,

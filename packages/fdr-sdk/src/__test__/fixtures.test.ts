@@ -21,7 +21,7 @@ function testNavigationConfigConverter(fixtureName: string): void {
             useJavaScriptAsTypeScript: false,
             alwaysEnableJavaScriptFetch: false,
             usesApplicationJsonInFormDataValue: false,
-        }).migrate(),
+        }).migrate()
     );
 
     // eslint-disable-next-line vitest/valid-title
@@ -29,9 +29,9 @@ function testNavigationConfigConverter(fixtureName: string): void {
         const collector = new NodeCollector(latest);
 
         it("gets all urls from docs config", () => {
-            expect(JSON.stringify(sortObject(latest), undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/node.json`,
-            );
+            expect(
+                JSON.stringify(sortObject(latest), undefined, 2)
+            ).toMatchFileSnapshot(`output/${fixtureName}/node.json`);
 
             const orphanedNodes = collector.getOrphanedNodes().map((node) => ({
                 id: node.id,
@@ -39,38 +39,48 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 title: node.title,
                 slug: node.slug,
             }));
-            expect(JSON.stringify(sortObject(orphanedNodes), undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/orphanedNodes.json`,
-            );
+            expect(
+                JSON.stringify(sortObject(orphanedNodes), undefined, 2)
+            ).toMatchFileSnapshot(`output/${fixtureName}/orphanedNodes.json`);
 
             const orphanedNodesWithContent = collector.getOrphanedPages();
-            expect(JSON.stringify(sortObject(orphanedNodesWithContent), undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/orphanedNodesWithContent.json`,
+            expect(
+                JSON.stringify(
+                    sortObject(orphanedNodesWithContent),
+                    undefined,
+                    2
+                )
+            ).toMatchFileSnapshot(
+                `output/${fixtureName}/orphanedNodesWithContent.json`
             );
 
-            expect(JSON.stringify(collector.slugs, undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/slugs.json`,
-            );
+            expect(
+                JSON.stringify(collector.slugs, undefined, 2)
+            ).toMatchFileSnapshot(`output/${fixtureName}/slugs.json`);
 
-            expect(JSON.stringify(collector.staticPageSlugs, undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/slugs-pages.json`,
-            );
+            expect(
+                JSON.stringify(collector.staticPageSlugs, undefined, 2)
+            ).toMatchFileSnapshot(`output/${fixtureName}/slugs-pages.json`);
 
-            expect(JSON.stringify(collector.indexablePageSlugs, undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/slugs-sitemap.json`,
-            );
+            expect(
+                JSON.stringify(collector.indexablePageSlugs, undefined, 2)
+            ).toMatchFileSnapshot(`output/${fixtureName}/slugs-sitemap.json`);
 
             const pageIds = collectPageIds(latest);
-            expect(JSON.stringify([...pageIds], undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/pageIds.json`,
-            );
+            expect(
+                JSON.stringify([...pageIds], undefined, 2)
+            ).toMatchFileSnapshot(`output/${fixtureName}/pageIds.json`);
 
-            expect(JSON.stringify(sortObject(collector.getVersionNodes()), undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/versionNodes.json`,
-            );
+            expect(
+                JSON.stringify(
+                    sortObject(collector.getVersionNodes()),
+                    undefined,
+                    2
+                )
+            ).toMatchFileSnapshot(`output/${fixtureName}/versionNodes.json`);
 
             expect(JSON.stringify(v2Apis, undefined, 2)).toMatchFileSnapshot(
-                `output/${fixtureName}/apiDefinitions.json`,
+                `output/${fixtureName}/apiDefinitions.json`
             );
         });
 
@@ -79,10 +89,14 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 for (const api of Object.values(v2Apis)) {
                     const keys: string[] = [];
 
-                    ApiDefinition.Transformer.keys((key) => keys.push(key)).apiDefinition(api);
+                    ApiDefinition.Transformer.keys((key) =>
+                        keys.push(key)
+                    ).apiDefinition(api);
 
-                    expect(JSON.stringify(keys, undefined, 2)).toMatchFileSnapshot(
-                        `output/${fixtureName}/apiDefinitionKeys-${api.id}.json`,
+                    expect(
+                        JSON.stringify(keys, undefined, 2)
+                    ).toMatchFileSnapshot(
+                        `output/${fixtureName}/apiDefinitionKeys-${api.id}.json`
                     );
 
                     // all keys must be unique
@@ -100,34 +114,50 @@ function testNavigationConfigConverter(fixtureName: string): void {
                 if (!FernNavigation.isPage(node) || node.hidden) {
                     console.log(node);
                 }
-                expect(FernNavigation.isPage(node), `${slug} is a page`).toBe(true);
+                expect(FernNavigation.isPage(node), `${slug} is a page`).toBe(
+                    true
+                );
                 expect(node.hidden, `${slug} is not hidden`).not.toBe(true);
 
                 if (FernNavigation.hasMarkdown(node)) {
                     expect(node.noindex, `${slug} is indexable`).not.toBe(true);
                 }
 
-                const pageId = FernNavigation.isPage(node) ? FernNavigation.getPageId(node) : undefined;
+                const pageId = FernNavigation.isPage(node)
+                    ? FernNavigation.getPageId(node)
+                    : undefined;
                 if (pageId != null) {
-                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId}`).toBe(false);
+                    expect(
+                        visitedPageIds.has(pageId),
+                        `${slug} must not be repeated key=${pageId}`
+                    ).toBe(false);
                     visitedPageIds.add(pageId);
                 }
 
                 if (node.type === "endpoint") {
                     const pageId = `${node.apiDefinitionId}-${node.endpointId}`;
-                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId})`).toBe(false);
+                    expect(
+                        visitedPageIds.has(pageId),
+                        `${slug} must not be repeated key=${pageId})`
+                    ).toBe(false);
                     visitedPageIds.add(pageId);
                 }
 
                 if (node.type === "webSocket") {
                     const pageId = `${node.apiDefinitionId}-${node.webSocketId}`;
-                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId})`).toBe(false);
+                    expect(
+                        visitedPageIds.has(pageId),
+                        `${slug} must not be repeated key=${pageId})`
+                    ).toBe(false);
                     visitedPageIds.add(pageId);
                 }
 
                 if (node.type === "webhook") {
                     const pageId = `${node.apiDefinitionId}-${node.webhookId}`;
-                    expect(visitedPageIds.has(pageId), `${slug} must not be repeated key=${pageId})`).toBe(false);
+                    expect(
+                        visitedPageIds.has(pageId),
+                        `${slug} must not be repeated key=${pageId})`
+                    ).toBe(false);
                     visitedPageIds.add(pageId);
                 }
             });

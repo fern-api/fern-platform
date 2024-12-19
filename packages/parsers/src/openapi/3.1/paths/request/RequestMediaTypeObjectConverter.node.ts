@@ -6,7 +6,10 @@ import {
     BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
-import { ConstArrayToType, SUPPORTED_REQUEST_CONTENT_TYPES } from "../../../types/format.types";
+import {
+    ConstArrayToType,
+    SUPPORTED_REQUEST_CONTENT_TYPES,
+} from "../../../types/format.types";
 import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isObjectSchema } from "../../guards/isObjectSchema";
@@ -15,7 +18,9 @@ import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
 
-export type RequestContentType = ConstArrayToType<typeof SUPPORTED_REQUEST_CONTENT_TYPES>;
+export type RequestContentType = ConstArrayToType<
+    typeof SUPPORTED_REQUEST_CONTENT_TYPES
+>;
 
 export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.MediaTypeObject,
@@ -33,11 +38,13 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     // multipart/form-data
     availability: AvailabilityConverterNode | undefined;
     requiredFields: string[] | undefined;
-    fields: Record<string, MultipartFormDataPropertySchemaConverterNode> | undefined;
+    fields:
+        | Record<string, MultipartFormDataPropertySchemaConverterNode>
+        | undefined;
 
     constructor(
         args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
-        contentType: string | undefined,
+        contentType: string | undefined
     ) {
         super(args);
         this.safeParse(contentType);
@@ -85,15 +92,17 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
 
                                 return [
                                     key,
-                                    new MultipartFormDataPropertySchemaConverterNode({
-                                        input: property,
-                                        context: this.context,
-                                        accessPath: this.accessPath,
-                                        pathId: `schema.${key}`,
-                                    }),
+                                    new MultipartFormDataPropertySchemaConverterNode(
+                                        {
+                                            input: property,
+                                            context: this.context,
+                                            accessPath: this.accessPath,
+                                            pathId: `schema.${key}`,
+                                        }
+                                    ),
                                 ];
                             })
-                            .filter(isNonNullish),
+                            .filter(isNonNullish)
                     );
                 } else {
                     this.context.errors.warning({
@@ -130,19 +139,27 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                                     return {
                                         type: field.multipartType,
                                         key: FernRegistry.PropertyKey(key),
-                                        isOptional: this.requiredFields?.includes(key) == null,
+                                        isOptional:
+                                            this.requiredFields?.includes(
+                                                key
+                                            ) == null,
                                         contentType: field.contentType,
                                         description: field.description,
-                                        availability: field.availability?.convert(),
+                                        availability:
+                                            field.availability?.convert(),
                                     };
                                 case "files":
                                     return {
                                         type: field.multipartType,
                                         key: FernRegistry.PropertyKey(key),
-                                        isOptional: this.requiredFields?.includes(key) == null,
+                                        isOptional:
+                                            this.requiredFields?.includes(
+                                                key
+                                            ) == null,
                                         contentType: field.contentType,
                                         description: field.description,
-                                        availability: field.availability?.convert(),
+                                        availability:
+                                            field.availability?.convert(),
                                     };
                                 case "property": {
                                     const valueShape = field.convert();
@@ -155,13 +172,16 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                                         contentType: field.contentType,
                                         valueShape,
                                         description: field.description,
-                                        availability: field.availability?.convert(),
+                                        availability:
+                                            field.availability?.convert(),
                                     };
                                 }
                                 case undefined:
                                     return undefined;
                                 default:
-                                    new UnreachableCaseError(field.multipartType);
+                                    new UnreachableCaseError(
+                                        field.multipartType
+                                    );
                                     return undefined;
                             }
                         })

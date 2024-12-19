@@ -5,7 +5,7 @@ import type { APIV1Read } from "../client/types";
 export class ApiTypeIdVisitor {
     public static visitEndpointDefinition(
         endpoint: APIV1Read.EndpointDefinition,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         endpoint.path.pathParameters.forEach((pathParameter) => {
             ApiTypeIdVisitor.visitTypeReference(pathParameter.type, visit);
@@ -17,10 +17,16 @@ export class ApiTypeIdVisitor {
             ApiTypeIdVisitor.visitTypeReference(header.type, visit);
         });
         if (endpoint.request != null) {
-            ApiTypeIdVisitor.visitHttpRequestBodyShape(endpoint.request.type, visit);
+            ApiTypeIdVisitor.visitHttpRequestBodyShape(
+                endpoint.request.type,
+                visit
+            );
         }
         if (endpoint.response != null) {
-            ApiTypeIdVisitor.visitHttpResponseBodyShape(endpoint.response.type, visit);
+            ApiTypeIdVisitor.visitHttpResponseBodyShape(
+                endpoint.response.type,
+                visit
+            );
         }
         if (endpoint.errorsV2 != null) {
             endpoint.errorsV2.forEach((error) => {
@@ -33,7 +39,7 @@ export class ApiTypeIdVisitor {
 
     public static visitWebSocketChannel(
         channel: APIV1Read.WebSocketChannel,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         channel.headers.forEach((header) => {
             ApiTypeIdVisitor.visitTypeReference(header.type, visit);
@@ -51,7 +57,7 @@ export class ApiTypeIdVisitor {
 
     public static visitWebhookDefinition(
         webhook: APIV1Read.WebhookDefinition,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         webhook.headers.forEach((header) => {
             ApiTypeIdVisitor.visitTypeReference(header.type, visit);
@@ -61,79 +67,108 @@ export class ApiTypeIdVisitor {
 
     public static visitHttpRequestBodyShape(
         bodyShape: APIV1Read.HttpRequestBodyShape,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         return visitDiscriminatedUnion(bodyShape)._visit({
             object: (value) => ApiTypeIdVisitor.visitObjectType(value, visit),
-            reference: (value) => ApiTypeIdVisitor.visitTypeReference(value.value, visit),
+            reference: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.value, visit),
             bytes: noop,
-            formData: (value) => ApiTypeIdVisitor.visitFormDataRequest(value, visit),
+            formData: (value) =>
+                ApiTypeIdVisitor.visitFormDataRequest(value, visit),
             fileUpload: (value) =>
-                value.value != null ? ApiTypeIdVisitor.visitFormDataRequest(value.value, visit) : undefined,
+                value.value != null
+                    ? ApiTypeIdVisitor.visitFormDataRequest(value.value, visit)
+                    : undefined,
         });
     }
 
     public static visitHttpResponseBodyShape(
         bodyShape: APIV1Read.HttpResponseBodyShape,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         return visitDiscriminatedUnion(bodyShape)._visit({
             object: (value) => ApiTypeIdVisitor.visitObjectType(value, visit),
-            reference: (value) => ApiTypeIdVisitor.visitTypeReference(value.value, visit),
+            reference: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.value, visit),
             fileDownload: noop,
             streamingText: noop,
-            stream: (value) => ApiTypeIdVisitor.visitObjectOrReference(value.shape, visit),
+            stream: (value) =>
+                ApiTypeIdVisitor.visitObjectOrReference(value.shape, visit),
             streamCondition: (value) => {
-                ApiTypeIdVisitor.visitObjectOrReference(value.response.shape, visit);
-                ApiTypeIdVisitor.visitObjectOrReference(value.streamResponse.shape, visit);
+                ApiTypeIdVisitor.visitObjectOrReference(
+                    value.response.shape,
+                    visit
+                );
+                ApiTypeIdVisitor.visitObjectOrReference(
+                    value.streamResponse.shape,
+                    visit
+                );
             },
         });
     }
 
     public static visitObjectOrReference(
         bodyShape: APIV1Read.JsonBodyShape,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         return visitDiscriminatedUnion(bodyShape)._visit({
             object: (value) => ApiTypeIdVisitor.visitObjectType(value, visit),
-            reference: (value) => ApiTypeIdVisitor.visitTypeReference(value.value, visit),
+            reference: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.value, visit),
         });
     }
 
     public static visitFormDataRequest(
         typeDefinition: APIV1Read.FormDataRequest,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         return typeDefinition.properties.forEach((property) =>
             visitDiscriminatedUnion(property)._visit({
                 file: noop,
-                bodyProperty: (bodyProperty) => ApiTypeIdVisitor.visitTypeReference(bodyProperty.valueType, visit),
-            }),
+                bodyProperty: (bodyProperty) =>
+                    ApiTypeIdVisitor.visitTypeReference(
+                        bodyProperty.valueType,
+                        visit
+                    ),
+            })
         );
     }
 
     public static visitTypeDefinition(
         typeDefinition: APIV1Read.TypeDefinition,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         return ApiTypeIdVisitor.visitTypeShape(typeDefinition.shape, visit);
     }
 
-    public static visitTypeShape(typeShape: APIV1Read.TypeShape, visit: (typeId: APIV1Read.TypeId) => void): void {
+    public static visitTypeShape(
+        typeShape: APIV1Read.TypeShape,
+        visit: (typeId: APIV1Read.TypeId) => void
+    ): void {
         return visitDiscriminatedUnion(typeShape)._visit({
             object: (value) => ApiTypeIdVisitor.visitObjectType(value, visit),
-            alias: (value) => ApiTypeIdVisitor.visitTypeReference(value.value, visit),
+            alias: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.value, visit),
             enum: noop,
             undiscriminatedUnion: (value) =>
-                value.variants.forEach((variant) => ApiTypeIdVisitor.visitTypeReference(variant.type, visit)),
+                value.variants.forEach((variant) =>
+                    ApiTypeIdVisitor.visitTypeReference(variant.type, visit)
+                ),
             discriminatedUnion: (value) =>
                 value.variants.forEach((variant) =>
-                    ApiTypeIdVisitor.visitObjectType(variant.additionalProperties, visit),
+                    ApiTypeIdVisitor.visitObjectType(
+                        variant.additionalProperties,
+                        visit
+                    )
                 ),
         });
     }
 
-    public static visitObjectType(typeShape: APIV1Read.ObjectType, visit: (typeId: APIV1Read.TypeId) => void): void {
+    public static visitObjectType(
+        typeShape: APIV1Read.ObjectType,
+        visit: (typeId: APIV1Read.TypeId) => void
+    ): void {
         typeShape.extends.forEach(visit);
         typeShape.properties.forEach((property) => {
             ApiTypeIdVisitor.visitTypeReference(property.valueType, visit);
@@ -142,14 +177,17 @@ export class ApiTypeIdVisitor {
 
     public static visitTypeReference(
         typeReference: APIV1Read.TypeReference,
-        visit: (typeId: APIV1Read.TypeId) => void,
+        visit: (typeId: APIV1Read.TypeId) => void
     ): void {
         return visitDiscriminatedUnion(typeReference)._visit({
             id: (value) => visit(value.value),
             primitive: noop,
-            optional: (value) => ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
-            list: (value) => ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
-            set: (value) => ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
+            optional: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
+            list: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
+            set: (value) =>
+                ApiTypeIdVisitor.visitTypeReference(value.itemType, visit),
             map: (value) => {
                 ApiTypeIdVisitor.visitTypeReference(value.keyType, visit);
                 ApiTypeIdVisitor.visitTypeReference(value.valueType, visit);

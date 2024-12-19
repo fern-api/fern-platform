@@ -1,0 +1,128 @@
+{
+  "name": "@fern-docs/components",
+  "version": "0.0.0",
+  "private": true,
+  "homepage": "https://github.com/fern-api/fern-platform#readme",
+  "bugs": {
+    "url": "https://github.com/fern-api/fern-platform/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/components"
+  },
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./src/index.scss": "./src/index.scss",
+    "./badges": "./src/badges/index.ts",
+    "./src/colors.css": "./src/colors.css",
+    "./src/fern-accent.scss": "./src/fern-accent.scss",
+    "./src/badges/index.scss": "./src/badges/index.scss",
+    "./src/kbd.scss": "./src/kbd.scss"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "build-storybook": "storybook build",
+    "chromatic": "pnpx chromatic --project-token=chpt_48b3c560025e978",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "storybook": "storybook dev -p 6006",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
+  },
+  "dependencies": {
+    "@emotion/is-prop-valid": "^1.2.2",
+    "@fern-ui/react-commons": "workspace:*",
+    "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/primitive": "^1.1.0",
+    "@radix-ui/react-checkbox": "^1.1.2",
+    "@radix-ui/react-collapsible": "^1.1.1",
+    "@radix-ui/react-compose-refs": "^1.1.0",
+    "@radix-ui/react-dropdown-menu": "^2.1.2",
+    "@radix-ui/react-radio-group": "^1.2.1",
+    "@radix-ui/react-scroll-area": "^1.2.1",
+    "@radix-ui/react-select": "^2.1.2",
+    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-switch": "^1.1.1",
+    "@radix-ui/react-tabs": "^1.1.1",
+    "@radix-ui/react-toggle-group": "^1.1.0",
+    "@radix-ui/react-tooltip": "^1.1.4",
+    "@storybook/client-api": "^7.6.17",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.0",
+    "copyfiles": "^2.4.1",
+    "date-fns": "^4.1.0",
+    "es-toolkit": "^1.24.0",
+    "iconoir-react": "^7.7.0",
+    "lucide-react": "^0.460.0",
+    "moment": "^2.30.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "sonner": "^1.5.0",
+    "tailwind-merge": "^2.3.0",
+    "ts-extras": "^0.11.0"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^1.4.0",
+    "@fern-platform/configs": "workspace:*",
+    "@storybook/addon-essentials": "^8.4.4",
+    "@storybook/addon-interactions": "^8.4.4",
+    "@storybook/addon-links": "^8.4.4",
+    "@storybook/addon-onboarding": "^8.4.4",
+    "@storybook/addon-themes": "^8.4.4",
+    "@storybook/blocks": "^8.4.4",
+    "@storybook/react": "^8.4.4",
+    "@storybook/react-vite": "^8.4.4",
+    "@storybook/test": "^8.4.4",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "@testing-library/jest-dom": "^6.4.2",
+    "@testing-library/react": "^14.2.1",
+    "@types/date-fns": "^2.6.3",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-test-renderer": "^18.0.7",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "chromatic": "^11.3.0",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.56.0",
+    "eslint-plugin-storybook": "^0.8.0",
+    "jsdom": "^24.0.0",
+    "organize-imports-cli": "^0.10.0",
+    "postcss-import": "^16.0.1",
+    "prettier": "^3.3.2",
+    "react-test-renderer": "^18",
+    "sass": "^1.74.1",
+    "storybook": "^8.4.4",
+    "stylelint": "^16.1.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "5.4.3",
+    "vite": "^5.4.10",
+    "vitest": "^2.1.4"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18",
+    "sass": "^1.74.1"
+  }
+}

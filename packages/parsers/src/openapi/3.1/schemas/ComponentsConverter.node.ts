@@ -13,7 +13,9 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
     typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ComponentsObject>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ComponentsObject>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -36,7 +38,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
                             pathId: key,
                         }),
                     ];
-                }),
+                })
             );
         }
     }
@@ -66,7 +68,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
                         },
                     ];
                 })
-                .filter(([_, value]) => isNonNullish(value)),
+                .filter(([_, value]) => isNonNullish(value))
         );
     }
 }

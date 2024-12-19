@@ -54,7 +54,8 @@ describe("NumberConverterNode", () => {
             });
 
             expect(mockContext.errors.warning).toHaveBeenCalledWith({
-                message: "Expected default value to be a number. Received not-a-number",
+                message:
+                    "Expected default value to be a number. Received not-a-number",
                 path: ["test"],
             });
         });

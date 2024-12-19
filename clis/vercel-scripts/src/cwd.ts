@@ -9,7 +9,10 @@ export async function cwd(): Promise<string> {
         return _cwd;
     }
 
-    const result = await loggingExeca("Get git project root", "git", ["rev-parse", "--show-toplevel"]);
+    const result = await loggingExeca("Get git project root", "git", [
+        "rev-parse",
+        "--show-toplevel",
+    ]);
 
     const cwd = String(result.stdout).trim();
 

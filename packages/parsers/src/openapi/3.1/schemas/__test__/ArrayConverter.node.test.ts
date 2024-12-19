@@ -22,7 +22,9 @@ describe("ArrayConverterNode", () => {
                 accessPath: [],
                 pathId: "test",
             });
-            expect(node.item?.typeShapeNode).toBeInstanceOf(StringConverterNode);
+            expect(node.item?.typeShapeNode).toBeInstanceOf(
+                StringConverterNode
+            );
         });
 
         it("should error when items is null", () => {
@@ -36,7 +38,8 @@ describe("ArrayConverterNode", () => {
                 pathId: "test",
             });
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Error converting node. Please contact support if the error persists",
+                message:
+                    "Error converting node. Please contact support if the error persists",
                 path: ["test", "items"],
             });
         });
@@ -75,7 +78,9 @@ describe("ArrayConverterNode", () => {
         it("should return undefined if inner schema conversion fails", () => {
             const input: ArrayConverterNode.Input = {
                 type: "array",
-                items: { type: "invalid" as OpenAPIV3_1.NonArraySchemaObjectType },
+                items: {
+                    type: "invalid" as OpenAPIV3_1.NonArraySchemaObjectType,
+                },
             };
             const node = new ArrayConverterNode({
                 input,

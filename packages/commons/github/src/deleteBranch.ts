@@ -2,7 +2,10 @@
 import { SimpleGit } from "simple-git";
 import { DEFAULT_REMOTE_NAME } from "./constants";
 
-export async function deleteBranch(git: SimpleGit, branchToDeleteName: string): Promise<void> {
+export async function deleteBranch(
+    git: SimpleGit,
+    branchToDeleteName: string
+): Promise<void> {
     await git.fetch(DEFAULT_REMOTE_NAME, branchToDeleteName);
     const deleteResult = await git.branch(["-D", branchToDeleteName]);
     // For some reason the API is not typed to return this, but the documentation
@@ -12,9 +15,15 @@ export async function deleteBranch(git: SimpleGit, branchToDeleteName: string): 
     if ("success" in deleteResult) {
         console.log(`Deleted branch ${branchToDeleteName}`);
         if (deleteResult.success !== true) {
-            throw new Error("Failed to delete branch, received a failure response: " + JSON.stringify(deleteResult));
+            throw new Error(
+                "Failed to delete branch, received a failure response: " +
+                    JSON.stringify(deleteResult)
+            );
         }
     } else {
-        throw new Error("Failed to delete branch, received an unexpected response: " + JSON.stringify(deleteResult));
+        throw new Error(
+            "Failed to delete branch, received an unexpected response: " +
+                JSON.stringify(deleteResult)
+        );
     }
 }

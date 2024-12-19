@@ -14,10 +14,14 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
     FernRegistry.api.latest.HttpRequest[]
 > {
     description: string | undefined;
-    requestBodiesByContentType: Record<string, RequestMediaTypeObjectConverterNode> | undefined;
+    requestBodiesByContentType:
+        | Record<string, RequestMediaTypeObjectConverterNode>
+        | undefined;
 
     constructor(
-        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject>,
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+            OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject
+        >
     ) {
         super(args);
         this.safeParse();
@@ -36,18 +40,21 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
             return undefined;
         }
 
-        Object.entries(requestBody.content).forEach(([contentType, contentTypeObject]) => {
-            this.requestBodiesByContentType ??= {};
-            this.requestBodiesByContentType[contentType] = new RequestMediaTypeObjectConverterNode(
-                {
-                    input: contentTypeObject,
-                    context: this.context,
-                    accessPath: this.accessPath,
-                    pathId: "content",
-                },
-                contentType,
-            );
-        });
+        Object.entries(requestBody.content).forEach(
+            ([contentType, contentTypeObject]) => {
+                this.requestBodiesByContentType ??= {};
+                this.requestBodiesByContentType[contentType] =
+                    new RequestMediaTypeObjectConverterNode(
+                        {
+                            input: contentTypeObject,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: "content",
+                        },
+                        contentType
+                    );
+            }
+        );
     }
 
     convert(): FernRegistry.api.latest.HttpRequest[] {

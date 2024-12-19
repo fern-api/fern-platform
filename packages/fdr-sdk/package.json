@@ -1,13 +1,8 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
   "sideEffects": false,
-  "source": "src/index.ts",
-  "main": "dist/index.js",
+  "type": "module",
   "exports": {
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -37,6 +32,21 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
+  },
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build tsconfig.build.json",
+    "dev": "tsc --watch tsconfig.build.json",
+    "docs:dev": "pnpm dev",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
+    "test": "vitest --run"
   },
   "dependencies": {
     "@fern-api/ui-core-utils": "workspace:*",
@@ -69,15 +79,5 @@
     "prettier": "^3.3.2",
     "typescript": "5.4.3",
     "vitest": "^2.1.4"
-  },
-  "scripts": {
-    "compile": "tsc --build tsconfig.build.json",
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
-    "test": "vitest --run",
-    "dev": "tsc --watch tsconfig.build.json",
-    "docs:dev": "pnpm dev"
   }
 }

@@ -23,12 +23,19 @@ import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverte
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.OperationObject,
-    FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition
+    | FernRegistry.api.latest.EndpointDefinition
+    | FernRegistry.api.latest.WebhookDefinition
 > {
     description: string | undefined;
-    pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
-    queryParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
-    requestHeaders: Record<string, ParameterBaseObjectConverterNode> | undefined;
+    pathParameters:
+        | Record<string, ParameterBaseObjectConverterNode>
+        | undefined;
+    queryParameters:
+        | Record<string, ParameterBaseObjectConverterNode>
+        | undefined;
+    requestHeaders:
+        | Record<string, ParameterBaseObjectConverterNode>
+        | undefined;
     requests: RequestBodyObjectConverterNode | undefined;
     responses: ResponsesObjectConverterNode | undefined;
     availability: AvailabilityConverterNode | undefined;
@@ -41,7 +48,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         protected path: string | undefined,
         protected method: "GET" | "POST" | "PUT" | "DELETE",
         protected basePath: XFernBasePathConverterNode | undefined,
-        protected isWebhook?: boolean,
+        protected isWebhook?: boolean
     ) {
         super(args);
         this.safeParse();
@@ -63,11 +70,19 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             accessPath: this.accessPath,
             pathId: "x-fern-availability",
         });
-        this.servers = coalesceServers(this.servers, this.input.servers, this.context, this.accessPath);
+        this.servers = coalesceServers(
+            this.servers,
+            this.input.servers,
+            this.context,
+            this.accessPath
+        );
 
         this.input.parameters?.map((parameter, index) => {
             if (isReferenceObject(parameter)) {
-                const resolvedParameter = resolveParameterReference(parameter, this.context.document);
+                const resolvedParameter = resolveParameterReference(
+                    parameter,
+                    this.context.document
+                );
                 if (resolvedParameter != null) {
                     parameter = resolvedParameter;
                 } else {
@@ -81,33 +96,36 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             if (parameter.in === "path") {
                 if (parameter.schema != null) {
                     this.pathParameters ??= {};
-                    this.pathParameters[parameter.name] = new ParameterBaseObjectConverterNode({
-                        input: parameter,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: `parameters[${index}]`,
-                    });
+                    this.pathParameters[parameter.name] =
+                        new ParameterBaseObjectConverterNode({
+                            input: parameter,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: `parameters[${index}]`,
+                        });
                 }
                 // this.pathParameters.push(parameter.name);
             } else if (parameter.in === "query") {
                 if (parameter.schema != null) {
                     this.queryParameters ??= {};
-                    this.queryParameters[parameter.name] = new ParameterBaseObjectConverterNode({
-                        input: parameter,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: `parameters[${index}]`,
-                    });
+                    this.queryParameters[parameter.name] =
+                        new ParameterBaseObjectConverterNode({
+                            input: parameter,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: `parameters[${index}]`,
+                        });
                 }
             } else if (parameter.in === "header") {
                 if (parameter.schema != null) {
                     this.requestHeaders ??= {};
-                    this.requestHeaders[parameter.name] = new ParameterBaseObjectConverterNode({
-                        input: parameter,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: `parameters[${index}]`,
-                    });
+                    this.requestHeaders[parameter.name] =
+                        new ParameterBaseObjectConverterNode({
+                            input: parameter,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: `parameters[${index}]`,
+                        });
                 }
             }
         });
@@ -181,7 +199,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         const path = this.path.startsWith("/") ? this.path.slice(1) : this.path;
         const basePath = this.basePath?.convert();
-        const pathParts = basePath ? [basePath, ...path.split("/")] : path.split("/");
+        const pathParts = basePath
+            ? [basePath, ...path.split("/")]
+            : path.split("/");
 
         return pathParts.map((part) => {
             if (part.startsWith("{") && part.endsWith("}")) {
@@ -197,7 +217,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         });
     }
 
-    convert(): FernRegistry.api.latest.EndpointDefinition | FernRegistry.api.latest.WebhookDefinition | undefined {
+    convert():
+        | FernRegistry.api.latest.EndpointDefinition
+        | FernRegistry.api.latest.WebhookDefinition
+        | undefined {
         if (this.path == null) {
             return undefined;
         }
@@ -214,7 +237,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 id: FernRegistry.WebhookId("x-fern-webhook-name"),
                 method: this.method,
                 // This is a little bit weird, consider changing the shape of fdr
-                path: this.convertPathToPathParts()?.map((part) => part.value.toString()) ?? [],
+                path:
+                    this.convertPathToPathParts()?.map((part) =>
+                        part.value.toString()
+                    ) ?? [],
                 headers: convertOperationObjectProperties(this.requestHeaders),
                 // TODO: figure out what this looks like to be able to parse
                 payload: undefined,
@@ -224,7 +250,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         const endpointId = getEndpointId(this.method, this.path);
 
-        const environments = this.servers?.map((server) => server.convert()).filter(isNonNullish);
+        const environments = this.servers
+            ?.map((server) => server.convert())
+            .filter(isNonNullish);
         const pathParts = this.convertPathToPathParts();
         if (pathParts == null) {
             return undefined;
@@ -237,9 +265,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         }
 
         // TODO: revisit fdr shape to suport multiple responses
-        const { responses, errors } = this.responses?.convert() ?? { responses: undefined, errors: undefined };
+        const { responses, errors } = this.responses?.convert() ?? {
+            responses: undefined,
+            errors: undefined,
+        };
 
-        this.context.logger.info("Accessing first request and response from OperationObjectConverterNode conversion.");
+        this.context.logger.info(
+            "Accessing first request and response from OperationObjectConverterNode conversion."
+        );
         return {
             description: this.description,
             availability: this.availability?.convert(),
@@ -247,12 +280,20 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             id: FernRegistry.EndpointId(endpointId),
             method: this.method,
             path: pathParts,
-            auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
+            auth: authIds?.map((id) =>
+                FernRegistry.api.latest.AuthSchemeId(id)
+            ),
             defaultEnvironment: environments?.[0]?.id,
             environments,
-            pathParameters: convertOperationObjectProperties(this.pathParameters),
-            queryParameters: convertOperationObjectProperties(this.queryParameters),
-            requestHeaders: convertOperationObjectProperties(this.requestHeaders),
+            pathParameters: convertOperationObjectProperties(
+                this.pathParameters
+            ),
+            queryParameters: convertOperationObjectProperties(
+                this.queryParameters
+            ),
+            requestHeaders: convertOperationObjectProperties(
+                this.requestHeaders
+            ),
             responseHeaders: responses?.[0]?.headers,
             // TODO: revisit fdr shape to suport multiple requests
             request: this.requests?.convert()[0],

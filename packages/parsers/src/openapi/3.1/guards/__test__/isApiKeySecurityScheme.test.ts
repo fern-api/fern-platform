@@ -23,7 +23,8 @@ describe("isApiKeySecurityScheme", () => {
             },
             {
                 type: "openIdConnect",
-                openIdConnectUrl: "https://example.com/.well-known/openid-configuration",
+                openIdConnectUrl:
+                    "https://example.com/.well-known/openid-configuration",
             },
         ];
 

@@ -24,13 +24,18 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
     default: boolean | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input>
+    ) {
         super(args);
         this.safeParse();
     }
 
     parse(): void {
-        if (this.input.default != null && typeof this.input.default !== "boolean") {
+        if (
+            this.input.default != null &&
+            typeof this.input.default !== "boolean"
+        ) {
             this.context.errors.warning({
                 message: `Expected default value to be a boolean. Received ${this.input.default}`,
                 path: this.accessPath,

@@ -43,7 +43,7 @@ describe("PathItemObjectConverterNode", () => {
                 },
                 undefined,
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -121,7 +121,7 @@ describe("PathItemObjectConverterNode", () => {
                 },
                 undefined,
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -154,7 +154,7 @@ describe("PathItemObjectConverterNode", () => {
                 },
                 undefined,
                 undefined,
-                undefined,
+                undefined
             );
 
             const result = node.convert();
@@ -163,7 +163,7 @@ describe("PathItemObjectConverterNode", () => {
                 expect.objectContaining({
                     description: "Test endpoint",
                     method: "GET",
-                }),
+                })
             );
         });
     });

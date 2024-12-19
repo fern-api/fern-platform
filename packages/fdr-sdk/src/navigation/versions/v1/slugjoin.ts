@@ -7,6 +7,6 @@ export function slugjoin(...parts: string[]): Slug {
         urljoin(parts.map((part) => part.trim()))
             .replaceAll("//*", "/")
             .replace(/^\//, "")
-            .replace(/\/$/, ""),
+            .replace(/\/$/, "")
     );
 }

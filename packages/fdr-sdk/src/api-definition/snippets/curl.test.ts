@@ -11,8 +11,8 @@ describe("curl", () => {
                     searchParams: {},
                     body: undefined,
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot('"curl https://api.example.com/users"');
     });
 
@@ -34,8 +34,8 @@ describe("curl", () => {
                         },
                     },
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(`
           "curl -X POST https://api.example.com/users \\
                -H "Content-Type: application/json" \\
@@ -60,8 +60,8 @@ describe("curl", () => {
                     },
                     body: undefined,
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(`
           "curl https://api.example.com/secure \\
                -u "user:pass123""
@@ -89,8 +89,8 @@ describe("curl", () => {
                         },
                     },
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(`
           "curl -X POST https://api.example.com/upload \\
                -H "Content-Type: multipart/form-data" \\
@@ -127,8 +127,8 @@ describe("curl", () => {
                         },
                     },
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(`
           "curl -X POST https://api.example.com/upload \\
                -H "Content-Type: multipart/form-data" \\
@@ -174,8 +174,8 @@ describe("curl", () => {
                         },
                     },
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(`
           "curl -X POST https://api.example.com/upload \\
                -H "Content-Type: multipart/form-data" \\
@@ -200,10 +200,10 @@ describe("curl", () => {
                     },
                     body: undefined,
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(
-            '"curl -X POST "https://api.example.com/form?name=John%20Doe&email=john%40example.com&items[]=item1&items[]=item2""',
+            '"curl -X POST "https://api.example.com/form?name=John%20Doe&email=john%40example.com&items[]=item1&items[]=item2""'
         );
     });
 
@@ -226,8 +226,8 @@ describe("curl", () => {
                         },
                     },
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(`
           "curl -X POST https://api.example.com/form \\
                -H "Content-Type: application/x-www-form-urlencoded" \\
@@ -252,8 +252,8 @@ describe("curl", () => {
                     },
                     body: undefined,
                 },
-                { usesApplicationJsonInFormDataValue: false },
-            ),
+                { usesApplicationJsonInFormDataValue: false }
+            )
         ).toMatchInlineSnapshot(
             `
           "curl -G https://api.example.com/search \\
@@ -261,18 +261,20 @@ describe("curl", () => {
                -d "filter[]"=category1 \\
                -d "filter[]"=category2 \\
                --data-urlencode sort="date desc""
-        `,
+        `
         );
     });
 
     it("does not include nulls in urlencoded parameters", () => {
-        expect(getUrlQueriesGetString({ a: null, b: "b" })).toMatchInlineSnapshot(`
+        expect(getUrlQueriesGetString({ a: null, b: "b" }))
+            .toMatchInlineSnapshot(`
           [
             "-d b=b",
           ]
         `);
 
-        expect(getUrlQueriesGetString({ a: ["b1", null, "b2"] })).toMatchInlineSnapshot(`
+        expect(getUrlQueriesGetString({ a: ["b1", null, "b2"] }))
+            .toMatchInlineSnapshot(`
           [
             "-d "a[]"=b1",
             "-d "a[]"=b2",

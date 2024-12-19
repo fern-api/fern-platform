@@ -26,7 +26,9 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     extraProperties: string | SchemaConverterNode | undefined;
     requiredProperties: string[] | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ObjectConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ObjectConverterNode.Input>
+    ) {
         super(args);
         this.safeParse();
     }
@@ -36,17 +38,19 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
         this.requiredProperties = this.input.required;
         this.properties = Object.fromEntries(
-            Object.entries(this.input.properties ?? {}).map(([key, property]) => {
-                return [
-                    key,
-                    new SchemaConverterNode({
-                        input: property,
-                        context: this.context,
-                        accessPath: this.accessPath,
-                        pathId: this.pathId,
-                    }),
-                ];
-            }),
+            Object.entries(this.input.properties ?? {}).map(
+                ([key, property]) => {
+                    return [
+                        key,
+                        new SchemaConverterNode({
+                            input: property,
+                            context: this.context,
+                            accessPath: this.accessPath,
+                            pathId: this.pathId,
+                        }),
+                    ];
+                }
+            )
         );
 
         this.extraProperties =
@@ -73,7 +77,9 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                             this.properties = {
                                 ...this.properties,
                                 ...Object.fromEntries(
-                                    Object.entries(this.input.properties ?? {}).map(([key, property]) => {
+                                    Object.entries(
+                                        this.input.properties ?? {}
+                                    ).map(([key, property]) => {
                                         return [
                                             key,
                                             new SchemaConverterNode({
@@ -83,13 +89,13 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                                                 pathId: this.pathId,
                                             }),
                                         ];
-                                    }),
+                                    })
                                 ),
                             };
                             return undefined;
                         }
                     })
-                    .filter(isNonNullish),
+                    .filter(isNonNullish)
             );
         }
 
@@ -101,10 +107,15 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             return undefined;
         }
 
-        return convertToObjectProperties(this.properties, this.requiredProperties);
+        return convertToObjectProperties(
+            this.properties,
+            this.requiredProperties
+        );
     }
 
-    convertExtraProperties(): FernRegistry.api.latest.TypeReference | undefined {
+    convertExtraProperties():
+        | FernRegistry.api.latest.TypeReference
+        | undefined {
         if (this.extraProperties == null) {
             return undefined;
         }

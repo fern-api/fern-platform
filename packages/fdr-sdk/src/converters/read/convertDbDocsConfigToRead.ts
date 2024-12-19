@@ -1,13 +1,28 @@
 import assertNever from "@fern-api/ui-core-utils/assertNever";
 import { kebabCase } from "es-toolkit/string";
 import tinycolor from "tinycolor2";
-import { DocsV1Db, DocsV1Read, visitDbNavigationConfig, visitUnversionedDbNavigationConfig } from "../../client";
+import {
+    DocsV1Db,
+    DocsV1Read,
+    visitDbNavigationConfig,
+    visitUnversionedDbNavigationConfig,
+} from "../../client";
 import { visitDbNavigationTab } from "../../client/visitNavigationTab";
-import { DEFAULT_DARK_MODE_ACCENT_PRIMARY, DEFAULT_LIGHT_MODE_ACCENT_PRIMARY } from "../utils/colors";
+import {
+    DEFAULT_DARK_MODE_ACCENT_PRIMARY,
+    DEFAULT_LIGHT_MODE_ACCENT_PRIMARY,
+} from "../utils/colors";
 
-export function convertDbDocsConfigToRead({ dbShape }: { dbShape: DocsV1Db.DocsDbConfig }): DocsV1Read.DocsConfig {
+export function convertDbDocsConfigToRead({
+    dbShape,
+}: {
+    dbShape: DocsV1Db.DocsDbConfig;
+}): DocsV1Read.DocsConfig {
     return {
-        navigation: dbShape.navigation != null ? transformNavigationConfigToRead(dbShape.navigation) : undefined,
+        navigation:
+            dbShape.navigation != null
+                ? transformNavigationConfigToRead(dbShape.navigation)
+                : undefined,
         root: dbShape.root,
         logoHeight: dbShape.logoHeight,
         logoHref: dbShape.logoHref,
@@ -16,7 +31,8 @@ export function convertDbDocsConfigToRead({ dbShape }: { dbShape: DocsV1Db.DocsD
         footerLinks: dbShape.footerLinks,
         title: dbShape.title,
         favicon: dbShape.favicon,
-        typographyV2: dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
+        typographyV2:
+            dbShape.typographyV2 ?? transformTypographyToV2(dbShape.typography),
         layout: dbShape.layout,
         css: dbShape.css,
         js: dbShape.js,
@@ -29,7 +45,9 @@ export function convertDbDocsConfigToRead({ dbShape }: { dbShape: DocsV1Db.DocsD
     };
 }
 
-function transformFontConfigToV2(fontConfig: DocsV1Read.FontConfig | undefined): DocsV1Read.FontConfigV2 | undefined {
+function transformFontConfigToV2(
+    fontConfig: DocsV1Read.FontConfig | undefined
+): DocsV1Read.FontConfigV2 | undefined {
     if (fontConfig == null) {
         return undefined;
     }
@@ -50,7 +68,7 @@ function transformFontConfigToV2(fontConfig: DocsV1Read.FontConfig | undefined):
 }
 
 function transformTypographyToV2(
-    typography: DocsV1Read.DocsTypographyConfig | undefined,
+    typography: DocsV1Read.DocsTypographyConfig | undefined
 ): DocsV1Read.DocsTypographyConfigV2 | undefined {
     if (typography == null) {
         return undefined;
@@ -89,7 +107,9 @@ function transformTypographyToV2(
 //     };
 // }
 
-export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConfig): DocsV1Read.NavigationConfig {
+export function transformNavigationConfigToRead(
+    dbShape: DocsV1Db.NavigationConfig
+): DocsV1Read.NavigationConfig {
     return visitDbNavigationConfig<DocsV1Read.NavigationConfig>(dbShape, {
         unversioned: (config) => {
             return transformUnversionedNavigationConfigForDb(config);
@@ -101,7 +121,7 @@ export function transformNavigationConfigToRead(dbShape: DocsV1Db.NavigationConf
 }
 
 function transformVersionedNavigationConfigToRead(
-    config: DocsV1Db.VersionedNavigationConfig,
+    config: DocsV1Db.VersionedNavigationConfig
 ): DocsV1Read.VersionedNavigationConfig {
     return {
         versions: config.versions.map(
@@ -109,35 +129,42 @@ function transformVersionedNavigationConfigToRead(
                 urlSlug: version.urlSlug ?? kebabCase(version.version),
                 availability: version.availability,
                 version: version.version,
-                config: transformUnversionedNavigationConfigForDb(version.config),
-            }),
+                config: transformUnversionedNavigationConfigForDb(
+                    version.config
+                ),
+            })
         ),
     };
 }
 
 function transformUnversionedNavigationConfigForDb(
-    config: DocsV1Db.UnversionedNavigationConfig,
+    config: DocsV1Db.UnversionedNavigationConfig
 ): DocsV1Read.UnversionedNavigationConfig {
-    return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(config, {
-        tabbed: (config) => {
-            return {
-                tabs:
-                    config.tabsV2?.map(transformNavigationTabV2ForDb) ??
-                    config.tabs?.map(transformNavigationTabForDb) ??
-                    [],
-                landingPage: config.landingPage,
-            };
-        },
-        untabbed: (config) => {
-            return {
-                items: config.items.map(transformNavigationItemForDb),
-                landingPage: config.landingPage,
-            };
-        },
-    });
+    return visitUnversionedDbNavigationConfig<DocsV1Read.UnversionedNavigationConfig>(
+        config,
+        {
+            tabbed: (config) => {
+                return {
+                    tabs:
+                        config.tabsV2?.map(transformNavigationTabV2ForDb) ??
+                        config.tabs?.map(transformNavigationTabForDb) ??
+                        [],
+                    landingPage: config.landingPage,
+                };
+            },
+            untabbed: (config) => {
+                return {
+                    items: config.items.map(transformNavigationItemForDb),
+                    landingPage: config.landingPage,
+                };
+            },
+        }
+    );
 }
 
-export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): DocsV1Read.NavigationTab {
+export function transformNavigationTabForDb(
+    dbShape: DocsV1Db.NavigationTab
+): DocsV1Read.NavigationTab {
     return visitDbNavigationTab<DocsV1Read.NavigationTab>(dbShape, {
         link: (link) => ({ type: "link", ...link }),
         group: (group) => ({
@@ -151,7 +178,9 @@ export function transformNavigationTabForDb(dbShape: DocsV1Db.NavigationTab): Do
     });
 }
 
-export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2): DocsV1Read.NavigationTab {
+export function transformNavigationTabV2ForDb(
+    dbShape: DocsV1Db.NavigationTabV2
+): DocsV1Read.NavigationTab {
     switch (dbShape.type) {
         case "link":
             return dbShape;
@@ -171,11 +200,15 @@ export function transformNavigationTabV2ForDb(dbShape: DocsV1Db.NavigationTabV2)
     }
 }
 
-export function isNavigationTabLink(tab: DocsV1Db.NavigationTab): tab is DocsV1Read.NavigationTabLink {
+export function isNavigationTabLink(
+    tab: DocsV1Db.NavigationTab
+): tab is DocsV1Read.NavigationTabLink {
     return (tab as DocsV1Read.NavigationTabLink).url != null;
 }
 
-export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): DocsV1Read.NavigationItem {
+export function transformNavigationItemForDb(
+    dbShape: DocsV1Db.NavigationItem
+): DocsV1Read.NavigationItem {
     switch (dbShape.type) {
         case "api":
             return {
@@ -185,7 +218,9 @@ export function transformNavigationItemForDb(dbShape: DocsV1Db.NavigationItem): 
         case "section":
             return {
                 ...dbShape,
-                items: dbShape.items.map((item) => transformNavigationItemForDb(item)),
+                items: dbShape.items.map((item) =>
+                    transformNavigationItemForDb(item)
+                ),
             };
         case "page":
         case "link":
@@ -224,7 +259,9 @@ const EMPTY_LIGHT_THEME: DocsV1Read.ThemeConfig = {
     cardBackground: undefined,
 };
 
-export function getColorsV3(docsDbConfig: DocsV1Db.DocsDbConfig): DocsV1Read.ColorsConfigV3 {
+export function getColorsV3(
+    docsDbConfig: DocsV1Db.DocsDbConfig
+): DocsV1Read.ColorsConfigV3 {
     let hasDarkMode = false;
     let hasLightMode = false;
     let darkTheme: Partial<DocsV1Read.ThemeConfig> = {};
@@ -252,49 +289,81 @@ export function getColorsV3(docsDbConfig: DocsV1Db.DocsDbConfig): DocsV1Read.Col
     if (docsDbConfig.colorsV2 != null) {
         if (docsDbConfig.colorsV2.background != null) {
             if (docsDbConfig.colorsV2.background.type === "themed") {
-                if (docsDbConfig.colorsV2.background.dark != null && darkTheme.background == null) {
+                if (
+                    docsDbConfig.colorsV2.background.dark != null &&
+                    darkTheme.background == null
+                ) {
                     hasDarkMode = true;
-                    darkTheme.background = { type: "solid", ...docsDbConfig.colorsV2.background.dark };
+                    darkTheme.background = {
+                        type: "solid",
+                        ...docsDbConfig.colorsV2.background.dark,
+                    };
                 }
-                if (docsDbConfig.colorsV2.background.light != null && lightTheme.background == null) {
+                if (
+                    docsDbConfig.colorsV2.background.light != null &&
+                    lightTheme.background == null
+                ) {
                     hasLightMode = true;
-                    lightTheme.background = { type: "solid", ...docsDbConfig.colorsV2.background.light };
+                    lightTheme.background = {
+                        type: "solid",
+                        ...docsDbConfig.colorsV2.background.light,
+                    };
                 }
             } else if (docsDbConfig.colorsV2.background.type === "unthemed") {
                 if (docsDbConfig.colorsV2.background.color != null) {
                     // the background color is a good way to tell if we're in dark mode or light mode
                     // check the percieved brightness of the color:
 
-                    if (tinycolor(docsDbConfig.colorsV2.background.color).isDark()) {
+                    if (
+                        tinycolor(
+                            docsDbConfig.colorsV2.background.color
+                        ).isDark()
+                    ) {
                         hasDarkMode = true;
-                        darkTheme.background = { type: "solid", ...docsDbConfig.colorsV2.background.color };
+                        darkTheme.background = {
+                            type: "solid",
+                            ...docsDbConfig.colorsV2.background.color,
+                        };
                     } else {
                         hasLightMode = true;
-                        lightTheme.background = { type: "solid", ...docsDbConfig.colorsV2.background.color };
+                        lightTheme.background = {
+                            type: "solid",
+                            ...docsDbConfig.colorsV2.background.color,
+                        };
                     }
                 }
             }
         }
 
         if (docsDbConfig.colorsV2.accentPrimary?.type === "themed") {
-            if (docsDbConfig.colorsV2.accentPrimary.dark != null && darkTheme.accentPrimary == null) {
+            if (
+                docsDbConfig.colorsV2.accentPrimary.dark != null &&
+                darkTheme.accentPrimary == null
+            ) {
                 hasDarkMode = true;
-                darkTheme.accentPrimary = docsDbConfig.colorsV2.accentPrimary.dark;
+                darkTheme.accentPrimary =
+                    docsDbConfig.colorsV2.accentPrimary.dark;
             }
 
-            if (docsDbConfig.colorsV2.accentPrimary.light != null && lightTheme.accentPrimary == null) {
+            if (
+                docsDbConfig.colorsV2.accentPrimary.light != null &&
+                lightTheme.accentPrimary == null
+            ) {
                 hasLightMode = true;
-                lightTheme.accentPrimary = docsDbConfig.colorsV2.accentPrimary.light;
+                lightTheme.accentPrimary =
+                    docsDbConfig.colorsV2.accentPrimary.light;
             }
         } else if (docsDbConfig.colorsV2.accentPrimary?.type === "unthemed") {
             // we don't know at this point whether accentPrimary is dark or light, so we'll set both
             // but we don't mark hasDarkMode or hasLightMode as true, because we don't know which it is
             if (docsDbConfig.colorsV2.accentPrimary.color != null) {
                 if (darkTheme.accentPrimary == null) {
-                    darkTheme.accentPrimary = docsDbConfig.colorsV2.accentPrimary.color;
+                    darkTheme.accentPrimary =
+                        docsDbConfig.colorsV2.accentPrimary.color;
                 }
                 if (lightTheme.accentPrimary == null) {
-                    lightTheme.accentPrimary = docsDbConfig.colorsV2.accentPrimary.color;
+                    lightTheme.accentPrimary =
+                        docsDbConfig.colorsV2.accentPrimary.color;
                 }
             }
         }

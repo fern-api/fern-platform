@@ -16,10 +16,15 @@ export declare namespace NullConverterNode {
     }
 }
 
-export class NullConverterNode extends BaseOpenApiV3_1ConverterNode<NullConverterNode.Input, NullConverterNode.Output> {
+export class NullConverterNode extends BaseOpenApiV3_1ConverterNode<
+    NullConverterNode.Input,
+    NullConverterNode.Output
+> {
     displayName: string | undefined;
 
-    constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<NullConverterNode.Input>) {
+    constructor(
+        args: BaseOpenApiV3_1ConverterNodeConstructorArgs<NullConverterNode.Input>
+    ) {
         super(args);
         this.safeParse();
     }
