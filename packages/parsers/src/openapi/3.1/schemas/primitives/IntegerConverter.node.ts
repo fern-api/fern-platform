@@ -3,8 +3,8 @@ import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
 import { FdrIntegerType } from "../../../../types/fdr.types";
 import {
-    BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
+    BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { ConstArrayToType, OPENAPI_INTEGER_TYPE_FORMAT } from "../../../types/format.types";
 
@@ -25,7 +25,7 @@ function isOpenApiIntegerTypeFormat(format: unknown): format is ConstArrayToType
     return OPENAPI_INTEGER_TYPE_FORMAT.includes(format as ConstArrayToType<typeof OPENAPI_INTEGER_TYPE_FORMAT>);
 }
 
-export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     IntegerConverterNode.Input,
     IntegerConverterNode.Output
 > {
@@ -94,5 +94,9 @@ export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNode<
                 },
             },
         };
+    }
+
+    example(): number | undefined {
+        return this.input.example ?? this.input.examples?.[0] ?? this.default ?? 0;
     }
 }

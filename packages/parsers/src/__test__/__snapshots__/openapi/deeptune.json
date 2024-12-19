@@ -46,7 +46,8 @@
         }
       ],
       "responses": [],
-      "errors": []
+      "errors": [],
+      "examples": []
     },
     "endpoint_textToSpeech.generateFromPrompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
@@ -101,7 +102,8 @@
         }
       ],
       "responses": [],
-      "errors": []
+      "errors": [],
+      "examples": []
     },
     "endpoint_voices.list": {
       "description": "Retrieve all voices associated with the current workspace.",
@@ -148,7 +150,25 @@
           "description": "Successful response"
         }
       ],
-      "errors": []
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "is_public": false
+              }
+            ]
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.create": {
       "description": "Create a new voice with a name, optional description, and audio file.",
@@ -207,7 +227,24 @@
           "description": "Successful response"
         }
       ],
-      "errors": []
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices",
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.get": {
       "description": "Retrieve a specific voice by its ID.",
@@ -277,7 +314,24 @@
           "description": "Successful response"
         }
       ],
-      "errors": []
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices/{voice_id}",
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.update": {
       "description": "Update an existing voice with new name, description, or audio file.",
@@ -359,7 +413,24 @@
           "description": "Successful response"
         }
       ],
-      "errors": []
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices/{voice_id}",
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.delete": {
       "description": "Delete an existing voice by its ID.",
@@ -417,7 +488,8 @@
         }
       ],
       "responses": [],
-      "errors": []
+      "errors": [],
+      "examples": []
     }
   },
   "websockets": {},

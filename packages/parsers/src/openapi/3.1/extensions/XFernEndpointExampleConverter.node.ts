@@ -8,8 +8,13 @@ import {
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
+import { isExampleCodeSampleSchemaLanguage } from "../guards/isExampleCodeSampleSchemaLanguage";
+import { isExampleCodeSampleSchemaSdk } from "../guards/isExampleCodeSampleSchemaSdk";
+import { isExampleResponseBody } from "../guards/isExampleResponseBody";
+import { isExampleSseResponseBody } from "../guards/isExampleSseResponseBody";
+import { isFileWithData } from "../guards/isFileWithData";
+import { isRecord } from "../guards/isRecord";
 import { RequestMediaTypeObjectConverterNode, ResponseMediaTypeObjectConverterNode } from "../paths";
-import { RedocExampleConverterNode } from "./examples/RedocExampleConverter.node";
 import { X_FERN_EXAMPLES } from "./fernExtension.consts";
 
 export declare namespace XFernEndpointExampleConverterNode {
@@ -17,47 +22,6 @@ export declare namespace XFernEndpointExampleConverterNode {
         [X_FERN_EXAMPLES]?: FernDefinition.ExampleEndpointCallSchema[];
         example?: OpenAPIV3_1.ExampleObject;
     }
-}
-
-function isExampleResponseBody(input: unknown): input is FernDefinition.ExampleBodyResponseSchema {
-    return typeof input === "object" && input != null && ("error" in input || "body" in input);
-}
-
-function isExampleSseEvent(input: unknown): input is FernDefinition.ExampleSseEventSchema {
-    return typeof input === "object" && input != null && "event" in input;
-}
-
-function isExampleSseResponseBody(input: unknown): input is FernDefinition.ExampleSseResponseSchema {
-    return (
-        typeof input === "object" &&
-        input != null &&
-        "stream" in input &&
-        Array.isArray(input.stream) &&
-        input.stream.every(isExampleSseEvent)
-    );
-}
-
-function isFileWithData(valueObject: unknown): valueObject is { filename: string; data: string } {
-    return (
-        typeof valueObject === "object" &&
-        valueObject != null &&
-        "filename" in valueObject &&
-        "data" in valueObject &&
-        typeof valueObject.filename === "string" &&
-        typeof valueObject.data === "string"
-    );
-}
-
-function isRecord(input: unknown): input is Record<string, unknown> {
-    return typeof input === "object" && input != null && !Array.isArray(input);
-}
-
-function isExampleCodeSampleSchemaLanguage(input: unknown): input is FernDefinition.ExampleCodeSampleSchemaLanguage {
-    return typeof input === "object" && input != null && "language" in input;
-}
-
-function isExampleCodeSampleSchemaSdk(input: unknown): input is FernDefinition.ExampleCodeSampleSchemaSdk {
-    return typeof input === "object" && input != null && "sdk" in input;
 }
 
 export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -71,7 +35,6 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
         protected path: string,
         protected successResponseStatusCode: number,
         protected requestBodyByContentType: Record<string, RequestMediaTypeObjectConverterNode> | undefined,
-        protected redocSnippetsNode: RedocExampleConverterNode | undefined,
         protected responseBodies: ResponseMediaTypeObjectConverterNode[] | undefined,
     ) {
         super(args);
@@ -91,7 +54,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
 
     convertFormDataExampleRequest(
         requestBody: RequestMediaTypeObjectConverterNode,
-        exampleValue: Record<string, unknown>,
+        exampleValue: Record<string, unknown> | string,
     ): FernRegistry.api.latest.ExampleEndpointRequest | undefined {
         if (requestBody.fields == null) {
             return undefined;
@@ -101,7 +64,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
                 const formData = Object.fromEntries(
                     Object.entries(requestBody.fields)
                         .map(([key, field]) => {
-                            const value = exampleValue[key];
+                            const value = typeof exampleValue === "object" ? exampleValue[key] : undefined;
                             switch (field.multipartType) {
                                 case "file": {
                                     if (isFileWithData(value)) {
@@ -113,7 +76,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
                                                 data: FernRegistry.FileId(value.data),
                                             },
                                         ];
-                                    } else {
+                                    } else if (value != null) {
                                         return [
                                             key,
                                             {
@@ -121,6 +84,8 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
                                                 value,
                                             },
                                         ];
+                                    } else {
+                                        return undefined;
                                     }
                                 }
                                 case "files": {
@@ -337,10 +302,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
                     ),
                     requestBody,
                     responseBody,
-                    snippets: {
-                        ...(this.redocSnippetsNode?.convert() ?? {}),
-                        ...snippets,
-                    },
+                    snippets,
                 };
             });
         });

@@ -19,14 +19,15 @@ export function generateEndpointRecord({
 }: GenerateEndpointRecordsOptions): Algolia.AlgoliaRecord.EndpointV4 {
     const description = toDescription([
         endpoint.description,
-        endpoint.request?.description,
-        endpoint.response?.description,
+        endpoint.requests?.[0]?.description,
+        endpoint.responses?.[0]?.description,
     ]);
     const endpointRecord: Algolia.AlgoliaRecord.EndpointV4 = {
         type: "endpoint-v4",
         method: endpoint.method,
         endpointPath: endpoint.path,
-        isResponseStream: endpoint.response?.body.type === "stream" || endpoint.response?.body.type === "streamingText",
+        isResponseStream:
+            endpoint.responses?.[0]?.body.type === "stream" || endpoint.responses?.[0]?.body.type === "streamingText",
         title: node.title,
         description: description?.length ? truncateToBytes(description, 50 * 1000) : undefined,
         breadcrumbs: breadcrumb.map((breadcrumb) => ({
@@ -105,12 +106,12 @@ export function generateEndpointFieldRecords({
         );
     });
 
-    if (endpoint.request) {
-        switch (endpoint.request.body.type) {
+    if (endpoint.requests?.[0]) {
+        switch (endpoint.requests?.[0]?.body.type) {
             case "object":
             case "alias":
                 push(
-                    ApiDefinition.collectTypeDefinitionTree(endpoint.request.body, types, {
+                    ApiDefinition.collectTypeDefinitionTree(endpoint.requests?.[0]?.body, types, {
                         path: [
                             { type: "meta", value: "request", displayName: "Request" },
                             { type: "meta", value: "body", displayName: undefined },
@@ -134,12 +135,12 @@ export function generateEndpointFieldRecords({
         );
     });
 
-    if (endpoint.response) {
-        switch (endpoint.response.body.type) {
+    if (endpoint.responses?.[0]) {
+        switch (endpoint.responses?.[0]?.body.type) {
             case "alias":
             case "object":
                 push(
-                    ApiDefinition.collectTypeDefinitionTree(endpoint.response.body, types, {
+                    ApiDefinition.collectTypeDefinitionTree(endpoint.responses?.[0]?.body, types, {
                         path: [
                             { type: "meta", value: "response", displayName: "Response" },
                             { type: "meta", value: "body", displayName: undefined },
@@ -149,7 +150,7 @@ export function generateEndpointFieldRecords({
                 break;
             case "stream":
                 push(
-                    ApiDefinition.collectTypeDefinitionTree(endpoint.response.body.shape, types, {
+                    ApiDefinition.collectTypeDefinitionTree(endpoint.responses?.[0]?.body.shape, types, {
                         path: [
                             { type: "meta", value: "response", displayName: "Response" },
                             { type: "meta", value: "body", displayName: undefined },

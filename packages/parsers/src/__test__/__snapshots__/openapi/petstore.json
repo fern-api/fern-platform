@@ -61,7 +61,23 @@
           "description": "Successful operation"
         }
       ],
-      "errors": []
+      "errors": [],
+      "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_pet.updatePet": {
       "description": "Update an existing pet by Id",
@@ -123,7 +139,23 @@
           "description": "Successful operation"
         }
       ],
-      "errors": []
+      "errors": [],
+      "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_pets.getPetById": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
@@ -196,13 +228,18 @@
               "id": "Pet"
             }
           },
-          "description": "Invalid ID supplied",
+          "description": "A Pet in JSON format",
           "name": "Bad Request",
           "examples": [
             {
-              "description": "A Pet in JSON format",
               "responseBody": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
@@ -216,16 +253,37 @@
               "id": "Pet"
             }
           },
-          "description": "Pet not found",
+          "description": "A Pet in JSON format",
           "name": "Not Found",
           "examples": [
             {
-              "description": "A Pet in JSON format",
               "responseBody": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
+        }
+      ],
+      "examples": [
+        {
+          "path": "/pet/{petId}",
+          "responseStatusCode": null,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
         }
       ]
     }

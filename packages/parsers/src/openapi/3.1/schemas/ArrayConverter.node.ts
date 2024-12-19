@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-    BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
+    BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
@@ -16,7 +16,7 @@ export declare namespace ArrayConverterNode {
     }
 }
 
-export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     ArrayConverterNode.Input,
     ArrayConverterNode.Output | undefined
 > {
@@ -57,5 +57,9 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNode<
                 itemShape,
             },
         };
+    }
+
+    example(): unknown[] | undefined {
+        return this.input.example ?? this.input.examples?.[0] ?? [this.item?.example()];
     }
 }

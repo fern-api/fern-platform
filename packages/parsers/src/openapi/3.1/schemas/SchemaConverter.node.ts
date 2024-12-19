@@ -2,8 +2,8 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../client/generated";
 import {
-    BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
+    BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { isArraySchema } from "../guards/isArraySchema";
@@ -35,11 +35,13 @@ export type PrimitiveType =
     | BooleanConverterNode.Input
     | StringConverterNode.Input;
 
-export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
     FernRegistry.api.latest.TypeShape | undefined
 > {
-    typeShapeNode: BaseOpenApiV3_1ConverterNode<unknown, FernRegistry.api.latest.TypeShape | undefined> | undefined;
+    typeShapeNode:
+        | BaseOpenApiV3_1ConverterNodeWithExample<unknown, FernRegistry.api.latest.TypeShape | undefined>
+        | undefined;
 
     description: string | undefined;
     name: string | undefined;
@@ -210,5 +212,9 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     convert(): FernRegistry.api.latest.TypeShape | undefined {
         return this.typeShapeNode?.convert();
+    }
+
+    example(): unknown | undefined {
+        return this.typeShapeNode?.example();
     }
 }
