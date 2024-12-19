@@ -59,7 +59,7 @@ export function buildAuthHeaders(
                 const token =
                   authState.oauth?.selectedInputMethod === "credentials"
                     ? authState.oauth?.accessToken
-                    : authState.oauth?.userSuppliedAccessToken ?? "";
+                    : (authState.oauth?.userSuppliedAccessToken ?? "");
 
                 if (
                   oAuthClientCredentialReferencedEndpointLoginFlowProps &&

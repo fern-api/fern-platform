@@ -40,7 +40,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
                 icon={
                   tab.type !== "tabLink" && tab.authed
                     ? "lock"
-                    : tab.icon ?? "book-open"
+                    : (tab.icon ?? "book-open")
                 }
               />
             </div>

@@ -408,7 +408,7 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
 
   function score(value: string, keywords?: string[]) {
     const filter = propsRef.current?.filter ?? defaultFilter;
-    return value ? filter?.(value, state.current.search, keywords) ?? 0 : 0;
+    return value ? (filter?.(value, state.current.search, keywords) ?? 0) : 0;
   }
 
   /** Sorts items by score, and groups by highest item score. */
@@ -794,7 +794,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
         ? true
         : !state.search
           ? true
-          : state.filtered.items.get(id) ?? 0 > 0
+          : (state.filtered.items.get(id) ?? 0 > 0)
   );
 
   useEffect(() => {

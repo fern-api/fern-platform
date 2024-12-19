@@ -77,7 +77,7 @@ export default async function handler(
     prompt: response.hits
       .map(
         (hit) =>
-          `# ${hit.title}\n${hit.description ?? ""}\n${hit.type === "changelog" || hit.type === "markdown" ? hit.content ?? "" : ""}`
+          `# ${hit.title}\n${hit.description ?? ""}\n${hit.type === "changelog" || hit.type === "markdown" ? (hit.content ?? "") : ""}`
       )
       .join("\n\n"),
     maxRetries: 3,

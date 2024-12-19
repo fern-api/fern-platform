@@ -13,6 +13,6 @@ export function getReturnToQueryParam(
   }
 
   return authConfig?.type === "basic_token_verification"
-    ? authConfig.returnToQueryParam ?? DEFAULT_RETURN_TO_QUERY_PARAM
+    ? (authConfig.returnToQueryParam ?? DEFAULT_RETURN_TO_QUERY_PARAM)
     : DEFAULT_RETURN_TO_QUERY_PARAM;
 }
