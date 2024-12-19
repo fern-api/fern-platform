@@ -1,19 +1,38 @@
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import Script from "next/script";
-import { ReactElement } from "react";
+import { ReactNode, useEffect } from "react";
+import { useFernUser } from "../atoms";
+import { useSafeListenTrackEvents } from "./use-track";
 
-export function FullstoryScript(props: { config?: DocsV1Read.FullStoryAnalyticsConfig }): ReactElement {
-    if (!props.config) {
-        return <></>;
-    }
+export function FullstoryScript(props: { orgId: string }): ReactNode {
+    useSafeListenTrackEvents(({ event, properties }) => {
+        if (typeof window.FS === "function") {
+            // https://developer.fullstory.com/browser/capture-events/analytics-events/
+            window.FS("trackEvent", { name: event, properties });
+        }
+    });
 
-    return <Script id="init-fullstory" dangerouslySetInnerHTML={{ __html: initFullstory(props.config) }} />;
+    const user = useFernUser();
+    useEffect(() => {
+        if (user && user.email && typeof window.FS === "function") {
+            // https://developer.fullstory.com/browser/identification/set-user-properties/
+            window.FS("setProperties", {
+                type: "user",
+                properties: {
+                    displayName: user.name,
+                    email: user.email,
+                },
+            });
+        }
+    }, [user]);
+
+    return <Script id="fullstory" type="text/javascript" dangerouslySetInnerHTML={{ __html: initFullstory(props) }} />;
 }
 
-function initFullstory(config: DocsV1Read.FullStoryAnalyticsConfig) {
-    return `window['_fs_host'] = 'fullstory.com';
+function initFullstory({ orgId }: { orgId: string }) {
+    return `window['_fs_debug'] = false;
+window['_fs_host'] = 'fullstory.com';
 window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
-window['_fs_org'] = '${config.orgId}';
+window['_fs_org'] = '${orgId}';
 window['_fs_namespace'] = 'FS';
 !function(m,n,e,t,l,o,g,y){var s,f,a=function(h){
 return!(h in m)||(m.console&&m.console.log&&m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'),!1)}(e)

@@ -1,14 +1,13 @@
 import { get } from "@vercel/edge-config";
 import urlJoin from "url-join";
 
-interface GTMParams {
-    tagId: string;
-}
 interface CustomerAnalytics {
     ga4?: {
         measurementId: string;
     };
-    gtm?: GTMParams;
+    gtm?: {
+        tagId: string;
+    };
 }
 
 /**

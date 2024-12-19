@@ -4,8 +4,7 @@ import Link, { LinkProps } from "next/link";
 import { ReactElement, forwardRef, useEffect, useState, type ComponentProps } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
 import { useMemoOne } from "use-memo-one";
-import { SLUG_ATOM, useDomain } from "../atoms";
-import { selectHref } from "../hooks/useHref";
+import { SLUG_ATOM, selectHref, useDomain } from "../atoms";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
     showExternalLinkIcon?: boolean;

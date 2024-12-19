@@ -1,7 +1,7 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { NavArrowRight } from "iconoir-react";
 import { Fragment, ReactElement } from "react";
-import { useToHref } from "../hooks/useHref";
+import { useToHref } from "../atoms";
 import { FernLink } from "./FernLink";
 
 export interface FernBreadcrumbsProps {

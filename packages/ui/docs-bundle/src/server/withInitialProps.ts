@@ -1,3 +1,4 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -22,6 +23,7 @@ import { getMdxBundler } from "@fern-ui/ui/bundlers";
 import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
+import { EMPTY_ANALYTICS_CONFIG } from "../../../app/src/atoms/docs";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
@@ -328,10 +330,12 @@ export async function withInitialProps({
         ),
         user: authState.authed ? authState.user : undefined,
         fallback: {},
-        // eslint-disable-next-line deprecation/deprecation
-        analytics: await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
         theme: featureFlags.isCohereTheme ? "cohere" : "default",
-        analyticsConfig: docs.definition.config.analyticsConfig,
+        analyticsConfig: mergeAnalyticsConfig(
+            docs.definition.config.analyticsConfig,
+            // eslint-disable-next-line deprecation/deprecation
+            await getCustomerAnalytics(docs.baseUrl.domain, docs.baseUrl.basePath),
+        ),
         defaultLang: docs.definition.config.defaultLanguage ?? "curl",
         stylesheet: renderThemeStylesheet(
             colors,
@@ -368,4 +372,31 @@ function withRedirect(destination: string): { redirect: Redirect } {
         destination = encodeURI(addLeadingSlash(destination));
     }
     return { redirect: { destination, permanent: false } };
+}
+
+function mergeAnalyticsConfig(
+    analytics: DocsV1Read.AnalyticsConfig | undefined,
+    /*
+     * Edge analytics config is deprecated and will be removed in the future.
+     */
+    edgeAnalyticsConfig:
+        | {
+              ga4?: { measurementId: string };
+              gtm?: { tagId: string };
+          }
+        | undefined,
+): DocsV1Read.AnalyticsConfig | undefined {
+    if (!edgeAnalyticsConfig) {
+        return analytics;
+    }
+
+    const ga4MeasurementId = analytics?.ga4?.measurementId ?? edgeAnalyticsConfig.ga4?.measurementId;
+    const gtmTagId = analytics?.gtm?.containerId ?? edgeAnalyticsConfig.gtm?.tagId;
+
+    return {
+        ...EMPTY_ANALYTICS_CONFIG,
+        ...analytics,
+        ga4: ga4MeasurementId != null ? { measurementId: ga4MeasurementId } : undefined,
+        gtm: gtmTagId != null ? { containerId: gtmTagId } : undefined,
+    };
 }

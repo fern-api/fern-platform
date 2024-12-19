@@ -1,6 +1,6 @@
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { SidebarTab } from "@fern-ui/fdr-utils";
-import { useToHref } from "./useHref";
+import { useToHref } from "../atoms";
 
 export function useSidebarTabHref(tab: SidebarTab): string {
     const toHref = useToHref();

@@ -1,5 +1,5 @@
 import type { APIKeyInjectionConfig } from "@fern-ui/fern-docs-auth";
-import { useApiRouteSWR } from "../hooks/useApiRouteSWR";
+import { useApiRouteSWR } from "../atoms";
 
 const DEFAULT = { enabled: false as const, returnToQueryParam: "state" };
 

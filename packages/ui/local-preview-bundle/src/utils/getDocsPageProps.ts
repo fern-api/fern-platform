@@ -213,7 +213,6 @@ export async function getDocsPageProps(
             false,
         ),
         fallback: {},
-        analytics: undefined,
         analyticsConfig: docs.definition.config.analyticsConfig,
         theme: docs.baseUrl.domain.includes("cohere") ? "cohere" : "default",
         user: undefined,

@@ -269,6 +269,13 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     },
  *                     heap: {
  *                         appId: "string"
+ *                     },
+ *                     datadog: {
+ *                         applicationId: "string",
+ *                         clientToken: "string",
+ *                         site: {
+ *                             "key": "value"
+ *                         }
  *                     }
  *                 },
  *                 integrations: {

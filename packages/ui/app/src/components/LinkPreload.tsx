@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ReactElement } from "react";
+import { useApiRoute } from "../atoms";
 import { useIsLocalPreview } from "../contexts/local-preview";
-import { useApiRoute } from "../hooks/useApiRoute";
 
 export function LinkPreload({ href }: { href: string }): ReactElement {
     return (
