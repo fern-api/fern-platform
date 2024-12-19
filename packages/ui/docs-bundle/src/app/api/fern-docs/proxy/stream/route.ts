@@ -1,3 +1,5 @@
+import { withProxyCors } from "@/server/withProxyCors";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { ProxyRequestSchema } from "@fern-ui/ui";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -6,27 +8,15 @@ import { NextRequest, NextResponse } from "next/server";
  */
 
 export const runtime = "edge";
-export const dynamic = "force-dynamic";
 
-export default async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
-    if (req.method !== "POST" && req.method !== "OPTIONS") {
-        return new NextResponse(null, { status: 405 });
-    }
+export async function OPTIONS(req: NextRequest): Promise<NextResponse> {
+    const headers = new Headers(withProxyCors(getDocsDomainEdge(req)));
+    return new NextResponse(null, { status: 204, headers });
+}
 
-    const origin = req.headers.get("Origin");
-    if (origin == null) {
-        return new NextResponse(null, { status: 400 });
-    }
+export async function POST(req: NextRequest): Promise<NextResponse<null | Uint8Array>> {
+    const corsHeaders = new Headers(withProxyCors(getDocsDomainEdge(req)));
 
-    const corsHeaders = {
-        "Access-Control-Allow-Origin": origin,
-        "Access-Control-Allow-Methods": "POST",
-        "Access-Control-Allow-Headers": "Content-Type",
-    };
-
-    if (req.method === "OPTIONS") {
-        return new NextResponse(null, { status: 204, headers: corsHeaders });
-    }
     try {
         const proxyRequest = ProxyRequestSchema.parse(await req.json());
         const startTime = Date.now();
