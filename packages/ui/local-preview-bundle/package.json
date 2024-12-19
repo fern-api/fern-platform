@@ -63,7 +63,7 @@
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.3",
     "eslint": "^8.56.0",
-    "express": "^4.20.0",
+    "express": "^4.21.2",
     "glslify-import": "^3.1.0",
     "glslify-loader": "^2.0.0",
     "organize-imports-cli": "^0.10.0",
