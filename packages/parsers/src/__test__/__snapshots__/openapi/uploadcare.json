@@ -15029,7 +15029,8 @@
   "auths": {
     "apiKeyAuth": {
       "type": "header",
-      "headerWireValue": "Authorization"
+      "headerWireValue": "Authorization",
+      "prefix": "Uploadcare"
     }
   }
 }

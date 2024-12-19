@@ -2906,6 +2906,7 @@
               "type": "apiKey",
               "in": "header",
               "name": "Authorization",
+              "x-fern-header": { "prefix": "Uploadcare" },
               "description": "Every request made to `https://api.uploadcare.com/` MUST be signed. HTTPS SHOULD be used with any authorization scheme.\n\nRequests MUST contain the `Authorization` header defining `auth-scheme` and `auth-param`: `Authorization: auth-scheme auth-param`.\n\nEvery request MUST contain the `Accept` header identifying the REST API version: `Accept: application/vnd.uploadcare-v0.7+json`.\n\nThere are two available authorization schemes:\n* For production: `Uploadcare`, a scheme where a `signature`, not your Secret API Key MUST be specified. Signatures SHOULD be generated on backend.\n* For quick tests: `Uploadcare.Simple`, a simple scheme where your [Secret API Key](https://app.uploadcare.com/projects/-/api-keys/) MUST be specified in every request's `auth-param`.\n",
             },
           "Uploadcare":
