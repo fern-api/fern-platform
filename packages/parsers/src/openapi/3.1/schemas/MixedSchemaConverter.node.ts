@@ -2,8 +2,8 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-    BaseOpenApiV3_1ConverterNode,
     BaseOpenApiV3_1ConverterNodeConstructorArgs,
+    BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
@@ -11,7 +11,7 @@ export declare namespace MixedSchemaConverterNode {
     export type Input = (OpenAPIV3_1.ArraySchemaObject | OpenAPIV3_1.NonArraySchemaObject | { type: "null" })[];
 }
 
-export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     MixedSchemaConverterNode.Input,
     FernRegistry.api.latest.TypeShape.UndiscriminatedUnion | FernRegistry.api.latest.TypeShape.Alias
 > {
@@ -79,5 +79,9 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
                   },
               }
             : union;
+    }
+
+    example(): unknown | undefined {
+        return this.typeNodes?.[0]?.example();
     }
 }

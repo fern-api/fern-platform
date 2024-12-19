@@ -564,26 +564,12 @@ export class Register {
      *                     responseHeaders: [{
      *                             "key": "value"
      *                         }],
-     *                     request: {
-     *                         contentType: {
+     *                     requests: [{
      *                             "key": "value"
-     *                         },
-     *                         body: {
-     *                             type: "object"
-     *                         },
-     *                         description: {
+     *                         }],
+     *                     responses: [{
      *                             "key": "value"
-     *                         }
-     *                     },
-     *                     response: {
-     *                         body: {
-     *                             type: "object"
-     *                         },
-     *                         statusCode: 1,
-     *                         description: {
-     *                             "key": "value"
-     *                         }
-     *                     },
+     *                         }],
      *                     errors: [{
      *                             "key": "value"
      *                         }],
@@ -598,9 +584,7 @@ export class Register {
      *                             "key": "value"
      *                         }
      *                     },
-     *                     description: {
-     *                         "key": "value"
-     *                     },
+     *                     description: "string",
      *                     availability: "Stable",
      *                     namespace: [{
      *                             "key": "value"
@@ -628,9 +612,7 @@ export class Register {
      *                                     "key": "value"
      *                                 }
      *                             },
-     *                             description: {
-     *                                 "key": "value"
-     *                             },
+     *                             description: "string",
      *                             availability: "Stable"
      *                         }],
      *                     auth: [{
@@ -652,9 +634,7 @@ export class Register {
      *                     examples: [{
      *                             "key": "value"
      *                         }],
-     *                     description: {
-     *                         "key": "value"
-     *                     },
+     *                     description: "string",
      *                     availability: "Stable",
      *                     namespace: [{
      *                             "key": "value"
@@ -676,16 +656,12 @@ export class Register {
      *                                 "key": "value"
      *                             }
      *                         },
-     *                         description: {
-     *                             "key": "value"
-     *                         }
+     *                         description: "string"
      *                     },
      *                     examples: [{
      *                             "key": "value"
      *                         }],
-     *                     description: {
-     *                         "key": "value"
-     *                     },
+     *                     description: "string",
      *                     availability: "Stable",
      *                     namespace: [{
      *                             "key": "value"
@@ -701,9 +677,7 @@ export class Register {
      *                             type: "id"
      *                         }
      *                     },
-     *                     description: {
-     *                         "key": "value"
-     *                     },
+     *                     description: "string",
      *                     availability: "Stable"
      *                 }
      *             },
@@ -727,9 +701,7 @@ export class Register {
      *                             "key": "value"
      *                         }
      *                     },
-     *                     description: {
-     *                         "key": "value"
-     *                     },
+     *                     description: "string",
      *                     availability: "Stable"
      *                 }]
      *         },

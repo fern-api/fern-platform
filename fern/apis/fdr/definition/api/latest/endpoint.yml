@@ -31,8 +31,8 @@ types:
       queryParameters: optional<list<type.ObjectProperty>>
       requestHeaders: optional<list<type.ObjectProperty>>
       responseHeaders: optional<list<type.ObjectProperty>> # this is not being used currently
-      request: optional<HttpRequest>
-      response: optional<HttpResponse>
+      requests: optional<list<HttpRequest>>
+      responses: optional<list<HttpResponse>>
       errors: optional<list<ErrorResponse>>
       examples: optional<list<ExampleEndpointCall>>
       snippetTemplates: optional<EndpointSnippetTemplates>

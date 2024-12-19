@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { mapValues } from "es-toolkit/object";
@@ -163,8 +164,8 @@ export class ApiDefinitionV1ToLatest {
             queryParameters: this.migrateParameters(v1.queryParameters),
             requestHeaders: this.migrateParameters(v1.headers),
             responseHeaders: undefined,
-            request: this.migrateHttpRequest(v1.request),
-            response: this.migrateHttpResponse(v1.response),
+            requests: [this.migrateHttpRequest(v1.request)].filter(isNonNullish),
+            responses: [this.migrateHttpResponse(v1.response)].filter(isNonNullish),
             errors: this.migrateHttpErrors(v1.errorsV2),
             examples: undefined,
             snippetTemplates: v1.snippetTemplates,
@@ -406,69 +407,70 @@ export class ApiDefinitionV1ToLatest {
         if (examples.length === 0) {
             return undefined;
         }
-        return examples.map((example): V2.ExampleEndpointCall => {
-            const toRet: V2.ExampleEndpointCall = {
-                path: example.path,
-                responseStatusCode: example.responseStatusCode,
-                name: example.name,
-                description: example.description,
-                pathParameters: example.pathParameters,
-                queryParameters: example.queryParameters,
-                headers: example.headers,
-                requestBody: example.requestBodyV3,
-                responseBody: example.responseBodyV3,
-                snippets: undefined,
-            };
+        // We take the cross product of requests and responses
+        return endpoint.responses?.flatMap((response) => {
+            return (endpoint.requests ?? []).flatMap((request) =>
+                examples.map((example): V2.ExampleEndpointCall => {
+                    const toRet: V2.ExampleEndpointCall = {
+                        path: example.path,
+                        responseStatusCode: example.responseStatusCode,
+                        name: example.name,
+                        description: example.description,
+                        pathParameters: example.pathParameters,
+                        queryParameters: example.queryParameters,
+                        headers: example.headers,
+                        requestBody: example.requestBodyV3,
+                        responseBody: example.responseBodyV3,
+                        snippets: undefined,
+                    };
 
-            if (example.requestBodyV3) {
-                toRet.requestBody = visitDiscriminatedUnion(
-                    example.requestBodyV3,
-                )._visit<APIV1Read.ExampleEndpointRequest>({
-                    bytes: (value) => value,
-                    json: (value) => ({
-                        type: "json",
-                        value: sortKeysByShape(value.value, endpoint.request?.body, this.types),
-                    }),
-                    form: (value) => ({
-                        type: "form",
-                        value: mapValues(value.value, (formValue, key): APIV1Read.FormValue => {
-                            if (formValue.type === "json") {
-                                const shape =
-                                    endpoint.request?.body.type === "formData"
-                                        ? endpoint.request.body.fields.find(
-                                              (field): field is V2.FormDataField.Property =>
-                                                  field.key === key && field.type === "property",
-                                          )?.valueShape
-                                        : undefined;
-                                return {
-                                    type: "json",
-                                    value: sortKeysByShape(formValue.value, shape, this.types),
-                                };
-                            } else {
-                                return formValue;
-                            }
-                        }),
-                    }),
-                });
-            }
+                    if (example.requestBodyV3) {
+                        toRet.requestBody = visitDiscriminatedUnion(
+                            example.requestBodyV3,
+                        )._visit<APIV1Read.ExampleEndpointRequest>({
+                            bytes: (value) => value,
+                            json: (value) => ({
+                                type: "json",
+                                value: sortKeysByShape(value.value, request.body, this.types),
+                            }),
+                            form: (value) => ({
+                                type: "form",
+                                value: mapValues(value.value, (formValue, key): APIV1Read.FormValue => {
+                                    if (formValue.type === "json") {
+                                        const shape =
+                                            request.body.type === "formData"
+                                                ? request.body.fields.find(
+                                                      (field): field is V2.FormDataField.Property =>
+                                                          field.key === key && field.type === "property",
+                                                  )?.valueShape
+                                                : undefined;
+                                        return {
+                                            type: "json",
+                                            value: sortKeysByShape(formValue.value, shape, this.types),
+                                        };
+                                    } else {
+                                        return formValue;
+                                    }
+                                }),
+                            }),
+                        });
+                    }
 
-            if (toRet.responseBody) {
-                toRet.responseBody.value = sortKeysByShape(
-                    toRet.responseBody.value,
-                    endpoint.response?.body,
-                    this.types,
-                );
-            }
+                    if (toRet.responseBody) {
+                        toRet.responseBody.value = sortKeysByShape(toRet.responseBody.value, response.body, this.types);
+                    }
 
-            toRet.snippets = this.migrateEndpointSnippets(
-                endpoint,
-                toRet,
-                example.codeSamples,
-                example.codeExamples,
-                this.flags,
+                    toRet.snippets = this.migrateEndpointSnippets(
+                        endpoint,
+                        toRet,
+                        example.codeSamples,
+                        example.codeExamples,
+                        this.flags,
+                    );
+
+                    return toRet;
+                }),
             );
-
-            return toRet;
         });
     };
 
@@ -643,14 +645,16 @@ export class ApiDefinitionV1ToLatest {
         });
 
         if (!userProvidedLanguages.has(SupportedLanguage.Curl)) {
-            const code = convertToCurl(toSnippetHttpRequest(endpoint, example, this.auth), flags);
-            push(SupportedLanguage.Curl, {
-                language: SupportedLanguage.Curl,
-                code,
-                name: undefined,
-                install: undefined,
-                generated: true,
-                description: undefined,
+            toSnippetHttpRequest(endpoint, example, this.auth).forEach((snippet) => {
+                const code = convertToCurl(snippet, flags);
+                push(SupportedLanguage.Curl, {
+                    language: SupportedLanguage.Curl,
+                    code,
+                    name: undefined,
+                    install: undefined,
+                    generated: true,
+                    description: undefined,
+                });
             });
         }
 

@@ -109,8 +109,8 @@ export class PlaygroundCodeSnippetResolver {
 
         this.headers = { ...authHeaders, ...formState.headers };
 
-        if (this.context.endpoint.method !== "GET" && this.context.endpoint.request?.contentType != null) {
-            this.headers["Content-Type"] = this.context.endpoint.request.contentType;
+        if (this.context.endpoint.method !== "GET" && this.context.endpoint.requests?.[0]?.contentType != null) {
+            this.headers["Content-Type"] = this.context.endpoint.requests[0].contentType;
         }
 
         if (isSnippetTemplatesEnabled && this.context.endpoint.snippetTemplates != null) {

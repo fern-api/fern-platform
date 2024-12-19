@@ -44,3 +44,10 @@ export abstract class BaseOpenApiV3_1ConverterNode<Input, Output> extends BaseAp
         }
     }
 }
+
+export abstract class BaseOpenApiV3_1ConverterNodeWithExample<Input, Output> extends BaseOpenApiV3_1ConverterNode<
+    Input,
+    Output
+> {
+    abstract example(): unknown | undefined;
+}

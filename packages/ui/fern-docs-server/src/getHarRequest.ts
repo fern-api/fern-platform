@@ -40,7 +40,8 @@ export function getHarRequest(
         value: unknownToString(value),
     }));
 
-    let mimeType = endpoint.request?.contentType as string | undefined;
+    // TODO: the request should be marked in the example so that the right content-type can be selected
+    let mimeType = endpoint.requests?.[0]?.contentType as string | undefined;
 
     if (requestBody != null) {
         if (mimeType == null) {
