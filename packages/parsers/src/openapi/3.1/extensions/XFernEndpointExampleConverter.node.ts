@@ -161,7 +161,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
             return undefined;
         }
         if (this.requestBodyByContentType != null && Object.keys(this.requestBodyByContentType).length > 1) {
-            this.context.logger.info(
+            this.context.logger.warn(
                 `Multiple request bodies found for #/${[this.accessPath, this.pathId, "x-fern-examples"].join("/")}. Coercing to first request body until supported.`,
             );
         }

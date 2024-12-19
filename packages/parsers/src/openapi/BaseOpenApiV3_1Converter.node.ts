@@ -27,7 +27,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<Input, Output> extends BaseAp
 
         if (this.pathId && this.pathId !== this.accessPath[this.accessPath.length - 1]) {
             this.accessPath.push(this.pathId);
-            context.logger.info(`Processing ${toOpenApiPath(this.accessPath)}`);
+            context.logger.debug(`Processing ${toOpenApiPath(this.accessPath)}`);
         }
     }
 

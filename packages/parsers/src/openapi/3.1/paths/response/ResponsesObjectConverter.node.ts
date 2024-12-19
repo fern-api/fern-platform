@@ -78,14 +78,12 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     convertResponseObjectToHttpResponses(): ResponsesObjectConverterNode.Output["responses"] {
         return Object.entries(this.responsesByStatusCode ?? {})
-            .map(([statusCode, response]) => {
-                // TODO: support multiple response types per response status code
-                this.context.logger.info("Accessing first response from ResponsesObjectConverterNode conversion.");
-                const body = response.convert()?.[0];
-                if (body == null) {
+            .flatMap(([statusCode, response]) => {
+                const bodies = response.convert();
+                if (bodies == null) {
                     return undefined;
                 }
-                return {
+                return bodies?.map((body) => ({
                     headers: convertOperationObjectProperties(response.headers),
                     response: {
                         statusCode: parseInt(statusCode),
@@ -95,7 +93,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     examples: (response.responses ?? []).flatMap((response) =>
                         (response.examples ?? []).map((example) => example.convert()).filter(isNonNullish),
                     ),
-                };
+                }));
             })
             .filter(isNonNullish);
     }
@@ -103,10 +101,6 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     convertResponseObjectToErrors(): FernRegistry.api.latest.ErrorResponse[] {
         return Object.entries(this.errorsByStatusCode ?? {})
             .flatMap(([statusCode, response]) => {
-                this.context.logger.info(
-                    "Accessing first response from ResponseMediaTypeObjectConverterNode conversion.",
-                );
-
                 // TODO: resolve reference here, if not done already
                 return response.responses?.map((response) => {
                     const schema = response.schema;
@@ -135,26 +129,6 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                                 };
                             })
                             .filter(isNonNullish),
-
-                        // Array.isArray(schema.examples)
-                        //     ? schema.examples.map((example) => ({
-                        //           name: schema.name,
-                        //           description: schema.description,
-                        //           responseBody: {
-                        //               type: "json" as const,
-                        //               value: example,
-                        //           },
-                        //       }))
-                        //     : [
-                        //           {
-                        //               name: schema.name,
-                        //               description: schema.description,
-                        //               responseBody: {
-                        //                   type: "json" as const,
-                        //                   value: schema.examples,
-                        //               },
-                        //           },
-                        //       ],
                     };
                 });
             })

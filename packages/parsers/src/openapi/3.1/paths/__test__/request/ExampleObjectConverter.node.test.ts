@@ -8,9 +8,13 @@ import { ResponseMediaTypeObjectConverterNode } from "../../response/ResponseMed
 describe("ExampleObjectConverterNode", () => {
     const mockContext = createMockContext();
 
-    const baseArgs: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ExampleObject> = {
+    const baseArgs: BaseOpenApiV3_1ConverterNodeConstructorArgs<{
+        requestExample: OpenAPIV3_1.ExampleObject | undefined;
+        responseExample: OpenAPIV3_1.ExampleObject | undefined;
+    }> = {
         input: {
-            value: {},
+            requestExample: undefined,
+            responseExample: undefined,
         },
         context: mockContext,
         accessPath: [],
@@ -23,7 +27,10 @@ describe("ExampleObjectConverterNode", () => {
         contentType: "json" as const,
         resolvedSchema: {},
     };
-    const mockResponseBody = {};
+    const mockResponseBody = {
+        contentType: "json" as const,
+        resolvedSchema: {},
+    };
 
     describe("parse()", () => {
         it("should error if request body schema is missing", () => {
@@ -31,10 +38,9 @@ describe("ExampleObjectConverterNode", () => {
                 baseArgs,
                 mockPath,
                 mockResponseStatusCode,
+                "test",
                 { ...mockRequestBody, resolvedSchema: undefined } as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-                undefined,
                 undefined,
             );
 
@@ -49,15 +55,59 @@ describe("ExampleObjectConverterNode", () => {
                 {
                     ...baseArgs,
                     input: {
-                        value: "not an object",
+                        requestExample: {
+                            value: "not an object",
+                        },
+                        responseExample: undefined,
                     },
                 },
                 mockPath,
                 mockResponseStatusCode,
+                "test",
                 mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
+            );
+
+            expect(mockContext.errors.error).toHaveBeenCalledWith({
+                message: "Invalid example object, expected object for json",
+                path: ["test"],
+            });
+        });
+
+        it("should error if response body schema is missing", () => {
+            new ExampleObjectConverterNode(
+                baseArgs,
+                mockPath,
+                mockResponseStatusCode,
+                "test",
+                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+                { ...mockResponseBody, resolvedSchema: undefined } as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
+            );
+
+            expect(mockContext.errors.error).toHaveBeenCalledWith({
+                message: "Response body schema is required",
+                path: ["test"],
+            });
+        });
+
+        it("should error if response json example is not an object", () => {
+            new ExampleObjectConverterNode(
+                {
+                    ...baseArgs,
+                    input: {
+                        requestExample: undefined,
+                        responseExample: {
+                            value: "not an object",
+                        },
+                    },
+                },
+                mockPath,
+                mockResponseStatusCode,
+                "test",
+                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
             );
 
@@ -75,17 +125,19 @@ describe("ExampleObjectConverterNode", () => {
                 {
                     ...baseArgs,
                     input: {
-                        value,
-                        summary: "Test example",
-                        description: "Test description",
+                        requestExample: {
+                            value,
+                            summary: "Test example",
+                            description: "Test description",
+                        },
+                        responseExample: undefined,
                     },
                 },
                 mockPath,
                 mockResponseStatusCode,
+                "test",
                 mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-                undefined,
                 undefined,
             );
 
@@ -108,27 +160,104 @@ describe("ExampleObjectConverterNode", () => {
             });
         });
 
+        it("should convert json response body", () => {
+            const value = { id: "123", name: "Test User" };
+            const converter = new ExampleObjectConverterNode(
+                {
+                    ...baseArgs,
+                    input: {
+                        requestExample: undefined,
+                        responseExample: {
+                            value,
+                            summary: "Test response",
+                            description: "Test response description",
+                        },
+                    },
+                },
+                mockPath,
+                mockResponseStatusCode,
+                "test",
+                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+                undefined,
+            );
+
+            const result = converter.convert();
+
+            expect(result).toEqual({
+                path: mockPath,
+                responseStatusCode: mockResponseStatusCode,
+                name: "Test response",
+                description: "Test response description",
+                pathParameters: undefined,
+                queryParameters: undefined,
+                headers: undefined,
+                requestBody: undefined,
+                responseBody: {
+                    type: "json",
+                    value,
+                },
+                snippets: undefined,
+            });
+        });
+
         it("should convert bytes request body", () => {
             const value = "base64string";
             const converter = new ExampleObjectConverterNode(
                 {
                     ...baseArgs,
                     input: {
-                        value,
+                        requestExample: {
+                            value,
+                        },
+                        responseExample: undefined,
                     },
                 },
                 mockPath,
                 mockResponseStatusCode,
+                "test",
                 { ...mockRequestBody, contentType: "bytes" as const } as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-                undefined,
                 undefined,
             );
 
             const result = converter.convert();
 
             expect(result?.requestBody).toEqual({
+                type: "bytes",
+                value: {
+                    type: "base64",
+                    value,
+                },
+            });
+        });
+
+        it("should convert bytes response body", () => {
+            const value = "base64string";
+            const converter = new ExampleObjectConverterNode(
+                {
+                    ...baseArgs,
+                    input: {
+                        requestExample: undefined,
+                        responseExample: {
+                            value,
+                        },
+                    },
+                },
+                mockPath,
+                mockResponseStatusCode,
+                "test",
+                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+                {
+                    ...mockResponseBody,
+                    contentType: "bytes" as const,
+                } as unknown as ResponseMediaTypeObjectConverterNode,
+                undefined,
+            );
+
+            const result = converter.convert();
+
+            expect(result?.responseBody).toEqual({
                 type: "bytes",
                 value: {
                     type: "base64",
@@ -144,16 +273,20 @@ describe("ExampleObjectConverterNode", () => {
                 {
                     ...baseArgs,
                     input: {
-                        value: {
-                            file: {
-                                filename: "test.txt",
-                                data: "base64data",
+                        requestExample: {
+                            value: {
+                                file: {
+                                    filename: "test.txt",
+                                    data: "base64data",
+                                },
                             },
                         },
+                        responseExample: undefined,
                     },
                 },
                 mockPath,
                 mockResponseStatusCode,
+                "test",
                 {
                     ...mockRequestBody,
                     contentType: "form-data" as const,
@@ -165,11 +298,9 @@ describe("ExampleObjectConverterNode", () => {
                 } as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
-                undefined,
-                undefined,
             );
 
-            expect(converter.validateFormDataExample()).toBe(true);
+            expect(converter.validateFormDataRequestExample()).toBe(true);
         });
 
         it("should validate files field", () => {
@@ -177,22 +308,26 @@ describe("ExampleObjectConverterNode", () => {
                 {
                     ...baseArgs,
                     input: {
-                        value: {
-                            files: [
-                                {
-                                    filename: "test1.txt",
-                                    data: "base64data1",
-                                },
-                                {
-                                    filename: "test2.txt",
-                                    data: "base64data2",
-                                },
-                            ],
+                        requestExample: {
+                            value: {
+                                files: [
+                                    {
+                                        filename: "test1.txt",
+                                        data: "base64data1",
+                                    },
+                                    {
+                                        filename: "test2.txt",
+                                        data: "base64data2",
+                                    },
+                                ],
+                            },
                         },
+                        responseExample: undefined,
                     },
                 },
                 mockPath,
                 mockResponseStatusCode,
+                "test",
                 {
                     ...mockRequestBody,
                     contentType: "form-data" as const,
@@ -204,11 +339,9 @@ describe("ExampleObjectConverterNode", () => {
                 } as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
-                undefined,
-                undefined,
             );
 
-            expect(converter.validateFormDataExample()).toBe(true);
+            expect(converter.validateFormDataRequestExample()).toBe(true);
         });
     });
 });
