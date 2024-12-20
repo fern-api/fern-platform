@@ -368,7 +368,7 @@ export async function withInitialProps({
     ),
     user: authState.authed ? authState.user : undefined,
     fallback: {},
-    // eslint-disable-next-line @typescript-eslint/no-deprecated
+
     analytics: await getCustomerAnalytics(
       docs.baseUrl.domain,
       docs.baseUrl.basePath
