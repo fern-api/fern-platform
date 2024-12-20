@@ -1,4 +1,4 @@
-name: Preview @fern-docs/bundle
+name: Preview @fern-ui/docs-bundle
 
 on:
   pull_request:
@@ -34,7 +34,7 @@ jobs:
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           project: "app.buildwithfern.com"
-          package: "@fern-docs/bundle"
+          package: "@fern-ui/docs-bundle"
           environment: "preview"
           branch: ${{ github.event.pull_request.head.ref || github.ref_name || github.ref }}
 
@@ -100,7 +100,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bundle
-          path: packages/fern-docs/bundle/.next/analyze/__bundle_analysis.json
+          path: packages/ui/docs-bundle/.next/analyze/__bundle_analysis.json
 
       - name: Download base branch bundle stats
         uses: dawidd6/action-download-artifact@v6
@@ -108,18 +108,18 @@ jobs:
         with:
           workflow: deploy-docs-bundle-preview.yml
           branch: ${{ github.event.pull_request.base.ref }}
-          path: packages/fern-docs/bundle/.next/analyze/base
+          path: packages/ui/docs-bundle/.next/analyze/base
 
       # https://infrequently.org/2021/03/the-performance-inequality-gap/
       - name: Compare with base branch bundle
         if: success() && github.event.number
-        run: ls -laR packages/fern-docs/bundle/.next/analyze/base && pnpm --package=nextjs-bundle-analysis dlx compare
+        run: ls -laR packages/ui/docs-bundle/.next/analyze/base && pnpm --package=nextjs-bundle-analysis dlx compare
 
       - name: Comment PR Bundle Analysis
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         with:
-          filePath: packages/fern-docs/bundle/.next/analyze/__bundle_analysis_comment.txt
+          filePath: packages/ui/docs-bundle/.next/analyze/__bundle_analysis_comment.txt
           comment_tag: bundle_analysis
 
   deploy-dev:

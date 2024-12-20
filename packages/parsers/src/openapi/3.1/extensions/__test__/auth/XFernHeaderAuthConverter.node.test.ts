@@ -3,82 +3,82 @@ import { XFernHeaderAuthConverterNode } from "../../auth/XFernHeaderAuthConverte
 import { HeaderTokenSecurityScheme } from "../../auth/types/TokenSecurityScheme";
 
 describe("XFernHeaderAuthConverterNode", () => {
-  const mockContext = createMockContext();
+    const mockContext = createMockContext();
 
-  it("should parse header auth with name, env and prefix", () => {
-    const input = {
-      "x-fern-header": {
-        name: "myHeader",
-        env: "MY_HEADER_ENV",
-        prefix: "Bearer",
-      } as HeaderTokenSecurityScheme,
-    };
+    it("should parse header auth with name, env and prefix", () => {
+        const input = {
+            "x-fern-header": {
+                name: "myHeader",
+                env: "MY_HEADER_ENV",
+                prefix: "Bearer",
+            } as HeaderTokenSecurityScheme,
+        };
 
-    const node = new XFernHeaderAuthConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
+        const node = new XFernHeaderAuthConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
+
+        expect(node.headerVariableName).toBe("myHeader");
+        expect(node.headerEnvVar).toBe("MY_HEADER_ENV");
+        expect(node.headerPrefix).toBe("Bearer");
+
+        const converted = node.convert();
+        expect(converted).toEqual({
+            name: "myHeader",
+            env: "MY_HEADER_ENV",
+            prefix: "Bearer",
+        });
     });
 
-    expect(node.headerVariableName).toBe("myHeader");
-    expect(node.headerEnvVar).toBe("MY_HEADER_ENV");
-    expect(node.headerPrefix).toBe("Bearer");
+    it("should handle missing header auth", () => {
+        const input = {};
 
-    const converted = node.convert();
-    expect(converted).toEqual({
-      name: "myHeader",
-      env: "MY_HEADER_ENV",
-      prefix: "Bearer",
-    });
-  });
+        const node = new XFernHeaderAuthConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
 
-  it("should handle missing header auth", () => {
-    const input = {};
+        expect(node.headerVariableName).toBeUndefined();
+        expect(node.headerEnvVar).toBeUndefined();
+        expect(node.headerPrefix).toBeUndefined();
 
-    const node = new XFernHeaderAuthConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
-
-    expect(node.headerVariableName).toBeUndefined();
-    expect(node.headerEnvVar).toBeUndefined();
-    expect(node.headerPrefix).toBeUndefined();
-
-    const converted = node.convert();
-    expect(converted).toEqual({
-      name: undefined,
-      env: undefined,
-      prefix: undefined,
-    });
-  });
-
-  it("should handle partial header auth info", () => {
-    const input = {
-      "x-fern-header": {
-        name: "myHeader",
-        prefix: "Bearer",
-      } as HeaderTokenSecurityScheme,
-    };
-
-    const node = new XFernHeaderAuthConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
+        const converted = node.convert();
+        expect(converted).toEqual({
+            name: undefined,
+            env: undefined,
+            prefix: undefined,
+        });
     });
 
-    expect(node.headerVariableName).toBe("myHeader");
-    expect(node.headerEnvVar).toBeUndefined();
-    expect(node.headerPrefix).toBe("Bearer");
+    it("should handle partial header auth info", () => {
+        const input = {
+            "x-fern-header": {
+                name: "myHeader",
+                prefix: "Bearer",
+            } as HeaderTokenSecurityScheme,
+        };
 
-    const converted = node.convert();
-    expect(converted).toEqual({
-      name: "myHeader",
-      env: undefined,
-      prefix: "Bearer",
+        const node = new XFernHeaderAuthConverterNode({
+            input,
+            context: mockContext,
+            accessPath: [],
+            pathId: "test",
+        });
+
+        expect(node.headerVariableName).toBe("myHeader");
+        expect(node.headerEnvVar).toBeUndefined();
+        expect(node.headerPrefix).toBe("Bearer");
+
+        const converted = node.convert();
+        expect(converted).toEqual({
+            name: "myHeader",
+            env: undefined,
+            prefix: "Bearer",
+        });
     });
-  });
 });

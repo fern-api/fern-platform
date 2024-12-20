@@ -36,22 +36,20 @@ expressApp.disable("x-powered-by");
 
 // ========= Init Sentry =========
 Sentry.init({
-  dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
-  integrations: [
-    // enable HTTP calls tracing
-    new Sentry.Integrations.Http({ tracing: true }),
-    // enable Express.js middleware tracing
-    new Sentry.Integrations.Express({ app: expressApp }),
-    nodeProfilingIntegration(),
-  ],
-  // Performance Monitoring
-  tracesSampleRate: config.applicationEnvironment == "prod" ? 0.25 : 0.1, //  Capture 25% of the transactions
-  profilesSampleRate: config.applicationEnvironment == "prod" ? 0.25 : 0.1,
-  environment: config.applicationEnvironment,
-  maxValueLength: 1000,
-  enabled:
-    config.applicationEnvironment === "dev" ||
-    config.applicationEnvironment == "prod",
+    dsn: "https://ca7d28b81fee41961a6f9f3fb59dfa8a@o4507138224160768.ingest.us.sentry.io/4507148234522624",
+    integrations: [
+        // enable HTTP calls tracing
+        new Sentry.Integrations.Http({ tracing: true }),
+        // enable Express.js middleware tracing
+        new Sentry.Integrations.Express({ app: expressApp }),
+        nodeProfilingIntegration(),
+    ],
+    // Performance Monitoring
+    tracesSampleRate: config.applicationEnvironment == "prod" ? 0.25 : 0.1, //  Capture 25% of the transactions
+    profilesSampleRate: config.applicationEnvironment == "prod" ? 0.25 : 0.1,
+    environment: config.applicationEnvironment,
+    maxValueLength: 1000,
+    enabled: config.applicationEnvironment === "dev" || config.applicationEnvironment == "prod",
 });
 
 // The request handler must be the first middleware on the app
@@ -68,87 +66,81 @@ setGlobalDispatcher(new Agent({ connect: { timeout: 5_000 } }));
 const app = new FdrApplication(config);
 
 expressApp.get("/health", async (_req, res) => {
-  const cacheInitialized = app.docsDefinitionCache.isInitialized();
-  if (!cacheInitialized) {
-    app.logger.error(
-      "The docs definition cache is not initilialized. Erroring the health check."
-    );
-    res.sendStatus(500);
-  }
-  if (app.redisDatastore != null) {
-    const redisHealthCheckSuccessful = await checkRedis({
-      redis: app.redisDatastore,
-    });
-    if (!redisHealthCheckSuccessful) {
-      app.logger.error(
-        "Records cannot be successfully written and read from redis"
-      );
-      res.sendStatus(500);
+    const cacheInitialized = app.docsDefinitionCache.isInitialized();
+    if (!cacheInitialized) {
+        app.logger.error("The docs definition cache is not initilialized. Erroring the health check.");
+        res.sendStatus(500);
     }
-  }
-  res.sendStatus(200);
+    if (app.redisDatastore != null) {
+        const redisHealthCheckSuccessful = await checkRedis({ redis: app.redisDatastore });
+        if (!redisHealthCheckSuccessful) {
+            app.logger.error("Records cannot be successfully written and read from redis");
+            res.sendStatus(500);
+        }
+    }
+    res.sendStatus(200);
 });
 
 void startServer();
 
 async function startServer(): Promise<void> {
-  try {
-    await app.initialize();
-    expressApp.use(express.json({ limit: "50mb" }));
-    register(expressApp, {
-      docs: {
-        v1: {
-          read: {
-            _root: getDocsReadService(app),
-          },
-          write: {
-            _root: getDocsWriteService(app),
-          },
-        },
-        v2: {
-          read: {
-            _root: getDocsReadV2Service(app),
-          },
-          write: {
-            _root: getDocsWriteV2Service(app),
-          },
-        },
-      },
-      api: {
-        v1: {
-          read: {
-            _root: getReadApiService(app),
-          },
-          register: {
-            _root: getRegisterApiService(app),
-          },
-        },
-        latest: {
-          _root: getApiLatestService(app),
-        },
-      },
-      snippets: getSnippetsService(app),
-      snippetsFactory: getSnippetsFactoryService(app),
-      templates: getTemplatesService(app),
-      diff: getApiDiffService(app),
-      docsCache: getDocsCacheService(app),
-      sdks: {
-        versions: getVersionsService(app),
-      },
-      generators: {
-        _root: getGeneratorsRootController(app),
-        cli: getGeneratorsCliController(app),
-        versions: getGeneratorsVersionsController(app),
-      },
-      tokens: getTokensService(app),
-      git: getGitController(app),
-    });
-    registerBackgroundTasks(app);
-    app.logger.info(`Listening for requests on port ${PORT}`);
-    // The error handler must be registered before any other error middleware and after all controllers
-    expressApp.use(Sentry.Handlers.errorHandler());
-    expressApp.listen(PORT);
-  } catch (err) {
-    app.logger.error("Failed to start express server", err);
-  }
+    try {
+        await app.initialize();
+        expressApp.use(express.json({ limit: "50mb" }));
+        register(expressApp, {
+            docs: {
+                v1: {
+                    read: {
+                        _root: getDocsReadService(app),
+                    },
+                    write: {
+                        _root: getDocsWriteService(app),
+                    },
+                },
+                v2: {
+                    read: {
+                        _root: getDocsReadV2Service(app),
+                    },
+                    write: {
+                        _root: getDocsWriteV2Service(app),
+                    },
+                },
+            },
+            api: {
+                v1: {
+                    read: {
+                        _root: getReadApiService(app),
+                    },
+                    register: {
+                        _root: getRegisterApiService(app),
+                    },
+                },
+                latest: {
+                    _root: getApiLatestService(app),
+                },
+            },
+            snippets: getSnippetsService(app),
+            snippetsFactory: getSnippetsFactoryService(app),
+            templates: getTemplatesService(app),
+            diff: getApiDiffService(app),
+            docsCache: getDocsCacheService(app),
+            sdks: {
+                versions: getVersionsService(app),
+            },
+            generators: {
+                _root: getGeneratorsRootController(app),
+                cli: getGeneratorsCliController(app),
+                versions: getGeneratorsVersionsController(app),
+            },
+            tokens: getTokensService(app),
+            git: getGitController(app),
+        });
+        registerBackgroundTasks(app);
+        app.logger.info(`Listening for requests on port ${PORT}`);
+        // The error handler must be registered before any other error middleware and after all controllers
+        expressApp.use(Sentry.Handlers.errorHandler());
+        expressApp.listen(PORT);
+    } catch (err) {
+        app.logger.error("Failed to start express server", err);
+    }
 }

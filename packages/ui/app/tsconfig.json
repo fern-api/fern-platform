@@ -1,0 +1,54 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "composite": true,
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../commons/fdr-utils"
+    },
+    {
+      "path": "../../commons/loadable"
+    },
+    {
+      "path": "../../commons/next-seo"
+    },
+    {
+      "path": "../../commons/react/react-commons"
+    },
+    {
+      "path": "../../commons/search-utils"
+    },
+    {
+      "path": "../../fdr-sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../../template-resolver"
+    },
+    {
+      "path": "../fern-docs-auth"
+    },
+    {
+      "path": "../fern-docs-utils"
+    },
+    {
+      "path": "../fern-docs-server"
+    },
+    {
+      "path": "../fern-docs-mdx"
+    },
+    {
+      "path": "../components"
+    },
+    {
+      "path": "../fern-docs-syntax-highlighter"
+    }
+  ]
+}

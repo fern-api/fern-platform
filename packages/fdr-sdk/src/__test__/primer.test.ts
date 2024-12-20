@@ -6,18 +6,18 @@ import { testGetNavigationRoot } from "./testGetNavigationRoot";
 
 const FIXTURE = "primer";
 const slugs = [
-  "docs/api/introduction/getting-started",
-  "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token",
+    "docs/api/introduction/getting-started",
+    "docs/api/v2.1/api-reference/client-session-api/retrieve-client-side-token",
 ];
 
 // eslint-disable-next-line vitest/valid-title
 describe(FIXTURE, () => {
-  const fixture = readFixture(FIXTURE);
-  const v1 = FernNavigation.V1.toRootNode(fixture);
-  const latest = FernNavigationV1ToLatest.create().root(v1);
+    const fixture = readFixture(FIXTURE);
+    const v1 = FernNavigation.V1.toRootNode(fixture);
+    const latest = FernNavigationV1ToLatest.create().root(v1);
 
-  testGetAllUrlsFromDocsConfig(latest, fixture.baseUrl.domain);
-  slugs.forEach((slug) => {
-    testGetNavigationRoot(latest, slug);
-  });
+    testGetAllUrlsFromDocsConfig(latest, fixture.baseUrl.domain);
+    slugs.forEach((slug) => {
+        testGetNavigationRoot(latest, slug);
+    });
 });

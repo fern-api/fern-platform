@@ -5,117 +5,117 @@ import { AvailabilityConverterNode } from "../../../3.1/extensions/AvailabilityC
 import { convertToObjectProperties } from "../../3.1/convertToObjectProperties";
 
 describe("convertToObjectProperties", () => {
-  const mockContext = createMockContext();
+    const mockContext = createMockContext();
 
-  it("should return undefined when properties is undefined", () => {
-    expect(convertToObjectProperties(undefined, undefined)).toBeUndefined();
-  });
-
-  it("should convert properties to object properties", () => {
-    const mockTypeShape: FernRegistry.api.latest.TypeShape = {
-      type: "alias",
-      value: {
-        type: "primitive",
-        value: {
-          type: "string",
-          regex: undefined,
-          minLength: undefined,
-          maxLength: undefined,
-          default: undefined,
-        },
-      },
-    };
-
-    const mockAvailabilityShape: FernRegistry.Availability = "Deprecated";
-
-    const nameSchemaConverterNode = new SchemaConverterNode({
-      input: {
-        type: "string",
-        description: "The name",
-      },
-      context: mockContext,
-      accessPath: [],
-      pathId: "",
-    });
-    nameSchemaConverterNode.availability = new AvailabilityConverterNode({
-      input: {
-        deprecated: true,
-      },
-      context: mockContext,
-      accessPath: [],
-      pathId: "",
+    it("should return undefined when properties is undefined", () => {
+        expect(convertToObjectProperties(undefined, undefined)).toBeUndefined();
     });
 
-    const properties = {
-      name: nameSchemaConverterNode,
-      age: new SchemaConverterNode({
-        input: {
-          type: "string",
-        },
-        context: mockContext,
-        accessPath: [],
-        pathId: "",
-      }),
-    };
+    it("should convert properties to object properties", () => {
+        const mockTypeShape: FernRegistry.api.latest.TypeShape = {
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: "string",
+                    regex: undefined,
+                    minLength: undefined,
+                    maxLength: undefined,
+                    default: undefined,
+                },
+            },
+        };
 
-    const result = convertToObjectProperties(properties, undefined);
+        const mockAvailabilityShape: FernRegistry.Availability = "Deprecated";
 
-    expect(result).toEqual([
-      {
-        key: FernRegistry.PropertyKey("name"),
-        valueShape: mockTypeShape,
-        description: "The name",
-        availability: mockAvailabilityShape,
-      },
-      {
-        key: FernRegistry.PropertyKey("age"),
-        valueShape: mockTypeShape,
-        description: undefined,
-        availability: undefined,
-      },
-    ]);
-  });
+        const nameSchemaConverterNode = new SchemaConverterNode({
+            input: {
+                type: "string",
+                description: "The name",
+            },
+            context: mockContext,
+            accessPath: [],
+            pathId: "",
+        });
+        nameSchemaConverterNode.availability = new AvailabilityConverterNode({
+            input: {
+                deprecated: true,
+            },
+            context: mockContext,
+            accessPath: [],
+            pathId: "",
+        });
 
-  it("should filter out properties with null value shapes", () => {
-    const mockTypeShape: FernRegistry.api.latest.TypeShape = {
-      type: "alias",
-      value: {
-        type: "primitive",
-        value: {
-          type: "string",
-          regex: undefined,
-          minLength: undefined,
-          maxLength: undefined,
-          default: undefined,
-        },
-      },
-    };
+        const properties = {
+            name: nameSchemaConverterNode,
+            age: new SchemaConverterNode({
+                input: {
+                    type: "string",
+                },
+                context: mockContext,
+                accessPath: [],
+                pathId: "",
+            }),
+        };
 
-    const validSchemaConverterNode = new SchemaConverterNode({
-      input: {
-        type: "string",
-      },
-      context: mockContext,
-      accessPath: [],
-      pathId: "",
+        const result = convertToObjectProperties(properties, undefined);
+
+        expect(result).toEqual([
+            {
+                key: FernRegistry.PropertyKey("name"),
+                valueShape: mockTypeShape,
+                description: "The name",
+                availability: mockAvailabilityShape,
+            },
+            {
+                key: FernRegistry.PropertyKey("age"),
+                valueShape: mockTypeShape,
+                description: undefined,
+                availability: undefined,
+            },
+        ]);
     });
 
-    const properties = {
-      valid: validSchemaConverterNode,
-      invalid: {
-        convert: () => undefined,
-      } as unknown as SchemaConverterNode,
-    };
+    it("should filter out properties with null value shapes", () => {
+        const mockTypeShape: FernRegistry.api.latest.TypeShape = {
+            type: "alias",
+            value: {
+                type: "primitive",
+                value: {
+                    type: "string",
+                    regex: undefined,
+                    minLength: undefined,
+                    maxLength: undefined,
+                    default: undefined,
+                },
+            },
+        };
 
-    const result = convertToObjectProperties(properties, undefined);
+        const validSchemaConverterNode = new SchemaConverterNode({
+            input: {
+                type: "string",
+            },
+            context: mockContext,
+            accessPath: [],
+            pathId: "",
+        });
 
-    expect(result).toEqual([
-      {
-        key: FernRegistry.PropertyKey("valid"),
-        valueShape: mockTypeShape,
-        description: undefined,
-        availability: undefined,
-      },
-    ]);
-  });
+        const properties = {
+            valid: validSchemaConverterNode,
+            invalid: {
+                convert: () => undefined,
+            } as unknown as SchemaConverterNode,
+        };
+
+        const result = convertToObjectProperties(properties, undefined);
+
+        expect(result).toEqual([
+            {
+                key: FernRegistry.PropertyKey("valid"),
+                valueShape: mockTypeShape,
+                description: undefined,
+                availability: undefined,
+            },
+        ]);
+    });
 });

@@ -9,9 +9,6 @@ const SKIP = "skip" as const;
 /**
  * Traverse the navigation tree in a depth-first manner (pre-order).
  */
-export function traverseBF(
-  node: NavigationNode,
-  visit: TraverserVisit<NavigationNode, NavigationNodeParent>
-) {
-  return bfs(node, visit, getChildren);
+export function traverseBF(node: NavigationNode, visit: TraverserVisit<NavigationNode, NavigationNodeParent>) {
+    return bfs(node, visit, getChildren);
 }

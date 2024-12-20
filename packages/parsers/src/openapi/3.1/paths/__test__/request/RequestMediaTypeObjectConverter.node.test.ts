@@ -3,142 +3,142 @@ import { createMockContext } from "../../../../../__test__/createMockContext.uti
 import { RequestMediaTypeObjectConverterNode } from "../../request/RequestMediaTypeObjectConverter.node";
 
 describe("RequestMediaTypeObjectConverterNode", () => {
-  const mockContext = createMockContext();
+    const mockContext = createMockContext();
 
-  it("should handle application/json content type", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {
-      schema: {
-        type: "object",
-        properties: {
-          name: { type: "string" },
-        },
-      },
-    };
+    it("should handle application/json content type", () => {
+        const input: OpenAPIV3_1.MediaTypeObject = {
+            schema: {
+                type: "object",
+                properties: {
+                    name: { type: "string" },
+                },
+            },
+        };
 
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "application/json"
-    );
+        const converter = new RequestMediaTypeObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "application/json",
+        );
 
-    expect(converter.contentType).toBe("json");
-    expect(converter.schema).toBeDefined();
-  });
+        expect(converter.contentType).toBe("json");
+        expect(converter.schema).toBeDefined();
+    });
 
-  it("should handle application/octet-stream content type", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {
-      schema: {
-        type: "object",
-      },
-    };
+    it("should handle application/octet-stream content type", () => {
+        const input: OpenAPIV3_1.MediaTypeObject = {
+            schema: {
+                type: "object",
+            },
+        };
 
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "application/octet-stream"
-    );
+        const converter = new RequestMediaTypeObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "application/octet-stream",
+        );
 
-    expect(converter.contentType).toBe("bytes");
-    expect(converter.isOptional).toBe(true);
-  });
+        expect(converter.contentType).toBe("bytes");
+        expect(converter.isOptional).toBe(true);
+    });
 
-  it("should handle multipart/form-data content type", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {
-      schema: {
-        type: "object",
-        properties: {
-          file: {
-            type: "string",
-            format: "binary",
-          },
-        },
-        required: ["file"],
-      },
-    };
+    it("should handle multipart/form-data content type", () => {
+        const input: OpenAPIV3_1.MediaTypeObject = {
+            schema: {
+                type: "object",
+                properties: {
+                    file: {
+                        type: "string",
+                        format: "binary",
+                    },
+                },
+                required: ["file"],
+            },
+        };
 
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "multipart/form-data"
-    );
+        const converter = new RequestMediaTypeObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "multipart/form-data",
+        );
 
-    expect(converter.contentType).toBe("form-data");
-    expect(converter.fields).toBeDefined();
-    expect(converter.requiredFields).toEqual(["file"]);
-  });
+        expect(converter.contentType).toBe("form-data");
+        expect(converter.fields).toBeDefined();
+        expect(converter.requiredFields).toEqual(["file"]);
+    });
 
-  it("should handle reference objects", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {
-      schema: {
-        $ref: "#/components/schemas/Pet",
-      },
-    };
+    it("should handle reference objects", () => {
+        const input: OpenAPIV3_1.MediaTypeObject = {
+            schema: {
+                $ref: "#/components/schemas/Pet",
+            },
+        };
 
-    mockContext.document.components ??= {};
-    mockContext.document.components.schemas = {
-      Pet: { type: "object" },
-    };
+        mockContext.document.components ??= {};
+        mockContext.document.components.schemas = {
+            Pet: { type: "object" },
+        };
 
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "application/json"
-    );
+        const converter = new RequestMediaTypeObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "application/json",
+        );
 
-    expect(converter.schema).toBeDefined();
-  });
+        expect(converter.schema).toBeDefined();
+    });
 
-  it("should handle missing schema", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {};
+    it("should handle missing schema", () => {
+        const input: OpenAPIV3_1.MediaTypeObject = {};
 
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "application/json"
-    );
+        const converter = new RequestMediaTypeObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "application/json",
+        );
 
-    expect(converter.schema).toBeUndefined();
-    expect(mockContext.errors.warning).toHaveBeenCalled();
-  });
+        expect(converter.schema).toBeUndefined();
+        expect(mockContext.errors.warning).toHaveBeenCalled();
+    });
 
-  it("should handle unsupported content types", () => {
-    const input: OpenAPIV3_1.MediaTypeObject = {
-      schema: {
-        type: "object",
-      },
-    };
+    it("should handle unsupported content types", () => {
+        const input: OpenAPIV3_1.MediaTypeObject = {
+            schema: {
+                type: "object",
+            },
+        };
 
-    const converter = new RequestMediaTypeObjectConverterNode(
-      {
-        input,
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-      },
-      "application/xml"
-    );
+        const converter = new RequestMediaTypeObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "application/xml",
+        );
 
-    expect(converter.contentType).toBeUndefined();
-    expect(mockContext.errors.warning).toHaveBeenCalled();
-  });
+        expect(converter.contentType).toBeUndefined();
+        expect(mockContext.errors.warning).toHaveBeenCalled();
+    });
 });

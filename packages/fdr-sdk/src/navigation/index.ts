@@ -9,9 +9,4 @@ export * as migrate from "./migrators";
 export * as utils from "./utils";
 export * from "./utils/pruneNavigationTree";
 export * from "./versions";
-export {
-  ApiDefinitionHolder,
-  ApiDefinitionPruner,
-  ApiTypeIdVisitor,
-  NodeCollector,
-};
+export { ApiDefinitionHolder, ApiDefinitionPruner, ApiTypeIdVisitor, NodeCollector };

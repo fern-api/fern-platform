@@ -7,9 +7,5 @@ import type { NavigationNode } from "./NavigationNode";
 export type NavigationNodeApiLeaf = EndpointNode | WebSocketNode | WebhookNode;
 
 export function isApiLeaf(node: NavigationNode): node is NavigationNodeApiLeaf {
-  return (
-    node.type === "endpoint" ||
-    node.type === "webSocket" ||
-    node.type === "webhook"
-  );
+    return node.type === "endpoint" || node.type === "webSocket" || node.type === "webhook";
 }

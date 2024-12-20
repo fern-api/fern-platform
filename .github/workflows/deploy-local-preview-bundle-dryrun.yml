@@ -1,4 +1,4 @@
-name: Deploy @fern-docs/local-preview-bundle (Dry Run)
+name: Deploy @fern-ui/local-preview-bundle (Dry Run)
 
 on:
   pull_request:
@@ -26,9 +26,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm turbo --filter=@fern-docs/local-preview-bundle build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Synthesize local preview bundle
-        run: pnpm --filter=@fern-platform/cdk run synth:dev2
+        run: pnpm --filter=@fern-ui/cdk run synth:dev2
 
   prod:
     runs-on: ubuntu-latest
@@ -44,6 +44,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm turbo --filter=@fern-docs/local-preview-bundle build
+        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
       - name: Synthesize local preview bundle
-        run: pnpm --filter=@fern-platform/cdk run synth:prod
+        run: pnpm --filter=@fern-ui/cdk run synth:prod

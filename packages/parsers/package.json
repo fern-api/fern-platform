@@ -6,26 +6,26 @@
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/parsers"
   },
-  "sideEffects": false,
-  "type": "module",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js"
   },
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "type": "module",
   "scripts": {
-    "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
     "compile": "tsc --build",
-    "depcheck": "depcheck",
-    "format": "prettier --write \"**\"",
-    "format:check": "prettier --check \"**\"",
-    "lint": "pnpm lint:eslint && pnpm lint:style",
-    "lint:eslint": "eslint --max-warnings 0 .",
+    "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
+    "test": "vitest --run --passWithNoTests --globals",
+    "test:update": "vitest -u --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "test": "vitest --run --passWithNoTests --globals",
-    "test:update": "vitest -u --run --passWithNoTests --globals"
+    "depcheck": "depcheck",
+    "lint": "pnpm lint:eslint && pnpm lint:style"
   },
   "dependencies": {
     "@fern-api/logger": "0.4.24-rc1",

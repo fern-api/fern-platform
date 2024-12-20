@@ -1,7 +1,4 @@
-export {
-  visitObject,
-  type ObjectPropertiesVisitor,
-} from "./ObjectPropertiesVisitor";
+export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVisitor";
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";

@@ -1,0 +1,66 @@
+@layer base {
+    :root {
+        --font-mono: ui-monospace, sfmono-regular, menlo, monaco, consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    html {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+
+        @apply outline-transparent;
+        @apply focus:outline-border-accent-muted focus-visible:outline-border-accent-muted;
+    }
+
+    ::selection {
+        @apply bg-accent-highlight;
+    }
+
+    html,
+    body {
+        @apply t-default;
+
+        font-size: 16px !important;
+    }
+
+    code.inline-code {
+        @apply text-[0.875em];
+    }
+
+    h1 {
+        @apply text-[2.25rem] font-extrabold leading-tight;
+    }
+
+    h2 {
+        @apply text-[1.5rem] font-bold leading-tight;
+    }
+
+    h3 {
+        @apply text-[1.25rem] font-semibold leading-tight;
+    }
+
+    h4 {
+        @apply text-[1.125rem] font-semibold leading-tight;
+    }
+
+    h5 {
+        @apply text-[1rem] font-semibold;
+    }
+
+    h6 {
+        @apply text-[0.875rem] font-semibold;
+    }
+
+    input[type="search"]::-webkit-search-cancel-button {
+        display: none;
+    }
+
+    hr {
+        @apply border-default;
+    }
+}
