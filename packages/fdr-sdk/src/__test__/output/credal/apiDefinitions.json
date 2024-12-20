@@ -30,68 +30,72 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "A descriptive name for the copilot.\n"
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "An in depth name for the copilot's function. Useful for routing requests to the right copilot.\n"
-              },
-              {
-                "key": "collaborators",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_common:Collaborator"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "A descriptive name for the copilot.\n"
                 },
-                "description": "A list of collaborator emails and roles that will have access to the copilot.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_copilots:CreateCopilotResponse"
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "An in depth name for the copilot's function. Useful for routing requests to the right copilot.\n"
+                },
+                {
+                  "key": "collaborators",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_common:Collaborator"
+                        }
+                      }
+                    }
+                  },
+                  "description": "A list of collaborator emails and roles that will have access to the copilot.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_copilots:CreateCopilotResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/copilots/createCopilot",
@@ -172,51 +176,55 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "agentId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "agentId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
+                  },
+                  "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
                 },
-                "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
-              },
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "End-user for the conversation.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_copilots:CreateConversationResponse"
+                  },
+                  "description": "End-user for the conversation.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_copilots:CreateConversationResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/copilots/createConversation",
@@ -290,65 +298,68 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "agentId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "agentId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
+                  },
+                  "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
                 },
-                "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
-              },
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
+                  },
+                  "description": "The user profile you want to use when providing feedback.\n"
                 },
-                "description": "The user profile you want to use when providing feedback.\n"
-              },
-              {
-                "key": "messageId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "messageId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
+                  },
+                  "description": "The message ID for which feedback is being provided.\n"
                 },
-                "description": "The message ID for which feedback is being provided.\n"
-              },
-              {
-                "key": "messageFeedback",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_copilots:MessageFeedback"
-                  }
-                },
-                "description": "The feedback provided by the user.\n"
-              }
-            ]
+                {
+                  "key": "messageFeedback",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_copilots:MessageFeedback"
+                    }
+                  },
+                  "description": "The feedback provided by the user.\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/copilots/provideMessageFeedback",
@@ -421,107 +432,111 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "agentId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "agentId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
-                    }
-                  }
-                },
-                "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
-              },
-              {
-                "key": "message",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The message you want to send to your copilot.\n"
-              },
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The user profile you want to use when sending the message.\n"
-              },
-              {
-                "key": "conversationId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "uuid"
-                        }
+                        "type": "uuid"
                       }
                     }
-                  }
+                  },
+                  "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
                 },
-                "description": "Credal-generated conversation ID for sending follow up messages. Conversation ID is returned after initial message. Optional, to be left off for first messages on new conversations.\n"
-              },
-              {
-                "key": "inputVariables",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                {
+                  "key": "message",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
                       "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The message you want to send to your copilot.\n"
+                },
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user profile you want to use when sending the message.\n"
+                },
+                {
+                  "key": "conversationId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_copilots:InputVariable"
+                            "type": "uuid"
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Credal-generated conversation ID for sending follow up messages. Conversation ID is returned after initial message. Optional, to be left off for first messages on new conversations.\n"
                 },
-                "description": "Optional input variables to be used in the message. Map the name of the variable to a list of urls.\n",
-                "availability": "Beta"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_copilots:SendAgentMessageResponse"
+                {
+                  "key": "inputVariables",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_copilots:InputVariable"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optional input variables to be used in the message. Map the name of the variable to a list of urls.\n",
+                  "availability": "Beta"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_copilots:SendAgentMessageResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/copilots/sendMessage",
@@ -664,111 +679,115 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "copilotId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "copilotId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
-                    }
-                  }
-                },
-                "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
-              },
-              {
-                "key": "message",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The message you want to send to your copilot.\n"
-              },
-              {
-                "key": "email",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The user profile you want to use when sending the message.\n"
-              },
-              {
-                "key": "conversationId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "uuid"
-                        }
+                        "type": "uuid"
                       }
                     }
-                  }
+                  },
+                  "description": "Credal-generated Copilot ID to specify which agent to route the request to.\n"
                 },
-                "description": "Credal-generated conversation ID for sending follow up messages. Conversation ID is returned after initial message. Optional, to be left off for first messages on new conversations.\n"
-              },
-              {
-                "key": "inputVariables",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                {
+                  "key": "message",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
                       "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The message you want to send to your copilot.\n"
+                },
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user profile you want to use when sending the message.\n"
+                },
+                {
+                  "key": "conversationId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_copilots:InputVariable"
+                            "type": "uuid"
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Credal-generated conversation ID for sending follow up messages. Conversation ID is returned after initial message. Optional, to be left off for first messages on new conversations.\n"
                 },
-                "description": "Optional input variables to be used in the message. Map the name of the variable to a list of urls.\n",
-                "availability": "Beta"
-              }
-            ]
+                {
+                  "key": "inputVariables",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_copilots:InputVariable"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optional input variables to be used in the message. Map the name of the variable to a list of urls.\n",
+                  "availability": "Beta"
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "description": "This endpoint returns a stream of server sent events. These can be in two formats - one is an initial event, followed by multiple data chunks, followed by a final chunk, or the other format is just one blocked event. See the examples for more details.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "stream",
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_copilots:StreamingChunk"
+        ],
+        "responses": [
+          {
+            "description": "This endpoint returns a stream of server sent events. These can be in two formats - one is an initial event, followed by multiple data chunks, followed by a final chunk, or the other format is just one blocked event. See the examples for more details.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "stream",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_copilots:StreamingChunk"
+                }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/copilots/streamMessage",
@@ -963,41 +982,44 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "copilotId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "copilotId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
+                  },
+                  "description": "Credal-generated copilot ID to add the collection to.\n"
                 },
-                "description": "Credal-generated copilot ID to add the collection to.\n"
-              },
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
-                },
-                "description": "Credal-generated collection ID to add.\n"
-              }
-            ]
+                  },
+                  "description": "Credal-generated collection ID to add.\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/copilots/addCollectionToCopilot",
@@ -1067,41 +1089,44 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "copilotId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "copilotId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
+                  },
+                  "description": "Credal-generated copilot ID to add the collection to.\n"
                 },
-                "description": "Credal-generated copilot ID to add the collection to.\n"
-              },
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
-                },
-                "description": "Credal-generated collection ID to add.\n"
-              }
-            ]
+                  },
+                  "description": "Credal-generated collection ID to add.\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/copilots/removeCollectionFromCopilot",
@@ -1171,38 +1196,41 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "copilotId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "copilotId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
+                    }
+                  },
+                  "description": "Credal-generated copilot ID to add the collection to.\n"
+                },
+                {
+                  "key": "configuration",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_copilots:Configuration"
                     }
                   }
-                },
-                "description": "Credal-generated copilot ID to add the collection to.\n"
-              },
-              {
-                "key": "configuration",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_copilots:Configuration"
-                  }
                 }
-              }
-            ]
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/copilots/updateConfiguration",
@@ -1279,38 +1307,42 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
-                  }
-                },
-                "description": "Copilot ID"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_copilots:DeleteCopilotResponse"
+                  },
+                  "description": "Copilot ID"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_copilots:DeleteCopilotResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/copilots/deleteCopilot",
@@ -1383,188 +1415,192 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "documentName",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "documentName",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
+                  },
+                  "description": "The name of the document you want to upload.\n"
                 },
-                "description": "The name of the document you want to upload.\n"
-              },
-              {
-                "key": "documentContents",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "documentContents",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The full LLM-formatted text contents of the document you want to upload.\n"
-              },
-              {
-                "key": "allowedUsersEmailAddresses",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "The full LLM-formatted text contents of the document you want to upload.\n"
                 },
-                "description": "Users allowed to access the document. Unlike Credal's out of the box connectors which reconcile various permissions models from 3rd party software, for custom uploads the caller is responsible for specifying who can access the document and currently flattening groups if applicable. Documents can also be marked as internal public.\n"
-              },
-              {
-                "key": "uploadAsUserEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "allowedUsersEmailAddresses",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
-                  }
+                  },
+                  "description": "Users allowed to access the document. Unlike Credal's out of the box connectors which reconcile various permissions models from 3rd party software, for custom uploads the caller is responsible for specifying who can access the document and currently flattening groups if applicable. Documents can also be marked as internal public.\n"
                 },
-                "description": "[Legacy] The user on behalf of whom the document should be uploaded. In most cases, this can simply be the email of the developer making the API call. This field will be removed in the future in favor of purely specifying permissions via allowedUsersEmailAddresses.\n"
-              },
-              {
-                "key": "documentExternalId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "uploadAsUserEmail",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The external ID of the document. This is typically the ID as it exists in its original external system. Uploads to the same external ID will update the document in Credal.\n"
-              },
-              {
-                "key": "documentExternalUrl",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "[Legacy] The user on behalf of whom the document should be uploaded. In most cases, this can simply be the email of the developer making the API call. This field will be removed in the future in favor of purely specifying permissions via allowedUsersEmailAddresses.\n"
+                },
+                {
+                  "key": "documentExternalId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The external ID of the document. This is typically the ID as it exists in its original external system. Uploads to the same external ID will update the document in Credal.\n"
+                },
+                {
+                  "key": "documentExternalUrl",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The external URL of the document you want to upload. If provided Credal will link to this URL.\n"
                 },
-                "description": "The external URL of the document you want to upload. If provided Credal will link to this URL.\n"
-              },
-              {
-                "key": "customMetadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "unknown"
-                      }
-                    }
-                  }
-                },
-                "description": "Optional JSON representing any custom metdata for this document\n"
-              },
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "customMetadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "unknown"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Optional JSON representing any custom metdata for this document\n"
                 },
-                "description": "If specified, document will also be added to a particular document collection\n"
-              },
-              {
-                "key": "forceUpdate",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "If specified, document will also be added to a particular document collection\n"
                 },
-                "description": "If specified, document contents will be re-uploaded and re-embedded even if the document already exists in Credal\n"
-              },
-              {
-                "key": "internalPublic",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "forceUpdate",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "If specified, document contents will be re-uploaded and re-embedded even if the document already exists in Credal\n"
                 },
-                "description": "If specified, document will be accessible to everyone within the organization of the uploader\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documentCatalog:UploadDocumentResponse"
+                {
+                  "key": "internalPublic",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "If specified, document will be accessible to everyone within the organization of the uploader\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documentCatalog:UploadDocumentResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/catalog/uploadDocumentContents",
@@ -1645,16 +1681,19 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documentCatalog:DocumentMetadataPatchRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documentCatalog:DocumentMetadataPatchRequest"
+              }
             }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/catalog/metadata",
@@ -1746,45 +1785,48 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
-                    }
-                  }
-                },
-                "description": "The ID of the document collection you want to add to."
-              },
-              {
-                "key": "resourceIdentifiers",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_common:ResourceIdentifier"
+                        "type": "uuid"
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the document collection you want to add to."
                 },
-                "description": "The set of resource identifier for which you want to add to the collection.\n"
-              }
-            ]
+                {
+                  "key": "resourceIdentifiers",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_common:ResourceIdentifier"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The set of resource identifier for which you want to add to the collection.\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/documentCollections/addDocumentsToCollection",
@@ -1865,45 +1907,48 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
-                    }
-                  }
-                },
-                "description": "The ID of the document collection you want to add to."
-              },
-              {
-                "key": "resourceIdentifiers",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_common:ResourceIdentifier"
+                        "type": "uuid"
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the document collection you want to add to."
                 },
-                "description": "The set of resource identifier for which you want to remove from the collection\n"
-              }
-            ]
+                {
+                  "key": "resourceIdentifiers",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_common:ResourceIdentifier"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The set of resource identifier for which you want to remove from the collection\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/documentCollections/removeDocumentsFromCollection",
@@ -1984,68 +2029,72 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "A descriptive name for the collection.\n"
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "An in depth name for the copilot's function. Useful for routing requests to the right copilot.\n"
-              },
-              {
-                "key": "collaborators",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_common:Collaborator"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "A descriptive name for the collection.\n"
                 },
-                "description": "A list of collaborator emails and roles that will have access to the copilot.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documentCollections:CreateCollectionResponse"
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "An in depth name for the copilot's function. Useful for routing requests to the right copilot.\n"
+                },
+                {
+                  "key": "collaborators",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_common:Collaborator"
+                        }
+                      }
+                    }
+                  },
+                  "description": "A list of collaborator emails and roles that will have access to the copilot.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documentCollections:CreateCollectionResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/documentCollections/createCollection",
@@ -2127,37 +2176,41 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documentCollections:DeleteCollectionResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documentCollections:DeleteCollectionResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/documentCollections/deleteCollection",
@@ -2232,59 +2285,63 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "mongoURI",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "config",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_documentCollections:MongoCollectionSyncConfig"
                     }
                   }
                 }
-              },
-              {
-                "key": "mongoURI",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "config",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_documentCollections:MongoCollectionSyncConfig"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documentCollections:MongoCollectionSyncResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documentCollections:MongoCollectionSyncResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/documentCollections/mongodb/createMongoSync",
@@ -2377,59 +2434,63 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "mongoCredentialId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "mongoCredentialId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "mongoURI",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "config",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_documentCollections:MongoCollectionSyncConfig"
                     }
                   }
                 }
-              },
-              {
-                "key": "mongoURI",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "config",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_documentCollections:MongoCollectionSyncConfig"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documentCollections:MongoCollectionSyncResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documentCollections:MongoCollectionSyncResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/documentCollections/mongodb/updateMongoSync",
@@ -2522,68 +2583,72 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "resourceIdentifier",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_common:ResourceIdentifier"
-                  }
-                },
-                "description": "The resource identifier for which you want to check authorization.\n"
-              },
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "resourceIdentifier",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_common:ResourceIdentifier"
                     }
-                  }
+                  },
+                  "description": "The resource identifier for which you want to check authorization.\n"
                 },
-                "description": "The user email to check authorization for.\n"
-              },
-              {
-                "key": "disableCache",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user email to check authorization for.\n"
+                },
+                {
+                  "key": "disableCache",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "If specified, Credal will bypass the permissions cache and check current permissions for this resource\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_permissionsService:CheckResourceAuthorizationResponse"
+                  },
+                  "description": "If specified, Credal will bypass the permissions cache and check current permissions for this resource\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_permissionsService:CheckResourceAuthorizationResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/permissions/checkResourceAuthorizationForUser",
@@ -2663,74 +2728,78 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "resourceIdentifiers",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_common:ResourceIdentifier"
-                      }
-                    }
-                  }
-                },
-                "description": "The set of resource identifier for which you want to check authorization. Currently limited to 20 resources.\n"
-              },
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "resourceIdentifiers",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The user email to check authorization for.\n"
-              },
-              {
-                "key": "disableCache",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "id",
+                          "id": "type_common:ResourceIdentifier"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The set of resource identifier for which you want to check authorization. Currently limited to 20 resources.\n"
                 },
-                "description": "If specified, Credal will bypass the permissions cache and check current permissions for all resources specified.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_permissionsService:CheckBulkResourcesAuthorizationResponse"
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The user email to check authorization for.\n"
+                },
+                {
+                  "key": "disableCache",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "If specified, Credal will bypass the permissions cache and check current permissions for all resources specified.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_permissionsService:CheckBulkResourcesAuthorizationResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/permissions/checkBulkResourcesAuthorizationForUser",
@@ -2830,93 +2899,97 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The user email to list authorized resources for.\n"
-              },
-              {
-                "key": "resourceType",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_common:ResourceType"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "The user email to list authorized resources for.\n"
                 },
-                "description": "The type of resource you want to list. If not specified, all resource types will be listed.\n"
-              },
-              {
-                "key": "limit",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "resourceType",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "integer"
+                          "type": "id",
+                          "id": "type_common:ResourceType"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The type of resource you want to list. If not specified, all resource types will be listed.\n"
                 },
-                "description": "The maximum number of resources to return. Defaults to 100.\n"
-              },
-              {
-                "key": "offset",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "limit",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "integer"
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The maximum number of resources to return. Defaults to 100.\n"
                 },
-                "description": "The offset to use for pagination. If not specified, the first page of results will be returned.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_permissionsService:AuthorizedResourceListPage"
+                {
+                  "key": "offset",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The offset to use for pagination. If not specified, the first page of results will be returned.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_permissionsService:AuthorizedResourceListPage"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/permissions/listCachedAuthorizedResourcesForUser",
@@ -3003,121 +3076,125 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "collectionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "collectionId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "uuid"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "searchQuery",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "userEmail",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "uuid"
+                      }
                     }
                   }
                 },
-                "description": "The email of the user making the search request for permissions reduction.\n"
-              },
-              {
-                "key": "structuredQueryFilters",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                {
+                  "key": "searchQuery",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
                       "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_search:SingleFieldFilter"
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "userEmail",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The email of the user making the search request for permissions reduction.\n"
+                },
+                {
+                  "key": "structuredQueryFilters",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_search:SingleFieldFilter"
+                            }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The structured query filters to apply to the search query.\n"
                 },
-                "description": "The structured query filters to apply to the search query.\n"
-              },
-              {
-                "key": "searchOptions",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_search:DocumentCollectionSearchOptions"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "metadataFilterExpression",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "searchOptions",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_search:DocumentCollectionSearchOptions"
                         }
                       }
                     }
                   }
                 },
-                "description": "Legacy metadata filter expression to apply to the search query. Use structuredQueryFilters instead.\n",
-                "availability": "Deprecated"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_search:SearchDocumentCollectionResponse"
+                {
+                  "key": "metadataFilterExpression",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Legacy metadata filter expression to apply to the search query. Use structuredQueryFilters instead.\n",
+                  "availability": "Deprecated"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_search:SearchDocumentCollectionResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/search/searchDocumentCollection",
@@ -3278,22 +3355,25 @@
             "baseUrl": "https://api.credal.ai/api"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_users:UserMetadataPatch"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_users:UserMetadataPatch"
+                  }
                 }
               }
             }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v0/users/metadata",

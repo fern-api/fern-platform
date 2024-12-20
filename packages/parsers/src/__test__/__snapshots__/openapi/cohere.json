@@ -601,6 +601,7 @@
           }
         }
       ],
+<<<<<<< HEAD
       "responses": [
         {
           "statusCode": 200,
@@ -625,6 +626,9 @@
           "description": "OK"
         }
       ],
+=======
+      "responses": [],
+>>>>>>> main
       "errors": [
         {
           "statusCode": 400,
@@ -1644,6 +1648,7 @@
               }
             ]
           }
+<<<<<<< HEAD
         },
         {
           "path": "/v1/chat",
@@ -1666,6 +1671,8 @@
             }
           },
           "snippets": {}
+=======
+>>>>>>> main
         }
       ]
     },
@@ -1810,6 +1817,7 @@
                         "type": "list",
                         "itemShape": {
                           "type": "undiscriminatedUnion",
+<<<<<<< HEAD
                           "variants": [
                             {
                               "shape": {
@@ -1832,6 +1840,9 @@
                               }
                             }
                           ]
+=======
+                          "variants": []
+>>>>>>> main
                         }
                       }
                     }
@@ -2086,6 +2097,7 @@
           }
         }
       ],
+<<<<<<< HEAD
       "responses": [
         {
           "statusCode": 200,
@@ -2110,6 +2122,9 @@
           "description": "OK"
         }
       ],
+=======
+      "responses": [],
+>>>>>>> main
       "errors": [
         {
           "statusCode": 400,
@@ -3027,6 +3042,7 @@
               }
             ]
           }
+<<<<<<< HEAD
         },
         {
           "path": "/v2/chat",
@@ -3057,6 +3073,8 @@
             }
           },
           "snippets": {}
+=======
+>>>>>>> main
         }
       ]
     },
@@ -4108,6 +4126,7 @@
           "description": "The name of the project that is making the request.\n"
         }
       ],
+<<<<<<< HEAD
       "responseHeaders": [
         {
           "key": "X-API-Warning",
@@ -4141,6 +4160,20 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
+=======
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "texts",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+>>>>>>> main
                     "type": "list",
                     "itemShape": {
                       "type": "alias",
@@ -4150,6 +4183,7 @@
                           "type": "string"
                         }
                       }
+<<<<<<< HEAD
                     }
                   }
                 },
@@ -4259,11 +4293,57 @@
                           "value": "embeddings_by_type"
                         }
                       ]
+=======
+>>>>>>> main
                     }
+                  }
+                },
+                "description": "An array of strings for the model to embed. Maximum number of texts per call is `96`. We recommend reducing the length of each text to be under `512` tokens for optimal quality."
+              },
+              {
+                "key": "images",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "An array of image data URIs for the model to embed. Maximum number of images per call is `1`.\n\nThe image must be a valid [data URI](https://developer.mozilla.org/en-US/docs/Web/URI/Schemes/data). The image must be in either `image/jpeg` or `image/png` format and has a maximum size of 5MB."
+              },
+              {
+                "key": "model",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Defaults to embed-english-v2.0\n\nThe identifier of the model. Smaller \"light\" models are faster, while larger models will perform better. [Custom models](https://docs.cohere.com/docs/training-custom-models) can also be supplied with their full ID.\n\nAvailable models and corresponding embedding dimensions:\n\n* `embed-english-v3.0`  1024\n* `embed-multilingual-v3.0`  1024\n* `embed-english-light-v3.0`  384\n* `embed-multilingual-light-v3.0`  384\n\n* `embed-english-v2.0`  4096\n* `embed-english-light-v2.0`  1024\n* `embed-multilingual-v2.0`  768"
+              },
+              {
+                "key": "input_type",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "EmbedInputType"
                   }
                 }
               },
               {
+<<<<<<< HEAD
                 "key": "id",
                 "valueShape": {
                   "type": "alias",
@@ -4599,6 +4679,48 @@
           "description": "OK"
         }
       ],
+=======
+                "key": "embedding_types",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "EmbeddingType"
+                      }
+                    }
+                  }
+                },
+                "description": "Specifies the types of embeddings you want to get back. Not required and default is None, which returns the Embed Floats response type. Can be one or more of the following types.\n\n* `\"float\"`: Use this when you want to get back the default float embeddings. Valid for all models.\n* `\"int8\"`: Use this when you want to get back signed int8 embeddings. Valid for only v3 models.\n* `\"uint8\"`: Use this when you want to get back unsigned int8 embeddings. Valid for only v3 models.\n* `\"binary\"`: Use this when you want to get back signed binary embeddings. Valid for only v3 models.\n* `\"ubinary\"`: Use this when you want to get back unsigned binary embeddings. Valid for only v3 models."
+              },
+              {
+                "key": "truncate",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "NONE"
+                    },
+                    {
+                      "value": "START"
+                    },
+                    {
+                      "value": "END"
+                    }
+                  ],
+                  "default": "END"
+                },
+                "description": "One of `NONE|START|END` to specify how the API will handle inputs longer than the maximum token length.\n\nPassing `START` will discard the start of the input. `END` will discard the end of the input. In both cases, input is discarded until the remaining input is exactly the maximum input token length for the model.\n\nIf `NONE` is selected, when the input exceeds the maximum input token length an error will be returned."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [],
+>>>>>>> main
       "errors": [
         {
           "statusCode": 400,
@@ -8240,6 +8362,7 @@
               }
             ]
           }
+<<<<<<< HEAD
         },
         {
           "path": "/v1/embed",
@@ -8278,6 +8401,8 @@
             }
           },
           "snippets": {}
+=======
+>>>>>>> main
         }
       ]
     },
@@ -13184,9 +13309,12 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
+<<<<<<< HEAD
           "requestBody": {
             "type": "json"
           },
+=======
+>>>>>>> main
           "snippets": {
             "go": [
               {
@@ -14343,6 +14471,7 @@
                     "type": "list",
                     "itemShape": {
                       "type": "undiscriminatedUnion",
+<<<<<<< HEAD
                       "variants": [
                         {
                           "shape": {
@@ -14352,6 +14481,50 @@
                               "value": {
                                 "type": "string"
                               }
+=======
+                      "variants": []
+                    }
+                  }
+                },
+                "description": "A list of document objects or strings to rerank.\nIf a document is provided the text fields is required and all other fields will be preserved in the response.\n\nThe total max chunks (length of documents * max_chunks_per_doc) must be less than 10000.\n\nWe recommend a maximum of 1,000 documents for optimal endpoint performance."
+              },
+              {
+                "key": "top_n",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The number of most relevant documents or indices to return, defaults to the length of the documents"
+              },
+              {
+                "key": "rank_fields",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+>>>>>>> main
                             }
                           }
                         },
@@ -14408,6 +14581,76 @@
                               "type": "string"
                             }
                           }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "If a JSON object is provided, you can specify which keys you would like to have considered for reranking. The model will rerank based on order of the fields passed in (i.e. rank_fields=['title','author','text'] will rerank using the values in title, author, text  sequentially. If the length of title, author, and text exceeds the context length of the model, the chunking will not re-consider earlier fields). If not provided, the model will use the default text field for ranking."
+              },
+              {
+                "key": "return_documents",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "- If false, returns results without the doc text - the api will return a list of {index, relevance score} where index is inferred from the list passed into the request.\n- If true, returns results with the doc text passed in - the api will return an ordered list of {index, text, relevance score} where index + text refers to the list passed into the request."
+              },
+              {
+                "key": "max_chunks_per_doc",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer",
+                          "default": 10
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The maximum number of chunks to produce internally from a document"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
                         }
                       }
                     }
@@ -22679,9 +22922,12 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
+<<<<<<< HEAD
           "requestBody": {
             "type": "json"
           },
+=======
+>>>>>>> main
           "snippets": {
             "go": [
               {
@@ -23743,9 +23989,12 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
+<<<<<<< HEAD
           "requestBody": {
             "type": "json"
           },
+=======
+>>>>>>> main
           "snippets": {
             "go": [
               {
@@ -26927,9 +27176,12 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
+<<<<<<< HEAD
           "requestBody": {
             "type": "json"
           },
+=======
+>>>>>>> main
           "snippets": {
             "java": [
               {

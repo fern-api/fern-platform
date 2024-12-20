@@ -25,7 +25,7 @@ jobs:
 
       - name: 📥 Install
         uses: ./.github/actions/install
-    
+
       - name: 🧪 Build and test
         run: pnpm turbo codegen build test --filter=${{ env.PACKAGE_NAME }}
 
@@ -42,7 +42,7 @@ jobs:
           VERSION="${tag#$prefix}"
 
           cd packages/template-resolver
-          node scripts/preparePackageJson.cjs $VERSION
+          node preparePackageJson.cjs $VERSION
 
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
           npm publish --access public

@@ -2,10 +2,10 @@ import { Env } from "@libs/env";
 import { App } from "octokit";
 
 export const dashboard = async (app: App): Promise<Response> => {
-    const { data } = await app.octokit.request("GET /app");
+  const { data } = await app.octokit.request("GET /app");
 
-    return new Response(
-        `
+  return new Response(
+    `
 <h1>GitHub App: ${data?.name}</h1>
 
 <p>Installation count: ${data?.installations_count}</p>
@@ -20,25 +20,25 @@ export const dashboard = async (app: App): Promise<Response> => {
     <a href="https://github.com/fernapi/fern-platform/servers/fern-bot-worker/README.md">source code</a>
 </p>
 `,
-        {
-            headers: { "content-type": "text/html" },
-        },
-    );
+    {
+      headers: { "content-type": "text/html" },
+    }
+  );
 };
 
 export const setupGithubApp = (env: Env): App => {
-    const app = new App({
-        appId: env.GITHUB_APP_ID,
-        privateKey: env.GITHUB_APP_PRIVATE_KEY,
-        oauth: {
-            clientId: env.GITHUB_APP_CLIENT_ID,
-            clientSecret: env.GITHUB_APP_CLIENT_SECRET,
-        },
-        webhooks: {
-            secret: env.GITHUB_APP_WEBHOOK_SECRET,
-        },
-    });
+  const app = new App({
+    appId: env.GITHUB_APP_ID,
+    privateKey: env.GITHUB_APP_PRIVATE_KEY,
+    oauth: {
+      clientId: env.GITHUB_APP_CLIENT_ID,
+      clientSecret: env.GITHUB_APP_CLIENT_SECRET,
+    },
+    webhooks: {
+      secret: env.GITHUB_APP_WEBHOOK_SECRET,
+    },
+  });
 
-    app.log.debug("Application loaded successfully.");
-    return app;
+  app.log.debug("Application loaded successfully.");
+  return app;
 };

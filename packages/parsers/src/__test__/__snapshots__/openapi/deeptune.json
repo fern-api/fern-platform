@@ -206,6 +206,7 @@
         {
           "contentType": "multipart/form-data",
           "body": {
+<<<<<<< HEAD
             "type": "formData",
             "fields": [
               {
@@ -243,6 +244,13 @@
                 "description": "Optional description of the voice."
               }
             ]
+=======
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "CreateVoiceRequest"
+            }
+>>>>>>> main
           }
         }
       ],
@@ -424,6 +432,7 @@
         {
           "contentType": "multipart/form-data",
           "body": {
+<<<<<<< HEAD
             "type": "formData",
             "fields": [
               {
@@ -461,6 +470,13 @@
                 "description": "Optional description of the voice."
               }
             ]
+=======
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "UpdateVoiceRequest"
+            }
+>>>>>>> main
           }
         }
       ],

@@ -2,193 +2,200 @@ import WhatwgMIMEType from "whatwg-mimetype";
 
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 export class MediaType {
-    private constructor(
-        readonly type: string,
-        readonly subtype: string,
-        readonly essence: string,
-        readonly parameters: WhatwgMIMEType.MIMETypeParameters,
-        private mimeType: WhatwgMIMEType,
-        private input: string,
-    ) {}
+  private constructor(
+    readonly type: string,
+    readonly subtype: string,
+    readonly essence: string,
+    readonly parameters: WhatwgMIMEType.MIMETypeParameters,
+    private mimeType: WhatwgMIMEType,
+    private input: string
+  ) {}
 
-    static APPLICATION_JSON = "application/json";
-    static APPLICATION_OCTET_STREAM = "application/octet-stream";
-    static MULTIPART_FORM_DATA = "multipart/form-data";
+  static APPLICATION_JSON = "application/json";
+  static APPLICATION_OCTET_STREAM = "application/octet-stream";
+  static MULTIPART_FORM_DATA = "multipart/form-data";
 
-    static parse(input: string | null | undefined): MediaType | null {
-        if (input == null) {
-            return null;
-        }
-        const parsed = WhatwgMIMEType.parse(input);
-        if (parsed == null) {
-            return null;
-        }
-        return new MediaType(parsed.type, parsed.subtype, parsed.essence, parsed.parameters, parsed, input);
+  static parse(input: string | null | undefined): MediaType | null {
+    if (input == null) {
+      return null;
     }
-
-    public toString(): string {
-        return this.input;
+    const parsed = WhatwgMIMEType.parse(input);
+    if (parsed == null) {
+      return null;
     }
+    return new MediaType(
+      parsed.type,
+      parsed.subtype,
+      parsed.essence,
+      parsed.parameters,
+      parsed,
+      input
+    );
+  }
 
-    /** Types */
+  public toString(): string {
+    return this.input;
+  }
 
-    public isText(): boolean {
-        return this.type === "text";
-    }
+  /** Types */
 
-    public isImage(): boolean {
-        return this.type === "image";
-    }
+  public isText(): boolean {
+    return this.type === "text";
+  }
 
-    public isAudio(): boolean {
-        return this.type === "audio";
-    }
+  public isImage(): boolean {
+    return this.type === "image";
+  }
 
-    public isVideo(): boolean {
-        return this.type === "video";
-    }
+  public isAudio(): boolean {
+    return this.type === "audio";
+  }
 
-    public isFont(): boolean {
-        return this.type === "font";
-    }
+  public isVideo(): boolean {
+    return this.type === "video";
+  }
 
-    public isMultipart(): boolean {
-        return this.type === "multipart";
-    }
+  public isFont(): boolean {
+    return this.type === "font";
+  }
 
-    public isApplication(): boolean {
-        return this.type === "application";
-    }
+  public isMultipart(): boolean {
+    return this.type === "multipart";
+  }
 
-    public isMessage(): boolean {
-        return this.type === "message";
-    }
+  public isApplication(): boolean {
+    return this.type === "application";
+  }
 
-    public isModel(): boolean {
-        return this.type === "model";
-    }
+  public isMessage(): boolean {
+    return this.type === "message";
+  }
 
-    /** Text */
+  public isModel(): boolean {
+    return this.type === "model";
+  }
 
-    public isCSS(): boolean {
-        return this.isText() && this.subtype === "css";
-    }
+  /** Text */
 
-    public isCSV(): boolean {
-        return this.isText() && this.subtype === "csv";
-    }
+  public isCSS(): boolean {
+    return this.isText() && this.subtype === "css";
+  }
 
-    public isMarkdown(): boolean {
-        return this.isText() && this.subtype === "markdown";
-    }
+  public isCSV(): boolean {
+    return this.isText() && this.subtype === "csv";
+  }
 
-    public isPlainText(): boolean {
-        return this.isText() && this.subtype === "plain";
-    }
+  public isMarkdown(): boolean {
+    return this.isText() && this.subtype === "markdown";
+  }
 
-    public isEventStream(): boolean {
-        return this.isText() && this.subtype === "event-stream";
-    }
+  public isPlainText(): boolean {
+    return this.isText() && this.subtype === "plain";
+  }
 
-    /** Multipart */
+  public isEventStream(): boolean {
+    return this.isText() && this.subtype === "event-stream";
+  }
 
-    public isMultiPartFormData(): boolean {
-        return this.isMultipart() && this.subtype === "form-data";
-    }
+  /** Multipart */
 
-    /** Application */
+  public isMultiPartFormData(): boolean {
+    return this.isMultipart() && this.subtype === "form-data";
+  }
 
-    public isJSON(): boolean {
-        return this.isApplication() && this.subtype === "json";
-    }
+  /** Application */
 
-    public containsJSON(): boolean {
-        return this.isApplication() && this.subtype.includes("json");
-    }
+  public isJSON(): boolean {
+    return this.isApplication() && this.subtype === "json";
+  }
 
-    public isURLEncoded(): boolean {
-        return this.isApplication() && this.subtype === "x-www-form-urlencoded";
-    }
+  public containsJSON(): boolean {
+    return this.isApplication() && this.subtype.includes("json");
+  }
 
-    public isOctetStream(): boolean {
-        return this.isApplication() && this.subtype === "octet-stream";
-    }
+  public isURLEncoded(): boolean {
+    return this.isApplication() && this.subtype === "x-www-form-urlencoded";
+  }
 
-    public isPDF(): boolean {
-        return this.isApplication() && this.subtype === "pdf";
-    }
+  public isOctetStream(): boolean {
+    return this.isApplication() && this.subtype === "octet-stream";
+  }
 
-    public isZip(): boolean {
-        return this.isApplication() && this.subtype === "zip";
-    }
+  public isPDF(): boolean {
+    return this.isApplication() && this.subtype === "pdf";
+  }
 
-    public isGzip(): boolean {
-        return this.isApplication() && this.subtype === "gzip";
-    }
+  public isZip(): boolean {
+    return this.isApplication() && this.subtype === "zip";
+  }
 
-    public isTar(): boolean {
-        return this.isApplication() && this.subtype === "tar";
-    }
+  public isGzip(): boolean {
+    return this.isApplication() && this.subtype === "gzip";
+  }
 
-    public isBrotli(): boolean {
-        return this.isApplication() && this.subtype === "br";
-    }
+  public isTar(): boolean {
+    return this.isApplication() && this.subtype === "tar";
+  }
 
-    public isDeflate(): boolean {
-        return this.isApplication() && this.subtype === "deflate";
-    }
+  public isBrotli(): boolean {
+    return this.isApplication() && this.subtype === "br";
+  }
 
-    public isProtobuf(): boolean {
-        return this.isApplication() && this.subtype === "protobuf";
-    }
+  public isDeflate(): boolean {
+    return this.isApplication() && this.subtype === "deflate";
+  }
 
-    /** Images */
+  public isProtobuf(): boolean {
+    return this.isApplication() && this.subtype === "protobuf";
+  }
 
-    public isAvif(): boolean {
-        return this.isImage() && this.subtype === "avif";
-    }
+  /** Images */
 
-    public isWebP(): boolean {
-        return this.isImage() && this.subtype === "webp";
-    }
+  public isAvif(): boolean {
+    return this.isImage() && this.subtype === "avif";
+  }
 
-    public isSVG(): boolean {
-        return this.isImage() && this.subtype === "svg+xml";
-    }
+  public isWebP(): boolean {
+    return this.isImage() && this.subtype === "webp";
+  }
 
-    public isPNG(): boolean {
-        return this.isImage() && this.subtype === "png";
-    }
+  public isSVG(): boolean {
+    return this.isImage() && this.subtype === "svg+xml";
+  }
 
-    public isJPEG(): boolean {
-        return this.isImage() && this.subtype === "jpeg";
-    }
+  public isPNG(): boolean {
+    return this.isImage() && this.subtype === "png";
+  }
 
-    public isGIF(): boolean {
-        return this.isImage() && this.subtype === "gif";
-    }
+  public isJPEG(): boolean {
+    return this.isImage() && this.subtype === "jpeg";
+  }
 
-    /** Audio */
+  public isGIF(): boolean {
+    return this.isImage() && this.subtype === "gif";
+  }
 
-    public isMPEG(): boolean {
-        return this.isAudio() && this.subtype === "mpeg";
-    }
+  /** Audio */
 
-    public isWAV(): boolean {
-        return this.isAudio() && this.subtype === "wav";
-    }
+  public isMPEG(): boolean {
+    return this.isAudio() && this.subtype === "mpeg";
+  }
 
-    /** Mixed */
+  public isWAV(): boolean {
+    return this.isAudio() && this.subtype === "wav";
+  }
 
-    public isHTML(): boolean {
-        return this.mimeType.isHTML();
-    }
+  /** Mixed */
 
-    public isXML(): boolean {
-        return this.mimeType.isXML();
-    }
+  public isHTML(): boolean {
+    return this.mimeType.isHTML();
+  }
 
-    public isJavaScript(): boolean {
-        return this.mimeType.isJavaScript();
-    }
+  public isXML(): boolean {
+    return this.mimeType.isXML();
+  }
+
+  public isJavaScript(): boolean {
+    return this.mimeType.isJavaScript();
+  }
 }

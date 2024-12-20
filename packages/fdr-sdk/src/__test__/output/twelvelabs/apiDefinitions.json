@@ -286,17 +286,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The video indexing tasks have successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tasks:TasksListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The video indexing tasks have successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tasks:TasksListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -988,150 +991,154 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "index_id",
-                "description": "The unique identifier of the index to which the video is being uploaded.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "index_id",
+                  "description": "The unique identifier of the index to which the video is being uploaded.\n",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "provide_transcription",
-                "description": "A boolean value specifying whether or not you provide a transcription for this video.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "type": "property",
+                  "key": "provide_transcription",
+                  "description": "A boolean value specifying whether or not you provide a transcription for this video.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "language",
+                  "description": "Must be set to `en`.",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "default": "en"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "file",
+                  "key": "video_file",
+                  "isOptional": true
+                },
+                {
+                  "type": "file",
+                  "key": "transcription_file",
+                  "isOptional": true
+                },
+                {
+                  "type": "property",
+                  "key": "video_url",
+                  "description": "Specify this parameter to upload a video from a publicly accessible URL.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "transcription_url",
+                  "description": "When the `provide_transcription` parameter is set to `true`, and you want to provide a transcription from a publicly accessible URL, use the `transcription_url` parameter to specify the URL of your transcription. The transcription must be in the SRT or VTT format.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "disable_video_stream",
+                  "description": "This parameter indicates if the platform stores the video for streaming. When set to `false`, the platform stores the video, and you can retrieve its URL by calling the [`GET`](/reference/retrieve-video-information) method of the `/indexes/{index-id}/videos/{video-id}` endpoint. You can then use this URL to access the stream over the <a href=\"https://en.wikipedia.org/wiki/HTTP_Live_Streaming\" target=\"_blank\">HLS</a> protocol.\n\n**Default:** `false`\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "type": "property",
-                "key": "language",
-                "description": "Must be set to `en`.",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "default": "en"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "file",
-                "key": "video_file",
-                "isOptional": true
-              },
-              {
-                "type": "file",
-                "key": "transcription_file",
-                "isOptional": true
-              },
-              {
-                "type": "property",
-                "key": "video_url",
-                "description": "Specify this parameter to upload a video from a publicly accessible URL.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "transcription_url",
-                "description": "When the `provide_transcription` parameter is set to `true`, and you want to provide a transcription from a publicly accessible URL, use the `transcription_url` parameter to specify the URL of your transcription. The transcription must be in the SRT or VTT format.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "disable_video_stream",
-                "description": "This parameter indicates if the platform stores the video for streaming. When set to `false`, the platform stores the video, and you can retrieve its URL by calling the [`GET`](/reference/retrieve-video-information) method of the `/indexes/{index-id}/videos/{video-id}` endpoint. You can then use this URL to access the stream over the <a href=\"https://en.wikipedia.org/wiki/HTTP_Live_Streaming\" target=\"_blank\">HLS</a> protocol.\n\n**Default:** `false`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "A video indexing task has successfully been created.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tasks:TasksCreateResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "A video indexing task has successfully been created.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tasks:TasksCreateResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -1705,17 +1712,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The specified video indexing task has successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tasks:TasksRetrieveResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The specified video indexing task has successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tasks:TasksRetrieveResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -2023,6 +2033,8 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "The request has failed.",
@@ -2296,17 +2308,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "An object containing the number video indexing tasks in each status.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tasks:TasksStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "An object containing the number video indexing tasks in each status.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tasks:TasksStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -2560,6 +2575,8 @@
             "baseUrl": "https://api.twelvelabs.io/v1.3"
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/tasks/transfers",
@@ -2744,108 +2761,112 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "index_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "index_id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The unique identifier of the index to which the videos are being uploaded.\n"
-              },
-              {
-                "key": "incremental_import",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean"
-                        }
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "The unique identifier of the index to which the videos are being uploaded.\n"
                 },
-                "description": "Specifies whether or not incremental sync is enabled. If set to `false`, the platform will synchronize all the files in the bucket.\n\n**Default**: `true`.\n"
-              },
-              {
-                "key": "retry_failed",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "incremental_import",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Determines whether the platform retries failed uploads. When set to `true`, the platform attempts to re-upload files that failed during the initial upload process.\n\n**Default**: `false`.\n"
-              },
-              {
-                "key": "user_metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Specifies whether or not incremental sync is enabled. If set to `false`, the platform will synchronize all the files in the bucket.\n\n**Default**: `true`.\n"
+                },
+                {
+                  "key": "retry_failed",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Determines whether the platform retries failed uploads. When set to `true`, the platform attempts to re-upload files that failed during the initial upload process.\n\n**Default**: `false`.\n"
+                },
+                {
+                  "key": "user_metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
                             }
                           }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
-                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Metadata that helps you categorize your videos. You can specify a list of keys and values. Keys must be of type `string`, and values can be of the following types: `string`, `integer`, `float` or `boolean`.\n\n**NOTES:**\n- The metadata you specify when calling this method applies to all videos imported in this request.\n-  If you want to store other types of data such as objects or arrays, you must convert your data into string values.\n- You cannot override any of the predefined metadata (example: duration, width, length, etc) associated with a video.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "An import has successfully been initiated.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_uploadVideos:CloudToCloudImportVideosResponse"
+                  },
+                  "description": "Metadata that helps you categorize your videos. You can specify a list of keys and values. Keys must be of type `string`, and values can be of the following types: `string`, `integer`, `float` or `boolean`.\n\n**NOTES:**\n- The metadata you specify when calling this method applies to all videos imported in this request.\n-  If you want to store other types of data such as objects or arrays, you must convert your data into string values.\n- You cannot override any of the predefined metadata (example: duration, width, length, etc) associated with a video.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "An import has successfully been initiated.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_uploadVideos:CloudToCloudImportVideosResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -3145,39 +3166,43 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "index_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "index_id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The unique identifier of the index for which you want to retrieve the status of your imported videos."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "The status for each video from the specified integration and index has successfully been retrieved\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_uploadVideos:CloudToCloudRetrieveStatusResponse"
+                  },
+                  "description": "The unique identifier of the index for which you want to retrieve the status of your imported videos."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "The status for each video from the specified integration and index has successfully been retrieved\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_uploadVideos:CloudToCloudRetrieveStatusResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -3382,17 +3407,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The import logs have successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_uploadVideos:CloudToCloudRetrieveImportLogsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The import logs have successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_uploadVideos:CloudToCloudRetrieveImportLogsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -3763,17 +3791,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The indexes have successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_indexes:IndexesListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The indexes have successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_indexes:IndexesListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -4438,81 +4469,85 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "index_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "index_name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The name of the index. Make sure you use a succinct and descriptive name.\n"
-              },
-              {
-                "key": "engines",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_indexes:IndexesCreateRequestEnginesItem"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "The name of the index. Make sure you use a succinct and descriptive name.\n"
                 },
-                "description": "An array that specifies the [video understanding engines](/docs/video-understanding-engines) and the [engine options](/docs/engine-options) to be enabled for this index. This determines how the platform processes your videos.\n"
-              },
-              {
-                "key": "addons",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                {
+                  "key": "engines",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_indexes:IndexesCreateRequestEnginesItem"
+                        }
+                      }
+                    }
+                  },
+                  "description": "An array that specifies the [video understanding engines](/docs/video-understanding-engines) and the [engine options](/docs/engine-options) to be enabled for this index. This determines how the platform processes your videos.\n"
+                },
+                {
+                  "key": "addons",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "An array specifying which add-ons should be enabled. Each entry in the array is an addon, and the following values are supported:\n- `thumbnail`: Enables [thumbnail generation](/docs/extract-video-data#retrieve-thumbnails).\n\nIf you don't provide this parameter, no add-ons will be enabled.\n\n**NOTES:**\n- You can only enable addons when using the Marengo video understanding engine.\n- You cannot disable an add-on once the index has been created.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "An index has successfully been created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_indexes:IndexesCreateResponse"
+                  },
+                  "description": "An array specifying which add-ons should be enabled. Each entry in the array is an addon, and the following values are supported:\n- `thumbnail`: Enables [thumbnail generation](/docs/extract-video-data#retrieve-thumbnails).\n\nIf you don't provide this parameter, no add-ons will be enabled.\n\n**NOTES:**\n- You can only enable addons when using the Marengo video understanding engine.\n- You cannot disable an add-on once the index has been created.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "An index has successfully been created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_indexes:IndexesCreateResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -5021,17 +5056,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The specified index has successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_indexes:IndexesRetrieveResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The specified index has successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_indexes:IndexesRetrieveResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -5345,28 +5383,31 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "index_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "index_name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The name of the index.\n"
-              }
-            ]
+                  },
+                  "description": "The name of the index.\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "The request has failed.",
@@ -5700,6 +5741,8 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "The request has failed.",
@@ -5958,90 +6001,94 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "video_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "video_id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The unique identifier of the video that you want to summarize.\n"
-              },
-              {
-                "key": "type",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Specifies the type of summary. Use one of the following values:\n  - `summary`: A brief that encapsulates the key points of a video, presenting the most important information clearly and concisely.\n  - `chapter`: A chronological list of all the chapters in a video, providing a granular breakdown of its content. For each chapter, the platform returns its starting and end times, measured in seconds from the beginning of the video clip, a descriptive headline that offers a brief of the events or activities within that part of the video, and an accompanying summary that elaborates on the headline.\n  - `highlight`: A chronologically ordered list of the most important events within a video. Unlike chapters, highlights only capture the key moments, providing a snapshot of the video's main topics. For each highlight, the platform returns its starting and end times, measured in seconds from the beginning of the video, a title, and a brief description that captures the essence of this part of the video.\n"
-              },
-              {
-                "key": "prompt",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier of the video that you want to summarize.\n"
+                },
+                {
+                  "key": "type",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Specifies the type of summary. Use one of the following values:\n  - `summary`: A brief that encapsulates the key points of a video, presenting the most important information clearly and concisely.\n  - `chapter`: A chronological list of all the chapters in a video, providing a granular breakdown of its content. For each chapter, the platform returns its starting and end times, measured in seconds from the beginning of the video clip, a descriptive headline that offers a brief of the events or activities within that part of the video, and an accompanying summary that elaborates on the headline.\n  - `highlight`: A chronologically ordered list of the most important events within a video. Unlike chapters, highlights only capture the key moments, providing a snapshot of the video's main topics. For each highlight, the platform returns its starting and end times, measured in seconds from the beginning of the video, a title, and a brief description that captures the essence of this part of the video.\n"
+                },
+                {
+                  "key": "prompt",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Use this field to provide context for the summarization task, such as the target audience, style, tone of voice, and purpose.\n\n**NOTES**:\n  - Your prompts can be instructive or descriptive, or you can also phrase them as questions.\n  - The maximum length of a prompt is 1500 characters.\n\n**Example**: Generate a summary of this video for a social media post, up to two sentences.\n"
                 },
-                "description": "Use this field to provide context for the summarization task, such as the target audience, style, tone of voice, and purpose.\n\n**NOTES**:\n  - Your prompts can be instructive or descriptive, or you can also phrase them as questions.\n  - The maximum length of a prompt is 1500 characters.\n\n**Example**: Generate a summary of this video for a social media post, up to two sentences.\n"
-              },
-              {
-                "key": "temperature",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "temperature",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "double"
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Controls the randomness of the text output generated by the model. A higher value generates more creative text, while a lower value produces more deterministic text output.\n\n**Default:** 0.7\n**Min:** 0\n**Max:** 1\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "The specified video has successfully been summarized.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_summarize:SummarizeCreateResponse"
+                  },
+                  "description": "Controls the randomness of the text output generated by the model. A higher value generates more creative text, while a lower value produces more deterministic text output.\n\n**Default:** 0.7\n**Min:** 0\n**Max:** 1\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "The specified video has successfully been summarized.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_summarize:SummarizeCreateResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -6477,90 +6524,94 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "video_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "video_id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The unique identifier of the video for which you wish to generate a text."
-              },
-              {
-                "key": "prompt",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "A prompt that guides the model on the desired format or content.\n\n**NOTES**:\n  - Even though the model behind this endpoint is trained to a high degree of accuracy, the preciseness of the generated text may vary based on the nature and quality of the video and the clarity of the prompt.\n  - Your prompts can be instructive or descriptive, or you can also phrase them as questions. \n  - The maximum length of a prompt is 1500 characters.\n\n**Examples**:\n  \n  - Based on this video, I want to generate five keywords for SEO (Search Engine Optimization).\n  - I want to generate a description for my video with the following format: Title of the video, followed by a summary in 2-3 sentences, highlighting the main topic, key events, and concluding remarks.\n"
-              },
-              {
-                "key": "temperature",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The unique identifier of the video for which you wish to generate a text."
+                },
+                {
+                  "key": "prompt",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "A prompt that guides the model on the desired format or content.\n\n**NOTES**:\n  - Even though the model behind this endpoint is trained to a high degree of accuracy, the preciseness of the generated text may vary based on the nature and quality of the video and the clarity of the prompt.\n  - Your prompts can be instructive or descriptive, or you can also phrase them as questions. \n  - The maximum length of a prompt is 1500 characters.\n\n**Examples**:\n  \n  - Based on this video, I want to generate five keywords for SEO (Search Engine Optimization).\n  - I want to generate a description for my video with the following format: Title of the video, followed by a summary in 2-3 sentences, highlighting the main topic, key events, and concluding remarks.\n"
+                },
+                {
+                  "key": "temperature",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "double"
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Controls the randomness of the text output generated by the model. A higher value generates more creative text, while a lower value produces more deterministic text output.\n\n**Default:** 0.7\n**Min:** 0\n**Max:** 1\n"
                 },
-                "description": "Controls the randomness of the text output generated by the model. A higher value generates more creative text, while a lower value produces more deterministic text output.\n\n**Default:** 0.7\n**Min:** 0\n**Max:** 1\n"
-              },
-              {
-                "key": "stream",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "stream",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Set this parameter to `true` to enable streaming responses in the <a href=\"https://github.com/ndjson/ndjson-spec\" target=\"_blank\">NDJSON</a> format. \n\n**Default:** `true`\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "The specified video has successfully been processed.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_generate:GenerateCreateResponse"
+                  },
+                  "description": "Set this parameter to `true` to enable streaming responses in the <a href=\"https://github.com/ndjson/ndjson-spec\" target=\"_blank\">NDJSON</a> format. \n\n**Default:** `true`\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "The specified video has successfully been processed.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_generate:GenerateCreateResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -7141,151 +7192,155 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "engine_name",
-                "description": "The name of the engine you want to use. The following engines are available:\n  - `Marengo-retrieval-2.6`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "engine_name",
+                  "description": "The name of the engine you want to use. The following engines are available:\n  - `Marengo-retrieval-2.6`\n",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "text",
-                "description": "The text for which you wish to create an embedding.\n\n**NOTE**:\nText embeddings are limited to 77 tokens. If the text exceeds this limit, the platform truncates it according to the value of the `text_truncate` parameter described below.\n\n**Example**: \"Man with a dog crossing the street\"\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "type": "property",
+                  "key": "text",
+                  "description": "The text for which you wish to create an embedding.\n\n**NOTE**:\nText embeddings are limited to 77 tokens. If the text exceeds this limit, the platform truncates it according to the value of the `text_truncate` parameter described below.\n\n**Example**: \"Man with a dog crossing the street\"\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "text_truncate",
+                  "description": "Specifies how the platform truncates text that exceeds 77 tokens to fit the maximum length allowed for an embedding.\nThis parameter can take one of the following values:\n- `start`: The platform will truncate the start of the provided text.\n- `end`: The platform will truncate the end of the provided text.\n- `none`: The platform will return an error if the text is longer than the maximum token limit.\n\n**Default**: `end`\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "default": "end"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "image_url",
+                  "description": "The publicly accessible URL of the image for which you wish to create an embedding. This parameter is required for image embeddings if `image_file` is not provided.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "file",
+                  "key": "image_file",
+                  "isOptional": true
+                },
+                {
+                  "type": "property",
+                  "key": "audio_url",
+                  "description": "The publicly accessible URL of the audio file for which you wish to creae an emebdding. This parameter is required for audio embeddings if `audio_file` is not provided.   \n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "file",
+                  "key": "audio_file",
+                  "isOptional": true
+                },
+                {
+                  "type": "property",
+                  "key": "audio_start_offset_sec",
+                  "description": "Specifies the start time, in seconds, from which the platform generates the audio embeddings. This parameter allows you to skip the initial portion of the audio during processing.\n**Default**: `0`.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "default": 0
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "type": "property",
-                "key": "text_truncate",
-                "description": "Specifies how the platform truncates text that exceeds 77 tokens to fit the maximum length allowed for an embedding.\nThis parameter can take one of the following values:\n- `start`: The platform will truncate the start of the provided text.\n- `end`: The platform will truncate the end of the provided text.\n- `none`: The platform will return an error if the text is longer than the maximum token limit.\n\n**Default**: `end`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "default": "end"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "image_url",
-                "description": "The publicly accessible URL of the image for which you wish to create an embedding. This parameter is required for image embeddings if `image_file` is not provided.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "file",
-                "key": "image_file",
-                "isOptional": true
-              },
-              {
-                "type": "property",
-                "key": "audio_url",
-                "description": "The publicly accessible URL of the audio file for which you wish to creae an emebdding. This parameter is required for audio embeddings if `audio_file` is not provided.   \n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "file",
-                "key": "audio_file",
-                "isOptional": true
-              },
-              {
-                "type": "property",
-                "key": "audio_start_offset_sec",
-                "description": "Specifies the start time, in seconds, from which the platform generates the audio embeddings. This parameter allows you to skip the initial portion of the audio during processing.\n**Default**: `0`.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "default": 0
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "A text embedding has successfully been created. \n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EmbeddingResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "A text embedding has successfully been created. \n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EmbeddingResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -7762,272 +7817,276 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "query_media_type",
-                "description": "The type of media you wish to use. This parameter is required for media queries. For example, to perform an image-based search, set this parameter to `image`.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "literal",
-                        "value": {
-                          "type": "stringLiteral",
-                          "value": "image"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "query_media_url",
-                "description": "The publicly accessible URL of the media file you wish to use. This parameter is required for media queries if `query_media_file` is not provided.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "file",
-                "key": "query_media_file",
-                "isOptional": true
-              },
-              {
-                "type": "property",
-                "key": "query_text",
-                "description": "The text query to search for. This parameter is required for text queries. Note that the platform supports full natural language-based search.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "index_id",
-                "description": "The unique identifier of the index to search.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "query_media_type",
+                  "description": "The type of media you wish to use. This parameter is required for media queries. For example, to perform an image-based search, set this parameter to `image`.\n",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "search_options",
-                "description": "Specifies the [sources of information](/docs/search-options) the platform uses when performing a search. You must include the `search_options` parameter separately for each desired source of information.\n\n**NOTES:** \n- The search options you specify must be a subset of the [engine options](/docs/engine-options) used when you created the index.\n- You can specify multiple search options in conjunction with the `operator` parameter described below to broaden or narrow your search.\n\nExample:\nTo search using both visual and audio cues, include this parameter twice in the request as shown below:\n```JSON\n--form search_options=visual \\\n--form search_options=conversation \\\n```\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_search:SearchQueryRequestSearchOptionsItem"
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "literal",
+                          "value": {
+                            "type": "stringLiteral",
+                            "value": "image"
+                          }
+                        }
                       }
                     }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "adjust_confidence_level",
-                "description": "This parameter specifies the strictness of the thresholds for assigning the high, medium, or low confidence levels to search results. If you use a lower value, the thresholds become more relaxed, and more search results will be classified as having high, medium, or low confidence levels. You can use this parameter to include a broader range of potentially relevant video clips, even if some results might be less precise. \n\n**Min**: 0\n**Max**: 1\n**Default:** 0.5\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "type": "property",
+                  "key": "query_media_url",
+                  "description": "The publicly accessible URL of the media file you wish to use. This parameter is required for media queries if `query_media_file` is not provided.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "double"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "file",
+                  "key": "query_media_file",
+                  "isOptional": true
+                },
+                {
+                  "type": "property",
+                  "key": "query_text",
+                  "description": "The text query to search for. This parameter is required for text queries. Note that the platform supports full natural language-based search.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "index_id",
+                  "description": "The unique identifier of the index to search.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "search_options",
+                  "description": "Specifies the [sources of information](/docs/search-options) the platform uses when performing a search. You must include the `search_options` parameter separately for each desired source of information.\n\n**NOTES:** \n- The search options you specify must be a subset of the [engine options](/docs/engine-options) used when you created the index.\n- You can specify multiple search options in conjunction with the `operator` parameter described below to broaden or narrow your search.\n\nExample:\nTo search using both visual and audio cues, include this parameter twice in the request as shown below:\n```JSON\n--form search_options=visual \\\n--form search_options=conversation \\\n```\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_search:SearchQueryRequestSearchOptionsItem"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "adjust_confidence_level",
+                  "description": "This parameter specifies the strictness of the thresholds for assigning the high, medium, or low confidence levels to search results. If you use a lower value, the thresholds become more relaxed, and more search results will be classified as having high, medium, or low confidence levels. You can use this parameter to include a broader range of potentially relevant video clips, even if some results might be less precise. \n\n**Min**: 0\n**Max**: 1\n**Default:** 0.5\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "group_by",
+                  "description": "Use this parameter to group or ungroup items in a response. It can take one of the following values:\n- `video`:  The platform will group the matching video clips in the response by video.\n- `clip`: The matching video clips in the response will not be grouped.\n\n**Default:** `clip`\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_search:SearchQueryRequestGroupBy"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "threshold",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ThresholdSearch"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "sort_option",
+                  "description": "Use this parameter to specify the sort order for the response.\n\nWhen performing a search, the platform determines the level of confidence that each video clip matches your search terms. By default, the search results are sorted on the level of confidence in descending order. \n\nIf you set this parameter to `score` and `group_by` is set to `video`, the platform will determine the maximum value of the `score` field for each video and sort the videos in the response by the maximum value of this field. For each video, the matching video clips will be sorted by the level of confidence.\n\nIf you set this parameter to `clip_count` and `group_by` is set to `video`, the platform will sort the videos in the response by the number of clips. For each video, the matching video clips will be sorted by the level of confidence. You can use `clip_count` only when the matching video clips are sorted by video.\n\n\n**Default:** `score`\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_search:SearchQueryRequestSortOption"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "operator",
+                  "description": "When you perform a search specifying multiple [sources of information](/docs/search-options), you can use the this parameter to broaden or narrow your search.\n  \n  The following logical operators are supported:\n  \n  - `or`\n  \n  - `and`\n  \n  For details and examples, see the [Using multiple sources of information](/docs/search-single-queries#using-multiple-sources-of-information) section.\n\n  \n  **Default**: `or`.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_search:SearchQueryRequestOperator"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "conversation_option",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ConversationOptionAnyToVideo"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "page_limit",
+                  "description": "The number of items to return on each page. When grouping by video, this parameter represents the number of videos per page. Otherwise, it represents the maximum number of video clips per page. \n\n**Max**: `50`.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer",
+                            "default": 10
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "filter",
+                  "description": "This parameter accepts a stringified object to filter search results:\n- For string fields: Use the exact match operator (`=`) to return results that exactly equal the specified value. Syntax: `\"field\": \"value\"`.\n- For numeric fields: Use either exact match (`=`) or comparison operators (`gte`, `lte`) for arithmetic comparisons Syntax: `\"field\": number` or `\"field\": { \"gte\": number, \"lte\": number }`.\n\nThe filter object can contain the following properties:\n- `id`: An array of strings to filter by specific video IDs. Example: `\"id\": [\"video1\", \"video2\"]`.\n- `duration`: An object to filter your search results based on the duration of the video containing the segment that matches your query. Example: `\"duration\": { \"gte\": 600, \"lte\": 800 }`.\n- `width`: A numeric value to filter by video width. Example: `\"width\": 1920` or `\"width\": { \"gte\": 1280, \"lte\": 1920 }`\n- `height`: A numeric value to filter by video height. Example: `\"height\": 1080` or `\"height\": { \"gte\": 720, \"lte\": 1080 }`.\n- `size`: A numeric value to filter by video size in bytes. Example: `\"size\": 1048576` or `\"size\": { \"gte\": 1048576, \"lte\": 5242880 }`.\n- `title`: A string value to filter by video title. Example: `\"title\": \"Animal Encounters part 1\"`.\n\nTo enable filtering by custom fields:\n1. Add metadata to your video by calling the the [`PUT`](/reference/update-video-information) method of the `/indexes/:index-id/videos/:video-id` endpoint\n2. Use the custom fields as filter criteria in your queries. For example, to return only videos where a custom field named `needsReview` of type boolean is `true`, use: `\"needs_review\": true`.\n\nFor more details and examples, see the [Filter search results based on metadata](/docs/filtering-search-results) page.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "type": "property",
-                "key": "group_by",
-                "description": "Use this parameter to group or ungroup items in a response. It can take one of the following values:\n- `video`:  The platform will group the matching video clips in the response by video.\n- `clip`: The matching video clips in the response will not be grouped.\n\n**Default:** `clip`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_search:SearchQueryRequestGroupBy"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "threshold",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:ThresholdSearch"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "sort_option",
-                "description": "Use this parameter to specify the sort order for the response.\n\nWhen performing a search, the platform determines the level of confidence that each video clip matches your search terms. By default, the search results are sorted on the level of confidence in descending order. \n\nIf you set this parameter to `score` and `group_by` is set to `video`, the platform will determine the maximum value of the `score` field for each video and sort the videos in the response by the maximum value of this field. For each video, the matching video clips will be sorted by the level of confidence.\n\nIf you set this parameter to `clip_count` and `group_by` is set to `video`, the platform will sort the videos in the response by the number of clips. For each video, the matching video clips will be sorted by the level of confidence. You can use `clip_count` only when the matching video clips are sorted by video.\n\n\n**Default:** `score`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_search:SearchQueryRequestSortOption"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "operator",
-                "description": "When you perform a search specifying multiple [sources of information](/docs/search-options), you can use the this parameter to broaden or narrow your search.\n  \n  The following logical operators are supported:\n  \n  - `or`\n  \n  - `and`\n  \n  For details and examples, see the [Using multiple sources of information](/docs/search-single-queries#using-multiple-sources-of-information) section.\n\n  \n  **Default**: `or`.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_search:SearchQueryRequestOperator"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "conversation_option",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:ConversationOptionAnyToVideo"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "page_limit",
-                "description": "The number of items to return on each page. When grouping by video, this parameter represents the number of videos per page. Otherwise, it represents the maximum number of video clips per page. \n\n**Max**: `50`.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "integer",
-                          "default": 10
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "filter",
-                "description": "This parameter accepts a stringified object to filter search results:\n- For string fields: Use the exact match operator (`=`) to return results that exactly equal the specified value. Syntax: `\"field\": \"value\"`.\n- For numeric fields: Use either exact match (`=`) or comparison operators (`gte`, `lte`) for arithmetic comparisons Syntax: `\"field\": number` or `\"field\": { \"gte\": number, \"lte\": number }`.\n\nThe filter object can contain the following properties:\n- `id`: An array of strings to filter by specific video IDs. Example: `\"id\": [\"video1\", \"video2\"]`.\n- `duration`: An object to filter your search results based on the duration of the video containing the segment that matches your query. Example: `\"duration\": { \"gte\": 600, \"lte\": 800 }`.\n- `width`: A numeric value to filter by video width. Example: `\"width\": 1920` or `\"width\": { \"gte\": 1280, \"lte\": 1920 }`\n- `height`: A numeric value to filter by video height. Example: `\"height\": 1080` or `\"height\": { \"gte\": 720, \"lte\": 1080 }`.\n- `size`: A numeric value to filter by video size in bytes. Example: `\"size\": 1048576` or `\"size\": { \"gte\": 1048576, \"lte\": 5242880 }`.\n- `title`: A string value to filter by video title. Example: `\"title\": \"Animal Encounters part 1\"`.\n\nTo enable filtering by custom fields:\n1. Add metadata to your video by calling the the [`PUT`](/reference/update-video-information) method of the `/indexes/:index-id/videos/:video-id` endpoint\n2. Use the custom fields as filter criteria in your queries. For example, to return only videos where a custom field named `needsReview` of type boolean is `true`, use: `\"needs_review\": true`.\n\nFor more details and examples, see the [Filter search results based on metadata](/docs/filtering-search-results) page.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Successfully performed a search request.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_search:SearchQueryResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Successfully performed a search request.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_search:SearchQueryResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -9057,17 +9116,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "Successfully retrieved the specified page of search results.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_search:SearchRetrieveResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successfully retrieved the specified page of search results.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_search:SearchRetrieveResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -9348,6 +9410,8 @@
             "baseUrl": "https://api.twelvelabs.io/v1.3"
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/gist",
@@ -9530,6 +9594,8 @@
             "baseUrl": "https://api.twelvelabs.io/v1.3"
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/embed-new",
@@ -9913,17 +9979,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "A list of video embedding tasks has successfully been retrieved.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_embed/tasks:TasksListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "A list of video embedding tasks has successfully been retrieved.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_embed/tasks:TasksListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -10378,145 +10447,149 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "engine_name",
-                "description": "The name of the engine you want to use. The following engines are available:\n  - `Marengo-retrieval-2.6`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "engine_name",
+                  "description": "The name of the engine you want to use. The following engines are available:\n  - `Marengo-retrieval-2.6`\n",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
-                }
-              },
-              {
-                "type": "file",
-                "key": "video_file",
-                "isOptional": true
-              },
-              {
-                "type": "property",
-                "key": "video_url",
-                "description": "Specify this parameter to upload a video from a publicly accessible URL.\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "type": "file",
+                  "key": "video_file",
+                  "isOptional": true
+                },
+                {
+                  "type": "property",
+                  "key": "video_url",
+                  "description": "Specify this parameter to upload a video from a publicly accessible URL.\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "video_start_offset_sec",
+                  "description": "The start offset in seconds from the beginning of the video where processing should begin. Specifying 0 means starting from the beginning of the video.\n\n**Default**: 0\n**Min**: 0\n**Max**: Duration of the video minus 6\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "video_end_offset_sec",
+                  "description": "The end offset in seconds from the beginning of the video where processing should stop.\n\nEnsure the following when you specify this parameter:\n- The end offset does not exceed the total duration of the video file.\n- The end offset is greater than the start offset.\n- You must set both the start and end offsets. Setting only one of these offsets is not permitted, resulting in an error.\n\n**Min**: video_start_offset + 6\n**Max**: Duration of the video file\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "video_clip_length",
+                  "description": "The desired duration in seconds for each clip for which the platform generates an embedding. Ensure that the clip length does not exceed the interval between the start and end offsets.\n\n**Default**: 6\n**Min**: 2\n**Max**: 10\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "video_embedding_scope",
+                  "description": "Defines the scope of video embedding generation. Valid values are the following:\n- `clip`: Creates embeddings for each video segment of `video_clip_length` seconds, from `video_start_offset_sec` to `video_end_offset_sec`.\n- `clip` and `video`: Creates embeddings for video segments and the entire video.\n\nTo create embeddings for segments and the entire video in the same request, include this parameter twice as shown below:\n\n```json\n--form video_embedding_scope=clip \\\n--form video_embedding_scope=video\n```\n\n**Default**: `clip`\n",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "default": "clip"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "type": "property",
-                "key": "video_start_offset_sec",
-                "description": "The start offset in seconds from the beginning of the video where processing should begin. Specifying 0 means starting from the beginning of the video.\n\n**Default**: 0\n**Min**: 0\n**Max**: Duration of the video minus 6\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "video_end_offset_sec",
-                "description": "The end offset in seconds from the beginning of the video where processing should stop.\n\nEnsure the following when you specify this parameter:\n- The end offset does not exceed the total duration of the video file.\n- The end offset is greater than the start offset.\n- You must set both the start and end offsets. Setting only one of these offsets is not permitted, resulting in an error.\n\n**Min**: video_start_offset + 6\n**Max**: Duration of the video file\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "video_clip_length",
-                "description": "The desired duration in seconds for each clip for which the platform generates an embedding. Ensure that the clip length does not exceed the interval between the start and end offsets.\n\n**Default**: 6\n**Min**: 2\n**Max**: 10\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "video_embedding_scope",
-                "description": "Defines the scope of video embedding generation. Valid values are the following:\n- `clip`: Creates embeddings for each video segment of `video_clip_length` seconds, from `video_start_offset_sec` to `video_end_offset_sec`.\n- `clip` and `video`: Creates embeddings for video segments and the entire video.\n\nTo create embeddings for segments and the entire video in the same request, include this parameter twice as shown below:\n\n```json\n--form video_embedding_scope=clip \\\n--form video_embedding_scope=video\n```\n\n**Default**: `clip`\n",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "default": "clip"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "A video embedding task has successfully been created.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_embed/tasks:TasksCreateResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "A video embedding task has successfully been created.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_embed/tasks:TasksCreateResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -11059,17 +11132,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "Video embeddings have successfully been retrieved.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_embed/tasks:TasksRetrieveResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Video embeddings have successfully been retrieved.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_embed/tasks:TasksRetrieveResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -11412,17 +11488,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The status of your video embedding task has been retrieved.\n",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_embed/tasks/status:StatusRetrieveResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The status of your video embedding task has been retrieved.\n",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_embed/tasks/status:StatusRetrieveResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -12029,17 +12108,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The video vectors in the specified index have successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_indexes/videos:VideosListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The video vectors in the specified index have successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_indexes/videos:VideosListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -12995,17 +13077,20 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "response": {
-          "description": "The specified video information has successfully been retrieved.",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_indexes/videos:VideosRetrieveResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "The specified video information has successfully been retrieved.",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_indexes/videos:VideosRetrieveResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "The request has failed.",
@@ -13417,65 +13502,68 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "video_title",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "video_title",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Specifies the new title of the video.\n"
                 },
-                "description": "Specifies the new title of the video.\n"
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
                             }
                           }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
-                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Metadata that helps you categorize your videos. You can specify a list of keys and values. Keys must be of type `string`, and values can be of the following types: `string`, `integer`, `float` or `boolean`.\n\n**NOTES:**\n-  If you want to store other types of data such as objects or arrays,  you must convert your data into string values.\n- You cannot override any of the predefined metadata (example: duration, width, length, etc) associated with a video.\n"
-              }
-            ]
+                  },
+                  "description": "Metadata that helps you categorize your videos. You can specify a list of keys and values. Keys must be of type `string`, and values can be of the following types: `string`, `integer`, `float` or `boolean`.\n\n**NOTES:**\n-  If you want to store other types of data such as objects or arrays,  you must convert your data into string values.\n- You cannot override any of the predefined metadata (example: duration, width, length, etc) associated with a video.\n"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "The request has failed.",
@@ -13953,6 +14041,8 @@
             "description": "Your API key.\n\n**NOTE:** You can find your API key on the <a href=\"https://playground.twelvelabs.io/dashboard/api-key\" target=\"_blank\">API Key</a> page."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "The request has failed.",

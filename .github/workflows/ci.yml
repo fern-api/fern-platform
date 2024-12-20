@@ -67,14 +67,14 @@ jobs:
         uses: ./.github/actions/install
 
       - name: Build components
-        run: pnpm turbo --filter=@fern-ui/components compile
+        run: pnpm turbo --filter=@fern-docs/components compile
 
       - name: Run Chromatic
         uses: chromaui/action@latest
         # Chromatic CI config: https://www.chromatic.com/docs/github-actions/
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          workingDir: packages/ui/components
+          workingDir: packages/fern-docs/components
           onlyChanged: true
 
   fern-generate:

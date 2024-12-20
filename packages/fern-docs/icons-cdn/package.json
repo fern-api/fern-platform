@@ -1,0 +1,61 @@
+{
+  "name": "@fern-docs/icons-cdn",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fern-docs/icons-cdn"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "next build",
+    "depcheck": "depcheck",
+    "dev": "next dev",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint": "next lint",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "start": "next start",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-brands-svg-icons": "^6.5.2",
+    "@fortawesome/pro-duotone-svg-icons": "^6.5.2",
+    "@fortawesome/pro-light-svg-icons": "^6.5.2",
+    "@fortawesome/pro-regular-svg-icons": "^6.5.2",
+    "@fortawesome/pro-solid-svg-icons": "^6.5.2",
+    "@fortawesome/pro-thin-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-light-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-regular-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-solid-svg-icons": "^6.5.2",
+    "@fortawesome/sharp-thin-svg-icons": "^6.5.2",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@next/bundle-analyzer": "14.2.9",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18",
+    "depcheck": "^1.4.3",
+    "eslint": "^9",
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.4.2",
+    "stylelint": "^16.1.0",
+    "typescript": "^5",
+    "vitest": "^2.1.4"
+  },
+  "optionalDependencies": {
+    "@next/swc-darwin-arm64": "14.2.9",
+    "@next/swc-darwin-x64": "14.2.9",
+    "@next/swc-linux-x64-gnu": "14.2.9",
+    "@next/swc-win32-x64-msvc": "14.2.9"
+  }
+}
