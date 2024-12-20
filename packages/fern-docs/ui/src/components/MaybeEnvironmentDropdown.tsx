@@ -64,7 +64,6 @@ export function MaybeEnvironmentDropdown({
   // TODO: clean up this component
   useEffect(() => {
     if (
-       
       url &&
       url.host &&
       url.host !== "" &&
