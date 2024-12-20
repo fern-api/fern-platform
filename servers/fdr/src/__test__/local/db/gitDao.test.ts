@@ -110,13 +110,11 @@ it("pulls happy path", async () => {
   });
   expect(pulls.pullRequests).toEqual([pull2, pull1]);
 
-  const pull1FromDb = await fdrApplication.dao
-    .git()
-    .getPullRequest({
-      repositoryOwner: "acme",
-      repositoryName: "repoForPRs",
-      pullRequestNumber: 1,
-    });
+  const pull1FromDb = await fdrApplication.dao.git().getPullRequest({
+    repositoryOwner: "acme",
+    repositoryName: "repoForPRs",
+    pullRequestNumber: 1,
+  });
   expect(pull1FromDb).toEqual(pull1);
 
   const pull3: PullRequest = {

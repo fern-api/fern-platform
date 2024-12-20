@@ -55,11 +55,9 @@ it("generator dao", async () => {
     generator: generatorStarter,
   });
 
-  const generator = await fdrApplication.dao
-    .generators()
-    .getGenerator({
-      generatorId: FdrAPI.generators.GeneratorId("my-cool/example"),
-    });
+  const generator = await fdrApplication.dao.generators().getGenerator({
+    generatorId: FdrAPI.generators.GeneratorId("my-cool/example"),
+  });
   expect(generator).toEqual(generatorStarter);
 
   await fdrApplication.dao.generators().upsertGenerator({

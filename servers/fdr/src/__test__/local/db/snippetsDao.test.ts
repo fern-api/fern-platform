@@ -200,13 +200,11 @@ it("snippets dao", async () => {
     .getSdkIdForPackage({ sdkPackage: "acme", language: "PYTHON" });
   expect(sdkId).toEqual("python|acme|0.0.2");
 
-  const sdkIdPrevious = await fdrApplication.dao
-    .sdks()
-    .getSdkIdForPackage({
-      sdkPackage: "acme",
-      language: "PYTHON",
-      version: "0.0.1",
-    });
+  const sdkIdPrevious = await fdrApplication.dao.sdks().getSdkIdForPackage({
+    sdkPackage: "acme",
+    language: "PYTHON",
+    version: "0.0.1",
+  });
   expect(sdkIdPrevious).toEqual("python|acme|0.0.1");
 
   const snippetsForSdkId = await fdrApplication.dao
