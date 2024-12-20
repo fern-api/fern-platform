@@ -21,7 +21,7 @@ describe("buildFormData", () => {
         const form = await buildFormData(serializedFormData);
 
         // Assert
-        expect(form.getLengthSync()).toBeGreaterThan(0);
+        expect(form.get("file")).toBeTruthy();
     });
 
     it("should build a form data object with a file array", async () => {
@@ -49,6 +49,6 @@ describe("buildFormData", () => {
         };
 
         const form = await buildFormData(serializedFormData);
-        expect(form.getLengthSync()).toBeGreaterThan(0);
+        expect(form.get("files")).toBeTruthy();
     });
 });

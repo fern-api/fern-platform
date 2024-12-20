@@ -215,6 +215,7 @@ export class FdrDeployStack extends Stack {
                         environmentType === "DEV2"
                             ? "https://files-dev2.buildwithfern.com"
                             : "https://files.buildwithfern.com",
+                    NODE_ENV: "production",
                 },
                 containerName: CONTAINER_NAME,
                 containerPort: 8080,
