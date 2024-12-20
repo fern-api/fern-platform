@@ -34,7 +34,7 @@ describe("ServerObjectConverterNode", () => {
       });
       const result = node.convert();
       expect(result).toEqual({
-        id: FernRegistry.EnvironmentId("x-fern-server-name"),
+        id: FernRegistry.EnvironmentId("https://api.example.com"),
         baseUrl: "https://api.example.com",
       });
     });

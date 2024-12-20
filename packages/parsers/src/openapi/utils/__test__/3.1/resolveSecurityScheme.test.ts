@@ -41,9 +41,7 @@ describe("resolveSecurityScheme", () => {
       paths: {},
       components: {
         securitySchemes: {
-          apiKey: {
-            $ref: "#/components/securitySchemes/referencedApiKey",
-          },
+          apiKey: { $ref: "#/components/securitySchemes/referencedApiKey" },
           referencedApiKey: referencedScheme,
         },
       },
@@ -58,9 +56,7 @@ describe("resolveSecurityScheme", () => {
       paths: {},
       components: {
         securitySchemes: {
-          apiKey: {
-            $ref: "#/components/securitySchemes/nonexistent",
-          },
+          apiKey: { $ref: "#/components/securitySchemes/nonexistent" },
         },
       },
     };

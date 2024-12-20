@@ -1,6 +1,6 @@
 {
   "name": "@fern-api/docs-parsers",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
@@ -16,10 +16,10 @@
     "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
     "compile": "tsc --build",
     "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown \"**\"",
-    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "lint": "pnpm lint:eslint && pnpm lint:style",
-    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
@@ -38,6 +38,7 @@
     "whatwg-mimetype": "^4.0.0"
   },
   "devDependencies": {
+    "@fern-fern/docs-parsers-fern-definition": "^0.0.3",
     "@fern-platform/configs": "workspace:*",
     "@types/uuid": "^9.0.1",
     "@types/whatwg-mimetype": "^3.0.2",

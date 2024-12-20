@@ -1,6 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import { FernRegistry } from "../../client/generated";
+import { SubpackageId } from "../../client/generated/api/resources/api/resources/v1";
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -11,6 +12,7 @@ import { XFernBasePathConverterNode } from "./extensions/XFernBasePathConverter.
 import { XFernGroupsConverterNode } from "./extensions/XFernGroupsConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
+import { TagObjectConverterNode } from "./paths/TagsObjectConverter.node";
 import { WebhooksObjectConverterNode } from "./paths/WebhooksObjectConverter.node";
 import { ComponentsConverterNode } from "./schemas/ComponentsConverter.node";
 
@@ -25,6 +27,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
   auth: SecurityRequirementObjectConverterNode | undefined;
   basePath: XFernBasePathConverterNode | undefined;
   fernGroups: XFernGroupsConverterNode | undefined;
+  tags: TagObjectConverterNode[] | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>
@@ -40,11 +43,40 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.context,
       this.accessPath
     );
+
+    if (this.input.security != null) {
+      this.auth = new SecurityRequirementObjectConverterNode({
+        input: this.input.security,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "security",
+      });
+    }
+
     this.basePath = new XFernBasePathConverterNode({
       input: this.input,
       context: this.context,
       accessPath: this.accessPath,
       pathId: this.pathId,
+    });
+
+    if (this.input.tags != null) {
+      this.tags = this.input.tags.map(
+        (tag, index) =>
+          new TagObjectConverterNode({
+            input: tag,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: `tags[${index}]`,
+          })
+      );
+    }
+
+    this.fernGroups = new XFernGroupsConverterNode({
+      input: this.input,
+      context: this.context,
+      accessPath: this.accessPath,
+      pathId: "x-fern-groups",
     });
 
     if (this.input.paths == null && this.input.webhooks == null) {
@@ -63,6 +95,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
           pathId: "paths",
         },
         this.servers,
+        this.auth,
         this.basePath
       );
     }
@@ -75,7 +108,9 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
           accessPath: this.accessPath,
           pathId: "webhooks",
         },
-        this.basePath
+        this.basePath,
+        this.servers,
+        this.auth
       );
     }
 
@@ -92,28 +127,43 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         pathId: "components",
       });
     }
-
-    if (this.input.security != null) {
-      this.auth = new SecurityRequirementObjectConverterNode({
-        input: this.input.security,
-        context: this.context,
-        accessPath: this.accessPath,
-        pathId: "security",
-      });
-    }
-
-    this.fernGroups = new XFernGroupsConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-fern-groups",
-    });
   }
 
   convert(): FernRegistry.api.latest.ApiDefinition | undefined {
     const apiDefinitionId = v4();
 
     const { webhookEndpoints, endpoints } = this.paths?.convert() ?? {};
+    const subpackages: Record<
+      SubpackageId,
+      FernRegistry.api.latest.SubpackageMetadata
+    > = {};
+    if (endpoints != null) {
+      Object.values(endpoints).forEach((endpoint) =>
+        endpoint.namespace?.forEach((subpackage) => {
+          const qualifiedPath: string[] = [];
+          subpackages[subpackage] = {
+            id: subpackage,
+            name: [...qualifiedPath, subpackage].join("/"),
+            displayName: undefined,
+          };
+          qualifiedPath.push(subpackage);
+        })
+      );
+    }
+    if (webhookEndpoints != null) {
+      Object.values(webhookEndpoints).forEach((webhook) =>
+        webhook.namespace?.forEach((subpackage) => {
+          const qualifiedPath: string[] = [];
+          subpackages[subpackage] = {
+            id: subpackage,
+            name: [...qualifiedPath, subpackage].join("/"),
+            displayName: undefined,
+          };
+          qualifiedPath.push(subpackage);
+        })
+      );
+    }
+
     const types = this.components?.convert();
 
     if (types == null) {
@@ -129,9 +179,11 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         ...(this.webhooks?.convert() ?? {}),
         ...(webhookEndpoints ?? {}),
       },
-      types,
+      types: Object.fromEntries(
+        Object.entries(types).map(([id, type]) => [id, type])
+      ),
       // This is not necessary and will be removed
-      subpackages: {},
+      subpackages,
       auths: this.auth?.convert() ?? {},
       // TODO: Implement globalHeaders
       globalHeaders: undefined,

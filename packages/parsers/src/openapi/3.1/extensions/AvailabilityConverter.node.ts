@@ -11,7 +11,7 @@ import {
 } from "../../types/format.types";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { extendType } from "../../utils/extendType";
-import { xFernAvailabilityKey } from "./fernExtension.consts";
+import { X_FERN_AVAILABILITY } from "./fernExtension.consts";
 
 export type Availability = ConstArrayToType<
   typeof SUPPORTED_X_FERN_AVAILABILITY_VALUES
@@ -19,7 +19,7 @@ export type Availability = ConstArrayToType<
 
 export declare namespace AvailabilityConverterNode {
   export interface Input {
-    [xFernAvailabilityKey]?: Availability;
+    [X_FERN_AVAILABILITY]?: Availability;
   }
 }
 
@@ -48,7 +48,7 @@ export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
     } else {
       const maybeAvailability = extendType<AvailabilityConverterNode.Input>(
         this.input
-      )[xFernAvailabilityKey];
+      )[X_FERN_AVAILABILITY];
       if (maybeAvailability != null) {
         if (SUPPORTED_X_FERN_AVAILABILITY_VALUES.includes(maybeAvailability)) {
           this.availability = maybeAvailability;
@@ -65,6 +65,7 @@ export class AvailabilityConverterNode extends BaseOpenApiV3_1ConverterNode<
 
   convert(): FernRegistry.Availability | undefined {
     switch (this.availability) {
+      case "beta":
       case "pre-release":
         return FernRegistry.Availability.Beta;
       case "in-development":

@@ -21,7 +21,9 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject
-    >
+    >,
+    protected path: string,
+    protected responseStatusCode: number
   ) {
     super(args);
     this.safeParse();
@@ -51,7 +53,9 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
               accessPath: this.accessPath,
               pathId: "content",
             },
-            contentType
+            contentType,
+            this.path,
+            this.responseStatusCode
           );
       }
     );

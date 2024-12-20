@@ -7,8 +7,10 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveWebhookReference } from "../../utils/3.1/resolveWebhookReference";
+import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { PathItemObjectConverterNode } from "./PathItemObjectConverter.node";
+import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
 export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.Document["webhooks"],
@@ -20,7 +22,11 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.Document["webhooks"]
     >,
-    protected readonly basePath: XFernBasePathConverterNode | undefined
+    protected readonly basePath: XFernBasePathConverterNode | undefined,
+    protected readonly servers: ServerObjectConverterNode[] | undefined,
+    protected readonly globalAuth:
+      | SecurityRequirementObjectConverterNode
+      | undefined
   ) {
     super(args);
     this.safeParse();
@@ -46,7 +52,8 @@ export class WebhooksObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                 accessPath: this.accessPath,
                 pathId: operation,
               },
-              undefined,
+              this.servers,
+              this.globalAuth,
               this.basePath,
               true
             ),

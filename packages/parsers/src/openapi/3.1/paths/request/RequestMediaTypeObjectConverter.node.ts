@@ -10,12 +10,14 @@ import {
   ConstArrayToType,
   SUPPORTED_REQUEST_CONTENT_TYPES,
 } from "../../../types/format.types";
+import { resolveReference } from "../../../utils/3.1/resolveReference";
 import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
+import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
 
 export type RequestContentType = ConstArrayToType<
@@ -42,9 +44,14 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     | Record<string, MultipartFormDataPropertySchemaConverterNode>
     | undefined;
 
+  resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
+  example: ExampleObjectConverterNode | undefined;
+
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
-    contentType: string | undefined
+    contentType: string | undefined,
+    protected path: string,
+    protected responseStatusCode: number
   ) {
     super(args);
     this.safeParse(contentType);
@@ -53,6 +60,11 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   parse(contentType: string | undefined): void {
     if (this.input.schema != null) {
       if (isReferenceObject(this.input.schema)) {
+        this.resolvedSchema = resolveReference(
+          this.input.schema,
+          this.context.document,
+          undefined
+        );
         this.schema = new ReferenceConverterNode({
           input: this.input.schema,
           context: this.context,
@@ -60,6 +72,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           pathId: "schema",
         });
       } else if (isObjectSchema(this.input.schema)) {
+        this.resolvedSchema = this.input.schema;
         const mediaType = MediaType.parse(contentType);
         // An exhaustive switch cannot be used here, because contentType is an unbounded string
         if (mediaType?.containsJSON()) {
@@ -71,7 +84,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             pathId: "schema",
           });
         } else if (mediaType?.isOctetStream()) {
-          this.contentType = "stream" as const;
+          this.contentType = "bytes" as const;
           this.isOptional = this.input.schema.required == null;
         } else if (mediaType?.isMultiPartFormData()) {
           this.contentType = "form-data" as const;
@@ -115,13 +128,29 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         path: this.accessPath,
       });
     }
+
+    if (this.contentType != null) {
+      if (this.input.example != null) {
+        // this.example = new ExampleObjectConverterNode(
+        //     {
+        //         input: this.input.example,
+        //         context: this.context,
+        //         accessPath: this.accessPath,
+        //         pathId: "example",
+        //     },
+        //     this.path,
+        //     this.responseStatusCode,
+        //     this,
+        // );
+      }
+    }
   }
 
   convert(): FernRegistry.api.latest.HttpRequestBodyShape | undefined {
     switch (this.contentType) {
       case "json":
         return this.schema?.convert();
-      case "stream":
+      case "bytes":
         return {
           type: "bytes",
           isOptional: this.isOptional ?? false,

@@ -1,21 +1,28 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "post-pet": {
+    "endpoint_pet.addPet": {
       "description": "Add a new pet to the store",
-      "id": "post-pet",
+      "namespace": [
+        "pet"
+      ],
+      "id": "endpoint_pet.addPet",
       "method": "POST",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -40,24 +47,30 @@
         },
         "description": "Successful operation"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "put-pet": {
+    "endpoint_pet.updatePet": {
       "description": "Update an existing pet by Id",
-      "id": "put-pet",
+      "namespace": [
+        "pet"
+      ],
+      "id": "endpoint_pet.updatePet",
       "method": "PUT",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -82,17 +95,27 @@
         },
         "description": "Successful operation"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "get-pet-pet-id": {
+    "endpoint_pets.getPetById": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
-      "id": "get-pet-pet-id",
+      "namespace": [
+        "pets"
+      ],
+      "id": "endpoint_pets.getPetById",
       "method": "GET",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
@@ -100,10 +123,10 @@
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -144,7 +167,15 @@
             }
           },
           "description": "Invalid ID supplied",
-          "name": "Bad Request"
+          "name": "Bad Request",
+          "examples": [
+            {
+              "description": "A Pet in JSON format",
+              "responseBody": {
+                "type": "json"
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -156,10 +187,17 @@
             }
           },
           "description": "Pet not found",
-          "name": "Not Found"
+          "name": "Not Found",
+          "examples": [
+            {
+              "description": "A Pet in JSON format",
+              "responseBody": {
+                "type": "json"
+              }
+            }
+          ]
         }
-      ],
-      "examples": []
+      ]
     }
   },
   "websockets": {},
@@ -695,6 +733,15 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "pet": {
+      "id": "pet",
+      "name": "pet"
+    },
+    "pets": {
+      "id": "pets",
+      "name": "pets"
+    }
+  },
   "auths": {}
 }

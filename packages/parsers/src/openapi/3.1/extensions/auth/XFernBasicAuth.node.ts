@@ -3,12 +3,12 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
-import { xFernBasicAuthKey } from "../fernExtension.consts";
+import { X_FERN_BASIC_AUTH } from "../fernExtension.consts";
 import { TokenSecurityScheme } from "./types/TokenSecurityScheme";
 
 export declare namespace XFernBasicAuthNode {
   export interface Input {
-    [xFernBasicAuthKey]?: {
+    [X_FERN_BASIC_AUTH]?: {
       username?: TokenSecurityScheme;
       password?: TokenSecurityScheme;
     };
@@ -35,7 +35,7 @@ export class XFernBasicAuthNode extends BaseOpenApiV3_1ConverterNode<
   // This would be used to set a member on the node
   parse(): void {
     const basicAuthScheme = extendType<XFernBasicAuthNode.Input>(this.input)[
-      xFernBasicAuthKey
+      X_FERN_BASIC_AUTH
     ];
     this.username = basicAuthScheme?.username;
     this.password = basicAuthScheme?.password;

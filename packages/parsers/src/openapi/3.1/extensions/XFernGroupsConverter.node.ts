@@ -4,7 +4,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
-import { xFernGroupsKey } from "./fernExtension.consts";
+import { X_FERN_GROUPS } from "./fernExtension.consts";
 
 export declare namespace XFernGroupsConverterNode {
   export interface Group {
@@ -13,7 +13,7 @@ export declare namespace XFernGroupsConverterNode {
   }
 
   export interface Input {
-    [xFernGroupsKey]?: Record<string, Group>[];
+    [X_FERN_GROUPS]?: Record<string, Group>[];
   }
 }
 
@@ -30,7 +30,7 @@ export class XFernGroupsConverterNode extends BaseOpenApiV3_1ConverterNode<
 
   parse(): void {
     this.groups = extendType<XFernGroupsConverterNode.Input>(this.input)[
-      xFernGroupsKey
+      X_FERN_GROUPS
     ];
   }
 

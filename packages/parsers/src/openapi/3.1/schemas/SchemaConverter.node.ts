@@ -48,6 +48,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
 
   description: string | undefined;
   name: string | undefined;
+  examples: unknown | undefined;
   availability: AvailabilityConverterNode | undefined;
 
   constructor(
@@ -79,7 +80,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNode<
     } else {
       // If the object is not a reference object, then it is a schema object, gather all appropriate variables
       this.name = this.input.title;
-
+      this.examples = this.input.example;
       if (this.input.const != null) {
         this.typeShapeNode = new ConstConverterNode({
           input: this.input,

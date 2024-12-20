@@ -124,10 +124,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           return this.convertStreamingFormat();
         }
       case "application/octet-stream":
-        return {
-          type: "fileDownload",
-          contentType: this.contentSubtype,
-        };
+        return { type: "fileDownload", contentType: this.contentSubtype };
       case "text/event-stream":
         return this.convertStreamingFormat();
       case undefined:

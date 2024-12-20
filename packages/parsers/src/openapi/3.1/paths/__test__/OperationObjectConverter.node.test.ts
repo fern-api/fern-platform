@@ -27,6 +27,7 @@ describe("OperationObjectConverterNode", () => {
           pathId: "test",
         },
         undefined,
+        undefined,
         "/pets/{petId}",
         "GET",
         undefined
@@ -36,14 +37,13 @@ describe("OperationObjectConverterNode", () => {
 
       expect(result).toEqual({
         description: "Get a pet",
-        id: "get-pets-pet-id",
+        id: "endpoint_.petId",
         method: "GET",
         path: [
+          { type: "literal", value: "/" },
           { type: "literal", value: "pets" },
-          {
-            type: "pathParameter",
-            value: FernRegistry.PropertyKey("petId"),
-          },
+          { type: "literal", value: "/" },
+          { type: "pathParameter", value: FernRegistry.PropertyKey("petId") },
         ],
         environments: [],
         pathParameters: [
@@ -66,7 +66,6 @@ describe("OperationObjectConverterNode", () => {
             },
           },
         ],
-        examples: [],
       });
     });
 
@@ -82,6 +81,7 @@ describe("OperationObjectConverterNode", () => {
           accessPath: [],
           pathId: "test",
         },
+        undefined,
         undefined,
         undefined,
         "GET",
@@ -103,6 +103,7 @@ describe("OperationObjectConverterNode", () => {
           pathId: "test",
         },
         undefined,
+        undefined,
         "/users/{userId}/posts/{postId}",
         "GET",
         undefined
@@ -111,16 +112,14 @@ describe("OperationObjectConverterNode", () => {
       const result = node.convertPathToPathParts();
 
       expect(result).toEqual([
+        { type: "literal", value: "/" },
         { type: "literal", value: "users" },
-        {
-          type: "pathParameter",
-          value: FernRegistry.PropertyKey("userId"),
-        },
+        { type: "literal", value: "/" },
+        { type: "pathParameter", value: FernRegistry.PropertyKey("userId") },
+        { type: "literal", value: "/" },
         { type: "literal", value: "posts" },
-        {
-          type: "pathParameter",
-          value: FernRegistry.PropertyKey("postId"),
-        },
+        { type: "literal", value: "/" },
+        { type: "pathParameter", value: FernRegistry.PropertyKey("postId") },
       ]);
     });
   });

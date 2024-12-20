@@ -32,7 +32,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    const defaultResponse = this.input.default;
+    const defaultResponse = this.input["default"];
     Object.entries(this.input).forEach(([statusCode, response]) => {
       if (parseInt(statusCode) >= 400) {
         this.errorsByStatusCode ??= {};
@@ -93,6 +93,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.context.logger.info(
           "Accessing first response from ResponseMediaTypeObjectConverterNode conversion."
         );
+
+        // TODO: resolve reference here, if not done already
         const schema = response.responses?.[0]?.schema;
         const shape = schema?.convert();
 
@@ -109,7 +111,25 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             schema.name ??
             STATUS_CODE_MESSAGES[parseInt(statusCode)] ??
             "UNKNOWN ERROR",
-          examples: undefined,
+          examples: Array.isArray(schema.examples)
+            ? schema.examples.map((example) => ({
+                name: schema.name,
+                description: schema.description,
+                responseBody: {
+                  type: "json" as const,
+                  value: example,
+                },
+              }))
+            : [
+                {
+                  name: schema.name,
+                  description: schema.description,
+                  responseBody: {
+                    type: "json" as const,
+                    value: schema.examples,
+                  },
+                },
+              ],
         };
       })
       .filter(isNonNullish);

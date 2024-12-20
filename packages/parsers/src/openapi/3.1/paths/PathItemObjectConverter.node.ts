@@ -6,6 +6,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
+import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
 import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { OperationObjectConverterNode } from "./OperationObjectConverter.node";
@@ -29,6 +30,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.PathItemObject>,
     protected servers: ServerObjectConverterNode[] | undefined,
+    protected globalAuth: SecurityRequirementObjectConverterNode | undefined,
     protected basePath: XFernBasePathConverterNode | undefined,
     protected isWebhook: boolean | undefined
   ) {
@@ -62,6 +64,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           pathId: "get",
         },
         this.servers,
+        this.globalAuth,
         this.pathId,
         "GET",
         this.basePath,
@@ -77,6 +80,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           pathId: "post",
         },
         this.servers,
+        this.globalAuth,
         this.pathId,
         "POST",
         this.basePath,
@@ -92,8 +96,24 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           pathId: "put",
         },
         this.servers,
+        this.globalAuth,
         this.pathId,
         "PUT",
+        this.basePath
+      );
+    }
+    if (this.input.patch != null) {
+      this.patch = new OperationObjectConverterNode(
+        {
+          input: this.input.patch,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: "patch",
+        },
+        this.servers,
+        this.globalAuth,
+        this.pathId,
+        "PATCH",
         this.basePath
       );
     }
@@ -106,6 +126,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           pathId: "delete",
         },
         this.servers,
+        this.globalAuth,
         this.pathId,
         "DELETE",
         this.basePath
@@ -123,6 +144,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.get?.convert(),
       this.post?.convert(),
       this.put?.convert(),
+      this.patch?.convert(),
       this.delete?.convert(),
     ].filter(isNonNullish);
   }

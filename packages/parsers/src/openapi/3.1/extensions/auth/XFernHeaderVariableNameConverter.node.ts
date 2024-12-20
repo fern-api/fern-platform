@@ -3,11 +3,11 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
-import { xFernHeaderVariableNameKey } from "../fernExtension.consts";
+import { X_FERN_HEADER_NAME } from "../fernExtension.consts";
 
 export declare namespace XFernHeaderVariableNameConverterNode {
   export interface Input {
-    [xFernHeaderVariableNameKey]?: string;
+    [X_FERN_HEADER_NAME]?: string;
   }
 }
 
@@ -25,7 +25,7 @@ export class XFernHeaderVariableNameConverterNode extends BaseOpenApiV3_1Convert
   parse(): void {
     this.headerVariableName =
       extendType<XFernHeaderVariableNameConverterNode.Input>(this.input)[
-        xFernHeaderVariableNameKey
+        X_FERN_HEADER_NAME
       ];
   }
 

@@ -4,10 +4,10 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
-import { xFernBasePathKey } from "./fernExtension.consts";
+import { X_FERN_BASE_PATH } from "./fernExtension.consts";
 export declare namespace XFernBasePathConverterNode {
   export interface Input {
-    [xFernBasePathKey]?: string;
+    [X_FERN_BASE_PATH]?: string;
   }
 }
 
@@ -26,7 +26,7 @@ export class XFernBasePathConverterNode extends BaseOpenApiV3_1ConverterNode<
 
   parse(): void {
     this.basePath = extendType<XFernBasePathConverterNode.Input>(this.input)[
-      xFernBasePathKey
+      X_FERN_BASE_PATH
     ];
 
     if (this.basePath != null) {

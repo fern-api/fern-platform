@@ -4,11 +4,11 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
-import { xFernGroupNameKey } from "./fernExtension.consts";
+import { X_FERN_GROUP_NAME } from "./fernExtension.consts";
 
 export declare namespace XFernGroupNameConverterNode {
   export interface Input {
-    [xFernGroupNameKey]?: string | string[];
+    [X_FERN_GROUP_NAME]?: string | string[];
   }
 }
 
@@ -26,7 +26,7 @@ export class XFernGroupNameConverterNode extends BaseOpenApiV3_1ConverterNode<
   // This would be used to set a member on the node
   parse(): void {
     this.groupName = extendType<XFernGroupNameConverterNode.Input>(this.input)[
-      xFernGroupNameKey
+      X_FERN_GROUP_NAME
     ];
   }
 

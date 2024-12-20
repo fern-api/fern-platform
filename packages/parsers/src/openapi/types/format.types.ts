@@ -57,6 +57,7 @@ export const OPENAPI_STRING_TYPE_FORMAT = [
 ] as const;
 
 export const SUPPORTED_X_FERN_AVAILABILITY_VALUES = [
+  "beta",
   "pre-release",
   "in-development",
   "generally-available",
@@ -65,7 +66,7 @@ export const SUPPORTED_X_FERN_AVAILABILITY_VALUES = [
 export const SUPPORTED_REQUEST_CONTENT_TYPES = [
   "json",
   "form-data",
-  "stream",
+  "bytes",
 ] as const;
 export const SUPPORTED_RESPONSE_CONTENT_TYPES = [
   "application/json",

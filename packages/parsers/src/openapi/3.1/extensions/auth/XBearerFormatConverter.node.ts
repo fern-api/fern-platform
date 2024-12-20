@@ -3,11 +3,11 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
-import { xBearerFormatKey } from "../openApiExtension.consts";
+import { X_BEARER_FORMAT } from "../openApiExtension.consts";
 
 export declare namespace XBearerFormatConverterNode {
   export interface Input {
-    [xBearerFormatKey]?: string;
+    [X_BEARER_FORMAT]?: string;
   }
 }
 
@@ -25,7 +25,7 @@ export class XBearerFormatConverterNode extends BaseOpenApiV3_1ConverterNode<
   parse(): void {
     this.bearerFormat = extendType<XBearerFormatConverterNode.Input>(
       this.input
-    )[xBearerFormatKey];
+    )[X_BEARER_FORMAT];
   }
 
   convert(): string | undefined {

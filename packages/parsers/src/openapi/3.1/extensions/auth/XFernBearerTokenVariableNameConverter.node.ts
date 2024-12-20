@@ -3,11 +3,11 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../../utils/extendType";
-import { xFernBearerTokenVariableNameKey } from "../fernExtension.consts";
+import { X_FERN_BEARER_TOKEN_NAME } from "../fernExtension.consts";
 
 export declare namespace XFernBearerTokenVariableNameConverterNode {
   export interface Input {
-    [xFernBearerTokenVariableNameKey]?: string;
+    [X_FERN_BEARER_TOKEN_NAME]?: string;
   }
 }
 
@@ -25,7 +25,7 @@ export class XFernBearerTokenVariableNameConverterNode extends BaseOpenApiV3_1Co
   parse(): void {
     this.tokenVariableName =
       extendType<XFernBearerTokenVariableNameConverterNode.Input>(this.input)[
-        xFernBearerTokenVariableNameKey
+        X_FERN_BEARER_TOKEN_NAME
       ];
   }
 
