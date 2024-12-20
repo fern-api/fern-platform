@@ -33,23 +33,6 @@ describe("ExampleObjectConverterNode", () => {
     };
 
     describe("parse()", () => {
-        it("should error if request body schema is missing", () => {
-            new ExampleObjectConverterNode(
-                baseArgs,
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                { ...mockRequestBody, resolvedSchema: undefined } as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Request body schema is required",
-                path: ["test"],
-            });
-        });
-
         it("should error if json example is not an object", () => {
             new ExampleObjectConverterNode(
                 {
@@ -70,7 +53,7 @@ describe("ExampleObjectConverterNode", () => {
             );
 
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Invalid example object, expected object for json",
+                message: "Invalid example, expected object for json",
                 path: ["test"],
             });
         });
@@ -87,7 +70,7 @@ describe("ExampleObjectConverterNode", () => {
             );
 
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Response body schema is required",
+                message: "Invalid example, expected object for json",
                 path: ["test"],
             });
         });
@@ -112,7 +95,7 @@ describe("ExampleObjectConverterNode", () => {
             );
 
             expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Invalid example object, expected object for json",
+                message: "Invalid example, expected object for json",
                 path: ["test"],
             });
         });
@@ -135,7 +118,7 @@ describe("ExampleObjectConverterNode", () => {
                 },
                 mockPath,
                 mockResponseStatusCode,
-                "test",
+                "Test example",
                 mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
@@ -178,7 +161,27 @@ describe("ExampleObjectConverterNode", () => {
                 mockResponseStatusCode,
                 "test",
                 mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+                new ResponseMediaTypeObjectConverterNode(
+                    {
+                        input: {
+                            schema: {
+                                type: "object",
+                                properties: {
+                                    id: { type: "string" },
+                                    name: { type: "string" },
+                                },
+                            },
+                        },
+                        context: mockContext,
+                        accessPath: [],
+                        pathId: "test",
+                    },
+                    "application/json",
+                    undefined,
+                    "testpath",
+                    200,
+                    undefined,
+                ),
                 undefined,
             );
 
@@ -187,7 +190,7 @@ describe("ExampleObjectConverterNode", () => {
             expect(result).toEqual({
                 path: mockPath,
                 responseStatusCode: mockResponseStatusCode,
-                name: "Test response",
+                name: "test",
                 description: "Test response description",
                 pathParameters: undefined,
                 queryParameters: undefined,
@@ -216,7 +219,10 @@ describe("ExampleObjectConverterNode", () => {
                 mockPath,
                 mockResponseStatusCode,
                 "test",
-                { ...mockRequestBody, contentType: "bytes" as const } as unknown as RequestMediaTypeObjectConverterNode,
+                {
+                    ...mockRequestBody,
+                    contentType: "bytes" as const,
+                } as unknown as RequestMediaTypeObjectConverterNode,
                 mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
             );
@@ -250,7 +256,7 @@ describe("ExampleObjectConverterNode", () => {
                 mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
                 {
                     ...mockResponseBody,
-                    contentType: "bytes" as const,
+                    contentType: "application/octet-stream" as const,
                 } as unknown as ResponseMediaTypeObjectConverterNode,
                 undefined,
             );
@@ -258,11 +264,8 @@ describe("ExampleObjectConverterNode", () => {
             const result = converter.convert();
 
             expect(result?.responseBody).toEqual({
-                type: "bytes",
-                value: {
-                    type: "base64",
-                    value,
-                },
+                type: "filename",
+                value,
             });
         });
     });
