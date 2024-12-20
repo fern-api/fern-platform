@@ -7,9 +7,10 @@
     "lib": ["DOM", "ESNext"],
     "esModuleInterop": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*.ts"],
   "exclude": [
     "node_modules",
+    "**/__test__/**",
     "src/client/generated/Client.ts",
     "src/client/generated/api/resources/**/client/",
     "src/client/generated/api/resources/docsCache/",

@@ -1,27 +1,35 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "post-v-1-text-to-speech": {
+    "endpoint_textToSpeech.generate": {
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "post-v-1-text-to-speech",
+      "id": "endpoint_textToSpeech.generate",
       "method": "POST",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "text-to-speech"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -35,20 +43,27 @@
           }
         }
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "post-v-1-text-to-speech-from-prompt": {
+    "endpoint_textToSpeech.generateFromPrompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "post-v-1-text-to-speech-from-prompt",
+      "id": "endpoint_textToSpeech.generateFromPrompt",
       "method": "POST",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "literal",
@@ -56,13 +71,17 @@
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "from-prompt"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -76,30 +95,37 @@
           }
         }
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "get-v-1-voices": {
+    "endpoint_voices.list": {
       "description": "Retrieve all voices associated with the current workspace.",
       "namespace": [
         "voices"
       ],
-      "id": "get-v-1-voices",
+      "id": "endpoint_voices.list",
       "method": "GET",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "voices"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -114,30 +140,37 @@
         },
         "description": "Successful response"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "post-v-1-voices": {
+    "endpoint_voices.create": {
       "description": "Create a new voice with a name, optional description, and audio file.",
       "namespace": [
         "voices"
       ],
-      "id": "post-v-1-voices",
+      "id": "endpoint_voices.create",
       "method": "POST",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "voices"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -162,34 +195,45 @@
         },
         "description": "Successful response"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "get-v-1-voices-voice-id": {
+    "endpoint_voices.get": {
       "description": "Retrieve a specific voice by its ID.",
       "namespace": [
         "voices"
       ],
-      "id": "get-v-1-voices-voice-id",
+      "id": "endpoint_voices.get",
       "method": "GET",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "voices"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
           "value": "voice_id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -219,34 +263,45 @@
         },
         "description": "Successful response"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "put-v-1-voices-voice-id": {
+    "endpoint_voices.update": {
       "description": "Update an existing voice with new name, description, or audio file.",
       "namespace": [
         "voices"
       ],
-      "id": "put-v-1-voices-voice-id",
+      "id": "endpoint_voices.update",
       "method": "PUT",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "voices"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
           "value": "voice_id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -286,34 +341,45 @@
         },
         "description": "Successful response"
       },
-      "errors": [],
-      "examples": []
+      "errors": []
     },
-    "delete-v-1-voices-voice-id": {
+    "endpoint_voices.delete": {
       "description": "Delete an existing voice by its ID.",
       "namespace": [
         "voices"
       ],
-      "id": "delete-v-1-voices-voice-id",
+      "id": "endpoint_voices.delete",
       "method": "DELETE",
       "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
         {
           "type": "literal",
           "value": "v1"
         },
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "voices"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
           "value": "voice_id"
         }
       ],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "https://api.deeptune.com",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "https://api.deeptune.com",
           "baseUrl": "https://api.deeptune.com"
         }
       ],
@@ -332,8 +398,7 @@
           "description": "The ID of the voice to delete"
         }
       ],
-      "errors": [],
-      "examples": []
+      "errors": []
     }
   },
   "websockets": {},
@@ -739,6 +804,15 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "text_to_speech": {
+      "id": "text_to_speech",
+      "name": "text_to_speech"
+    },
+    "voices": {
+      "id": "voices",
+      "name": "voices"
+    }
+  },
   "auths": {}
 }

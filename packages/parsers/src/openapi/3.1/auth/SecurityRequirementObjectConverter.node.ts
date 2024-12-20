@@ -25,7 +25,7 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
                 const resolvedSecurityScheme = resolveSecurityScheme(key, this.context.document);
                 if (resolvedSecurityScheme == null) {
                     this.context.errors.warning({
-                        message: `No auth scheme found for ${key}`,
+                        message: `No auth scheme found for ${key}. Inline security schemes are not supported.`,
                         path: this.accessPath,
                     });
                     return;
