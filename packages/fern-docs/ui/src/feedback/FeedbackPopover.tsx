@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
-import { capturePosthogEvent } from "../analytics/posthog";
+import { track } from "../analytics";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";
 
@@ -85,7 +85,7 @@ export const FeedbackPopover = forwardRef<
 
   const handleThumbsUp = useCallback(() => {
     setIsHelpful(true);
-    capturePosthogEvent("feedback_voted", {
+    track("feedback_voted", {
       satisfied: true,
       selectedText: selection?.toString().trim(),
     });
@@ -93,7 +93,7 @@ export const FeedbackPopover = forwardRef<
 
   const handleThumbsDown = useCallback(() => {
     setIsHelpful(false);
-    capturePosthogEvent("feedback_voted", {
+    track("feedback_voted", {
       satisfied: false,
       selectedText: selection?.toString().trim(),
     });
@@ -108,7 +108,7 @@ export const FeedbackPopover = forwardRef<
       email: string;
       showEmailInput: boolean | "indeterminate";
     }) => {
-      capturePosthogEvent("feedback_submitted", {
+      track("feedback_submitted", {
         satisfied: isHelpful,
         feedback: feedbackId,
         selectedText: selection?.toString().trim(),
@@ -154,13 +154,13 @@ export const FeedbackPopover = forwardRef<
           icon={
             <ThumbsDown
               className={clsx("opacity-60", {
-                "animate-thumb-rock": isHelpful === false,
+                "animate-thumb-rock": !isHelpful,
               })}
             />
           }
           variant="minimal"
-          intent={isHelpful === false ? "danger" : "none"}
-          active={isHelpful === false}
+          intent={!isHelpful ? "danger" : "none"}
+          active={!isHelpful}
           onClick={handleThumbsDown}
           className={clsx({ "w-full": isHelpful !== undefined })}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
@@ -201,11 +201,7 @@ export const FeedbackPopover = forwardRef<
           {isHelpful !== undefined &&
             (isFeedbackSubmitted ? (
               <motion.div
-                transition={{
-                  type: "spring",
-                  duration: 0.3,
-                  bounce: 0,
-                }}
+                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.5 }}
@@ -214,7 +210,7 @@ export const FeedbackPopover = forwardRef<
               >
                 <motion.div
                   layoutId="icon-container"
-                  className="t-accent bg-tag-primary mx-auto flex size-8 items-center justify-center rounded-md"
+                  className="bg-tag-primary t-accent mx-auto flex size-8 items-center justify-center rounded-md"
                 >
                   <Check />
                 </motion.div>
@@ -233,11 +229,7 @@ export const FeedbackPopover = forwardRef<
               </motion.div>
             ) : (
               <motion.div
-                transition={{
-                  type: "spring",
-                  duration: 0.3,
-                  bounce: 0,
-                }}
+                transition={{ type: "spring", duration: 0.3, bounce: 0 }}
                 initial={{ opacity: 0, y: 25 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -25 }}

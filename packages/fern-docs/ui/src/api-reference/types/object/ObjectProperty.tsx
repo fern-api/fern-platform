@@ -12,7 +12,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { capturePosthogEvent } from "../../../analytics/posthog";
+import { trackInternal } from "../../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";
@@ -138,7 +138,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
 
   useEffect(() => {
     if (descriptions.length > 0) {
-      capturePosthogEvent("api_reference_multiple_descriptions", {
+      trackInternal("api_reference_multiple_descriptions", {
         name: property.key,
         slug,
         anchorIdParts,

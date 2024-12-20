@@ -6,7 +6,7 @@ import { AvailabilityBadge } from "@fern-docs/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { capturePosthogEvent } from "../../../analytics/posthog";
+import { trackInternal } from "../../../analytics";
 import { useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { useHref } from "../../../hooks/useHref";
@@ -96,7 +96,7 @@ export const DiscriminatedUnionVariant: React.FC<
 
   useEffect(() => {
     if (descriptions.length > 0) {
-      capturePosthogEvent("api_reference_multiple_descriptions", {
+      trackInternal("api_reference_multiple_descriptions", {
         slug,
         anchorIdParts,
         discriminant,

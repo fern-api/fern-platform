@@ -20,12 +20,8 @@ const IntercomScript = dynamic(() =>
 const FullstoryScript = dynamic(() =>
   import("./FullstoryScript").then((mod) => mod.FullstoryScript)
 );
-const GoogleAnalytics = dynamic(() =>
-  import("@next/third-parties/google").then((mod) => mod.GoogleAnalytics)
-);
-const GoogleTagManager = dynamic(() =>
-  import("@next/third-parties/google").then((mod) => mod.GoogleTagManager)
-);
+const GoogleAnalytics = dynamic(() => import("./ga"), { ssr: true });
+const GoogleTagManager = dynamic(() => import("./gtm"), { ssr: true });
 
 const ANALYTICS_ATOM = selectAtom(
   DOCS_ATOM,
@@ -57,7 +53,7 @@ export const CustomerAnalytics = memo(
         <IntercomScript config={config.intercom} />
         <FullstoryScript config={config.fullstory} />
 
-        {/* renders Google Analytics 4 or Google Tag Manager using @next/third-parties */}
+        {/* renders Google Analytics 4 or Google Tag Manager */}
         {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
         {gtm != null && <GoogleTagManager gtmId={gtm.tagId} />}
       </>

@@ -4,10 +4,8 @@ import clsx from "clsx";
 import { ThumbsDown, ThumbsUp } from "iconoir-react";
 import { Router } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import {
-  capturePosthogEvent,
-  registerPosthogProperties,
-} from "../analytics/posthog";
+import { track } from "../analytics";
+import { registerPosthogProperties } from "../analytics/posthog";
 import { FeedbackForm } from "./FeedbackForm";
 import { FeedbackFormDialog } from "./FeedbackFormDialog";
 
@@ -39,7 +37,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     setIsHelpful(true);
     setShowFeedbackInput(true);
     textareaRef.current?.focus();
-    capturePosthogEvent("feedback_voted", {
+    track("feedback_voted", {
       satisfied: true,
     });
   };
@@ -47,7 +45,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     setIsHelpful(false);
     setShowFeedbackInput(true);
     textareaRef.current?.focus();
-    capturePosthogEvent("feedback_voted", {
+    track("feedback_voted", {
       satisfied: false,
     });
   };
@@ -65,7 +63,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
       showEmailInput: boolean | "indeterminate";
     }) => {
       registerPosthogProperties({ email });
-      capturePosthogEvent("feedback_submitted", {
+      track("feedback_submitted", {
         satisfied: isHelpful ? true : false,
         feedback: feedbackId,
         message: feedbackMessage,
@@ -106,9 +104,7 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
                 <FernButton
                   icon={
                     <ThumbsUp
-                      className={clsx({
-                        "animate-thumb-rock": isHelpful,
-                      })}
+                      className={clsx({ "animate-thumb-rock": isHelpful })}
                     />
                   }
                   variant="outlined"

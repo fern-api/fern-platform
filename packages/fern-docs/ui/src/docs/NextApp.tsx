@@ -12,6 +12,7 @@ import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
 import { useInterceptNextDataHref } from "../hooks/useInterceptNextDataHref";
 import { ThemeScript } from "../themes/ThemeScript";
+import { CustomerAnalytics } from "../analytics/CustomerAnalytics";
 
 export function NextApp({
   Component,
@@ -33,6 +34,7 @@ export function NextApp({
           options={{ showSpinner: false, speed: 400 }}
           showOnShallow={false}
         />
+        <CustomerAnalytics />
         <Toaster />
         <FernTooltipProvider>
           <SWRConfig

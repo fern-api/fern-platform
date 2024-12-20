@@ -14,6 +14,7 @@ import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useCallback, useState } from "react";
+import { track } from "../../analytics";
 import {
   FERN_USER_ATOM,
   PLAYGROUND_AUTH_STATE_ATOM,
@@ -106,8 +107,7 @@ export const PlaygroundEndpoint = ({
     }
     setResponse(loading());
     try {
-      const { capturePosthogEvent } = await import("../../analytics/posthog");
-      capturePosthogEvent("api_playground_request_sent", {
+      track("api_playground_request_sent", {
         endpointId: endpoint.id,
         endpointName: node.title,
         method: endpoint.method,
@@ -179,7 +179,7 @@ export const PlaygroundEndpoint = ({
         const res = await executeProxyRest(proxyEnvironment, req);
         setResponse(loaded(res));
         if (res.type !== "stream") {
-          capturePosthogEvent("api_playground_request_received", {
+          track("api_playground_request_received", {
             endpointId: endpoint.id,
             endpointName: node.title,
             method: endpoint.method,
