@@ -1,10 +1,10 @@
 import Script from "next/script";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function KoalaScript({ apiKey }: { apiKey: string }): ReactNode {
-    const user = useFernUser();
+export default function KoalaScript({ apiKey }: { apiKey: string }): ReactNode {
+    const user = useUserInfo();
 
     useEffect(() => {
         if (user && user.email && window.ko) {

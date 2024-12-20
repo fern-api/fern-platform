@@ -43,5 +43,5 @@
       "dependsOn": ["^build", "^compile"]
     }
   },
-  "globalDependencies": [".eslintrc.js", ".prettierrc.json"]
+  "globalDependencies": [".eslintrc.js", ".prettierrc.json", "package.json"]
 }

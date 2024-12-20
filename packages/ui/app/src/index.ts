@@ -1,4 +1,4 @@
-export { EMPTY_ANALYTICS_CONFIG } from "./atoms";
+export { EMPTY_ANALYTICS_CONFIG, getApiRouteSupplier } from "./atoms";
 export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";

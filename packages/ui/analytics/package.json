@@ -1,0 +1,56 @@
+{
+  "name": "@fern-docs/analytics",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./provider": {
+      "types": "./src/provider.tsx",
+      "default": "./dist/provider.js"
+    }
+  },
+  "scripts": {
+    "compile": "tsc --build",
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
+    "dev": "tsc --watch tsconfig.json"
+  },
+  "peerDependencies": {
+    "next": "^14",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-platform/configs": "workspace:*",
+    "@types/mixpanel-browser": "^2.50.2",
+    "@types/node": "^18.7.18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18.3.0",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.56.0",
+    "next": "^14",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.3.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "typescript": "5.4.3"
+  },
+  "dependencies": {
+    "@amplitude/analytics-browser": "^2.11.10",
+    "@datadog/browser-rum": "^5.34.0",
+    "@hotjar/browser": "^1.0.9",
+    "@segment/snippet": "^5.2.1",
+    "fathom-client": "^3.7.2",
+    "logrocket": "^9.0.0",
+    "mixpanel-browser": "^2.57.1",
+    "posthog-js": "^1.154.5",
+    "zod": "^3.24.1"
+  }
+}

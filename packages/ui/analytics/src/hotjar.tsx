@@ -1,15 +1,15 @@
 import Hotjar from "@hotjar/browser";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
-import { useRouteChangeComplete } from "../hooks/useRouteChanged";
+import { useRouteChangeComplete } from "./use-route-changed";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function HotjarScript({ id, version }: { id: string; version: string }): ReactNode {
+export default function HotjarScript({ id, version }: { id: string; version: string }): ReactNode {
     useEffect(() => {
         Hotjar.init(Number(id), Number(version));
     }, [id, version]);
 
-    const user = useFernUser();
+    const user = useUserInfo();
     useEffect(() => {
         if (user) {
             const userInfo: Record<string, string> = {};

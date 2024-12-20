@@ -2,7 +2,7 @@ import { init, track } from "@amplitude/analytics-browser";
 import { ReactNode, useEffect } from "react";
 import { useSafeListenTrackEvents } from "./use-track";
 
-export function AmplitudeScript({ apiKey }: { apiKey: string }): ReactNode {
+export default function AmplitudeScript({ apiKey }: { apiKey: string }): ReactNode {
     useEffect(() => {
         try {
             init(apiKey, undefined, {

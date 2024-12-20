@@ -1,7 +1,7 @@
 import Script from "next/script";
 import { ReactElement, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
 // copied from @intercom/messenger-js-sdk
 interface IntercomSettings {
@@ -47,7 +47,7 @@ export function IntercomScript(props: IntercomSettings): ReactElement {
  * @param config
  */
 function useIntercomInitializer(config: IntercomSettings): void {
-    const user = useFernUser();
+    const user = useUserInfo();
 
     useEffect(() => {
         try {

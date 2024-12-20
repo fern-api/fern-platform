@@ -49,6 +49,9 @@
     },
     {
       "path": "../fern-docs-syntax-highlighter"
+    },
+    {
+      "path": "../analytics"
     }
   ]
 }

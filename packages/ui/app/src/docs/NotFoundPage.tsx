@@ -1,6 +1,6 @@
+import { track } from "@fern-docs/analytics";
 import Error from "next/error";
 import { ReactElement, useEffect } from "react";
-import { track } from "../analytics";
 
 /**
  * This is required for Next.js to generate `_next/static/chunks/pages/404.js`

@@ -1095,6 +1095,79 @@ importers:
         specifier: 5.4.3
         version: 5.4.3
 
+  packages/ui/analytics:
+    dependencies:
+      '@amplitude/analytics-browser':
+        specifier: ^2.11.10
+        version: 2.11.10
+      '@datadog/browser-rum':
+        specifier: ^5.34.0
+        version: 5.34.0
+      '@hotjar/browser':
+        specifier: ^1.0.9
+        version: 1.0.9
+      '@segment/snippet':
+        specifier: ^5.2.1
+        version: 5.2.1
+      fathom-client:
+        specifier: ^3.7.2
+        version: 3.7.2
+      logrocket:
+        specifier: ^9.0.0
+        version: 9.0.0
+      mixpanel-browser:
+        specifier: ^2.57.1
+        version: 2.57.1
+      posthog-js:
+        specifier: ^1.154.5
+        version: 1.154.5
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
+    devDependencies:
+      '@fern-api/fdr-sdk':
+        specifier: workspace:*
+        version: link:../../fdr-sdk
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@types/mixpanel-browser':
+        specifier: ^2.50.2
+        version: 2.50.2
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      '@types/react':
+        specifier: ^18
+        version: 18.3.3
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.0
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      eslint:
+        specifier: ^8.56.0
+        version: 8.57.0
+      next:
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      organize-imports-cli:
+        specifier: ^0.10.0
+        version: 0.10.0
+      prettier:
+        specifier: ^3.3.2
+        version: 3.3.3
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
+      typescript:
+        specifier: 5.4.3
+        version: 5.4.3
+
   packages/ui/app:
     dependencies:
       '@amplitude/analytics-browser':
@@ -1115,6 +1188,9 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-docs/analytics':
+        specifier: workspace:*
+        version: link:../analytics
       '@fern-ui/components':
         specifier: workspace:*
         version: link:../components
@@ -16218,6 +16294,9 @@ packages:
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
 
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
+
   zustand@3.7.2:
     resolution: {integrity: sha512-PIJDIZKtokhof+9+60cpockVOq05sJzHCriyvaLBmEJixseQ1a5Kdov6fWZfWOu5SK9c+FhH1jU0tntLxRJYMA==}
     engines: {node: '>=12.7.0'}
@@ -19100,8 +19179,8 @@ snapshots:
       p-queue: 6.6.2
       p-retry: 4.6.2
       uuid: 10.0.0
-      zod: 3.23.8
-      zod-to-json-schema: 3.23.5(zod@3.23.8)
+      zod: 3.24.1
+      zod-to-json-schema: 3.23.5(zod@3.24.1)
     transitivePeerDependencies:
       - openai
 
@@ -30725,8 +30804,7 @@ snapshots:
 
   prettier@3.3.2: {}
 
-  prettier@3.3.3:
-    optional: true
+  prettier@3.3.3: {}
 
   pretty-error@4.0.0:
     dependencies:
@@ -33827,7 +33905,13 @@ snapshots:
     dependencies:
       zod: 3.23.8
 
+  zod-to-json-schema@3.23.5(zod@3.24.1):
+    dependencies:
+      zod: 3.24.1
+
   zod@3.23.8: {}
+
+  zod@3.24.1: {}
 
   zustand@3.7.2(react@18.3.1):
     optionalDependencies:

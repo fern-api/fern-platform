@@ -1,11 +1,11 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { unknownToString } from "@fern-api/ui-core-utils";
+import { trackInternal } from "@fern-docs/analytics";
 import { AvailabilityBadge } from "@fern-ui/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import { forwardRef, memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { trackInternal } from "../../../analytics";
 import { useHref, useIsApiReferencePaginated, useRouteListener } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernErrorBoundary } from "../../../components/FernErrorBoundary";

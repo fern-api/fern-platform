@@ -1,16 +1,16 @@
 import mixpanel from "mixpanel-browser";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function MixpanelScript({ token }: { token: string }): ReactNode {
+export default function MixpanelScript({ token }: { token: string }): ReactNode {
     useEffect(() => {
         mixpanel.init(token, {
             track_pageview: true,
         });
     }, [token]);
 
-    const user = useFernUser();
+    const user = useUserInfo();
     useEffect(() => {
         if (user?.email) {
             mixpanel.identify(user.email);

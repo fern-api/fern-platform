@@ -8,7 +8,7 @@ type GTMParams = {
     nonce?: string;
 };
 
-export function GoogleTagManager(props: GTMParams): ReactNode {
+export default function GoogleTagManager(props: GTMParams): ReactNode {
     const { gtmId, dataLayerName = "dataLayer", nonce } = props;
 
     useEffect(() => {

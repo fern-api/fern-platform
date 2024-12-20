@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React from "react";
 import { z } from "zod";
 
 const TRACK_EVENT_NAME = "fern-docs-track-analytics";
@@ -29,13 +29,13 @@ type TrackEvent = z.infer<typeof TrackEventSchema>;
  * @param allowInternal - Whether to allow internal events to be emitted. Defaults to false. Only use this for Fern's internal posthog instance.
  */
 export function useSafeListenTrackEvents(cb: (detail: TrackEvent) => void, allowInternal = false): void {
-    const ref = useRef<(detail: TrackEvent) => void>(cb);
+    const ref = React.useRef<(detail: TrackEvent) => void>(cb);
 
-    useEffect(() => {
+    React.useEffect(() => {
         ref.current = cb;
     });
 
-    useEffect(() => {
+    React.useEffect(() => {
         const handler = (event: Event) => {
             try {
                 if (event instanceof CustomEvent) {

@@ -1,6 +1,7 @@
 import type { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import { buildEndpointUrl, toCurlyBraceEndpointPathLiteral } from "@fern-api/fdr-sdk/api-definition";
 import { unknownToString } from "@fern-api/ui-core-utils";
+import { track } from "@fern-docs/analytics";
 import { FernTooltipProvider } from "@fern-ui/components";
 import { Loadable, failed, loaded, loading, notStartedLoading } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
@@ -8,7 +9,6 @@ import { mapValues } from "es-toolkit/object";
 import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useCallback, useState } from "react";
-import { track } from "../../analytics";
 import {
     FERN_USER_ATOM,
     PLAYGROUND_AUTH_STATE_ATOM,

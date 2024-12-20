@@ -1,9 +1,9 @@
 import * as Fathom from "fathom-client";
 import { ReactNode, useEffect } from "react";
-import { useRouteChangeComplete } from "../hooks/useRouteChanged";
+import { useRouteChangeComplete } from "./use-route-changed";
 import { useSafeListenTrackEvents } from "./use-track";
 
-export function FathomScript({ siteId }: { siteId: string }): ReactNode {
+export default function FathomScript({ siteId }: { siteId: string }): ReactNode {
     useEffect(() => {
         Fathom.load(siteId);
     }, [siteId]);

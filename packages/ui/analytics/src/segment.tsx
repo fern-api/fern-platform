@@ -1,11 +1,11 @@
 import * as snippet from "@segment/snippet";
 import Script from "next/script";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function SegmentScript(props: snippet.Options): ReactNode {
-    const user = useFernUser();
+export default function SegmentScript(props: snippet.Options): ReactNode {
+    const user = useUserInfo();
 
     useEffect(() => {
         try {

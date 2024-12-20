@@ -39,7 +39,7 @@
       "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {
-      "path": "../app/tsconfig.build.json"
+      "path": "../app"
     },
     {
       "path": "../components"

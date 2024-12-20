@@ -37,6 +37,7 @@
     "@amplitude/analytics-browser": "^2.11.10",
     "@datadog/browser-rum": "^5.34.0",
     "@emotion/is-prop-valid": "^1.2.2",
+    "@fern-docs/analytics": "workspace:*",
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/template-resolver": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",

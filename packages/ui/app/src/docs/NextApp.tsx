@@ -5,7 +5,6 @@ import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";
 import { SWRConfig } from "swr";
-import { CustomerAnalytics } from "../analytics";
 import { DocsProps, HydrateAtoms, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LocalPreviewContextProvider } from "../contexts/local-preview";
@@ -13,6 +12,7 @@ import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
 import { useInterceptNextDataHref } from "../hooks/useInterceptNextDataHref";
 import { ThemeScript } from "../themes/ThemeScript";
+import { CustomerAnalytics } from "./CustomerAnalytics";
 
 export function NextApp({ Component, pageProps, router }: AppProps<DocsProps | undefined>): ReactElement {
     // This is a hack to handle edge-cases related to multitenant subpath rendering:

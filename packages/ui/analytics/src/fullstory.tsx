@@ -1,9 +1,9 @@
 import Script from "next/script";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function FullstoryScript(props: { orgId: string }): ReactNode {
+export default function FullstoryScript(props: { orgId: string }): ReactNode {
     useSafeListenTrackEvents(({ event, properties }) => {
         if (typeof window.FS === "function") {
             // https://developer.fullstory.com/browser/capture-events/analytics-events/
@@ -11,7 +11,7 @@ export function FullstoryScript(props: { orgId: string }): ReactNode {
         }
     });
 
-    const user = useFernUser();
+    const user = useUserInfo();
     useEffect(() => {
         if (user && user.email && typeof window.FS === "function") {
             // https://developer.fullstory.com/browser/identification/set-user-properties/

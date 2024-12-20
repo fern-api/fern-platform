@@ -1,16 +1,16 @@
 import Script from "next/script";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function HeapScript({ appId }: { appId: string }): ReactNode {
+export default function HeapScript({ appId }: { appId: string }): ReactNode {
     useSafeListenTrackEvents(({ event, properties }) => {
         if (window.heap) {
             window.heap.track(event, properties);
         }
     });
 
-    const user = useFernUser();
+    const user = useUserInfo();
     useEffect(() => {
         if (!window.heap) {
             return;

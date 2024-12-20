@@ -1,15 +1,15 @@
 import { datadogRum, type RumInitConfiguration } from "@datadog/browser-rum";
 import { ReactNode, useEffect } from "react";
-import { useFernUser } from "../atoms";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
-export function DatadogRumScript(props: RumInitConfiguration): ReactNode {
+export default function DatadogRumScript(props: RumInitConfiguration): ReactNode {
     useEffect(() => {
         datadogRum.init(props);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const user = useFernUser();
+    const user = useUserInfo();
     useEffect(() => {
         if (user) {
             datadogRum.setUser({ email: user.email, name: user.name });

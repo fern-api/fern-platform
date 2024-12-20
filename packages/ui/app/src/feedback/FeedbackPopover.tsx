@@ -1,10 +1,10 @@
+import { track } from "@fern-docs/analytics";
 import { FernButton, FernButtonGroup } from "@fern-ui/components";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
-import { track } from "../analytics";
 import { useSelection } from "../hooks/useSelection";
 import { FeedbackForm } from "./FeedbackForm";
 

@@ -1,8 +1,8 @@
 import posthog, { type PostHog } from "posthog-js";
 import { ReactNode, useEffect } from "react";
-import { useApiRoute, useFernUser } from "../atoms";
-import { useRouteChangeComplete } from "../hooks/useRouteChanged";
+import { useRouteChangeComplete } from "./use-route-changed";
 import { useSafeListenTrackEvents } from "./use-track";
+import { useUserInfo } from "./user";
 
 /**
  * Posthog natively allows us to define additional capture objects with distinct configs on the global instance,
@@ -23,50 +23,7 @@ function posthogHasCustomer(instance: PostHog): instance is PostHogWithCustomer 
     return Boolean((instance as PostHogWithCustomer).customer);
 }
 
-export function Posthog(): ReactNode {
-    const route = useApiRoute("/api/fern-docs/analytics/posthog");
-
-    // initialize the posthog instance
-    useEffect(() => {
-        const token = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
-        if (token == null) {
-            // eslint-disable-next-line no-console
-            console.warn("Posthog will NOT be initialized.");
-            return;
-        }
-
-        posthog.init(token, {
-            api_host: route,
-            capture_pageview: true,
-            capture_pageleave: true,
-        });
-    }, [route]);
-
-    // identify the user after the posthog instance is initialized
-    const user = useFernUser();
-    useEffect(() => {
-        if (user && user.email && posthog._isIdentified()) {
-            posthog.identify(user.email);
-        } else if (posthog._isIdentified()) {
-            posthog.reset();
-        }
-    }, [user]);
-
-    // capture pageviews
-    useRouteChangeComplete(() => {
-        // posthog doesn't handle this automatically: https://posthog.com/docs/libraries/next-js#pageview
-        posthog.capture("$pageview");
-    });
-
-    // capture events
-    useSafeListenTrackEvents(({ event, properties }) => {
-        posthog.capture(event, properties);
-    }, true);
-
-    return false;
-}
-
-export function CustomerPosthog({ token, api_host }: { token: string; api_host?: string }): ReactNode {
+export default function CustomerPosthog({ token, api_host }: { token: string; api_host?: string }): ReactNode {
     // initialize the posthog instance
     useEffect(() => {
         posthog.init(
@@ -81,7 +38,7 @@ export function CustomerPosthog({ token, api_host }: { token: string; api_host?:
     }, [token, api_host]);
 
     // identify the user after the posthog instance is initialized
-    const user = useFernUser();
+    const user = useUserInfo();
     useEffect(() => {
         if (user && user.email && getCustomerPosthog()) {
             getCustomerPosthog()?.identify(user.email);
