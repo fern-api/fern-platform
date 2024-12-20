@@ -13,6 +13,9 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
   {
+    files: [
+      "**/*.{ts,tsx,js,jsx,mjs,mts,mjsx,mtsx,cjs,cjsx,cts,ctsx,es,es6,esm}",
+    ],
     ignores: [
       "**/generated",
       "**/dist",
@@ -60,7 +63,7 @@ export default tseslint.config(
   }),
 
   {
-    files: ["**/*.test.ts", "**/*.test.tsx"],
+    files: ["**/*.test.{ts,tsx}"],
     plugins: {
       vitest,
     },
