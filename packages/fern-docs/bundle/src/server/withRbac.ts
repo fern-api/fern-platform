@@ -69,8 +69,8 @@ export function withBasicTokenAnonymousCheck(
     // }
 
     const predicate = rbacViewGate([], false);
-     
-    return predicate(node as NavigationNode, parents);
+
+    return predicate(node as unknown as NavigationNode, parents);
   };
 }
 
