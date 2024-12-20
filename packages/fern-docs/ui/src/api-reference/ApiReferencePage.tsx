@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import {
   useIsReady,
   useNavigationNodes,
@@ -8,15 +9,11 @@ import { DocsContent } from "../resolver/DocsContent";
 import { BuiltWithFern } from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
 
-export declare namespace ApiReferencePage {
-  export interface Props {
-    content: DocsContent.ApiReferencePage;
-  }
-}
-
-export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({
+export default function ApiReferencePage({
   content,
-}) => {
+}: {
+  content: DocsContent.ApiReferencePage;
+}): ReactNode {
   const hydrated = useIsReady();
 
   useWriteApiDefinitionAtom(content.apiDefinition);
@@ -49,4 +46,4 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({
       </div>
     </ApiPageContext.Provider>
   );
-};
+}

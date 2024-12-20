@@ -1,13 +1,13 @@
-import { ReactElement } from "react";
+import { ReactNode } from "react";
 import { useWriteApiDefinitionsAtom } from "../atoms";
 import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
 import { DocsContent } from "../resolver/DocsContent";
 
-interface MarkdownPageProps {
+export default function MarkdownPage({
+  content,
+}: {
   content: DocsContent.MarkdownPage;
-}
-
-export function MarkdownPage({ content }: MarkdownPageProps): ReactElement {
+}): ReactNode {
   useWriteApiDefinitionsAtom(content.apis);
   return <LayoutEvaluator {...content} />;
 }

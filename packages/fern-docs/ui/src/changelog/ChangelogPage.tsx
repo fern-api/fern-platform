@@ -39,7 +39,7 @@ function getOverviewMdx(
     : undefined;
 }
 
-export function ChangelogPage({
+export default function ChangelogPage({
   content,
 }: {
   content: DocsContent.ChangelogPage;

@@ -6,7 +6,7 @@ import { useHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";
 
-export function ChangelogEntryPage({
+export default function ChangelogEntryPage({
   content,
 }: {
   content: DocsContent.ChangelogEntryPage;

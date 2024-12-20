@@ -6,54 +6,30 @@ import { useFeatureFlags, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import type { DocsContent } from "../resolver/DocsContent";
 
-const MarkdownPage = dynamic(
-  () => import("./MarkdownPage").then(({ MarkdownPage }) => MarkdownPage),
-  {
-    ssr: true,
-  }
-);
+const MarkdownPage = dynamic(() => import("./MarkdownPage"), { ssr: true });
 
 const ApiReferencePage = dynamic(
-  () =>
-    import("../api-reference/ApiReferencePage").then(
-      ({ ApiReferencePage }) => ApiReferencePage
-    ),
+  () => import("../api-reference/ApiReferencePage"),
   { ssr: true }
 );
 
 const ApiEndpointPage = dynamic(
-  () =>
-    import("../api-reference/ApiEndpointPage").then(
-      ({ ApiEndpointPage }) => ApiEndpointPage
-    ),
+  () => import("../api-reference/ApiEndpointPage"),
   { ssr: true }
 );
 
-const ChangelogPage = dynamic(
-  () =>
-    import("../changelog/ChangelogPage").then(
-      ({ ChangelogPage }) => ChangelogPage
-    ),
-  {
-    ssr: true,
-  }
-);
+const ChangelogPage = dynamic(() => import("../changelog/ChangelogPage"), {
+  ssr: true,
+});
 
 const ChangelogEntryPage = dynamic(
-  () =>
-    import("../changelog/ChangelogEntryPage").then(
-      ({ ChangelogEntryPage }) => ChangelogEntryPage
-    ),
+  () => import("../changelog/ChangelogEntryPage"),
   { ssr: true }
 );
 
-const FeedbackPopover = dynamic(
-  () =>
-    import("../feedback/FeedbackPopover").then(
-      ({ FeedbackPopover }) => FeedbackPopover
-    ),
-  { ssr: false }
-);
+const FeedbackPopover = dynamic(() => import("../feedback/FeedbackPopover"), {
+  ssr: true,
+});
 
 const DocsMainContentRenderer = memo(
   ({ content }: { content: DocsContent }) => {
