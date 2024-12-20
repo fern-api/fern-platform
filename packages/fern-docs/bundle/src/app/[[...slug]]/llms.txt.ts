@@ -8,6 +8,7 @@ import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFeatureFlags } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -38,7 +39,7 @@ export async function handleLLMSTxt(
   const path = addLeadingSlash(params.slug?.join("/") ?? "");
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const featureFlags = await getFeatureFlags(domain);
   const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
     featureFlags

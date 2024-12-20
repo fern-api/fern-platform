@@ -10,6 +10,7 @@ import {
   getSearchApiKey,
 } from "@fern-docs/search-server/algolia/edge";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -30,7 +31,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
   }
 
-  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const user = await safeVerifyFernJWTConfig(
     fern_token,
     await getAuthEdgeConfig(domain)

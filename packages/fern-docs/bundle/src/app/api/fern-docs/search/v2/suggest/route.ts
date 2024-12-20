@@ -12,6 +12,7 @@ import {
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { kv } from "@vercel/kv";
 import { streamObject } from "ai";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -32,13 +33,14 @@ export async function POST(req: NextRequest): Promise<Response> {
   const start = Date.now();
   const domain = getDocsDomainEdge(req);
   const featureFlags = await getFeatureFlags(domain);
+  const cookieJar = cookies();
 
   if (!featureFlags.isAskAiEnabled) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 
   const cacheKey = `${PREFIX}:${domain}:suggestions`;
-  if (!req.cookies.has(COOKIE_FERN_TOKEN)) {
+  if (!cookieJar.has(COOKIE_FERN_TOKEN)) {
     const cachedSuggestions = await kv.get(cacheKey);
 
     if (cachedSuggestions) {
@@ -87,7 +89,7 @@ export async function POST(req: NextRequest): Promise<Response> {
       e.warnings?.forEach((warning) => {
         console.warn(warning);
       });
-      if (e.object && !req.cookies.has(COOKIE_FERN_TOKEN)) {
+      if (e.object && !cookieJar.has(COOKIE_FERN_TOKEN)) {
         await kv.set(cacheKey, e.object);
         await kv.expire(cacheKey, 60 * 60);
       }

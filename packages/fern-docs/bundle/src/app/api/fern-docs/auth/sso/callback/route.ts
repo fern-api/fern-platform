@@ -6,6 +6,7 @@ import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -90,7 +91,8 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     // TODO: check if we need to run `getAllowedRedirectUrls(config)` because we don't have the edge config imported here
     const res = FernNextResponse.redirect(req, { destination: url });
-    res.cookies.set(COOKIE_FERN_TOKEN, session, withSecureCookie(url.origin));
+    const cookieJar = cookies();
+    cookieJar.set(COOKIE_FERN_TOKEN, session, withSecureCookie(url.origin));
 
     return res;
   } catch (error) {

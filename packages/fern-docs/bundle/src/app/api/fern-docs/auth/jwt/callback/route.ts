@@ -9,15 +9,12 @@ import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export default async function handler(req: NextRequest): Promise<NextResponse> {
-  if (req.method !== "GET") {
-    return new NextResponse(null, { status: 405 });
-  }
-
+export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const edgeConfig = await getAuthEdgeConfig(domain);
@@ -57,10 +54,13 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
         allowedDestinations: getAllowedRedirectUrls(edgeConfig),
       })
     : NextResponse.next();
-  res.cookies.set(
+
+  const cookieJar = cookies();
+  cookieJar.set(
     COOKIE_FERN_TOKEN,
     token,
     withSecureCookie(withDefaultProtocol(host))
   );
+
   return res;
 }

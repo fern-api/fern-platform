@@ -7,16 +7,12 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 export const maxDuration = 5;
 
-export default async function GET(req: NextRequest): Promise<NextResponse> {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   const corsHeaders = new Headers({
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
   });
-
-  if (req.method === "OPTIONS") {
-    return new NextResponse(null, { status: 204, headers: corsHeaders });
-  }
 
   const domain = req.nextUrl.hostname;
   const time: string = new Date().toISOString();
@@ -42,4 +38,14 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
 
 function constructS3Key(domain: string, time: string, file: string): string {
   return `${domain}/user-upload/${time}/${file}`;
+}
+
+export async function OPTIONS(): Promise<NextResponse> {
+  const corsHeaders = new Headers({
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+  });
+
+  return new NextResponse(null, { status: 204, headers: corsHeaders });
 }

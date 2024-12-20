@@ -8,6 +8,7 @@ import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 import { WebflowClient } from "webflow-api";
@@ -20,14 +21,15 @@ export async function GET(
 ): Promise<NextResponse<APIKeyInjectionConfig>> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
+  const cookieJar = cookies();
 
   const edgeConfig = await getAuthEdgeConfig(domain);
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
-  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
-  const access_token = req.cookies.get("access_token")?.value;
-  const refresh_token = req.cookies.get("refresh_token")?.value;
+  const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
+  const access_token = cookieJar.get("access_token")?.value;
+  const refresh_token = cookieJar.get("refresh_token")?.value;
   const fernUser = await safeVerifyFernJWTConfig(fern_token, edgeConfig);
 
   // if the JWT is valid, and the user has an API key, return it
@@ -166,8 +168,8 @@ export async function GET(
         returnToQueryParam,
       });
 
-      if (access_token !== req.cookies.get("access_token")?.value) {
-        response.cookies.set(
+      if (access_token !== cookieJar.get("access_token")?.value) {
+        cookieJar.set(
           "access_token",
           access_token,
           withSecureCookie(withDefaultProtocol(host), {
@@ -178,9 +180,9 @@ export async function GET(
 
       if (
         refresh_token != null &&
-        refresh_token !== req.cookies.get("refresh_token")?.value
+        refresh_token !== cookieJar.get("refresh_token")?.value
       ) {
-        response.cookies.set(
+        cookieJar.set(
           "refresh_token",
           refresh_token,
           withSecureCookie(withDefaultProtocol(host), { expires })

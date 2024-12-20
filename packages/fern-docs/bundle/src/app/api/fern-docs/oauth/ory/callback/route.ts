@@ -15,6 +15,7 @@ import {
   COOKIE_FERN_TOKEN,
   COOKIE_REFRESH_TOKEN,
 } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -23,6 +24,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const config = await getAuthEdgeConfig(domain);
+  const cookieJar = cookies();
 
   const code = req.nextUrl.searchParams.get("code");
   const return_to = req.nextUrl.searchParams.get(getReturnToQueryParam(config));
@@ -79,26 +81,26 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           allowedDestinations: getAllowedRedirectUrls(config),
         })
       : NextResponse.next();
-    res.cookies.set(
+    cookieJar.set(
       COOKIE_FERN_TOKEN,
       await signFernJWT(fernUser),
       withSecureCookie(withDefaultProtocol(host), { expires })
     );
 
     // TODO: should we have a more specific place to set these cookies (such as inside fern_token, or fern_ory, etc.)?
-    res.cookies.set(
+    cookieJar.set(
       COOKIE_ACCESS_TOKEN,
       access_token,
       withSecureCookie(withDefaultProtocol(host), { expires })
     );
     if (refresh_token != null) {
-      res.cookies.set(
+      cookieJar.set(
         COOKIE_REFRESH_TOKEN,
         refresh_token,
         withSecureCookie(withDefaultProtocol(host), { expires })
       );
     } else {
-      res.cookies.delete(COOKIE_REFRESH_TOKEN);
+      cookieJar.delete(COOKIE_REFRESH_TOKEN);
     }
     return res;
   } catch (error) {

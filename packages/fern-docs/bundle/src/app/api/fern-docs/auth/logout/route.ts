@@ -12,18 +12,20 @@ import {
   COOKIE_FERN_TOKEN,
   COOKIE_REFRESH_TOKEN,
 } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
+  const cookieJar = cookies();
 
   const authConfig = await getAuthEdgeConfig(domain);
 
   if (authConfig?.type === "sso" && authConfig.partner === "workos") {
     // revoke session in WorkOS
-    await revokeSessionForToken(req.cookies.get(COOKIE_FERN_TOKEN)?.value);
+    await revokeSessionForToken(cookieJar.get(COOKIE_FERN_TOKEN)?.value);
   }
 
   const logoutUrl = safeUrl(
@@ -50,13 +52,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     destination: redirectLocation,
     allowedDestinations: getAllowedRedirectUrls(authConfig),
   });
-  res.cookies.delete(
+  cookieJar.delete(
     withDeleteCookie(COOKIE_FERN_TOKEN, withDefaultProtocol(getHostEdge(req)))
   );
-  res.cookies.delete(
+  cookieJar.delete(
     withDeleteCookie(COOKIE_ACCESS_TOKEN, withDefaultProtocol(getHostEdge(req)))
   );
-  res.cookies.delete(
+  cookieJar.delete(
     withDeleteCookie(
       COOKIE_REFRESH_TOKEN,
       withDefaultProtocol(getHostEdge(req))

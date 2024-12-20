@@ -7,6 +7,7 @@ import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { WebflowClient } from "webflow-api";
 
@@ -72,7 +73,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           allowedDestinations: getAllowedRedirectUrls(config),
         })
       : NextResponse.next();
-    res.cookies.set(
+    cookies().set(
       "access_token",
       accessToken,
       withSecureCookie(withDefaultProtocol(host))

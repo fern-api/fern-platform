@@ -7,6 +7,7 @@ import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { Feed, Item } from "feed";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
 
@@ -22,7 +23,7 @@ export async function handleChangelog(
 
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const fernToken = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const fernToken = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const loader = DocsLoader.for(domain, host, fernToken);
 
   const root = await loader.root();

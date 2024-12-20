@@ -8,6 +8,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { getFeatureFlags } from "@fern-docs/edge-config";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { uniqBy } from "es-toolkit/array";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function handleLLMSFullTxt(
@@ -18,7 +19,7 @@ export async function handleLLMSFullTxt(
   const path = addLeadingSlash(slug.join("/"));
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const featureFlags = await getFeatureFlags(domain);
   const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
     featureFlags

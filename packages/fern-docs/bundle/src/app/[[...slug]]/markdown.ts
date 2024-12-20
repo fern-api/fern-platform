@@ -6,6 +6,7 @@ import {
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { getFeatureFlags } from "@fern-docs/edge-config";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -21,7 +22,7 @@ export async function handleMarkdown(
   const path = addLeadingSlash(slug.join("/"));
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const featureFlags = await getFeatureFlags(domain);
   const loader = DocsLoader.for(domain, host, fern_token).withFeatureFlags(
     featureFlags

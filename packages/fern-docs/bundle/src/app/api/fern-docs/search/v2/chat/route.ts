@@ -17,6 +17,7 @@ import {
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { embed, EmbeddingModel, streamText, tool } from "ai";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -55,7 +56,7 @@ export async function POST(req: NextRequest) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 
-  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const user = await safeVerifyFernJWTConfig(fern_token, authEdgeConfig);
 
   const lastUserMessage: string | undefined = messages.findLast(
