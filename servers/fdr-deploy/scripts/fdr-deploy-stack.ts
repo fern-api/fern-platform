@@ -227,83 +227,16 @@ export class FdrDeployStack extends Stack {
       ingressSecurityGroup: fdrSg,
     });
 
-        const cloudmapNamespaceName = environmentInfo.cloudMapNamespaceInfo.namespaceName;
-        const cloudMapNamespace = PrivateDnsNamespace.fromPrivateDnsNamespaceAttributes(this, "private-cloudmap", {
-            namespaceArn: environmentInfo.cloudMapNamespaceInfo.namespaceArn,
-            namespaceId: environmentInfo.cloudMapNamespaceInfo.namespaceId,
-            namespaceName: cloudmapNamespaceName,
-        });
-
-        const fargateService = new ApplicationLoadBalancedFargateService(this, SERVICE_NAME, {
-            serviceName: SERVICE_NAME,
-            cluster,
-            cpu: options.cpu,
-            memoryLimitMiB: options.memory,
-            desiredCount: options.desiredTaskCount,
-            securityGroups: [fdrSg, efsSg],
-            taskImageOptions: {
-                image: ContainerImage.fromTarball(`../../docker/build/tar/fern-definition-registry:${version}.tar`),
-                environment: {
-                    VENUS_URL: `http://venus.${cloudmapNamespaceName}:8080/`,
-                    AWS_ACCESS_KEY_ID: getEnvironmentVariableOrThrow("AWS_ACCESS_KEY_ID"),
-                    AWS_SECRET_ACCESS_KEY: getEnvironmentVariableOrThrow("AWS_SECRET_ACCESS_KEY"),
-                    PUBLIC_S3_BUCKET_NAME: publicDocsBucket.bucketName,
-                    PUBLIC_S3_BUCKET_REGION: publicDocsBucket.stack.region,
-                    PRIVATE_S3_BUCKET_NAME: privateDocsBucket.bucketName,
-                    PRIVATE_S3_BUCKET_REGION: privateDocsBucket.stack.region,
-                    API_DEFINITION_SOURCE_BUCKET_NAME: privateApiDefinitionSourceBucket.bucketName,
-                    API_DEFINITION_SOURCE_BUCKET_REGION: privateApiDefinitionSourceBucket.stack.region,
-                    DOMAIN_SUFFIX: getDomainSuffix(environmentType),
-                    ALGOLIA_APP_ID: getEnvironmentVariableOrThrow("ALGOLIA_APP_ID"),
-                    ALGOLIA_ADMIN_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_ADMIN_API_KEY"),
-                    ALGOLIA_SEARCH_INDEX: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_INDEX"),
-                    ALGOLIA_SEARCH_API_KEY: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_API_KEY"),
-                    ALGOLIA_SEARCH_V2_DOMAINS: getEnvironmentVariableOrThrow("ALGOLIA_SEARCH_V2_DOMAINS"),
-                    SLACK_TOKEN: getEnvironmentVariableOrThrow("FERNIE_SLACK_APP_TOKEN"),
-                    LOG_LEVEL: getLogLevel(environmentType),
-                    DOCS_CACHE_ENDPOINT: fernDocsCacheEndpoint,
-                    ENABLE_CUSTOMER_NOTIFICATIONS: (environmentType === "PROD").toString(),
-                    REDIS_ENABLED: options.redis.toString(),
-                    REDIS_CLUSTERING_MODE_ENABLED: options.redisClusteringModeEnabled.toString(),
-                    APPLICATION_ENVIRONMENT: getEnvironmentVariableOrThrow("APPLICATION_ENVIRONMENT"),
-                    PUBLIC_DOCS_CDN_URL:
-                        environmentType === "DEV2"
-                            ? "https://files-dev2.buildwithfern.com"
-                            : "https://files.buildwithfern.com",
-                    NODE_ENV: "production",
-                },
-                containerName: CONTAINER_NAME,
-                containerPort: 8080,
-                enableLogging: true,
-                logDriver: LogDriver.awsLogs({
-                    logGroup,
-                    streamPrefix: SERVICE_NAME,
-                }),
-            },
-            assignPublicIp: true,
-            publicLoadBalancer: true,
-            enableECSManagedTags: true,
-            protocol: ApplicationProtocol.HTTPS,
-            certificate,
-            domainZone: hostedZone,
-            domainName: getServiceDomainName(environmentType, environmentInfo),
-            cloudMapOptions:
-                cloudMapNamespace != null
-                    ? {
-                          cloudMapNamespace,
-                          name: SERVICE_NAME,
-                      }
-                    : undefined,
-        });
-        if (options.redis) {
-            const scalableTaskCount = fargateService.service.autoScaleTaskCount({
-                maxCapacity: options.maxTaskCount,
-                minCapacity: options.desiredTaskCount,
-            });
-            scalableTaskCount.scaleOnRequestCount("RequestCountScaling", {
-                targetGroup: fargateService.targetGroup,
-                requestsPerTarget: 1000,
-            });
+    const cloudmapNamespaceName =
+      environmentInfo.cloudMapNamespaceInfo.namespaceName;
+    const cloudMapNamespace =
+      PrivateDnsNamespace.fromPrivateDnsNamespaceAttributes(
+        this,
+        "private-cloudmap",
+        {
+          namespaceArn: environmentInfo.cloudMapNamespaceInfo.namespaceArn,
+          namespaceId: environmentInfo.cloudMapNamespaceInfo.namespaceId,
+          namespaceName: cloudmapNamespaceName,
         }
       );
 
@@ -368,6 +301,7 @@ export class FdrDeployStack extends Stack {
               environmentType === "DEV2"
                 ? "https://files-dev2.buildwithfern.com"
                 : "https://files.buildwithfern.com",
+            NODE_ENV: "production",
           },
           containerName: CONTAINER_NAME,
           containerPort: 8080,
@@ -550,9 +484,7 @@ export class FdrDeployStack extends Stack {
     new CfnOutput(this, `${props.cacheName}Host`, {
       value: cacheEndpointAddress,
     });
-    new CfnOutput(this, `${props.cacheName}Port`, {
-      value: cacheEndpointPort,
-    });
+    new CfnOutput(this, `${props.cacheName}Port`, { value: cacheEndpointPort });
 
     cacheSecurityGroup.addIngressRule(
       props.ingressSecurityGroup || Peer.anyIpv4(),
