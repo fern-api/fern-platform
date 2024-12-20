@@ -42,8 +42,11 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     ...mapValues(formState.headers ?? {}, (value) => unknownToString(value)),
   };
 
-  if (endpoint.method !== "GET" && endpoint.request?.contentType != null) {
-    headers["Content-Type"] = endpoint.request.contentType;
+  if (
+    endpoint.method !== "GET" &&
+    endpoint.requests?.[0]?.contentType != null
+  ) {
+    headers["Content-Type"] = endpoint.requests[0].contentType;
   }
 
   const req: ProxyRequest = {
@@ -57,7 +60,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     headers,
     body: await serializeFormStateBody(
       "",
-      endpoint.request?.body,
+      endpoint.requests?.[0]?.body,
       formState.body,
       false
     ),

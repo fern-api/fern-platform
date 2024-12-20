@@ -32,12 +32,12 @@ export function createEndpointBaseRecordHttp({
   keywords.push("endpoint", "api", "http", "rest", "openapi");
 
   const response_type =
-    endpoint.response?.body.type === "streamingText" ||
-    endpoint.response?.body.type === "stream"
+    endpoint.responses?.[0]?.body.type === "streamingText" ||
+    endpoint.responses?.[0]?.body.type === "stream"
       ? "stream"
-      : endpoint.response?.body.type === "fileDownload"
+      : endpoint.responses?.[0]?.body.type === "fileDownload"
         ? "file"
-        : endpoint.response?.body != null
+        : endpoint.responses?.[0]?.body != null
           ? "json"
           : undefined;
 

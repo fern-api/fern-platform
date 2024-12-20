@@ -123,17 +123,20 @@
             "description": "Search query"
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersListWorkflowsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersListWorkflowsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -561,27 +564,31 @@
             "baseUrl": "https://api-prod.scoutos.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowConfigInput"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowConfigInput"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersCreateWorkflowResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersCreateWorkflowResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -3578,17 +3585,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersGetWorkflowResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersGetWorkflowResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -3915,27 +3925,31 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowConfigInput"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowConfigInput"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersUpdateWorkflowResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersUpdateWorkflowResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -6979,17 +6993,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersDeleteWorkflowResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersDeleteWorkflowResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -7336,72 +7353,76 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
-                          }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_workflows:WorkflowsRunStreamRequestInputsValue"
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_workflows:WorkflowsRunStreamRequestInputsValue"
+                            }
                           }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "key": "streaming",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "literal",
+                },
+                {
+                  "key": "streaming",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "booleanLiteral",
-                      "value": true
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": true
+                      }
                     }
                   }
                 }
-              }
-            ]
+              ]
+            }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "stream",
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:WorkflowRunEvent"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "stream",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:WorkflowRunEvent"
+                }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -8359,69 +8380,73 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
-                          }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_workflows:WorkflowsRunRequestInputsValue"
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_workflows:WorkflowsRunRequestInputsValue"
+                            }
                           }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "key": "streaming",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "literal",
+                },
+                {
+                  "key": "streaming",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "booleanLiteral",
-                      "value": false
+                      "type": "literal",
+                      "value": {
+                        "type": "booleanLiteral",
+                        "value": false
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowRunResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowRunResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -9259,17 +9284,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersGetWorkflowEnvironmentsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersGetWorkflowEnvironmentsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -9629,66 +9657,70 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "deployments",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_:EnvironmentDeploymentConfig"
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "deployments",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EnvironmentDeploymentConfig"
+                        }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersUpdateWorkflowEnvironmentResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersUpdateWorkflowEnvironmentResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -10259,17 +10291,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersListWorkflowRevisionsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersListWorkflowRevisionsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -10610,17 +10645,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersPromoteWorkflowRevisionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersPromoteWorkflowRevisionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -11001,17 +11039,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersDeleteWorkflowRevisionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersDeleteWorkflowRevisionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -11353,17 +11394,20 @@
             "description": "End date for the usage data"
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ResponseModelUsage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ResponseModelUsage"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -11791,16 +11835,19 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "unknown"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -12360,17 +12407,20 @@
             "description": "Search query"
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersListCopilotsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersListCopilotsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -12798,27 +12848,31 @@
             "baseUrl": "https://api-prod.scoutos.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CopilotConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CopilotConfig"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersCreateCopilotResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersCreateCopilotResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -13622,17 +13676,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersGetCopilotResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersGetCopilotResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -13957,27 +14014,31 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CopilotConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CopilotConfig"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersUpdateCopilotResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersUpdateCopilotResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -14828,17 +14889,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AppsServiceHandlersDeleteCopilotResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AppsServiceHandlersDeleteCopilotResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -15124,17 +15188,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersGetCollectionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersGetCollectionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -15439,27 +15506,31 @@
             "baseUrl": "https://api-prod.scoutos.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CollectionConfigInput"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CollectionConfigInput"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersCreateCollectionResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersCreateCollectionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -17258,27 +17329,31 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CollectionConfigInput"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CollectionConfigInput"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersUpdateCollectionResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersUpdateCollectionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -19126,17 +19201,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersDeleteCollectionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersDeleteCollectionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -19442,17 +19520,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersGetDocumentResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersGetDocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -19815,27 +19896,31 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:DocumentsCreateRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:DocumentsCreateRequest"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersCreateDocumentResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersCreateDocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -20932,27 +21017,31 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentDataInput"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentDataInput"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersUpdateDocumentResponse"
+        ],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersUpdateDocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
@@ -21674,17 +21763,20 @@
             }
           }
         ],
-        "response": {
-          "description": "Successful Response",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EvalServiceHandlersDeleteDocumentResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Successful Response",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EvalServiceHandlersDeleteDocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Validation Error",
