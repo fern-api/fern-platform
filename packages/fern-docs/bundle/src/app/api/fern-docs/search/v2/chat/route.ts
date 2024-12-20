@@ -16,20 +16,17 @@ import {
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { embed, streamText, tool } from "ai";
+import { embed, EmbeddingModel, streamText, tool } from "ai";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
-
-const openai = createOpenAI({
-  apiKey: openaiApiKey(),
-});
-
-const embeddingModel = openai.embedding("text-embedding-3-small");
-
 export async function POST(req: NextRequest) {
+  const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
+  const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
+
+  const openai = createOpenAI({ apiKey: openaiApiKey() });
+  const embeddingModel = openai.embedding("text-embedding-3-small");
+
   const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
   const { messages } = await req.json();
@@ -66,6 +63,7 @@ export async function POST(req: NextRequest) {
   )?.content;
 
   const searchResults = await runQueryTurbopuffer(lastUserMessage, {
+    embeddingModel,
     namespace,
     authed: user != null,
     roles: user?.roles ?? [],
@@ -92,6 +90,7 @@ export async function POST(req: NextRequest) {
         }),
         async execute({ query }) {
           const response = await runQueryTurbopuffer(query, {
+            embeddingModel,
             namespace,
             authed: user != null,
             roles: user?.roles ?? [],
@@ -128,6 +127,7 @@ export async function POST(req: NextRequest) {
 async function runQueryTurbopuffer(
   query: string | null | undefined,
   opts: {
+    embeddingModel: EmbeddingModel<string>;
     namespace: string;
     topK?: number;
     authed?: boolean;
@@ -142,7 +142,7 @@ async function runQueryTurbopuffer(
         topK: opts.topK ?? 20,
         vectorizer: async (text) => {
           const embedding = await embed({
-            model: embeddingModel,
+            model: opts.embeddingModel,
             value: text,
           });
           return embedding.embedding;

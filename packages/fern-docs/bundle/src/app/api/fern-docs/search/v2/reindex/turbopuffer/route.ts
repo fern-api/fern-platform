@@ -16,15 +16,12 @@ import {
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
-const openai = createOpenAI({
-  apiKey: openaiApiKey(),
-});
-
-const embeddingModel = openai.embedding("text-embedding-3-small");
-
 export const maxDuration = 900; // 15 minutes
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  const openai = createOpenAI({ apiKey: openaiApiKey() });
+  const embeddingModel = openai.embedding("text-embedding-3-small");
+
   const domain = getDocsDomainEdge(req);
   const deleteExisting =
     req.nextUrl.searchParams.get("deleteExisting") === "true";

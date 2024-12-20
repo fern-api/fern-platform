@@ -18,9 +18,6 @@ import { z } from "zod";
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
-const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-const languageModel = anthropic.languageModel("claude-3-5-haiku-latest");
-
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
 
@@ -29,6 +26,9 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: NextRequest): Promise<Response> {
+  const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
+  const languageModel = anthropic.languageModel("claude-3-5-haiku-latest");
+
   const start = Date.now();
   const domain = getDocsDomainEdge(req);
   const featureFlags = await getFeatureFlags(domain);
