@@ -133,8 +133,8 @@ export function endpointDefinitionToMarkdown(
     [
       "```http",
       `${endpoint.method} ${endpoint.environments?.find((env) => env.id === endpoint.defaultEnvironment)?.baseUrl ?? endpoint.environments?.[0]?.baseUrl ?? ""}${ApiDefinition.toCurlyBraceEndpointPathLiteral(endpoint.path)}`,
-      endpoint.request != null
-        ? `Content-Type: ${endpoint.request.contentType}`
+      endpoint.requests?.[0] != null
+        ? `Content-Type: ${endpoint.requests[0].contentType}`
         : undefined,
       "```",
     ]
@@ -162,12 +162,12 @@ export function endpointDefinitionToMarkdown(
           `- ${pascalCaseHeaderKey(param.key)}${getShorthand(param.valueShape, types, param.description)}`
       )
       .join("\n"),
-    endpoint.request != null ? "## Request Body" : undefined,
-    typeof endpoint.request?.description === "string"
-      ? endpoint.request?.description
+    endpoint.requests?.[0] != null ? "## Request Body" : undefined,
+    typeof endpoint.requests?.[0]?.description === "string"
+      ? endpoint.requests?.[0]?.description
       : undefined,
-    endpoint.request != null
-      ? `\`\`\`json\n${JSON.stringify(endpoint.request.body)}\n\`\`\``
+    endpoint.requests?.[0] != null
+      ? `\`\`\`json\n${JSON.stringify(endpoint.requests[0].body)}\n\`\`\``
       : undefined,
     endpoint.responseHeaders?.length ? "## Response Headers" : undefined,
     endpoint.responseHeaders
@@ -176,13 +176,13 @@ export function endpointDefinitionToMarkdown(
           `- ${pascalCaseHeaderKey(header.key)}${getShorthand(header.valueShape, types, header.description)}`
       )
       .join("\n"),
-    endpoint.response != null || endpoint.errors?.length
+    endpoint.responses?.[0] != null || endpoint.errors?.length
       ? "## Response Body"
       : undefined,
-    endpoint.response != null || endpoint.errors?.length
+    endpoint.responses?.[0] != null || endpoint.errors?.length
       ? [
-          typeof endpoint.response?.description === "string"
-            ? `- ${endpoint.response.statusCode}: ${endpoint.response?.description}`
+          typeof endpoint.responses?.[0]?.description === "string"
+            ? `- ${endpoint.responses?.[0]?.statusCode}: ${endpoint.responses?.[0]?.description}`
             : undefined,
           ...(endpoint.errors
             ?.filter((error) => typeof error.description === "string")

@@ -64,7 +64,7 @@ export function MaybeEnvironmentDropdown({
   // TODO: clean up this component
   useEffect(() => {
     if (
-      // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+       
       url &&
       url.host &&
       url.host !== "" &&
