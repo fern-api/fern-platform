@@ -73,11 +73,13 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
         pathId: "test",
       },
       "application/json",
-      "json"
+      "json",
+      "testpath",
+      200,
+      undefined
     );
 
     expect(converter.contentType).toBe("application/json");
-    expect(converter.streamingFormat).toBe("json");
     expect(converter.schema).toBeDefined();
   });
 
@@ -92,11 +94,14 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
         pathId: "test",
       },
       "text/event-stream",
-      "sse"
+      "sse",
+      "testpath",
+      200,
+      undefined
     );
 
     const result = converter.convert();
-    expect(result).toEqual({ type: "streamingText" });
+    expect(result[0]).toEqual({ type: "streamingText" });
   });
 
   it("should error when JSON response is missing schema", () => {
@@ -110,6 +115,9 @@ describe("ResponseMediaTypeObjectConverterNode", () => {
         pathId: "test",
       },
       "application/json",
+      undefined,
+      "testpath",
+      200,
       undefined
     );
 

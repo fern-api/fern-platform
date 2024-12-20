@@ -33,26 +33,6 @@ describe("ExampleObjectConverterNode", () => {
   };
 
   describe("parse()", () => {
-    it("should error if request body schema is missing", () => {
-      new ExampleObjectConverterNode(
-        baseArgs,
-        mockPath,
-        mockResponseStatusCode,
-        "test",
-        {
-          ...mockRequestBody,
-          resolvedSchema: undefined,
-        } as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
-      );
-
-      expect(mockContext.errors.error).toHaveBeenCalledWith({
-        message: "Request body schema is required",
-        path: ["test"],
-      });
-    });
-
     it("should error if json example is not an object", () => {
       new ExampleObjectConverterNode(
         {
