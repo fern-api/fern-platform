@@ -1,11 +1,11 @@
-import { execa, Options, Result } from "execa";
+import { execa, Result } from "execa";
 import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
 import tmp from "tmp-promise";
 import { doesPathExist } from "./fs";
 
-export async function execFernCli(command: string, cwd?: string, pipeYes: boolean = false): Promise<Result<Options>> {
+export async function execFernCli(command: string, cwd?: string, pipeYes: boolean = false): Promise<Result> {
     console.log(`Running command on fern CLI: ${command}`);
     const commandParts = command.split(" ");
     try {
@@ -22,7 +22,7 @@ export async function execFernCli(command: string, cwd?: string, pipeYes: boolea
         // Re-install the CLI to ensure it's at the correct path, given the updated config
         await execa("npm", ["install", "-g", "fern-api"]);
 
-        let command: Promise<Result<Options>>;
+        let command: Promise<Result>;
         // If you don't have node_modules/fern-api, try using the CLI directly
         if (!(await doesPathExist(`${process.cwd()}/node_modules/fern-api`))) {
             // TODO: is there a better way to pipe `yes`? Piping the output of the real `yes` command doesn't work -- resulting in an EPIPE error.
@@ -36,7 +36,7 @@ export async function execFernCli(command: string, cwd?: string, pipeYes: boolea
                 input: pipeYes ? "y" : undefined,
             });
         }
-        return command;
+        return await command;
     } catch (error) {
         console.error("fern command failed.");
         throw error;
@@ -46,8 +46,7 @@ export async function execFernCli(command: string, cwd?: string, pipeYes: boolea
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
 // Exported to leverage in tests
 export function cleanFernStdout(stdout: string): string {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return stdout.split("╭─")[0]!.split("\n")[0]!.trim();
+    return stdout.split("╭─")[0]?.split("\n")[0]?.trim() ?? "";
 }
 
 // This type is meant to mirror the data model for the `generator list` command

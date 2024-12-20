@@ -44,7 +44,7 @@ export async function resolveChangelogEntryPage({
   const markdown = pages[node.pageId]?.markdown;
   if (markdown == null) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Markdown content not found", node.pageId);
     return;
   }

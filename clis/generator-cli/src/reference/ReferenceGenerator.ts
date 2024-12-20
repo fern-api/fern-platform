@@ -45,7 +45,7 @@ export class ReferenceGenerator {
     writer: Writer;
   }): void {
     if (section.description != null) {
-      writer.writeLine(`${section.description}`);
+      writer.writeLine(section.description);
     }
     for (const endpoint of section.endpoints) {
       this.writeEndpoint({ endpoint, writer });
@@ -61,7 +61,7 @@ export class ReferenceGenerator {
   }): void {
     writer.writeLine(`## ${section.title}`);
     if (section.description != null) {
-      writer.writeLine(`${section.description}`);
+      writer.writeLine(section.description);
     }
     for (const endpoint of section.endpoints) {
       this.writeEndpoint({ endpoint, writer });

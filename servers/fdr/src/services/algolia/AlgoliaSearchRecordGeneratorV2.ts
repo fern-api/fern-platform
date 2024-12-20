@@ -263,24 +263,12 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
                     this.generateAlgoliaSearchRecordsForChangelogSectionV2(item, context),
                 );
             case "changelogV3":
-                return this.generateAlgoliaSearchRecordsForChangelogNode(
-                    item.node as FernNavigation.V1.ChangelogNode,
-                    context,
-                ).concat(
-                    this.generateAlgoliaSearchRecordsForChangelogNodeV2(
-                        item.node as FernNavigation.V1.ChangelogNode,
-                        context,
-                    ),
+                return this.generateAlgoliaSearchRecordsForChangelogNode(item.node, context).concat(
+                    this.generateAlgoliaSearchRecordsForChangelogNodeV2(item.node, context),
                 );
             case "apiV2":
-                return this.generateAlgoliaSearchRecordsForApiReferenceNode(
-                    item.node as FernNavigation.V1.ApiReferenceNode,
-                    context,
-                ).concat(
-                    this.generateAlgoliaSearchRecordsForApiReferenceNodeV2(
-                        item.node as FernNavigation.V1.ApiReferenceNode,
-                        context,
-                    ),
+                return this.generateAlgoliaSearchRecordsForApiReferenceNode(item.node, context).concat(
+                    this.generateAlgoliaSearchRecordsForApiReferenceNodeV2(item.node, context),
                 );
             default:
                 assertNever(item);
@@ -1293,9 +1281,9 @@ export class AlgoliaSearchRecordGeneratorV2 extends AlgoliaSearchRecordGenerator
     protected collectReferencedTypesToContentV2(
         typeReferencesWithMetadata: TypeReferenceWithMetadata[],
         types: Record<string, APIV1Read.TypeDefinition>,
-        visitedNodes: Set<string> = new Set(),
-        discriminatedUnionVariants: Set<string> = new Set(),
-        undiscriminatedUnionVariants: Set<string> = new Set(),
+        visitedNodes = new Set<string>(),
+        discriminatedUnionVariants = new Set<string>(),
+        undiscriminatedUnionVariants = new Set<string>(),
         depth: number = 0,
     ): AlgoliaSearchRecord[] {
         if (depth >= 8) {
@@ -1650,7 +1638,7 @@ function toBreadcrumbs(
             .filter(FernNavigation.V1.hasMetadata)
             .filter((parent) =>
                 parent.type === "apiReference"
-                    ? parent.hideTitle !== true
+                    ? !parent.hideTitle
                     : parent.type === "changelogMonth" || parent.type === "changelogYear"
                       ? false
                       : true,

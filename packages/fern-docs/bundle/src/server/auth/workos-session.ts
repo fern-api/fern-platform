@@ -29,7 +29,7 @@ async function refreshSession(
         organizationId,
       });
     return { accessToken, refreshToken, user, impersonator };
-  } catch (e) {
+  } catch (_) {
     return undefined;
   }
 }

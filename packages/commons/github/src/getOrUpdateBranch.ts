@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { SimpleGit } from "simple-git";
 import { DEFAULT_REMOTE_NAME } from "./constants";
 
@@ -21,7 +20,8 @@ export async function getOrUpdateBranch(
     await git.merge(["-X", "theirs", defaultBranchName]);
   } catch (e) {
     console.log(
-      `Branch (${branchToCheckoutName}) does not exist, create and checkout`
+      `Branch (${branchToCheckoutName}) does not exist, create and checkout`,
+      e
     );
     await git.checkoutBranch(branchToCheckoutName, defaultBranchName);
   }

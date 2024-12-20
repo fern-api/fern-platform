@@ -11,7 +11,6 @@ export async function handleLoadDocsError(
     return { notFound: true };
   }
 
-  // eslint-disable-next-line no-console
   console.error(
     `Failed to load initial props for docs page: https://${xFernHost}/${slug}`,
     error.content

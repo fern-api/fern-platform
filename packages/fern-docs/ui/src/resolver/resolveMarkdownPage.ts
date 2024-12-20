@@ -43,7 +43,6 @@ export async function resolveMarkdownPage({
   });
 
   if (!markdownPageWithoutApiRefs) {
-    // eslint-disable-next-line no-console
     console.error(`Failed to load markdown for ${node.slug}`);
     return;
   }
@@ -83,14 +82,12 @@ export async function resolveMarkdownPage({
           > => {
             const loader = apiLoaders[id];
             if (loader == null) {
-              // eslint-disable-next-line no-console
               console.error("API definition not found", id);
               return;
             }
             const apiDefinition = await loader.load();
 
             if (apiDefinition == null) {
-              // eslint-disable-next-line no-console
               console.error(`Failed to load API definition for ${id}`);
               return;
             }
@@ -128,7 +125,6 @@ export async function resolveMarkdownPageWithoutApiRefs({
   const rawMarkdown = markdownLoader.getRawMarkdown(node);
 
   if (!rawMarkdown) {
-    // eslint-disable-next-line no-console
     console.error(`Failed to load markdown for ${node.slug}`);
     return;
   }

@@ -72,7 +72,6 @@ export async function serializeMdx(
     try {
       cwd = dirname(filename);
     } catch {
-      // eslint-disable-next-line no-console
       console.error("Failed to get cwd from filename", filename);
     }
   }
@@ -157,7 +156,6 @@ export async function serializeMdx(
 
     if (bundled.errors.length > 0) {
       bundled.errors.forEach((error) => {
-        // eslint-disable-next-line no-console
         console.error(error);
       });
     }
@@ -173,7 +171,6 @@ export async function serializeMdx(
       jsxRefs: jsxElements,
     };
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return content;
   }

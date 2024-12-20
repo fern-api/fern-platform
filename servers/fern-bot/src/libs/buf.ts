@@ -59,7 +59,7 @@ export class Buf {
         try {
             await which(["buf"]);
         } catch (err) {
-            console.log("buf is not installed");
+            console.log("buf is not installed", err);
             return this.install();
         }
         this.cli = this.createBufExecutable();

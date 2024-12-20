@@ -1,5 +1,6 @@
 import { FernDocs } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { isString } from "es-toolkit/predicate";
 
 export function toDescription(
   descriptions:
@@ -25,5 +26,5 @@ export function toDescription(
     return undefined;
   }
 
-  return stringDescriptions.join("\n\n");
+  return stringDescriptions.filter(isString).join("\n\n");
 }

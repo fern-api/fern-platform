@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import type { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";

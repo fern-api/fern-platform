@@ -8,11 +8,9 @@ import { convertPlaygroundFormDataEntryValueToResolvedExampleEndpointRequest } f
 import { PlaygroundCodeSnippetBuilder } from "./types";
 
 export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
-  private isFileForgeHackEnabled: boolean = false;
+  private isFileForgeHackEnabled = false;
 
-  public setFileForgeHackEnabled(
-    isFileForgeHackEnabled: boolean
-  ): CurlSnippetBuilder {
+  public setFileForgeHackEnabled(isFileForgeHackEnabled: boolean): this {
     this.isFileForgeHackEnabled = isFileForgeHackEnabled;
     return this;
   }

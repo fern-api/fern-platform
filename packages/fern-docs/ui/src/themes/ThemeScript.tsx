@@ -50,6 +50,7 @@ export function ThemeScript({
 }): ReactElement {
   const args = getAvailableThemes(colors);
   return (
+    // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
     <Script
       id="theme-script"
       dangerouslySetInnerHTML={{

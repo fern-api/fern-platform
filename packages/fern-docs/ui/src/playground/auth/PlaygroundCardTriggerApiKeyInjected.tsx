@@ -1,6 +1,6 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
-import { FernButton, FernCard } from "@fern-docs/components";
 import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
+import { FernButton, FernCard } from "@fern-docs/components";
 import { Key, User } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useSearchParams } from "next/navigation";
@@ -119,8 +119,7 @@ export function PlaygroundCardTriggerApiKeyInjected({
                   .then(() => {
                     window.location.reload();
                   })
-                  .catch((error) => {
-                    // eslint-disable-next-line no-console
+                  .catch((error: unknown) => {
                     console.error(error);
                   });
               }}

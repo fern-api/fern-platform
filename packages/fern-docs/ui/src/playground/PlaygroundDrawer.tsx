@@ -135,7 +135,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
       >
         <Dialog.Portal>
           <Dialog.Content
-            className="bg-background-translucent border-default fixed inset-x-0 bottom-0 border-t shadow-xl backdrop-blur-2xl data-[state=open]:animate-content-show-from-bottom max-sm:h-full"
+            className="bg-background-translucent border-default data-[state=open]:animate-content-show-from-bottom fixed inset-x-0 bottom-0 border-t shadow-xl backdrop-blur-2xl max-sm:h-full"
             onInteractOutside={(e) => {
               e.preventDefault();
             }}
@@ -162,9 +162,9 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                     onMouseDown={resizeY.onMouseDown}
                     onTouchStart={resizeY.onTouchStart}
                   >
-                    <div className="absolute inset-0 bg-accent opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
+                    <div className="bg-accent absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100 group-active:opacity-100" />
                     <div className="relative -top-6 z-30 mx-auto w-fit p-4 pb-0">
-                      <div className="h-1 w-10 rounded-full bg-accent" />
+                      <div className="bg-accent h-1 w-10 rounded-full" />
                     </div>
                   </div>
                 </>

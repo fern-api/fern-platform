@@ -7,7 +7,7 @@ import { JUST_NAVIGATED_ATOM, SLUG_ATOM, useAtomEffect } from "../atoms";
 export function useApiPageCenterElement(
   ref: RefObject<HTMLDivElement>,
   slug: FernNavigation.Slug,
-  skip: boolean = false
+  skip = false
 ): void {
   const isInView = useInView(ref, {
     // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport

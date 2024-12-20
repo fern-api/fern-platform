@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import type { GradientStop, WaveformColor } from "./types";
 import { gradientColors } from "./types";
 
@@ -82,7 +81,7 @@ export default function WaveformComplex({
   );
 }
 
-const Camera = ({ zoom }: { zoom: number }): JSX.Element => {
+const Camera = ({ zoom }: { zoom: number }): React.JSX.Element => {
   const cameraRef = useRef() as any;
   const { viewport } = useThree();
   const zoomSpring = useSpring(INITIAL_ZOOM, springSettings);
@@ -118,7 +117,7 @@ function Scene({
 }: {
   colors: GradientStop[];
   speed: number;
-}): JSX.Element {
+}): React.JSX.Element {
   const { gl } = useThree();
   const planeRef = useRef() as any;
   const targetColorsRef = useRef(colors);

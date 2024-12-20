@@ -28,7 +28,7 @@ export function buildAuthHeaders(
         if (redacted) {
           token = obfuscateSecret(token);
         }
-        headers["Authorization"] = `Bearer ${token}`;
+        headers.Authorization = `Bearer ${token}`;
       },
       header: (header) => {
         // pluck the value from the headers object (avoid inheriting all the other headers)
@@ -48,8 +48,7 @@ export function buildAuthHeaders(
         if (redacted) {
           password = obfuscateSecret(password);
         }
-        headers["Authorization"] =
-          `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
+        headers.Authorization = `Basic ${btoa(`${username}:${obfuscateSecret(password)}`)}`;
       },
       oAuth: (oAuth) => {
         visitDiscriminatedUnion(oAuth.value)._visit({

@@ -43,9 +43,8 @@ export class ApiDefinitionKVCache {
   ): Promise<ApiDefinition.ApiDefinition | null> {
     const key = this.createKey(`api-definition/${additionalKey}`);
     try {
-      return kv.get<ApiDefinition.ApiDefinition>(key);
+      return await kv.get<ApiDefinition.ApiDefinition>(key);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(`Could not get ${key} from cache`, e);
       return null;
     }
@@ -59,7 +58,6 @@ export class ApiDefinitionKVCache {
     try {
       await kv.set(key, apiDefinition);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(`Could not set ${key} in cache`, e);
     }
   }

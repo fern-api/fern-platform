@@ -16,7 +16,6 @@ export function testGenerateReadme({
   config: FernGeneratorCli.ReadmeConfig;
   originalReadme?: string;
 }): void {
-  // eslint-disable-next-line vitest/valid-title
   describe(fixtureName, () => {
     it("generate readme", async () => {
       const file = await tmp.file();

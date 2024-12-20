@@ -143,7 +143,7 @@ export const baseMockFdrConfig: FdrConfig = {
     algoliaSearchV2Domains: [],
     slackToken: "",
     logLevel: "debug",
-    docsCacheEndpoint: process.env["DOCS_CACHE_ENDPOINT"] || "",
+    docsCacheEndpoint: process.env.DOCS_CACHE_ENDPOINT || "",
     enableCustomerNotifications: false,
     applicationEnvironment: "mock",
     redisEnabled: false,

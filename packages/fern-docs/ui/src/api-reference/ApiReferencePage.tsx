@@ -25,7 +25,7 @@ export const ApiReferencePage: React.FC<ApiReferencePage.Props> = ({
 
   if (node?.type !== "apiReference") {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Expected node to be an api reference node");
     return null;
   }

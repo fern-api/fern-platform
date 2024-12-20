@@ -20,7 +20,7 @@ export function PageLayout({
   return (
     <main className="fern-page-layout">
       <PageHeader />
-      <div className="prose max-w-full break-words dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0">
+      <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
         {children}
       </div>
       {(!hideFeedback || editThisPageUrl != null) && (

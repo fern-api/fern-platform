@@ -15,13 +15,12 @@ export class Revalidator implements Revalidator {
 
   async path(path: string): Promise<FernDocs.RevalidationResult> {
     const url = this.getUrl(path);
-    // eslint-disable-next-line no-console
+
     console.log(`Revalidating ${url}`);
     try {
       await this.res.revalidate(`/static/${url}`);
       return { success: true, url };
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(`Failed to revalidate ${url}:`, error);
       return { success: false, url, error: String(error) };
     }

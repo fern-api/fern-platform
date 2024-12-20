@@ -29,7 +29,7 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
 
   if (error != null) {
     // TODO: store this login attempt in posthog
-    // eslint-disable-next-line no-console
+
     console.error(error, errorDescription, errorUri);
     return new NextResponse(null, { status: 400 });
   }
@@ -40,7 +40,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
   const url = safeUrl(return_to ?? req.nextUrl.origin);
 
   if (url == null) {
-    // eslint-disable-next-line no-console
     console.error(`Invalid ${return_to_param} param provided:`, return_to);
     return new NextResponse(null, { status: 400 });
   }
@@ -51,7 +50,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     if (
       req.nextUrl.searchParams.get(FORWARDED_HOST_QUERY) === req.nextUrl.host
     ) {
-      // eslint-disable-next-line no-console
       console.error(
         FORWARDED_HOST_QUERY,
         "is the same as the host:",
@@ -72,7 +70,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
   const code = req.nextUrl.searchParams.get(CODE_QUERY);
 
   if (code == null) {
-    // eslint-disable-next-line no-console
     console.error("No code param provided");
     return new NextResponse(null, { status: 400 });
   }
@@ -105,7 +102,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
       error: error instanceof Error ? error.message : String(error),
     };
 
-    // eslint-disable-next-line no-console
     console.error(errorRes);
 
     return errorResponse();

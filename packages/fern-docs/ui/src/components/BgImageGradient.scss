@@ -1,6 +1,6 @@
 @layer components {
   .fern-background {
-    @apply pointer-events-none fixed inset-0 -z-10 overscroll-y-none bg-background;
+    @apply bg-background pointer-events-none fixed inset-0 -z-10 overscroll-y-none;
   }
 }
 

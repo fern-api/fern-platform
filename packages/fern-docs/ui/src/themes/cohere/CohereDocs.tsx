@@ -20,7 +20,6 @@ import { HeaderContainer } from "./HeaderContainer";
 const CohereDocsStyle = () => {
   const contentHeight = useAtomValue(CONTENT_HEIGHT_ATOM);
   return (
-    // eslint-disable-next-line react/no-unknown-property
     <style jsx global>
       {`
         :root {

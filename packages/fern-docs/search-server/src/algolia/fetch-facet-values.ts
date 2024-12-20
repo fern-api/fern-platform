@@ -32,8 +32,7 @@ async function fetchFacetValues(opts: {
         distinct: true,
       })),
     })
-    .catch((err) => {
-      // eslint-disable-next-line no-console
+    .catch((err: unknown) => {
       console.error(err);
       return { results: [] };
     });

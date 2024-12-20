@@ -33,9 +33,9 @@ function isFailureResult(
 }
 
 function chunk<T>(arr: T[], size: number): T[][] {
-  return arr.reduce(
+  return arr.reduce<T[][]>(
     (acc, _, i) => (i % size ? acc : [...acc, arr.slice(i, i + size)]),
-    [] as T[][]
+    []
   );
 }
 
@@ -75,7 +75,6 @@ const handler: NextApiHandler = async (
       }
     }
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
   }
 
@@ -106,7 +105,6 @@ const handler: NextApiHandler = async (
       )
       .json({ successfulRevalidations, failedRevalidations });
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
     return res
       .status(500)

@@ -48,7 +48,7 @@ export const ApiSectionMarkdownPage = memo(
 
     if (!mdx) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error(`No markdown content found for node ${node.id}`);
       return null;
     }

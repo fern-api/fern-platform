@@ -55,7 +55,7 @@ expressApp.listen(port, (err) => {
   if (err) {
     throw err;
   }
-  // eslint-disable-next-line no-console
+
   console.log(`> Ready on http://${hostname}:${port}`);
 });
 
@@ -80,5 +80,6 @@ setInterval(() => {
 }, 10_000);
 
 // await infiinitely
+
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 void new Promise(() => {});

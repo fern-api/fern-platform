@@ -3,7 +3,7 @@ import { createAlgoliaRecords } from "../records/create-algolia-records";
 import { readFixture, readFixtureToRootNode } from "./test-utils";
 
 describe("hume", () => {
-  it("should work", () => {
+  it("should work", async () => {
     const [fixture, snapshotFilepath] = readFixture("hume");
     const { root, apis, pages } = readFixtureToRootNode(fixture);
 
@@ -19,7 +19,7 @@ describe("hume", () => {
 
     const objectIDs = records.map((record) => record.objectID);
 
-    expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
+    await expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
       snapshotFilepath
     );
 

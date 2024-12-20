@@ -76,8 +76,7 @@ function formatChangelogResponses(previousVersion: string, changelogs: Changelog
         throw new Error("Version difference was found, but no changelog entries were found. This is unexpected.");
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const prBodyTitle = `## Upgrading from \`${previousVersion}\` to \`${changelogs[0]!.version}\` - Changelog\n\n<dl>\n<dd>\n<ul>`;
+    const prBodyTitle = `## Upgrading from \`${previousVersion}\` to \`${changelogs[0]?.version}\` - Changelog\n\n<dl>\n<dd>\n<ul>`;
     let prBody = prBodyTitle;
     const terminalString = "</ul>\n</dd>\n</dl>";
 
@@ -120,8 +119,7 @@ function terminateChangelog(prBody: string, newEntry: string, terminalString: st
 // We pollute stdout with a version upgrade log, this tries to ignore that by only consuming the first line
 // Exported to leverage in tests
 export function cleanStdout(stdout: string): string {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return stdout.split("╭─")[0]!.split("\n")[0]!.trim();
+    return stdout.split("╭─")[0]?.split("\n")[0]?.trim() ?? "";
 }
 
 export async function updateVersionInternal(
@@ -152,6 +150,7 @@ export async function updateVersionInternal(
         } catch (error) {
             console.error(
                 "Could not determine the repo owner, continuing to upgrade CLI, but will fail generator upgrades.",
+                error,
             );
         }
 

@@ -262,7 +262,6 @@ export function getClosestGrayScale(
 
     return allColors[0]!.scale as (typeof grayScaleNames)[number];
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return "gray";
   }

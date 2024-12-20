@@ -49,8 +49,7 @@ export function getPrereleaseTypeAndVersion(version: string): [ReleaseType, numb
         const prereleaseTypeWithVersion = prereleaseType.match(/((?:rc|alpha|beta))([0-9]+)/);
         if (
             parsedVersion.prerelease.length === 1 &&
-            prereleaseTypeWithVersion != null &&
-            prereleaseTypeWithVersion[1] != null &&
+            prereleaseTypeWithVersion?.[1] != null &&
             prereleaseTypeWithVersion[2] != null
         ) {
             const truePrereleaseType = prereleaseTypeWithVersion[1];

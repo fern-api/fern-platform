@@ -51,7 +51,7 @@ export function PlaygroundResponseCard({
             </span>
             <span
               className={
-                "flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"
+                "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
               }
             >
               time: {round(response.value.time, 2)}ms
@@ -61,7 +61,7 @@ export function PlaygroundResponseCard({
               response.value.size.trim().length > 0 && (
                 <span
                   className={
-                    "flex h-5 items-center rounded-md bg-tag-default px-1.5 py-1 font-mono"
+                    "bg-tag-default flex h-5 items-center rounded-md px-1.5 py-1 font-mono"
                   }
                 >
                   size: {response.value.size}b
@@ -105,7 +105,7 @@ export function PlaygroundResponseCard({
               />
             ),
           failed: () => (
-            <span className="flex items-center rounded-[4px] bg-tag-danger p-1 font-mono text-xs uppercase leading-none text-intent-danger">
+            <span className="bg-tag-danger text-intent-danger flex items-center rounded-[4px] p-1 font-mono text-xs uppercase leading-none">
               Failed
             </span>
           ),

@@ -90,7 +90,6 @@ export class OryOAuth2Client {
     try {
       return await this.decode(access_token);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
       return null;
     }

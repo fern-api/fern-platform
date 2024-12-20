@@ -3,13 +3,13 @@ import { NextSeoProps, OpenGraphMedia } from "../types";
 
 const buildOpenGraphMediaTags = (
   mediaType: "image" | "video" | "audio",
-  media: ReadonlyArray<OpenGraphMedia> = [],
+  media: readonly OpenGraphMedia[] = [],
   {
     defaultWidth,
     defaultHeight,
   }: { defaultWidth?: number; defaultHeight?: number } = {}
 ) => {
-  return media.reduce((tags, medium, index) => {
+  return media.reduce<ReactNode[]>((tags, medium, index) => {
     tags.push(
       <meta
         key={`og:${mediaType}:0${index}`}
@@ -85,7 +85,7 @@ const buildOpenGraphMediaTags = (
     }
 
     return tags;
-  }, [] as ReactNode[]);
+  }, []);
 };
 
 export const buildTags = (config: NextSeoProps): ReactNode[] => {
@@ -311,10 +311,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           );
         }
       } else if (type === "book" && config.openGraph.book) {
-        if (
-          config.openGraph.book.authors &&
-          config.openGraph.book.authors.length
-        ) {
+        if (config.openGraph.book.authors?.length) {
           config.openGraph.book.authors.forEach((author, index) => {
             tagsToRender.push(
               <meta
@@ -346,7 +343,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           );
         }
 
-        if (config.openGraph.book.tags && config.openGraph.book.tags.length) {
+        if (config.openGraph.book.tags?.length) {
           config.openGraph.book.tags.forEach((tag, index) => {
             tagsToRender.push(
               <meta
@@ -388,10 +385,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           );
         }
 
-        if (
-          config.openGraph.article.authors &&
-          config.openGraph.article.authors.length
-        ) {
+        if (config.openGraph.article.authors?.length) {
           config.openGraph.article.authors.forEach((author, index) => {
             tagsToRender.push(
               <meta
@@ -413,10 +407,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           );
         }
 
-        if (
-          config.openGraph.article.tags &&
-          config.openGraph.article.tags.length
-        ) {
+        if (config.openGraph.article.tags?.length) {
           config.openGraph.article.tags.forEach((tag, index) => {
             tagsToRender.push(
               <meta
@@ -434,10 +425,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           type === "video.other") &&
         config.openGraph.video
       ) {
-        if (
-          config.openGraph.video.actors &&
-          config.openGraph.video.actors.length
-        ) {
+        if (config.openGraph.video.actors?.length) {
           config.openGraph.video.actors.forEach((actor, index) => {
             if (actor.profile) {
               tagsToRender.push(
@@ -461,10 +449,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           });
         }
 
-        if (
-          config.openGraph.video.directors &&
-          config.openGraph.video.directors.length
-        ) {
+        if (config.openGraph.video.directors?.length) {
           config.openGraph.video.directors.forEach((director, index) => {
             tagsToRender.push(
               <meta
@@ -476,10 +461,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           });
         }
 
-        if (
-          config.openGraph.video.writers &&
-          config.openGraph.video.writers.length
-        ) {
+        if (config.openGraph.video.writers?.length) {
           config.openGraph.video.writers.forEach((writer, index) => {
             tagsToRender.push(
               <meta
@@ -511,7 +493,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
           );
         }
 
-        if (config.openGraph.video.tags && config.openGraph.video.tags.length) {
+        if (config.openGraph.video.tags?.length) {
           config.openGraph.video.tags.forEach((tag, index) => {
             tagsToRender.push(
               <meta
@@ -535,7 +517,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
       }
     }
 
-    if (config.openGraph.images && config.openGraph.images.length) {
+    if (config.openGraph.images?.length) {
       tagsToRender.push(
         ...buildOpenGraphMediaTags("image", config.openGraph.images, {
           defaultWidth: config.openGraph.defaultImageWidth,
@@ -546,7 +528,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
 
     // videos
 
-    if (config.openGraph.videos && config.openGraph.videos.length) {
+    if (config.openGraph.videos?.length) {
       tagsToRender.push(
         ...buildOpenGraphMediaTags("video", config.openGraph.videos, {
           defaultWidth: config.openGraph.defaultVideoWidth,

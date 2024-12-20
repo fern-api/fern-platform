@@ -10,7 +10,7 @@ async function renderMdxContent(
     options: { development: false },
   });
   const result = renderer
-    // eslint-disable-next-line deprecation/deprecation
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     .create(
       typeof serializedContent === "string"
         ? createElement("span", {}, serializedContent)

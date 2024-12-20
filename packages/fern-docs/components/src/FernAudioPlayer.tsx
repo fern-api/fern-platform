@@ -36,9 +36,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
         preload="metadata"
         autoPlay={props.autoPlay}
         className="hidden"
-        onLoadedMetadata={(
-          event: React.SyntheticEvent<HTMLAudioElement, Event>
-        ) => {
+        onLoadedMetadata={(event: React.SyntheticEvent<HTMLAudioElement>) => {
           const audio = event.target as HTMLAudioElement;
           audio.volume = 1;
           setDuration(audio.duration);
@@ -98,7 +96,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                 isPlaying ? (
                   <Pause />
                 ) : (
-                  <Play className="-mr-0.5 fill-accent-contrast" />
+                  <Play className="fill-accent-contrast -mr-0.5" />
                 )
               }
               variant="filled"
@@ -109,7 +107,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
                 if (ref.current?.paused) {
                   void ref.current.play();
                 } else {
-                  void ref.current?.pause();
+                  ref.current?.pause();
                 }
               }}
             />

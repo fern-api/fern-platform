@@ -130,7 +130,6 @@ export function makeToc(
           });
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error(e);
       }
     }
@@ -160,7 +159,6 @@ export function makeToc(
           });
         });
       } catch (e) {
-        // eslint-disable-next-line no-console
         console.error(e);
       }
     }

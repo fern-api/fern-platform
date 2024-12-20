@@ -135,7 +135,7 @@ export const PlaygroundWebSocketSessionForm: FC<
               >
                 <span className="relative inline-flex size-2">
                   {connected && (
-                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-75" />
+                    <span className="bg-accent absolute inline-flex size-full animate-ping rounded-full opacity-75" />
                   )}
                   <span
                     className={cn("relative inline-flex size-2 rounded-full", {

@@ -31,7 +31,6 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
   );
 
   if (!context) {
-    // eslint-disable-next-line no-console
     console.error("Could not create context for endpoint", node);
     return null;
   }

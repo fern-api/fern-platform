@@ -16,17 +16,17 @@ export function getWebflowAuthorizationUrl(
     client_id: authConfig.clientId,
   };
   if (authConfig.redirectUri != null) {
-    params["redirect_uri"] = authConfig.redirectUri;
+    params.redirect_uri = authConfig.redirectUri;
   } else if (redirectUri != null) {
-    params["redirect_uri"] = redirectUri;
+    params.redirect_uri = redirectUri;
   }
   if (state != null) {
-    params["state"] = state;
+    params.state = state;
   }
   if (typeof authConfig.scope === "string") {
-    params["scope"] = authConfig.scope;
+    params.scope = authConfig.scope;
   } else if (authConfig.scope != null) {
-    params["scope"] = authConfig.scope.join(" ");
+    params.scope = authConfig.scope.join(" ");
   }
   return `https://webflow.com/oauth/authorize?${qs.stringify(params)}`;
 }

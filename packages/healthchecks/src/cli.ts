@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
 import { getAllFernDocsWebsites } from "./getDocsURLs";
@@ -38,7 +37,7 @@ void yargs(hideBin(process.argv))
             }
           }
         } catch (err) {
-          console.error(`Failed to run rules for ${url}.`);
+          console.error(`Failed to run rules for ${url}.`, err);
         }
       }
       printResults(resultsWithUrl);

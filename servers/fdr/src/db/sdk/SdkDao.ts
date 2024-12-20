@@ -6,7 +6,7 @@ import { SdkIdFactory } from "../snippets/SdkIdFactory";
 import { SdkId } from "../types";
 
 type PrismaTransaction = Omit<
-    PrismaClient<Prisma.PrismaClientOptions, never, DefaultArgs>,
+    PrismaClient<Prisma.PrismaClientOptions, never>,
     "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
 >;
 

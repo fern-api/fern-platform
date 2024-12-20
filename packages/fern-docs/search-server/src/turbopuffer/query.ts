@@ -97,13 +97,10 @@ export async function queryTurbopuffer(
 type ResultItem = QueryResults[number];
 
 function resultsToRanks(results: ResultItem[]): Record<string, number> {
-  return results.reduce(
-    (acc, item, index) => {
-      acc[item.id] = index + 1;
-      return acc;
-    },
-    {} as Record<string, number>
-  );
+  return results.reduce<Record<string, number>>((acc, item, index) => {
+    acc[item.id] = index + 1;
+    return acc;
+  }, {});
 }
 
 function reciprocalRankFusion(

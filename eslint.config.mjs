@@ -1,109 +1,97 @@
-import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
-import { FlatCompat } from "@eslint/eslintrc";
-import js from "@eslint/js";
-import tsParser from "@typescript-eslint/parser";
-import deprecation from "eslint-plugin-deprecation";
-import _import from "eslint-plugin-import";
-import tailwindcss from "eslint-plugin-tailwindcss";
-import globals from "globals";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
+// @ts-check
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { FlatCompat } from "@eslint/eslintrc";
+import eslint from "@eslint/js";
+import vitest from "eslint-plugin-vitest";
+import tseslint from "typescript-eslint";
+
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
+  baseDirectory: import.meta.dirname,
+  recommendedConfig: eslint.configs.recommended,
+  allConfig: eslint.configs.all,
 });
 
-export default [
+export default tseslint.config(
   {
     ignores: [
-      "**/*.js",
-      "**/*.jsx",
-      "**/lib",
-      "**/build",
+      "**/generated",
       "**/dist",
-      "**/.yarn",
-      "**/.husky",
-      "**/generated",
-      "**/bundle.c?js",
-      "**/.pnp*",
-      "**/generated",
+      "**/build",
+      "**/.next",
+      "**/storybook-static",
+      "**/out",
     ],
   },
-  ...fixupConfigRules(
-    compat.extends(
-      "prettier",
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended",
-      "plugin:@typescript-eslint/strict",
-      "plugin:@typescript-eslint/eslint-recommended",
-      // "plugin:vitest/recommended",
-      "plugin:react/recommended",
-      "plugin:react-hooks/recommended",
-      "plugin:tailwindcss/recommended",
-      "plugin:@next/next/recommended"
-    )
-  ),
+  eslint.configs.recommended,
+  tseslint.configs.strictTypeChecked,
+  tseslint.configs.stylisticTypeChecked,
   {
-    plugins: {
-      deprecation,
-      import: fixupPluginRules(_import),
-      tailwindcss: fixupPluginRules(tailwindcss),
+    languageOptions: {
+      parserOptions: {
+        project: ["./tsconfig.eslint.json"],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
+  },
 
+  ...compat.config({
+    extends: [
+      "next/core-web-vitals",
+      "next/typescript",
+      "plugin:tailwindcss/recommended",
+    ],
+    settings: {
+      next: {
+        rootDir: [
+          "packages/fern-docs/bundle",
+          "packages/fern-docs/local-preview-bundle",
+          "packages/fern-docs/search-ui",
+        ],
+      },
+      react: {
+        version: "18",
+      },
+    },
+  }),
+
+  {
+    files: ["**/*.test.ts", "**/*.test.tsx"],
+    plugins: {
+      vitest,
+    },
+    rules: {
+      ...vitest.configs.recommended.rules,
+      "@typescript-eslint/no-empty-function": "off",
+    },
+    settings: {
+      vitest: {
+        typecheck: true,
+      },
+    },
     languageOptions: {
       globals: {
-        ...globals.browser,
-      },
-
-      parser: tsParser,
-      ecmaVersion: 12,
-      sourceType: "module",
-
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
-        },
-
-        project: ["./tsconfig.eslint.json", "./packages/**/tsconfig.json"],
-        allowAutomaticSingleRunInference: true,
-        tsconfigRootDir: __dirname,
+        ...vitest.environments.env.globals,
       },
     },
+  },
 
-    settings: {
-      react: {
-        version: "18.3.1",
-      },
-
-      next: {
-        rootDir: "packages/fern-docs/bundle/",
-      },
-    },
-
+  {
     rules: {
+      "no-unused-vars": "off",
+      "no-undef": "off",
+      "no-empty": ["error", { allowEmptyCatch: true }],
+      eqeqeq: ["error", "always", { null: "never" }],
+      "@typescript-eslint/no-deprecated": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
         {
           varsIgnorePattern: "^_",
           argsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
           ignoreRestSiblings: true,
         },
       ],
-
-      "@typescript-eslint/no-namespace": [
-        "error",
-        {
-          allowDeclarations: true,
-        },
-      ],
-
-      "@typescript-eslint/explicit-module-boundary-types": ["off"],
-      "@typescript-eslint/no-floating-promises": ["error"],
-
       "@typescript-eslint/no-empty-function": [
         "error",
         {
@@ -114,102 +102,92 @@ export default [
           ],
         },
       ],
-
-      "@typescript-eslint/await-thenable": "error",
-      "@typescript-eslint/no-base-to-string": "error",
-      "@typescript-eslint/no-extraneous-class": "off",
-      "@typescript-eslint/no-invalid-void-type": "off",
-      "@typescript-eslint/prefer-optional-chain": "off",
-      "@typescript-eslint/strict-boolean-expressions": "off",
-      "linebreak-style": ["error", "unix"],
-      "no-console": "error",
-
-      "no-empty": [
-        "error",
-        {
-          allowEmptyCatch: true,
-        },
-      ],
-
-      "no-unused-vars": "off",
-      "tailwindcss/classnames-order": "off",
-
-      quotes: [
-        "error",
-        "double",
-        {
-          avoidEscape: true,
-        },
-      ],
-
-      semi: ["error", "always"],
-      indent: "off",
-      "object-shorthand": ["error"],
-      "deprecation/deprecation": "warn",
-
-      eqeqeq: [
-        "error",
-        "always",
-        {
-          null: "never",
-        },
-      ],
-
-      curly: "error",
-      "react/react-in-jsx-scope": "off",
-      "react/prop-types": "off",
-      "tailwindcss/no-custom-classname": "off",
+      "@typescript-eslint/no-namespace": ["error", { allowDeclarations: true }],
       "@next/next/no-html-link-for-pages": "off",
-      "@next/next/no-img-element": "off",
-
       "react-hooks/exhaustive-deps": [
         "warn",
         {
           additionalHooks: "(useMemoOne|useCallbackOne)",
         },
       ],
+      "tailwindcss/no-custom-classname": "off",
     },
   },
-  {
-    files: ["**/*.ts", "**/*.mts", "**/*.cts", "**/*.tsx"],
 
+  {
     rules: {
-      "@typescript-eslint/explicit-module-boundary-types": [
-        "error",
-        {
-          allowHigherOrderFunctions: false,
-        },
-      ],
+      // TODO: remove these:
+      "@typescript-eslint/consistent-type-definitions": "off",
+      "@typescript-eslint/no-confusing-void-expression": "off",
+      "@typescript-eslint/no-duplicate-type-constituents": "off",
+      "@typescript-eslint/no-empty-object-type": "off",
+      "@typescript-eslint/no-extraneous-class": "off",
+      "@typescript-eslint/no-inferrable-types": "off",
+      "@typescript-eslint/no-misused-promises": "off",
+      "@typescript-eslint/no-redundant-type-constituents": "off",
+      "@typescript-eslint/no-require-imports": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-return": "off",
+      "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/no-unnecessary-type-parameters": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/prefer-find": "off",
+      "@typescript-eslint/prefer-nullish-coalescing": "off",
+      "@typescript-eslint/prefer-regexp-exec": "off",
+      "@typescript-eslint/restrict-plus-operands": "off",
+      "@typescript-eslint/restrict-template-expressions": "off",
+      "@typescript-eslint/require-await": "off",
+      "import/no-anonymous-default-export": "off",
     },
   },
   {
     files: [
-      "packages/fdr-sdk/**/*",
-      "servers/fdr-deploy/**/*",
-      "servers/fdr/**/*",
+      "packages/fern-docs/**/*",
+      "packages/commons/**/*",
+      "packages/scripts/**/*",
+      "packages/healthchecks/**/*",
+      "packages/template-resolver/**/*",
     ],
-
     rules: {
-      "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-base-to-string": "off",
     },
   },
   {
-    files: ["servers/fdr/**/*", "servers/fern-bot/**/*"],
-
+    files: ["packages/parsers/**/*"],
     rules: {
-      eqeqeq: "off",
-      "no-console": "off",
+      "@typescript-eslint/unbound-method": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
     },
   },
   {
-    files: ["packages/fern-docs/**/*"],
-
+    files: ["servers/fern-bot/**/*"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-floating-promises": "off",
+      "@typescript-eslint/return-await": "off",
+      "@typescript-eslint/prefer-promise-reject-errors": "off",
+      "@typescript-eslint/no-deprecated": "off",
     },
   },
-];
+  {
+    files: [
+      "packages/fern-docs/search-server/src/algolia/records/archive/**/*",
+    ],
+    rules: {
+      "@typescript-eslint/no-base-to-string": "off",
+    },
+  },
+  {
+    files: ["servers/fdr/src/**/*"],
+    rules: {
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-base-to-string": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+      eqeqeq: "off",
+    },
+  }
+);

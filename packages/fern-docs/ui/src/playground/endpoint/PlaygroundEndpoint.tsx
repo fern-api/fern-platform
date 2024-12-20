@@ -195,7 +195,7 @@ export const PlaygroundEndpoint = ({
       }
     } catch (e) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error(
         "An unexpected error occurred while sending request to the proxy server. This is likely a bug, rather than a user error.",
         e
@@ -263,7 +263,6 @@ export const PlaygroundEndpoint = ({
       const res = await executeGrpc(proxyEnvironment, req);
       setResponse(loaded(res));
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
       setResponse(failed(e));
     }

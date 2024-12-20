@@ -21,7 +21,6 @@ export const provideS3Client = once((): S3Client | undefined => {
       },
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
   }
   return undefined;

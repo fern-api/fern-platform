@@ -10,7 +10,6 @@ export function getAllObjectProperties(
   const extendedProperties = object.extends.flatMap((typeId) => {
     const type = resolveTypeByIdRecursive(typeId, resolveTypeById);
     if (type?.shape.type !== "object") {
-      // eslint-disable-next-line no-console
       console.error("Object extends non-object", typeId);
       return [];
     }

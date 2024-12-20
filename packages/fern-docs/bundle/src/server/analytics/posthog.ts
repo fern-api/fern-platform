@@ -33,7 +33,6 @@ export async function track(
 
     await client.shutdown();
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(error);
   }
 }

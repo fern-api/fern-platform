@@ -48,7 +48,7 @@ for (const fixtureName of [
 ]) {
   // eslint-disable-next-line vitest/valid-title
   describe(fixtureName, () => {
-    it("should work", () => {
+    it("should work", async () => {
       const fixture = readFixture(fixtureName);
       const root = FernNavigation.utils.toRootNode(fixture);
       const apis = FernNavigation.utils.toApis(fixture);
@@ -73,7 +73,7 @@ for (const fixtureName of [
           expect(record.content.length).toBeLessThanOrEqual(50_000);
         }
       });
-      expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
+      await expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
         path.join("__snapshots__", `${fixtureName}.test.ts.json`)
       );
     });

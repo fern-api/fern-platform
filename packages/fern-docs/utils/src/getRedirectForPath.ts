@@ -21,7 +21,6 @@ export function matchPath(
   try {
     return match(pattern)(path);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e, { pattern, path });
     return false;
   }
@@ -34,7 +33,6 @@ function safeCompile(
   try {
     return compile(destination)(match.params);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e, { match, destination });
     return destination;
   }
@@ -53,15 +51,13 @@ export function getRedirectForPath(
     if (result) {
       const destination = safeCompile(redirect.destination, result);
 
-      // eslint-disable-next-line no-console
       console.debug({ match: redirect, result });
 
       if (!destination.startsWith("/")) {
         try {
           new URL(destination);
         } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error("Invalid redirect destination:", destination);
+          console.error("Invalid redirect destination:", destination, e);
           return undefined;
         }
       }

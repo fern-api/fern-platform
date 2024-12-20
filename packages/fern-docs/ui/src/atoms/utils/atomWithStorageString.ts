@@ -16,7 +16,7 @@ export function atomWithStorageString<VALUE extends string>(
   return atomWithStorageValidation<VALUE>(key, value, {
     validate,
     serialize: identity,
-    parse: validate?.parse,
+    parse: validate?.parse?.bind(validate),
     getOnInit,
   });
 }

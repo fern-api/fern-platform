@@ -5,7 +5,7 @@ import urlJoin from "url-join";
 import { TRAILING_SLASH_ATOM } from "../atoms";
 
 export function getToHref(
-  includeTrailingSlash: boolean = false
+  includeTrailingSlash = false
 ): (slug: FernNavigation.Slug, host?: string) => string {
   return (slug, host) => {
     const path =

@@ -19,7 +19,7 @@
   .fern-numeric-input-group {
     @apply flex items-center overflow-hidden;
     @apply focus-within:fern-input-focus;
-    @apply ring-default rounded-lg bg-white shadow-inner ring-1 ring-inset dark:bg-tag-default-soft;
+    @apply ring-default dark:bg-tag-default-soft rounded-lg bg-white shadow-inner ring-1 ring-inset;
   }
 
   .fern-input-icon {
@@ -60,7 +60,7 @@
 
   .fern-input,
   .fern-textarea {
-    @apply px-2.5 py-2 text-sm caret-accent;
+    @apply caret-accent px-2.5 py-2 text-sm;
     @apply max-sm:text-base;
   }
 

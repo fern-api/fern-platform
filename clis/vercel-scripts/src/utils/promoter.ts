@@ -16,7 +16,6 @@ export async function requestPromote(
   }
 
   if (deployment.readySubstate === "PROMOTED") {
-    // eslint-disable-next-line no-console
     console.log(`Deployment ${deployment.name} is already promoted`);
     return;
   }
@@ -48,7 +47,6 @@ export async function requestPromote(
     }
   );
 
-  // eslint-disable-next-line no-console
   console.log(
     `Successfully requested promote of ${deployment.name} to ${deployment.project.name}`
   );

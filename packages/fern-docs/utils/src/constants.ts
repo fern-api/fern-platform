@@ -1,18 +1,18 @@
 export const BUILDWITHFERN_COM = "buildwithfern.com";
-export const TRACK_LOAD_DOCS_PERFORMANCE = "load_docs_performance" as const;
-export const COOKIE_FERN_DOCS_PREVIEW = "_fern_docs_preview" as const;
-export const COOKIE_FERN_TOKEN = "fern_token" as const;
-export const COOKIE_ACCESS_TOKEN = "access_token" as const; // for api key injection
-export const COOKIE_REFRESH_TOKEN = "refresh_token" as const; // for api key injection
-export const COOKIE_EMAIL = "email" as const; // for api key injection
-export const HEADER_X_FERN_HOST = "x-fern-host" as const;
-export const HEADER_X_MATCHED_PATH = "x-matched-path" as const;
-export const HEADER_X_VERCEL_PROTECTION_BYPASS =
-  "x-vercel-protection-bypass" as const;
+export const TRACK_LOAD_DOCS_PERFORMANCE = "load_docs_performance";
+export const COOKIE_FERN_DOCS_PREVIEW = "_fern_docs_preview";
+export const COOKIE_FERN_TOKEN = "fern_token";
+export const COOKIE_ACCESS_TOKEN = "access_token"; // for api key injection
+export const COOKIE_REFRESH_TOKEN = "refresh_token"; // for api key injection
+export const COOKIE_EMAIL = "email"; // for api key injection
+export const HEADER_X_FERN_HOST = "x-fern-host";
+export const HEADER_X_MATCHED_PATH = "x-matched-path";
+export const HEADER_X_VERCEL_PROTECTION_BYPASS = "x-vercel-protection-bypass";
+
 /**
  * The role that is used to represent everyone (including unauthenticated users)
  */
-export const EVERYONE_ROLE = "everyone" as const;
+export const EVERYONE_ROLE = "everyone";
 
 /**
  * Revalidate all cached docs within 6 days because S3 signatures expire after 7 days.

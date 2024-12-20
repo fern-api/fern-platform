@@ -4,7 +4,6 @@ import {
   isHastText,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
-  type MdxJsxAttribute,
   type MdxJsxElementHast,
 } from "@fern-docs/mdx";
 import type { FernSyntaxHighlighterProps } from "@fern-docs/syntax-highlighter";
@@ -72,11 +71,7 @@ export function rehypeFernCode(): (tree: Root) => void {
       }
 
       // neither CodeBlocks nor CodeBlock were matched, so we need to check for raw code blocks
-      if (
-        isHastElement(node) &&
-        isBlockCode(node) &&
-        node.data?.visited !== true
-      ) {
+      if (isHastElement(node) && isBlockCode(node) && !node.data?.visited) {
         node.data = { visited: true, ...node.data };
         const head = node.children
           .filter(isHastElement)
@@ -154,7 +149,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
     if (isMdxJsxElementHast(node) && node.name === "CodeBlock") {
       const jsxAttributes = node.attributes.filter(
         (attr) => attr.type === "mdxJsxAttribute"
-      ) as MdxJsxAttribute[];
+      );
       const title = jsxAttributes.find((attr) => attr.name === "title");
       visit(node, "element", (child) => {
         if (child.tagName === "code" && child.data?.visited !== true) {
@@ -246,7 +241,7 @@ function maybeParseInt(str: string | null | undefined): number | undefined {
 
 export function parseBlockMetaString(
   element: Element,
-  defaultFallback: string = "plaintext"
+  defaultFallback = "plaintext"
 ): FernCodeMeta {
   const originalMeta: string = unknownToString(
     element.data?.meta ?? element.properties?.metastring ?? ""

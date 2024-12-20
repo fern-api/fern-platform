@@ -19,14 +19,14 @@ BASEPATH_ATOM.debugLabel = "BASEPATH_ATOM";
 
 export const TABS_ATOM = selectAtom(
   DOCS_ATOM,
-  (docs): ReadonlyArray<SidebarTab> => docs.navigation.tabs,
+  (docs): readonly SidebarTab[] => docs.navigation.tabs,
   isEqual
 );
 TABS_ATOM.debugLabel = "TABS_ATOM";
 
 export const VERSIONS_ATOM = selectAtom(
   DOCS_ATOM,
-  (docs): ReadonlyArray<VersionSwitcherInfo> => docs.navigation.versions,
+  (docs): readonly VersionSwitcherInfo[] => docs.navigation.versions,
   isEqual
 );
 VERSIONS_ATOM.debugLabel = "VERSIONS_ATOM";
@@ -48,7 +48,7 @@ TRAILING_SLASH_ATOM.debugLabel = "TRAILING_SLASH_ATOM";
 
 export const NAVBAR_LINKS_ATOM = selectAtom(
   DOCS_ATOM,
-  (docs): ReadonlyArray<NavbarLink> => docs.navbarLinks,
+  (docs): readonly NavbarLink[] => docs.navbarLinks,
   isEqual
 );
 NAVBAR_LINKS_ATOM.debugLabel = "NAVBAR_LINKS_ATOM";

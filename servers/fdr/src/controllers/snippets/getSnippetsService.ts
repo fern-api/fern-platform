@@ -1,10 +1,10 @@
+import { FdrAPI } from "@fern-api/fdr-sdk";
 import { SnippetTemplateResolver } from "@fern-api/template-resolver";
 import { SnippetsService } from "../../api";
 import { InvalidPageError, SnippetTemplateNotFoundError, UnauthorizedError } from "../../api/generated/api";
 import { type FdrApplication } from "../../app";
 import { DbSnippetsPage } from "../../db/snippets/SnippetsDao";
 import { APIResolver } from "./APIResolver";
-import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export function getSnippetsService(app: FdrApplication): SnippetsService {
     return new SnippetsService({
@@ -81,9 +81,9 @@ export function getSnippetsService(app: FdrApplication): SnippetsService {
                         snippets.push(templateResolver.resolve());
                     }
 
-                    return res.send(snippets);
+                    return await res.send(snippets);
                 } catch (e) {
-                    return res.send([]);
+                    return await res.send([]);
                 }
             }
         },

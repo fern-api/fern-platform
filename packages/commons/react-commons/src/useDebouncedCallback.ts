@@ -14,7 +14,7 @@ interface DebounceOptions {
    * If both "leading" and "trailing" are included, the function will be invoked at both the start and end of the delay period.
    * @default ["trailing"]
    */
-  edges?: Array<"leading" | "trailing">;
+  edges?: ("leading" | "trailing")[];
 }
 
 const defaultOptions: DebounceOptions = {
@@ -26,7 +26,7 @@ const defaultOptions: DebounceOptions = {
  * its invoking by the defined time.
  * If time is not defined, its default value will be 250ms.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 const useDebouncedCallback = <TCallback extends (...args: any[]) => void>(
   fn: TCallback,
   dependencies?: DependencyList,
@@ -47,7 +47,7 @@ const useDebouncedCallback = <TCallback extends (...args: any[]) => void>(
     debounced.current?.cancel();
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps, @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   return useCallback(debounced.current, dependencies ?? []) as any;
 };
 

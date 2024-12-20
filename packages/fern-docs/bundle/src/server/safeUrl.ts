@@ -10,7 +10,6 @@ export function safeUrl(url: string | null | undefined): URL | undefined {
   try {
     return new URL(url);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return undefined;
   }

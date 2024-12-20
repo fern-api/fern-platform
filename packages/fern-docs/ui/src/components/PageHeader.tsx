@@ -28,7 +28,7 @@ export const PageHeader = ({
                 className="mt-2 leading-7 prose-p:t-muted"
             /> */}
       {subtitle != null && (
-        <div className="mt-2 leading-7 prose-p:t-muted">{subtitle}</div>
+        <div className="prose-p:t-muted mt-2 leading-7">{subtitle}</div>
       )}
     </header>
   );

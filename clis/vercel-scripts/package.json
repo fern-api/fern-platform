@@ -4,8 +4,8 @@
   "type": "module",
   "scripts": {
     "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",

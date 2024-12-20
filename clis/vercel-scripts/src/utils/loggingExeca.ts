@@ -59,10 +59,9 @@ export function prettyCommand(command: string | string[]): string {
 export function logCommand(title: string, command?: string | string[]): void {
   if (command) {
     const pretty = prettyCommand(command);
-    // eslint-disable-next-line no-console
+
     console.log(`\n\x1b[1;4m${title}\x1b[0m\n> \x1b[1m${pretty}\x1b[0m\n`);
   } else {
-    // eslint-disable-next-line no-console
     console.log(`\n\x1b[1;4m${title}\x1b[0m\n`);
   }
 }

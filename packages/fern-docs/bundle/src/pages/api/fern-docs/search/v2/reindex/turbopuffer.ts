@@ -103,7 +103,6 @@ export default async function handler(
       added: numInserted,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(error);
 
     await track("turbopuffer_reindex_error", {

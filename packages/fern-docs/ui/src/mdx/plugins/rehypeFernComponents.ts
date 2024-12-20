@@ -247,8 +247,8 @@ function transformSteps(
 
       // id may have been set by customHeadingHandler in remarkRehypeHandlers.ts
       const slug =
-        (typeof child.properties["id"] === "string"
-          ? child.properties["id"]
+        (typeof child.properties.id === "string"
+          ? child.properties.id
           : undefined) ?? slugger.slug(title);
       children.push({
         type: "mdxJsxFlowElement",

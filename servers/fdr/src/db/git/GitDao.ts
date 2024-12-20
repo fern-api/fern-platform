@@ -124,23 +124,23 @@ export class GitDaoImpl implements GitDao {
     }): Promise<ListPullRequestsResponse> {
         const where: Record<string, unknown> = {};
         if (repositoryOwner != null) {
-            where["repositoryOwner"] = repositoryOwner;
+            where.repositoryOwner = repositoryOwner;
         }
         if (repositoryName != null) {
-            where["repositoryName"] = repositoryName;
+            where.repositoryName = repositoryName;
         }
         if (organizationId != null) {
-            where["repository"] = {
+            where.repository = {
                 repositoryOwnerOrganizationId: organizationId,
             };
         }
         if (state != null) {
-            where["state"] = {
+            where.state = {
                 in: state,
             };
         }
         if (author != null) {
-            where["authorLogin"] = {
+            where.authorLogin = {
                 in: author,
             };
         }
@@ -271,13 +271,13 @@ export class GitDaoImpl implements GitDao {
     }): Promise<ListRepositoriesResponse> {
         const where: Record<string, string> = {};
         if (repositoryOwner != null) {
-            where["repositoryOwner"] = repositoryOwner;
+            where.repositoryOwner = repositoryOwner;
         }
         if (repositoryName != null) {
-            where["repositoryName"] = repositoryName;
+            where.repositoryName = repositoryName;
         }
         if (organizationId != null) {
-            where["repositoryOwnerOrganizationId"] = organizationId;
+            where.repositoryOwnerOrganizationId = organizationId;
         }
         const repos = await this.prisma.repository.findMany({
             skip: page * pageSize,

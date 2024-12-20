@@ -98,7 +98,6 @@ const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
     // TODO: if the link is to the same domain, we should check if the page is a fern page, and if so, use the Link component to leverage client-side navigation
     const isSameSite = host === url.host;
     return (
-      // eslint-disable-next-line react/jsx-no-target-blank
       <a
         ref={ref}
         {...props}

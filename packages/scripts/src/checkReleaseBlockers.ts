@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -18,10 +16,8 @@ export async function checkReleaseBlockers(
     process.exit(1);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let yamlContents: any;
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     yamlContents = yaml.load(releaseBlockersFileContents) as any;
   } catch {
     console.error(chalk.red(`Failed to parse YAML in ${filepath}`));

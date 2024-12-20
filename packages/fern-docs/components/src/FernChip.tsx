@@ -4,13 +4,13 @@ import { PropsWithChildren, forwardRef } from "react";
 import { ColorScheme, Size } from "./util/shared-component-types";
 
 export type FernChipSize = Extract<Size, "sm" | "lg">;
-export const FernChipSizes: { [key: string]: FernChipSize } = {
+export const FernChipSizes: Record<string, FernChipSize> = {
   Small: "sm",
   Large: "lg",
 };
 
 export type FernChipColorScheme = ColorScheme;
-export const FernChipColorSchemes: { [key: string]: FernChipColorScheme } = {
+export const FernChipColorSchemes: Record<string, FernChipColorScheme> = {
   Gray: "gray",
   Green: "green",
   Blue: "blue",

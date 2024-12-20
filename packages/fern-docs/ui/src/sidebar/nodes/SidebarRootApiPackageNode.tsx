@@ -1,5 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
+import { ReactElement } from "react";
 import { useIsApiReferenceShallowLink, useIsChildSelected } from "../../atoms";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -13,7 +14,7 @@ export interface SidebarRootApiPackageNodeProps {
 export function SidebarRootApiPackageNode({
   node,
   className,
-}: SidebarRootApiPackageNodeProps): React.ReactElement | null {
+}: SidebarRootApiPackageNodeProps): ReactElement | null {
   const childSelected = useIsChildSelected(node.id);
   const shallow = useIsApiReferenceShallowLink(node);
 

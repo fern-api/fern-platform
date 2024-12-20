@@ -1,6 +1,6 @@
-import { Env } from "@libs/env";
 import { FernRegistryClient } from "@fern-fern/paged-generators-sdk";
 import { PullRequest, PullRequestState } from "@fern-fern/paged-generators-sdk/api";
+import { Env } from "@libs/env";
 import { SlackService } from "@libs/slack/SlackService";
 
 const STALE_IN_DAYS = 7;
@@ -61,8 +61,7 @@ export async function sendStaleNotificationsInternal(env: Env): Promise<void> {
                 apiSpecPull: maybeApiSpecPull,
                 versionUpdatePulls,
                 // We only call this function if there's at least one PR so this should be safe
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                repoName: `${aPull!.repositoryOwner}/${aPull!.repositoryName}`,
+                repoName: `${aPull?.repositoryOwner}/${aPull?.repositoryName}`,
                 retoolLink: "https://buildwithfern.retool.com/apps/703271ca-7777-11ef-aecd-ab097775918e/Stale%20Pulls",
                 // Truncate the messages if we're going to be writing a lot of them
                 shouldBeVerbose: versionUpdatePulls.length <= VERBOSE_MESSAGE_THRESHOLD,

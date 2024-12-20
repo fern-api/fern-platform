@@ -230,7 +230,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
                 <div key={parameter.key} className="relative">
                   {isAuth && (
                     <div className="absolute right-0 top-3">
-                      <div className="flex h-5 items-center rounded-xl bg-tag-danger px-2">
+                      <div className="bg-tag-danger flex h-5 items-center rounded-xl px-2">
                         <span className="t-danger text-xs">Auth</span>
                       </div>
                     </div>

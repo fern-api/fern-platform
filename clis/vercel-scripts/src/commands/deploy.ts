@@ -23,7 +23,6 @@ export async function deployCommand({
 }: DeployArgs): Promise<void> {
   assertValidEnvironment(environment);
 
-  // eslint-disable-next-line no-console
   console.log(`Deploying project ${project} to ${environment} environment`);
 
   const cli = new VercelDeployer({

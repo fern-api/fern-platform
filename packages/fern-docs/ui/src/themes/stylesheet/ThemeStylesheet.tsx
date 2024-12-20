@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unknown-property */
 import { atom, useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { DOCS_ATOM } from "../../atoms";

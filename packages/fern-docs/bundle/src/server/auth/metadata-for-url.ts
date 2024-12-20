@@ -18,7 +18,7 @@ export async function getOrgMetadataForDomain(
     );
     const metadata = await docsLoader.getMetadata();
     return metadata ?? undefined;
-  } catch (error) {
+  } catch (_) {
     return undefined;
   }
 }

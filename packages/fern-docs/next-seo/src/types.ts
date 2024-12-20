@@ -233,9 +233,9 @@ export interface OpenGraph {
   type?: string;
   title?: string;
   description?: string;
-  images?: ReadonlyArray<OpenGraphMedia>;
-  videos?: ReadonlyArray<OpenGraphMedia>;
-  audio?: ReadonlyArray<OpenGraphMedia>;
+  images?: readonly OpenGraphMedia[];
+  videos?: readonly OpenGraphMedia[];
+  audio?: readonly OpenGraphMedia[];
   defaultImageHeight?: number;
   defaultImageWidth?: number;
   defaultVideoHeight?: number;
@@ -256,10 +256,10 @@ export interface OpenGraphProfile {
 }
 
 export interface OpenGraphBook {
-  authors?: ReadonlyArray<string>;
+  authors?: readonly string[];
   isbn?: string;
   releaseDate?: string;
-  tags?: ReadonlyArray<string>;
+  tags?: readonly string[];
 }
 
 export interface OpenGraphArticle {
@@ -267,18 +267,18 @@ export interface OpenGraphArticle {
   modifiedTime?: string;
   expirationTime?: string;
 
-  authors?: ReadonlyArray<string>;
+  authors?: readonly string[];
   section?: string;
-  tags?: ReadonlyArray<string>;
+  tags?: readonly string[];
 }
 
 export interface OpenGraphVideo {
-  actors?: ReadonlyArray<OpenGraphVideoActors>;
-  directors?: ReadonlyArray<string>;
-  writers?: ReadonlyArray<string>;
+  actors?: readonly OpenGraphVideoActors[];
+  directors?: readonly string[];
+  writers?: readonly string[];
   duration?: number;
   releaseDate?: string;
-  tags?: ReadonlyArray<string>;
+  tags?: readonly string[];
   series?: string;
 }
 
@@ -478,12 +478,12 @@ export interface NextSeoProps {
   description?: string;
   canonical?: string;
   mobileAlternate?: MobileAlternate;
-  languageAlternates?: ReadonlyArray<LanguageAlternate>;
+  languageAlternates?: readonly LanguageAlternate[];
   openGraph?: OpenGraph;
   facebook?: { appId: string };
   twitter?: Twitter;
-  additionalMetaTags?: ReadonlyArray<MetaTag>;
-  additionalLinkTags?: ReadonlyArray<LinkTag>;
+  additionalMetaTags?: readonly MetaTag[];
+  additionalLinkTags?: readonly LinkTag[];
   children?: never;
   breadcrumbList?: FernDocs.JsonLdBreadcrumbList;
   viewport?: string;

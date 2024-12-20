@@ -76,7 +76,6 @@ export const FernButton = forwardRef<HTMLButtonElement, FernButtonProps>(
         disabled={disabled || skeleton}
         data-state={active ? "on" : "off"}
         aria-disabled={disabled}
-        aria-selected={active}
         data-selected={active}
         {...buttonProps}
         className={getButtonClassName(props)}

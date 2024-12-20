@@ -14,7 +14,7 @@ export function parseStringStyle(
     StyleToObject(value, replacer);
   } catch (e) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Failed to parse style originating from shiki", e);
     return undefined;
   }
@@ -22,8 +22,8 @@ export function parseStringStyle(
   function replacer(name: string, value: string) {
     let key = name;
 
-    if (key.slice(0, 2) !== "--") {
-      if (key.slice(0, 4) === "-ms-") {
+    if (!key.startsWith("--")) {
+      if (key.startsWith("-ms-")) {
         key = "ms-" + key.slice(4);
       }
       key = camelCase(key);

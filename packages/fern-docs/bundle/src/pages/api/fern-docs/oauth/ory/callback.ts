@@ -36,7 +36,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     safeUrl(return_to) ?? safeUrl(withDefaultProtocol(host));
 
   if (error != null) {
-    // eslint-disable-next-line no-console
     console.error(`OAuth2 error: ${error} - ${error_description}`);
     return redirectWithLoginError(
       req,
@@ -47,7 +46,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
   }
 
   if (typeof code !== "string") {
-    // eslint-disable-next-line no-console
     console.error("Missing code in query params");
     return redirectWithLoginError(
       req,
@@ -58,7 +56,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
   }
 
   if (config == null || config.type !== "oauth2" || config.partner !== "ory") {
-    // eslint-disable-next-line no-console
     console.log(`Invalid config for domain ${domain}`);
     return redirectWithLoginError(
       req,
@@ -109,7 +106,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     }
     return res;
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error("Error getting access token", error);
     return redirectWithLoginError(
       req,

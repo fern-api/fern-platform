@@ -45,8 +45,7 @@ export function extractJsx(tree: HastRoot | MdastRoot): {
           attribute.type === "mdxJsxAttribute" &&
           attribute.value &&
           typeof attribute.value !== "string" &&
-          attribute.value.data &&
-          attribute.value.data.estree
+          attribute.value.data?.estree
         ) {
           walkEstree(attribute.value.data.estree);
         }
@@ -58,8 +57,7 @@ export function extractJsx(tree: HastRoot | MdastRoot): {
       (node.type === "mdxFlowExpression" ||
         node.type === "mdxTextExpression" ||
         node.type === "mdxjsEsm") &&
-      node.data &&
-      node.data.estree
+      node.data?.estree
     ) {
       walkEstree(node.data.estree);
     }

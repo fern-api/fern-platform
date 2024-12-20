@@ -32,7 +32,7 @@ export async function resolveApiEndpointPage({
 
   if (!apiDefinition) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error(`Failed to load API definition for ${node.slug}`);
     return;
   }
@@ -40,7 +40,7 @@ export async function resolveApiEndpointPage({
   const sidebarRootNodeIdx = parents.findIndex((p) => p.type === "sidebarRoot");
   if (sidebarRootNodeIdx === -1) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Failed to find sidebar root node");
   }
   const breadcrumb = FernNavigation.utils.createBreadcrumb(

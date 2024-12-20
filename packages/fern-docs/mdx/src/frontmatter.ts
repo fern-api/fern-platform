@@ -12,7 +12,6 @@ export function getFrontmatter(content: string): {
       content: gm.content,
     };
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return {
       data: {} as FernDocs.Frontmatter,

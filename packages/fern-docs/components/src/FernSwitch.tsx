@@ -7,7 +7,7 @@ export function FernSwitch(props: Switch.SwitchProps): ReactElement {
     <Switch.Root
       {...props}
       className={cn(
-        "ring-default relative h-[25px] w-[42px] cursor-default rounded-full bg-tag-default ring-1 ring-inset data-[state=checked]:bg-accent",
+        "ring-default bg-tag-default data-[state=checked]:bg-accent relative h-[25px] w-[42px] cursor-default rounded-full ring-1 ring-inset",
         props.className
       )}
       style={{
@@ -16,7 +16,7 @@ export function FernSwitch(props: Switch.SwitchProps): ReactElement {
       }}
       tabIndex={0}
     >
-      <Switch.Thumb className="block size-[21px] translate-x-0.5 rounded-full bg-background shadow-[0_2px_2px] shadow-border-default transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px]" />
+      <Switch.Thumb className="bg-background shadow-border-default block size-[21px] translate-x-0.5 rounded-full shadow-[0_2px_2px] transition-transform duration-100 will-change-transform data-[state=checked]:translate-x-[19px]" />
     </Switch.Root>
   );
 }

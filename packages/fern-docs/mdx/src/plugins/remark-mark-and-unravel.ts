@@ -99,8 +99,7 @@ export function remarkMarkAndUnravel(): (tree: Root) => void {
         (node.type === "mdxFlowExpression" ||
           node.type === "mdxTextExpression" ||
           node.type === "mdxjsEsm") &&
-        node.data &&
-        node.data.estree
+        node.data?.estree
       ) {
         walk(node.data.estree, {
           enter(node) {

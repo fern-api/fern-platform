@@ -6,13 +6,13 @@
   }
 
   .fern-header-container {
-    @apply h-header-height-real shadow-none lg:h-header-height;
+    @apply h-header-height-real lg:h-header-height shadow-none;
   }
 
   .fern-header-container:is(.light *):not(.has-background-light),
   .fern-header-container:is(.dark *):not(.has-background-dark) {
     @apply backdrop-blur-lg lg:backdrop-blur;
-    @apply transition-shadow data-[border=show]:dark:shadow-header-dark;
+    @apply data-[border=show]:dark:shadow-header-dark transition-shadow;
   }
 
   .fern-header,
@@ -32,7 +32,7 @@
     @apply h-[44px] max-lg:hidden;
 
     .fern-header-tabs-list {
-      @apply mx-auto flex max-w-page-width shrink-0 list-none items-center justify-start px-1 md:px-3 lg:px-5;
+      @apply max-w-page-width mx-auto flex shrink-0 list-none items-center justify-start px-1 md:px-3 lg:px-5;
     }
 
     .fern-header-tab-button {
@@ -54,7 +54,7 @@
       &::after {
         content: "";
 
-        @apply absolute inset-x-3 bottom-0 h-px bg-accent;
+        @apply bg-accent absolute inset-x-3 bottom-0 h-px;
       }
     }
 
@@ -76,11 +76,11 @@
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar border-concealed sticky top-header-offset mt-header-offset hidden h-fit max-h-vh-minus-header w-sidebar-width lg:block;
+    @apply bg-sidebar border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden h-fit lg:block;
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
-      @apply fixed z-30 mt-0 h-vh-minus-header;
+      @apply h-vh-minus-header fixed z-30 mt-0;
     }
 
     @supports (height: 100dvh) {
@@ -99,7 +99,7 @@
   }
 
   .fern-sidebar-container.dismissable {
-    @apply fixed bottom-0 left-0 top-header-offset mt-0;
+    @apply top-header-offset fixed bottom-0 left-0 mt-0;
     @apply bg-background-translucent backdrop-blur-lg;
     @apply sm:border-concealed sm:border-r;
     @apply max-sm:inset-x-0 max-sm:w-full;
@@ -117,11 +117,11 @@
   }
 
   .fern-body {
-    @apply relative mx-auto flex min-h-0 w-full min-w-0 max-w-page-width flex-1;
+    @apply max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1;
   }
 
   .fern-main {
-    @apply relative mt-header-offset min-w-0 flex-1;
+    @apply mt-header-offset relative min-w-0 flex-1;
   }
 
   .fern-sidebar-content {
@@ -133,7 +133,7 @@
 
     .fern-endpoint-content-right {
       @apply max-w-content-width;
-      @apply md:sticky md:top-header-offset md:flex-1 md:self-start;
+      @apply md:top-header-offset md:sticky md:flex-1 md:self-start;
 
       // the 4rem is the same as the h-10 as the Header
       @apply max-h-content flex py-8;
@@ -190,6 +190,6 @@
   }
 
   .fern-layout-toc {
-    @apply h-content sticky top-header-offset w-sidebar-width shrink-0 max-xl:hidden;
+    @apply h-content top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
   }
 }

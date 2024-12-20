@@ -1,6 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
+import { ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";
@@ -25,7 +26,7 @@ export function SidebarNavigationChild({
   node,
   depth,
   root,
-}: SidebarNavigationChildProps): React.ReactElement {
+}: SidebarNavigationChildProps): ReactNode {
   switch (node.type) {
     case "apiReference":
       return <SidebarApiPackageNode node={node} depth={depth} />;
@@ -35,7 +36,7 @@ export function SidebarNavigationChild({
           node={node}
           depth={depth}
           className={clsx({
-            "font-semibold !text-text-default": root,
+            "!text-text-default font-semibold": root,
           })}
         />
       );

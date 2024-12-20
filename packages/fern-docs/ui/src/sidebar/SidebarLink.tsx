@@ -200,7 +200,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
                   title
                 )}
                 {authed ? (
-                  <Lock className="size-4 self-center text-faded" />
+                  <Lock className="text-faded size-4 self-center" />
                 ) : (
                   rightElement
                 )}

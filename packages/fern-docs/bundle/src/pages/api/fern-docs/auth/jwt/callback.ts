@@ -31,7 +31,6 @@ export default async function handler(req: NextRequest): Promise<NextResponse> {
     safeUrl(returnTo) ?? safeUrl(withDefaultProtocol(host));
 
   if (edgeConfig?.type !== "basic_token_verification" || token == null) {
-    // eslint-disable-next-line no-console
     console.error(`Invalid config for domain ${domain}`);
     return redirectWithLoginError(
       req,

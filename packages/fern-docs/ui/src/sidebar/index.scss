@@ -4,7 +4,7 @@
     @apply inline-flex items-center px-4 lg:px-3;
 
     .fa-icon {
-      @apply mr-3 shrink-0 text-faded;
+      @apply text-faded mr-3 shrink-0;
     }
 
     .fern-sidebar-heading-content {
@@ -44,7 +44,7 @@
 
   .fern-sidebar-link-container[data-state="active"] {
     .fern-sidebar-link-indent::after {
-      @apply absolute inset-y-1 -left-px border-l border-accented-a7;
+      @apply border-accented-a7 absolute inset-y-1 -left-px border-l;
 
       content: "";
     }
@@ -111,7 +111,7 @@
   }
 
   .fern-sidebar-link-expand[data-state="active"] {
-    @apply t-accent after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:bg-tag-primary after:content-[''] lg:after:rounded-md;
+    @apply t-accent after:bg-tag-primary after:pointer-events-none after:absolute after:inset-1 after:rounded-xl after:content-[''] lg:after:rounded-md;
   }
 
   .fern-sidebar-tabs {
@@ -123,6 +123,6 @@
   }
 
   .fern-sidebar-header {
-    @apply mx-3 hidden h-header-height-real border-b border-transparent lg:flex lg:items-center lg:justify-between;
+    @apply h-header-height-real mx-3 hidden border-b border-transparent lg:flex lg:items-center lg:justify-between;
   }
 }

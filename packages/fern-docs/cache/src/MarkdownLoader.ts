@@ -16,14 +16,14 @@ export class MarkdownLoader {
   private pages: Record<FernNavigation.PageId, DocsV1Read.PageContent> = {};
   public withPages(
     pages: Record<FernNavigation.PageId, DocsV1Read.PageContent>
-  ): MarkdownLoader {
+  ): this {
     this.pages = { ...this.pages, ...pages };
     return this;
   }
 
   // this is the docs instance id
   private instanceId: string | undefined;
-  public withInstanceId(instanceId: string): MarkdownLoader {
+  public withInstanceId(instanceId: string): this {
     this.instanceId = instanceId;
     return this;
   }
@@ -39,7 +39,7 @@ export class MarkdownLoader {
       pageId: FernNavigation.PageId | undefined
     ) => Promise<FernDocs.MarkdownText>,
     engine: string
-  ): MarkdownLoader => {
+  ): this => {
     this.#serializeMdx = fn;
     this.#engine = engine;
     return this;

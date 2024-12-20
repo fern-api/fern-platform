@@ -181,7 +181,7 @@ export const FeedbackPopover = forwardRef<
           transition={{ type: "spring", duration: 0.4, bounce: 0 }}
           sideOffset={8}
           className={clsx(
-            "border-default z-50 rounded-lg border bg-white/50 p-1 shadow-xl backdrop-blur-xl dark:bg-background/50",
+            "border-default dark:bg-background/50 z-50 rounded-lg border bg-white/50 p-1 shadow-xl backdrop-blur-xl",
             {
               "min-w-80 space-y-2 p-2": isHelpful !== undefined,
             }
@@ -214,7 +214,7 @@ export const FeedbackPopover = forwardRef<
               >
                 <motion.div
                   layoutId="icon-container"
-                  className="t-accent mx-auto flex size-8 items-center justify-center rounded-md bg-tag-primary"
+                  className="t-accent bg-tag-primary mx-auto flex size-8 items-center justify-center rounded-md"
                 >
                   <Check />
                 </motion.div>

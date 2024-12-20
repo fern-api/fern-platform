@@ -11,7 +11,7 @@
   }
 
   .toc-root::before {
-    @apply h-full bg-grayscale-a5;
+    @apply bg-grayscale-a5 h-full;
   }
 
   .toc-root::after {

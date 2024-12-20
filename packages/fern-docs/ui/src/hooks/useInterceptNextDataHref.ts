@@ -21,7 +21,7 @@ function createPageLoaderGetDataHref(
     const { pathname: hrefPathname, query, search } = parseRelativeUrl(href);
     const { pathname: asPathname } = parseRelativeUrl(asPath);
     const route = removeTrailingSlash(hrefPathname);
-    if (route[0] !== "/") {
+    if (!route.startsWith("/")) {
       throw new Error(`Route name should start with a "/", got "${route}"`);
     }
 

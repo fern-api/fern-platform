@@ -13,6 +13,7 @@ const PreviewUrlAuthSchema = z.discriminatedUnion("type", [
 
 export type PreviewUrlAuth = z.infer<typeof PreviewUrlAuthSchema>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PreviewUrlAuthConfigSchema = z.record(PreviewUrlAuthSchema);
 
 type PreviewUrlAuthConfig = z.infer<typeof PreviewUrlAuthConfigSchema>;

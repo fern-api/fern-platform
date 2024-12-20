@@ -17,7 +17,7 @@ export function getApiDiffService(app: FdrApplication): DiffService {
             const previousEndpoints = getEndpoints(previous);
             const currentEndpoints = getEndpoints(current);
 
-            const visitedEndpoints: Set<string> = new Set();
+            const visitedEndpoints = new Set<string>();
             const addedEndpoints: FdrAPI.AddedEndpoint[] = [];
             const updatedEndpoints: FdrAPI.UpdatedEndpoint[] = [];
             for (const [endpointId, currentEndpoint] of Object.entries(currentEndpoints)) {

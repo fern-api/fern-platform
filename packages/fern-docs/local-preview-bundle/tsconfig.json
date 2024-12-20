@@ -17,7 +17,7 @@
       "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {
-      "path": "../app/tsconfig.build.json"
+      "path": "../ui/tsconfig.build.json"
     },
     {
       "path": "../components"

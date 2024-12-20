@@ -82,7 +82,7 @@
   }
 
   [data-rmiz-modal-overlay="visible"] {
-    @apply bg-background/70 backdrop-blur dark:bg-background/60;
+    @apply bg-background/70 dark:bg-background/60 backdrop-blur;
   }
 
   [data-rmiz-modal-content] {

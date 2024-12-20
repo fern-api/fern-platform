@@ -32,7 +32,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    const defaultResponse = this.input["default"];
+    const defaultResponse = this.input.default;
     Object.entries(this.input).forEach(([statusCode, response]) => {
       if (parseInt(statusCode) >= 400) {
         this.errorsByStatusCode ??= {};

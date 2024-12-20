@@ -12,10 +12,10 @@
   }
 
   .fern-checkbox-item:focus {
-    @apply outline outline-4 outline-offset-0 outline-tag-primary;
+    @apply outline-tag-primary outline outline-4 outline-offset-0;
   }
 
   .fern-checkbox-indicator {
-    @apply flex size-4 items-center justify-center rounded-sm bg-accent text-accent-contrast;
+    @apply bg-accent text-accent-contrast flex size-4 items-center justify-center rounded-sm;
   }
 }

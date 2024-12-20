@@ -6,7 +6,7 @@ export declare namespace PlaygroundFormDataEntryValue {
 
   interface MultipleFiles {
     type: "fileArray";
-    value: ReadonlyArray<File>;
+    value: readonly File[];
   }
 
   interface Json {

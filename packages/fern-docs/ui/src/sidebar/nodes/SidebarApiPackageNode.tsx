@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import {
   useIsApiReferenceShallowLink,
   useIsChildSelected,
@@ -23,7 +23,7 @@ export function SidebarApiPackageNode({
   node,
   depth,
   className,
-}: SidebarApiPackageNodeProps): React.ReactElement | null {
+}: SidebarApiPackageNodeProps): ReactNode {
   const selected = useIsSelectedSidebarNode(node.id);
   const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
   const childSelected = useIsChildSelected(node.id);

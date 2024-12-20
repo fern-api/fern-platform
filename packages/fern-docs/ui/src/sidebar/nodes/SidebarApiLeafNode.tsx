@@ -1,6 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import clsx from "clsx";
+import { ReactNode } from "react";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -14,7 +15,7 @@ export function SidebarApiLeafNode({
   node,
   depth,
   shallow,
-}: SidebarApiLeafNodeProps): React.ReactElement | null {
+}: SidebarApiLeafNodeProps): ReactNode {
   const selected = useIsSelectedSidebarNode(node.id);
 
   if (node.hidden && !selected) {

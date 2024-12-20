@@ -8,7 +8,7 @@
 
     .fern-dropdown-item {
       @apply flex w-full cursor-default items-center justify-start rounded px-2 py-1 text-left text-sm;
-      @apply will-change-[background-color,color] data-[highlighted]:t-accent-contrast data-[highlighted]:bg-accent;
+      @apply data-[highlighted]:t-accent-contrast data-[highlighted]:bg-accent will-change-[background-color,color];
 
       .fern-dropdown-item-indicator {
         @apply mr-1 flex h-full w-4 flex-none items-center justify-center;

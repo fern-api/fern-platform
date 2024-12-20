@@ -39,7 +39,6 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
     corsHeaders.set("Cache-Control", "public, max-age=60");
     return NextResponse.json({ put, get }, { headers: corsHeaders });
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error("Failed to create signed URL", err);
     return new NextResponse(null, { status: 500, headers: corsHeaders });
   }

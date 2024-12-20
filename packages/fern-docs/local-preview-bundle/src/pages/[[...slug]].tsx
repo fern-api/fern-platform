@@ -41,7 +41,7 @@ export default function LocalPreviewDocs(): ReactElement {
         if (isCanceled) {
           return;
         }
-        // eslint-disable-next-line no-console
+
         console.error(error);
         toastInstance.current = toast.error("Failed to load the docs.", {
           id: toastInstance.current,
@@ -74,7 +74,6 @@ export default function LocalPreviewDocs(): ReactElement {
           }
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error(error);
         await loadData();
       }
@@ -126,8 +125,7 @@ export default function LocalPreviewDocs(): ReactElement {
           void router.replace("/");
         }
       })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
+      .catch((error: unknown) => {
         console.error(error);
         toastInstance.current = toast.error("Failed to load the docs.", {
           id: toastInstance.current,
@@ -157,7 +155,6 @@ async function loadDocsForUrl(origin: string) {
   const docs: DocsV2Read.LoadDocsForUrlResponse = await response.json();
 
   if (docs.baseUrl == null || docs.definition == null) {
-    // eslint-disable-next-line no-console
     console.debug(docs);
     throw new Error("Invalid response from the server.");
   }

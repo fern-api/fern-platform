@@ -273,8 +273,7 @@ export function getSeoProps(
   }
 
   if (favicon != null && files[favicon] != null) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const image = files[favicon]!;
+    const image = files[favicon];
     additionalLinkTags.push({
       rel: "icon",
       href: image.url,
@@ -332,7 +331,7 @@ function getPreloadedFont(
   let fontExtension: string;
   try {
     fontExtension = getFontExtension(new URL(file).pathname);
-  } catch (err) {
+  } catch (_) {
     fontExtension = getFontExtension(file);
   }
   return {

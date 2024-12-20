@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { useCallback } from "react";
+import { ReactNode, useCallback } from "react";
 import {
   useIsChildSelected,
   useIsExpandedSidebarNode,
@@ -21,7 +21,7 @@ export function SidebarSectionNode({
   node,
   className,
   depth,
-}: SidebarSectionNodeProps): React.ReactElement | null {
+}: SidebarSectionNodeProps): ReactNode {
   const selected = useIsSelectedSidebarNode(node.id);
   const handleToggleExpand = useToggleExpandedSidebarNode(node.id);
   const childSelected = useIsChildSelected(node.id);

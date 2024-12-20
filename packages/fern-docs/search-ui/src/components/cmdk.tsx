@@ -718,7 +718,7 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
               // This prevents unwanted triggering while user is still inputting text with IME
               // e.keyCode === 229 is for the Japanese IME and Safari.
               // isComposing does not work with Japanese IME and Safari combination.
-              // eslint-disable-next-line deprecation/deprecation
+              // eslint-disable-next-line @typescript-eslint/no-deprecated
               if (!e.nativeEvent.isComposing && e.keyCode !== 229) {
                 // Trigger item onSelect
                 e.preventDefault();

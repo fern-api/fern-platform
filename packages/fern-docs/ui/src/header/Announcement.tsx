@@ -42,10 +42,10 @@ const AnnouncementInternal = forwardRef<
       className={clsx("overflow-hidden", className)}
     >
       <motion.div
-        className="flex min-h-8 items-center bg-accent text-accent-contrast"
+        className="bg-accent text-accent-contrast flex min-h-8 items-center"
         exit={{ y: "-100%" }}
       >
-        <div className="mx-auto max-w-page-width flex-1 px-4 text-center md:px-6 lg:px-8">
+        <div className="max-w-page-width mx-auto flex-1 px-4 text-center md:px-6 lg:px-8">
           {announcement != null && <MdxContent mdx={announcement.mdx} />}
         </div>
         <FernButton

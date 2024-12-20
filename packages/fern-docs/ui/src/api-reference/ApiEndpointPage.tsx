@@ -48,7 +48,7 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({
   const node = useNavigationNodes().get(content.nodeId);
   if (!node || !isApiPackageContentNode(node)) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Expected node to be an api reference node");
     return null;
   }

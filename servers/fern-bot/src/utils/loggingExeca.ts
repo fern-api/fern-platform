@@ -12,7 +12,7 @@ export async function loggingExeca(
     executable: string,
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {},
-): Promise<Result<ExecaOptions>> {
+): Promise<Result> {
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,

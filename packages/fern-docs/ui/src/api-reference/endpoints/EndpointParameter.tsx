@@ -142,7 +142,7 @@ export const EndpointParameterContent: FC<
       className={cn(
         "scroll-mt-content-padded relative flex flex-col gap-2 py-3",
         {
-          "rounded-sm outline outline-1 outline-offset-4 outline-accent":
+          "outline-accent rounded-sm outline outline-1 outline-offset-4":
             isActive,
         }
       )}

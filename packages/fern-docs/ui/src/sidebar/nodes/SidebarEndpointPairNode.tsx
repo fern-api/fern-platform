@@ -1,5 +1,6 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { useAtomValue } from "jotai";
+import { ReactNode } from "react";
 import { FERN_STREAM_ATOM } from "../../atoms";
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 
@@ -13,7 +14,7 @@ export function SidebarEndpointPairNode({
   node,
   depth,
   shallow,
-}: SidebarEndpointPairNodeProps): React.ReactElement | null {
+}: SidebarEndpointPairNodeProps): ReactNode {
   const isStream = useAtomValue(FERN_STREAM_ATOM);
 
   return isStream ? (

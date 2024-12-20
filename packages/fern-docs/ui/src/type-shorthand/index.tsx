@@ -20,8 +20,8 @@ export interface TypeShorthandOptions {
 export function renderTypeShorthandRoot(
   shape: TypeShapeOrReference,
   types: Record<string, TypeDefinition>,
-  isResponse: boolean = false,
-  hideOptional: boolean = false
+  isResponse = false,
+  hideOptional = false
 ): ReactNode {
   const unwrapped = unwrapReference(shape, types);
   const typeShorthand = renderTypeShorthand(
@@ -77,7 +77,7 @@ function toPrimitiveTypeLabels({
   }
 }
 
-function numberToString(value: number, isDouble: boolean = false): string {
+function numberToString(value: number, isDouble = false): string {
   return isDouble ? String(value) : String(Math.floor(value));
 }
 

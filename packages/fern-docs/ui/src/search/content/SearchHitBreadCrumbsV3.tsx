@@ -16,7 +16,7 @@ export function SearchHitBreadCrumbsV3({
       {breadcrumb.map(({ title }, index) => (
         <Fragment key={index}>
           {index > 0 && (
-            <NavArrowRight className="mx-0.5 inline-block size-icon-sm" />
+            <NavArrowRight className="size-icon-sm mx-0.5 inline-block" />
           )}
           <span>{title}</span>
         </Fragment>

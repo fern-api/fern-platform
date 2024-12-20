@@ -22,7 +22,6 @@ export const useConsoleMessage = (): void => {
 `.trim();
     const svgUrl = `data:image/svg+xml;base64,${btoa(svgString)}`;
 
-    // eslint-disable-next-line no-console
     console.log(
       "\n%cBuilt with %c %c\n%cCheck out https://buildwithfern.com\n",
       `

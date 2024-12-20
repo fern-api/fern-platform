@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 // Adapted from https://github.com/joewalnes/reconnecting-websocket/blob/master/reconnecting-websocket.js
 
 // MIT License:
@@ -105,7 +106,7 @@ export default class ReconnectingWebSocket {
 
   private generateEvent(s: string, args?: any): CustomEvent {
     const evt = document.createEvent("CustomEvent");
-    // eslint-disable-next-line deprecation/deprecation
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     evt.initCustomEvent(s, false, false, args);
     return evt;
   }
@@ -127,14 +128,12 @@ export default class ReconnectingWebSocket {
     }
 
     if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-      // eslint-disable-next-line no-console
       console.debug("ReconnectingWebSocket", "attempt-connect", this.url);
     }
 
     const localWs = this.ws;
     const timeout = setTimeout(() => {
       if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-        // eslint-disable-next-line no-console
         console.debug("ReconnectingWebSocket", "connection-timeout", this.url);
       }
       this.timedOut = true;
@@ -145,11 +144,10 @@ export default class ReconnectingWebSocket {
     this.ws.onopen = (_event) => {
       clearTimeout(timeout);
       if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-        // eslint-disable-next-line no-console
         console.debug("ReconnectingWebSocket", "onopen", this.url);
       }
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      this.protocol = this.ws!.protocol;
+
+      this.protocol = this.ws?.protocol ?? null;
       this.readyState = WebSocket.OPEN;
       this.reconnectAttempts = 0;
       const e = this.generateEvent("open");
@@ -173,7 +171,6 @@ export default class ReconnectingWebSocket {
         this.eventTarget.dispatchEvent(e);
         if (!reconnectAttempt && !this.timedOut) {
           if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-            // eslint-disable-next-line no-console
             console.debug("ReconnectingWebSocket", "onclose", this.url);
           }
           this.eventTarget.dispatchEvent(this.generateEvent("close"));
@@ -196,7 +193,6 @@ export default class ReconnectingWebSocket {
 
     this.ws.onmessage = (event) => {
       if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-        // eslint-disable-next-line no-console
         console.debug(
           "ReconnectingWebSocket",
           "onmessage",
@@ -211,7 +207,6 @@ export default class ReconnectingWebSocket {
 
     this.ws.onerror = (event) => {
       if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-        // eslint-disable-next-line no-console
         console.debug("ReconnectingWebSocket", "onerror", this.url, event);
       }
       this.eventTarget.dispatchEvent(this.generateEvent("error"));
@@ -221,12 +216,11 @@ export default class ReconnectingWebSocket {
   public send(data: string | ArrayBuffer | Blob): void {
     if (this.ws) {
       if (this.settings.debug || ReconnectingWebSocket.debugAll) {
-        // eslint-disable-next-line no-console
         console.debug("ReconnectingWebSocket", "send", this.url, data);
       }
       this.ws.send(data);
     } else {
-      throw "INVALID_STATE_ERR : Pausing to reconnect websocket";
+      throw new Error("INVALID_STATE_ERR : Pausing to reconnect websocket");
     }
   }
 
@@ -239,15 +233,14 @@ export default class ReconnectingWebSocket {
     this.ws?.close();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   public onopen(_event: Event): void {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   public onclose(_event: CloseEvent): void {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   public onconnecting(_event: Event): void {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   public onmessage(_event: MessageEvent): void {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   public onerror(_event: Event): void {}
 
   public addEventListener: HTMLDivElement["addEventListener"];

@@ -20,8 +20,8 @@ export default async function responseApiHandler(
     return res.status(405).end();
   }
 
-  const path = req.query["path"];
-  const format = req.query["format"] ?? "rss";
+  const path = req.query.path;
+  const format = req.query.format ?? "rss";
 
   if (typeof path !== "string" || typeof format !== "string") {
     return res.status(400).end();
@@ -66,7 +66,6 @@ export default async function responseApiHandler(
         try {
           feed.addItem(toFeedItem(entry, domain, pages, files));
         } catch (e) {
-          // eslint-disable-next-line no-console
           console.error(e);
           // TODO: sentry
         }
@@ -124,7 +123,6 @@ function toFeedItem(
         item.image = { url: image };
       }
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
       // TODO: sentry
     }

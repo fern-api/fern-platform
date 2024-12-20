@@ -50,7 +50,7 @@ export function useResizeY(set: (y: number) => void): {
       window.addEventListener("touchmove", handleTouchMove);
       window.addEventListener("touchend", handleTouchUp);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [set]
   );
 
@@ -107,7 +107,7 @@ export function useResizeX(set: (x: number) => void): {
       window.addEventListener("touchmove", handleTouchMove);
       window.addEventListener("touchend", handleTouchUp);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [set]
   );
 

@@ -38,7 +38,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
         baseUrl: ParsedBaseUrl;
         app?: FdrApplication;
     }): Promise<RevalidatedPathsResponse> {
-        let revalidationFailed = false;
+        // let revalidationFailed = false;
         try {
             const client = new FernRevalidationClient({
                 environment: baseUrl.toURL().toString(),
@@ -56,7 +56,7 @@ export class RevalidatorServiceImpl implements RevalidatorService {
             };
         } catch (e) {
             app?.logger.error("Failed to revalidate paths", e);
-            revalidationFailed = true;
+            // revalidationFailed = true;
             console.log(e);
             return {
                 successful: [],

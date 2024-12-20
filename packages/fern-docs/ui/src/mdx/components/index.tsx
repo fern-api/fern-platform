@@ -148,7 +148,7 @@ export const MDX_COMPONENTS: MDXComponents = {
 export function createMdxComponents(jsxElements: string[]): MDXComponents {
   return {
     // spread in jsx elements that may be unsupported
-    ...jsxElements.reduce(
+    ...jsxElements.reduce<Record<string, () => ReactElement>>(
       (acc, jsxElement) => {
         acc[jsxElement] = () => (
           <FernErrorTag
@@ -158,7 +158,7 @@ export function createMdxComponents(jsxElements: string[]): MDXComponents {
         );
         return acc;
       },
-      {} as Record<string, () => ReactElement>
+      {}
     ),
     // then, spread in the supported components
     ...MDX_COMPONENTS,

@@ -1,5 +1,6 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { OpenNewWindow } from "iconoir-react";
+import { ReactNode } from "react";
 import { SidebarLink } from "../SidebarLink";
 
 interface SidebarLinkNodeProps {
@@ -12,7 +13,7 @@ export function SidebarLinkNode({
   node,
   depth,
   className,
-}: SidebarLinkNodeProps): React.ReactElement {
+}: SidebarLinkNodeProps): ReactNode {
   return (
     <SidebarLink
       icon={node.icon}
@@ -20,7 +21,7 @@ export function SidebarLinkNode({
       className={className}
       depth={Math.max(depth - 1, 0)}
       title={node.title}
-      rightElement={<OpenNewWindow className="size-4 self-center text-faded" />}
+      rightElement={<OpenNewWindow className="text-faded size-4 self-center" />}
       href={node.url}
     />
   );

@@ -6,7 +6,7 @@ export function PlaygroundCardSkeleton({
   children,
 }: PropsWithChildren<{ className?: string }>): ReactElement {
   return (
-    <div className={clsx("rounded-xl bg-tag-default", className)}>
+    <div className={clsx("bg-tag-default rounded-xl", className)}>
       {children && <div className="invisible contents">{children}</div>}
     </div>
   );

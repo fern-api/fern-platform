@@ -1,74 +1,7 @@
 {
-  "extends": "./shared/tsconfig.shared.json",
   "ts-node": {
     "compilerOptions": {
       "module": "CommonJS"
     }
-  },
-  "compilerOptions": {},
-  "references": [
-    {
-      "path": "packages/cdk"
-    },
-    {
-      "path": "packages/commons/core-utils"
-    },
-    {
-      "path": "packages/commons/fdr-utils"
-    },
-    {
-      "path": "packages/commons/github"
-    },
-    {
-      "path": "packages/commons/loadable"
-    },
-    {
-      "path": "packages/fern-docs/next-seo"
-    },
-    {
-      "path": "packages/commons/react-commons"
-    },
-    {
-      "path": "packages/fern-docs/search-utils"
-    },
-    {
-      "path": "packages/fdr-sdk"
-    },
-    {
-      "path": "packages/healthchecks"
-    },
-    {
-      "path": "packages/scripts"
-    },
-    {
-      "path": "packages/template-resolver"
-    },
-    {
-      "path": "packages/fern-docs/ui"
-    },
-    {
-      "path": "packages/fern-docs/components"
-    },
-    {
-      "path": "packages/fern-docs/bundle"
-    },
-    {
-      "path": "packages/fern-docs/icons-cdn"
-    },
-    {
-      "path": "packages/fern-docs/local-preview-bundle"
-    },
-    {
-      "path": "servers/fdr-deploy"
-    },
-    {
-      "path": "servers/fdr"
-    },
-    {
-      "path": "servers/fern-bot"
-    },
-    {
-      "path": "clis/generator-cli"
-    }
-  ]
+  }
 }

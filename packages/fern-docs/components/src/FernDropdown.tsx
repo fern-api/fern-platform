@@ -119,7 +119,7 @@ export const FernDropdown = forwardRef<
                 ) : (
                   <DropdownMenu.Separator
                     key={idx}
-                    className="mx-2 my-1 h-px bg-border-default"
+                    className="bg-border-default mx-2 my-1 h-px"
                   />
                 )
               )}

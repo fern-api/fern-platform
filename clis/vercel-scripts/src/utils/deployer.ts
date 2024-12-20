@@ -143,7 +143,6 @@ export class VercelDeployer {
     //     logCommand(`[${this.environmentName}] Inspector URL: ${deployment.inspectorUrl}`);
     // }
 
-    // eslint-disable-next-line no-console
     console.log("Deployment Source:", deployment.source);
 
     return deployment;
@@ -190,7 +189,6 @@ export class VercelDeployer {
     const dotvercel = join(this.cwd, ".vercel");
     const envfile = join(dotvercel, `.env.${this.environment}.local`);
 
-    // eslint-disable-next-line no-console
     console.log("Loading env file:", envfile);
 
     return readFileSync(envfile, "utf-8");

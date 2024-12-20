@@ -183,7 +183,7 @@ export class SnippetTemplateResolver {
             this.maybeApiDefinitionId
           );
           this.maybeApiDefinition = apiDefinitionResponse;
-        } catch (err) {}
+        } catch (_err) {}
       }
     }
 

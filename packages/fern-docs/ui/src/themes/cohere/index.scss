@@ -130,7 +130,7 @@
   }
 
   .fern-layout-toc {
-    @apply h-content sticky top-header-offset w-sidebar-width shrink-0 max-xl:hidden;
+    @apply h-content top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
   }
 
   .fern-guide-layout,

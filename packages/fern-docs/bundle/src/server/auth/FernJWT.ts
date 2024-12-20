@@ -71,7 +71,6 @@ export async function safeVerifyFernJWTConfig(
       return await verifyFernJWTConfig(token, authConfig);
     }
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.debug(String(e));
   }
 

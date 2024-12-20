@@ -1,13 +1,12 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ReactNode } from "react";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 
 interface SidebarGroupNodeProps {
   node: FernNavigation.SidebarGroupNode;
 }
 
-export function SidebarGroupNode({
-  node,
-}: SidebarGroupNodeProps): React.ReactElement {
+export function SidebarGroupNode({ node }: SidebarGroupNodeProps): ReactNode {
   return (
     <ul className="fern-sidebar-group">
       {node.children.map((child) => (

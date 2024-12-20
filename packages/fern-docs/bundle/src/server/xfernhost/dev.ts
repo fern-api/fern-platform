@@ -13,7 +13,6 @@ export function getNextPublicDocsDomain(): string | undefined {
 
     return new URL(withDefaultProtocol(domain)).host;
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return undefined;
   }

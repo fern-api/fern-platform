@@ -16,7 +16,7 @@ const base: BaseRecord = {
 };
 
 describe("cohere", () => {
-  it("should work", () => {
+  it("should work", async () => {
     const fixture = fs.readFileSync(
       path.join(__dirname, "fixtures/cohere.mdx"),
       "utf8"
@@ -26,7 +26,7 @@ describe("cohere", () => {
       markdown: fixture,
     });
 
-    expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(
+    await expect(JSON.stringify(result, null, 2)).toMatchFileSnapshot(
       path.join(__dirname, "__snapshots__/cohere.json")
     );
   });

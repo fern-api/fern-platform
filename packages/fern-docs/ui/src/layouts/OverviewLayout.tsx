@@ -23,7 +23,7 @@ export function OverviewLayout({
       <TableOfContents />
       <article className="fern-layout-content max-w-content-wide-width">
         <PageHeader />
-        <div className="prose max-w-full break-words dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0">
+        <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
           {children}
         </div>
         {(!hideFeedback || editThisPageUrl != null) && (

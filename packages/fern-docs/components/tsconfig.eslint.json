@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true
+  },
+  "include": [
+    "src/**/*",
+    ".storybook/**/*",
+    "postcss.config.cjs",
+    "tailwind.config.cjs",
+    "vite.config.ts",
+    "vitest.config.ts"
+  ]
+}

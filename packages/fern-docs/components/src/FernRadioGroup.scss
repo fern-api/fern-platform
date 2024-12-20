@@ -20,15 +20,15 @@
   }
 
   .fern-radio-item:focus {
-    @apply outline outline-4 outline-offset-0 outline-tag-primary;
+    @apply outline-tag-primary outline outline-4 outline-offset-0;
   }
 
   .fern-radio-indicator {
-    @apply flex size-4 items-center justify-center rounded-full bg-accent;
+    @apply bg-accent flex size-4 items-center justify-center rounded-full;
   }
 
   .fern-radio-indicator::after {
-    @apply absolute size-2 rounded-full bg-background;
+    @apply bg-background absolute size-2 rounded-full;
 
     content: "";
   }

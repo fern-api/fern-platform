@@ -3,8 +3,8 @@
     @apply cursor-pointer;
     @apply t-muted border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
     @apply bg-tag-default;
-    @apply transition-[background,shadow] hover:bg-tag-default-hover;
-    @apply ring-default ring-1 ring-inset hover:ring-default;
+    @apply hover:bg-tag-default-hover transition-[background,shadow];
+    @apply ring-default hover:ring-default ring-1 ring-inset;
     @apply max-sm:h-10 max-sm:text-base;
 
     .search-placeholder {
@@ -16,7 +16,7 @@
     }
 
     .keyboard-shortcut-hint {
-      @apply t-muted inline-flex size-icon-md items-center justify-center rounded font-mono text-xs leading-none shadow-card-light ring-1 ring-card-border;
+      @apply t-muted size-icon-md shadow-card-light ring-card-border inline-flex items-center justify-center rounded font-mono text-xs leading-none ring-1;
       @apply bg-card dark:shadow-card-dark;
     }
 
@@ -25,12 +25,12 @@
     }
 
     &:disabled {
-      @apply cursor-default bg-tag-default-soft shadow-none;
+      @apply bg-tag-default-soft cursor-default shadow-none;
     }
   }
 
   .fern-mdx-link {
-    @apply t-accent-aaa underline decoration-accent-aa decoration-1 underline-offset-4 hover:decoration-2;
+    @apply t-accent-aaa decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
     @apply font-semibold;
 
     h1 &,
@@ -49,7 +49,7 @@
     }
 
     svg.external-link-icon {
-      @apply ml-0.5 inline-block size-3.5 text-text-muted;
+      @apply text-text-muted ml-0.5 inline-block size-3.5;
     }
 
     &:hover {

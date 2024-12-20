@@ -37,7 +37,6 @@ export function generateAlgoliaRecords({
     .filter(isNonNullish);
 
   if (collector.indexablePageSlugs.length !== indexablePageNodes.length) {
-    // eslint-disable-next-line no-console
     console.warn(
       `Some indexable page nodes were not found: ${collector.indexablePageSlugs.filter(
         (slug) => !collector.slugMap.has(slug)
@@ -57,13 +56,11 @@ export function generateAlgoliaRecords({
   markdownNodes.forEach((node) => {
     const pageId = FernNavigation.getPageId(node);
     if (!pageId) {
-      // eslint-disable-next-line no-console
       console.error(`Page node ${node.slug} has no page id`);
       return;
     }
     const markdown = pages[pageId];
     if (!markdown) {
-      // eslint-disable-next-line no-console
       console.error(
         `Page node ${node.slug} has page id ${pageId} but no markdown`
       );
@@ -99,7 +96,6 @@ export function generateAlgoliaRecords({
     const apiDefinition = apis[node.apiDefinitionId];
 
     if (!apiDefinition) {
-      // eslint-disable-next-line no-console
       console.error(
         `API leaf node ${node.slug} has api definition id ${node.apiDefinitionId} but no api definition`
       );
@@ -123,7 +119,6 @@ export function generateAlgoliaRecords({
     if (node.type === "endpoint") {
       const endpoint = apiDefinition.endpoints[node.endpointId];
       if (!endpoint) {
-        // eslint-disable-next-line no-console
         console.error(
           `API leaf node ${node.slug} has endpoint id ${node.endpointId} but no endpoint`
         );
@@ -159,7 +154,6 @@ export function generateAlgoliaRecords({
     } else if (node.type === "webSocket") {
       const channel = apiDefinition.websockets[node.webSocketId];
       if (!channel) {
-        // eslint-disable-next-line no-console
         console.error(
           `API leaf node ${node.slug} has web socket id ${node.webSocketId} but no web socket`
         );
@@ -188,7 +182,6 @@ export function generateAlgoliaRecords({
     } else if (node.type === "webhook") {
       const webhook = apiDefinition.webhooks[node.webhookId];
       if (!webhook) {
-        // eslint-disable-next-line no-console
         console.error(
           `API leaf node ${node.slug} has web hook id ${node.webhookId} but no web hook`
         );

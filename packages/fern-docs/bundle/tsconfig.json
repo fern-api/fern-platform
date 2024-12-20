@@ -1,7 +1,6 @@
 {
   "extends": "@fern-platform/configs/tsconfig/nextjs.json",
   "compilerOptions": {
-    "outDir": "./dist",
     "rootDir": ".",
     "paths": {
       "@/*": ["./src/*"]

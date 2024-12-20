@@ -6,7 +6,7 @@ import { FC, forwardRef } from "react";
 export const FernSelect: FC<Select.SelectProps> = () => (
   <Select.Root>
     <Select.Trigger
-      className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white px-icon text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
+      className="text-violet11 hover:bg-mauve3 data-[placeholder]:text-violet9 px-icon inline-flex h-[35px] items-center justify-center gap-[5px] rounded bg-white text-[13px] leading-none shadow-[0_2px_10px] shadow-black/10 outline-none focus:shadow-[0_0_0_2px] focus:shadow-black"
       aria-label="Food"
     >
       <Select.Value placeholder="Select a fruit…" />

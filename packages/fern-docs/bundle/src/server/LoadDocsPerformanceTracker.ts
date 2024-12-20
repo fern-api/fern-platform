@@ -53,7 +53,6 @@ export class LoadDocsPerformanceTracker {
       $current_url: `https://${this.domain}/${this.slug}`,
     };
 
-    // eslint-disable-next-line no-console
     console.log(TRACK_LOAD_DOCS_PERFORMANCE, properties);
 
     await track(TRACK_LOAD_DOCS_PERFORMANCE, properties);

@@ -131,7 +131,7 @@ export function useTableOfContentsObserver(
         }, {});
       } catch (e) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
+
         console.error("Error measuring table of contents", e);
       }
     });

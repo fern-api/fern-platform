@@ -1,5 +1,6 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { Calendar } from "iconoir-react";
+import { ReactNode } from "react";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { Changelog } from "../../util/dateUtils";
 import { SidebarSlugLink } from "../SidebarLink";
@@ -14,7 +15,7 @@ export function SidebarChangelogNode({
   node,
   depth,
   className,
-}: SidebarChangelogNodeProps): React.ReactElement | null {
+}: SidebarChangelogNodeProps): ReactNode {
   const selected = useIsSelectedSidebarNode(node.id);
 
   if (node.hidden && !selected) {

@@ -60,7 +60,7 @@ const ERROR_ANCHOR_PREFIX = "response.error.";
 function maybeGetErrorStatusCodeOrNameFromAnchor(
   anchor: string | undefined
 ): number | string | undefined {
-  if (anchor != null && anchor.startsWith(ERROR_ANCHOR_PREFIX)) {
+  if (anchor?.startsWith(ERROR_ANCHOR_PREFIX)) {
     // error anchor format is response.error.{statusCode}.property.a.b.c
     // get {statusCode} from the anchor
     const statusCodeOrErrorName = anchor.split(".")[2];
@@ -304,7 +304,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     >
       <div
         className={cn(
-          "scroll-mt-content mx-auto max-w-content-width md:max-w-endpoint-width",
+          "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto",
           {
             "border-default mb-px border-b pb-12": !last,
           }
@@ -317,7 +317,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         />
         <div className="md:grid md:grid-cols-2 md:gap-8 lg:gap-12">
           <div
-            className="flex min-w-0 max-w-content-width flex-1 flex-col pt-8 md:py-8"
+            className="max-w-content-width flex min-w-0 flex-1 flex-col pt-8 md:py-8"
             style={{
               // TODO: do we still need to set minHeight here?
               minHeight: `${minHeight}px`,

@@ -25,7 +25,6 @@ export const Webhook: React.FC<Webhook.Props> = ({
   );
 
   if (!context) {
-    // eslint-disable-next-line no-console
     console.error("Could not create context for webhook", node);
     return null;
   }

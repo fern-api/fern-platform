@@ -39,7 +39,6 @@ export function collectRootHeadings(
     }
 
     if (!heading.position) {
-      // eslint-disable-next-line no-console
       console.error("Expected heading to have position; Skipping...");
       return;
     }

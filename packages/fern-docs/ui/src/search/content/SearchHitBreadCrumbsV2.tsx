@@ -13,7 +13,7 @@ export function SearchHitBreadCrumbsV2({
       {breadcrumb.map((part, index) => (
         <Fragment key={index}>
           {index > 0 && (
-            <NavArrowRight className="mx-0.5 inline-block size-icon-sm" />
+            <NavArrowRight className="size-icon-sm mx-0.5 inline-block" />
           )}
           <span>{part}</span>
         </Fragment>

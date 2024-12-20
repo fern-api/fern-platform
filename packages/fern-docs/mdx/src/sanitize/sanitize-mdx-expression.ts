@@ -33,7 +33,6 @@ export function sanitizeMdxExpression(content: string): string {
   let loops = 0;
   while (loops++ < 100) {
     if (loops === 100) {
-      // eslint-disable-next-line no-console
       console.error("Infinite Loop Detected: sanitizing acorn failed");
     }
 
@@ -109,7 +108,6 @@ export function sanitizeMdxExpression(content: string): string {
   }
 
   if (errors.length > 0) {
-    // eslint-disable-next-line no-console
     console.debug(
       "MDX sanitization errors:",
       errors.map(

@@ -12,7 +12,6 @@ export function testGenerateReference({
   fixtureName: string;
   config: FernGeneratorCli.ReferenceConfig;
 }): void {
-  // eslint-disable-next-line vitest/valid-title
   describe(fixtureName, () => {
     it("generate readme", async () => {
       const file = await tmp.file();

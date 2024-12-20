@@ -47,7 +47,7 @@ export function getHarRequest(
     })
   );
 
-  let mimeType = endpoint.request?.contentType as string | undefined;
+  let mimeType = endpoint.request?.contentType;
 
   if (requestBody != null) {
     if (mimeType == null) {

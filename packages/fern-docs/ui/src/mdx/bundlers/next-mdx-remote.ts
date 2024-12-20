@@ -135,7 +135,7 @@ export async function serializeMdx(
     };
   } catch (e) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Failed to serialize MDX content", e);
 
     return content;

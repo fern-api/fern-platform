@@ -81,7 +81,6 @@ export class FernDocsRevalidator {
     const failedDomains: string[] = [];
 
     for await (const domain of this.getProductionDomains()) {
-      // eslint-disable-next-line no-console
       console.log(`Revalidating ${domain.name}...`);
 
       const client = new FernDocsClient({
@@ -100,7 +99,6 @@ export class FernDocsRevalidator {
         });
         for await (const result of results) {
           if (!result.success) {
-            // eslint-disable-next-line no-console
             console.warn(
               `[${domain.name}] Failed to revalidate ${result.url}: ${result.error}`
             );
@@ -111,20 +109,16 @@ export class FernDocsRevalidator {
         }
         summary[domain.name] = revalidationSummary;
       } catch (error) {
-        // eslint-disable-next-line no-console
         console.error(`Failed to revalidate ${domain.name}: ${error}`);
         failedDomains.push(domain.name);
       }
     }
 
-    // eslint-disable-next-line no-console
     logCommand("Revalidation summary");
     Object.entries(summary).forEach(([domain, { success, failed }]) => {
-      // eslint-disable-next-line no-console
       console.log(`- ${domain}: ${success} successful, ${failed} failed`);
     });
     failedDomains.forEach((domain) => {
-      // eslint-disable-next-line no-console
       console.error(`- ${domain}: Failed to revalidate`);
     });
   }

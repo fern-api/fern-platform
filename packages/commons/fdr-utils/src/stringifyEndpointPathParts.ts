@@ -6,7 +6,7 @@ export function stringifyEndpointPathParts(
   return (
     "/" +
     path
-      .map((part) => (part.type === "literal" ? part.value : `${part.value}`))
+      .map((part) => (part.type === "literal" ? part.value : `{${part.value}}`))
       .join("/")
   );
 }

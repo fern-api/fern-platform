@@ -37,7 +37,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
             disabled: availability == null,
             href: toHref(pointsTo ?? slug),
             icon: authed ? (
-              <Lock className="size-4 self-center text-faded" />
+              <Lock className="text-faded size-4 self-center" />
             ) : undefined,
             className: hidden ? "opacity-50" : undefined,
           })

@@ -39,7 +39,7 @@ export class DocsLoader {
     alwaysEnableJavaScriptFetch: false,
     usesApplicationJsonInFormDataValue: false,
   };
-  public withFeatureFlags(featureFlags: DocsLoaderFlags): DocsLoader {
+  public withFeatureFlags(featureFlags: DocsLoaderFlags): this {
     this.featureFlags = featureFlags;
     return this;
   }
@@ -49,7 +49,7 @@ export class DocsLoader {
   public withAuth(
     authConfig: AuthEdgeConfig | undefined,
     authState?: AuthState
-  ): DocsLoader {
+  ): this {
     this.authConfig = authConfig;
     if (authState) {
       this.authState = authState;
@@ -90,7 +90,7 @@ export class DocsLoader {
 
   public withLoadDocsForUrlResponse(
     loadForDocsUrlResponse: DocsV2Read.LoadDocsForUrlResponse
-  ): DocsLoader {
+  ): this {
     this.#loadForDocsUrlResponse = loadForDocsUrlResponse;
     return this;
   }
@@ -160,7 +160,7 @@ export class DocsLoader {
         root = pruneWithAuthState(authState, authConfig, root);
       } catch (e) {
         // TODO: sentry
-        // eslint-disable-next-line no-console
+
         console.error(e);
         return undefined;
       }

@@ -275,7 +275,6 @@ export async function getWorkosRbacRoles(
     }
     return [];
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(`Error fetching RBAC roles for ${org}/${email}: ${error}`);
     return [];
   }

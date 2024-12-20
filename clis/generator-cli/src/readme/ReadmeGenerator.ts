@@ -10,7 +10,7 @@ import { ReadmeParser } from "./ReadmeParser";
 
 export class ReadmeGenerator {
   private ADVANCED_FEATURE_ID = "ADVANCED";
-  private ADVANCED_FEATURES: Set<FernGeneratorCli.FeatureId> = new Set([
+  private ADVANCED_FEATURES = new Set<FernGeneratorCli.FeatureId>([
     FernGeneratorCli.StructuredFeatureId.Retries,
     FernGeneratorCli.StructuredFeatureId.Timeouts,
     FernGeneratorCli.StructuredFeatureId.CustomClient,
@@ -73,10 +73,7 @@ export class ReadmeGenerator {
         })
       );
     }
-    if (
-      this.readmeConfig.language != null &&
-      this.readmeConfig.language.publishInfo != null
-    ) {
+    if (this.readmeConfig.language?.publishInfo != null) {
       blocks.push(
         this.generateInstallation({
           language: this.readmeConfig.language,

@@ -1,5 +1,5 @@
 import { isEqual } from "es-toolkit/predicate";
-import * as React from "react";
+import React from "react";
 
 type UseEffectParams = Parameters<typeof React.useEffect>;
 type EffectCallback = UseEffectParams[0];
@@ -9,7 +9,7 @@ type DependencyList = UseEffectParams[1];
 type UseEffectReturn = ReturnType<typeof React.useEffect>;
 
 function checkDeps(deps: DependencyList) {
-  if (!deps || !deps.length) {
+  if (!deps?.length) {
     throw new Error(
       "useDeepCompareEffect should not be used with no dependencies. Use React.useEffect instead."
     );

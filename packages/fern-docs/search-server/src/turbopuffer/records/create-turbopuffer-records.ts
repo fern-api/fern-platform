@@ -51,14 +51,12 @@ export async function createTurbopufferRecords({
         async (node): Promise<FernTurbopufferRecordWithoutVector[]> => {
           const pageId = getPageId(node);
           if (!pageId) {
-            // eslint-disable-next-line no-console
             console.error(`Page node ${node.slug} has no page id`);
             return [];
           }
 
           const markdown = pages[pageId];
           if (!markdown) {
-            // eslint-disable-next-line no-console
             console.error(
               `Page node ${node.slug} has page id ${pageId} but no markdown`
             );

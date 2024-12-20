@@ -13,11 +13,7 @@ export function extractEndpointPathAndMethod(
   }
 
   // ensure that method is a valid HTTP method
-  if (
-    !Object.values(APIV1Read.HttpMethod).includes(
-      method as APIV1Read.HttpMethod
-    )
-  ) {
+  if (method == null || !Object.values(APIV1Read.HttpMethod).includes(method)) {
     return [undefined, undefined];
   }
 

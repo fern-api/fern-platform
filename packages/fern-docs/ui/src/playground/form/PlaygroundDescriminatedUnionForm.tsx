@@ -50,7 +50,6 @@ export const PlaygroundDiscriminatedUnionForm =
             (variant) => variant.discriminantValue === variantKey
           );
           if (selectedVariant == null) {
-            // eslint-disable-next-line no-console
             console.error(
               `Could not find variant with discriminant value ${variantKey}`
             );
@@ -140,7 +139,7 @@ export const PlaygroundDiscriminatedUnionForm =
           </FernDropdown>
         )}
         {activeVariant != null && (
-          <div className="border-l border-border-default-soft pl-4">
+          <div className="border-border-default-soft border-l pl-4">
             <PlaygroundObjectPropertiesForm
               properties={properties}
               extraProperties={undefined}

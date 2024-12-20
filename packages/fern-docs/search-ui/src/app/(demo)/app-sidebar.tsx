@@ -1,5 +1,4 @@
 import { useSearchParams } from "next/navigation";
-import * as React from "react";
 
 // This is sample data.
 const data = {

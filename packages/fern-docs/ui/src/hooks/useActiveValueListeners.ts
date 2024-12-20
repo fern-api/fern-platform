@@ -38,7 +38,6 @@ export function useActiveValueListeners<T extends string>(
       if (listenersForValue != null) {
         const indexOfListenerToDelete = listenersForValue.indexOf(listener);
         if (indexOfListenerToDelete === -1) {
-          // eslint-disable-next-line no-console
           console.warn(
             "Failed to deregister listener for useActiveValueListeners."
           );

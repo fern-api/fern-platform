@@ -67,7 +67,6 @@ export async function POST(
       });
     }
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
     return new NextResponse(null, { status: 500, headers: corsHeaders });
   }

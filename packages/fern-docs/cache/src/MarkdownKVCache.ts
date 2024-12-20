@@ -5,7 +5,7 @@ const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
 export class MarkdownKVCache {
-  private static instances: Map<string, MarkdownKVCache> = new Map();
+  private static instances = new Map<string, MarkdownKVCache>();
   public static getInstance(domain: string): MarkdownKVCache {
     const instance = MarkdownKVCache.instances.get(domain);
     if (!instance) {
@@ -27,9 +27,8 @@ export class MarkdownKVCache {
     key: string
   ): Promise<FernDocs.MarkdownText | null> {
     try {
-      return kv.get<string>(this.createKey(key));
+      return await kv.get<string>(this.createKey(key));
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(`Could not get ${key} from cache`, e);
       return null;
     }
@@ -63,7 +62,6 @@ export class MarkdownKVCache {
         });
       });
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
     }
     return toRet;
@@ -76,7 +74,6 @@ export class MarkdownKVCache {
     try {
       await kv.set(this.createKey(key), markdownText);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(`Could not set ${key} in cache`, e);
     }
   }
@@ -98,7 +95,6 @@ export class MarkdownKVCache {
         batches.map((batch) => kv.mset(Object.fromEntries(batch)))
       );
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(e);
     }
   }

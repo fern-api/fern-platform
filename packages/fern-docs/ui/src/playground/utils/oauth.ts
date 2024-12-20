@@ -81,7 +81,6 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
           }));
           setTimeout(() => closeContainer && closeContainer(), 500);
         } catch (e) {
-          // eslint-disable-next-line no-console
           console.error(e);
           closeContainer && closeContainer();
         }

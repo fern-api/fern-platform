@@ -21,7 +21,6 @@ const DefaultDocsStyle = () => {
   const headerOffset = useAtomValue(HEADER_OFFSET_ATOM);
   const mobileHeaderOffset = useAtomValue(MOBILE_HEADER_OFFSET_ATOM);
   return (
-    // eslint-disable-next-line react/no-unknown-property
     <style jsx global>
       {`
         :root {

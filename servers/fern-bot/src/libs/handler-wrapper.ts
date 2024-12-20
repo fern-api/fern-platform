@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import type { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
 
 export const handlerWrapper =

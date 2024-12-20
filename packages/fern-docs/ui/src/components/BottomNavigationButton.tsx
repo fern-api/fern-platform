@@ -32,7 +32,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
       href={href}
     >
       {dir === "prev" && (
-        <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:mr-6 sm:border-r sm:pr-6">
+        <span className="sm-4 t-muted sm:border-default inline-flex items-center gap-2 py-2.5 text-sm sm:mr-6 sm:border-r sm:pr-6">
           <NavArrowLeft className="size-icon" />
           <span className="hidden leading-none sm:inline">
             {hint ?? "Go Back"}
@@ -45,11 +45,11 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         <Markdown
           mdx={excerpt}
           size="sm"
-          className="mt-1 font-normal prose-p:t-muted prose-p:m-0 prose-p:leading-snug"
+          className="prose-p:t-muted prose-p:m-0 prose-p:leading-snug mt-1 font-normal"
         />
       </div>
       {dir === "next" && (
-        <span className="sm-4 t-muted inline-flex items-center gap-2 py-2.5 text-sm sm:border-default sm:ml-6 sm:border-l sm:pl-6">
+        <span className="sm-4 t-muted sm:border-default inline-flex items-center gap-2 py-2.5 text-sm sm:ml-6 sm:border-l sm:pl-6">
           <span className="hidden leading-none sm:inline">
             {hint ?? "Up Next"}
           </span>

@@ -6,7 +6,6 @@ import createHandlerSetter, {
 /**
  * Returns a callback setter for a callback to be performed when the component will unmount.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const useWillUnmount = <TCallback extends (...args: any[]) => void>(
   callback?: TCallback
 ): CallbackSetter<undefined> => {

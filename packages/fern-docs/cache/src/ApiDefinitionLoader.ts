@@ -53,9 +53,7 @@ export class ApiDefinitionLoader {
   };
 
   private environment: string | undefined;
-  public withEnvironment = (
-    environment: string | undefined
-  ): ApiDefinitionLoader => {
+  public withEnvironment = (environment: string | undefined): this => {
     this.environment = environment;
     return this;
   };
@@ -69,28 +67,26 @@ export class ApiDefinitionLoader {
   }
 
   private flags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
-  public withFlags = (flags: Partial<FeatureFlags>): ApiDefinitionLoader => {
+  public withFlags = (flags: Partial<FeatureFlags>): this => {
     this.flags = { ...this.flags, ...flags };
     return this;
   };
 
   private prune: PruningNodeType[] = [];
 
-  public withPrune = (...prune: PruningNodeType[]): ApiDefinitionLoader => {
+  public withPrune = (...prune: PruningNodeType[]): this => {
     this.prune.push(...prune);
     return this;
   };
 
   private resolve: boolean = false;
-  public withResolveDescriptions = (resolve = true): ApiDefinitionLoader => {
+  public withResolveDescriptions = (resolve = true): this => {
     this.resolve = resolve;
     return this;
   };
 
   private apiDefinition: ApiDefinition | undefined;
-  public withApiDefinition = (
-    definition: ApiDefinition | undefined
-  ): ApiDefinitionLoader => {
+  public withApiDefinition = (definition: ApiDefinition | undefined): this => {
     this.apiDefinition = definition;
     return this;
   };
@@ -116,7 +112,6 @@ export class ApiDefinitionLoader {
       if (v1.error.error === "ApiDoesNotExistError") {
         return undefined;
       } else {
-        // eslint-disable-next-line no-console
         console.error(v1.error.content);
         throw new Error("Failed to load API definition");
       }
@@ -285,7 +280,7 @@ export class ApiDefinitionLoader {
   public withMdxBundler = (
     fn: (mdx: string) => Promise<FernDocs.MarkdownText>,
     engine: string
-  ): ApiDefinitionLoader => {
+  ): this => {
     this.#serializeMdx = fn;
     this.#engine = engine;
     return this;
@@ -322,7 +317,6 @@ export class ApiDefinitionLoader {
       key: string
     ) => {
       if (descriptions[`${this.#engine}/${key}`] != null) {
-        // eslint-disable-next-line no-console
         console.error(`Duplicate description key: ${key}!`);
         return description;
       }

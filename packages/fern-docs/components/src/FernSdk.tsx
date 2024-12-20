@@ -161,7 +161,7 @@ export const FernSdk: React.FC<{
           })}
         </div>
       </div>
-      <div className="border-default relative border-t bg-background-tertiary-light px-3 py-4 text-sm dark:bg-background-tertiary-dark">
+      <div className="border-default bg-background-tertiary-light dark:bg-background-tertiary-dark relative border-t px-3 py-4 text-sm">
         {activeSdk ? (
           <FernSdkInstallCommand
             installCommand={

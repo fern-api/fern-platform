@@ -54,7 +54,7 @@ beforeEach(async () => {
                 ref: `heads/${JAVA_TEST_BRANCH}`,
             });
         } catch (e) {
-            console.log("Branches do not exist, continuing, consider `beforeEach` a success.");
+            console.log("Branches do not exist, continuing, consider `beforeEach` a success.", e);
         }
     });
 });
@@ -112,7 +112,7 @@ it(
             // but execa continues to have difficulties running pnpm.
             //
             // Instead we just invoke the function directly
-            process.env["REPO_TO_RUN_ON"] = REPO_FULL_NAME;
+            process.env.REPO_TO_RUN_ON = REPO_FULL_NAME;
             await updateGeneratorVersions({});
 
             try {

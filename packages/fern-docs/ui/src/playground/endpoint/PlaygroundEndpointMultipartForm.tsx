@@ -84,7 +84,7 @@ export function PlaygroundEndpointMultipartForm({
   );
 
   const handleFormDataFileChange = useCallback(
-    (key: string, files: ReadonlyArray<File> | undefined) => {
+    (key: string, files: readonly File[] | undefined) => {
       const type =
         endpoint.request?.body.type === "formData"
           ? endpoint.request?.body.fields.find((p) => p.key === key)?.type

@@ -11,7 +11,7 @@ import { useAtomEffect } from "./hooks/useAtomEffect";
 import { atomWithStorageString } from "./utils/atomWithStorageString";
 
 const STORAGE_KEY = "theme";
-const SYSTEM = "system" as const;
+const SYSTEM = "system";
 const SYSTEM_THEMES = ["light" as const, "dark" as const];
 const MEDIA = "(prefers-color-scheme: dark)";
 
@@ -176,11 +176,11 @@ export function useInitializeTheme(): void {
       const media = window.matchMedia(MEDIA);
 
       // Intentionally use deprecated listener methods to support iOS & old browsers
-      // eslint-disable-next-line deprecation/deprecation
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       media.addListener(handleMediaQuery);
       handleMediaQuery();
 
-      // eslint-disable-next-line deprecation/deprecation
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       return () => media.removeListener(handleMediaQuery);
     }, [])
   );

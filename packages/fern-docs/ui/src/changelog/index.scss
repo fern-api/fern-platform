@@ -19,7 +19,7 @@
     @apply pt-12 lg:pt-24;
 
     .fern-changelog-content {
-      @apply relative mx-auto min-w-0 max-w-content-width flex-auto shrink;
+      @apply max-w-content-width relative mx-auto min-w-0 flex-auto shrink;
 
       .fern-changelog-date {
         @apply t-muted mb-8 text-base lg:hidden;
@@ -30,7 +30,7 @@
       @apply hidden w-64 flex-initial shrink-0 lg:block;
 
       .fern-changelog-date {
-        @apply t-muted sticky top-header-offset-padded mb-8 text-base;
+        @apply t-muted top-header-offset-padded sticky mb-8 text-base;
       }
     }
   }
@@ -47,7 +47,7 @@
     }
 
     .fern-changelog-content {
-      @apply relative mr-6 min-w-0 max-w-content-width flex-auto shrink;
+      @apply max-w-content-width relative mr-6 min-w-0 flex-auto shrink;
 
       .fern-changelog-date {
         @apply t-muted mb-8 text-base xl:hidden;
@@ -58,7 +58,7 @@
       @apply -mt-2 hidden w-72 pl-4 text-right xl:block;
 
       .fern-changelog-date {
-        @apply t-muted sticky top-header-offset-padded text-base;
+        @apply t-muted top-header-offset-padded sticky text-base;
       }
     }
   }

@@ -1,5 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
+import { ReactNode } from "react";
 import { useIsChildSelected } from "../../atoms";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -13,7 +14,7 @@ interface SidebarRootSectionNodeProps {
 export function SidebarRootSectionNode({
   node,
   className,
-}: SidebarRootSectionNodeProps): React.ReactElement | null {
+}: SidebarRootSectionNodeProps): ReactNode {
   const childSelected = useIsChildSelected(node.id);
 
   // If the node has no children, it is a page node.

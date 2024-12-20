@@ -131,7 +131,7 @@ function PlaygroundListItemForm({
     >
       <div className="flex min-w-0 shrink items-center justify-between gap-2">
         <label className="inline-flex flex-wrap items-baseline">
-          <span className="t-muted min-w-6 rounded-xl bg-tag-default p-1 text-center text-xs font-semibold uppercase">
+          <span className="t-muted bg-tag-default min-w-6 rounded-xl p-1 text-center text-xs font-semibold uppercase">
             {idx + 1}
           </span>
         </label>

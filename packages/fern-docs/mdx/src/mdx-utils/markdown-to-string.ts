@@ -27,7 +27,6 @@ export function markdownToString(
       preserveNewlines: true,
     }).trim();
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return markdown;
   }

@@ -36,7 +36,7 @@ export function AlgoliaSearchDialog(): ReactElement | null {
   if (algoliaSearchClient == null || isMobileScreen) {
     if (!isMobileScreen) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error(
         "Algolia search client is null, when attempting to use search."
       );
@@ -47,10 +47,10 @@ export function AlgoliaSearchDialog(): ReactElement | null {
   return (
     <Dialog.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogState}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-0 bg-background/50 backdrop-blur-sm max-sm:hidden" />
+        <Dialog.Overlay className="bg-background/50 fixed inset-0 z-0 backdrop-blur-sm max-sm:hidden" />
         <Dialog.Content
           className={clsx(
-            "fixed inset-x-0 top-0 z-10 mx-6 my-[10vh] flex max-h-[80vh] flex-col md:mx-auto md:max-w-content-width",
+            "md:max-w-content-width fixed inset-x-0 top-0 z-10 mx-6 my-[10vh] flex max-h-[80vh] flex-col md:mx-auto",
             { "mt-4": fromHeader }
           )}
         >

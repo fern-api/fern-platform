@@ -155,7 +155,7 @@ const UnmemoizedObjectPropertyInternal = forwardRef<
       id={href}
       className={cn("scroll-mt-content-padded fern-api-property", {
         "px-3": !contextValue.isRootTypeDefinition,
-        "rounded-sm outline outline-1 outline-offset-4 outline-accent":
+        "outline-accent rounded-sm outline outline-1 outline-offset-4":
           isActive,
       })}
     >

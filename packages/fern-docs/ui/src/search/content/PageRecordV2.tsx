@@ -1,6 +1,7 @@
 import type { PageSearchRecordV2 } from "@fern-docs/search-utils";
 import cn from "clsx";
 import { LongArrowDownLeft } from "iconoir-react";
+import { FC } from "react";
 import { SearchHitBreadCrumbs } from "./SearchHitBreadCrumbs";
 
 export declare namespace PageRecordV2 {
@@ -10,10 +11,7 @@ export declare namespace PageRecordV2 {
   }
 }
 
-export const PageRecordV2: React.FC<PageRecordV2.Props> = ({
-  hit,
-  isHovered,
-}) => {
+export const PageRecordV2: FC<PageRecordV2.Props> = ({ hit, isHovered }) => {
   return (
     <div className="flex w-full flex-col space-y-1.5">
       <div className="flex justify-between">

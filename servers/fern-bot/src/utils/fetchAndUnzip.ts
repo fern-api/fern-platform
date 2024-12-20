@@ -39,7 +39,7 @@ async function unzipFile(sourcePath: string, destinationPath: string): Promise<v
             resolve();
         } catch (error) {
             console.error(`Error unzipping file: ${error}`);
-            reject(error);
+            reject(error as Error);
         }
     });
 }
@@ -58,6 +58,5 @@ async function downloadFile({
     }
     const fileStream = createWriteStream(destinationPath);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await promisify(pipeline)(response.body as any, fileStream);
 }

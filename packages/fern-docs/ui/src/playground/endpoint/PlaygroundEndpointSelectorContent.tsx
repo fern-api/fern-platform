@@ -78,7 +78,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
             {apiGroup.breadcrumb.map((breadcrumb, idx) => (
               <Fragment key={idx}>
                 {idx > 0 && (
-                  <Slash className="mx-0.5 size-icon-sm text-faded" />
+                  <Slash className="size-icon-sm text-faded mx-0.5" />
                 )}
                 <span className="t-accent shrink truncate whitespace-nowrap text-xs">
                   {breadcrumb}
@@ -146,7 +146,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
           </ul>
           <div className="!h-6"></div>
         </FernScrollArea>
-        <div className="border-default border-t bg-background px-6 py-4">
+        <div className="border-default bg-background border-t px-6 py-4">
           <BuiltWithFern />
         </div>
       </div>

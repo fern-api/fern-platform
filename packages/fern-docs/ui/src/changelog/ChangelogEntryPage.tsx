@@ -26,7 +26,7 @@ export function ChangelogEntryPage({
             className="flex items-stretch justify-between"
           >
             <div className="w-sidebar-width max-xl:hidden" />
-            <div className="relative mr-6 min-w-0 max-w-content-width flex-1 shrink max-xl:mx-auto">
+            <div className="max-w-content-width relative mr-6 min-w-0 flex-1 shrink max-xl:mx-auto">
               <header className="mb-8">
                 <div className="space-y-1">
                   <div className="not-prose">
@@ -46,7 +46,7 @@ export function ChangelogEntryPage({
                 <Markdown
                   mdx={excerpt}
                   size="lg"
-                  className="mt-2 leading-7 prose-p:t-muted"
+                  className="prose-p:t-muted mt-2 leading-7"
                 />
               </header>
 

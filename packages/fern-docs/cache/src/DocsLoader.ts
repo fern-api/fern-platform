@@ -12,7 +12,7 @@ export class DocsLoader {
   }
 
   private environment: string | undefined;
-  public withEnvironment = (environment: string | undefined): DocsLoader => {
+  public withEnvironment = (environment: string | undefined): this => {
     this.environment = environment;
     return this;
   };
@@ -43,7 +43,7 @@ export class DocsLoader {
       };
       await this.cache.setMetadata(metadata);
       return metadata;
-    } catch (error) {
+    } catch (_error) {
       return undefined;
     }
   };

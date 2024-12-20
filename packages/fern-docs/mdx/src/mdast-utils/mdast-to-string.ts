@@ -71,19 +71,17 @@ function one(
     }
 
     if ("value" in value) {
-      return value.type === "html" && !includeHtml
-        ? ""
-        : (value.value as string);
+      return value.type === "html" && !includeHtml ? "" : value.value;
     }
 
     if (includeImageAlt && "alt" in value && value.alt) {
-      return value.alt as string;
+      return value.alt;
     }
 
     if ("children" in value) {
       return (
         all(
-          value.children as Array<unknown>,
+          value.children as unknown[],
           includeImageAlt,
           includeHtml,
           preserveNewlines
@@ -133,12 +131,12 @@ function hasSpace(value: Extract<Nodes, { children: unknown[] }>): boolean {
  *   Serialized nodes.
  */
 function all(
-  values: Array<unknown>,
+  values: unknown[],
   includeImageAlt: boolean,
   includeHtml: boolean,
   preserveNewlines: boolean
 ): string {
-  const result: Array<string> = [];
+  const result: string[] = [];
   let index = -1;
 
   while (++index < values.length) {

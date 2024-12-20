@@ -31,7 +31,6 @@ interface Vector {
 }
 
 it.skip("unary w/ gRPC server reflection", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
             baseUrl: "https://demo.connectrpc.com",
@@ -51,7 +50,6 @@ it.skip("unary w/ gRPC server reflection", async () => {
 });
 
 it.skip("unary w/ default schema", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
             baseUrl: "https://serverless-test-gb6vrs7.svc.aped-4627-b74a.pinecone.io",
@@ -80,7 +78,6 @@ it.skip("unary w/ default schema", async () => {
 });
 
 it.skip("unauthorized", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
             baseUrl: "https://serverless-test-gb6vrs7.svc.aped-4627-b74a.pinecone.io",
@@ -110,7 +107,6 @@ it.skip("unauthorized", async () => {
 });
 
 it.skip("invalid schema", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
             baseUrl: "https://demo.connectrpc.com",
@@ -133,7 +129,6 @@ it.skip("invalid schema", async () => {
 });
 
 it.skip("invalid host", async () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const response = await proxyGrpc({
         body: {
             baseUrl: "https://demo.connectrpc.com",

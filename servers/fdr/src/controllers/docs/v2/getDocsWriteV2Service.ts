@@ -251,7 +251,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
 
                 await Promise.all(warmEndpointCachePromises);
 
-                return res.send();
+                return await res.send();
             } catch (e) {
                 app.logger.error(`Error while trying to register docs for ${docsRegistrationInfo.fernUrl}`, e);
                 await app.services.slack.notifyFailedToRegisterDocs({
@@ -302,7 +302,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 indexSegments,
             });
 
-            res.send();
+            return await res.send();
         },
         transferOwnershipOfDomain: async (req, res) => {
             // only fern users can transfer domain ownership
@@ -318,7 +318,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
                 toOrgId: req.body.toOrgId,
             });
 
-            return res.send();
+            return await res.send();
         },
     });
 }

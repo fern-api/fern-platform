@@ -1,7 +1,7 @@
 import { Options, Result } from "execa";
 import { loggingExeca } from "./loggingExeca";
 
-export type LoggingExecutable = (args?: string[], options?: loggingExeca.Options) => Promise<Result<Options>>;
+export type LoggingExecutable = (args?: string[], options?: loggingExeca.Options) => Promise<Result>;
 
 export declare namespace createLoggingExecutable {
     export interface Options extends loggingExeca.Options {}

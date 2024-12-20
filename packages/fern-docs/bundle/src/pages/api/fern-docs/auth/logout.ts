@@ -35,12 +35,9 @@ export default async function GET(req: NextRequest): Promise<NextResponse> {
   const return_to_param = getReturnToQueryParam(authConfig);
 
   // if logout url is provided, append the state to it before redirecting
-  if (req.nextUrl.searchParams.has(return_to_param)) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    logoutUrl?.searchParams.set(
-      return_to_param,
-      req.nextUrl.searchParams.get(return_to_param)!
-    );
+  const returnToParam = req.nextUrl.searchParams.get(return_to_param);
+  if (returnToParam != null) {
+    logoutUrl?.searchParams.set(return_to_param, returnToParam);
   }
 
   const redirectLocation =

@@ -50,7 +50,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<
   safeParse(...additionalArgs: unknown[]): void {
     try {
       this.parse(...additionalArgs);
-    } catch (error: Error | unknown) {
+    } catch (_error: Error | unknown) {
       this.context.errors.error({
         message:
           "Error converting node. Please contact support if the error persists",

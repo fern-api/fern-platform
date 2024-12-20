@@ -113,7 +113,7 @@ export class AuthServiceImpl implements AuthService {
         if (authHeader == null) {
             throw new UnauthorizedError("Authorization header was not specified");
         }
-        this.checkUserBelongsToOrg({ authHeader, orgId });
+        await this.checkUserBelongsToOrg({ authHeader, orgId });
         const token = getTokenFromAuthHeader(authHeader);
         const venus = getVenusClient({
             config: this.app.config,
@@ -144,7 +144,7 @@ export class AuthServiceImpl implements AuthService {
         if (authHeader == null) {
             throw new UnauthorizedError("Authorization header was not specified");
         }
-        this.checkUserBelongsToOrg({ authHeader, orgId });
+        await this.checkUserBelongsToOrg({ authHeader, orgId });
         const token = getTokenFromAuthHeader(authHeader);
         const venus = getVenusClient({
             config: this.app.config,

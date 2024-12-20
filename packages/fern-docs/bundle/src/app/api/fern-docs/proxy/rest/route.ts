@@ -19,7 +19,6 @@ export async function OPTIONS(req: NextRequest): Promise<NextResponse> {
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const headers = new Headers(withProxyCors(getDocsDomainEdge(req)));
 
-  // eslint-disable-next-line no-console
   console.log("Starting proxy request to", req.url);
 
   try {
@@ -30,10 +29,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
     // omit content-type for multipart/form-data so that fetch can set it automatically with the boundary
     const contentType = proxyHeaders.get("Content-Type");
-    if (
-      contentType != null &&
-      contentType.toLowerCase().includes("multipart/form-data")
-    ) {
+    if (contentType?.toLowerCase().includes("multipart/form-data")) {
       proxyHeaders.delete("Content-Type");
     } else if (mime != null) {
       proxyHeaders.set("Content-Type", mime);
@@ -47,7 +43,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       body: requestBody,
     });
 
-    // eslint-disable-next-line no-console
     console.log(
       "Proxy request to",
       req.url,
@@ -58,7 +53,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     let responseBody = await response.text();
     const endTime = Date.now();
 
-    // eslint-disable-next-line no-console
     console.log(
       "Proxy request to",
       req.url,
@@ -70,11 +64,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     try {
       responseBody = JSON.parse(responseBody);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.log(
         "Failed to parse response body as JSON, but will return it as text."
       );
-      // eslint-disable-next-line no-console
+
       console.error(e);
     }
 
@@ -103,7 +96,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       }
     );
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error(err);
     return new NextResponse(null, { status: 500 });
   }

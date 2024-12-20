@@ -97,10 +97,7 @@ describe("parseBlockMetaString", () => {
   });
 });
 
-function createElement(
-  metastring: string,
-  lang: string = "plaintext"
-): Element {
+function createElement(metastring: string, lang = "plaintext"): Element {
   return {
     type: "element",
     tagName: "pre",

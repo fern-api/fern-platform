@@ -38,6 +38,7 @@ export const Default: Story = {
     },
   },
   render: () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [{ language, sdks }, updateArgs] = useArgs();
     return (
       <FernSdk

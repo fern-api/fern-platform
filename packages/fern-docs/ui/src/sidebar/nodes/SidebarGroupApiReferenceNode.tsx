@@ -1,4 +1,5 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
+import { ReactNode } from "react";
 import { useIsApiReferenceShallowLink } from "../../atoms";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
@@ -10,7 +11,7 @@ interface SidebarGroupApiReferenceNodeProps {
 export function SidebarGroupApiReferenceNode({
   node,
   depth,
-}: SidebarGroupApiReferenceNodeProps): React.ReactElement {
+}: SidebarGroupApiReferenceNodeProps): ReactNode {
   const shallow = useIsApiReferenceShallowLink(node);
 
   return (

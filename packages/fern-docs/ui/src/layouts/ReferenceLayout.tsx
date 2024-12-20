@@ -31,14 +31,14 @@ export function ReferenceLayout({
   return (
     <main className="fern-reference-layout">
       <div className="z-10 w-full min-w-0 pt-8">
-        <article className="mx-auto w-full max-w-content-width pb-20 md:max-w-endpoint-width lg:ml-0 xl:mx-auto">
+        <article className="max-w-content-width md:max-w-endpoint-width mx-auto w-full pb-20 lg:ml-0 xl:mx-auto">
           <PageHeader />
           {hasAside ? (
             <div className="grid max-w-full gap-8 md:grid-cols-2 lg:gap-12">
               {children}
             </div>
           ) : (
-            <div className="prose max-w-full break-words dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0">
+            <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
               {children}
             </div>
           )}

@@ -108,7 +108,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
 
         <div
           className={cn(
-            "prose prose-sm -my-4 flex-1 overflow-x-auto dark:prose-invert before:mb-4 before:block after:mt-4 after:block" // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
+            "prose prose-sm dark:prose-invert -my-4 flex-1 overflow-x-auto before:mb-4 before:block after:mt-4 after:block" // ::after margin ensures that bottom padding overlaps with botttom margins of internal content
           )}
         >
           <div

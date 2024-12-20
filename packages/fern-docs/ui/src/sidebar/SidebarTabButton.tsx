@@ -21,7 +21,7 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
       <FernLink
         className={cn(
           "min-h-[32px] lg:min-h-[36px]",
-          "group/tab-button flex min-w-0 flex-1 select-none items-center justify-start rounded-lg py-2 text-base hover:t-accent group-hover/tab-button:transition lg:px-3 lg:text-sm",
+          "group/tab-button hover:t-accent flex min-w-0 flex-1 select-none items-center justify-start rounded-lg py-2 text-base group-hover/tab-button:transition lg:px-3 lg:text-sm",
           "data-[state=inactive]:t-muted data-[state=active]:t-accent"
         )}
         href={useSidebarTabHref(tab)}
@@ -33,9 +33,9 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
           })}
         >
           <div className="min-w-fit">
-            <div className="bg-card-surface flex size-6 items-center justify-center rounded-md shadow-sm ring-1 ring-border-default group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent/70 group-data-[state=active]/tab-button:bg-accent group-data-[state=active]/tab-button:ring-0 group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent">
+            <div className="bg-card-surface ring-border-default group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent/70 group-data-[state=active]/tab-button:bg-accent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent flex size-6 items-center justify-center rounded-md shadow-sm ring-1 group-data-[state=active]/tab-button:ring-0">
               <RemoteFontAwesomeIcon
-                className="size-4 bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background"
+                className="bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background size-4"
                 // TODO: Should we validate that the icon is not undefined in sidebar mode
                 icon={
                   tab.type !== "tabLink" && tab.authed

@@ -41,6 +41,5 @@ export async function rollbackCommand({
     body: JSON.stringify({}),
   });
 
-  // eslint-disable-next-line no-console
   console.log(`Successfully rolled back ${projectId} to ${deployment.url}`);
 }

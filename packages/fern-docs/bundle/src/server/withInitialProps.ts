@@ -99,7 +99,7 @@ export async function withInitialProps({
   // this should not happen, but if it does, we should return a 404
   if (root == null) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error("Root node not found");
     return { notFound: true };
   }
@@ -368,7 +368,7 @@ export async function withInitialProps({
     ),
     user: authState.authed ? authState.user : undefined,
     fallback: {},
-    // eslint-disable-next-line deprecation/deprecation
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     analytics: await getCustomerAnalytics(
       docs.baseUrl.domain,
       docs.baseUrl.basePath

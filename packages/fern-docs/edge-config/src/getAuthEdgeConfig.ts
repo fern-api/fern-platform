@@ -18,7 +18,6 @@ export async function getAuthEdgeConfig(
     // if the config is present, it should be valid.
     // if it's malformed, custom auth for this domain will not work and may leak docs to the public.
     if (!config.success) {
-      // eslint-disable-next-line no-console
       console.error(
         `Could not parse AuthEdgeConfigSchema for ${currentDomain}`,
         config.error

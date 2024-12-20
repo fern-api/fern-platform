@@ -215,15 +215,9 @@ export class AlgoliaSearchRecordGenerator {
         } else if (item.type === "changelog") {
             return this.generateAlgoliaSearchRecordsForChangelogSection(item, context);
         } else if (item.type === "changelogV3") {
-            return this.generateAlgoliaSearchRecordsForChangelogNode(
-                item.node as FernNavigation.V1.ChangelogNode,
-                context,
-            );
+            return this.generateAlgoliaSearchRecordsForChangelogNode(item.node, context);
         } else if (item.type === "apiV2") {
-            return this.generateAlgoliaSearchRecordsForApiReferenceNode(
-                item.node as FernNavigation.V1.ApiReferenceNode,
-                context,
-            );
+            return this.generateAlgoliaSearchRecordsForApiReferenceNode(item.node, context);
         }
         assertNever(item);
     }

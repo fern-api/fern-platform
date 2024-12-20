@@ -12,12 +12,11 @@ export function accessByPath(
       if ((Array.isArray(res) || res instanceof Array) && !isNaN(Number(idx))) {
         res = res[Number(idx)];
       } else {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         res = (res as any)[idx];
       }
     }
     return res;
-  } catch (err) {
+  } catch (_err) {
     // if an error is thrown just return undefined
   }
   return undefined;

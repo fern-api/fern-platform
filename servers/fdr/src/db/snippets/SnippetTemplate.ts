@@ -98,7 +98,7 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
                         },
                     },
                 });
-                if (result != null && result.endpointId.identifierOverride != null) {
+                if (result?.endpointId.identifierOverride != null) {
                     const template = {
                         [sdk.type]: result.snippetTemplate,
                         ...(toRet[result.endpointId.identifierOverride] ?? {}),
@@ -234,31 +234,33 @@ export class SnippetTemplateDaoImpl implements SnippetTemplateDao {
         await this.prisma.$transaction(async (tx) => {
             const snippets: Prisma.Enumerable<WithoutQuestionMarks<Prisma.SnippetTemplateCreateManyInput>> = [];
             const sdks: Prisma.Enumerable<SdkPackage> = [];
-            storeSnippetsInfo.snippets.map(async (snippet) => {
-                const sdkId = this.getSdkId(snippet.sdk);
+            await Promise.all(
+                storeSnippetsInfo.snippets.map(async (snippet) => {
+                    const sdkId = this.getSdkId(snippet.sdk);
 
-                snippets.push({
-                    id: uuidv4(),
-                    orgId: storeSnippetsInfo.orgId,
-                    apiName: storeSnippetsInfo.apiId,
-                    apiDefinitionId: storeSnippetsInfo.apiDefinitionId,
-                    endpointPath: snippet.endpointId.path,
-                    endpointMethod: snippet.endpointId.method,
-                    identifierOverride: snippet.endpointId.identifierOverride,
-                    sdkId,
-                    version: snippet.snippetTemplate.type,
-                    functionInvocation: writeBuffer(snippet.snippetTemplate.functionInvocation),
-                    clientInstantiation: writeBuffer(snippet.snippetTemplate.clientInstantiation),
-                });
+                    snippets.push({
+                        id: uuidv4(),
+                        orgId: storeSnippetsInfo.orgId,
+                        apiName: storeSnippetsInfo.apiId,
+                        apiDefinitionId: storeSnippetsInfo.apiDefinitionId,
+                        endpointPath: snippet.endpointId.path,
+                        endpointMethod: snippet.endpointId.method,
+                        identifierOverride: snippet.endpointId.identifierOverride,
+                        sdkId,
+                        version: snippet.snippetTemplate.type,
+                        functionInvocation: writeBuffer(snippet.snippetTemplate.functionInvocation),
+                        clientInstantiation: writeBuffer(snippet.snippetTemplate.clientInstantiation),
+                    });
 
-                sdks.push({
-                    id: sdkId,
-                    sdkPackage: getPackageNameFromSdkRequest(snippet.sdk),
-                    version: snippet.sdk.version,
-                    language: getLanguageFromRequest({ sdk: snippet.sdk }),
-                    sdk: writeBuffer(snippet.sdk),
-                });
-            });
+                    sdks.push({
+                        id: sdkId,
+                        sdkPackage: getPackageNameFromSdkRequest(snippet.sdk),
+                        version: snippet.sdk.version,
+                        language: getLanguageFromRequest({ sdk: snippet.sdk }),
+                        sdk: writeBuffer(snippet.sdk),
+                    });
+                }),
+            );
 
             await sdkDao.createManySdks(sdks, tx);
             await tx.snippetTemplate.createMany({
@@ -355,7 +357,7 @@ function getEndpointPathAsString(endpoint: APIV1Write.EndpointDefinition) {
     let endpointPath = "";
     for (const part of endpoint.path.parts) {
         if (part.type === "literal") {
-            endpointPath += `${part.value}`;
+            endpointPath += part.value;
         } else {
             endpointPath += `{${part.value}}`;
         }

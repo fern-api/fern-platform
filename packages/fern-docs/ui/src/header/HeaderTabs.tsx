@@ -34,7 +34,7 @@ export function HeaderTab({ tab }: { tab: SidebarTab }): ReactElement {
           {tab.icon && <RemoteFontAwesomeIcon icon={tab.icon} />}
           <span className="truncate font-medium">{tab.title}</span>
           {tab.type !== "tabLink" && tab.authed && (
-            <Lock className="size-4 self-center text-faded" />
+            <Lock className="text-faded size-4 self-center" />
           )}
         </div>
       </FernLink>

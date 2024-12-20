@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Octokit } from "octokit";
 
 interface CreatePRRequest {

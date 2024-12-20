@@ -1,9 +1,9 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { FernButton, FernScrollArea } from "@fern-docs/components";
 import {
   getSlugForSearchRecord,
   type SearchRecord,
 } from "@fern-docs/search-utils";
-import { FernButton, FernScrollArea } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import { Minus, Xmark } from "iconoir-react";
 import { useRouter } from "next/router";
@@ -72,7 +72,7 @@ const SearchSection: React.FC<{
     <div className="flex items-center justify-between">
       <div className="text-normal pl-0.5 font-semibold">{title}</div>
     </div>
-    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+    <Separator orientation="horizontal" decorative className="bg-accent my-2" />
     {expandHits(expanded, hits).map((hit) => (
       <SearchHit
         setRef={(elem) => {
@@ -101,7 +101,7 @@ const MobileSearchSection: React.FC<{
 }> = ({ title, hits, expanded, setExpanded, refs }) => (
   <>
     <h3 className="mt-4 pl-0.5 text-lg font-semibold">{title}</h3>
-    <Separator orientation="horizontal" decorative className="my-2 bg-accent" />
+    <Separator orientation="horizontal" decorative className="bg-accent my-2" />
     {expandHits(expanded, hits).map((hit) => (
       <SearchHit
         setRef={(elem) => {
@@ -122,6 +122,7 @@ const isAskAiEnabled = false;
 export const SearchHits: React.FC = () => {
   // const { isAskAiEnabled } = useFeatureFlags();
   const basePath = useBasePath();
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   const { hits } = useInfiniteHits<SearchRecord>();
   const search = useInstantSearch();
   const [hoveredSearchHitId, setHoveredSearchHitId] = useState<string | null>(
@@ -185,7 +186,7 @@ export const SearchHits: React.FC = () => {
       if (previousHit != null) {
         setHoveredSearchHitId(previousHit.objectID);
         const ref = refs.current.get(previousHit.objectID);
-        ref?.requestPointerLock();
+        void ref?.requestPointerLock();
         ref?.focus();
       }
     },
@@ -200,7 +201,7 @@ export const SearchHits: React.FC = () => {
       if (nextHit != null) {
         setHoveredSearchHitId(nextHit.objectID);
         const ref = refs.current.get(nextHit.objectID);
-        ref?.requestPointerLock();
+        void ref?.requestPointerLock();
         ref?.focus();
       }
     },
@@ -278,6 +279,7 @@ export const SearchHits: React.FC = () => {
 };
 
 export const SearchMobileHits: React.FC<PropsWithChildren> = ({ children }) => {
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   const { hits } = useInfiniteHits<SearchRecord>();
   const search = useInstantSearch();
   const [expandEndpoints, setExpandEndpoints] = useState(false);
@@ -351,10 +353,8 @@ function filterHits(hits: SearchRecord[]) {
     ]),
   };
 
-  const pageHits = hits.filter((hit) => hitTypeMap["pages"].has(hit.type));
-  const endpointHits = hits.filter((hit) =>
-    hitTypeMap["endpoints"].has(hit.type)
-  );
+  const pageHits = hits.filter((hit) => hitTypeMap.pages.has(hit.type));
+  const endpointHits = hits.filter((hit) => hitTypeMap.endpoints.has(hit.type));
 
   return { pageHits, endpointHits };
 }

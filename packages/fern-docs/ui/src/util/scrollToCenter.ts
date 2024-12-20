@@ -5,7 +5,7 @@ let stopMeasuring = noop;
 export function scrollToCenter(
   scrollContainer: HTMLElement | null,
   target: HTMLElement | null,
-  smooth: boolean = true
+  smooth = true
 ): void {
   if (scrollContainer == null || target == null) {
     return;

@@ -13,6 +13,7 @@ export declare namespace useKeyboardCommand {
     preventDefault?: boolean;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   export type Return = void;
 }
 

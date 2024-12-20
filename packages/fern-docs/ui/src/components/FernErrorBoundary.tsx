@@ -46,7 +46,7 @@ export function FernErrorTag({
   useEffect(() => {
     if (error) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error(
         errorDescription ??
           "An unknown UI error occurred. This could be a critical user-facing error that should be investigated.",
@@ -63,7 +63,7 @@ export function FernErrorTag({
   if (showError || isLocalPreview) {
     return (
       <div className={clsx(className ?? "my-4")}>
-        <span className="t-danger inline-flex items-center gap-2 rounded-full bg-tag-danger px-2">
+        <span className="t-danger bg-tag-danger inline-flex items-center gap-2 rounded-full px-2">
           <WarningTriangle />
           <span>{stringifyError(error)}</span>
           {reset != null && (
@@ -110,7 +110,7 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
   useEffect(() => {
     if (refreshOnError) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error(
         "Fern Docs crashed. Reloading the page might fix the issue."
       );

@@ -27,7 +27,6 @@ export function getDocsDomainNode(req: NextApiRequest): string {
     }
   }
 
-  // eslint-disable-next-line no-console
   console.error(
     "Could not determine xFernHost from request. Returning buildwithfern.com."
   );

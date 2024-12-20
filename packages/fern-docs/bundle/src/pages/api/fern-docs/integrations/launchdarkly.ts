@@ -120,7 +120,6 @@ async function safeGetLaunchDarklySettings(
   try {
     return await getLaunchDarklySettings(domain);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return undefined;
   }

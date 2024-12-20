@@ -127,7 +127,6 @@ export default async function handler(
         ...e.usage,
       });
       e.warnings?.forEach((warning) => {
-        // eslint-disable-next-line no-console
         console.warn(warning);
       });
     },

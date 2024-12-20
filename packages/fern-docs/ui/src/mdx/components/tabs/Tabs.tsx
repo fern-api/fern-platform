@@ -32,7 +32,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
         {tabs.map(({ title, id }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
-              className="text-default scroll-mt-content-padded -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6 hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent"
+              className="text-default scroll-mt-content-padded hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
               id={id}
             >
               {title}

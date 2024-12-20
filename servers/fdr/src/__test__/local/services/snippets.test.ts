@@ -664,7 +664,7 @@ it("user not part of org", async () => {
     });
     console.log("bruh", JSON.stringify(response));
 
-    expect(response.ok === false).toBe(true);
+    expect(!response.ok).toBe(true);
 });
 
 it("snippets apiId not found", async () => {
@@ -705,7 +705,7 @@ it("snippets apiId not found", async () => {
             identifierOverride: undefined,
         },
     });
-    expect(response.ok === false).toBe(true);
+    expect(!response.ok).toBe(true);
 });
 
 it("get snippets (unauthenticated)", async () => {

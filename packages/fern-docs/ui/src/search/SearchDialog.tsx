@@ -42,7 +42,7 @@ const InternalSearchDialog = (): ReactNode => {
   if (!config.isAvailable) {
     if (isSearchDialogOpen) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error("Search dialog is null, when attempting to use search.");
     }
     return null;

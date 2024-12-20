@@ -78,7 +78,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(
   EMPTY_DOCS_STATE,
   (_, next) => {
-    if (next == null || next.baseUrl == null) {
+    if (next?.baseUrl == null) {
       return EMPTY_DOCS_STATE;
     }
     return next;

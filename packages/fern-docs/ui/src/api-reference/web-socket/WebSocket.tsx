@@ -44,7 +44,6 @@ export const WebSocket: FC<WebSocketProps> = (props) => {
   );
 
   if (!context) {
-    // eslint-disable-next-line no-console
     console.error("Could not create context for websocket", props.node);
     return null;
   }
@@ -135,7 +134,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
     <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
       <article
         className={cn(
-          "scroll-mt-content mx-auto max-w-content-width md:max-w-endpoint-width",
+          "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto",
           {
             "border-default mb-px border-b pb-20": !last,
           }
@@ -165,7 +164,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                 title={
                   <span className="inline-flex items-center gap-2">
                     {"Handshake"}
-                    <span className="inline-block rounded-full bg-tag-default p-1">
+                    <span className="bg-tag-default inline-block rounded-full p-1">
                       <Wifi className="t-muted size-icon" strokeWidth={1.5} />
                     </span>
                   </span>
@@ -299,7 +298,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                   title={
                     <span className="inline-flex items-center gap-2">
                       {"Send"}
-                      <span className="t-success inline-block rounded-full bg-tag-success p-1">
+                      <span className="t-success bg-tag-success inline-block rounded-full p-1">
                         <ArrowUp className="size-icon" />
                       </span>
                     </span>
@@ -331,7 +330,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                   title={
                     <span className="inline-flex items-center gap-2">
                       {"Receive"}
-                      <span className="t-accent-aaa inline-block rounded-full bg-tag-primary p-1">
+                      <span className="t-accent-aaa bg-tag-primary inline-block rounded-full p-1">
                         <ArrowDown className="size-icon" />
                       </span>
                     </span>
@@ -362,7 +361,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
           </section>
           <aside className="max-w-content-width">
             {
-              <div className="max-h-content scroll-mt-content sticky top-header-offset flex flex-col gap-6 py-8">
+              <div className="max-h-content scroll-mt-content top-header-offset sticky flex flex-col gap-6 py-8">
                 <TitledExample
                   title={"Handshake"}
                   actions={
@@ -432,7 +431,7 @@ function CardedSection({
       id={href}
       className="border-default divide-default -mx-4 divide-y rounded-xl border"
     >
-      <div className="space-y-4 rounded-t-[inherit] bg-tag-default-soft p-4 last:rounded-b-[inherit]">
+      <div className="bg-tag-default-soft space-y-4 rounded-t-[inherit] p-4 last:rounded-b-[inherit]">
         <FernAnchor href={href}>
           <h2 className="relative mt-0 flex items-center">{title}</h2>
         </FernAnchor>

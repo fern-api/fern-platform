@@ -21,7 +21,7 @@ const Markdown = dynamic(() =>
   import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
 );
 
-const ADD_ALL_KEY = "__FERN_ADD_ALL__" as const;
+const ADD_ALL_KEY = "__FERN_ADD_ALL__";
 
 interface PlaygroundObjectPropertyFormProps {
   id: string;
@@ -227,7 +227,7 @@ export const PlaygroundObjectPropertiesForm =
     return (
       <div
         className={cn("min-w-0 flex-1 shrink", {
-          "border-l border-border-default-soft pl-4": indent,
+          "border-border-default-soft border-l pl-4": indent,
         })}
       >
         {shownProperties.length > 0 && (

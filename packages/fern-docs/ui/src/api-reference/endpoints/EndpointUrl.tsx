@@ -47,7 +47,8 @@ export const EndpointUrl = React.forwardRef<
   parentRef
 ) {
   const ref = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
   useImperativeHandle(parentRef, () => ref.current!);
 
   const [isHovered, setIsHovered] = useState(false);
@@ -69,7 +70,7 @@ export const EndpointUrl = React.forwardRef<
               elements.push(
                 <span
                   key={`part-${i}-${j}`}
-                  className="whitespace-nowrap text-faded"
+                  className="text-faded whitespace-nowrap"
                 >
                   {value}
                 </span>
@@ -81,7 +82,7 @@ export const EndpointUrl = React.forwardRef<
           elements.push(
             <span
               key={`part-${i}`}
-              className="whitespace-nowrap rounded bg-accent-highlight px-1 text-accent"
+              className="bg-accent-highlight text-accent whitespace-nowrap rounded px-1"
             >
               :{pathParameter.value}
             </span>
@@ -103,7 +104,7 @@ export const EndpointUrl = React.forwardRef<
     }
     try {
       return new URL(url, "http://n").pathname;
-    } catch (error) {
+    } catch {
       return undefined;
     }
   }, [options, environmentId, baseUrl]);

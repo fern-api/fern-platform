@@ -1,4 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import { SidebarApiLeafNode } from "./SidebarApiLeafNode";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
@@ -17,7 +18,7 @@ export function SidebarApiPackageChild({
   node,
   depth,
   shallow,
-}: SidebarApiPackageChild): React.ReactElement {
+}: SidebarApiPackageChild): ReactNode {
   switch (node.type) {
     case "page":
       return <SidebarPageNode node={node} depth={depth} shallow={shallow} />;

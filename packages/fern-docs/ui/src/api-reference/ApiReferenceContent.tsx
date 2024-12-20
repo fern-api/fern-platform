@@ -44,8 +44,6 @@ const UnmemoizedApiReferenceContent: React.FC<ApiReferenceContentProps> = ({
         scrollToRoute(route);
       }, 150);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady]);
 
   const flattened = useMemo(() => {

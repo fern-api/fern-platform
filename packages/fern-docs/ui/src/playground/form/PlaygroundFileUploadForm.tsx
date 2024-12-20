@@ -18,8 +18,8 @@ export interface PlaygroundFileUploadFormProps {
   propertyKey: string;
   type: "file" | "files";
   isOptional?: boolean;
-  onValueChange: (value: ReadonlyArray<File> | undefined) => void;
-  value: ReadonlyArray<File> | undefined;
+  onValueChange: (value: readonly File[] | undefined) => void;
+  value: readonly File[] | undefined;
 }
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(

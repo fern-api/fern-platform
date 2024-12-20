@@ -18,9 +18,7 @@ interface PlaygroundMapFormProps {
   types: Record<string, TypeDefinition>;
 }
 
-function toKeyValuePairs(
-  value: unknown
-): Array<{ key: unknown; value: unknown }> {
+function toKeyValuePairs(value: unknown): { key: unknown; value: unknown }[] {
   if (isPlainObject(value)) {
     return Object.entries(value).map(([key, value]) => ({ key, value }));
   }
@@ -28,7 +26,7 @@ function toKeyValuePairs(
 }
 
 function fromKeyValuePairs(
-  keyValuePairs: Array<{ key: unknown; value: unknown }>
+  keyValuePairs: { key: unknown; value: unknown }[]
 ): unknown {
   return keyValuePairs.reduce<Record<string, unknown>>((acc, item) => {
     const key = unknownToString(item.key);
@@ -40,7 +38,7 @@ function fromKeyValuePairs(
 export const PlaygroundMapForm = memo<PlaygroundMapFormProps>((props) => {
   const { id, keyShape, valueShape, onChange, value, types } = props;
   const [internalState, setInternalState] = useState<
-    Array<{ key: unknown; value: unknown }>
+    { key: unknown; value: unknown }[]
   >(() => toKeyValuePairs(value));
 
   useEffect(() => {

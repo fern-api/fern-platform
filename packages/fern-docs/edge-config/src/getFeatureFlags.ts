@@ -208,7 +208,6 @@ export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
       grpcEndpoints,
     };
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
     return {
       isApiPlaygroundEnabled: isDevelopment(domain),

@@ -8,7 +8,6 @@ export function safeCall(action: () => void): void {
   try {
     return action();
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
   }
 }
@@ -66,7 +65,6 @@ export async function initializePosthog(
   const apiKey = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
 
   if (apiKey == null) {
-    // eslint-disable-next-line no-console
     console.warn("Posthog will NOT be initialized.");
     return;
   }

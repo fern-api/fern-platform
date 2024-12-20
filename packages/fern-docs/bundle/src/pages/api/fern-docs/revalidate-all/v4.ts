@@ -33,7 +33,6 @@ const handler: NextApiHandler = async (
       ? DEFAULT_BATCH_SIZE
       : parseInt(req.query.limit as string, 10);
   if (isNaN(limit) || limit < 0) {
-    // eslint-disable-next-line no-console
     console.error("Invalid limit:", req.query.limit);
     return res.status(400).json({ total: 0, results: [] });
   }
@@ -45,7 +44,6 @@ const handler: NextApiHandler = async (
   const offset =
     req.query.offset == null ? 0 : parseInt(req.query.offset as string, 10);
   if (isNaN(offset) || offset < 0) {
-    // eslint-disable-next-line no-console
     console.error("Invalid offset:", req.query.offset);
     return res.status(400).json({ total: 0, results: [] });
   }
@@ -85,7 +83,6 @@ const handler: NextApiHandler = async (
         }
       }
     } catch (err) {
-      // eslint-disable-next-line no-console
       console.error(err);
     }
 

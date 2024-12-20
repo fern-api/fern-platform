@@ -88,7 +88,6 @@ export default async function handler(
     });
 
     response.tooLarge.forEach(({ record, size }) => {
-      // eslint-disable-next-line no-console
       console.warn(
         `Could not index record because it was too large: https://${record.domain}${record.pathname}${record.hash ?? ""} (${String(size)} bytes)`
       );
@@ -101,7 +100,6 @@ export default async function handler(
       unindexable: response.tooLarge.length,
     });
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error(error);
 
     await track("algolia_reindex_error", {

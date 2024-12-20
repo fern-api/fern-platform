@@ -51,7 +51,7 @@ export function DismissableSidebar({
     <AnimatePresence>
       {showSidebar && (
         <motion.div
-          className="fixed inset-0 z-20 bg-background/50 lg:hidden"
+          className="bg-background/50 fixed inset-0 z-20 lg:hidden"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

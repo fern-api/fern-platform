@@ -195,7 +195,6 @@ function OAuthReferencedEndpointForm({
 
   if (context == null) {
     if (!isLoading) {
-      // eslint-disable-next-line no-console
       console.error(
         "Could not find OAuth endpoint for referenced endpoint",
         referencedEndpoint

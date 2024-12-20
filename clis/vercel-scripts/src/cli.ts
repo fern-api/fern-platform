@@ -267,7 +267,6 @@ void yargs(hideBin(process.argv))
         withGitRepoInfo: "false",
       });
 
-      // eslint-disable-next-line no-console
       console.log(JSON.stringify(deployment, null, 2));
 
       process.exit(0);

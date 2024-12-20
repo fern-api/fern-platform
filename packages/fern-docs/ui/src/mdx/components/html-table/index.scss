@@ -1,6 +1,6 @@
 @layer components {
   .fern-table-root {
-    @apply rounded-md border border-grayscale-a5 bg-white/70 dark:bg-grayscale-a2;
+    @apply border-grayscale-a5 dark:bg-grayscale-a2 rounded-md border bg-white/70;
     @apply overflow-hidden text-sm backdrop-blur-2xl;
 
     /* hack to make the table scrollable */
@@ -18,7 +18,7 @@
     td,
     th {
       @apply h-9 p-2 text-left;
-      @apply border-b border-grayscale-a5;
+      @apply border-grayscale-a5 border-b;
     }
 
     tbody > tr:last-child > td {
@@ -37,7 +37,7 @@
     border-bottom: 0;
 
     &::after {
-      @apply pointer-events-none absolute inset-0 bg-grayscale-a2 content-[''];
+      @apply bg-grayscale-a2 pointer-events-none absolute inset-0 content-[''];
     }
   }
 
@@ -46,7 +46,7 @@
 
     .fern-table th,
     .fern-table td {
-      @apply h-10 bg-background p-3;
+      @apply bg-background h-10 p-3;
     }
   }
 }

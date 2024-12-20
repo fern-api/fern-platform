@@ -22,7 +22,6 @@ export async function cwd(): Promise<string> {
 
   _cwd = cwd;
 
-  // eslint-disable-next-line no-console
   console.log("Detected monorepo root directory:", cwd);
 
   return cwd;

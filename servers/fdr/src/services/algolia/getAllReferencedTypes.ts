@@ -77,7 +77,7 @@ export function getAllReferencedTypes({
             case "object": {
                 return {
                     ...results,
-                    ...definition.shape.extends.reduce((base, value) => {
+                    ...definition.shape.extends.reduce<ReferencedTypes>((base, value) => {
                         return {
                             ...base,
                             ...getAllReferencedTypesFromReference({
@@ -85,13 +85,13 @@ export function getAllReferencedTypes({
                                 results,
                             }),
                         };
-                    }, {} as ReferencedTypes),
-                    ...definition.shape.properties.reduce((base, value) => {
+                    }, {}),
+                    ...definition.shape.properties.reduce<ReferencedTypes>((base, value) => {
                         return {
                             ...base,
                             ...getAllReferencedTypesFromReference({ reference: value.valueType, results }),
                         };
-                    }, {} as ReferencedTypes),
+                    }, {}),
                 };
             }
             case "alias":
@@ -99,7 +99,7 @@ export function getAllReferencedTypes({
             case "discriminatedUnion":
                 return {
                     ...results,
-                    ...definition.shape.variants.reduce((base, value) => {
+                    ...definition.shape.variants.reduce<ReferencedTypes>((base, value) => {
                         return {
                             ...base,
                             ...getAllReferencedTypesFromDefinition({
@@ -112,14 +112,14 @@ export function getAllReferencedTypes({
                                 results,
                             }),
                         };
-                    }, {} as ReferencedTypes),
+                    }, {}),
                 };
             case "enum":
                 return results;
             case "undiscriminatedUnion":
                 return {
                     ...results,
-                    ...definition.shape.variants.reduce((base, value) => {
+                    ...definition.shape.variants.reduce<ReferencedTypes>((base, value) => {
                         return {
                             ...base,
                             ...getAllReferencedTypesFromReference({
@@ -127,7 +127,7 @@ export function getAllReferencedTypes({
                                 results,
                             }),
                         };
-                    }, {} as ReferencedTypes),
+                    }, {}),
                 };
             default:
                 assertNever(definition.shape);

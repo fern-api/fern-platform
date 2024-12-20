@@ -114,7 +114,7 @@ export const DiscriminatedUnionVariant: React.FC<
       id={href}
       className={cn("scroll-mt-content-padded flex flex-col gap-2 py-3", {
         "px-3": !isRootTypeDefinition,
-        "rounded-sm outline outline-1 outline-offset-4 outline-accent":
+        "outline-accent rounded-sm outline outline-1 outline-offset-4":
           isActive,
       })}
     >

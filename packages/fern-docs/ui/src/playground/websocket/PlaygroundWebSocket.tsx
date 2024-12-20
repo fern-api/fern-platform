@@ -153,7 +153,6 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
       };
 
       socket.current.onerror = (event) => {
-        // eslint-disable-next-line no-console
         console.error(event);
       };
     });

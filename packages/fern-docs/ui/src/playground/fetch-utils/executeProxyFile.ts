@@ -27,7 +27,7 @@ export async function executeProxyFile(
     let body = await r.text();
     try {
       body = JSON.parse(body);
-    } catch (e) {
+    } catch {
       // ignore
     }
     return {

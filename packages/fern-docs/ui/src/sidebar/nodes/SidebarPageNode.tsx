@@ -1,4 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ReactNode } from "react";
 import { useIsSelectedSidebarNode } from "../../atoms";
 import { SidebarSlugLink } from "../SidebarLink";
 
@@ -16,7 +17,7 @@ export function SidebarPageNode({
   className,
   linkClassName,
   shallow,
-}: SidebarPageNodeProps): React.ReactElement | null {
+}: SidebarPageNodeProps): ReactNode {
   const selected = useIsSelectedSidebarNode(node.id);
 
   if (node.hidden && !selected) {

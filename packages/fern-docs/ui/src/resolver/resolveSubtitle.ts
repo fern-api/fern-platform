@@ -26,7 +26,7 @@ export async function resolveSubtitle(
     return undefined;
   } catch (e) {
     // TODO: sentry
-    // eslint-disable-next-line no-console
+
     console.error(
       "Error occurred while parsing frontmatter to get the subtitle (aka excerpt)",
       e

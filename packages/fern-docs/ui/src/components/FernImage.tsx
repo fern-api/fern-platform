@@ -31,7 +31,8 @@ export function FernImage({
         unoptimized,
         ...imgProps
       } = props;
-      return <img {...imgProps} src={url} />;
+      // eslint-disable-next-line @next/next/no-img-element
+      return <img {...imgProps} src={url} alt={props.alt ?? ""} />;
     },
     image: ({
       url,

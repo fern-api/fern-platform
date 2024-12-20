@@ -45,7 +45,7 @@ export const EndpointError = memo<EndpointError.Props>(
     return (
       <button
         className={cn(
-          "space flex flex-col items-start px-3 py-3 transition-colors hover:bg-tag-default-soft",
+          "space hover:bg-tag-default-soft flex flex-col items-start px-3 py-3 transition-colors",
           {
             "bg-tag-default-soft": isSelected,
           },
@@ -60,7 +60,7 @@ export const EndpointError = memo<EndpointError.Props>(
         onClick={onClick}
       >
         <div className="flex items-baseline space-x-2">
-          <div className="rounded-lg bg-tag-danger px-2 py-1 text-xs text-intent-danger">
+          <div className="bg-tag-danger text-intent-danger rounded-lg px-2 py-1 text-xs">
             {error.statusCode}
           </div>
           <div className="t-muted text-left text-xs">{error.name}</div>

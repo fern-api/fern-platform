@@ -486,7 +486,7 @@ export function useOpenPlayground(): (
 
           if (context == null) {
             // TODO: sentry
-            // eslint-disable-next-line no-console
+
             console.error(
               "Could not find endpoint for API playground selection state"
             );
@@ -506,7 +506,7 @@ export function useOpenPlayground(): (
 
           if (context == null) {
             // TODO: sentry
-            // eslint-disable-next-line no-console
+
             console.error(
               "Could not find websocket for API playground selection state"
             );

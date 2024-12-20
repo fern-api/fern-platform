@@ -129,7 +129,7 @@ export function useHighlightJsonLines(
       return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine + 1);
     } catch (error) {
       // TODO: sentry
-      // eslint-disable-next-line no-console
+
       console.error("Error thrown while highlighting json lines", error);
       return [];
     }

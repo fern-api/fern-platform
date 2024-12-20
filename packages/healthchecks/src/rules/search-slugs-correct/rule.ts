@@ -143,7 +143,6 @@ export async function sampleRecordsFromIndexSegement({
   for (const res of result.results) {
     if (isSearchHit(res) && res.hits != null) {
       for (const hit of res.hits) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const algoliaRecord = hit as any as FdrAPI.AlgoliaRecord;
         const slug = getSlugFromAlgoliaRecord(algoliaRecord);
         if (!slugs.has(slug)) {

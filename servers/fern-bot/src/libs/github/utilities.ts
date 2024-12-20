@@ -26,7 +26,6 @@ export async function cloneRepo(
     fernBotLoginName: string,
     fernBotLoginId: string,
 ): Promise<void> {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const installationToken = ((await octokit.auth({ type: "installation" })) as any).token;
 
     const authedCloneUrl = repository.clone_url.replace("https://", `https://x-access-token:${installationToken}@`);

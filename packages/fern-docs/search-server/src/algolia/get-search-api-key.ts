@@ -78,13 +78,10 @@ function generateSecuredApiKey({
 
   mergedRestrictions = Object.keys(mergedRestrictions)
     .sort()
-    .reduce(
-      (acc, key) => {
-        acc[key] = (mergedRestrictions as any)[key];
-        return acc;
-      },
-      {} as Record<string, unknown>
-    );
+    .reduce<Record<string, unknown>>((acc, key) => {
+      acc[key] = (mergedRestrictions as any)[key];
+      return acc;
+    }, {});
 
   const queryParameters = serializeQueryParameters(mergedRestrictions);
   return Buffer.from(

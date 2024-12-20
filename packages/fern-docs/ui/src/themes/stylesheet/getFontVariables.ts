@@ -32,7 +32,7 @@ function generateFontFace(
   let fontExtension: string;
   try {
     fontExtension = getFontExtension(new URL(file.url).pathname);
-  } catch (err) {
+  } catch (_) {
     fontExtension = getFontExtension(file.url);
   }
   const lines: string[] = [
@@ -62,9 +62,9 @@ export function getFontVariables(
     [CSS_VARIABLES.HEADING_FONT]: BODY_FONT_FALLBACK,
     [CSS_VARIABLES.CODE_FONT]: MONO_FONT_FALLBACK,
   };
-  let additionalCss: string = "";
+  let additionalCss = "";
 
-  if (typography?.bodyFont != null && typography.bodyFont.variants != null) {
+  if (typography?.bodyFont?.variants != null) {
     let setVariant = false;
     for (const variant of typography.bodyFont.variants) {
       const fontFace = generateFontFace(variant, typography.bodyFont, files);
@@ -80,10 +80,7 @@ export function getFontVariables(
     }
   }
 
-  if (
-    typography?.headingsFont != null &&
-    typography.headingsFont.variants != null
-  ) {
+  if (typography?.headingsFont?.variants != null) {
     let setVariant = false;
     for (const variant of typography.headingsFont.variants) {
       const fontFace = generateFontFace(
@@ -108,7 +105,7 @@ export function getFontVariables(
     }
   }
 
-  if (typography?.codeFont != null && typography.codeFont.variants != null) {
+  if (typography?.codeFont?.variants != null) {
     let setVariant = false;
     for (const variant of typography.codeFont.variants) {
       const fontFace = generateFontFace(variant, typography.codeFont, files);

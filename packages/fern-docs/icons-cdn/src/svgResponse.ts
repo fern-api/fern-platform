@@ -29,7 +29,7 @@ export function svgResponse(
     iconName: iconName.replace(".svg", "") as IconName,
   });
 
-  if (foundIcon == null || foundIcon.abstract[0] == null) {
+  if (foundIcon?.abstract[0] == null) {
     return new NextResponse(null, { status: 404 });
   }
 

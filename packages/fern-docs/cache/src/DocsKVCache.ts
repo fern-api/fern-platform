@@ -35,7 +35,6 @@ export class DocsDomainKVCache {
       const metadata = await kv.get<DocsMetadata>(key);
       return metadata ?? null;
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(`Could not get ${key} from cache`, e);
       return null;
     }
@@ -46,7 +45,6 @@ export class DocsDomainKVCache {
     try {
       await kv.set(key, metadata, { ex: 24 * 60 * 60 }); // expire after 1 day
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error(`Could not set ${key} in cache`, e);
     }
   }

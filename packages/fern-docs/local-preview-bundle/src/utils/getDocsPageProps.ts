@@ -91,7 +91,6 @@ export async function getDocsPageProps(
   });
 
   if (content == null) {
-    // eslint-disable-next-line no-console
     console.error(`Failed to resolve path for ${slug}`);
     return { notFound: true };
   }
