@@ -25,7 +25,7 @@ export default function GoogleTagManager(props: GTMParams): ReactNode {
 
         performance.mark("mark_feature_usage", {
             detail: {
-                feature: "next-third-parties-gtm",
+                feature: "fern-analytics-gtm",
             },
         });
     }, []);

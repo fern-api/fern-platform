@@ -26,7 +26,7 @@ export default function GoogleAnalytics(props: GAParams): ReactNode {
 
         performance.mark("mark_feature_usage", {
             detail: {
-                feature: "next-third-parties-ga",
+                feature: "fern-analytics-ga",
             },
         });
     }, []);
