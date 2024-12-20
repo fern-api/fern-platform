@@ -8,20 +8,20 @@ import { delay } from "./delay";
  *   (timer starts when withMinimumTime() is invoked)
  */
 export async function withMinimumTime<T>(
-    promise: Promise<T>,
-    ms: number,
-    { alwaysDelay = false }: { alwaysDelay?: boolean } = {},
+  promise: Promise<T>,
+  ms: number,
+  { alwaysDelay = false }: { alwaysDelay?: boolean } = {}
 ): Promise<T> {
-    const delayPromise = delay(ms);
+  const delayPromise = delay(ms);
 
-    try {
-        const result = await promise;
-        if (alwaysDelay) {
-            await delayPromise;
-        }
-        return result;
-    } catch (error) {
-        await delayPromise;
-        throw error;
+  try {
+    const result = await promise;
+    if (alwaysDelay) {
+      await delayPromise;
     }
+    return result;
+  } catch (error) {
+    await delayPromise;
+    throw error;
+  }
 }

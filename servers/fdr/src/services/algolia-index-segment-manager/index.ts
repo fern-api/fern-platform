@@ -1,4 +1,4 @@
 export {
-    AlgoliaIndexSegmentManagerServiceImpl,
-    type AlgoliaIndexSegmentManagerService,
+  AlgoliaIndexSegmentManagerServiceImpl,
+  type AlgoliaIndexSegmentManagerService,
 } from "./AlgoliaIndexSegmentManagerService";

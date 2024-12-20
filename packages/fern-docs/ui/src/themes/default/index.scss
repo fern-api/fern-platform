@@ -1,0 +1,195 @@
+.fern-theme-default.fern-container {
+  @apply relative z-0 flex min-h-screen flex-1 flex-col;
+
+  #fern-header {
+    @apply fixed inset-x-0 top-0 z-30;
+  }
+
+  .fern-header-container {
+    @apply h-header-height-real lg:h-header-height shadow-none;
+  }
+
+  .fern-header-container:is(.light *):not(.has-background-light),
+  .fern-header-container:is(.dark *):not(.has-background-dark) {
+    @apply backdrop-blur-lg lg:backdrop-blur;
+    @apply data-[border=show]:dark:shadow-header-dark transition-shadow;
+  }
+
+  .fern-header,
+  .fern-header-tabs {
+    @apply bg-header border-concealed relative border-b;
+  }
+
+  .fern-header-content {
+    @apply flex h-full shrink-0 items-center justify-between gap-4 px-4 md:px-6 lg:px-8;
+  }
+
+  .fern-header {
+    @apply h-header-height-real;
+  }
+
+  .fern-header-tabs {
+    @apply h-[44px] max-lg:hidden;
+
+    .fern-header-tabs-list {
+      @apply max-w-page-width mx-auto flex shrink-0 list-none items-center justify-start px-1 md:px-3 lg:px-5;
+    }
+
+    .fern-header-tab-button {
+      @apply relative flex h-full min-w-0 flex-1 select-none items-center justify-start p-3 text-base;
+      @apply lg:text-sm;
+
+      .fa-icon {
+        @apply size-3.5;
+      }
+    }
+
+    .fern-header-tab-button[data-state="active"] {
+      @apply t-accent;
+
+      .fa-icon {
+        @apply bg-accent;
+      }
+
+      &::after {
+        content: "";
+
+        @apply bg-accent absolute inset-x-3 bottom-0 h-px;
+      }
+    }
+
+    .fern-header-tab-button[data-state="inactive"] {
+      @apply t-muted;
+
+      .fa-icon {
+        @apply bg-text-muted;
+      }
+
+      &:hover {
+        @apply t-default;
+
+        .fa-icon {
+          @apply bg-text-default;
+        }
+      }
+    }
+  }
+
+  .fern-sidebar-container {
+    @apply bg-sidebar border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden h-fit lg:block;
+    @apply flex flex-col;
+
+    &.fern-sidebar-fixed {
+      @apply h-vh-minus-header fixed z-30 mt-0;
+    }
+
+    @supports (height: 100dvh) {
+      &.fern-sidebar-fixed {
+        @apply h-dvh-minus-header;
+      }
+    }
+
+    &:not(.fern-sidebar-fixed) {
+      @apply lg:pl-1;
+    }
+
+    .fern-sidebar-content {
+      @apply flex h-full w-full flex-col;
+    }
+  }
+
+  .fern-sidebar-container.dismissable {
+    @apply top-header-offset fixed bottom-0 left-0 mt-0;
+    @apply bg-background-translucent backdrop-blur-lg;
+    @apply sm:border-concealed sm:border-r;
+    @apply max-sm:inset-x-0 max-sm:w-full;
+    @apply h-vh-minus-header;
+  }
+
+  @supports (height: 100dvh) {
+    .fern-sidebar-container.dismissable {
+      @apply h-dvh-minus-header;
+    }
+  }
+
+  .fern-sidebar-container:not(.dismissable) {
+    @apply max-lg:hidden;
+  }
+
+  .fern-body {
+    @apply max-w-page-width relative mx-auto flex min-h-0 w-full min-w-0 flex-1;
+  }
+
+  .fern-main {
+    @apply mt-header-offset relative min-w-0 flex-1;
+  }
+
+  .fern-sidebar-content {
+    @apply mask-grad-y-6 px-4 pb-12;
+  }
+
+  .fern-endpoint-content {
+    @apply scroll-mt-content mx-4 md:mx-6 lg:mx-8;
+
+    .fern-endpoint-content-right {
+      @apply max-w-content-width;
+      @apply md:top-header-offset md:sticky md:flex-1 md:self-start;
+
+      // the 4rem is the same as the h-10 as the Header
+      @apply max-h-content flex py-8;
+    }
+  }
+
+  .fern-endpoint-code-snippets {
+    @apply grid w-full grid-rows-[repeat(auto-fit,minmax(0,min-content))] gap-6;
+  }
+
+  // guide and overview layouts are centered using .fern-layout-toc
+  .fern-sidebar-disabled:has(.fern-overview-layout, .fern-guide-layout):has(
+      .fern-layout-toc
+    ) {
+    @apply xl:pl-sidebar-width;
+  }
+
+  .fern-sidebar-fixed + .fern-main {
+    @apply lg:pl-sidebar-width;
+  }
+
+  .fern-guide-layout,
+  .fern-overview-layout,
+  .fern-page-layout,
+  .fern-reference-layout {
+    @apply relative px-4 md:px-6 lg:px-8;
+  }
+
+  .fern-reference-layout,
+  .fern-guide-layout,
+  .fern-overview-layout {
+    @apply flex flex-row-reverse justify-between;
+  }
+
+  .fern-guide-layout,
+  .fern-overview-layout {
+    @apply gap-8;
+
+    .fern-layout-content {
+      @apply mx-auto w-full min-w-0 pb-20 pt-8 xl:mx-auto;
+    }
+
+    &:has(.fern-layout-toc) {
+      @apply xl:pr-0;
+    }
+  }
+
+  .fern-guide-layout .fern-layout-content {
+    @apply lg:ml-0 xl:mx-auto;
+  }
+
+  .fern-page-layout {
+    @apply pb-20 pt-8;
+  }
+
+  .fern-layout-toc {
+    @apply h-content top-header-offset w-sidebar-width sticky shrink-0 max-xl:hidden;
+  }
+}

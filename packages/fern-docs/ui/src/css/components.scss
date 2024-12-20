@@ -1,0 +1,92 @@
+@layer components {
+  .fern-search-bar {
+    @apply cursor-pointer;
+    @apply t-muted border-default flex items-center rounded-lg border-none px-2.5 py-2 text-sm;
+    @apply bg-tag-default;
+    @apply hover:bg-tag-default-hover transition-[background,shadow];
+    @apply ring-default hover:ring-default ring-1 ring-inset;
+    @apply max-sm:h-10 max-sm:text-base;
+
+    .search-placeholder {
+      @apply inline-flex flex-1 items-center space-x-2.5;
+
+      span {
+        @apply text-faded;
+      }
+    }
+
+    .keyboard-shortcut-hint {
+      @apply t-muted size-icon-md shadow-card-light ring-card-border inline-flex items-center justify-center rounded font-mono text-xs leading-none ring-1;
+      @apply bg-card dark:shadow-card-dark;
+    }
+
+    &:hover .keyboard-shortcut-hint {
+      @apply ring-card-border;
+    }
+
+    &:disabled {
+      @apply bg-tag-default-soft cursor-default shadow-none;
+    }
+  }
+
+  .fern-mdx-link {
+    @apply t-accent-aaa decoration-accent-aa underline decoration-1 underline-offset-4 hover:decoration-2;
+    @apply font-semibold;
+
+    h1 &,
+    h2 &,
+    h3 &,
+    h4 &,
+    h5 &,
+    h6 & {
+      font-weight: inherit;
+    }
+
+    h1 &,
+    h2 &,
+    h3 & {
+      @apply t-accent; // WCAG AA
+    }
+
+    svg.external-link-icon {
+      @apply text-text-muted ml-0.5 inline-block size-3.5;
+    }
+
+    &:hover {
+      svg.external-link-icon {
+        @apply t-accent;
+      }
+    }
+  }
+
+  .fern-api-property {
+    @apply space-y-4 py-4;
+
+    p:last-child {
+      @apply mb-0;
+    }
+  }
+
+  .fern-api-property-header {
+    @apply flex items-baseline gap-2;
+  }
+
+  .fern-api-property-key {
+    @apply t-default font-mono text-sm font-semibold;
+  }
+
+  .fern-api-property-meta {
+    @apply t-muted inline-flex items-baseline gap-2 text-xs;
+  }
+
+  .custom-backdrop [data-rmiz-modal-overlay="visible"] {
+    @apply bg-text-default/20;
+  }
+
+  .fern-page-heading {
+    @apply my-0 inline-block leading-tight;
+
+    text-wrap: balance;
+    word-wrap: break-word;
+  }
+}
