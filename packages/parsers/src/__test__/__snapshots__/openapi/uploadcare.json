@@ -3537,6 +3537,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP auth. on HTTP or file copy errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -8876,6 +8877,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP Auth or webhook permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -9148,6 +9150,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP Auth or webhook permission or endpoint errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -9418,13 +9421,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-uploaded",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileInfected": {
       "description": "file.infected event payload",
@@ -9488,13 +9485,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-infected",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileStored": {
       "description": "file.stored event payload",
@@ -9558,13 +9549,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-stored",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileDeleted": {
       "description": "file.deleted event payload",
@@ -9628,13 +9613,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-deleted",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileInfoUpdated": {
       "description": "file.info_updated event payload",
@@ -9698,13 +9677,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-info-updated",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhook.updateWebhook": {
       "description": "Update webhook attributes.",
@@ -9855,6 +9828,7 @@
               }
             ]
           },
+          "description": "Webhook with ID {id} not found.",
           "name": "Not Found",
           "examples": [
             {
@@ -10071,6 +10045,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP Auth or webhook permission or endpoint errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -10452,6 +10427,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -10535,6 +10511,7 @@
               }
             ]
           },
+          "description": "Document with specified ID is not found.",
           "name": "Not Found",
           "examples": [
             {
@@ -10821,6 +10798,7 @@
               }
             ]
           },
+          "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -11171,6 +11149,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -11254,6 +11233,7 @@
               }
             ]
           },
+          "description": "Job with specified ID is not found.",
           "name": "Not Found",
           "examples": [
             {
@@ -11592,6 +11572,7 @@
               }
             ]
           },
+          "description": "Simple HTTP Auth or video conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -11957,6 +11938,7 @@
             "type": "undiscriminatedUnion",
             "variants": []
           },
+          "description": "Simple HTTP Auth or video conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -12040,6 +12022,7 @@
               }
             ]
           },
+          "description": "Job with specified ID is not found.",
           "name": "Not Found",
           "examples": [
             {

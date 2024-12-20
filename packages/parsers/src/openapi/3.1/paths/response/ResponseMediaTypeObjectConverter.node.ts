@@ -34,7 +34,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         protected streamingFormat: ResponseStreamingFormat | undefined,
         protected path: string,
         protected statusCode: number,
-        protected redocExamplesNode: RedocExampleConverterNode,
+        protected redocExamplesNode: RedocExampleConverterNode | undefined,
     ) {
         super(args);
         this.safeParse(contentType);

@@ -151,20 +151,23 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                   )
                 : undefined;
 
-        this.emptyExample = new ExampleObjectConverterNode(
-            {
-                input: undefined,
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: "example",
-            },
-            this.path,
-            200,
-            undefined,
-            undefined,
-            undefined,
-            redocExamplesNode,
-        );
+        this.emptyExample =
+            redocExamplesNode.codeSamples != null && redocExamplesNode.codeSamples.length > 0
+                ? new ExampleObjectConverterNode(
+                      {
+                          input: undefined,
+                          context: this.context,
+                          accessPath: this.accessPath,
+                          pathId: "example",
+                      },
+                      this.path,
+                      200,
+                      undefined,
+                      undefined,
+                      undefined,
+                      redocExamplesNode,
+                  )
+                : undefined;
 
         // TODO: pass appropriate status codes for examples
         let responseStatusCode = 200;

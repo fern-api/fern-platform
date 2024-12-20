@@ -13699,13 +13699,7 @@
           ]
         }
       ],
-      "examples": [
-        {
-          "path": "/v1/embed-jobs/{id}/cancel",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_.rerank": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
@@ -25985,6 +25979,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -26006,6 +26001,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -26027,6 +26023,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -26048,6 +26045,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -26069,6 +26067,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -26090,6 +26089,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -26227,6 +26227,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -26248,6 +26249,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -26269,6 +26271,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -26290,6 +26293,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -26311,6 +26315,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -26332,6 +26337,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -26531,6 +26537,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -26552,6 +26559,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -26573,6 +26581,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -26594,6 +26603,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -26615,6 +26625,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -26636,6 +26647,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -26946,6 +26958,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -26967,6 +26980,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -26988,6 +27002,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27009,6 +27024,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27030,6 +27046,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27051,6 +27068,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -27253,6 +27271,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -27274,6 +27293,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -27295,6 +27315,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27316,6 +27337,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27337,6 +27359,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27358,6 +27381,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -27559,6 +27583,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -27580,6 +27605,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -27601,6 +27627,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27622,6 +27649,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27643,6 +27671,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27664,6 +27693,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -27856,6 +27886,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -27877,6 +27908,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -27898,6 +27930,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27919,6 +27952,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27940,6 +27974,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27961,6 +27996,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {

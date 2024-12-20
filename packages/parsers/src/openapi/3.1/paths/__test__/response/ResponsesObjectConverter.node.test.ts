@@ -52,12 +52,16 @@ describe("ResponsesObjectConverterNode", () => {
             },
         };
 
-        const converter = new ResponsesObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
+        const converter = new ResponsesObjectConverterNode(
+            {
+                input,
+                context: mockContext,
+                accessPath: [],
+                pathId: "test",
+            },
+            "testpath",
+            undefined,
+        );
 
         const result = converter.convert();
         expect(result?.errors).toBeDefined();
