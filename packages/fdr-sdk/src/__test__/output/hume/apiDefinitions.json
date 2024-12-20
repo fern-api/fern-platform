@@ -85,17 +85,20 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:FilePage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FilePage"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/files",
@@ -186,40 +189,44 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "description": "List of Files with Attributes to be created",
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:FileWithAttributesInput"
+        "requests": [
+          {
+            "description": "List of Files with Attributes to be created",
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:FileWithAttributesInput"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:FileWithAttributes"
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:FileWithAttributes"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/files",
@@ -309,35 +316,39 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "file",
-                "key": "file",
-                "isOptional": false
-              },
-              {
-                "type": "file",
-                "key": "attributes",
-                "isOptional": true
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:FileWithAttributes"
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "file",
+                  "key": "file",
+                  "isOptional": false
+                },
+                {
+                  "type": "file",
+                  "key": "attributes",
+                  "isOptional": true
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileWithAttributes"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/registry/files/upload",
@@ -441,17 +452,20 @@
             "description": "Hume-generated ID of a File"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:FileWithAttributes"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileWithAttributes"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/files/id",
@@ -548,17 +562,20 @@
             "description": "Hume-generated ID of a File"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:Unit"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:Unit"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/files/id",
@@ -643,17 +660,20 @@
             "description": "New File name"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:FileWithAttributes"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileWithAttributes"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/files/id",
@@ -756,19 +776,22 @@
             "description": "Hume-generated ID of a File"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
               "value": {
-                "type": "string"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/files/id/predictions",
@@ -896,17 +919,20 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DatasetPage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DatasetPage"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets",
@@ -1003,49 +1029,53 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "name",
-                "description": "Name of the Dataset to be created",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "name",
+                  "description": "Name of the Dataset to be created",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
+                },
+                {
+                  "type": "file",
+                  "key": "feature_types",
+                  "isOptional": true
+                },
+                {
+                  "type": "file",
+                  "key": "labels_file",
+                  "isOptional": false
                 }
-              },
-              {
-                "type": "file",
-                "key": "feature_types",
-                "isOptional": true
-              },
-              {
-                "type": "file",
-                "key": "labels_file",
-                "isOptional": false
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnDataset"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnDataset"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets",
@@ -1144,17 +1174,20 @@
             "description": "Hume-generated ID of a Dataset"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnDataset"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnDataset"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/id",
@@ -1242,41 +1275,45 @@
             "description": "Hume-generated ID of a Dataset"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "file",
-                "key": "feature_types",
-                "isOptional": true
-              },
-              {
-                "type": "file",
-                "key": "labels_file",
-                "isOptional": false
-              }
-            ]
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "file",
+                  "key": "feature_types",
+                  "isOptional": true
+                },
+                {
+                  "type": "file",
+                  "key": "labels_file",
+                  "isOptional": false
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnDataset"
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnDataset"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/:id",
@@ -1375,17 +1412,20 @@
             "description": "Hume-generated ID of a Dataset"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:Unit"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:Unit"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/id",
@@ -1519,17 +1559,20 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DatasetVersionPage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DatasetVersionPage"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/id/versions",
@@ -1701,23 +1744,26 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:FilePage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:FilePage"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/id/files",
@@ -1820,17 +1866,20 @@
             "description": "Hume-generated ID of a Dataset version"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DatasetLabels"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DatasetLabels"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/version/id",
@@ -1971,23 +2020,26 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:FilePage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:FilePage"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/datasets/version/id/files",
@@ -2150,17 +2202,20 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ModelPage"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ModelPage"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/models",
@@ -2274,17 +2329,20 @@
             "description": "Hume-generated ID of a Model"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ExternalModel"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ExternalModel"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/models/id",
@@ -2401,17 +2459,20 @@
             "description": "New Model name"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ExternalModel"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ExternalModel"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/models/id",
@@ -2575,23 +2636,26 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ExternalModelVersion"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ExternalModelVersion"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/models/version",
@@ -2705,17 +2769,20 @@
             "description": "`True` Will show all assets owned by you and shared with you. `False` Will show only your assets. Default: `False`"
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ExternalModelVersion"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ExternalModelVersion"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/models/version/id",
@@ -2807,29 +2874,33 @@
             "description": "Hume-generated ID of a Model Version"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
               "value": {
-                "type": "string"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ExternalModelVersion"
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ExternalModelVersion"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/models/version/id",
@@ -2906,27 +2977,31 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json; charset=utf-8",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:TrainingBaseRequest"
+        "requests": [
+          {
+            "contentType": "application/json; charset=utf-8",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:TrainingBaseRequest"
+              }
             }
           }
-        },
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:JobId"
+        ],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:JobId"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/v0/batch/jobs/tl/train",
@@ -2986,27 +3061,31 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json; charset=utf-8",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:TlInferenceBaseRequest"
+        "requests": [
+          {
+            "contentType": "application/json; charset=utf-8",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:TlInferenceBaseRequest"
+              }
             }
           }
-        },
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:JobId"
+        ],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:JobId"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/registry/v0/batch/jobs/tl/inference",
@@ -11172,23 +11251,26 @@
             "description": "Specify the order in which to sort the jobs. Defaults to descending order.\n\n- `asc`: Sort in ascending order (chronological, with the oldest records first).\n\n- `desc`: Sort in descending order (reverse-chronological, with the newest records first)."
           }
         ],
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_batch:UnionJob"
+        "requests": [],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_batch:UnionJob"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/batch/jobs",
@@ -11298,27 +11380,31 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_batch:InferenceBaseRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_batch:InferenceBaseRequest"
+              }
             }
           }
-        },
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_batch:JobId"
+        ],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_batch:JobId"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/batch/jobs",
@@ -11409,17 +11495,20 @@
             "description": "The unique identifier for the job."
           }
         ],
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_batch:UnionJob"
+        "requests": [],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_batch:UnionJob"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/batch/jobs/job_id",
@@ -11547,23 +11636,26 @@
             "description": "The unique identifier for the job."
           }
         ],
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_batch:UnionPredictResult"
+        "requests": [],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_batch:UnionPredictResult"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/batch/jobs/job_id/predictions",
@@ -11880,13 +11972,16 @@
             "description": "The unique identifier for the job."
           }
         ],
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "fileDownload"
+        "requests": [],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "fileDownload"
+            }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v0/batch/jobs/id/artifacts",
@@ -11935,48 +12030,52 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "json",
-                "description": "Stringified JSON object containing the inference job configuration.",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_batch:InferenceBaseRequest"
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "json",
+                  "description": "Stringified JSON object containing the inference job configuration.",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_batch:InferenceBaseRequest"
+                        }
                       }
                     }
                   }
+                },
+                {
+                  "type": "files",
+                  "key": "file",
+                  "isOptional": false
                 }
-              },
-              {
-                "type": "files",
-                "key": "file",
-                "isOptional": false
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_batch:JobId"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_batch:JobId"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v0/batch/jobs",
@@ -19419,17 +19518,20 @@
             "description": "Filter to only include tools with name."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedUserDefinedTools"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedUserDefinedTools"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -19587,115 +19689,119 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Name applied to all versions of a particular Tool."
-              },
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "Name applied to all versions of a particular Tool."
                 },
-                "description": "An optional description of the Tool version."
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "An optional description of what the Tool does, used by the supplemental LLM to choose when and how to call the function."
-              },
-              {
-                "key": "parameters",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Stringified JSON defining the parameters used by this version of the Tool.\n\nThese parameters define the inputs needed for the Tool’s execution, including the expected data type and description for each input field. Structured as a stringified JSON schema, this format ensures the Tool receives data in the expected format."
-              },
-              {
-                "key": "fallback_content",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An optional description of the Tool version."
                 },
-                "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the Tool errors."
-              }
-            ]
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optional description of what the Tool does, used by the supplemental LLM to choose when and how to call the function."
+                },
+                {
+                  "key": "parameters",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Stringified JSON defining the parameters used by this version of the Tool.\n\nThese parameters define the inputs needed for the Tool’s execution, including the expected data type and description for each input field. Structured as a stringified JSON schema, this format ensures the Tool receives data in the expected format."
+                },
+                {
+                  "key": "fallback_content",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the Tool errors."
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnUserDefinedTool"
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnUserDefinedTool"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -19923,17 +20029,20 @@
             "description": "By default, `restrict_to_most_recent` is set to true, returning only the latest version of each tool. To include all versions of each tool in the list, set `restrict_to_most_recent` to false."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedUserDefinedTools"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedUserDefinedTools"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -20098,102 +20207,106 @@
             "description": "Identifier for a Tool. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "An optional description of the Tool version."
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "An optional description of what the Tool does, used by the supplemental LLM to choose when and how to call the function."
-              },
-              {
-                "key": "parameters",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Stringified JSON defining the parameters used by this version of the Tool.\n\nThese parameters define the inputs needed for the Tool’s execution, including the expected data type and description for each input field. Structured as a stringified JSON schema, this format ensures the Tool receives data in the expected format."
-              },
-              {
-                "key": "fallback_content",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An optional description of the Tool version."
                 },
-                "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the Tool errors."
-              }
-            ]
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optional description of what the Tool does, used by the supplemental LLM to choose when and how to call the function."
+                },
+                {
+                  "key": "parameters",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Stringified JSON defining the parameters used by this version of the Tool.\n\nThese parameters define the inputs needed for the Tool’s execution, including the expected data type and description for each input field. Structured as a stringified JSON schema, this format ensures the Tool receives data in the expected format."
+                },
+                {
+                  "key": "fallback_content",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optional text passed to the supplemental LLM in place of the tool call result. The LLM then uses this text to generate a response back to the user, ensuring continuity in the conversation if the Tool errors."
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnUserDefinedTool"
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnUserDefinedTool"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -20363,6 +20476,8 @@
             "description": "Identifier for a Tool. Formatted as a UUID."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -20501,28 +20616,31 @@
             "description": "Identifier for a Tool. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "Name applied to all versions of a particular Tool."
-              }
-            ]
+                  },
+                  "description": "Name applied to all versions of a particular Tool."
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -20694,23 +20812,26 @@
             "description": "Version number for a Tool.\n\nTools, Configs, Custom Voices, and Prompts are versioned. This versioning system supports iterative development, allowing you to progressively refine tools and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Tool. Each update to the Tool increments its version number."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnUserDefinedTool"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnUserDefinedTool"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -20888,6 +21009,8 @@
             "description": "Version number for a Tool.\n\nTools, Configs, Custom Voices, and Prompts are versioned. This versioning system supports iterative development, allowing you to progressively refine tools and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Tool. Each update to the Tool increments its version number."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -21049,51 +21172,55 @@
             "description": "Version number for a Tool.\n\nTools, Configs, Custom Voices, and Prompts are versioned. This versioning system supports iterative development, allowing you to progressively refine tools and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Tool. Each update to the Tool increments its version number."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "An optional description of the Tool version."
-              }
-            ]
+                  },
+                  "description": "An optional description of the Tool version."
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnUserDefinedTool"
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnUserDefinedTool"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -21320,17 +21447,20 @@
             "description": "Filter to only include prompts with name."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedPrompts"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedPrompts"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -21482,77 +21612,81 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Name applied to all versions of a particular Prompt."
-              },
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Name applied to all versions of a particular Prompt."
+                },
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An optional description of the Prompt version."
                 },
-                "description": "An optional description of the Prompt version."
-              },
-              {
-                "key": "text",
-                "valueShape": {
+                {
+                  "key": "text",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Instructions used to shape EVI’s behavior, responses, and style.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting)."
+                }
+              ]
+            }
+          }
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
+                    "type": "id",
+                    "id": "type_:ReturnPrompt"
                   }
-                },
-                "description": "Instructions used to shape EVI’s behavior, responses, and style.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting)."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnPrompt"
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -21773,17 +21907,20 @@
             "description": "By default, `restrict_to_most_recent` is set to true, returning only the latest version of each prompt. To include all versions of each prompt in the list, set `restrict_to_most_recent` to false."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedPrompts"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedPrompts"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -21945,64 +22082,68 @@
             "description": "Identifier for a Prompt. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An optional description of the Prompt version."
                 },
-                "description": "An optional description of the Prompt version."
-              },
-              {
-                "key": "text",
-                "valueShape": {
+                {
+                  "key": "text",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Instructions used to shape EVI’s behavior, responses, and style for this version of the Prompt.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting)."
+                }
+              ]
+            }
+          }
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
+                    "type": "id",
+                    "id": "type_:ReturnPrompt"
                   }
-                },
-                "description": "Instructions used to shape EVI’s behavior, responses, and style for this version of the Prompt.\n\nYou can use the Prompt to define a specific goal or role for EVI, specifying how it should act or what it should focus on during the conversation. For example, EVI can be instructed to act as a customer support representative, a fitness coach, or a travel advisor, each with its own set of behaviors and response styles.\n\nFor help writing a system prompt, see our [Prompting Guide](/docs/empathic-voice-interface-evi/prompting)."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnPrompt"
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -22167,6 +22308,8 @@
             "description": "Identifier for a Prompt. Formatted as a UUID."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -22305,28 +22448,31 @@
             "description": "Identifier for a Prompt. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "Name applied to all versions of a particular Prompt."
-              }
-            ]
+                  },
+                  "description": "Name applied to all versions of a particular Prompt."
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -22498,23 +22644,26 @@
             "description": "Version number for a Prompt.\n\nPrompts, Configs, Custom Voices, and Tools are versioned. This versioning system supports iterative development, allowing you to progressively refine prompts and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Prompt. Each update to the Prompt increments its version number."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnPrompt"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnPrompt"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -22689,6 +22838,8 @@
             "description": "Version number for a Prompt.\n\nPrompts, Configs, Custom Voices, and Tools are versioned. This versioning system supports iterative development, allowing you to progressively refine prompts and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Prompt. Each update to the Prompt increments its version number."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -22850,51 +23001,55 @@
             "description": "Version number for a Prompt.\n\nPrompts, Configs, Custom Voices, and Tools are versioned. This versioning system supports iterative development, allowing you to progressively refine prompts and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Prompt. Each update to the Prompt increments its version number."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "An optional description of the Prompt version."
-              }
-            ]
+                  },
+                  "description": "An optional description of the Prompt version."
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:ReturnPrompt"
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:ReturnPrompt"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -23098,17 +23253,20 @@
             "description": "Filter to only include custom voices with name."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedCustomVoices"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedCustomVoices"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -23247,27 +23405,31 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PostedCustomVoice"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PostedCustomVoice"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnCustomVoice"
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnCustomVoice"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -23443,17 +23605,20 @@
             "description": "Identifier for a Custom Voice. Formatted as a UUID."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnCustomVoice"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnCustomVoice"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -23617,27 +23782,31 @@
             "description": "Identifier for a Custom Voice. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PostedCustomVoice"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PostedCustomVoice"
+              }
             }
           }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnCustomVoice"
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnCustomVoice"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -23817,6 +23986,8 @@
             "description": "Identifier for a Custom Voice. Formatted as a UUID."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -23955,28 +24126,31 @@
             "description": "Identifier for a Custom Voice. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The name of the Custom Voice. Maximum length of 75 characters. Will be converted to all-uppercase. (e.g., \"sample voice\" becomes \"SAMPLE VOICE\")"
-              }
-            ]
+                  },
+                  "description": "The name of the Custom Voice. Maximum length of 75 characters. Will be converted to all-uppercase. (e.g., \"sample voice\" becomes \"SAMPLE VOICE\")"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -24159,17 +24333,20 @@
             "description": "Filter to only include configs with this name."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedConfigs"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedConfigs"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -24380,228 +24557,232 @@
             "baseUrl": "https://api.hume.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "evi_version",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "evi_version",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Specifies the EVI version to use. Use `\"1\"` for version 1, or `\"2\"` for the latest enhanced version. For a detailed comparison of the two versions, refer to our [guide](/docs/empathic-voice-interface-evi/evi-2)."
-              },
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Name applied to all versions of a particular Config."
-              },
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Specifies the EVI version to use. Use `\"1\"` for version 1, or `\"2\"` for the latest enhanced version. For a detailed comparison of the two versions, refer to our [guide](/docs/empathic-voice-interface-evi/evi-2)."
+                },
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Name applied to all versions of a particular Config."
+                },
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optional description of the Config version."
+                },
+                {
+                  "key": "prompt",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedConfigPromptSpec"
                         }
                       }
                     }
                   }
                 },
-                "description": "An optional description of the Config version."
-              },
-              {
-                "key": "prompt",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedConfigPromptSpec"
+                {
+                  "key": "voice",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedVoice"
+                        }
                       }
                     }
-                  }
-                }
-              },
-              {
-                "key": "voice",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedVoice"
-                      }
-                    }
-                  }
+                  },
+                  "description": "A voice specification associated with this Config."
                 },
-                "description": "A voice specification associated with this Config."
-              },
-              {
-                "key": "language_model",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedLanguageModel"
+                {
+                  "key": "language_model",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedLanguageModel"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The supplemental language model associated with this Config.\n\nThis model is used to generate longer, more detailed responses from EVI. Choosing an appropriate supplemental language model for your use case is crucial for generating fast, high-quality responses from EVI."
                 },
-                "description": "The supplemental language model associated with this Config.\n\nThis model is used to generate longer, more detailed responses from EVI. Choosing an appropriate supplemental language model for your use case is crucial for generating fast, high-quality responses from EVI."
-              },
-              {
-                "key": "ellm_model",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedEllmModel"
+                {
+                  "key": "ellm_model",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedEllmModel"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The eLLM setup associated with this Config.\n\nHume's eLLM (empathic Large Language Model) is a multimodal language model that takes into account both expression measures and language. The eLLM generates short, empathic language responses and guides text-to-speech (TTS) prosody."
                 },
-                "description": "The eLLM setup associated with this Config.\n\nHume's eLLM (empathic Large Language Model) is a multimodal language model that takes into account both expression measures and language. The eLLM generates short, empathic language responses and guides text-to-speech (TTS) prosody."
-              },
-              {
-                "key": "tools",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "optional",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "type_:PostedUserDefinedToolSpec"
+                {
+                  "key": "tools",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "optional",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "id",
+                                  "id": "type_:PostedUserDefinedToolSpec"
+                                }
                               }
                             }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "List of user-defined tools associated with this Config."
                 },
-                "description": "List of user-defined tools associated with this Config."
-              },
-              {
-                "key": "builtin_tools",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "optional",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "type_:PostedBuiltinTool"
+                {
+                  "key": "builtin_tools",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "optional",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "id",
+                                  "id": "type_:PostedBuiltinTool"
+                                }
                               }
                             }
                           }
                         }
                       }
                     }
+                  },
+                  "description": "List of built-in tools associated with this Config."
+                },
+                {
+                  "key": "event_messages",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedEventMessageSpecs"
+                        }
+                      }
+                    }
                   }
                 },
-                "description": "List of built-in tools associated with this Config."
-              },
-              {
-                "key": "event_messages",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedEventMessageSpecs"
+                {
+                  "key": "timeouts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedTimeoutSpecs"
+                        }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "timeouts",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedTimeoutSpecs"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnConfig"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnConfig"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -24919,17 +25100,20 @@
             "description": "By default, `restrict_to_most_recent` is set to true, returning only the latest version of each config. To include all versions of each config in the list, set `restrict_to_most_recent` to false."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedConfigs"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedConfigs"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -25160,215 +25344,219 @@
             "description": "Identifier for a Config. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "evi_version",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "evi_version",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The version of the EVI used with this config."
-              },
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The version of the EVI used with this config."
+                },
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optional description of the Config version."
+                },
+                {
+                  "key": "prompt",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedConfigPromptSpec"
                         }
                       }
                     }
                   }
                 },
-                "description": "An optional description of the Config version."
-              },
-              {
-                "key": "prompt",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedConfigPromptSpec"
+                {
+                  "key": "voice",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedVoice"
+                        }
                       }
                     }
-                  }
-                }
-              },
-              {
-                "key": "voice",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedVoice"
-                      }
-                    }
-                  }
+                  },
+                  "description": "A voice specification associated with this Config version."
                 },
-                "description": "A voice specification associated with this Config version."
-              },
-              {
-                "key": "language_model",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedLanguageModel"
+                {
+                  "key": "language_model",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedLanguageModel"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The supplemental language model associated with this Config version.\n\nThis model is used to generate longer, more detailed responses from EVI. Choosing an appropriate supplemental language model for your use case is crucial for generating fast, high-quality responses from EVI."
                 },
-                "description": "The supplemental language model associated with this Config version.\n\nThis model is used to generate longer, more detailed responses from EVI. Choosing an appropriate supplemental language model for your use case is crucial for generating fast, high-quality responses from EVI."
-              },
-              {
-                "key": "ellm_model",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedEllmModel"
+                {
+                  "key": "ellm_model",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedEllmModel"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The eLLM setup associated with this Config version.\n\nHume's eLLM (empathic Large Language Model) is a multimodal language model that takes into account both expression measures and language. The eLLM generates short, empathic language responses and guides text-to-speech (TTS) prosody."
                 },
-                "description": "The eLLM setup associated with this Config version.\n\nHume's eLLM (empathic Large Language Model) is a multimodal language model that takes into account both expression measures and language. The eLLM generates short, empathic language responses and guides text-to-speech (TTS) prosody."
-              },
-              {
-                "key": "tools",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "optional",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "type_:PostedUserDefinedToolSpec"
+                {
+                  "key": "tools",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "optional",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "id",
+                                  "id": "type_:PostedUserDefinedToolSpec"
+                                }
                               }
                             }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "List of user-defined tools associated with this Config version."
                 },
-                "description": "List of user-defined tools associated with this Config version."
-              },
-              {
-                "key": "builtin_tools",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "optional",
-                            "shape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "id",
-                                "id": "type_:PostedBuiltinTool"
+                {
+                  "key": "builtin_tools",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "optional",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "id",
+                                  "id": "type_:PostedBuiltinTool"
+                                }
                               }
                             }
                           }
                         }
                       }
                     }
+                  },
+                  "description": "List of built-in tools associated with this Config version."
+                },
+                {
+                  "key": "event_messages",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedEventMessageSpecs"
+                        }
+                      }
+                    }
                   }
                 },
-                "description": "List of built-in tools associated with this Config version."
-              },
-              {
-                "key": "event_messages",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedEventMessageSpecs"
+                {
+                  "key": "timeouts",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PostedTimeoutSpecs"
+                        }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "timeouts",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PostedTimeoutSpecs"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnConfig"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnConfig"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -25632,6 +25820,8 @@
             "description": "Identifier for a Config. Formatted as a UUID."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -25770,28 +25960,31 @@
             "description": "Identifier for a Config. Formatted as a UUID."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "Name applied to all versions of a particular Config."
-              }
-            ]
+                  },
+                  "description": "Name applied to all versions of a particular Config."
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -25963,17 +26156,20 @@
             "description": "Version number for a Config.\n\nConfigs, Prompts, Custom Voices, and Tools are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Config. Each update to the Config increments its version number."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnConfig"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnConfig"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -26217,6 +26413,8 @@
             "description": "Version number for a Config.\n\nConfigs, Prompts, Custom Voices, and Tools are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Config. Each update to the Config increments its version number."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "description": "Bad Request",
@@ -26378,45 +26576,49 @@
             "description": "Version number for a Config.\n\nConfigs, Prompts, Custom Voices, and Tools are versioned. This versioning system supports iterative development, allowing you to progressively refine configurations and revert to previous versions if needed.\n\nVersion numbers are integer values representing different iterations of the Config. Each update to the Config increments its version number."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "version_description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "version_description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "An optional description of the Config version."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnConfig"
+                  },
+                  "description": "An optional description of the Config version."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnConfig"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -26690,17 +26892,20 @@
             "description": "Specifies the sorting order of the results based on their creation date. Set to true for ascending order (chronological, with the oldest records first) and false for descending order (reverse-chronological, with the newest records first). Defaults to true."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedChats"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedChats"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -26926,17 +27131,20 @@
             "description": "Specifies the sorting order of the results based on their creation date. Set to true for ascending order (chronological, with the oldest records first) and false for descending order (reverse-chronological, with the newest records first). Defaults to true."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnChatPagedEvents"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnChatPagedEvents"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -27137,17 +27345,20 @@
             "description": "Identifier for a chat. Formatted as a UUID."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnChatAudioReconstruction"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnChatAudioReconstruction"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -27358,17 +27569,20 @@
             "description": "The unique identifier for an EVI configuration.\n\nFilter Chat Groups to only include Chats that used this `config_id` in their most recent Chat."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnPagedChatGroups"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnPagedChatGroups"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -27590,17 +27804,20 @@
             "description": "Specifies the sorting order of the results based on their creation date. Set to true for ascending order (chronological, with the oldest records first) and false for descending order (reverse-chronological, with the newest records first). Defaults to true."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnChatGroupPagedChats"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnChatGroupPagedChats"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -27834,17 +28051,20 @@
             "description": "Specifies the sorting order of the results based on their creation date. Set to true for ascending order (chronological, with the oldest records first) and false for descending order (reverse-chronological, with the newest records first). Defaults to true."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnChatGroupPagedEvents"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnChatGroupPagedEvents"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -28096,17 +28316,20 @@
             "description": "Boolean to indicate if the results should be paginated in chronological order or reverse-chronological order. Defaults to true."
           }
         ],
-        "response": {
-          "description": "Success",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ReturnChatGroupPagedAudioReconstructions"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Success",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ReturnChatGroupPagedAudioReconstructions"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",

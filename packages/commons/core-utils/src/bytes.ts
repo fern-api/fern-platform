@@ -1,5 +1,5 @@
 export function measureBytes(str: string): number {
-    return new TextEncoder().encode(str).length;
+  return new TextEncoder().encode(str).length;
 }
 
 /**
@@ -9,18 +9,18 @@ export function measureBytes(str: string): number {
  * @returns An array of strings, each of the specified byte size.
  */
 export function chunkToBytes(str: string, byteSize: number): string[] {
-    const encoder = new TextEncoder();
+  const encoder = new TextEncoder();
 
-    // TODO: what if the string isn't utf8?
-    const utf8Bytes = encoder.encode(str);
-    const numChunks = Math.ceil(utf8Bytes.length / byteSize);
-    const chunks = new Array(numChunks);
+  // TODO: what if the string isn't utf8?
+  const utf8Bytes = encoder.encode(str);
+  const numChunks = Math.ceil(utf8Bytes.length / byteSize);
+  const chunks = new Array(numChunks);
 
-    for (let i = 0, o = 0; i < numChunks; ++i, o += byteSize) {
-        chunks[i] = new TextDecoder().decode(utf8Bytes.slice(o, o + byteSize));
-    }
+  for (let i = 0, o = 0; i < numChunks; ++i, o += byteSize) {
+    chunks[i] = new TextDecoder().decode(utf8Bytes.slice(o, o + byteSize));
+  }
 
-    return chunks;
+  return chunks;
 }
 
 /**
@@ -30,8 +30,8 @@ export function chunkToBytes(str: string, byteSize: number): string[] {
  * @returns The truncated string.
  */
 export function truncateToBytes(str: string, byteSize: number): string {
-    const encoder = new TextEncoder();
-    const utf8Bytes = encoder.encode(str);
-    const truncatedBytes = utf8Bytes.slice(0, byteSize);
-    return new TextDecoder().decode(truncatedBytes);
+  const encoder = new TextEncoder();
+  const utf8Bytes = encoder.encode(str);
+  const truncatedBytes = utf8Bytes.slice(0, byteSize);
+  return new TextDecoder().decode(truncatedBytes);
 }

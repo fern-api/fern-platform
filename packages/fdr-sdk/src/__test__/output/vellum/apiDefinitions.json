@@ -24,214 +24,218 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PromptDeploymentInputRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "A list consisting of the Prompt Deployment's input variables and their values."
-              },
-              {
-                "key": "prompt_deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:PromptDeploymentInputRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "A list consisting of the Prompt Deployment's input variables and their values."
                 },
-                "description": "The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name."
-              },
-              {
-                "key": "prompt_deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "prompt_deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The unique name of the Prompt Deployment. Must provide either this or prompt_deployment_id."
-              },
-              {
-                "key": "release_tag",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally specify a release tag if you want to pin to a specific release of the Prompt Deployment"
-              },
-              {
-                "key": "external_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally include a unique identifier for tracking purposes. Must be unique within a given Prompt Deployment."
-              },
-              {
-                "key": "expand_meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PromptDeploymentExpandMetaRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "An optionally specified configuration used to opt in to including additional metadata about this prompt execution in the API response. Corresponding values will be returned under the `meta` key of the API response."
-              },
-              {
-                "key": "raw_overrides",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:RawPromptExecutionOverridesRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "Overrides for the raw API request sent to the model host. Combined with `expand_raw`, it can be used to access new features from models."
-              },
-              {
-                "key": "expand_raw",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name."
+                },
+                {
+                  "key": "prompt_deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The unique name of the Prompt Deployment. Must provide either this or prompt_deployment_id."
+                },
+                {
+                  "key": "release_tag",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify a release tag if you want to pin to a specific release of the Prompt Deployment"
+                },
+                {
+                  "key": "external_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally include a unique identifier for tracking purposes. Must be unique within a given Prompt Deployment."
+                },
+                {
+                  "key": "expand_meta",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PromptDeploymentExpandMetaRequest"
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optionally specified configuration used to opt in to including additional metadata about this prompt execution in the API response. Corresponding values will be returned under the `meta` key of the API response."
+                },
+                {
+                  "key": "raw_overrides",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:RawPromptExecutionOverridesRequest"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Overrides for the raw API request sent to the model host. Combined with `expand_raw`, it can be used to access new features from models."
+                },
+                {
+                  "key": "expand_raw",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "A list of keys whose values you'd like to directly return from the JSON response of the model provider. Useful if you need lower-level info returned by model providers that Vellum would otherwise omit. Corresponding key/value pairs will be returned under the `raw` key of the API response."
                 },
-                "description": "A list of keys whose values you'd like to directly return from the JSON response of the model provider. Useful if you need lower-level info returned by model providers that Vellum would otherwise omit. Corresponding key/value pairs will be returned under the `raw` key of the API response."
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
-                          }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ExecutePromptResponse"
+                  },
+                  "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ExecutePromptResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "",
@@ -618,217 +622,221 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PromptDeploymentInputRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "A list consisting of the Prompt Deployment's input variables and their values."
-              },
-              {
-                "key": "prompt_deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:PromptDeploymentInputRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "A list consisting of the Prompt Deployment's input variables and their values."
                 },
-                "description": "The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name."
-              },
-              {
-                "key": "prompt_deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "prompt_deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The unique name of the Prompt Deployment. Must provide either this or prompt_deployment_id."
-              },
-              {
-                "key": "release_tag",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally specify a release tag if you want to pin to a specific release of the Prompt Deployment"
-              },
-              {
-                "key": "external_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally include a unique identifier for tracking purposes. Must be unique within a given Prompt Deployment."
-              },
-              {
-                "key": "expand_meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PromptDeploymentExpandMetaRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "An optionally specified configuration used to opt in to including additional metadata about this prompt execution in the API response. Corresponding values will be returned under the `meta` key of the API response."
-              },
-              {
-                "key": "raw_overrides",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:RawPromptExecutionOverridesRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "Overrides for the raw API request sent to the model host. Combined with `expand_raw`, it can be used to access new features from models."
-              },
-              {
-                "key": "expand_raw",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The ID of the Prompt Deployment. Must provide either this or prompt_deployment_name."
+                },
+                {
+                  "key": "prompt_deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The unique name of the Prompt Deployment. Must provide either this or prompt_deployment_id."
+                },
+                {
+                  "key": "release_tag",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify a release tag if you want to pin to a specific release of the Prompt Deployment"
+                },
+                {
+                  "key": "external_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally include a unique identifier for tracking purposes. Must be unique within a given Prompt Deployment."
+                },
+                {
+                  "key": "expand_meta",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PromptDeploymentExpandMetaRequest"
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optionally specified configuration used to opt in to including additional metadata about this prompt execution in the API response. Corresponding values will be returned under the `meta` key of the API response."
+                },
+                {
+                  "key": "raw_overrides",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:RawPromptExecutionOverridesRequest"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Overrides for the raw API request sent to the model host. Combined with `expand_raw`, it can be used to access new features from models."
+                },
+                {
+                  "key": "expand_raw",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "A list of keys whose values you'd like to directly return from the JSON response of the model provider. Useful if you need lower-level info returned by model providers that Vellum would otherwise omit. Corresponding key/value pairs will be returned under the `raw` key of the API response."
                 },
-                "description": "A list of keys whose values you'd like to directly return from the JSON response of the model provider. Useful if you need lower-level info returned by model providers that Vellum would otherwise omit. Corresponding key/value pairs will be returned under the `raw` key of the API response."
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
-                          }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
-              }
-            ]
+                  },
+                  "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "stream",
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ExecutePromptEvent"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "stream",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:ExecutePromptEvent"
+                }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "",
@@ -1202,172 +1210,176 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:WorkflowRequestInputRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "The list of inputs defined in the Workflow's Deployment with their corresponding values."
-              },
-              {
-                "key": "expand_meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:WorkflowExpandMetaRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "An optionally specified configuration used to opt in to including additional metadata about this workflow execution in the API response. Corresponding values will be returned under the `execution_meta` key within NODE events in the response stream."
-              },
-              {
-                "key": "workflow_deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:WorkflowRequestInputRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The list of inputs defined in the Workflow's Deployment with their corresponding values."
                 },
-                "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name."
-              },
-              {
-                "key": "workflow_deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "expand_meta",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "id",
+                          "id": "type_:WorkflowExpandMetaRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An optionally specified configuration used to opt in to including additional metadata about this workflow execution in the API response. Corresponding values will be returned under the `execution_meta` key within NODE events in the response stream."
                 },
-                "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id."
-              },
-              {
-                "key": "release_tag",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "workflow_deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
-              },
-              {
-                "key": "external_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally include a unique identifier for tracking purposes. Must be unique for a given workflow deployment."
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name."
+                },
+                {
+                  "key": "workflow_deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id."
+                },
+                {
+                  "key": "release_tag",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
+                },
+                {
+                  "key": "external_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally include a unique identifier for tracking purposes. Must be unique for a given workflow deployment."
+                },
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
                             }
                           }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
-                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ExecuteWorkflowResponse"
+                  },
+                  "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ExecuteWorkflowResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "",
@@ -1693,198 +1705,202 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:WorkflowRequestInputRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "The list of inputs defined in the Workflow's Deployment with their corresponding values."
-              },
-              {
-                "key": "expand_meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:WorkflowExpandMetaRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "An optionally specified configuration used to opt in to including additional metadata about this workflow execution in the API response. Corresponding values will be returned under the `execution_meta` key within NODE events in the response stream."
-              },
-              {
-                "key": "workflow_deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:WorkflowRequestInputRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The list of inputs defined in the Workflow's Deployment with their corresponding values."
                 },
-                "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name."
-              },
-              {
-                "key": "workflow_deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "expand_meta",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "id",
+                          "id": "type_:WorkflowExpandMetaRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An optionally specified configuration used to opt in to including additional metadata about this workflow execution in the API response. Corresponding values will be returned under the `execution_meta` key within NODE events in the response stream."
                 },
-                "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id."
-              },
-              {
-                "key": "release_tag",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "workflow_deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
-              },
-              {
-                "key": "external_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Optionally include a unique identifier for tracking purposes. Must be unique for a given workflow deployment."
-              },
-              {
-                "key": "event_types",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_:WorkflowExecutionEventType"
+                            "type": "string"
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the Workflow Deployment. Must provide either this or workflow_deployment_name."
                 },
-                "description": "Optionally specify which events you want to receive. Defaults to only WORKFLOW events. Note that the schema of non-WORKFLOW events is unstable and should be used with caution."
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
+                {
+                  "key": "workflow_deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The name of the Workflow Deployment. Must provide either this or workflow_deployment_id."
+                },
+                {
+                  "key": "release_tag",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
+                },
+                {
+                  "key": "external_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally include a unique identifier for tracking purposes. Must be unique for a given workflow deployment."
+                },
+                {
+                  "key": "event_types",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "id",
+                              "id": "type_:WorkflowExecutionEventType"
                             }
                           }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify which events you want to receive. Defaults to only WORKFLOW events. Note that the schema of non-WORKFLOW events is unstable and should be used with caution."
+                },
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
-              }
-            ]
+                  },
+                  "description": "Arbitrary JSON metadata associated with this request. Can be used to capture additional monitoring data such as user id, session id, etc. for future analysis."
+                }
+              ]
+            }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "stream",
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:WorkflowStreamEvent"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "stream",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:WorkflowStreamEvent"
+                }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "",
@@ -2264,97 +2280,101 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "index_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The ID of the index to search against. Must provide either this or index_name."
-              },
-              {
-                "key": "index_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The name of the index to search against. Must provide either this or index_id."
-              },
-              {
-                "key": "query",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "index_id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 1
-                    }
-                  }
-                },
-                "description": "The query to search for."
-              },
-              {
-                "key": "options",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SearchRequestOptionsRequest"
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the index to search against. Must provide either this or index_name."
                 },
-                "description": "Configuration options for the search."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:SearchResponse"
+                {
+                  "key": "index_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The name of the index to search against. Must provide either this or index_id."
+                },
+                {
+                  "key": "query",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
+                      }
+                    }
+                  },
+                  "description": "The query to search for."
+                },
+                {
+                  "key": "options",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SearchRequestOptionsRequest"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Configuration options for the search."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:SearchResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "",
@@ -2628,72 +2648,75 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the deployment. Must provide either this or deployment_name."
                 },
-                "description": "The ID of the deployment. Must provide either this or deployment_name."
-              },
-              {
-                "key": "deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The name of the deployment. Must provide either this or deployment_id."
                 },
-                "description": "The name of the deployment. Must provide either this or deployment_id."
-              },
-              {
-                "key": "actuals",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SubmitCompletionActualRequest"
+                {
+                  "key": "actuals",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SubmitCompletionActualRequest"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "Feedback regarding the quality of previously generated completions"
-              }
-            ]
+                  },
+                  "description": "Feedback regarding the quality of previously generated completions"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "errors": [
           {
             "description": "",
@@ -2958,72 +2981,75 @@
             "baseUrl": "https://predict.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "actuals",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SubmitWorkflowExecutionActualRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "Feedback regarding the quality of an output on a previously executed workflow."
-              },
-              {
-                "key": "execution_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "actuals",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:SubmitWorkflowExecutionActualRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Feedback regarding the quality of an output on a previously executed workflow."
                 },
-                "description": "The Vellum-generated ID of a previously executed workflow. Must provide either this or external_id."
-              },
-              {
-                "key": "external_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "execution_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The Vellum-generated ID of a previously executed workflow. Must provide either this or external_id."
                 },
-                "description": "The external ID that was originally provided by when executing the workflow, if applicable, that you'd now like to submit actuals for. Must provide either this or execution_id."
-              }
-            ]
+                {
+                  "key": "external_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The external ID that was originally provided by when executing the workflow, if applicable, that you'd now like to submit actuals for. Must provide either this or execution_id."
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/submit-workflow-execution-actuals",
@@ -3174,16 +3200,19 @@
             "description": "status"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedSlimDeploymentReadList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedSlimDeploymentReadList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/deployments",
@@ -3294,16 +3323,19 @@
             "description": "Either the Deployment's ID or its unique name"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DeploymentRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DeploymentRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/deployments/id",
@@ -3438,16 +3470,19 @@
             "description": "The name of the Release Tag associated with this Deployment that you'd like to retrieve."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DeploymentReleaseTagRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DeploymentReleaseTagRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/deployments/id/release-tags/name",
@@ -3566,44 +3601,48 @@
             "description": "The name of the Release Tag associated with this Deployment that you'd like to update."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "history_item_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "history_item_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "The ID of the Deployment History Item to tag"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DeploymentReleaseTagRead"
+                  },
+                  "description": "The ID of the Deployment History Item to tag"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DeploymentReleaseTagRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/deployments/id/release-tags/name",
@@ -3686,119 +3725,123 @@
             "baseUrl": "https://api.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the deployment. Must provide either this or deployment_name."
                 },
-                "description": "The ID of the deployment. Must provide either this or deployment_name."
-              },
-              {
-                "key": "deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The name of the deployment. Must provide either this or deployment_id."
                 },
-                "description": "The name of the deployment. Must provide either this or deployment_id."
-              },
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PromptDeploymentInputRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "The list of inputs defined in the Prompt's deployment with their corresponding values."
-              },
-              {
-                "key": "release_tag",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "id",
+                          "id": "type_:PromptDeploymentInputRequest"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The list of inputs defined in the Prompt's deployment with their corresponding values."
                 },
-                "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
-              },
-              {
-                "key": "expand_meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:CompilePromptDeploymentExpandMetaRequest"
+                {
+                  "key": "release_tag",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify a release tag if you want to pin to a specific release of the Workflow Deployment"
+                },
+                {
+                  "key": "expand_meta",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:CompilePromptDeploymentExpandMetaRequest"
+                        }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DeploymentProviderPayloadResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DeploymentProviderPayloadResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "",
@@ -4261,16 +4304,19 @@
             "description": "Filter down to only document indices that have a status matching the status specified\n\n- `ACTIVE` - Active\n- `ARCHIVED` - Archived"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedDocumentIndexReadList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedDocumentIndexReadList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/document-indexes",
@@ -4362,118 +4408,122 @@
             "baseUrl": "https://api.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 1
-                    }
-                  }
-                },
-                "description": "A human-readable label for the document index"
-              },
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 1
-                    }
-                  }
-                },
-                "description": "A name that uniquely identifies this index within its workspace"
-              },
-              {
-                "key": "status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_:EntityStatus"
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
                       }
                     }
-                  }
+                  },
+                  "description": "A human-readable label for the document index"
                 },
-                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived"
-              },
-              {
-                "key": "environment",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_:EnvironmentEnum"
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
                       }
                     }
-                  }
+                  },
+                  "description": "A name that uniquely identifies this index within its workspace"
                 },
-                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production"
-              },
-              {
-                "key": "indexing_config",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:DocumentIndexIndexingConfigRequest"
-                  }
-                }
-              },
-              {
-                "key": "copy_documents_from_index_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "status",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:EntityStatus"
                         }
                       }
                     }
+                  },
+                  "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived"
+                },
+                {
+                  "key": "environment",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EnvironmentEnum"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production"
+                },
+                {
+                  "key": "indexing_config",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:DocumentIndexIndexingConfigRequest"
+                    }
                   }
                 },
-                "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentIndexRead"
+                {
+                  "key": "copy_documents_from_index_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optionally specify the id of a document index from which you'd like to copy and re-index its documents into this newly created index"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentIndexRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/document-indexes",
@@ -4760,16 +4810,19 @@
             "description": "Either the Document Index's ID or its unique name"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentIndexRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentIndexRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/document-indexes/id",
@@ -4878,74 +4931,78 @@
             "description": "Either the Document Index's ID or its unique name"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 1
-                    }
-                  }
-                },
-                "description": "A human-readable label for the document index"
-              },
-              {
-                "key": "status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_:EntityStatus"
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
                       }
                     }
-                  }
+                  },
+                  "description": "A human-readable label for the document index"
                 },
-                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived"
-              },
-              {
-                "key": "environment",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:EnvironmentEnum"
+                {
+                  "key": "status",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EntityStatus"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived"
                 },
-                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentIndexRead"
+                {
+                  "key": "environment",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EnvironmentEnum"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentIndexRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/document-indexes/id",
@@ -5060,6 +5117,8 @@
             "description": "Either the Document Index's ID or its unique name"
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/document-indexes/id",
@@ -5145,80 +5204,84 @@
             "description": "Either the Document Index's ID or its unique name"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "A human-readable label for the document index"
                 },
-                "description": "A human-readable label for the document index"
-              },
-              {
-                "key": "status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:EntityStatus"
+                {
+                  "key": "status",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EntityStatus"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived"
                 },
-                "description": "The current status of the document index\n\n* `ACTIVE` - Active\n* `ARCHIVED` - Archived"
-              },
-              {
-                "key": "environment",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:EnvironmentEnum"
+                {
+                  "key": "environment",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EnvironmentEnum"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentIndexRead"
+                  },
+                  "description": "The environment this document index is used in\n\n* `DEVELOPMENT` - Development\n* `STAGING` - Staging\n* `PRODUCTION` - Production"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentIndexRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/document-indexes/id",
@@ -5352,6 +5415,8 @@
             "description": "Either the Vellum-generated ID or the originally specified name that uniquely identifies the Document Index to which you'd like to add the Document."
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/document-indexes/id/documents/document_id",
@@ -5459,6 +5524,8 @@
             "description": "Either the Vellum-generated ID or the originally specified name that uniquely identifies the Document Index from which you'd like to remove a Document."
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/document-indexes/id/documents/document_id",
@@ -5604,16 +5671,19 @@
             "description": "Which field to use when ordering the results."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedSlimDocumentList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedSlimDocumentList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/documents",
@@ -5728,16 +5798,19 @@
             "description": "A UUID string identifying this document."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/documents/id",
@@ -5846,6 +5919,8 @@
             "description": "A UUID string identifying this document."
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/documents/id",
@@ -5931,94 +6006,98 @@
             "description": "A UUID string identifying this document."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "A human-readable label for the document. Defaults to the originally uploaded file's file name."
                 },
-                "description": "A human-readable label for the document. Defaults to the originally uploaded file's file name."
-              },
-              {
-                "key": "status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:DocumentStatus"
+                {
+                  "key": "status",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:DocumentStatus"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The current status of the document\n\n* `ACTIVE` - Active"
                 },
-                "description": "The current status of the document\n\n* `ACTIVE` - Active"
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
                             }
                           }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
-                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "A JSON object containing any metadata associated with the document that you'd like to filter upon later."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DocumentRead"
+                  },
+                  "description": "A JSON object containing any metadata associated with the document that you'd like to filter upon later."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DocumentRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/documents/id",
@@ -6112,139 +6191,143 @@
             "baseUrl": "https://documents.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "add_to_index_names",
-                "description": "Optionally include the names of all indexes that you'd like this document to be included in",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "external_id",
-                "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "label",
-                "description": "A human-friendly name for this document. Typically the filename.",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "add_to_index_names",
+                  "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string",
-                      "minLength": 1,
-                      "maxLength": 1
-                    }
-                  }
-                }
-              },
-              {
-                "type": "file",
-                "key": "contents",
-                "isOptional": false
-              },
-              {
-                "type": "property",
-                "key": "keywords",
-                "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "metadata",
-                "description": "A stringified JSON object containing any metadata associated with the document that you'd like to filter upon later.",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "type": "property",
+                  "key": "external_id",
+                  "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "label",
+                  "description": "A human-friendly name for this document. Typically the filename.",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 1
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "file",
+                  "key": "contents",
+                  "isOptional": false
+                },
+                {
+                  "type": "property",
+                  "key": "keywords",
+                  "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "metadata",
+                  "description": "A stringified JSON object containing any metadata associated with the document that you'd like to filter upon later.",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:UploadDocumentResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:UploadDocumentResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "",
@@ -6671,16 +6754,19 @@
             "description": "Filter down to only those entities whose parent folder has the specified ID.\n\nTo filter by an entity's parent folder, provide the ID of the parent folder. To filter by the root directory, provide\na string representing the entity type of the root directory. Supported root directories include:\n\n- PROMPT_SANDBOX\n- WORKFLOW_SANDBOX\n- DOCUMENT_INDEX\n- TEST_SUITE"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedFolderEntityList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedFolderEntityList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/folder-entities",
@@ -6791,28 +6877,31 @@
             "description": "The ID of the folder to which the entity should be added. This can be a UUID of a folder, or the name of a root\ndirectory. Supported root directories include:\n\n- PROMPT_SANDBOX\n- WORKFLOW_SANDBOX\n- DOCUMENT_INDEX\n- TEST_SUITE"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "entity_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "entity_id",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The ID of the entity you would like to move."
-              }
-            ]
+                  },
+                  "description": "The ID of the entity you would like to move."
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/folders/folder_id/add-entity",
@@ -6928,111 +7017,115 @@
             "description": "An ID identifying the Prompt you'd like to deploy."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "prompt_deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "prompt_deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The Vellum-generated ID of the Prompt Deployment you'd like to update. Cannot specify both this and prompt_deployment_name. Leave null to create a new Prompt Deployment."
-              },
-              {
-                "key": "prompt_deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The unique name of the Prompt Deployment you'd like to either create or update. Cannot specify both this and prompt_deployment_id. If provided and matches an existing Prompt Deployment, that Prompt Deployment will be updated. Otherwise, a new Prompt Deployment will be created."
-              },
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "In the event that a new Prompt Deployment is created, this will be the label it's given."
-              },
-              {
-                "key": "release_tags",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The Vellum-generated ID of the Prompt Deployment you'd like to update. Cannot specify both this and prompt_deployment_name. Leave null to create a new Prompt Deployment."
+                },
+                {
+                  "key": "prompt_deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The unique name of the Prompt Deployment you'd like to either create or update. Cannot specify both this and prompt_deployment_id. If provided and matches an existing Prompt Deployment, that Prompt Deployment will be updated. Otherwise, a new Prompt Deployment will be created."
+                },
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "In the event that a new Prompt Deployment is created, this will be the label it's given."
+                },
+                {
+                  "key": "release_tags",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Optionally provide the release tags that you'd like to be associated with the latest release of the created/updated Prompt Deployment."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DeploymentRead"
+                  },
+                  "description": "Optionally provide the release tags that you'd like to be associated with the latest release of the created/updated Prompt Deployment."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DeploymentRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/sandboxes/id/prompts/prompt_variant_id/deploy",
@@ -7155,82 +7248,86 @@
             "description": "A UUID string identifying this sandbox."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "default": "Untitled Scenario"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "default": "Untitled Scenario"
+                          }
                         }
                       }
                     }
                   }
+                },
+                {
+                  "key": "inputs",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:NamedScenarioInputRequest"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The inputs for the scenario"
+                },
+                {
+                  "key": "scenario_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended."
                 }
-              },
-              {
-                "key": "inputs",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:NamedScenarioInputRequest"
-                      }
-                    }
-                  }
-                },
-                "description": "The inputs for the scenario"
-              },
-              {
-                "key": "scenario_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The id of the scenario to update. If none is provided, an id will be generated and a new scenario will be appended."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:SandboxScenario"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:SandboxScenario"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/sandboxes/id/scenarios",
@@ -7462,6 +7559,8 @@
             "description": "An id identifying the scenario that you'd like to delete"
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/sandboxes/id/scenarios/scenario_id",
@@ -7529,76 +7628,80 @@
             "baseUrl": "https://api.vellum.ai"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "test_suite_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "test_suite_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the Test Suite to run. Must provide either this or test_suite_id."
                 },
-                "description": "The ID of the Test Suite to run. Must provide either this or test_suite_id."
-              },
-              {
-                "key": "test_suite_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "test_suite_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The name of the Test Suite to run. Must provide either this or test_suite_id."
                 },
-                "description": "The name of the Test Suite to run. Must provide either this or test_suite_id."
-              },
-              {
-                "key": "exec_config",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:TestSuiteRunExecConfigRequest"
-                  }
-                },
-                "description": "Configuration that defines how the Test Suite should be run"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:TestSuiteRunRead"
+                {
+                  "key": "exec_config",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:TestSuiteRunExecConfigRequest"
+                    }
+                  },
+                  "description": "Configuration that defines how the Test Suite should be run"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:TestSuiteRunRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/test-suite-runs",
@@ -7735,16 +7838,19 @@
             "description": "A UUID string identifying this test suite run."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:TestSuiteRunRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:TestSuiteRunRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/test-suite-runs/id",
@@ -7924,16 +8030,19 @@
             "description": "The initial index from which to return the results."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedTestSuiteRunExecutionList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedTestSuiteRunExecutionList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/test-suite-runs/id/executions",
@@ -8099,16 +8208,19 @@
             "description": "The initial index from which to return the results."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedTestSuiteTestCaseList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedTestSuiteTestCaseList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/test-suites/id/test-cases",
@@ -8227,26 +8339,30 @@
             "description": "Either the Test Suites' ID or its unique name"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:UpsertTestSuiteTestCaseRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:UpsertTestSuiteTestCaseRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:TestSuiteTestCase"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:TestSuiteTestCase"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/test-suites/id/test-cases",
@@ -8385,27 +8501,10 @@
             "description": "Either the Test Suites' ID or its unique name"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:TestSuiteTestCaseBulkOperationRequest"
-                }
-              }
-            }
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "stream",
-            "shape": {
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
               "type": "alias",
               "value": {
                 "type": "list",
@@ -8413,13 +8512,34 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "type_:TestSuiteTestCaseBulkResult"
+                    "id": "type_:TestSuiteTestCaseBulkOperationRequest"
                   }
                 }
               }
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "stream",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:TestSuiteTestCaseBulkResult"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/test-suites/:id/test-cases-bulk",
@@ -8572,6 +8692,8 @@
             "description": "An id identifying the test case that you'd like to delete"
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/v1/test-suites/id/test-cases/test_case_id",
@@ -8715,16 +8837,19 @@
             "description": "status"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaginatedSlimWorkflowDeploymentList"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaginatedSlimWorkflowDeploymentList"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/workflow-deployments",
@@ -8842,16 +8967,19 @@
             "description": "Either the Workflow Deployment's ID or its unique name"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowDeploymentRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowDeploymentRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/workflow-deployments/id",
@@ -8994,16 +9122,19 @@
             "description": "The name of the Release Tag associated with this Workflow Deployment that you'd like to retrieve."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowReleaseTagRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowReleaseTagRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/workflow-deployments/id/release-tags/name",
@@ -9122,44 +9253,48 @@
             "description": "The name of the Release Tag associated with this Workflow Deployment that you'd like to update."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "history_item_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "history_item_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "The ID of the Workflow Deployment History Item to tag"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowReleaseTagRead"
+                  },
+                  "description": "The ID of the Workflow Deployment History Item to tag"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowReleaseTagRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/workflow-deployments/id/release-tags/name",
@@ -9285,111 +9420,115 @@
             "description": "An ID identifying the Workflow you'd like to deploy."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "workflow_deployment_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "workflow_deployment_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The Vellum-generated ID of the Workflow Deployment you'd like to update. Cannot specify both this and workflow_deployment_name. Leave null to create a new Workflow Deployment."
-              },
-              {
-                "key": "workflow_deployment_name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The unique name of the Workflow Deployment you'd like to either create or update. Cannot specify both this and workflow_deployment_id. If provided and matches an existing Workflow Deployment, that Workflow Deployment will be updated. Otherwise, a new Prompt Deployment will be created."
-              },
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "In the event that a new Workflow Deployment is created, this will be the label it's given."
-              },
-              {
-                "key": "release_tags",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The Vellum-generated ID of the Workflow Deployment you'd like to update. Cannot specify both this and workflow_deployment_name. Leave null to create a new Workflow Deployment."
+                },
+                {
+                  "key": "workflow_deployment_name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The unique name of the Workflow Deployment you'd like to either create or update. Cannot specify both this and workflow_deployment_id. If provided and matches an existing Workflow Deployment, that Workflow Deployment will be updated. Otherwise, a new Prompt Deployment will be created."
+                },
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "In the event that a new Workflow Deployment is created, this will be the label it's given."
+                },
+                {
+                  "key": "release_tags",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Optionally provide the release tags that you'd like to be associated with the latest release of the created/updated Prompt Deployment."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkflowDeploymentRead"
+                  },
+                  "description": "Optionally provide the release tags that you'd like to be associated with the latest release of the created/updated Prompt Deployment."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkflowDeploymentRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/workflow-sandboxes/id/workflows/workflow_id/deploy",
@@ -9516,16 +9655,19 @@
             "description": "Either the Workspace Secret's ID or its unique name"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkspaceSecretRead"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkspaceSecretRead"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/v1/workspace-secrets/id",
@@ -9621,65 +9763,69 @@
             "description": "Either the Workspace Secret's ID or its unique name"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "value",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 1
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "value",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "minLength": 1,
-                          "maxLength": 1
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WorkspaceSecretRead"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WorkspaceSecretRead"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/v1/workspace-secrets/id",

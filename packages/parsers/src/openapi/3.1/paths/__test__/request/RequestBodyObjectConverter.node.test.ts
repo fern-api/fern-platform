@@ -3,137 +3,141 @@ import { createMockContext } from "../../../../../__test__/createMockContext.uti
 import { RequestBodyObjectConverterNode } from "../../request/RequestBodyObjectConverter.node";
 
 describe("RequestBodyObjectConverterNode", () => {
-    const mockContext = createMockContext();
+  const mockContext = createMockContext();
 
-    it("should handle reference objects", () => {
-        const input = {
-            $ref: "#/components/requestBodies/PetBody",
-        };
+  it("should handle reference objects", () => {
+    const input = {
+      $ref: "#/components/requestBodies/PetBody",
+    };
 
-        mockContext.document.components ??= {};
-        mockContext.document.components.requestBodies = {
-            PetBody: {
-                content: {
-                    "application/json": { schema: { type: "object" } },
-                },
-            },
-        };
+    mockContext.document.components ??= {};
+    mockContext.document.components.requestBodies = {
+      PetBody: {
+        content: {
+          "application/json": { schema: { type: "object" } },
+        },
+      },
+    };
 
-        const converter = new RequestBodyObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
-
-        expect(converter.requestBodiesByContentType).toBeDefined();
+    const converter = new RequestBodyObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should handle request body objects with content", () => {
-        const input = {
-            content: {
-                "application/json": {
-                    schema: {
-                        type: "object" as const,
-                        properties: {
-                            name: { type: "string" as const },
-                        },
-                    },
-                },
+    expect(converter.requestBodiesByContentType).toBeDefined();
+  });
+
+  it("should handle request body objects with content", () => {
+    const input = {
+      content: {
+        "application/json": {
+          schema: {
+            type: "object" as const,
+            properties: {
+              name: { type: "string" as const },
             },
-        };
+          },
+        },
+      },
+    };
 
-        const converter = new RequestBodyObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
-
-        expect(converter.requestBodiesByContentType).toBeDefined();
-        expect(converter.requestBodiesByContentType?.["application/json"]).toBeDefined();
+    const converter = new RequestBodyObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should handle multiple content types", () => {
-        const input = {
-            content: {
-                "application/json": {
-                    schema: { type: "object" as const },
-                },
-                "application/xml": {
-                    schema: { type: "object" as const },
-                },
-            },
-        };
+    expect(converter.requestBodiesByContentType).toBeDefined();
+    expect(
+      converter.requestBodiesByContentType?.["application/json"]
+    ).toBeDefined();
+  });
 
-        const converter = new RequestBodyObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
+  it("should handle multiple content types", () => {
+    const input = {
+      content: {
+        "application/json": {
+          schema: { type: "object" as const },
+        },
+        "application/xml": {
+          schema: { type: "object" as const },
+        },
+      },
+    };
 
-        expect(Object.keys(converter.requestBodiesByContentType ?? {})).toHaveLength(2);
+    const converter = new RequestBodyObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should convert to HttpRequest array", () => {
-        const input = {
-            description: "Pet object",
-            content: {
-                "application/json": {
-                    schema: {
-                        type: "object" as const,
-                        properties: {
-                            name: { type: "string" as const },
-                        },
-                    },
+    expect(
+      Object.keys(converter.requestBodiesByContentType ?? {})
+    ).toHaveLength(2);
+  });
+
+  it("should convert to HttpRequest array", () => {
+    const input = {
+      description: "Pet object",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object" as const,
+            properties: {
+              name: { type: "string" as const },
+            },
+          },
+        },
+      },
+    };
+
+    const converter = new RequestBodyObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
+    });
+
+    const result = converter.convert();
+    expect(result).toHaveLength(1);
+    expect(result[0]).toEqual({
+      contentType: "application/json",
+      body: {
+        type: "object",
+        extends: [],
+        properties: [
+          {
+            key: "name",
+            valueShape: {
+              type: "alias",
+              value: {
+                type: "primitive",
+                value: {
+                  type: "string",
                 },
+              },
             },
-        };
+          },
+        ],
+      },
+    });
+  });
 
-        const converter = new RequestBodyObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
+  it("should handle null request body", () => {
+    const input = null as unknown as OpenAPIV3_1.RequestBodyObject;
 
-        const result = converter.convert();
-        expect(result).toHaveLength(1);
-        expect(result[0]).toEqual({
-            contentType: "application/json",
-            body: {
-                type: "object",
-                extends: [],
-                properties: [
-                    {
-                        key: "name",
-                        valueShape: {
-                            type: "alias",
-                            value: {
-                                type: "primitive",
-                                value: {
-                                    type: "string",
-                                },
-                            },
-                        },
-                    },
-                ],
-            },
-        });
+    const converter = new RequestBodyObjectConverterNode({
+      input,
+      context: mockContext,
+      accessPath: [],
+      pathId: "test",
     });
 
-    it("should handle null request body", () => {
-        const input = null as unknown as OpenAPIV3_1.RequestBodyObject;
-
-        const converter = new RequestBodyObjectConverterNode({
-            input,
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-        });
-
-        expect(converter.requestBodiesByContentType).toBeUndefined();
-        expect(converter.convert()).toEqual([]);
-    });
+    expect(converter.requestBodiesByContentType).toBeUndefined();
+    expect(converter.convert()).toEqual([]);
+  });
 });

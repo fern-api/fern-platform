@@ -46,17 +46,20 @@
             "description": "A comma-separated list of profile ids."
           }
         ],
-        "response": {
-          "description": "OK",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ProfilesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "OK",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ProfilesResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/profiles",
@@ -301,6 +304,8 @@
             "description": "A comma-separated list of profile ids."
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/profiles",
@@ -568,17 +573,20 @@
             "description": "Limit for pagination."
           }
         ],
-        "response": {
-          "description": "OK",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:SessionsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "OK",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:SessionsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Not Found",
@@ -1154,43 +1162,47 @@
             "baseUrl": "https://api.airtop.ai/api/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "configuration",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SessionConfigV1"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "configuration",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SessionConfigV1"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "Session configuration"
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:SessionResponse"
+                  },
+                  "description": "Session configuration"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:SessionResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sessions",
@@ -2065,17 +2077,20 @@
             "description": "Id of the session to get"
           }
         ],
-        "response": {
-          "description": "OK",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:SessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "OK",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:SessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Not Found",
@@ -2479,6 +2494,8 @@
             "description": "ID of the session to delete."
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
@@ -2694,102 +2711,106 @@
             "description": "ID of the session that owns the window."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "screenResolution",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "screenResolution",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "default": "1280x720"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "default": "1280x720"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Affects the live view configuration. By default, a live view will fill the parent frame (or local window if loaded directly) when initially loaded, causing the browser window to be resized to match. This parameter can be used to instead configure the returned liveViewUrl so that the live view is loaded with fixed dimensions (e.g. 1280x720), resizing the browser window to match, and then disallows any further resizing from the live view."
                 },
-                "description": "Affects the live view configuration. By default, a live view will fill the parent frame (or local window if loaded directly) when initially loaded, causing the browser window to be resized to match. This parameter can be used to instead configure the returned liveViewUrl so that the live view is loaded with fixed dimensions (e.g. 1280x720), resizing the browser window to match, and then disallows any further resizing from the live view."
-              },
-              {
-                "key": "url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "url",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string",
-                          "default": "https://www.google.com"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "default": "https://www.google.com"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Initial url to navigate to"
                 },
-                "description": "Initial url to navigate to"
-              },
-              {
-                "key": "waitUntil",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_windows:CreateWindowInputV1BodyWaitUntil"
-                      }
-                    }
-                  }
-                },
-                "description": "Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, and 'complete' will wait until the page and all it's iframes have loaded it's dom and assets."
-              },
-              {
-                "key": "waitUntilTimeoutSeconds",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "waitUntil",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "long"
+                          "type": "id",
+                          "id": "type_windows:CreateWindowInputV1BodyWaitUntil"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, and 'complete' will wait until the page and all it's iframes have loaded it's dom and assets."
                 },
-                "description": "Maximum time in seconds to wait for the specified loading event to occur before timing out."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WindowIdResponse"
+                {
+                  "key": "waitUntilTimeoutSeconds",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Maximum time in seconds to wait for the specified loading event to occur before timing out."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WindowIdResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows",
@@ -3259,17 +3280,20 @@
             "description": "Affects the live view configuration. By default, a live view will fill the parent frame (or local window if loaded directly) when initially loaded, causing the browser window to be resized to match. This parameter can be used to instead configure the returned liveViewUrl so that the live view is loaded with fixed dimensions (e.g. 1280x720), resizing the browser window to match, and then disallows any further resizing from the live view."
           }
         ],
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WindowResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WindowResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430",
@@ -3675,75 +3699,79 @@
             "description": "Airtop window ID of the browser window."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "url",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Url to navigate to"
-              },
-              {
-                "key": "waitUntil",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_windows:WindowLoadUrlV1BodyWaitUntil"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "Url to navigate to"
                 },
-                "description": "Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, and 'complete' will wait until the page and all it's iframes have loaded it's dom and assets."
-              },
-              {
-                "key": "waitUntilTimeoutSeconds",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "waitUntil",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "long"
+                          "type": "id",
+                          "id": "type_windows:WindowLoadUrlV1BodyWaitUntil"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Wait until the specified loading event occurs. Defaults to 'load', which waits until the page dom and it's assets have loaded. 'domContentLoaded' will wait until the dom has loaded, and 'complete' will wait until the page and all it's iframes have loaded it's dom and assets."
                 },
-                "description": "Maximum time in seconds to wait for the specified loading event to occur before timing out."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EmptyResponse"
+                {
+                  "key": "waitUntilTimeoutSeconds",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Maximum time in seconds to wait for the specified loading event to occur before timing out."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EmptyResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430",
@@ -4157,17 +4185,20 @@
             "description": "Airtop window ID of the browser window."
           }
         ],
-        "response": {
-          "description": "OK",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WindowIdResponse"
+        "requests": [],
+        "responses": [
+          {
+            "description": "OK",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WindowIdResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/7334da2a-91b0-42c5-6156-76a5eba87430",
@@ -4467,131 +4498,135 @@
             "description": "The Airtop window id of the browser window to target with an Airtop AI prompt."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "clientRequestId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "configuration",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PromptContentConfig"
-                      }
-                    }
-                  }
-                },
-                "description": "Request configuration"
-              },
-              {
-                "key": "costThresholdCredits",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "long"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended)."
-              },
-              {
-                "key": "followPaginationLinks",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Make a best effort attempt to load more content items than are originally displayed on the page, e.g. by following pagination links, clicking controls to load more content, utilizing infinite scrolling, etc. This can be quite a bit more costly, but may be necessary for sites that require additional interaction to show the needed results. You can provide constraints in your prompt (e.g. on the total number of pages or results to consider)."
-              },
-              {
-                "key": "prompt",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "clientRequestId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The prompt to submit about the content in the browser window."
-              },
-              {
-                "key": "timeThresholdSeconds",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "long"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 },
-                "description": "A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).\n\nThis setting does not extend the maximum session duration provided at the time of session creation."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AiPromptResponse"
+                {
+                  "key": "configuration",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PromptContentConfig"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Request configuration"
+                },
+                {
+                  "key": "costThresholdCredits",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended)."
+                },
+                {
+                  "key": "followPaginationLinks",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Make a best effort attempt to load more content items than are originally displayed on the page, e.g. by following pagination links, clicking controls to load more content, utilizing infinite scrolling, etc. This can be quite a bit more costly, but may be necessary for sites that require additional interaction to show the needed results. You can provide constraints in your prompt (e.g. on the total number of pages or results to consider)."
+                },
+                {
+                  "key": "prompt",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The prompt to submit about the content in the browser window."
+                },
+                {
+                  "key": "timeThresholdSeconds",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).\n\nThis setting does not extend the maximum session duration provided at the time of session creation."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AiPromptResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/prompt-content",
@@ -5076,82 +5111,86 @@
             "description": "The Airtop window id of the browser window to scrape."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "clientRequestId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "clientRequestId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
+                },
+                {
+                  "key": "costThresholdCredits",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended)."
+                },
+                {
+                  "key": "timeThresholdSeconds",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).\n\nThis setting does not extend the maximum session duration provided at the time of session creation."
                 }
-              },
-              {
-                "key": "costThresholdCredits",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "long"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended)."
-              },
-              {
-                "key": "timeThresholdSeconds",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "long"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).\n\nThis setting does not extend the maximum session duration provided at the time of session creation."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ScrapeResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ScrapeResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/scrape-content",
@@ -5578,118 +5617,122 @@
             "description": "The Airtop window id of the browser window to summarize."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "clientRequestId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "clientRequestId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
+                },
+                {
+                  "key": "configuration",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SummaryConfig"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Request configuration"
+                },
+                {
+                  "key": "costThresholdCredits",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended)."
+                },
+                {
+                  "key": "prompt",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An optional prompt providing the Airtop AI model with additional direction or constraints about the summary (such as desired length)."
+                },
+                {
+                  "key": "timeThresholdSeconds",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "long"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).\n\nThis setting does not extend the maximum session duration provided at the time of session creation."
                 }
-              },
-              {
-                "key": "configuration",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SummaryConfig"
-                      }
-                    }
-                  }
-                },
-                "description": "Request configuration"
-              },
-              {
-                "key": "costThresholdCredits",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "long"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A credit threshold that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended)."
-              },
-              {
-                "key": "prompt",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "An optional prompt providing the Airtop AI model with additional direction or constraints about the summary (such as desired length)."
-              },
-              {
-                "key": "timeThresholdSeconds",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "long"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A time threshold in seconds that, once exceeded, will cause the operation to be cancelled. Note that this is *not* a hard limit, but a threshold that is checked periodically during the course of fulfilling the request. A default threshold is used if not specified, but you can use this option to increase or decrease as needed. Set to 0 to disable this feature entirely (not recommended).\n\nThis setting does not extend the maximum session duration provided at the time of session creation."
-              }
-            ]
-          }
-        },
-        "response": {
-          "description": "Created",
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:AiPromptResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "description": "Created",
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:AiPromptResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sessions/6aac6f73-bd89-4a76-ab32-5a6c422e8b0b/windows/0334da2a-91b0-42c5-6156-76a5eba87430/summarize-content",
