@@ -1,3 +1,4 @@
 * @dsinghvi
-packages/fern-docs/** @abvthecity
-packages/parsers/** @RohinBhargava
+packages/template-resolver/** @armandobelardo
+packages/ui/** @abvthecity
+packages/ui/fern-dashboard/** @armandobelardo

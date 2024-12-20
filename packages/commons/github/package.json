@@ -1,39 +1,39 @@
 {
   "name": "@fern-api/github",
   "version": "0.0.0",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/commons/github"
   },
-  "sideEffects": false,
+  "private": true,
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "source": "src/index.ts",
+  "module": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
-  "main": "dist/index.js",
-  "module": "src/index.ts",
-  "source": "src/index.ts",
-  "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown \"**\"",
-    "format:check": "prettier --check --ignore-unknown \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 .",
+    "test": "vitest --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "test": "vitest --run --passWithNoTests --globals"
+    "depcheck": "depcheck"
   },
   "dependencies": {
     "octokit": "^3.2.0",
@@ -43,12 +43,12 @@
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
-    "eslint": "^9",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.4.2",
+    "eslint": "^8.56.0",
     "simple-git": "^3.24.0",
+    "vitest": "^2.1.4",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.3.2",
     "stylelint": "^16.1.0",
-    "typescript": "^5",
-    "vitest": "^2.1.4"
+    "typescript": "5.4.3"
   }
 }

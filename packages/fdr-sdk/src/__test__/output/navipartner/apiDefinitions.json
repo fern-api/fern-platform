@@ -137,30 +137,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:AddCardRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:AddCardRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:AddCardResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:AddCardResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/1224/member/4331/card",
@@ -358,30 +354,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:ReplaceCardRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:ReplaceCardRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:ReplaceCardResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:ReplaceCardResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/1224/member/4331/card/598/replace",
@@ -549,19 +541,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:GetCardResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:GetCardResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/id/123434",
@@ -739,19 +728,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:GetCardResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:GetCardResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/number/MC1234567890",
@@ -933,30 +919,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:RegisterArrivalRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:RegisterArrivalRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:RegisterArrivalResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:RegisterArrivalResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/MC1234567890/register-arrival",
@@ -1112,30 +1094,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:SendWalletRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:SendWalletRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-card:WalletSentResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-card:WalletSentResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/card/MC1234567890/sendToWallet",
@@ -1286,19 +1264,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-catalog:StoreCatalogResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-catalog:StoreCatalogResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./membership/catalog/EN",
@@ -1459,19 +1434,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:GetMembershipHistoryResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:GetMembershipHistoryResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/history",
@@ -1645,19 +1617,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:ConfirmMembershipActivateResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:ConfirmMembershipActivateResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/activate",
@@ -1831,30 +1800,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:CancelMembershipRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:CancelMembershipRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:ConfirmMembershipCancelResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:ConfirmMembershipCancelResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/cancel",
@@ -2034,19 +1999,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:GetRenewOptionsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:GetRenewOptionsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/renew/options",
@@ -2208,30 +2170,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:RenewMembershipRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:RenewMembershipRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:ConfirmMembershipRenewResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:ConfirmMembershipRenewResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/renew",
@@ -2424,19 +2382,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:GetUpgradeOptionsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:GetUpgradeOptionsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/upgrade/options",
@@ -2598,30 +2553,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:UpgradeMembershipRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:UpgradeMembershipRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:ConfirmMembershipUpgradeResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:ConfirmMembershipUpgradeResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/upgrade",
@@ -2814,19 +2765,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:GetExtendOptionsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:GetExtendOptionsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/extend/options",
@@ -2988,30 +2936,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:ExtendMembershipRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:ExtendMembershipRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-lifecycle:ConfirmMembershipExtendResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-lifecycle:ConfirmMembershipExtendResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/extend",
@@ -3204,30 +3148,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:AddMemberRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:AddMemberRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:AddMemberResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:AddMemberResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/1224/add",
@@ -3440,19 +3380,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:GetMemberResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:GetMemberResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/id/4331",
@@ -3638,19 +3575,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:GetMemberResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:GetMemberResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/number/M123456789",
@@ -3840,19 +3774,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:BlockMemberResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:BlockMemberResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331/block",
@@ -4017,19 +3948,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:UnblockMemberResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:UnblockMemberResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331/unblock",
@@ -4190,30 +4118,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:UpdateMemberRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:UpdateMemberRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:UpdateMemberResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:UpdateMemberResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331",
@@ -4397,19 +4321,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:GetMemberImageResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:GetMemberImageResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331/image",
@@ -4558,30 +4479,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:SetMemberImageRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:SetMemberImageRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:SetMemberImageResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:SetMemberImageResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member/4331/image",
@@ -4848,19 +4765,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-member:GetMemberListResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-member:GetMemberListResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/member",
@@ -5040,30 +4954,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:CreateMembershipRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:CreateMembershipRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:CreateMembershipResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:CreateMembershipResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership",
@@ -5224,19 +5134,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:GetMembershipResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:GetMembershipResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/id/1224",
@@ -5391,19 +5298,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:GetMembershipResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:GetMembershipResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/number/MS-DEMO-00152",
@@ -5562,19 +5466,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:BlockMembershipResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:BlockMembershipResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/block",
@@ -5733,19 +5634,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:UnblockMembershipResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:UnblockMembershipResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/unblock",
@@ -5904,19 +5802,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-membership:GetMembersResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-membership:GetMembersResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/membership/1224/members",
@@ -6108,19 +6003,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_memberships/service-misc:ResolveMemberIdentifierResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_memberships/service-misc:ResolveMemberIdentifierResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./memberships/misc/MS-DEMO-00152/resolve",
@@ -6224,19 +6116,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_systemservices/companies:Companies"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_systemservices/companies:Companies"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/{company}/companies",
@@ -6358,19 +6247,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_systemservices/helloworld:HelloWorld"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_systemservices/helloworld:HelloWorld"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./helloworld",
@@ -6575,25 +6461,22 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_ticketing/service-capacity:AdmissionCapacity"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_ticketing/service-capacity:AdmissionCapacity"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/capacity/search",
@@ -6815,19 +6698,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-catalog:StoreCatalogResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-catalog:StoreCatalogResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/catalog/EN",
@@ -6999,30 +6879,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:CreateReservationRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:CreateReservationRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:GetReservationDetails"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:GetReservationDetails"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation",
@@ -7226,30 +7102,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:CreateReservationRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:CreateReservationRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:GetReservationDetails"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:GetReservationDetails"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI",
@@ -7457,19 +7329,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:ReservationActionResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:ReservationActionResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI/cancel",
@@ -7617,19 +7486,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:ReservationActionResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:ReservationActionResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI/pre-confirm",
@@ -7778,30 +7644,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:ConfirmReservationRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:ConfirmReservationRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:GetReservationDetails"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:GetReservationDetails"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI/confirm",
@@ -8002,19 +7864,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-reservations:GetReservationDetails"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-reservations:GetReservationDetails"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI",
@@ -8281,25 +8140,22 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_ticketing/types-composite:TicketDetails"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_ticketing/types-composite:TicketDetails"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/reservation/ABC123456DEF789GHI/tickets",
@@ -8486,19 +8342,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/types-composite:TicketDetails"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/types-composite:TicketDetails"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123",
@@ -8687,19 +8540,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:RevokedResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:RevokedResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123/revoke",
@@ -8848,42 +8698,38 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_ticketing/service-ticket:ValidateTicketsRequest"
-                  }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_ticketing/service-ticket:ValidateTicketsRequest"
                 }
               }
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_ticketing/service-ticket:AdmittedResponse"
-                  }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_ticketing/service-ticket:AdmittedResponse"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123/validateArrival",
@@ -9039,36 +8885,32 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_ticketing/service-ticket:ValidateTicketsRequest"
-                  }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_ticketing/service-ticket:ValidateTicketsRequest"
                 }
               }
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:DepartedResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:DepartedResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123/validateDeparture",
@@ -9224,36 +9066,32 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:CreateMemberReservationRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:CreateMemberReservationRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_ticketing/types-composite:TicketDetails"
-                  }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_ticketing/types-composite:TicketDetails"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/MEMBER123/validateMemberArrival",
@@ -9452,30 +9290,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:SendTicketRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:SendTicketRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:TicketSentResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:TicketSentResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123/sendToWallet",
@@ -9630,30 +9464,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:GetTicketCouponRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:GetTicketCouponRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_ticketing/service-ticket:TicketCouponResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_ticketing/service-ticket:TicketCouponResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/01234567-89ab-cdef-0123-456789abcdef/production/CRONUS%20International%20Ltd./ticketing/ticket/TICKET123/exchangeForCoupon",

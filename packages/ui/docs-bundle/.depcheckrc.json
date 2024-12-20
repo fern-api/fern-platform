@@ -1,0 +1,24 @@
+{
+  "ignores": [
+    "@fern-platform/configs",
+    "@types/node",
+    "@types/react",
+    "@types/react-dom",
+    "autoprefixer",
+    "postcss",
+    "postcss-import",
+    "@tailwindcss/typography",
+    "@tailwindcss/forms",
+    "tailwindcss",
+    "jsonpath",
+    "cssnano",
+    "node-fetch",
+    "@types/node-fetch",
+    "sharp",
+    "esbuild",
+    "glslify-import",
+    "glslify-loader",
+    "raw-loader"
+  ],
+  "ignore-patterns": ["dist"]
+}

@@ -12,13 +12,7 @@ Assume you have an Express backend with following set of routes:
 // src/routes/user.route.js
 
 const { Router } = require("express");
-const {
-  createUser,
-  deleteUser,
-  getAllUsers,
-  getUser,
-  updateUser,
-} = require("../controllers/user.controller");
+const { createUser, deleteUser, getAllUsers, getUser, updateUser } = require("../controllers/user.controller");
 
 const userRoute = () => {
   const router = Router();
@@ -43,13 +37,7 @@ module.exports = { userRoute };
 // src/routes/book.route.js
 
 const { Router } = require("express");
-const {
-  createBook,
-  deleteBook,
-  getAllBooks,
-  getBook,
-  updateBook,
-} = require("../controllers/book.controller");
+const { createBook, deleteBook, getAllBooks, getBook, updateBook } = require("../controllers/book.controller");
 
 const bookRoute = () => {
   const router = Router();
@@ -113,10 +101,7 @@ In the root of your project, create a file `swagger.js` and add the following co
 const swaggerAutogen = require("swagger-autogen")();
 
 const outputFile = "./swagger_output.json";
-const endpointsFiles = [
-  "./src/routes/user.route.js",
-  "./src/routes/book.route.js",
-];
+const endpointsFiles = ["./src/routes/user.route.js", "./src/routes/book.route.js"];
 
 swaggerAutogen(outputFile, endpointsFiles);
 ```

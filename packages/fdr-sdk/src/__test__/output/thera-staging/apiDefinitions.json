@@ -25,19 +25,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/aiprise/aiprise_webhook_api:AiPriseVerificationCallback"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/aiprise/aiprise_webhook_api:AiPriseVerificationCallback"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/aiprise/webhook/verification/callback",
@@ -87,38 +84,35 @@
           }
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "employment",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_api/dev/dev:AddEorEmployment"
-                    }
-                  }
-                },
-                {
-                  "key": "user",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_api/dev/dev:AddEorUser"
-                    }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "employment",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_api/dev/dev:AddEorEmployment"
                   }
                 }
-              ]
-            }
+              },
+              {
+                "key": "user",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_api/dev/dev:AddEorUser"
+                  }
+                }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/dev/eor",
@@ -202,44 +196,41 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "s3Key",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "s3Key",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The s3 key of the document"
+                  }
                 },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The s3 key of the document"
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The name that will be shown in the UI for this document"
-                }
-              ]
-            }
+                  }
+                },
+                "description": "The name that will be shown in the UI for this document"
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "//contracts/:contractID/generic-document",
@@ -328,30 +319,27 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "ignore",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "ignore",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "//contracts/:contractID/generic-document/:s3Key",
@@ -444,19 +432,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/services/file:LoadGenericDocumentFromEmploymentResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/services/file:LoadGenericDocumentFromEmploymentResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "//contracts/:contractID/generic-document/:s3Key/file-url",
@@ -549,19 +534,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/services/file:LoadPayslipForEOREmployeeResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/services/file:LoadPayslipForEOREmployeeResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "//contracts/eor/:contractID/payslips/:s3Key/fileUrl",
@@ -654,19 +636,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/services/file:LoadPayInForEORResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/services/file:LoadPayInForEORResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "//companies/:companyId/contracts/eor/pay-in/:s3Key/file-url",
@@ -736,67 +715,64 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "syncInvoiceEnabled",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "syncInvoiceEnabled",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
                   }
-                },
-                {
-                  "key": "syncVendorEnabled",
-                  "valueShape": {
-                    "type": "alias",
+                }
+              },
+              {
+                "key": "syncVendorEnabled",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
                   }
-                },
-                {
-                  "key": "rutterAccountIdByTheraFeeType",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "map",
-                      "keyShape": {
-                        "type": "alias",
+                }
+              },
+              {
+                "key": "rutterAccountIdByTheraFeeType",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "map",
+                    "keyShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_db/company:TheraBillingType"
+                      }
+                    },
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "id",
-                          "id": "type_db/company:TheraBillingType"
-                        }
-                      },
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/accounting/settings",
@@ -869,19 +845,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/accounting/accounting_api:CompanyAccountingIntegrationsInfoResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/accounting/accounting_api:CompanyAccountingIntegrationsInfoResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/accounting/info",
@@ -961,19 +934,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/accounting/accounting_api:CompanyAccountingMappingDetailsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/accounting/accounting_api:CompanyAccountingMappingDetailsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/accounting/account-mapping",
@@ -1050,30 +1020,27 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "rutterPublicToken",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "rutterPublicToken",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/accounting/authorize",
@@ -1143,25 +1110,22 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_api/thera/bank/bank_api:GetBankAccountDetailsResponse"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_api/thera/bank/bank_api:GetBankAccountDetailsResponse"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/bank/account",
@@ -1228,59 +1192,55 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "companyId",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "companyId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
-                },
-                {
-                  "key": "paymentMethodId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                }
+              },
+              {
+                "key": "paymentMethodId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:PlaidUpdateFlowLinkTokenResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:PlaidUpdateFlowLinkTokenResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/bank/account/update",
@@ -1373,19 +1333,16 @@
             "description": "Will be required soon once FE always passes it. The name must match the name on the account in order to\nverify the account with Plaid.Restricted to printable ASCII characters: alphanumeric, space, and simple\npunctuation."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetBankAccountSignupKey"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetBankAccountSignupKey"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/bank/account/signup/link",
@@ -1434,19 +1391,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:CompleteAccountSignupRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:CompleteAccountSignupRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/bank/account/signup/complete",
@@ -1493,19 +1447,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:ReattachStripeAccountMandateRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:ReattachStripeAccountMandateRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/bank/stripe/attach",
@@ -1574,19 +1525,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetPaymentMethodsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetPaymentMethodsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/payment-methods",
@@ -1684,8 +1632,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/companies/:companyId/payment-methods/:paymentMethodId",
@@ -1770,8 +1716,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/companies/:companyId/payment-methods/:paymentMethodId/select-for-w2",
@@ -1834,60 +1778,56 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "companyId",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "companyId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "paymentMethodId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
                       "value": {
-                        "type": "string"
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
                 },
-                {
-                  "key": "paymentMethodId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "Will be required soon"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetBankAccountVerificationToken"
+                "description": "Will be required soon"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetBankAccountVerificationToken"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/bank/account/signup/verify",
@@ -1983,50 +1923,47 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "enabled",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "enabled",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
-                  },
-                  "description": "If enabled, all fixed rate invoices will automatically be paid x days in advance of their due date, where x is\nthe number of days that the company has set for their invoices to be available ahead of their due date. A payment method id\nmust be included if this is set to on.\n"
+                  }
                 },
-                {
-                  "key": "paymentMethodId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                "description": "If enabled, all fixed rate invoices will automatically be paid x days in advance of their due date, where x is\nthe number of days that the company has set for their invoices to be available ahead of their due date. A payment method id\nmust be included if this is set to on.\n"
+              },
+              {
+                "key": "paymentMethodId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "For now, this should be the Stripe payment method id"
-                }
-              ]
-            }
+                  }
+                },
+                "description": "For now, this should be the Stripe payment method id"
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/company/:companyId/teams/:teamId/autopay",
@@ -2099,19 +2036,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWithdrawalMethodCurrenciesResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWithdrawalMethodCurrenciesResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/supported-withdrawal-method-currencies",
@@ -2164,19 +2098,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetBankTransferCurrenciesByCountryResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetBankTransferCurrenciesByCountryResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/supported-bank-transfer-currencies",
@@ -2296,19 +2227,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWithdrawalLimitsByMethodResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWithdrawalLimitsByMethodResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/workers/:userId/withdrawal-methods/:paymentMethodId/withdrawal-limits",
@@ -2375,19 +2303,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWithdrawalMinimumByCurrencyResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWithdrawalMinimumByCurrencyResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/withdrawal-minimum-by-currency",
@@ -2503,19 +2428,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWithdrawalMinimumByMethodResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWithdrawalMinimumByMethodResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/workers/:userId/withdrawal-methods/:paymentMethodId/withdrawal-minimum",
@@ -2567,36 +2489,32 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:WithdrawalMethodsRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:WithdrawalMethodsRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_api/thera/bank/bank_api:SingleWithdrawalMethodResponse"
-                  }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_api/thera/bank/bank_api:SingleWithdrawalMethodResponse"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/supported-withdrawal-methods",
@@ -2715,30 +2633,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:WithdrawalMethodsRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:WithdrawalMethodsRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:SaveWithdrawalMethodResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:SaveWithdrawalMethodResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/:userId/withdrawal-method",
@@ -2859,19 +2773,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:DeleteWithdrawalMethodResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:DeleteWithdrawalMethodResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/:userId/withdrawal-method/:withdrawalMethodId",
@@ -2955,42 +2866,38 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "preferred",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "preferred",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
-                  },
-                  "description": "For now, exception is thrown if this is set to false; you can't remove a preferred payment method without setting a new one."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:EditWithdrawalMethodResponse"
+                  }
+                },
+                "description": "For now, exception is thrown if this is set to false; you can't remove a preferred payment method without setting a new one."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:EditWithdrawalMethodResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/worker/:userId/withdrawal-method/:withdrawalMethodId",
@@ -3084,30 +2991,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:InitiateWorkerWithdrawalRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:InitiateWorkerWithdrawalRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:WorkerWithdrawalPreviewResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:WorkerWithdrawalPreviewResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/workers/:userId/payout-preview",
@@ -3210,30 +3113,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:InitiateWorkerWithdrawalRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:InitiateWorkerWithdrawalRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:InitiateWorkerWithdrawalResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:InitiateWorkerWithdrawalResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/workers/:userId/payout",
@@ -3331,19 +3230,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWorkerBalancesResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWorkerBalancesResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/workers/:userId/balances",
@@ -3439,19 +3335,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWorkerTransactionsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWorkerTransactionsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/workers/:userId/transactions",
@@ -3533,19 +3426,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetWorkerWithdrawalDeliveryEstimate"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetWorkerWithdrawalDeliveryEstimate"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/workers/withdrawals/delivery-estimate/:withdrawalId",
@@ -3650,19 +3540,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetPayInHistoryResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetPayInHistoryResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/pay-ins",
@@ -3776,19 +3663,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetPayInDetailsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetPayInDetailsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/pay-ins/:payInId",
@@ -3918,19 +3802,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:DeleteOffPlatformPaymentResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:DeleteOffPlatformPaymentResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/pay-ins/off-platform/:payInId",
@@ -4014,19 +3895,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:GetCurrencyConversionResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:GetCurrencyConversionResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/currency/convert",
@@ -4118,41 +3996,37 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "autoWithdrawalsOn",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "autoWithdrawalsOn",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/bank/bank_api:SetAutoWithdrawalResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/bank/bank_api:SetAutoWithdrawalResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/workers/:userId/auto-withdrawals",
@@ -4204,30 +4078,27 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "companyId",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "companyId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/bank/check/payment-method",
@@ -4272,48 +4143,45 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "companyId",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "companyId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
-                },
-                {
-                  "key": "paymentMethodId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                }
+              },
+              {
+                "key": "paymentMethodId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/bank/stripe/payment-method",
@@ -4381,47 +4249,43 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "moniteEntityUserId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "moniteEntityUserId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:GetMoniteTokenResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:GetMoniteTokenResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/monite/token",
@@ -4475,30 +4339,26 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:InviteContractorRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:InviteContractorRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:InviteContractorResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:InviteContractorResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/employees",
@@ -4850,113 +4710,109 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "firstName",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "firstName",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
-                },
-                {
-                  "key": "lastName",
-                  "valueShape": {
-                    "type": "alias",
+                }
+              },
+              {
+                "key": "lastName",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
-                },
-                {
-                  "key": "email",
-                  "valueShape": {
-                    "type": "alias",
+                }
+              },
+              {
+                "key": "email",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
-                },
-                {
-                  "key": "teams",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "map",
-                      "keyShape": {
-                        "type": "alias",
+                }
+              },
+              {
+                "key": "teams",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "map",
+                    "keyShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/company/company_api:TeamRoleAndDetails"
+                      }
+                    }
+                  }
+                },
+                "description": "Keys are teamId"
+              },
+              {
+                "key": "orgAdmin",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
                           "value": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/company/company_api:TeamRoleAndDetails"
-                        }
-                      }
-                    }
-                  },
-                  "description": "Keys are teamId"
-                },
-                {
-                  "key": "orgAdmin",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "type_api/thera/company/company_api:OrgRole"
-                            }
+                            "type": "id",
+                            "id": "type_api/thera/company/company_api:OrgRole"
                           }
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:InviteManagerResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:InviteManagerResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/managers",
@@ -5061,86 +4917,82 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "rolesToAdd",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "map",
-                          "keyShape": {
-                            "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "rolesToAdd",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "map",
+                        "keyShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
+                              "type": "string"
                             }
-                          },
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "type_api/thera/company/company_api:TeamRoleAndDetails"
-                            }
+                          }
+                        },
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "type_api/thera/company/company_api:TeamRoleAndDetails"
                           }
                         }
                       }
                     }
-                  },
-                  "description": "Keys are teamId"
+                  }
                 },
-                {
-                  "key": "teamsToRemove",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
+                "description": "Keys are teamId"
+              },
+              {
+                "key": "teamsToRemove",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
+                              "type": "string"
                             }
                           }
                         }
                       }
                     }
-                  },
-                  "description": "Remove team role and all permissions for these team ids"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:EditManagerRolesResponse"
+                  }
+                },
+                "description": "Remove team role and all permissions for these team ids"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:EditManagerRolesResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/managers/:userId",
@@ -5220,105 +5072,101 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "adminsToAdd",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/company/company_api:OrgAdmin"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "adminsToRemove",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/company/company_api:OrgAdmin"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "managersToAdd",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/company/company_api:OrgManager"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "managersToRemove",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/company/company_api:OrgManager"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "isApArManager",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "adminsToAdd",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
                       "value": {
-                        "type": "boolean"
+                        "type": "id",
+                        "id": "type_api/thera/company/company_api:OrgAdmin"
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:EditOrgRolesResponse"
+              },
+              {
+                "key": "adminsToRemove",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/company/company_api:OrgAdmin"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "managersToAdd",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/company/company_api:OrgManager"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "managersToRemove",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/company/company_api:OrgManager"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "isApArManager",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:EditOrgRolesResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/admins",
@@ -5435,19 +5283,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:RemoveManagerResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:RemoveManagerResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/managers/:userId",
@@ -5536,53 +5381,49 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "newTeamId",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "newTeamId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "oldTeamId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:ChangeContractTeamResponse"
+              },
+              {
+                "key": "oldTeamId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:ChangeContractTeamResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/contracts/:contractId/team",
@@ -5658,19 +5499,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:GetTeamsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:GetTeamsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/teams",
@@ -5758,19 +5596,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:GetManagersResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:GetManagersResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/managers",
@@ -6011,57 +5846,53 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
-                },
-                {
-                  "key": "managers",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/company/company_api:CreateTeamRequestManager"
-                        }
+                }
+              },
+              {
+                "key": "managers",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/company/company_api:CreateTeamRequestManager"
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:CreateTeamResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:CreateTeamResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/teams",
@@ -6162,19 +5993,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:DeleteTeamResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:DeleteTeamResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/teams/:teamId",
@@ -6259,41 +6087,37 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:EditTeamResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:EditTeamResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/teams/:teamId",
@@ -6368,19 +6192,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:GetAllCompanyAffiliationsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:GetAllCompanyAffiliationsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/users/:userId/affiliations",
@@ -6840,19 +6661,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:CheckCanCreateAccountResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:CheckCanCreateAccountResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/check-can-create-account",
@@ -6922,50 +6740,46 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "teamId",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "teamId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "fields",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "unknown"
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:AddEorEmployeeResponse"
+              },
+              {
+                "key": "fields",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:AddEorEmployeeResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/eor",
@@ -7061,19 +6875,16 @@
             "description": "If a list is present, will only return workers from that team. Otherwise, returns workers from all\nteams that the caller has permission to view."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:GetContractorCSVResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:GetContractorCSVResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/contractors/csv",
@@ -7209,19 +7020,16 @@
             "description": "If true, include inactive contracts"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_api:GetContractsCSVResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_api:GetContractsCSVResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/contracts/csv",
@@ -7272,19 +7080,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_w2payroll_api:OnboardW2PayrollRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_w2payroll_api:OnboardW2PayrollRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/company/w2Payroll",
@@ -7354,30 +7159,27 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "flowComplete",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "flowComplete",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/w2/toggle-onboarding-flow-complete",
@@ -7447,19 +7249,16 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/company/company_w2payroll_api:SetupW2PayrollRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/company/company_w2payroll_api:SetupW2PayrollRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/w2/payroll/setup",
@@ -7551,19 +7350,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/contractor/contractor_api:GetUsContractorsTaxInfoResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/contractor/contractor_api:GetUsContractorsTaxInfoResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/us-contractors/tax-info",
@@ -7662,53 +7458,49 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "taxYear",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "taxYear",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "nonTheraPayAmount",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "long"
-                      }
+                      "type": "integer"
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/contractor/contractor_api:UpdateUsContractorsTaxInfoResponse"
+              },
+              {
+                "key": "nonTheraPayAmount",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "long"
+                    }
+                  }
+                }
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/contractor/contractor_api:UpdateUsContractorsTaxInfoResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/us-contractors/:userId/tax-info",
@@ -7807,60 +7599,56 @@
             "description": "If not provided, value is False."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "columns",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/oneschema/model:OneSchemaCsvColumn"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "records",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/contractor/contractor_api:CreateContractorsCsvRecord"
-                        }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "columns",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/oneschema/model:OneSchemaCsvColumn"
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
+              },
+              {
+                "key": "records",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/contractor/contractor_api:CreateContractorsCsvRecord"
+                      }
+                    }
+                  }
+                }
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyID/contractors/csv",
@@ -7977,60 +7765,56 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "columns",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/oneschema/model:OneSchemaCsvColumn"
-                        }
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "records",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_api/thera/disbursement/disbursement_api:CreateInvoiceCsvRecord"
-                        }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "columns",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/oneschema/model:OneSchemaCsvColumn"
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
+              },
+              {
+                "key": "records",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_api/thera/disbursement/disbursement_api:CreateInvoiceCsvRecord"
+                      }
+                    }
+                  }
+                }
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyID/invoices/csv",
@@ -8099,29 +7883,25 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/disbursement/disbursement_api:CreateDisbursementRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/disbursement/disbursement_api:CreateDisbursementRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/disbursement",
@@ -8201,8 +7981,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/disbursement/invoices/:invoiceId/approve",
@@ -8266,29 +8044,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/disbursement/disbursement_api:CreateInvoiceDeductionRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/disbursement/disbursement_api:CreateInvoiceDeductionRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/disbursement/invoices/:invoiceId/deduction",
@@ -8380,18 +8154,15 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/disbursement/invoices/:invoiceId/deduction/:deductionId",
@@ -8522,19 +8293,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/disbursement/disbursement_api:GetInvoicesCsvResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/disbursement/disbursement_api:GetInvoicesCsvResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyID/invoices/csv",
@@ -8598,30 +8366,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/disbursement/disbursement_webhook_api:InvoiceWebhookEvent"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/disbursement/disbursement_webhook_api:InvoiceWebhookEvent"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/disbursement/disbursement_webhook_api:AutoCreateInvoicePayCycleResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/disbursement/disbursement_webhook_api:AutoCreateInvoicePayCycleResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/webhook/disbursement/invoice",
@@ -8688,18 +8452,15 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/w9-document",
@@ -8818,19 +8579,16 @@
             "description": "If present, it overrides the system-generate date time. The date time string should respect to RFC 3339, section 5.6. Field is required for staging/test environment. Otherwise, can leave blank for prod env. Provided to simulate the environment to be in Filing Season."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/document/document_api:GetUsIrs1099NecDocumentResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/document/document_api:GetUsIrs1099NecDocumentResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/1099-nec-document",
@@ -8908,90 +8666,86 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "userIds",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "userIds",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
-                },
-                {
-                  "key": "companyId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "taxYear",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer"
-                      }
-                    }
-                  }
-                },
-                {
-                  "key": "overrideCurrentDateTime",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "datetime"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "If present, it overrides the system-generate date time. The date time string should respect to RFC 3339, section 5.6. Field is required for staging/test environment. Otherwise, can leave blank for prod env. Provided to simulate the environment to be in Filing Season."
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/document/document_api:BulkFileUsIrs1099NecDocumentResponse"
+              },
+              {
+                "key": "companyId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "taxYear",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "overrideCurrentDateTime",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "If present, it overrides the system-generate date time. The date time string should respect to RFC 3339, section 5.6. Field is required for staging/test environment. Otherwise, can leave blank for prod env. Provided to simulate the environment to be in Filing Season."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/document/document_api:BulkFileUsIrs1099NecDocumentResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/1099-nec-document/file",
@@ -9048,19 +8802,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/email/email_api:SendLoginEmailRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/email/email_api:SendLoginEmailRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/email/login",
@@ -9129,30 +8880,27 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "newEmail",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "newEmail",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/user/:userId/update-email",
@@ -9237,36 +8985,33 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "deletionReason",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "deletionReason",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/contracts/:contractId/pay-cycle/recurrences/:recurrenceId",
@@ -9310,30 +9055,26 @@
           }
         ],
         "environments": [],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/employment/employment_api:CreateContractEstimateRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/employment/employment_api:CreateContractEstimateRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/employment/employment_api:CreateContractEstimateResponse"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/employment/employment_api:CreateContractEstimateResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/contracts/estimate",
@@ -9439,8 +9180,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/contracts/:contractId",
@@ -9501,37 +9240,34 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "cancelDate",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "cancelDate",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "date"
-                          }
+                          "type": "date"
                         }
                       }
                     }
-                  },
-                  "description": "Only used for testing within backend. FE don't need to use this."
-                }
-              ]
-            }
+                  }
+                },
+                "description": "Only used for testing within backend. FE don't need to use this."
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/contracts/:contractId/termination-cancellation",
@@ -9612,19 +9348,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/employment/employment_api:GetPayCycleResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/employment/employment_api:GetPayCycleResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/contracts/:contractId/payCycle/2023-01-01",
@@ -9688,19 +9421,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/misc/misc:DailyCronResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/misc/misc:DailyCronResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/webhook/regular-cron",
@@ -9796,8 +9526,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/webhook/autopay-invoices-cron",
@@ -9850,8 +9578,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/webhook/autopay-email-cron",
@@ -9904,19 +9630,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/misc/misc:ContractRenewalCronResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/misc/misc:ContractRenewalCronResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/webhook/contract-renewal-cron",
@@ -9988,25 +9711,22 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_api/thera/payroll/offcycle_api:CheckPayrollResponse"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_api/thera/payroll/offcycle_api:CheckPayrollResponse"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/w2-payroll/off-cycle-checks",
@@ -10081,19 +9801,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/payroll/oncycle_api:ApproveOnCycleChecksResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/payroll/oncycle_api:ApproveOnCycleChecksResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyID/w2-payroll/on-cycle-checks/approve",
@@ -10168,25 +9885,22 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_api/thera/payroll/oncycle_api:OnCycleChecksResponse"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_api/thera/payroll/oncycle_api:OnCycleChecksResponse"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyID/w2-payroll/on-cycle-checks",
@@ -10260,8 +9974,6 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/companies/:companyID/w2-payroll/on-cycle-checks/cancel",
@@ -10345,19 +10057,16 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:AssociateTimeOffPoliciesToContractorRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:AssociateTimeOffPoliciesToContractorRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy/:policyId/pto/associate-contractors",
@@ -10450,19 +10159,16 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:CreatePtoForContractorRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:CreatePtoForContractorRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy/:policyId/pto/request",
@@ -10540,29 +10246,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:AddTimeOffPolicyRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:AddTimeOffPolicyRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy",
@@ -10659,19 +10361,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_db/company:TimeOffPolicy"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_db/company:TimeOffPolicy"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy/:policyId",
@@ -10773,29 +10472,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:UpdateTimeOffPolicyRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:UpdateTimeOffPolicyRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy/:policyId",
@@ -10893,18 +10588,15 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy/:policyId",
@@ -11009,19 +10701,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:GetContractorsTimeOffsByCompany"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:GetContractorsTimeOffsByCompany"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/time-off-history",
@@ -11136,19 +10825,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:GetTimeOffHistoryByContractorResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:GetTimeOffHistoryByContractorResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/users/:userId/time-off-history",
@@ -11259,19 +10945,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:GetContractorPoliciesDetailsByPolicy"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:GetContractorPoliciesDetailsByPolicy"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policies/:policyId/contractors-details",
@@ -11374,19 +11057,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:GetContractorPoliciesDetailsByContractor"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:GetContractorPoliciesDetailsByContractor"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/contractors/:userId/timeoff-policies",
@@ -11509,30 +11189,26 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:ModifyTimeOffStatusRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:ModifyTimeOffStatusRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_db/user:User"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_db/user:User"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/timeoff-policy/:policyId/time-off/:timeOffId/status-update",
@@ -11782,25 +11458,22 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_api/thera/timeoff/timeoff_api:BulkModifyTimeOffStatusesRequest"
-                  }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_api/thera/timeoff/timeoff_api:BulkModifyTimeOffStatusesRequest"
                 }
               }
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/time-off/bulk-status-update/:status",
@@ -11910,29 +11583,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/timeoff/timeoff_api:UpdatePtoRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/timeoff/timeoff_api:UpdatePtoRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/users/:userId/time-off/:timeOffId",
@@ -12013,57 +11682,53 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "details",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_db/company:CompanyBankingDetails"
-                    }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "details",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_db/company:CompanyBankingDetails"
                   }
-                },
-                {
-                  "key": "skipTpApplication",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                }
+              },
+              {
+                "key": "skipTpApplication",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean"
-                          }
+                          "type": "boolean"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:AddCompanyBankingDetailsResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:AddCompanyBankingDetailsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/banking-details",
@@ -12157,19 +11822,16 @@
           "default"
         ],
         "environments": [],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:GetNaicsCodesResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:GetNaicsCodesResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/naics-codes",
@@ -12242,29 +11904,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:ProcessFundsTransfer"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:ProcessFundsTransfer"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/process-funds",
@@ -12342,29 +12000,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:createCounterPartyForBankingRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:createCounterPartyForBankingRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/create-counterparty",
@@ -12438,18 +12092,15 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/fetch-accounts",
@@ -12533,18 +12184,15 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/fetch-accounts/:accountId",
@@ -12613,29 +12261,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:TransferFundsToOmnibusAccount"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:TransferFundsToOmnibusAccount"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/transfer-fbo-omnibus",
@@ -12726,25 +12370,22 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_api/thera/tp/tp_api:TpTransactionHistory"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_api/thera/tp/tp_api:TpTransactionHistory"
                 }
               }
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/fetch-transactions/:accountId",
@@ -12855,19 +12496,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:TpTransactionHistory"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:TpTransactionHistory"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/companies/:companyId/tp-transaction/:transactionId",
@@ -12952,29 +12590,25 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/tp/tp_api:ExternalTransferFund"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/tp/tp_api:ExternalTransferFund"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "unknown"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/webhook/tp/external-transfer-funds",
@@ -13068,19 +12702,16 @@
             }
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/user/user_api:SetUserComplianceSettingsRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/user/user_api:SetUserComplianceSettingsRequest"
             }
           }
-        ],
-        "responses": [],
+        },
         "examples": [
           {
             "path": "/company/:companyId/user/:userId",
@@ -13192,19 +12823,16 @@
             "description": "userId and email are mutually exclusive, provide only 1!"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_api/thera/user/user_api:GetUserComplianceSettingsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_api/thera/user/user_api:GetUserComplianceSettingsResponse"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/company/:companyId/user",
@@ -13272,19 +12900,16 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_db/user:User"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_db/user:User"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/user",

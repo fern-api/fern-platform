@@ -1,33 +1,33 @@
 {
   "name": "@fern-ui/scripts",
   "version": "0.0.0",
-  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/scripts"
   },
-  "sideEffects": false,
-  "type": "module",
-  "main": "dist/index.js",
-  "source": "src/index.ts",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "fern-scripts": "./dist/bundle.cjs"
-  },
+  "private": true,
   "files": [
     "dist"
   ],
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "bin": {
+    "fern-scripts": "./dist/bundle.cjs"
+  },
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
-    "depcheck": "depcheck",
-    "format": "prettier --write --ignore-unknown \"**\"",
-    "format:check": "prettier --check --ignore-unknown \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 .",
+    "test": "vitest run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "test": "vitest run --passWithNoTests --globals"
+    "depcheck": "depcheck"
   },
   "dependencies": {
     "chalk": "^5.3.0",
@@ -42,10 +42,10 @@
     "@types/node": "^18.7.18",
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.3",
-    "eslint": "^9",
+    "eslint": "^8.56.0",
     "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.4.2",
-    "typescript": "^5",
+    "prettier": "^3.3.2",
+    "typescript": "5.4.3",
     "vitest": "^2.1.4"
   }
 }

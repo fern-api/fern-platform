@@ -130,19 +130,16 @@
             "description": "only for csv files"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:DataFrameRequestOut"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:DataFrameRequestOut"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Not Found",
@@ -430,15 +427,12 @@
             }
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "fileDownload"
-            }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "fileDownload"
           }
-        ],
+        },
         "errors": [
           {
             "description": "Not Found",

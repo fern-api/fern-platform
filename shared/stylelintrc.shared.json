@@ -1,10 +1,6 @@
 {
   "plugins": ["stylelint-scss"],
-  "extends": [
-    "stylelint-config-recommended",
-    "stylelint-config-standard-scss",
-    "stylelint-config-tailwindcss"
-  ],
+  "extends": ["stylelint-config-recommended", "stylelint-config-standard-scss", "stylelint-config-tailwindcss"],
   "rules": {
     "scss/at-import-partial-extension": null,
     "at-rule-no-unknown": null,

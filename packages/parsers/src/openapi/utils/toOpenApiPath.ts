@@ -1,3 +1,3 @@
 export function toOpenApiPath(path: string[]): string {
-  return `#/${path.join("/")}`;
+    return `#/${path.join("/")}`;
 }

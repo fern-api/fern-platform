@@ -1,0 +1,9 @@
+@layer components {
+    .fern-steps {
+        @apply ml-2 mb-12 mt-4 border-l border-default pl-7;
+    }
+
+    .fern-step > .fern-anchor {
+        @apply absolute ml-[-40px] mt-1;
+    }
+}

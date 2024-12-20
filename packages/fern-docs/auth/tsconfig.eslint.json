@@ -1,8 +1,0 @@
-{
-  "extends": "@fern-platform/configs/tsconfig/library.json",
-  "compilerOptions": {
-    "rootDir": ".",
-    "noEmit": true
-  },
-  "include": ["src/**/*", "vitest.config.ts"]
-}
