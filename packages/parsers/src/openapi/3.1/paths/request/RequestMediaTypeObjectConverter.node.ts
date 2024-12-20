@@ -138,6 +138,11 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             return undefined;
         }
 
+        const newSeenVariants = new Set(seenVariants);
+        if (shape.type === "alias" && shape.value.type === "id") {
+            newSeenVariants.add(shape.value.id);
+        }
+
         const type = shape.type;
         switch (type) {
             case "alias":
@@ -154,17 +159,10 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                         },
                     },
                 }));
-            case "undiscriminatedUnion": {
-                const newSeenVariants = new Set(seenVariants);
-                shape.variants.forEach((variant) =>
-                    variant.shape.type === "alias" && variant.shape.value.type === "id"
-                        ? newSeenVariants.add(variant.shape.value.id)
-                        : undefined,
-                );
+            case "undiscriminatedUnion":
                 return shape.variants
                     .flatMap((variant) => this.convertTypeShapeToHttpRequestBodyShape(variant.shape, newSeenVariants))
                     .filter(isNonNullish);
-            }
             case "discriminatedUnion":
                 return shape.variants.map((variant) => ({
                     type: "object",

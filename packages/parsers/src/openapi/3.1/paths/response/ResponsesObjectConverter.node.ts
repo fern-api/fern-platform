@@ -101,7 +101,6 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     convertResponseObjectToErrors(): FernRegistry.api.latest.ErrorResponse[] {
         return Object.entries(this.errorsByStatusCode ?? {})
             .flatMap(([statusCode, response]) => {
-                // TODO: resolve reference here, if not done already
                 return response.responses?.map((response) => {
                     const schema = response.schema;
                     const shape = schema?.convert();

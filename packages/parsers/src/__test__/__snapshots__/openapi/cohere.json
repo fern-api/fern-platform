@@ -601,7 +601,30 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "NonStreamedChatResponse"
+            }
+          },
+          "description": "OK"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "StreamedChatResponse"
+            }
+          },
+          "description": "OK"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -1621,6 +1644,28 @@
               }
             ]
           }
+        },
+        {
+          "path": "/v1/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v1/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
+          },
+          "snippets": {}
         }
       ]
     },
@@ -2041,7 +2086,30 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "ChatResponse"
+            }
+          },
+          "description": "OK"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "StreamedChatResponseV2"
+            }
+          },
+          "description": "OK"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -2959,6 +3027,36 @@
               }
             ]
           }
+        },
+        {
+          "path": "/v2/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "finish_reason": "string",
+              "message": {
+                "role": "string"
+              }
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v2/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "finish_reason": "string",
+              "message": {
+                "role": "string"
+              }
+            }
+          },
+          "snippets": {}
         }
       ]
     },
