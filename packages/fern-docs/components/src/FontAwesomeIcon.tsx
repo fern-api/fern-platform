@@ -60,7 +60,8 @@ function getIconUrl(icon: string | undefined): string {
 function getCdnHost() {
   return (
     (typeof process !== "undefined"
-      ? process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST
+      ? // eslint-disable-next-line turbo/no-undeclared-env-vars
+        process.env.NEXT_PUBLIC_FONTAWESOME_CDN_HOST
       : undefined) ?? "https://icons.ferndocs.com"
   );
 }

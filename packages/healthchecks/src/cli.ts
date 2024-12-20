@@ -5,6 +5,7 @@ import { printResults } from "./printResults";
 import { RuleResult, runRules } from "./rules/runRules";
 
 void yargs(hideBin(process.argv))
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
   .scriptName(process.env.CLI_NAME ?? "fern-healthchecks")
   .strict()
   .command(

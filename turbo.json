@@ -10,7 +10,8 @@
     },
     "compile": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^compile"]
+      "dependsOn": ["^compile"],
+      "env": ["NODE_ENV", "VERCEL_ENV"]
     },
     "check-types": {
       "dependsOn": ["^compile"]
@@ -40,7 +41,55 @@
     },
     "docs:dev": {
       "persistent": true,
-      "dependsOn": ["^build", "^compile"]
+      "dependsOn": ["^build", "^compile"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env.production.local",
+        ".env.local",
+        ".env.production",
+        ".env"
+      ]
+    },
+    "docs:build": {
+      "dependsOn": ["^build", "^compile", "^docs:build"],
+      "env": [
+        "ALGOLIA_API_KEY",
+        "ALGOLIA_APP_ID",
+        "ALGOLIA_SEARCH_API_KEY",
+        "ALGOLIA_WRITE_API_KEY",
+        "ANTHROPIC_API_KEY",
+        "ANALYZE",
+        "AWS_ACCESS_KEY_ID",
+        "AWS_S3_ENDPOINT",
+        "AWS_REGION",
+        "AWS_S3_BUCKET_NAME",
+        "AWS_SECRET_ACCESS_KEY",
+        "COHERE_API_KEY",
+        "EDGE_CONFIG",
+        "ENABLE_ROOT_PATH_BUILD_CACHE",
+        "ENABLE_SOURCE_MAPS",
+        "FERN_TOKEN",
+        "JWT_SECRET_KEY",
+        "KV_REST_API_READ_ONLY_TOKEN",
+        "KV_REST_API_TOKEN",
+        "KV_REST_API_URL",
+        "KV_URL",
+        "NODE_ENV",
+        "OPENAI_API_KEY",
+        "QSTASH_CURRENT_SIGNING_KEY",
+        "QSTASH_NEXT_SIGNING_KEY",
+        "QSTASH_TOKEN",
+        "QSTASH_URL",
+        "TRAILING_SLASH",
+        "TURBOPUFFER_API_KEY",
+        "VERCEL",
+        "VERCEL_AUTOMATION_BYPASS_SECRET",
+        "VERCEL_DEPLOYMENT_ID",
+        "VERCEL_ENV",
+        "VERCEL_URL",
+        "WORKOS_API_KEY",
+        "WORKOS_CLIENT_ID"
+      ]
     }
   },
   "globalDependencies": ["eslint.config.mjs", ".prettierrc.json"]

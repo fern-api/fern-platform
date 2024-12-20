@@ -20,6 +20,7 @@ export default tseslint.config(
       "**/.next",
       "**/storybook-static",
       "**/out",
+      "**/lib",
       "**/node_modules",
       "fern/**",
     ],
@@ -38,6 +39,7 @@ export default tseslint.config(
 
   ...compat.config({
     extends: [
+      "turbo",
       "prettier",
       "next/core-web-vitals",
       "next/typescript",

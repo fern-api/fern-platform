@@ -64,12 +64,13 @@ async function getAlgoliaSearchConfig(
     return undefined;
   }
 
-  const algoliaAppId = process.env.NEXT_PUBLIC_ALGOLIA_APP_ID;
+  const algoliaAppId = process.env.ALGOLIA_APP_ID;
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
   const algoliaSearchIndex = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX;
 
   assertNonNullish(
     algoliaAppId,
-    "Missing environment variable: NEXT_PUBLIC_ALGOLIA_APP_ID"
+    "Missing environment variable: ALGOLIA_APP_ID"
   );
   assertNonNullish(
     algoliaSearchIndex,
