@@ -8,7 +8,7 @@
     "strictNullChecks": true
   },
   "exclude": ["node_modules"],
-  "include": ["./src/**/*", ".next/types/**/*.ts", "__mocks__"],
+  "include": ["./src/**/*", ".next/types/**/*.ts"],
   "references": [
     {
       "path": "../../commons/core-utils"

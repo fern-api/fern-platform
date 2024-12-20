@@ -587,55 +587,6 @@ importers:
 
   packages/configs: {}
 
-  packages/eslint:
-    dependencies:
-      '@eslint/compat':
-        specifier: ^1.2.4
-        version: 1.2.4(eslint@9.17.0(jiti@1.21.7))
-      '@eslint/eslintrc':
-        specifier: ^3.2.0
-        version: 3.2.0
-      '@eslint/js':
-        specifier: ^9.17.0
-        version: 9.17.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: 8.18.1
-        version: 8.18.1(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2)
-      '@typescript-eslint/parser':
-        specifier: 8.18.1
-        version: 8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2)
-      eslint:
-        specifier: 9.17.0
-        version: 9.17.0(jiti@1.21.7)
-      eslint-config-prettier:
-        specifier: ^9.1.0
-        version: 9.1.0(eslint@9.17.0(jiti@1.21.7))
-      eslint-plugin-deprecation:
-        specifier: ^3.0.0
-        version: 3.0.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2)
-      eslint-plugin-import:
-        specifier: ^2.31.0
-        version: 2.31.0(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint-import-resolver-typescript@3.7.0)(eslint@9.17.0(jiti@1.21.7))
-      eslint-plugin-react:
-        specifier: ^7.37.2
-        version: 7.37.2(eslint@9.17.0(jiti@1.21.7))
-      eslint-plugin-react-hooks:
-        specifier: ^5.1.0
-        version: 5.1.0(eslint@9.17.0(jiti@1.21.7))
-      eslint-plugin-tailwindcss:
-        specifier: ^3.17.5
-        version: 3.17.5(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
-      eslint-plugin-vitest:
-        specifier: ^0.5.4
-        version: 0.5.4(@typescript-eslint/eslint-plugin@8.18.1(@typescript-eslint/parser@8.18.1(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2))(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2)(vitest@2.1.4(@edge-runtime/vm@3.2.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0))
-      globals:
-        specifier: ^15.14.0
-        version: 15.14.0
-    devDependencies:
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-
   packages/fdr-sdk:
     dependencies:
       '@fern-api/ui-core-utils':
@@ -690,9 +641,6 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.26.0
         version: 7.26.0(@babel/core@7.26.0)
-      '@fern-api/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../configs

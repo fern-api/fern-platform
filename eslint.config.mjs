@@ -36,6 +36,7 @@ export default tseslint.config(
 
   ...compat.config({
     extends: [
+      "prettier",
       "next/core-web-vitals",
       "next/typescript",
       "plugin:tailwindcss/recommended",
@@ -111,6 +112,7 @@ export default tseslint.config(
         },
       ],
       "tailwindcss/no-custom-classname": "off",
+      "tailwindcss/classnames-order": "off",
     },
   },
 

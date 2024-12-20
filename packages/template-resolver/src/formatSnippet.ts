@@ -1,6 +1,6 @@
 import { FernRegistry } from "@fern-fern/fdr-cjs-sdk";
 import parserBabel from "prettier/plugins/babel";
-import * as prettierPluginEstree from "prettier/plugins/estree";
+import prettierPluginEstree from "prettier/plugins/estree";
 import * as prettier from "prettier/standalone";
 
 export async function formatSnippet(

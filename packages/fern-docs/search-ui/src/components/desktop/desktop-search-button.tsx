@@ -5,14 +5,14 @@ import { ComponentPropsWithoutRef, forwardRef, memo } from "react";
 import { cn } from "../ui/cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-start gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-6)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-9 p-2 w-full cursor-text",
+  "inline-flex h-9 w-full cursor-text items-center justify-start gap-2 whitespace-nowrap rounded-md p-2 text-sm font-medium transition-colors hover:transition-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--accent-6)] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         default:
           "bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)] hover:bg-[var(--grayscale-a4)]",
         loading:
-          "bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)] cursor-default",
+          "cursor-default bg-[var(--grayscale-a3)] text-[var(--grayscale-a10)]",
       },
     },
     defaultVariants: {

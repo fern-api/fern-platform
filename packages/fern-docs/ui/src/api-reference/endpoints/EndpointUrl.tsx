@@ -48,7 +48,7 @@ export const EndpointUrl = React.forwardRef<
 ) {
   const ref = useRef<HTMLDivElement>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   useImperativeHandle(parentRef, () => ref.current!);
 
   const [isHovered, setIsHovered] = useState(false);
