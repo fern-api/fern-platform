@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "noEmit": true,
+    "noEmit": true
   },
   "include": ["clis", "packages", "servers", "playwright", "eslint.config.mjs"]
 }

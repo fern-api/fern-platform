@@ -6,7 +6,7 @@ let server: Server;
 let port: number;
 
 // Force the tests to run on a single worker
-test.describe.configure({ mode: 'serial' });
+test.describe.configure({ mode: "serial" });
 
 test.beforeAll(async () => {
   const getPort = await import("get-port");

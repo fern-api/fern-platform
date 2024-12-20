@@ -9,7 +9,7 @@ const origin = getPreviewDeploymentUrl();
 const target = "https://test-nginx-proxy.docs.buildwithfern.com/subpath";
 
 // Force the tests to run on a single worker
-test.describe.configure({ mode: 'serial' });
+test.describe.configure({ mode: "serial" });
 
 test.setTimeout(120_000);
 
