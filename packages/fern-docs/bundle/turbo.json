@@ -4,8 +4,7 @@
   "tasks": {
     "docs:build": {
       "outputs": [".next/**", "!.next/cache/**"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "dependsOn": ["^build", "^compile"]
+      "inputs": ["$TURBO_DEFAULT$", ".env*"]
     },
     "docs:dev": {
       "dependsOn": ["^build", "^compile"]

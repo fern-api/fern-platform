@@ -36,6 +36,7 @@ export function getDocsDomainNode(req: NextApiRequest): string {
 // attempts to construct the host from environment variables, when the req object is not available
 export function getHostNodeStatic(): string | undefined {
   if (process.env.NODE_ENV === "development") {
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
     return `${process.env.HOST || "localhost"}:${process.env.PORT || 3000}`;
   }
 

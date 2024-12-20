@@ -16,6 +16,7 @@ import { ReadmeParser } from "./readme/ReadmeParser";
 import { ReferenceGenerator } from "./reference/ReferenceGenerator";
 
 void yargs(hideBin(process.argv))
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
   .scriptName(process.env.CLI_NAME ?? "generator-cli")
   .strict()
   .command(

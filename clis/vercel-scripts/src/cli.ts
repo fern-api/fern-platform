@@ -18,12 +18,14 @@ void yargs(hideBin(process.argv))
     type: "string",
     description: "The Vercel API token",
     demandOption: true,
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
     default: process.env.VERCEL_TOKEN ?? getVercelTokenFromGlobalConfig(),
   })
   .options("teamId", {
     type: "string",
     description: "The Vercel team ID",
     demandOption: false,
+    // eslint-disable-next-line turbo/no-undeclared-env-vars
     default: process.env.VERCEL_ORG_ID ?? "team_6FKOM5nw037hv8g2mTk3gaH7",
   })
   .options("teamName", {

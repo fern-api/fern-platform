@@ -164,6 +164,7 @@ export const baseMockFdrConfig: FdrConfig = {
   algoliaSearchV2Domains: [],
   slackToken: "",
   logLevel: "debug",
+  // eslint-disable-next-line turbo/no-undeclared-env-vars
   docsCacheEndpoint: process.env.DOCS_CACHE_ENDPOINT || "",
   enableCustomerNotifications: false,
   applicationEnvironment: "mock",

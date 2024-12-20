@@ -1,3 +1,4 @@
+/* eslint-disable turbo/no-undeclared-env-vars */
 import { noop } from "ts-essentials";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
