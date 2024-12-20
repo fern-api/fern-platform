@@ -74,7 +74,7 @@ type SelectionTextToolbarProps = {
 //     );
 // };
 
-export const FeedbackPopover = forwardRef<
+const FeedbackPopover = forwardRef<
   SelectionTextToolbarElement,
   SelectionTextToolbarProps
 >(({ children }, forwardedRef) => {
@@ -249,3 +249,5 @@ export const FeedbackPopover = forwardRef<
 });
 
 FeedbackPopover.displayName = "FeedbackPopover";
+
+export default FeedbackPopover;

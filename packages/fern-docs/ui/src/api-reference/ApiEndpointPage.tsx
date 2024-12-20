@@ -1,7 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
@@ -14,15 +14,11 @@ import {
   isApiPackageContentNode,
 } from "./ApiPackageContent";
 
-export declare namespace ApiEndpointPage {
-  export interface Props {
-    content: DocsContent.ApiEndpointPage;
-  }
-}
-
-export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({
+export default function ApiEndpointPage({
   content,
-}) => {
+}: {
+  content: DocsContent.ApiEndpointPage;
+}): ReactNode {
   useWriteApiDefinitionAtom(content.apiDefinition);
 
   // TODO: Why are we doing this here?
@@ -72,4 +68,4 @@ export const ApiEndpointPage: React.FC<ApiEndpointPage.Props> = ({
       </div>
     </ApiPageContext.Provider>
   );
-};
+}
