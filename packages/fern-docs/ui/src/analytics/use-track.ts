@@ -48,7 +48,7 @@ export function useSafeListenTrackEvents(
           }
         }
       } catch (error) {
-        // eslint-disable-next-line no-console
+         
         console.warn("Error emitting track event", error, event);
       }
     };
