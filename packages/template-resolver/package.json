@@ -1,27 +1,27 @@
 {
   "name": "@fern-api/template-resolver",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "module": "src/index.ts",
-  "source": "src/index.ts",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
   },
+  "main": "dist/index.js",
+  "module": "src/index.ts",
+  "source": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
+    "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:cjs": "tsc --build -f tsconfig.cjs.json",
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
@@ -29,16 +29,16 @@
   },
   "dependencies": {
     "@fern-fern/fdr-cjs-sdk": "0.116.5-873e41db0",
-    "prettier": "^3.3.2"
+    "prettier": "^3.4.2"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
-    "eslint": "^8.56.0",
+    "eslint": "^9",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
-    "typescript": "5.4.3"
+    "typescript": "^5"
   }
 }

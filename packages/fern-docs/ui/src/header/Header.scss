@@ -1,0 +1,21 @@
+@layer components {
+  .fern-header-searchbar {
+    @apply max-w-content-width mx-2 w-full min-w-0 shrink max-lg:hidden;
+  }
+
+  .fern-header-right-menu {
+    @apply -mr-1 flex items-center justify-end space-x-0 md:mr-0 lg:space-x-4;
+
+    .lg-menu {
+      @apply hidden lg:block;
+
+      .fern-theme-button {
+        @apply hidden lg:flex;
+      }
+    }
+
+    .max-lg-menu {
+      @apply flex items-center lg:hidden;
+    }
+  }
+}
