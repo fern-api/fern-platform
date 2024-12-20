@@ -2,13 +2,13 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
-export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   OpenAPIV3_1.NonArraySchemaObject,
   | FernRegistry.api.latest.TypeShape.DiscriminatedUnion
   | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
@@ -134,5 +134,14 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNode<
               .filter(isNonNullish),
           }
         : undefined;
+  }
+
+  example(): Record<string, unknown> | undefined {
+    return (
+      this.input.example ??
+      this.input.examples?.[0] ??
+      this.undiscriminatedMapping?.[0]?.example() ??
+      Object.values(this.discriminatedMapping ?? {})[0]?.example()
+    );
   }
 }

@@ -134,8 +134,11 @@ export const PlaygroundEndpoint = ({
         ),
       };
 
-      if (endpoint.method !== "GET" && endpoint.request?.contentType != null) {
-        headers["Content-Type"] = endpoint.request.contentType;
+      if (
+        endpoint.method !== "GET" &&
+        endpoint.requests?.[0]?.contentType != null
+      ) {
+        headers["Content-Type"] = endpoint.requests[0].contentType;
       }
 
       const req: ProxyRequest = {
@@ -149,12 +152,12 @@ export const PlaygroundEndpoint = ({
         headers,
         body: await serializeFormStateBody(
           uploadEnvironment,
-          endpoint.request?.body,
+          endpoint.requests?.[0]?.body,
           formState.body,
           usesApplicationJsonInFormDataValue
         ),
       };
-      if (endpoint.response?.body.type === "stream") {
+      if (endpoint.responses?.[0]?.body.type === "stream") {
         const [res, stream] = await executeProxyStream(proxyEnvironment, req);
         for await (const item of stream) {
           setResponse((lastValue) =>
@@ -172,7 +175,7 @@ export const PlaygroundEndpoint = ({
             })
           );
         }
-      } else if (endpoint.response?.body.type === "fileDownload") {
+      } else if (endpoint.responses?.[0]?.body.type === "fileDownload") {
         const res = await executeProxyFile(proxyEnvironment, req);
         setResponse(loaded(res));
       } else {
@@ -254,7 +257,7 @@ export const PlaygroundEndpoint = ({
         headers,
         body: await serializeFormStateBody(
           uploadEnvironment,
-          endpoint.request?.body,
+          endpoint.requests?.[0]?.body,
           formState.body,
           usesApplicationJsonInFormDataValue
         ),

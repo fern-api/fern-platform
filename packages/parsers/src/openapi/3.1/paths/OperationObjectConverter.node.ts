@@ -16,6 +16,7 @@ import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConvert
 import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
+import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import {
   ParameterBaseObjectConverterNode,
@@ -39,7 +40,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   availability: AvailabilityConverterNode | undefined;
   auth: SecurityRequirementObjectConverterNode | undefined;
   namespace: XFernGroupNameConverterNode | undefined;
-  examples: XFernEndpointExampleConverterNode | undefined;
+  xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
+  emptyExample: ExampleObjectConverterNode | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
@@ -140,14 +142,44 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
+    const redocExamplesNode = new RedocExampleConverterNode({
+      input: this.input,
+      context: this.context,
+      accessPath: this.accessPath,
+      pathId: "x-code-samples",
+    });
+
     this.responses =
       this.input.responses != null
-        ? new ResponsesObjectConverterNode({
-            input: this.input.responses,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: "responses",
-          })
+        ? new ResponsesObjectConverterNode(
+            {
+              input: this.input.responses,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: "responses",
+            },
+            this.path,
+            redocExamplesNode
+          )
+        : undefined;
+
+    this.emptyExample =
+      redocExamplesNode.codeSamples != null &&
+      redocExamplesNode.codeSamples.length > 0
+        ? new ExampleObjectConverterNode(
+            {
+              input: undefined,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: "example",
+            },
+            this.path,
+            200,
+            undefined,
+            undefined,
+            undefined,
+            redocExamplesNode
+          )
         : undefined;
 
     // TODO: pass appropriate status codes for examples
@@ -212,15 +244,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.input.operationId
     );
 
-    const redocSnippetsNode = new RedocExampleConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-code-samples",
-    });
-
     // TODO: figure out how to merge user specified examples with success response
-    this.examples = new XFernEndpointExampleConverterNode(
+    this.xFernExamplesNode = new XFernEndpointExampleConverterNode(
       {
         input: this.input,
         context: this.context,
@@ -230,7 +255,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.path,
       responseStatusCode,
       this.requests?.requestBodiesByContentType,
-      redocSnippetsNode,
       this.responses?.responsesByStatusCode?.[responseStatusCode]?.responses
     );
   }
@@ -332,15 +356,23 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       return undefined;
     }
 
-    // TODO: revisit fdr shape to suport multiple responses
     const { responses, errors } = this.responses?.convert() ?? {
       responses: undefined,
       errors: undefined,
     };
 
-    this.context.logger.info(
-      "Accessing first request and response from OperationObjectConverterNode conversion."
-    );
+    const examples = [
+      ...(this.xFernExamplesNode?.convert() ?? []),
+      ...(responses?.flatMap((response) => response.examples) ?? []),
+    ];
+
+    if (examples.length === 0) {
+      const emptyExample = this.emptyExample?.convert();
+      if (emptyExample != null) {
+        examples.push(emptyExample);
+      }
+    }
+
     return {
       description: this.description,
       availability: this.availability?.convert(),
@@ -356,10 +388,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       requestHeaders: convertOperationObjectProperties(this.requestHeaders),
       responseHeaders: responses?.[0]?.headers,
       // TODO: revisit fdr shape to suport multiple requests
-      request: this.requests?.convert()[0],
-      response: responses?.[0]?.response,
+      requests: this.requests?.convert(),
+      responses: responses?.map((response) => response.response),
       errors,
-      examples: this.examples?.convert(),
+      examples,
       snippetTemplates: undefined,
     };
   }

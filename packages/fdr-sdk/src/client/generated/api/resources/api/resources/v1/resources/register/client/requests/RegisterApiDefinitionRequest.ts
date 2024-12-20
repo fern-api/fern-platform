@@ -537,26 +537,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     responseHeaders: [{
  *                             "key": "value"
  *                         }],
- *                     request: {
- *                         contentType: {
+ *                     requests: [{
  *                             "key": "value"
- *                         },
- *                         body: {
- *                             type: "object"
- *                         },
- *                         description: {
+ *                         }],
+ *                     responses: [{
  *                             "key": "value"
- *                         }
- *                     },
- *                     response: {
- *                         body: {
- *                             type: "object"
- *                         },
- *                         statusCode: 1,
- *                         description: {
- *                             "key": "value"
- *                         }
- *                     },
+ *                         }],
  *                     errors: [{
  *                             "key": "value"
  *                         }],
@@ -571,9 +557,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }
  *                     },
- *                     description: {
- *                         "key": "value"
- *                     },
+ *                     description: "string",
  *                     availability: "Stable",
  *                     namespace: [{
  *                             "key": "value"
@@ -601,9 +585,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                     "key": "value"
  *                                 }
  *                             },
- *                             description: {
- *                                 "key": "value"
- *                             },
+ *                             description: "string",
  *                             availability: "Stable"
  *                         }],
  *                     auth: [{
@@ -625,9 +607,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                     examples: [{
  *                             "key": "value"
  *                         }],
- *                     description: {
- *                         "key": "value"
- *                     },
+ *                     description: "string",
  *                     availability: "Stable",
  *                     namespace: [{
  *                             "key": "value"
@@ -649,16 +629,12 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                 "key": "value"
  *                             }
  *                         },
- *                         description: {
- *                             "key": "value"
- *                         }
+ *                         description: "string"
  *                     },
  *                     examples: [{
  *                             "key": "value"
  *                         }],
- *                     description: {
- *                         "key": "value"
- *                     },
+ *                     description: "string",
  *                     availability: "Stable",
  *                     namespace: [{
  *                             "key": "value"
@@ -674,9 +650,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             type: "id"
  *                         }
  *                     },
- *                     description: {
- *                         "key": "value"
- *                     },
+ *                     description: "string",
  *                     availability: "Stable"
  *                 }
  *             },
@@ -700,9 +674,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }
  *                     },
- *                     description: {
- *                         "key": "value"
- *                     },
+ *                     description: "string",
  *                     availability: "Stable"
  *                 }]
  *         },

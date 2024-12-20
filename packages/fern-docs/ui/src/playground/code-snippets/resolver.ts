@@ -117,9 +117,10 @@ export class PlaygroundCodeSnippetResolver {
 
     if (
       this.context.endpoint.method !== "GET" &&
-      this.context.endpoint.request?.contentType != null
+      this.context.endpoint.requests?.[0]?.contentType != null
     ) {
-      this.headers["Content-Type"] = this.context.endpoint.request.contentType;
+      this.headers["Content-Type"] =
+        this.context.endpoint.requests[0].contentType;
     }
 
     if (

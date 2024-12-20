@@ -33,17 +33,21 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "TextToSpeechRequest"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "TextToSpeechRequest"
+            }
           }
         }
-      },
-      "errors": []
+      ],
+      "responses": [],
+      "errors": [],
+      "examples": []
     },
     "endpoint_textToSpeech.generateFromPrompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
@@ -85,17 +89,21 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "TextToSpeechFromPromptRequest"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "TextToSpeechFromPromptRequest"
+            }
           }
         }
-      },
-      "errors": []
+      ],
+      "responses": [],
+      "errors": [],
+      "examples": []
     },
     "endpoint_voices.list": {
       "description": "Retrieve all voices associated with the current workspace.",
@@ -129,18 +137,38 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "ListVoicesResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": []
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "ListVoicesResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "is_public": false
+              }
+            ]
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.create": {
       "description": "Create a new voice with a name, optional description, and audio file.",
@@ -174,28 +202,49 @@
           "baseUrl": "https://api.deeptune.com"
         }
       ],
-      "request": {
-        "contentType": "multipart/form-data",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "CreateVoiceRequest"
+      "requests": [
+        {
+          "contentType": "multipart/form-data",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "CreateVoiceRequest"
+            }
           }
         }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "CreateVoiceResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": []
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "CreateVoiceResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices",
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.get": {
       "description": "Retrieve a specific voice by its ID.",
@@ -252,18 +301,37 @@
           "description": "The ID of the voice to retrieve"
         }
       ],
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "GetVoiceByIdResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": []
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "GetVoiceByIdResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices/{voice_id}",
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.update": {
       "description": "Update an existing voice with new name, description, or audio file.",
@@ -320,28 +388,49 @@
           "description": "The ID of the voice to update"
         }
       ],
-      "request": {
-        "contentType": "multipart/form-data",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "UpdateVoiceRequest"
+      "requests": [
+        {
+          "contentType": "multipart/form-data",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "UpdateVoiceRequest"
+            }
           }
         }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "UpdateVoiceResponse"
-          }
-        },
-        "description": "Successful response"
-      },
-      "errors": []
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "UpdateVoiceResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/v1/voices/{voice_id}",
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.delete": {
       "description": "Delete an existing voice by its ID.",
@@ -398,7 +487,9 @@
           "description": "The ID of the voice to delete"
         }
       ],
-      "errors": []
+      "responses": [],
+      "errors": [],
+      "examples": []
     }
   },
   "websockets": {},

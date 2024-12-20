@@ -98,8 +98,8 @@ export function toSnippetHttpRequest(
 
   const body: Latest.ExampleEndpointRequest | undefined = example.requestBody;
 
-  if (endpoint.request?.contentType != null) {
-    headers["Content-Type"] = endpoint.request?.contentType;
+  if (endpoint.requests?.[0]?.contentType != null) {
+    headers["Content-Type"] = endpoint.requests?.[0]?.contentType;
   }
 
   if (body != null && headers["Content-Type"] == null) {

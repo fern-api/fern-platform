@@ -93,7 +93,9 @@ describe("PathItemObjectConverterNode", () => {
             },
           },
         ],
+        responses: [],
         errors: [],
+        examples: [],
       });
       expect(result?.[1]).toEqual({
         description: "Create a pet",
@@ -118,7 +120,9 @@ describe("PathItemObjectConverterNode", () => {
           },
         ],
         environments: [],
+        responses: [],
         errors: [],
+        examples: [],
       });
     });
 

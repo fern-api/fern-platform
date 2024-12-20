@@ -41,7 +41,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<
       this.pathId !== this.accessPath[this.accessPath.length - 1]
     ) {
       this.accessPath.push(this.pathId);
-      context.logger.info(`Processing ${toOpenApiPath(this.accessPath)}`);
+      context.logger.debug(`Processing ${toOpenApiPath(this.accessPath)}`);
     }
   }
 
@@ -50,7 +50,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<
   safeParse(...additionalArgs: unknown[]): void {
     try {
       this.parse(...additionalArgs);
-    } catch (_error: Error | unknown) {
+    } catch {
       this.context.errors.error({
         message:
           "Error converting node. Please contact support if the error persists",
@@ -58,4 +58,11 @@ export abstract class BaseOpenApiV3_1ConverterNode<
       });
     }
   }
+}
+
+export abstract class BaseOpenApiV3_1ConverterNodeWithExample<
+  Input,
+  Output,
+> extends BaseOpenApiV3_1ConverterNode<Input, Output> {
+  abstract example(): unknown | undefined;
 }

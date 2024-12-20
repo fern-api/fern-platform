@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace NullConverterNode {
@@ -16,7 +16,7 @@ export declare namespace NullConverterNode {
   }
 }
 
-export class NullConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class NullConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   NullConverterNode.Input,
   NullConverterNode.Output
 > {
@@ -41,5 +41,9 @@ export class NullConverterNode extends BaseOpenApiV3_1ConverterNode<
         displayName: this.displayName,
       },
     };
+  }
+
+  example(): null {
+    return null;
   }
 }

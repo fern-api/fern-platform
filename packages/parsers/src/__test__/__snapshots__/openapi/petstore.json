@@ -26,28 +26,58 @@
           "baseUrl": "/api/v31"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
           }
         },
-        "description": "Successful operation"
-      },
-      "errors": []
+        {
+          "contentType": "application/xml",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_pet.updatePet": {
       "description": "Update an existing pet by Id",
@@ -74,28 +104,58 @@
           "baseUrl": "/api/v31"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
           }
         },
-        "description": "Successful operation"
-      },
-      "errors": []
+        {
+          "contentType": "application/xml",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_pets.getPetById": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
@@ -145,17 +205,19 @@
           "description": "ID of pet that needs to be fetched"
         }
       ],
-      "response": {
-        "statusCode": null,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        },
-        "description": "The pet"
-      },
+      "responses": [
+        {
+          "statusCode": null,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "The pet"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -170,9 +232,14 @@
           "name": "Bad Request",
           "examples": [
             {
-              "description": "A Pet in JSON format",
               "responseBody": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
@@ -190,12 +257,33 @@
           "name": "Not Found",
           "examples": [
             {
-              "description": "A Pet in JSON format",
               "responseBody": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
+        }
+      ],
+      "examples": [
+        {
+          "path": "/pet/{petId}",
+          "responseStatusCode": null,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
         }
       ]
     }

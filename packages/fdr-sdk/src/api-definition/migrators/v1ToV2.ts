@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import titleCase from "@fern-api/ui-core-utils/titleCase";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { mapValues } from "es-toolkit/object";
@@ -22,7 +23,7 @@ interface Flags {
 
   /**
    * If true, avoid generating Typescript SDK snippets.
-   * In @fern-docs/ui's resolver, we generate http-snippets for JavaScript.
+   * In @fern-ui/ui's resolver, we generate http-snippets for JavaScript.
    */
   alwaysEnableJavaScriptFetch: boolean;
 
@@ -191,8 +192,8 @@ export class ApiDefinitionV1ToLatest {
       queryParameters: this.migrateParameters(v1.queryParameters),
       requestHeaders: this.migrateParameters(v1.headers),
       responseHeaders: undefined,
-      request: this.migrateHttpRequest(v1.request),
-      response: this.migrateHttpResponse(v1.response),
+      requests: [this.migrateHttpRequest(v1.request)].filter(isNonNullish),
+      responses: [this.migrateHttpResponse(v1.response)].filter(isNonNullish),
       errors: this.migrateHttpErrors(v1.errorsV2),
       examples: undefined,
       snippetTemplates: v1.snippetTemplates,
@@ -455,6 +456,7 @@ export class ApiDefinitionV1ToLatest {
     if (examples.length === 0) {
       return undefined;
     }
+
     return examples.map((example): V2.ExampleEndpointCall => {
       const toRet: V2.ExampleEndpointCall = {
         path: example.path,
@@ -478,7 +480,7 @@ export class ApiDefinitionV1ToLatest {
             type: "json",
             value: sortKeysByShape(
               value.value,
-              endpoint.request?.body,
+              endpoint.requests?.[0]?.body,
               this.types
             ),
           }),
@@ -489,8 +491,8 @@ export class ApiDefinitionV1ToLatest {
               (formValue, key): APIV1Read.FormValue => {
                 if (formValue.type === "json") {
                   const shape =
-                    endpoint.request?.body.type === "formData"
-                      ? endpoint.request.body.fields.find(
+                    endpoint.requests?.[0]?.body.type === "formData"
+                      ? endpoint.requests?.[0]?.body.fields.find(
                           (field): field is V2.FormDataField.Property =>
                             field.key === key && field.type === "property"
                         )?.valueShape
@@ -511,7 +513,7 @@ export class ApiDefinitionV1ToLatest {
       if (toRet.responseBody) {
         toRet.responseBody.value = sortKeysByShape(
           toRet.responseBody.value,
-          endpoint.response?.body,
+          endpoint.responses?.[0]?.body,
           this.types
         );
       }

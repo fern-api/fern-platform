@@ -81,8 +81,8 @@ export function createApiDefinitionLatest({
         auth: undefined,
         defaultEnvironment: undefined,
         environments: undefined,
-        request: undefined,
-        response: undefined,
+        requests: undefined,
+        responses: undefined,
         errors: undefined,
         description: undefined,
         availability: undefined,
@@ -144,12 +144,9 @@ export function getAPIResponse<Success, Failure>(
   if (response.ok) {
     return response.body;
   }
-  if ("error" in response) {
-    throw new Error(
-      `Received error from response: ${JSON.stringify(response.error)}`
-    );
-  }
-  throw new Error(`Received error from response`);
+  throw new Error(
+    `Received error from response: ${JSON.stringify(response.error)}`
+  );
 }
 
 export function getClient({

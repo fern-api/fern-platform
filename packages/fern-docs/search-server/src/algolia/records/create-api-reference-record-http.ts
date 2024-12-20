@@ -22,7 +22,9 @@ export function createApiReferenceRecordHttp({
   const {
     content: request_description,
     code_snippets: request_description_code_snippets,
-  } = maybePrepareMdxContent(toDescription(endpoint.request?.description));
+  } = maybePrepareMdxContent(
+    toDescription(endpoint.requests?.[0]?.description)
+  );
 
   if (
     request_description != null ||
@@ -52,7 +54,9 @@ export function createApiReferenceRecordHttp({
   const {
     content: response_description,
     code_snippets: response_description_code_snippets,
-  } = maybePrepareMdxContent(toDescription(endpoint.response?.description));
+  } = maybePrepareMdxContent(
+    toDescription(endpoint.responses?.[0]?.description)
+  );
 
   if (
     response_description != null ||

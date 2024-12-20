@@ -49,7 +49,6 @@ describe("XFernEndpointExampleConverterNode", () => {
             contentType: "json",
           } as RequestMediaTypeObjectConverterNode,
         },
-        undefined,
         [
           {
             contentType: "application/json",
@@ -123,7 +122,6 @@ describe("XFernEndpointExampleConverterNode", () => {
             },
           } as unknown as RequestMediaTypeObjectConverterNode,
         },
-        undefined,
         [
           {
             contentType: "application/json",
@@ -194,7 +192,6 @@ describe("XFernEndpointExampleConverterNode", () => {
             contentType: "json",
           } as RequestMediaTypeObjectConverterNode,
         },
-        undefined,
         [
           {
             contentType: "text/event-stream",

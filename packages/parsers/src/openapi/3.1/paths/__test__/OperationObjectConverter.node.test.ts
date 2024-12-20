@@ -66,6 +66,7 @@ describe("OperationObjectConverterNode", () => {
             },
           },
         ],
+        examples: [],
       });
     });
 
@@ -74,6 +75,7 @@ describe("OperationObjectConverterNode", () => {
         description: "Test operation",
       };
 
+      const path = undefined as unknown as string;
       const node = new OperationObjectConverterNode(
         {
           input,
@@ -83,8 +85,9 @@ describe("OperationObjectConverterNode", () => {
         },
         undefined,
         undefined,
-        undefined,
+        path,
         "GET",
+        undefined,
         undefined
       );
 

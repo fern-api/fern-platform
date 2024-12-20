@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
 
 export declare namespace BooleanConverterNode {
@@ -18,7 +18,7 @@ export declare namespace BooleanConverterNode {
   }
 }
 
-export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   BooleanConverterNode.Input,
   BooleanConverterNode.Output
 > {
@@ -52,5 +52,11 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNode<
         },
       },
     };
+  }
+
+  example(): boolean | undefined {
+    return (
+      this.input.example ?? this.input.examples?.[0] ?? this.default ?? false
+    );
   }
 }

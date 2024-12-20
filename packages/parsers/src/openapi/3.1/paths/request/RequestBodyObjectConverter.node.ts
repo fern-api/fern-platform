@@ -6,7 +6,6 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { resolveRequestReference } from "../../../utils/3.1/resolveRequestReference";
-import { isReferenceObject } from "../../guards/isReferenceObject";
 import { RequestMediaTypeObjectConverterNode } from "./RequestMediaTypeObjectConverter.node";
 
 export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -30,9 +29,10 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
   }
 
   parse(): void {
-    const requestBody = isReferenceObject(this.input)
-      ? resolveRequestReference(this.input, this.context.document)
-      : this.input;
+    const requestBody = resolveRequestReference(
+      this.input,
+      this.context.document
+    );
 
     if (requestBody == null) {
       this.context.errors.error({

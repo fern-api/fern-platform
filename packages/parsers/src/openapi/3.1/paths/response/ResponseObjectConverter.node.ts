@@ -6,6 +6,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { resolveResponseReference } from "../../../utils/3.1/resolveResponseReference";
+import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ParameterBaseObjectConverterNode } from "../parameters/ParameterBaseObjectConverter.node";
 import {
@@ -24,7 +25,10 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.ResponseObject | OpenAPIV3_1.ReferenceObject
-    >
+    >,
+    protected path: string,
+    protected statusCode: number,
+    protected redocExamplesNode: RedocExampleConverterNode | undefined
   ) {
     super(args);
     this.safeParse();
@@ -53,6 +57,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         pathId: "headers",
       });
     });
+
     Object.entries(input.content ?? {}).forEach(
       ([contentType, contentTypeObject]) => {
         this.responses ??= [];
@@ -65,7 +70,10 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               pathId: "content",
             },
             contentType,
-            streamingFormat
+            streamingFormat,
+            this.path,
+            this.statusCode,
+            this.redocExamplesNode
           )
         );
       }
