@@ -3,7 +3,7 @@
 exports[`CopyToClipboardButton > renders correctly 1`] = `
 <button
   aria-disabled={false}
-  className="group fern-copy-button fern-button minimal normal rounded square"
+  className="fern-copy-button group fern-button minimal normal rounded square"
   data-state="closed"
   data-testid="copy-btn"
   onBlur={[Function]}
