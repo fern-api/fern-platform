@@ -472,13 +472,6 @@ export class ApiDefinitionV1ToLatest {
 
             return toRet;
         });
-
-        // // We take the cross product of requests and responses
-        // return endpoint.responses?.flatMap((response) => {
-        //     return (endpoint.requests ?? []).flatMap((request) =>
-        //     {}
-        //     );
-        // });
     };
 
     migrateHttpErrors = (errors: APIV1Read.ErrorDeclarationV2[] | undefined): V2.ErrorResponse[] | undefined => {
@@ -652,16 +645,14 @@ export class ApiDefinitionV1ToLatest {
         });
 
         if (!userProvidedLanguages.has(SupportedLanguage.Curl)) {
-            toSnippetHttpRequest(endpoint, example, this.auth).forEach((snippet) => {
-                const code = convertToCurl(snippet, flags);
-                push(SupportedLanguage.Curl, {
-                    language: SupportedLanguage.Curl,
-                    code,
-                    name: undefined,
-                    install: undefined,
-                    generated: true,
-                    description: undefined,
-                });
+            const code = convertToCurl(toSnippetHttpRequest(endpoint, example, this.auth), flags);
+            push(SupportedLanguage.Curl, {
+                language: SupportedLanguage.Curl,
+                code,
+                name: undefined,
+                install: undefined,
+                generated: true,
+                description: undefined,
             });
         }
 
