@@ -1,8 +1,8 @@
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
-import { useFeatureFlags, useIsReady } from "../atoms";
+import { UnreachableCaseError } from "ts-essentials";
+import { useFeatureFlag, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import type { DocsContent } from "../resolver/DocsContent";
 
@@ -31,19 +31,27 @@ const FeedbackPopover = dynamic(() => import("../feedback/FeedbackPopover"), {
   ssr: true,
 });
 
-const DocsMainContentRenderer = memo(
-  ({ content }: { content: DocsContent }) => {
-    return visitDiscriminatedUnion(content)._visit({
-      "markdown-page": (content) => <MarkdownPage content={content} />,
-      "api-reference-page": (content) => <ApiReferencePage content={content} />,
-      "api-endpoint-page": (content) => <ApiEndpointPage content={content} />,
-      changelog: (content) => <ChangelogPage content={content} />,
-      "changelog-entry": (content) => <ChangelogEntryPage content={content} />,
-      _other: () => null,
-    });
+const DocsMainContentRenderer = memo(function DocsMainContentRenderer({
+  content,
+}: {
+  content: DocsContent;
+}): ReactElement | null {
+  switch (content.type) {
+    case "markdown-page":
+      return <MarkdownPage content={content} />;
+    case "api-reference-page":
+      return <ApiReferencePage content={content} />;
+    case "api-endpoint-page":
+      return <ApiEndpointPage content={content} />;
+    case "changelog":
+      return <ChangelogPage content={content} />;
+    case "changelog-entry":
+      return <ChangelogEntryPage content={content} />;
+    default:
+      console.error(new UnreachableCaseError(content));
+      return null;
   }
-);
-DocsMainContentRenderer.displayName = "DocsMainContentRenderer";
+});
 
 function LazyDocsMainContentRenderer({
   content,
@@ -59,11 +67,13 @@ export const DocsMainContent = memo(function DocsMainContent({
 }: {
   content: DocsContent;
 }): ReactElement {
-  const { isInlineFeedbackEnabled } = useFeatureFlags();
+  const isInlineFeedbackEnabled = useFeatureFlag("isInlineFeedbackEnabled");
   const searchParams = useSearchParams();
+
   const FeedbackPopoverProvider = isInlineFeedbackEnabled
     ? FeedbackPopover
     : Fragment;
+
   const ContentRenderer =
     searchParams.get("error") === "true"
       ? LazyDocsMainContentRenderer
