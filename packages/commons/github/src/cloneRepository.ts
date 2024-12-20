@@ -8,23 +8,23 @@ import { parseRepository } from "./parseRepository";
  * @param githubRepository a string that can be parsed into a RepositoryReference (e.g. 'owner/repo')
  */
 export async function cloneRepository({
-    githubRepository,
-    installationToken,
+  githubRepository,
+  installationToken,
 }: {
-    githubRepository: string;
-    installationToken: string | undefined;
+  githubRepository: string;
+  installationToken: string | undefined;
 }): Promise<ClonedRepository> {
-    const repositoryReference = parseRepository(githubRepository);
-    const cloneUrl =
-        installationToken != null
-            ? repositoryReference.getAuthedCloneUrl(installationToken)
-            : repositoryReference.cloneUrl;
-    const dir = await tmp.dir();
-    const clonePath = dir.path;
-    const git = simpleGit(clonePath);
-    await git.clone(cloneUrl, ".");
+  const repositoryReference = parseRepository(githubRepository);
+  const cloneUrl =
+    installationToken != null
+      ? repositoryReference.getAuthedCloneUrl(installationToken)
+      : repositoryReference.cloneUrl;
+  const dir = await tmp.dir();
+  const clonePath = dir.path;
+  const git = simpleGit(clonePath);
+  await git.clone(cloneUrl, ".");
 
-    return new ClonedRepository({
-        clonePath,
-    });
+  return new ClonedRepository({
+    clonePath,
+  });
 }

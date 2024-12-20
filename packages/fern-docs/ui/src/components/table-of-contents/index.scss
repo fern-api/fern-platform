@@ -1,0 +1,25 @@
+@layer components {
+  .toc-root {
+    @apply relative border-l-2 border-transparent pl-3;
+  }
+
+  .toc-root::before,
+  .toc-root::after {
+    @apply absolute -left-0.5 top-0 w-0.5 rounded-full;
+
+    content: "";
+  }
+
+  .toc-root::before {
+    @apply bg-grayscale-a5 h-full;
+  }
+
+  .toc-root::after {
+    @apply bg-accent;
+
+    height: var(--height, 20px);
+    transform: translateY(calc(var(--top, 0px)));
+    transition: 0.25s;
+    transition-property: transform, height;
+  }
+}

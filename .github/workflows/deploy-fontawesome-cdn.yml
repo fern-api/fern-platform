@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/fontawesome-cdn
+name: Deploy @fern-docs/icons-cdn
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           project: "icons.ferndocs.com"
-          package: "@fern-ui/fontawesome-cdn"
+          package: "@fern-docs/icons-cdn"
           environment: "production"
           branch: main
 

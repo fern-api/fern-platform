@@ -1,13 +1,8 @@
 {
   "name": "@fern-api/fdr-sdk",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
   "sideEffects": false,
-  "source": "src/index.ts",
-  "main": "dist/index.js",
+  "type": "module",
   "exports": {
     "./navigation": {
       "types": "./dist/navigation/index.d.ts",
@@ -38,6 +33,21 @@
       "default": "./dist/index.js"
     }
   },
+  "main": "dist/index.js",
+  "source": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build tsconfig.build.json",
+    "dev": "tsc --watch tsconfig.build.json",
+    "docs:dev": "pnpm dev",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
+    "test": "vitest --run"
+  },
   "dependencies": {
     "@fern-api/ui-core-utils": "workspace:*",
     "@ungap/structured-clone": "^1.2.0",
@@ -58,26 +68,15 @@
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-typescript": "^7.26.0",
-    "@fern-api/eslint-config": "workspace:*",
     "@fern-platform/configs": "workspace:*",
     "@types/node-fetch": "2.6.9",
     "@types/qs": "6.9.14",
     "@types/tinycolor2": "^1.4.6",
     "@types/title": "^3.4.3",
     "@types/ungap__structured-clone": "^1.2.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.3.2",
-    "typescript": "5.4.3",
+    "eslint": "^9",
+    "prettier": "^3.4.2",
+    "typescript": "^5",
     "vitest": "^2.1.4"
-  },
-  "scripts": {
-    "compile": "tsc --build tsconfig.build.json",
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "lint": "eslint --max-warnings 0 src --ext .ts --resolve-plugins-relative-to ../../",
-    "test": "vitest --run",
-    "dev": "tsc --watch tsconfig.build.json",
-    "docs:dev": "pnpm dev"
   }
 }

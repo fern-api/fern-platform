@@ -1,7 +1,0 @@
-@layer components {
-    .fa-icon {
-        @apply size-4 inline-block bg-intent-default;
-
-        background-color: var(--fa-icon-dark, var(--gray-a11));
-    }
-}

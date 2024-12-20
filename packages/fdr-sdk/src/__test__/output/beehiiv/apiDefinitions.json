@@ -65,77 +65,81 @@
             "description": "The prefixed ID of the automation object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "email",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The email address associated with the subscription."
+                },
+                {
+                  "key": "subscription_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_ids:SubscriptionId"
                         }
                       }
                     }
                   }
                 },
-                "description": "The email address associated with the subscription."
-              },
-              {
-                "key": "subscription_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_ids:SubscriptionId"
+                {
+                  "key": "double_opt_override",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:DoubleOptOverride"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "Override publication double-opt settings for this subscription."
                 }
-              },
-              {
-                "key": "double_opt_override",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:DoubleOptOverride"
-                      }
-                    }
-                  }
-                },
-                "description": "Override publication double-opt settings for this subscription."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_automationJourneys:AutomationJourneysResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_automationJourneys:AutomationJourneysResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -475,16 +479,19 @@
             "description": "The prefixed ID of the automation object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_automationJourneys:AutomationJourneysIndexResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_automationJourneys:AutomationJourneysIndexResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -796,16 +803,19 @@
             "description": "The prefixed automation journey id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_automationJourneys:AutomationJourneysResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_automationJourneys:AutomationJourneysResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -1147,16 +1157,19 @@
             "description": "Pagination returns the results in pages. Each page contains the number of results specified by the `limit` (default: 10).<br>If not specified, results 1-10 from page 1 will be returned."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_automations:AutomationsListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_automations:AutomationsListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -1481,16 +1494,19 @@
             "description": "The prefixed ID of the automation object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_automations:AutomationsGetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_automations:AutomationsGetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -1788,16 +1804,19 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_bulkSubscriptionUpdates:BulkSubscriptionUpdatesListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_bulkSubscriptionUpdates:BulkSubscriptionUpdatesListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -2114,16 +2133,19 @@
             "description": "The ID of the Subscription Update object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_bulkSubscriptionUpdates:BulkSubscriptionUpdatesGetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_bulkSubscriptionUpdates:BulkSubscriptionUpdatesGetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -2426,48 +2448,52 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "subscriptions",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItem"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "subscriptions",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItem"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "An array of objects representing the subscriptions to be updated"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionsPatchResponse"
+                  },
+                  "description": "An array of objects representing the subscriptions to be updated"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionsPatchResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -2809,48 +2835,52 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "subscriptions",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItem"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "subscriptions",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItem"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "An array of objects representing the subscriptions to be updated"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionsPatchResponse"
+                  },
+                  "description": "An array of objects representing the subscriptions to be updated"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionsPatchResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -3192,47 +3222,50 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "subscription_ids",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "subscription_ids",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An array of subscription IDs to be updated"
                 },
-                "description": "An array of subscription IDs to be updated"
-              },
-              {
-                "key": "new_status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "new_status",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The new status to set for the subscriptions"
-              }
-            ]
+                  },
+                  "description": "The new status to set for the subscriptions"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/publications/publicationId/subscriptions",
@@ -3308,47 +3341,50 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "subscription_ids",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "subscription_ids",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An array of subscription IDs to be updated"
                 },
-                "description": "An array of subscription IDs to be updated"
-              },
-              {
-                "key": "new_status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "new_status",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The new status to set for the subscriptions"
-              }
-            ]
+                  },
+                  "description": "The new status to set for the subscriptions"
+                }
+              ]
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/publications/publicationId/subscriptions",
@@ -3424,47 +3460,51 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "kind",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:CustomFieldType"
-                  }
-                }
-              },
-              {
-                "key": "display",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "kind",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_:CustomFieldType"
+                    }
+                  }
+                },
+                {
+                  "key": "display",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_customFields:CustomFieldResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_customFields:CustomFieldResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -3806,16 +3846,19 @@
             "description": "The ID of the Custom Fields object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_customFields:CustomFieldResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_customFields:CustomFieldResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -4110,16 +4153,19 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_customFields:CustomFieldIndexResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_customFields:CustomFieldIndexResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -4403,43 +4449,47 @@
             "description": "The ID of the Custom Fields object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "display",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "display",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_customFields:CustomFieldResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_customFields:CustomFieldResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -4773,43 +4823,47 @@
             "description": "The ID of the Custom Fields object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "display",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "display",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_customFields:CustomFieldsPatchResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_customFields:CustomFieldsPatchResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -5143,16 +5197,19 @@
             "description": "The ID of the Custom Fields object"
           }
         ],
-        "response": {
-          "statusCode": 204,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_customFields:CustomFieldsDeleteResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 204,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_customFields:CustomFieldsDeleteResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -5630,16 +5687,19 @@
             "description": "Optionally filter the results by the `hidden_from_feed` attribute of the post.<br>`all` - Does not restrict results by `hidden_from_feed`.<br>`true` - Only return posts hidden from the feed.<br>`false` - Only return posts that are visible on the feed."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_posts:PostsListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_posts:PostsListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -6015,16 +6075,19 @@
             "description": "Optionally expand the results by adding additional information. <br>`stats` - Adds statistics about the post(s). <br>`free_web_content` - Adds the web HTML rendered to a free reader. <br>`free_email_content` - Adds the email HTML rendered to a free reader. <br>`free_rss_content` - Adds the RSS feed HTML. <br>`premium_web_content` - Adds the web HTML rendered to a premium reader. <br>`premium_email_content` - Adds the email HTML rendered to a premium reader."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_posts:PostsGetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_posts:PostsGetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -6403,16 +6466,19 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "response": {
-          "statusCode": 204,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_posts:PostsDeleteResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 204,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_posts:PostsDeleteResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -6776,16 +6842,19 @@
             "description": "The field that the results are sorted by. Defaults to created<br> `created` - The time in which the publication was first created.<br> `name` - The name of the publication."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_publications:PublicationsListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_publications:PublicationsListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -7123,16 +7192,19 @@
             "description": "Optionally expand the results by adding additional information like subscription counts and engagement stats."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_publications:PublicationsGetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_publications:PublicationsGetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -7489,16 +7561,19 @@
             "description": "Pagination returns the results in pages. Each page contains the number of results specified by the `limit` (default: 10).<br>If not specified, results 1-10 from page 1 will be returned."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_referralProgram:ReferralProgramGetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_referralProgram:ReferralProgramGetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -7920,16 +7995,19 @@
             "description": "The direction that the results are sorted in. Defaults to asc<br> `asc` - Ascending, sorts from smallest to largest.<br> `desc` - Descending, sorts from largest to smallest."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_segments:SegmentsListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_segments:SegmentsListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -8255,16 +8333,19 @@
             "description": "The prefixed ID of the segment object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_segments:SegmentShowResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_segments:SegmentShowResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Resource Not Found",
@@ -8541,16 +8622,19 @@
             "description": "Pagination returns the results in pages. Each page contains the number of results specified by the `limit` (default: 10).<br>If not specified, results 1-10 from page 1 will be returned."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_segments:SegmentsGetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_segments:SegmentsGetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -8874,16 +8958,19 @@
             "description": "The prefixed ID of the segment object"
           }
         ],
-        "response": {
-          "statusCode": 204,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_segments:SegmentDeleteResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 204,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_segments:SegmentDeleteResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Resource Not Found",
@@ -9119,321 +9206,325 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "email",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "email",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The email address of the subscription."
-              },
-              {
-                "key": "reactivate_existing",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The email address of the subscription."
+                },
+                {
+                  "key": "reactivate_existing",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Whether or not to reactivate the subscription if they have already unsubscribed. This option should be used only if the subscriber is knowingly resubscribing."
+                },
+                {
+                  "key": "send_welcome_email",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
                         }
                       }
                     }
                   }
                 },
-                "description": "Whether or not to reactivate the subscription if they have already unsubscribed. This option should be used only if the subscriber is knowingly resubscribing."
-              },
-              {
-                "key": "send_welcome_email",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "utm_source",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The source of the subscription."
+                },
+                {
+                  "key": "utm_medium",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The medium of the subscription"
+                },
+                {
+                  "key": "utm_campaign",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The acquisition campaign of the subscription"
+                },
+                {
+                  "key": "referring_site",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The website that the subscriber was referred from"
+                },
+                {
+                  "key": "referral_code",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "This should be a subscribers referral_code. This gives referral credit for the new subscription."
+                },
+                {
+                  "key": "custom_fields",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_:CustomFieldValue"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The custom fields must already exist for the publication. Any new custom fields here will be discarded."
+                },
+                {
+                  "key": "double_opt_override",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:DoubleOptOverride"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Override publication double-opt settings for this subscription."
+                },
+                {
+                  "key": "tier",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_subscriptions:SubscriptionsCreateRequestTier"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The tier for this subscription."
+                },
+                {
+                  "key": "premium_tiers",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The names of the premium tiers this subscription is associated with. Ignored if `premium_tier_ids` is given."
+                },
+                {
+                  "key": "premium_tier_ids",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The ids of the premium tiers this subscription is associated with."
+                },
+                {
+                  "key": "stripe_customer_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The Stripe customer ID for this subscription."
+                },
+                {
+                  "key": "automation_ids",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Enroll the subscriber into automations after their subscription has been created. Requires the automations to have an active *Add by API* trigger."
                 }
-              },
-              {
-                "key": "utm_source",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The source of the subscription."
-              },
-              {
-                "key": "utm_medium",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The medium of the subscription"
-              },
-              {
-                "key": "utm_campaign",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The acquisition campaign of the subscription"
-              },
-              {
-                "key": "referring_site",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The website that the subscriber was referred from"
-              },
-              {
-                "key": "referral_code",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "This should be a subscribers referral_code. This gives referral credit for the new subscription."
-              },
-              {
-                "key": "custom_fields",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_:CustomFieldValue"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The custom fields must already exist for the publication. Any new custom fields here will be discarded."
-              },
-              {
-                "key": "double_opt_override",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:DoubleOptOverride"
-                      }
-                    }
-                  }
-                },
-                "description": "Override publication double-opt settings for this subscription."
-              },
-              {
-                "key": "tier",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_subscriptions:SubscriptionsCreateRequestTier"
-                      }
-                    }
-                  }
-                },
-                "description": "The tier for this subscription."
-              },
-              {
-                "key": "premium_tiers",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The names of the premium tiers this subscription is associated with. Ignored if `premium_tier_ids` is given."
-              },
-              {
-                "key": "premium_tier_ids",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The ids of the premium tiers this subscription is associated with."
-              },
-              {
-                "key": "stripe_customer_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The Stripe customer ID for this subscription."
-              },
-              {
-                "key": "automation_ids",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "Enroll the subscriber into automations after their subscription has been created. Requires the automations to have an active *Add by API* trigger."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -9963,16 +10054,19 @@
             "description": "The direction that the results are sorted in. Defaults to asc<br> `asc` - Ascending, sorts from smallest to largest.<br> `desc` - Descending, sorts from largest to smallest."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionsListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionsListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -10350,16 +10444,19 @@
             "description": "Optional list of expandable objects.<br>`subscription_premium_tiers ` - Returns an array of tiers the subscription is associated with.<br>`referrals` - Returns an array of subscriptions with limited data - `id`, `email`, and `status`. These are the subscriptions that were referred by this subscription.<br>`stats` - Returns statistics about the subscription(s).<br>`custom_fields` - Returns an array of custom field values that have been set on the subscription."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -10728,16 +10825,19 @@
             "description": "Optional list of expandable objects.<br>`subscription_premium_tiers` - Returns an array of tiers the subscription is associated with.<br>`referrals` - Returns an array of subscriptions with limited data - `id`, `email`, and `status`. These are the subscriptions that were referred by this subscription.<br>`stats` - Returns statistics about the subscription(s).<br>`custom_fields` - Returns an array of custom field values that have been set on the subscription."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -11031,103 +11131,107 @@
             "description": "The prefixed ID of the subscription object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "tier",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_bulkSubscriptionUpdates:SubscriptionsPutRequestSubscriptionsItemTier"
-                      }
-                    }
-                  }
-                },
-                "description": "Optional parameter to set the tier for this subscription."
-              },
-              {
-                "key": "stripe_customer_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "tier",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_bulkSubscriptionUpdates:SubscriptionsPutRequestSubscriptionsItemTier"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Optional parameter to set the tier for this subscription."
                 },
-                "description": "The Stripe Customer ID of the subscription (not required)"
-              },
-              {
-                "key": "unsubscribe",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "stripe_customer_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A boolean value specifying whether to unsubscribe this subscription from the publication (not required)"
-              },
-              {
-                "key": "custom_fields",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_bulkSubscriptionUpdates:SubscriptionsPutRequestSubscriptionsItemCustomFieldsItem"
+                            "type": "string"
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The Stripe Customer ID of the subscription (not required)"
                 },
-                "description": "An array of custom field objects to update"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionResponse"
+                {
+                  "key": "unsubscribe",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A boolean value specifying whether to unsubscribe this subscription from the publication (not required)"
+                },
+                {
+                  "key": "custom_fields",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_bulkSubscriptionUpdates:SubscriptionsPutRequestSubscriptionsItemCustomFieldsItem"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An array of custom field objects to update"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -11481,103 +11585,107 @@
             "description": "The prefixed ID of the subscription object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "tier",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItemTier"
-                      }
-                    }
-                  }
-                },
-                "description": "Optional parameter to set the tier for this subscription."
-              },
-              {
-                "key": "stripe_customer_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "tier",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItemTier"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "Optional parameter to set the tier for this subscription."
                 },
-                "description": "The Stripe Customer ID of the subscription (not required)"
-              },
-              {
-                "key": "unsubscribe",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "stripe_customer_id",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "A boolean value specifying whether to unsubscribe this subscription from the publication (not required)"
-              },
-              {
-                "key": "custom_fields",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItemCustomFieldsItem"
+                            "type": "string"
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The Stripe Customer ID of the subscription (not required)"
                 },
-                "description": "An array of custom field objects to update"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionResponse"
+                {
+                  "key": "unsubscribe",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A boolean value specifying whether to unsubscribe this subscription from the publication (not required)"
+                },
+                {
+                  "key": "custom_fields",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_bulkSubscriptionUpdates:SubscriptionsPatchRequestSubscriptionsItemCustomFieldsItem"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "An array of custom field objects to update"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -11931,16 +12039,19 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "response": {
-          "statusCode": 204,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptions:SubscriptionDeleteResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 204,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptions:SubscriptionDeleteResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -12245,50 +12356,54 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "tags",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "tags",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Tags that can be used to group subscribers"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscriptionTags:SubscriptionTagsCreateResponse"
+                  },
+                  "description": "Tags that can be used to group subscribers"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscriptionTags:SubscriptionTagsCreateResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -12620,77 +12735,81 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
-                }
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "key": "prices_attributes",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_tiers:TierPricesAttributesItem"
+                },
+                {
+                  "key": "prices_attributes",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_tiers:TierPricesAttributesItem"
+                            }
                           }
                         }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tiers:TierResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tiers:TierResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -13111,16 +13230,19 @@
             "description": "The direction that the results are sorted in. Defaults to asc<br> `asc` - Ascending, sorts from smallest to largest.<br> `desc` - Descending, sorts from largest to smallest."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tiers:IndexTiersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tiers:IndexTiersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -13473,16 +13595,19 @@
             "description": "Optional list of expandable objects.<br>`stats` - Returns statistics about the tier(s).<br>`prices` - Returns prices for the tier(s)."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tiers:TierResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tiers:TierResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -13809,83 +13934,87 @@
             "description": "The prefixed ID of the tier object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "prices_attributes",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_tiers:UpdateTierPriceRequest"
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "prices_attributes",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_tiers:UpdateTierPriceRequest"
+                            }
                           }
                         }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tiers:TierResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tiers:TierResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -14241,83 +14370,87 @@
             "description": "The prefixed ID of the tier object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "prices_attributes",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_tiers:UpdateTierPriceRequest"
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "prices_attributes",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_tiers:UpdateTierPriceRequest"
+                            }
                           }
                         }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_tiers:TierResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_tiers:TierResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -14658,74 +14791,78 @@
             "description": "The prefixed ID of the publication object"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "url",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The webhook URL to send events to."
-              },
-              {
-                "key": "event_types",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_webhooks:WebhookEventType"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "The webhook URL to send events to."
                 },
-                "description": "The types of events the webhook will receive."
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "event_types",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_webhooks:WebhookEventType"
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The types of events the webhook will receive."
                 },
-                "description": "A description of the webhook."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_webhooks:WebhookResponse"
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "A description of the webhook."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_webhooks:WebhookResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -15086,16 +15223,19 @@
             "description": "A limit on the number of objects to be returned. The limit can range between 1 and 100, and the default is 10."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_webhooks:IndexWebhooksResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_webhooks:IndexWebhooksResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
@@ -15415,16 +15555,19 @@
             "description": "The prefixed ID of the webhook object"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_webhooks:WebhookResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_webhooks:WebhookResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Unprocessable Entity",
@@ -15749,16 +15892,19 @@
             "description": "The prefixed ID of the webhook object"
           }
         ],
-        "response": {
-          "statusCode": 204,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_webhooks:WebhooksDeleteResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 204,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_webhooks:WebhooksDeleteResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "description": "Bad Request",
