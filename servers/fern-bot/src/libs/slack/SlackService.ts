@@ -176,9 +176,9 @@ export class SlackService {
     // NOTE: The pulls URL is not the link to the specific PR, but the link to the PRs page
     //
     // We only call this function if there's at least one PR so this should be safe
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const pullsLink = aPull!.url.replace(
-      aPull!.pullRequestNumber.toString(),
+
+    const pullsLink = aPull?.url.replace(
+      aPull.pullRequestNumber.toString(),
       ""
     );
     await this.slackClient.chat.postMessage({
