@@ -6,7 +6,7 @@ import {
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { ApiDefinitionLoader } from "@fern-docs/server";
+import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithAuthState } from "./withRbac";
