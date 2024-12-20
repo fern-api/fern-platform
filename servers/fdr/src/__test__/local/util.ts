@@ -57,45 +57,45 @@ export function createApiDefinition({
 }
 
 export function createApiDefinitionLatest({
-    endpointId,
-    endpointPath,
-    endpointMethod,
+  endpointId,
+  endpointPath,
+  endpointMethod,
 }: {
-    endpointId: FdrAPI.EndpointId;
-    endpointPath: FdrAPI.api.latest.PathPart[];
-    endpointMethod: FdrAPI.HttpMethod;
+  endpointId: FdrAPI.EndpointId;
+  endpointPath: FdrAPI.api.latest.PathPart[];
+  endpointMethod: FdrAPI.HttpMethod;
 }): FdrAPI.api.latest.ApiDefinition {
-    return {
-        endpoints: {
-            [FdrAPI.EndpointId(endpointId)]: {
-                id: FdrAPI.EndpointId(endpointId),
-                method: endpointMethod,
-                path: endpointPath,
-                requestHeaders: undefined,
-                responseHeaders: undefined,
-                queryParameters: undefined,
-                pathParameters: undefined,
-                snippetTemplates: undefined,
-                namespace: undefined,
-                examples: undefined,
-                auth: undefined,
-                defaultEnvironment: undefined,
-                environments: undefined,
-                request: undefined,
-                response: undefined,
-                errors: undefined,
-                description: undefined,
-                availability: undefined,
-            },
-        },
-        types: {},
-        subpackages: {},
-        websockets: {},
-        webhooks: {},
-        id: FdrAPI.ApiDefinitionId("api"),
-        auths: {},
-        globalHeaders: undefined,
-    };
+  return {
+    endpoints: {
+      [FdrAPI.EndpointId(endpointId)]: {
+        id: FdrAPI.EndpointId(endpointId),
+        method: endpointMethod,
+        path: endpointPath,
+        requestHeaders: undefined,
+        responseHeaders: undefined,
+        queryParameters: undefined,
+        pathParameters: undefined,
+        snippetTemplates: undefined,
+        namespace: undefined,
+        examples: undefined,
+        auth: undefined,
+        defaultEnvironment: undefined,
+        environments: undefined,
+        request: undefined,
+        response: undefined,
+        errors: undefined,
+        description: undefined,
+        availability: undefined,
+      },
+    },
+    types: {},
+    subpackages: {},
+    websockets: {},
+    webhooks: {},
+    id: FdrAPI.ApiDefinitionId("api"),
+    auths: {},
+    globalHeaders: undefined,
+  };
 }
 
 export function createMockDocs({
@@ -144,9 +144,12 @@ export function getAPIResponse<Success, Failure>(
   if (response.ok) {
     return response.body;
   }
-  throw new Error(
-    `Received error from response: ${JSON.stringify(response.error)}`
-  );
+  if ("error" in response) {
+    throw new Error(
+      `Received error from response: ${JSON.stringify(response.error)}`
+    );
+  }
+  throw new Error(`Received error from response`);
 }
 
 export function getClient({
