@@ -7,13 +7,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
 
-export default async function handler(
+export async function GET(
   req: NextRequest
 ): Promise<NextResponse<SearchConfig>> {
-  if (req.method !== "GET") {
-    return NextResponse.json({ isAvailable: false }, { status: 405 });
-  }
-
   const authState = await getAuthStateEdge(req, req.nextUrl.pathname);
 
   if (!authState.ok) {
@@ -36,6 +32,7 @@ export default async function handler(
     searchInfo,
     inkeepSettings
   );
+
   return NextResponse.json(config, {
     status: config.isAvailable ? 200 : 503,
   });

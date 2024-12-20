@@ -8,7 +8,8 @@ import {
 } from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import type { PathnameViewerRules } from "@fern-docs/auth";
-import { EVERYONE_ROLE, addLeadingSlash, matchPath } from "@fern-docs/utils";
+import { EVERYONE_ROLE } from "@fern-docs/search-server";
+import { addLeadingSlash, matchPath } from "@fern-docs/utils";
 import type { AuthState } from "./auth/getAuthState";
 
 export enum Gate {

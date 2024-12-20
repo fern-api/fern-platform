@@ -3,7 +3,6 @@
  */
 
 import { FernUser } from "@fern-docs/auth";
-import { EVERYONE_ROLE } from "@fern-docs/utils";
 import { render } from "@testing-library/react";
 import { Atom, atom } from "jotai";
 import { freezeAtom } from "jotai/utils";
@@ -174,7 +173,7 @@ describe("If", () => {
   it("renders when the role is everyone, including when the user is not logged in", async () => {
     const { findByText } = render(
       <If
-        roles={[EVERYONE_ROLE]}
+        roles={["everyone"]}
         __test_fern_user_atom={createTestFernUserAtom(false)}
       >
         capture_the_flag
@@ -186,7 +185,7 @@ describe("If", () => {
   it("renders when the role is everyone, and the user is logged in", async () => {
     const { findByText } = render(
       <If
-        roles={[EVERYONE_ROLE]}
+        roles={["everyone"]}
         __test_fern_user_atom={createTestFernUserAtom([])}
       >
         capture_the_flag

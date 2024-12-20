@@ -1,18 +1,18 @@
 import { track } from "@/server/analytics/posthog";
 import { algoliaAppId, anthropicApiKey } from "@/server/env-variables";
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { searchClient } from "@algolia/client-search";
 import { getFeatureFlags } from "@fern-docs/edge-config";
+import { SuggestionsSchema } from "@fern-docs/search-server";
 import {
   SEARCH_INDEX,
   type AlgoliaRecord,
 } from "@fern-docs/search-server/algolia";
-import { SuggestionsSchema } from "@fern-docs/search-ui";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { kv } from "@vercel/kv";
 import { streamObject } from "ai";
-import { NextApiRequest, NextApiResponse } from "next/types";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
@@ -28,17 +28,9 @@ const BodySchema = z.object({
   algoliaSearchKey: z.string(),
 });
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).send(`Method ${req.method} Not Allowed`);
-  }
-
+export async function POST(req: NextRequest): Promise<Response> {
   const start = Date.now();
-  const domain = getDocsDomainNode(req);
+  const domain = getDocsDomainEdge(req);
   const featureFlags = await getFeatureFlags(domain);
 
   if (!featureFlags.isAskAiEnabled) {
@@ -46,18 +38,19 @@ export default async function handler(
   }
 
   const cacheKey = `${PREFIX}:${domain}:suggestions`;
-  if (!req.cookies[COOKIE_FERN_TOKEN]) {
+  if (!req.cookies.has(COOKIE_FERN_TOKEN)) {
     const cachedSuggestions = await kv.get(cacheKey);
 
     if (cachedSuggestions) {
-      return res
-        .status(200)
-        .setHeader("Content-Type", "text/plain; charset=utf-8")
-        .send(JSON.stringify(cachedSuggestions));
+      return NextResponse.json(cachedSuggestions, {
+        status: 200,
+        headers: { "Content-Type": "text/plain; charset=utf-8" },
+      });
     }
   }
 
-  const { algoliaSearchKey } = BodySchema.parse(req.body);
+  const body = await req.json();
+  const { algoliaSearchKey } = BodySchema.parse(body);
 
   const client = searchClient(algoliaAppId(), algoliaSearchKey);
   const response = await client.searchSingleIndex<AlgoliaRecord>({
@@ -94,12 +87,12 @@ export default async function handler(
       e.warnings?.forEach((warning) => {
         console.warn(warning);
       });
-      if (e.object && !req.cookies[COOKIE_FERN_TOKEN]) {
+      if (e.object && !req.cookies.has(COOKIE_FERN_TOKEN)) {
         await kv.set(cacheKey, e.object);
         await kv.expire(cacheKey, 60 * 60);
       }
     },
   });
 
-  return result.pipeTextStreamToResponse(res);
+  return result.toTextStreamResponse();
 }

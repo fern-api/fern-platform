@@ -5,7 +5,8 @@
     "outDir": "./dist",
     "moduleResolution": "Bundler",
     "module": "ESNext",
-    "types": ["node", "vitest/globals"]
+    "types": ["vitest/globals"],
+    "lib": ["WebWorker", "ES2023.Array"]
   },
   "include": ["./src/**/*.ts"],
   "references": [

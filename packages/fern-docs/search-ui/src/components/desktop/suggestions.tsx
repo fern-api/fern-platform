@@ -1,8 +1,8 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { SuggestionsSchema } from "@fern-docs/search-server";
 import { experimental_useObject } from "ai/react";
 import { debounce } from "es-toolkit/function";
 import { ReactNode, useEffect, useMemo } from "react";
-import { SuggestionsSchema } from "../../server/suggestions-schema";
 import * as Command from "../cmdk";
 
 export const Suggestions = ({

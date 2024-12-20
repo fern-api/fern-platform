@@ -10,11 +10,6 @@ export const HEADER_X_MATCHED_PATH = "x-matched-path";
 export const HEADER_X_VERCEL_PROTECTION_BYPASS = "x-vercel-protection-bypass";
 
 /**
- * The role that is used to represent everyone (including unauthenticated users)
- */
-export const EVERYONE_ROLE = "everyone";
-
-/**
  * Revalidate all cached docs within 6 days because S3 signatures expire after 7 days.
  */
 export const REVALIDATE_SECONDS = 60 * 60 * 24 * 6;

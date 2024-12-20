@@ -1,6 +1,6 @@
-import { GenerateSecuredApiKeyOptions } from "algoliasearch";
-import { createHmac } from "crypto";
-import { createSearchFilters } from "./create-search-filters";
+import type { GenerateSecuredApiKeyOptions } from "algoliasearch";
+import { createSearchFilters } from "../create-search-filters";
+import { generateHmacAndEncode } from "./hmac";
 
 interface GetSearchApiKeyOptions {
   /**
@@ -39,7 +39,7 @@ interface GetSearchApiKeyOptions {
   userToken: string | undefined;
 }
 
-export function getSearchApiKey({
+export async function getSearchApiKey({
   parentApiKey,
   domain,
   roles,
@@ -47,8 +47,8 @@ export function getSearchApiKey({
   expiresInSeconds,
   searchIndex,
   userToken,
-}: GetSearchApiKeyOptions): string {
-  return generateSecuredApiKey({
+}: GetSearchApiKeyOptions): Promise<string> {
+  return await generateSecuredApiKey({
     parentApiKey,
     restrictions: {
       filters:
@@ -61,10 +61,10 @@ export function getSearchApiKey({
   });
 }
 
-function generateSecuredApiKey({
+async function generateSecuredApiKey({
   parentApiKey,
   restrictions = {},
-}: GenerateSecuredApiKeyOptions): string {
+}: GenerateSecuredApiKeyOptions): Promise<string> {
   let mergedRestrictions = restrictions;
   if (restrictions.searchParams) {
     // merge searchParams with the root restrictions
@@ -84,10 +84,7 @@ function generateSecuredApiKey({
     }, {});
 
   const queryParameters = serializeQueryParameters(mergedRestrictions);
-  return Buffer.from(
-    createHmac("sha256", parentApiKey).update(queryParameters).digest("hex") +
-      queryParameters
-  ).toString("base64");
+  return await generateHmacAndEncode(parentApiKey, queryParameters);
 }
 
 function serializeQueryParameters(parameters: Record<string, any>): string {

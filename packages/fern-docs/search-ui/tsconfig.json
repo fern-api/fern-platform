@@ -42,7 +42,8 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx",
-    "../components/src/kbd.tsx"
+    "../components/src/kbd.tsx",
+    "../search-server/src/utils/system-prompt.ts"
   ],
   "exclude": ["node_modules", "src/server/**/*"]
 }

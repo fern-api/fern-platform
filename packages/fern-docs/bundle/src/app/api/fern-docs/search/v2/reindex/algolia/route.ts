@@ -7,7 +7,7 @@ import {
   fernToken,
 } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
 import {
   SEARCH_INDEX,
@@ -15,25 +15,22 @@ import {
   algoliaIndexerTask,
 } from "@fern-docs/search-server/algolia";
 import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
-import { NextApiRequest, NextApiResponse } from "next/types";
+import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 900; // 15 minutes
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> {
-  const domain = getDocsDomainNode(req);
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const domain = getDocsDomainEdge(req);
 
   try {
     const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
     if (orgMetadata == null) {
-      return res.status(404).send("Not found");
+      return NextResponse.json("Not found", { status: 404 });
     }
 
     // If the domain is a preview URL, we don't want to reindex
     if (orgMetadata.isPreviewUrl) {
-      return res.status(200).json({
+      return NextResponse.json({
         added: 0,
         updated: 0,
         deleted: 0,
@@ -93,7 +90,7 @@ export default async function handler(
       );
     });
 
-    return res.status(200).json({
+    return NextResponse.json({
       added: response.addedObjectIDs.length,
       updated: response.updatedObjectIDs.length,
       deleted: response.deletedObjectIDs.length,
@@ -108,6 +105,6 @@ export default async function handler(
       error: String(error),
     });
 
-    return res.status(500).send("Internal server error");
+    return NextResponse.json("Internal server error", { status: 500 });
   }
 }

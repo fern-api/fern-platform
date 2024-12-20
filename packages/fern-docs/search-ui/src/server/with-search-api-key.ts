@@ -13,7 +13,7 @@ interface WithSearchApiKeyOptions {
   expiresInSeconds?: number;
 }
 
-export function withSearchApiKey({
+export async function withSearchApiKey({
   searchApiKey,
   domain,
   roles,
@@ -23,8 +23,8 @@ export function withSearchApiKey({
    * Defaults to 24 hours
    */
   expiresInSeconds = DEFAULT_SEARCH_API_KEY_EXPIRATION_SECONDS,
-}: WithSearchApiKeyOptions): string {
-  return getSearchApiKey({
+}: WithSearchApiKeyOptions): Promise<string> {
+  return await getSearchApiKey({
     parentApiKey: searchApiKey,
     domain,
     roles,

@@ -14,7 +14,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     request.headers.get("X-User-Token") ??
     `anonymous-user-${randomUUID()}`;
 
-  const apiKey = withSearchApiKey({
+  const apiKey = await withSearchApiKey({
     searchApiKey: algoliaSearchApikey(),
     domain,
     roles: [],

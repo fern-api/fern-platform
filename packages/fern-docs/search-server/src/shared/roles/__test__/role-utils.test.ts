@@ -1,4 +1,4 @@
-import { EVERYONE_ROLE } from "@fern-docs/utils";
+import { EVERYONE_ROLE } from "../../../utils/constants";
 import {
   createPermutations,
   flipAndOrToOrAnd,

@@ -1,5 +1,4 @@
 import { FernUser } from "@fern-docs/auth";
-import { EVERYONE_ROLE } from "@fern-docs/utils";
 import { Atom } from "jotai";
 import { PropsWithChildren, ReactNode } from "react";
 import { useFernUser } from "../../../atoms";
@@ -60,7 +59,7 @@ export function If({
         return user != null;
       }
       return roles.some(
-        (role) => userRoles.includes(role) || role === EVERYONE_ROLE
+        (role) => userRoles.includes(role) || role === "everyone"
       );
     }
     if (loggedIn != null) {

@@ -3,7 +3,7 @@ import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
 import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
 import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
 import { embedMany } from "ai";
-import { NextApiRequest, NextApiResponse } from "next/types";
+import { NextRequest, NextResponse } from "next/server";
 
 import { track } from "@/server/analytics/posthog";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
@@ -14,7 +14,7 @@ import {
   turbopufferApiKey,
 } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 
 const openai = createOpenAI({
   apiKey: openaiApiKey(),
@@ -24,28 +24,29 @@ const embeddingModel = openai.embedding("text-embedding-3-small");
 
 export const maxDuration = 900; // 15 minutes
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> {
-  const domain = getDocsDomainNode(req);
-  const deleteExisting = req.query.deleteExisting === "true";
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const domain = getDocsDomainEdge(req);
+  const deleteExisting =
+    req.nextUrl.searchParams.get("deleteExisting") === "true";
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
 
   try {
     const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
     if (orgMetadata == null) {
-      return res.status(404).send("Not found");
+      return NextResponse.json("Not found", { status: 404 });
     }
 
     // If the domain is a preview URL, we don't want to reindex
     if (orgMetadata.isPreviewUrl) {
-      return res.status(200).json({
-        added: 0,
-        updated: 0,
-        deleted: 0,
-        unindexable: 0,
-      });
+      return NextResponse.json(
+        {
+          added: 0,
+          updated: 0,
+          deleted: 0,
+          unindexable: 0,
+        },
+        { status: 200 }
+      );
     }
 
     const start = Date.now();
@@ -99,9 +100,12 @@ export default async function handler(
       added: numInserted,
     });
 
-    return res.status(200).json({
-      added: numInserted,
-    });
+    return NextResponse.json(
+      {
+        added: numInserted,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
 
@@ -112,6 +116,6 @@ export default async function handler(
       error: String(error),
     });
 
-    return res.status(500).send("Internal server error");
+    return NextResponse.json("Internal server error", { status: 500 });
   }
 }

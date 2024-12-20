@@ -81,9 +81,11 @@ const nextConfig = {
     scrollRestoration: true,
     hardNavigate404: true,
     optimizePackageImports: [
+      "@fern-api/fdr-sdk",
       "@fern-docs/ui",
       "@fern-docs/mdx",
       "@fern-docs/components",
+      "@fern-docs/search-server",
       "es-toolkit",
       "ts-essentials",
     ],

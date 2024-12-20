@@ -10,6 +10,10 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
     "./algolia": {
       "types": "./dist/algolia/index.d.ts",
       "default": "./dist/algolia/index.js"
@@ -17,6 +21,10 @@
     "./algolia/types": {
       "types": "./dist/algolia/types.d.ts",
       "default": "./dist/algolia/types.js"
+    },
+    "./algolia/edge": {
+      "types": "./dist/algolia/edge/index.d.ts",
+      "default": "./dist/algolia/edge/index.js"
     },
     "./archive": {
       "types": "./dist/algolia/records/archive/index.d.ts",

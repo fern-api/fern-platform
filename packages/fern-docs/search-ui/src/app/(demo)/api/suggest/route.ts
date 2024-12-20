@@ -1,7 +1,7 @@
 import { algoliaAppId } from "@/server/env-variables";
 import { models } from "@/server/models";
-import { SuggestionsSchema } from "@/server/suggestions-schema";
 import { searchClient } from "@algolia/client-search";
+import { SuggestionsSchema } from "@fern-docs/search-server";
 import {
   SEARCH_INDEX,
   type AlgoliaRecord,

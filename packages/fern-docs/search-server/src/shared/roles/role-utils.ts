@@ -1,5 +1,5 @@
-import { EVERYONE_ROLE } from "@fern-docs/utils";
 import { sortBy, uniq, uniqBy } from "es-toolkit/array";
+import { EVERYONE_ROLE } from "../../utils/constants";
 import { createRoleFacet } from "./create-role-facet";
 
 /**

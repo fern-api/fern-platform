@@ -1,15 +1,3 @@
-import { createAnthropic } from "@ai-sdk/anthropic";
-import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
-import {
-  queryTurbopuffer,
-  toDocuments,
-} from "@fern-docs/search-server/turbopuffer";
-import { createDefaultSystemPrompt } from "@fern-docs/search-ui";
-import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { embed, streamText, tool } from "ai";
-import { NextApiRequest, NextApiResponse } from "next/types";
-import { z } from "zod";
-
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
@@ -18,8 +6,19 @@ import {
   openaiApiKey,
   turbopufferApiKey,
 } from "@/server/env-variables";
-import { getDocsDomainNode } from "@/server/xfernhost/node";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
+import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
+import { createDefaultSystemPrompt } from "@fern-docs/search-server";
+import {
+  queryTurbopuffer,
+  toDocuments,
+} from "@fern-docs/search-server/turbopuffer";
+import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
+import { embed, streamText, tool } from "ai";
+import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 
 const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
 const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
@@ -30,27 +29,18 @@ const openai = createOpenAI({
 
 const embeddingModel = openai.embedding("text-embedding-3-small");
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-): Promise<void> {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).send(`Method ${req.method} Not Allowed`);
-  }
-
-  const domain = getDocsDomainNode(req);
+export async function POST(req: NextRequest) {
+  const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-  const messages = req.body.messages;
+  const { messages } = await req.json();
 
   const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
   if (orgMetadata == null) {
-    return res.status(404).send("Not found");
+    return NextResponse.json("Not found", { status: 404 });
   }
 
-  // If the domain is a preview URL, we don't want to reindex
   if (orgMetadata.isPreviewUrl) {
-    return res.status(200).json({
+    return NextResponse.json({
       added: 0,
       updated: 0,
       deleted: 0,
@@ -68,7 +58,7 @@ export default async function handler(
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 
-  const fern_token = req.cookies[COOKIE_FERN_TOKEN];
+  const fern_token = req.cookies.get(COOKIE_FERN_TOKEN)?.value;
   const user = await safeVerifyFernJWTConfig(fern_token, authEdgeConfig);
 
   const lastUserMessage: string | undefined = messages.findLast(
@@ -132,7 +122,7 @@ export default async function handler(
     },
   });
 
-  return result.pipeDataStreamToResponse(res);
+  return result.toDataStreamResponse();
 }
 
 async function runQueryTurbopuffer(

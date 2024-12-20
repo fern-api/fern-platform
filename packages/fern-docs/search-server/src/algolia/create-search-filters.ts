@@ -1,6 +1,6 @@
-import { EVERYONE_ROLE } from "@fern-docs/utils";
 import { createRoleFacet } from "../shared/roles/create-role-facet";
 import { createPermutations } from "../shared/roles/role-utils";
+import { EVERYONE_ROLE } from "../utils/constants";
 
 interface CreateSearchFiltersOpts {
   domain: string;

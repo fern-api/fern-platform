@@ -1,5 +1,4 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { EVERYONE_ROLE } from "@fern-docs/utils";
 import {
   FilterCondition,
   QueryResults,
@@ -7,6 +6,7 @@ import {
 } from "@turbopuffer/turbopuffer";
 import { createRoleFacet } from "../shared/roles/create-role-facet";
 import { createPermutations } from "../shared/roles/role-utils";
+import { EVERYONE_ROLE } from "../utils/constants";
 import { FernTurbopufferRecord } from "./types";
 
 interface SemanticSearchOptions {

@@ -245,7 +245,7 @@ const DesktopAskAIChat = ({
       void chat.append({ role: "user", content: message });
       chat.setInput("");
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     [chat.append, chat.setInput],
     1000,
     { edges: ["leading"] }
@@ -595,7 +595,7 @@ const AskAICommandItems = memo<{
                               ...components,
                               sup: FootnoteSup,
                               section: ({ children, node, ...props }) => {
-                                if (node?.properties["dataFootnotes"]) {
+                                if (node?.properties.dataFootnotes) {
                                   return (
                                     <FootnotesSection
                                       node={node}
