@@ -1,4 +1,4 @@
-import { FernButton, FernButtonGroup } from "@fern-ui/components";
+import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import clsx from "clsx";
 import { motion } from "framer-motion";
 import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
@@ -154,13 +154,13 @@ export const FeedbackPopover = forwardRef<
           icon={
             <ThumbsDown
               className={clsx("opacity-60", {
-                "animate-thumb-rock": isHelpful === false,
+                "animate-thumb-rock": !isHelpful,
               })}
             />
           }
           variant="minimal"
-          intent={isHelpful === false ? "danger" : "none"}
-          active={isHelpful === false}
+          intent={!isHelpful ? "danger" : "none"}
+          active={!isHelpful}
           onClick={handleThumbsDown}
           className={clsx({ "w-full": isHelpful !== undefined })}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}

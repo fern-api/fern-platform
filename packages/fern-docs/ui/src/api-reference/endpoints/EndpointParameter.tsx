@@ -2,7 +2,7 @@ import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import { AvailabilityBadge } from "@fern-ui/components/badges";
+import { AvailabilityBadge } from "@fern-docs/components/badges";
 import cn from "clsx";
 import { compact } from "es-toolkit/array";
 import {
