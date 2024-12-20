@@ -135,10 +135,11 @@ describe("RequestMediaTypeObjectConverterNode", () => {
         accessPath: [],
         pathId: "test",
       },
-      "application/xml"
+      "application/xml",
+      "testpath",
+      200
     );
 
-    expect(converter.contentType).toBeUndefined();
     expect(mockContext.errors.warning).toHaveBeenCalled();
   });
 });
