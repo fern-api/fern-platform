@@ -1,7 +1,7 @@
 import React from "react";
 import { z } from "zod";
+import { TRACK_EVENT_NAME } from "./constants";
 
-const TRACK_EVENT_NAME = "fern-docs-track-analytics";
 const TrackEventSchema = z.object({
   event: z.string(),
   properties: z
@@ -48,7 +48,6 @@ export function useSafeListenTrackEvents(
           }
         }
       } catch (error) {
-         
         console.warn("Error emitting track event", error, event);
       }
     };
