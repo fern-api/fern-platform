@@ -5,8 +5,6 @@ import { getFeatureFlags } from "@fern-docs/edge-config";
 import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
-
 export async function GET(
   req: NextRequest,
   { params }: { params: { api: string; endpoint: string } }
