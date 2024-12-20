@@ -408,7 +408,7 @@ export class ApiDefinitionV1ToLatest {
             return undefined;
         }
 
-        examples.map((example): V2.ExampleEndpointCall => {
+        return examples.map((example): V2.ExampleEndpointCall => {
             const toRet: V2.ExampleEndpointCall = {
                 path: example.path,
                 responseStatusCode: example.responseStatusCode,
