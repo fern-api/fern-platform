@@ -77,7 +77,7 @@
     "algoliasearch": "^5.13.0",
     "bezier-easing": "^2.1.0",
     "clsx": "^2.1.0",
-    "colorjs.io": "^0.5.0",
+    "colorjs.io": "^0.5.2",
     "es-toolkit": "^1.27.0",
     "esbuild": "0.20.2",
     "fastdom": "^1.0.12",

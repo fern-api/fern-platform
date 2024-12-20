@@ -7,6 +7,7 @@ settings:
 overrides:
   '@babel/core': 7.26.0
   clipboardy: 4.0.0
+  colorjs.io: ^0.5.2
   cookie: 0.7.0
   cross-spawn: 7.0.5
   elliptic: 6.6.0
@@ -2125,8 +2126,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.1
       colorjs.io:
-        specifier: ^0.5.0
-        version: 0.5.0
+        specifier: ^0.5.2
+        version: 0.5.2
       es-toolkit:
         specifier: ^1.27.0
         version: 1.30.0
@@ -8718,11 +8719,8 @@ packages:
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
-  colorjs.io@0.4.5:
-    resolution: {integrity: sha512-yCtUNCmge7llyfd/Wou19PMAcf5yC3XXhgFoAh6zsO2pGswhUPBaaUh8jzgHnXtXuZyFKzXZNAnyF5i+apICow==}
-
-  colorjs.io@0.5.0:
-    resolution: {integrity: sha512-qekjTiBLM3F/sXKks/ih5aWaHIGu+Ftel0yKEvmpbKvmxpNOhojKgha5uiWEUOqEpRjC1Tq3nJRT7WgdBOxIGg==}
+  colorjs.io@0.5.2:
+    resolution: {integrity: sha512-twmVoizEW7ylZSN32OgKdXRmo1qg+wT5/6C3xu5b9QsWzSFAhHLn2xd8ro0diCsKfCj1RdaTP/nrcW+vAoQPIw==}
 
   colors@1.4.0:
     resolution: {integrity: sha512-a+UqTh4kgZg/SlGvfbzDHpgRu7AAQOmmqRHJnxhRZICKFUT91brVhNNt58CMWU9PsBbv3PDCZUHbVxuDiH2mtA==}
@@ -18469,7 +18467,7 @@ snapshots:
       '@inkeep/preset-chakra': 0.0.24(@internationalized/date@3.5.4)(jsdom@24.0.0)(typescript@5.7.2)
       '@inkeep/shared': 0.0.25
       '@pandacss/dev': 0.22.1(jsdom@24.0.0)(typescript@5.7.2)
-      colorjs.io: 0.4.5
+      colorjs.io: 0.5.2
     transitivePeerDependencies:
       - '@internationalized/date'
       - jsdom
@@ -24210,9 +24208,7 @@ snapshots:
 
   colorette@2.0.20: {}
 
-  colorjs.io@0.4.5: {}
-
-  colorjs.io@0.5.0: {}
+  colorjs.io@0.5.2: {}
 
   colors@1.4.0: {}
 

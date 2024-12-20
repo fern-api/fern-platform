@@ -3,7 +3,8 @@
   "compilerOptions": {
     "composite": true,
     "noEmit": false,
-    "rootDir": "."
+    "rootDir": ".",
+    "outDir": "./dist"
   },
   "include": ["src/**/*"],
   "references": [

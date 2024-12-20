@@ -1,5 +1,6 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-// adapted from: https://github.com/radix-ui/website/blob/main/components/generateRadixColors.tsx
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck https://github.com/radix-ui/website/blob/main/components/generateRadixColors.tsx
+
 import * as RadixColors from "@radix-ui/colors";
 import BezierEasing from "bezier-easing";
 import Color from "colorjs.io";
@@ -8,12 +9,12 @@ type ArrayOf12<T> = [T, T, T, T, T, T, T, T, T, T, T, T];
 const arrayOf12 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
 
 // prettier-ignore
-const grayScaleNames = ["gray", "mauve", "slate", "sage", "olive", "sand"] as const;
+const grayScaleNames = ['gray', 'mauve', 'slate', 'sage', 'olive', 'sand'] as const;
 
 // prettier-ignore
-const scaleNames = [...grayScaleNames, "tomato", "red", "ruby", "crimson", "pink",
-"plum", "purple", "violet", "iris", "indigo", "blue", "cyan", "teal", "jade", "green",
-"grass", "brown", "orange", "sky", "mint", "lime", "yellow", "amber"] as const;
+const scaleNames = [...grayScaleNames, 'tomato', 'red', 'ruby', 'crimson', 'pink',
+'plum', 'purple', 'violet', 'iris', 'indigo', 'blue', 'cyan', 'teal', 'jade', 'green',
+'grass', 'brown', 'orange', 'sky', 'mint', 'lime', 'yellow', 'amber'] as const;
 
 const lightColors = Object.fromEntries(
   scaleNames.map((scaleName) => [
@@ -51,27 +52,6 @@ export const darkGrayColors = Object.fromEntries(
   ])
 ) as Record<(typeof grayScaleNames)[number], ArrayOf12<Color>>;
 
-interface GenerateRadixColorsResult {
-  accentScale: ArrayOf12<string>;
-  accentScaleAlpha: ArrayOf12<string>;
-  accentScaleWideGamut: ArrayOf12<string>;
-  accentScaleAlphaWideGamut: ArrayOf12<string>;
-  accentContrast: string;
-
-  grayScale: ArrayOf12<string>;
-  grayScaleAlpha: ArrayOf12<string>;
-  grayScaleWideGamut: ArrayOf12<string>;
-  grayScaleAlphaWideGamut: ArrayOf12<string>;
-
-  graySurface: string;
-  graySurfaceWideGamut: string;
-
-  accentSurface: string;
-  accentSurfaceWideGamut: string;
-
-  background: string;
-}
-
 export const generateRadixColors = ({
   appearance,
   ...args
@@ -80,7 +60,7 @@ export const generateRadixColors = ({
   accent: string;
   gray: string;
   background: string;
-}): GenerateRadixColorsResult => {
+}) => {
   const allScales = appearance === "light" ? lightColors : darkColors;
   const grayScales = appearance === "light" ? lightGrayColors : darkGrayColors;
   const backgroundColor = new Color(args.background).to("oklch");
@@ -178,13 +158,13 @@ export const generateRadixColors = ({
   return {
     accentScale: accentScaleHex,
     accentScaleAlpha: accentScaleAlphaHex,
-    accentScaleWideGamut,
+    accentScaleWideGamut: accentScaleWideGamut,
     accentScaleAlphaWideGamut: accentScaleAlphaWideGamutString,
     accentContrast: accentContrastColorHex,
 
     grayScale: grayScaleHex,
     grayScaleAlpha: grayScaleAlphaHex,
-    grayScaleWideGamut,
+    grayScaleWideGamut: grayScaleWideGamut,
     grayScaleAlphaWideGamut: grayScaleAlphaWideGamutString,
 
     graySurface: appearance === "light" ? "#ffffffcc" : "rgba(0, 0, 0, 0.05)",
@@ -260,7 +240,7 @@ export function getClosestGrayScale(
 
     allColors.sort((a, b) => a.distance - b.distance);
 
-    return allColors[0]!.scale as (typeof grayScaleNames)[number];
+    return allColors[0].scale as (typeof grayScaleNames)[number];
   } catch (e) {
     console.error(e);
     return "gray";
@@ -297,14 +277,14 @@ function getScaleFromColor(
   const allAreGrays = closestColors.every((color) =>
     grayScaleNamesStr.includes(color.scale)
   );
-  if (!allAreGrays && grayScaleNamesStr.includes(closestColors[0]!.scale)) {
-    while (grayScaleNamesStr.includes(closestColors[1]!.scale)) {
+  if (!allAreGrays && grayScaleNamesStr.includes(closestColors[0].scale)) {
+    while (grayScaleNamesStr.includes(closestColors[1].scale)) {
       closestColors.splice(1, 1);
     }
   }
 
-  const colorA = closestColors[0]!;
-  const colorB = closestColors[1]!;
+  const colorA = closestColors[0];
+  const colorB = closestColors[1];
 
   // Light trigonometry ahead.
   //
@@ -372,8 +352,8 @@ function getScaleFromColor(
   const ratio = Math.max(0, tanC1 / tanC2) * 0.5;
 
   // The base scale is going to be a mix of the two closest scales, with the mix ratio we determined before
-  const scaleA = scales[colorA.scale]!;
-  const scaleB = scales[colorB.scale]!;
+  const scaleA = scales[colorA.scale];
+  const scaleB = scales[colorB.scale];
   const scale = arrayOf12.map((i) =>
     new Color(Color.mix(scaleA[i], scaleB[i], ratio)).to("oklch")
   ) as ArrayOf12<Color>;
@@ -381,7 +361,7 @@ function getScaleFromColor(
   // Get the closest color from the pre-mixed scale we created
   const baseColor = scale
     .slice()
-    .sort((a, b) => source.deltaEOK(a) - source.deltaEOK(b))[0]!;
+    .sort((a, b) => source.deltaEOK(a) - source.deltaEOK(b))[0];
 
   // Note the chroma difference between the source color and the base color
   const ratioC = source.coords[1] / baseColor.coords[1];
@@ -410,7 +390,7 @@ function getScaleFromColor(
     newLightnessScale.shift();
 
     newLightnessScale.forEach((lightness, i) => {
-      scale[i]!.coords[0] = lightness;
+      scale[i].coords[0] = lightness;
     });
 
     return scale;
@@ -429,7 +409,7 @@ function getScaleFromColor(
 
     for (let i = 0; i < ease.length; i++) {
       const metaRatio = (ratioL - 1) * (maxRatio / (maxRatio - 1));
-      ease[i] = ratioL > maxRatio ? 0 : Math.max(0, ease[i]! * (1 - metaRatio));
+      ease[i] = ratioL > maxRatio ? 0 : Math.max(0, ease[i] * (1 - metaRatio));
     }
   }
 
@@ -442,7 +422,7 @@ function getScaleFromColor(
   );
 
   newLightnessScale.forEach((lightness, i) => {
-    scale[i]!.coords[0] = lightness;
+    scale[i].coords[0] = lightness;
   });
 
   return scale;
@@ -602,11 +582,11 @@ function getAlphaColorSrgb(
   return formatHex(new Color("srgb", [r, g, b], a).toString({ format: "hex" }));
 }
 
-export function getAlphaColorP3(
+function getAlphaColorP3(
   targetColor: string,
   backgroundColor: string,
   targetAlpha?: number
-): string {
+) {
   const [r, g, b, a] = getAlphaColor(
     new Color(targetColor).to("p3").coords,
     new Color(backgroundColor).to("p3").coords,
@@ -658,10 +638,10 @@ export function transposeProgressionStart(
   to: number,
   arr: number[],
   curve: [number, number, number, number]
-): number[] {
+) {
   return arr.map((n, i, arr) => {
     const lastIndex = arr.length - 1;
-    const diff = arr[0]! - to;
+    const diff = arr[0] - to;
     const fn = BezierEasing(...curve);
     return n - diff * fn(1 - i / lastIndex);
   });
@@ -671,10 +651,10 @@ export function transposeProgressionEnd(
   to: number,
   arr: number[],
   curve: [number, number, number, number]
-): number[] {
+) {
   return arr.map((n, i, arr) => {
     const lastIndex = arr.length - 1;
-    const diff = arr[lastIndex]! - to;
+    const diff = arr[lastIndex] - to;
     const fn = BezierEasing(...curve);
     return n - diff * fn(i / lastIndex);
   });

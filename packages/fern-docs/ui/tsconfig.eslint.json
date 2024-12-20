@@ -10,5 +10,6 @@
     "tailwind.config.cjs",
     "postcss.config.cjs",
     "vitest.config.ts"
-  ]
+  ],
+  "exclude": ["node_modules", "dist", ".turbo"]
 }

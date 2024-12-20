@@ -6,6 +6,7 @@
 
 import Router from "next/router";
 import NProgress from "nprogress";
+import React from "react";
 
 export interface NextNProgressProps {
   /**
