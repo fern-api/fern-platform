@@ -1248,8 +1248,8 @@ importers:
         specifier: ^3.4.0
         version: 3.4.0
       mdx-bundler:
-        specifier: ^10.0.2
-        version: 10.0.2(esbuild@0.20.2)
+        specifier: ^10.0.3
+        version: 10.0.3(esbuild@0.20.2)
       mermaid:
         specifier: ^11.2.1
         version: 11.3.0
@@ -12321,8 +12321,8 @@ packages:
   mdn-data@2.0.30:
     resolution: {integrity: sha512-GaqWWShW4kv/G9IEucWScBx9G1/vsFZZJUO+tD26M8J8z3Kw5RDQjaoZe03YAClgeS/SWPOcb4nkFBTEi5DUEA==}
 
-  mdx-bundler@10.0.2:
-    resolution: {integrity: sha512-0wF0zoCv+Ms4G+eSlk/jaKYoJHc0oXBaOma3kYlFJiKq9H8h41Dd66ioDBGF4noy80Pf7KTBQlyHfEpTqVml7A==}
+  mdx-bundler@10.0.3:
+    resolution: {integrity: sha512-vRtVZ5t+nUP0QtoRVgjDFO10YDjRgKe/19ie0IR8FqE8SugNn5RP4sCWBPzKoEwoGbqfQOrgHy+PHCVyfaCDQQ==}
     engines: {node: '>=18', npm: '>=6'}
     peerDependencies:
       esbuild: 0.20.2
@@ -29009,7 +29009,7 @@ snapshots:
 
   mdn-data@2.0.30: {}
 
-  mdx-bundler@10.0.2(esbuild@0.20.2):
+  mdx-bundler@10.0.3(esbuild@0.20.2):
     dependencies:
       '@babel/runtime': 7.24.5
       '@esbuild-plugins/node-resolve': 0.2.2(esbuild@0.20.2)
