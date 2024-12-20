@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/local-preview-bundle
+name: Deploy @fern-docs/local-preview-bundle
 
 on:
   workflow_dispatch: {}
@@ -31,9 +31,9 @@ jobs:
       - name: Build local preview bundle
         run: |
           pnpm compile
-          ENABLE_SOURCE_MAPS=true pnpm turbo --filter=@fern-ui/local-preview-bundle build
+          ENABLE_SOURCE_MAPS=true pnpm turbo --filter=@fern-docs/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: pnpm --filter=@fern-ui/cdk run deploy:dev2
+        run: pnpm --filter=@fern-platform/cdk run deploy:dev2
 
   prod:
     runs-on: ubuntu-latest
@@ -50,6 +50,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
       - name: Build local preview bundle
-        run: pnpm turbo --filter=@fern-ui/local-preview-bundle build
+        run: pnpm turbo --filter=@fern-docs/local-preview-bundle build
       - name: Deploy local preview bundle
-        run: pnpm --filter=@fern-ui/cdk run deploy:prod
+        run: pnpm --filter=@fern-platform/cdk run deploy:prod

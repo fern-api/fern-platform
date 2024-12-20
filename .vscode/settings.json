@@ -5,7 +5,11 @@
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": ["source.fixAll", "source.organizeImports", "source.sortMembers"],
+  "editor.codeActionsOnSave": [
+    "source.fixAll",
+    "source.organizeImports",
+    "source.sortMembers",
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"

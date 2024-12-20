@@ -1,4 +1,4 @@
-name: Deploy @fern-ui/docs-bundle (dev)
+name: Deploy @fern-docs/bundle (dev)
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           project: "app-dev.buildwithfern.com"
-          package: "@fern-ui/docs-bundle"
+          package: "@fern-docs/bundle"
           environment: "production"
           branch: main
 

@@ -3,23 +3,11 @@
   "version": "0.1.0",
   "bin": "bin/fdr-deploy.js",
   "scripts": {
-    "watch": "tsc -w",
     "cdk": "cdk",
     "deploy:dev": "cdk deploy fdr-dev2 --require-approval never --progress events",
     "deploy:prod": "cdk deploy fdr-prod --require-approval never --progress events",
-    "rediscli": "node ./node_modules/redis-cli/index.js"
-  },
-  "devDependencies": {
-    "@fern-platform/configs": "workspace:*",
-    "@types/node": "^18.7.18",
-    "@types/prettier": "2.6.0",
-    "aws-cdk": "^2.139.0",
-    "vitest": "^2.1.4",
-    "prettier": "^3.3.2",
-    "ts-node": "^10.9.1",
-    "@types/jest": "^29.5.12",
-    "redis-cli": "^2.1.2",
-    "typescript": "5.4.3"
+    "rediscli": "node ./node_modules/redis-cli/index.js",
+    "watch": "tsc -w"
   },
   "dependencies": {
     "@fern-fern/fern-cloud-sdk": "^0.0.305",
@@ -27,5 +15,17 @@
     "constructs": "^10.3.0",
     "redis": "^4.6.13",
     "source-map-support": "^0.5.21"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^18.7.18",
+    "@types/prettier": "2.6.0",
+    "aws-cdk": "^2.139.0",
+    "prettier": "^3.4.2",
+    "redis-cli": "^2.1.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^5",
+    "vitest": "^2.1.4"
   }
 }
