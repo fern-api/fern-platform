@@ -13,7 +13,7 @@ describe("resolveSerializableFile", () => {
 
     // Assert
     expect(type).toBe("image/x-icon");
-    expect(buffer).toBeInstanceOf(Buffer);
+    expect(buffer).toBeInstanceOf(ArrayBuffer);
     expect(buffer.byteLength).toBeGreaterThan(0);
   });
 
@@ -44,7 +44,7 @@ describe("resolveSerializableFile", () => {
 
     // Assert
     expect(type).toBe("image/png");
-    expect(buffer).toBeInstanceOf(Buffer);
+    expect(buffer).toBeInstanceOf(ArrayBuffer);
     expect(buffer.byteLength).toBeGreaterThan(0);
   });
 });
