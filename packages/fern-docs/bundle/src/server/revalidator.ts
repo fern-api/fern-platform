@@ -10,19 +10,26 @@ export class Revalidator implements Revalidator {
   ) {}
 
   getUrl(path: string): string {
-    return conformTrailingSlash(urljoin(this.domain, encodeURI(path)));
+    if (path.startsWith("/api/fern-docs")) {
+      return path;
+    }
+    return `/static/${conformTrailingSlash(urljoin(this.domain, encodeURI(path)))}`;
   }
 
   async path(path: string): Promise<FernDocs.RevalidationResult> {
-    const url = this.getUrl(path);
+    const fullpath = this.getUrl(path);
 
-    console.log(`Revalidating ${url}`);
+    console.log(`Revalidating ${fullpath}`);
     try {
-      await this.res.revalidate(`/static/${url}`);
-      return { success: true, url };
+      await this.res.revalidate(fullpath);
+      return { success: true, url: fullpath.replace(/^\/static/, "") };
     } catch (error) {
-      console.error(`Failed to revalidate ${url}:`, error);
-      return { success: false, url, error: String(error) };
+      console.error(`Failed to revalidate ${fullpath}:`, error);
+      return {
+        success: false,
+        url: fullpath.replace(/^\/static/, ""),
+        error: String(error),
+      };
     }
   }
 
