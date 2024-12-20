@@ -1,5 +1,6 @@
 import { DocsV1Db, DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import { AuthType } from "@prisma/client";
+import { FernRegistry } from "../../api/generated";
 import { DomainNotRegisteredError } from "../../api/generated/api/resources/docs/resources/v2/resources/read";
 import { FdrApplication } from "../../app";
 import {
@@ -12,7 +13,6 @@ import type { IndexSegment } from "../algolia";
 import { Semaphore } from "../revalidator/Semaphore";
 import LocalDocsDefinitionStore from "./LocalDocsDefinitionStore";
 import RedisDocsDefinitionStore from "./RedisDocsDefinitionStore";
-import { FernRegistry } from "../../api/generated";
 
 const DOCS_DOMAIN_REGX = /^([^.\s]+)/;
 

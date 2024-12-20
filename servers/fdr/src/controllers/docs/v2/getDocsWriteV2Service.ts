@@ -227,8 +227,19 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
             )
           )
         ).filter(isNonNullish);
+        const apiDefinitionsLatest = (
+          await Promise.all(
+            dbDocsDefinition.referencedApis.map(
+              async (id) => await app.services.db.getApiLatestDefinition(id)
+            )
+          )
+        ).filter(isNonNullish);
+
         const apiDefinitionsById = Object.fromEntries(
           apiDefinitions.map((definition) => [definition.id, definition])
+        );
+        const apiDefinitionsLatestById = Object.fromEntries(
+          apiDefinitionsLatest.map((definition) => [definition.id, definition])
         );
 
         const warmEndpointCachePromises = apiDefinitions.flatMap(
@@ -256,7 +267,8 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           app,
           docsRegistrationInfo,
           dbDocsDefinition,
-          apiDefinitionsById
+          apiDefinitionsById,
+          apiDefinitionsLatestById
         );
 
         await app.docsDefinitionCache.storeDocsForUrl({
@@ -348,12 +360,24 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         apiDefinitions.map((definition) => [definition.id, definition])
       );
 
+      const apiDefinitionsLatest = (
+        await Promise.all(
+          response.docsDefinition.referencedApis.map(
+            async (id) => await app.services.db.getApiLatestDefinition(id)
+          )
+        )
+      ).filter(isNonNullish);
+      const apiDefinitionsLatestById = Object.fromEntries(
+        apiDefinitionsLatest.map((definition) => [definition.id, definition])
+      );
+
       // step 2. create new index segments in algolia
       const indexSegments = await uploadToAlgolia(
         app,
         ParsedBaseUrl.parse(response.domain),
         response.docsDefinition,
         apiDefinitionsById,
+        apiDefinitionsLatestById,
         response.algoliaIndex,
         response.docsConfigInstanceId
       );
@@ -381,7 +405,7 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
         toOrgId: req.body.toOrgId,
       });
 
-      return await res.send();
+      return res.send();
     },
   });
 }
@@ -390,7 +414,8 @@ async function uploadToAlgoliaForRegistration(
   app: FdrApplication,
   docsRegistrationInfo: DocsRegistrationInfo,
   dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb.V3>,
-  apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>
+  apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
+  apiDefinitionsLatestById: Record<string, FdrAPI.api.latest.ApiDefinition>
 ): Promise<IndexSegment[]> {
   // TODO: make sure to store private docs index into user-restricted algolia index
   // see https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data/
@@ -407,7 +432,8 @@ async function uploadToAlgoliaForRegistration(
     app,
     docsRegistrationInfo.fernUrl,
     dbDocsDefinition,
-    apiDefinitionsById
+    apiDefinitionsById,
+    apiDefinitionsLatestById
   );
 }
 
@@ -416,6 +442,7 @@ async function uploadToAlgolia(
   url: ParsedBaseUrl,
   dbDocsDefinition: WithoutQuestionMarks<DocsV1Db.DocsDefinitionDb>,
   apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>,
+  apiDefinitionsLatestById: Record<string, FdrAPI.api.latest.ApiDefinition>,
   algoliaIndex?: FernRegistry.AlgoliaSearchIndex,
   docsConfigInstanceId?: DocsV1Write.DocsConfigId
 ): Promise<IndexSegment[]> {
@@ -469,6 +496,7 @@ async function uploadToAlgolia(
         apis: mapValues(apiDefinitionsById, (def) =>
           convertDbAPIDefinitionToRead(def)
         ),
+        apisV2: mapValues(apiDefinitionsLatestById, (def) => def),
         id: docsConfigInstanceId ?? DocsV1Write.DocsConfigId(""),
         search: getSearchInfoFromDocs({
           algoliaIndex,
@@ -487,6 +515,12 @@ async function uploadToAlgolia(
       lightModeEnabled: dbDocsDefinition.config.colorsV3?.type !== "dark",
       orgId: OrgId("dummy"),
     };
+
+    // TODO: consolidate this
+    const apis =
+      Object.entries(loadDocsForUrlResponse.definition.apis).length > 0
+        ? FernNavigation.utils.toApis(loadDocsForUrlResponse)
+        : loadDocsForUrlResponse.definition.apisV2;
     await Promise.all(
       configSegmentTuples.map(async ([_, indexSegment]) => {
         try {
@@ -494,7 +528,7 @@ async function uploadToAlgolia(
             indexSegmentId: indexSegment.id,
             nodes: FernNavigation.utils.toRootNode(loadDocsForUrlResponse),
             pages: FernNavigation.utils.toPages(loadDocsForUrlResponse),
-            apis: FernNavigation.utils.toApis(loadDocsForUrlResponse),
+            apis,
             isFieldRecordsEnabled: true,
           });
           searchRecords.push(

@@ -8,7 +8,7 @@ export function getFrontmatter(content: string): {
   try {
     const gm = grayMatter(content.trimStart());
     return {
-      data: gm.data satisfies Partial<FernDocs.Frontmatter> as FernDocs.Frontmatter,
+      data: gm.data as FernDocs.Frontmatter,
       content: gm.content,
     };
   } catch (e) {

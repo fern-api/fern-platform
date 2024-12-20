@@ -7,7 +7,7 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": [
     "source.fixAll",
-    "source.organizeImports",
+    // "source.organizeImports",
     "source.sortMembers",
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
