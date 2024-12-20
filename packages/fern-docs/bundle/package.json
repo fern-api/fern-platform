@@ -57,7 +57,7 @@
     "iron-session": "^8.0.3",
     "jose": "^5.2.3",
     "jsonpath": "^1.1.1",
-    "next": "^14",
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
     "postcss-import": "^16.0.1",
     "posthog-node": "^4.2.1",
     "qs": "6.12.0",

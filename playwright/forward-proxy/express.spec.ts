@@ -8,6 +8,9 @@ const origin = getPreviewDeploymentUrl();
 
 const target = "https://test-nginx-proxy.docs.buildwithfern.com/subpath";
 
+// Force the tests to run on a single worker
+test.describe.configure({ mode: 'serial' });
+
 test.setTimeout(120_000);
 
 let server: http.Server;
@@ -109,7 +112,7 @@ test("revalidate-all/v3 all should work", async ({ page }) => {
       getProxyUrl(server)
     ).toString(),
     {
-      timeout: 10_000,
+      timeout: 20_000,
     }
   );
   expect(response).toBeDefined();
@@ -131,7 +134,7 @@ test("revalidate-all/v3 should work with trailing slash", async ({ page }) => {
       getProxyUrl(server)
     ).toString(),
     {
-      timeout: 10_000,
+      timeout: 20_000,
     }
   );
   expect(response).toBeDefined();

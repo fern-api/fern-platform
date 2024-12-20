@@ -43,7 +43,7 @@
     "@fern-platform/fdr-utils": "workspace:*",
     "cssnano": "^6.0.3",
     "jsonpath": "^1.1.1",
-    "next": "^14",
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
     "react": "^18",

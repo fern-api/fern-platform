@@ -1,9 +1,12 @@
 import test, { expect } from "@playwright/test";
-import http from "http";
+import { Server } from "http";
 import { getNextServerUrl, startNextServer } from "./nextjs-proxy/start";
 
-let server: http.Server;
+let server: Server;
 let port: number;
+
+// Force the tests to run on a single worker
+test.describe.configure({ mode: 'serial' });
 
 test.beforeAll(async () => {
   const getPort = await import("get-port");
@@ -36,7 +39,7 @@ test("capture the flag", async ({ page }) => {
 
   // capture the flag
   const text = page.getByText("capture-the-flag");
-  await page.pause();
+  // await page.pause();
   expect(await text.count()).toBe(1);
   await text.click();
 

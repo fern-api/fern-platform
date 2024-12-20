@@ -81,7 +81,7 @@
     "@upstash/qstash": "^2.7.16",
     "autoprefixer": "^10.4.16",
     "cssnano": "^6.0.3",
-    "next": "^14",
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
     "postcss": "^8.4.33",
     "react": "^18",
     "react-dom": "^18",
@@ -92,7 +92,7 @@
     "typescript": "^5"
   },
   "peerDependencies": {
-    "next": "^14",
+    "next": "npm:@fern-api/next@14.2.9-fork.2",
     "react": "^18",
     "react-dom": "^18"
   }

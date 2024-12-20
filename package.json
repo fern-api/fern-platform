@@ -47,7 +47,6 @@
     "jsonpath-plus": "10.0.7",
     "markdown-to-jsx": "7.4.0",
     "micromatch": "4.0.8",
-    "next": "npm:@fern-api/next@14.2.9-fork.2",
     "postcss": "8.4.31",
     "react": "18.3.1",
     "react-dom": "18.3.1",
