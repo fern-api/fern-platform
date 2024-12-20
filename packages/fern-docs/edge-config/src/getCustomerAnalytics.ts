@@ -11,9 +11,7 @@ interface CustomerAnalytics {
   gtm?: GTMParams;
 }
 
-/**
- * @deprecated please migrate to docs.yml
- */
+// deprecated
 export async function getCustomerAnalytics(
   host: string,
   basePath?: string

@@ -42,17 +42,10 @@ export function openaiApiKey(): string {
   return getEnvVariable("OPENAI_API_KEY");
 }
 
-function assertNonNullable<T>(
-  value: T,
-  key: string
-): asserts value is NonNullable<T> {
-  if (value == null) {
-    throw new Error(`${key} is not defined`);
-  }
-}
-
 function getEnvVariable(key: string) {
   const env = process.env[key];
-  assertNonNullable(env, key);
-  return env;
+  if (env == null) {
+    console.error(`${key} is not defined`);
+  }
+  return env ?? "";
 }

@@ -4,5 +4,6 @@
     "rootDir": ".",
     "noEmit": true
   },
-  "include": ["src/**/*", "vitest.config.ts"]
+  "include": ["src/**/*", "vitest.config.ts"],
+  "exclude": ["node_modules", "src/client/generated/**/*"]
 }
