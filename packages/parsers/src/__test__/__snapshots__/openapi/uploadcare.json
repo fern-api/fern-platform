@@ -2130,26 +2130,7 @@
           "description": "Version header."
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "uuid"
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -2205,15 +2186,6 @@
           "shape": {
             "type": "undiscriminatedUnion",
             "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
               {
                 "shape": {
                   "type": "object",
@@ -2615,26 +2587,7 @@
           "description": "Version header."
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "uuid"
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -2690,15 +2643,6 @@
           "shape": {
             "type": "undiscriminatedUnion",
             "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
               {
                 "shape": {
                   "type": "object",
@@ -3591,18 +3535,9 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP auth. on HTTP or file copy errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -7111,20 +7046,7 @@
           "description": "Version header."
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -8953,27 +8875,9 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseWebhooksError"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP Auth or webhook permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -9225,85 +9129,7 @@
           "description": "Version header."
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/x-www-form-urlencoded",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target_url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_target"
-                  }
-                }
-              },
-              {
-                "key": "event",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_event"
-                  }
-                }
-              },
-              {
-                "key": "is_active",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "webhook_is_active"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "signing_secret",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "webhook_signing_secret"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "version",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "webhook_version_of_request"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 201,
@@ -9322,36 +9148,9 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseWebhooksError"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhookTargetUrlError"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP Auth or webhook permission or endpoint errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -9622,13 +9421,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-uploaded",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileInfected": {
       "description": "file.infected event payload",
@@ -9692,13 +9485,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-infected",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileStored": {
       "description": "file.stored event payload",
@@ -9762,13 +9549,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-stored",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileDeleted": {
       "description": "file.deleted event payload",
@@ -9832,13 +9613,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-deleted",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileInfoUpdated": {
       "description": "file.info_updated event payload",
@@ -9902,13 +9677,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/file-info-updated",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_webhook.updateWebhook": {
       "description": "Update webhook attributes.",
@@ -9983,57 +9752,7 @@
           "description": "Version header."
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/x-www-form-urlencoded",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target_url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_target"
-                  }
-                }
-              },
-              {
-                "key": "event",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_event"
-                  }
-                }
-              },
-              {
-                "key": "is_active",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_is_active"
-                  }
-                }
-              },
-              {
-                "key": "signing_secret",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_signing_secret"
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -10109,6 +9828,7 @@
               }
             ]
           },
+          "description": "Webhook with ID {id} not found.",
           "name": "Not Found",
           "examples": [
             {
@@ -10316,63 +10036,16 @@
           "description": "Version header."
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/x-www-form-urlencoded",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target_url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhook_target"
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ],
+      "requests": [],
       "responses": [],
       "errors": [
         {
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseWebhooksError"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "webhookTargetUrlError"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP Auth or webhook permission or endpoint errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -10752,27 +10425,9 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseDocsConversionError"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -10856,6 +10511,7 @@
               }
             ]
           },
+          "description": "Document with specified ID is not found.",
           "name": "Not Found",
           "examples": [
             {
@@ -11121,33 +10777,6 @@
             "variants": [
               {
                 "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseDocsConversionError"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "jsonObjectParseError"
-                  }
-                }
-              },
-              {
-                "shape": {
                   "type": "object",
                   "extends": [],
                   "properties": [
@@ -11169,6 +10798,7 @@
               }
             ]
           },
+          "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -11517,27 +11147,9 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseDocsConversionError"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -11621,6 +11233,7 @@
               }
             ]
           },
+          "description": "Job with specified ID is not found.",
           "name": "Not Found",
           "examples": [
             {
@@ -11938,33 +11551,6 @@
             "variants": [
               {
                 "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseVideoConversionError"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "jsonObjectParseError"
-                  }
-                }
-              },
-              {
-                "shape": {
                   "type": "object",
                   "extends": [],
                   "properties": [
@@ -11986,6 +11572,7 @@
               }
             ]
           },
+          "description": "Simple HTTP Auth or video conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -12349,27 +11936,9 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "simpleAuthHTTPForbidden"
-                  }
-                }
-              },
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "cantUseVideoConversionError"
-                  }
-                }
-              }
-            ]
+            "variants": []
           },
+          "description": "Simple HTTP Auth or video conversion permission errors.",
           "name": "Bad Request",
           "examples": [
             {
@@ -12453,6 +12022,7 @@
               }
             ]
           },
+          "description": "Job with specified ID is not found.",
           "name": "Not Found",
           "examples": [
             {

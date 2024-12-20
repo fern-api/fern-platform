@@ -33,14 +33,14 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponsesObject>,
     protected path: string,
-    protected redocExamplesNode: RedocExampleConverterNode
+    protected redocExamplesNode: RedocExampleConverterNode | undefined
   ) {
     super(args);
     this.safeParse();
   }
 
   parse(): void {
-    const defaultResponse = this.input["default"];
+    const defaultResponse = this.input.default;
     Object.entries(this.input).forEach(([statusCode, response]) => {
       if (parseInt(statusCode) >= 400) {
         this.errorsByStatusCode ??= {};
@@ -106,8 +106,9 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   convertResponseObjectToErrors(): FernRegistry.api.latest.ErrorResponse[] {
     return Object.entries(this.errorsByStatusCode ?? {})
       .flatMap(([statusCode, response]) => {
-        return response.responses?.map((response) => {
-          const schema = response.schema;
+        // TODO: resolve reference here, if not done already
+        return response.responses?.map((res) => {
+          const schema = res.schema;
           const shape = schema?.convert();
 
           if (shape == null || schema == null) {
@@ -117,13 +118,13 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           return {
             statusCode: parseInt(statusCode),
             shape,
-            description: schema.description,
+            description: response.description ?? schema.description,
             availability: schema.availability?.convert(),
             name:
               schema.name ??
               STATUS_CODE_MESSAGES[parseInt(statusCode)] ??
               "UNKNOWN ERROR",
-            examples: response.examples
+            examples: res.examples
               ?.map((example) => {
                 const convertedExample = example.convert();
                 if (

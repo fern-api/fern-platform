@@ -601,30 +601,7 @@
           }
         }
       ],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "NonStreamedChatResponse"
-            }
-          },
-          "description": "OK"
-        },
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "StreamedChatResponse"
-            }
-          },
-          "description": "OK"
-        }
-      ],
+      "responses": [],
       "errors": [
         {
           "statusCode": 400,
@@ -1644,28 +1621,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v1/chat",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "text": "string"
-            }
-          },
-          "snippets": {}
-        },
-        {
-          "path": "/v1/chat",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "text": "string"
-            }
-          },
-          "snippets": {}
         }
       ]
     },
@@ -1810,28 +1765,7 @@
                         "type": "list",
                         "itemShape": {
                           "type": "undiscriminatedUnion",
-                          "variants": [
-                            {
-                              "shape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string"
-                                  }
-                                }
-                              }
-                            },
-                            {
-                              "shape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "id",
-                                  "id": "Document"
-                                }
-                              }
-                            }
-                          ]
+                          "variants": []
                         }
                       }
                     }
@@ -2086,30 +2020,7 @@
           }
         }
       ],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "ChatResponse"
-            }
-          },
-          "description": "OK"
-        },
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "StreamedChatResponseV2"
-            }
-          },
-          "description": "OK"
-        }
-      ],
+      "responses": [],
       "errors": [
         {
           "statusCode": 400,
@@ -3027,36 +2938,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v2/chat",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": "string",
-              "finish_reason": "string",
-              "message": {
-                "role": "string"
-              }
-            }
-          },
-          "snippets": {}
-        },
-        {
-          "path": "/v2/chat",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": "string",
-              "finish_reason": "string",
-              "message": {
-                "role": "string"
-              }
-            }
-          },
-          "snippets": {}
         }
       ]
     },
@@ -4108,27 +3989,6 @@
           "description": "The name of the project that is making the request.\n"
         }
       ],
-      "responseHeaders": [
-        {
-          "key": "X-API-Warning",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Warning description for incorrect usage of the API"
-        }
-      ],
       "requests": [
         {
           "contentType": "application/json",
@@ -4237,368 +4097,7 @@
           }
         }
       ],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "object",
-            "properties": [
-              {
-                "key": "response_type",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "enum",
-                      "values": [
-                        {
-                          "value": "embeddings_floats"
-                        },
-                        {
-                          "value": "embeddings_by_type"
-                        }
-                      ]
-                    }
-                  }
-                }
-              },
-              {
-                "key": "id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "embeddings",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "An array of embeddings, where each embedding is an array of floats. The length of the `embeddings` array will be the same as the length of the original `texts` array."
-              },
-              {
-                "key": "texts",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The text entries for which embeddings were returned."
-              },
-              {
-                "key": "images",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "Image"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The image entries for which embeddings were returned."
-              },
-              {
-                "key": "meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "ApiMeta"
-                      }
-                    }
-                  }
-                }
-              }
-            ],
-            "extends": []
-          },
-          "description": "OK"
-        },
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "object",
-            "properties": [
-              {
-                "key": "response_type",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "enum",
-                      "values": [
-                        {
-                          "value": "embeddings_floats"
-                        },
-                        {
-                          "value": "embeddings_by_type"
-                        }
-                      ]
-                    }
-                  }
-                }
-              },
-              {
-                "key": "id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "embeddings",
-                "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "float",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "list",
-                              "itemShape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "double"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "description": "An array of float embeddings."
-                    },
-                    {
-                      "key": "int8",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "list",
-                              "itemShape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "integer"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "description": "An array of signed int8 embeddings. Each value is between -128 and 127."
-                    },
-                    {
-                      "key": "uint8",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "list",
-                              "itemShape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "integer"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "description": "An array of unsigned int8 embeddings. Each value is between 0 and 255."
-                    },
-                    {
-                      "key": "binary",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "list",
-                              "itemShape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "integer"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "description": "An array of packed signed binary embeddings. The length of each binary embedding is 1/8 the length of the float embeddings of the provided model. Each value is between -128 and 127."
-                    },
-                    {
-                      "key": "ubinary",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "list",
-                              "itemShape": {
-                                "type": "alias",
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "integer"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      },
-                      "description": "An array of packed unsigned binary embeddings. The length of each binary embedding is 1/8 the length of the float embeddings of the provided model. Each value is between 0 and 255."
-                    }
-                  ]
-                },
-                "description": "An object with different embedding types. The length of each embedding type array will be the same as the length of the original `texts` array."
-              },
-              {
-                "key": "texts",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The text entries for which embeddings were returned."
-              },
-              {
-                "key": "images",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "Image"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The image entries for which embeddings were returned."
-              },
-              {
-                "key": "meta",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "ApiMeta"
-                      }
-                    }
-                  }
-                }
-              }
-            ],
-            "extends": []
-          },
-          "description": "OK"
-        }
-      ],
+      "responses": [],
       "errors": [
         {
           "statusCode": 400,
@@ -8240,44 +7739,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v1/embed",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": "string",
-              "embeddings": [
-                [
-                  0
-                ]
-              ],
-              "texts": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
-        },
-        {
-          "path": "/v1/embed",
-          "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "id": "string",
-              "embeddings": [
-                [
-                  0
-                ]
-              ],
-              "texts": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
         }
       ]
     },
@@ -13184,9 +12645,6 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
-          "requestBody": {
-            "type": "json"
-          },
           "snippets": {
             "go": [
               {
@@ -14241,13 +13699,7 @@
           ]
         }
       ],
-      "examples": [
-        {
-          "path": "/v1/embed-jobs/{id}/cancel",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_.rerank": {
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
@@ -14349,28 +13801,7 @@
                     "type": "list",
                     "itemShape": {
                       "type": "undiscriminatedUnion",
-                      "variants": [
-                        {
-                          "shape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "shape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "RerankDocument"
-                            }
-                          }
-                        }
-                      ]
+                      "variants": []
                     }
                   }
                 },
@@ -22685,9 +22116,6 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
-          "requestBody": {
-            "type": "json"
-          },
           "snippets": {
             "go": [
               {
@@ -23749,9 +23177,6 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
-          "requestBody": {
-            "type": "json"
-          },
           "snippets": {
             "go": [
               {
@@ -26554,6 +25979,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -26575,6 +26001,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -26596,6 +26023,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -26617,6 +26045,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -26638,6 +26067,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -26659,6 +26089,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -26796,6 +26227,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -26817,6 +26249,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -26838,6 +26271,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -26859,6 +26293,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -26880,6 +26315,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -26901,6 +26337,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -26921,9 +26358,6 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
-          "requestBody": {
-            "type": "json"
-          },
           "snippets": {
             "java": [
               {
@@ -27103,6 +26537,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -27124,6 +26559,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -27145,6 +26581,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27166,6 +26603,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27187,6 +26625,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27208,6 +26647,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -27518,6 +26958,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -27539,6 +26980,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -27560,6 +27002,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27581,6 +27024,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27602,6 +27046,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27623,6 +27068,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -27825,6 +27271,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -27846,6 +27293,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -27867,6 +27315,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -27888,6 +27337,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -27909,6 +27359,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -27930,6 +27381,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -28131,6 +27583,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -28152,6 +27605,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -28173,6 +27627,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -28194,6 +27649,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -28215,6 +27671,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -28236,6 +27693,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -28428,6 +27886,7 @@
               "id": "Error"
             }
           },
+          "description": "Bad Request",
           "name": "Bad Request",
           "examples": [
             {
@@ -28449,6 +27908,7 @@
               "id": "Error"
             }
           },
+          "description": "Unauthorized",
           "name": "Unauthorized",
           "examples": [
             {
@@ -28470,6 +27930,7 @@
               "id": "Error"
             }
           },
+          "description": "Forbidden",
           "name": "Forbidden",
           "examples": [
             {
@@ -28491,6 +27952,7 @@
               "id": "Error"
             }
           },
+          "description": "Not Found",
           "name": "Not Found",
           "examples": [
             {
@@ -28512,6 +27974,7 @@
               "id": "Error"
             }
           },
+          "description": "Internal Server Error",
           "name": "Internal Server Error",
           "examples": [
             {
@@ -28533,6 +27996,7 @@
               "id": "Error"
             }
           },
+          "description": "Status Service Unavailable",
           "name": "Service Unavailable",
           "examples": [
             {
@@ -30705,34 +30169,7 @@
             "key": "content",
             "valueShape": {
               "type": "undiscriminatedUnion",
-              "variants": [
-                {
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "Content"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
+              "variants": []
             },
             "description": "The content of the message. This can be a string or a list of content blocks.\nIf a string is provided, it will be treated as a text content block.\n"
           }
@@ -31065,64 +30502,7 @@
                 "type": "optional",
                 "shape": {
                   "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "discriminatedUnion",
-                            "discriminant": "type",
-                            "variants": [
-                              {
-                                "discriminantValue": "text",
-                                "description": "Text content of the message.",
-                                "type": "object",
-                                "extends": [],
-                                "properties": [
-                                  {
-                                    "key": "type",
-                                    "valueShape": {
-                                      "type": "enum",
-                                      "values": [
-                                        {
-                                          "value": "text"
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "key": "text",
-                                    "valueShape": {
-                                      "type": "alias",
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "variants": []
                 }
               }
             }
@@ -31174,64 +30554,7 @@
             "key": "content",
             "valueShape": {
               "type": "undiscriminatedUnion",
-              "variants": [
-                {
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "discriminatedUnion",
-                        "discriminant": "type",
-                        "variants": [
-                          {
-                            "discriminantValue": "text",
-                            "description": "Text content of the message.",
-                            "type": "object",
-                            "extends": [],
-                            "properties": [
-                              {
-                                "key": "type",
-                                "valueShape": {
-                                  "type": "enum",
-                                  "values": [
-                                    {
-                                      "value": "text"
-                                    }
-                                  ]
-                                }
-                              },
-                              {
-                                "key": "text",
-                                "valueShape": {
-                                  "type": "alias",
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string"
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              ]
+              "variants": []
             }
           }
         ]
@@ -31417,34 +30740,7 @@
             "key": "content",
             "valueShape": {
               "type": "undiscriminatedUnion",
-              "variants": [
-                {
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                },
-                {
-                  "shape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "ToolContent"
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
+              "variants": []
             },
             "description": "Outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks"
           }
@@ -31479,34 +30775,7 @@
                 "key": "content",
                 "valueShape": {
                   "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "Content"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "variants": []
                 },
                 "description": "The content of the message. This can be a string or a list of content blocks.\nIf a string is provided, it will be treated as a text content block.\n"
               }
@@ -31578,64 +30847,7 @@
                     "type": "optional",
                     "shape": {
                       "type": "undiscriminatedUnion",
-                      "variants": [
-                        {
-                          "shape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        },
-                        {
-                          "shape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "list",
-                              "itemShape": {
-                                "type": "discriminatedUnion",
-                                "discriminant": "type",
-                                "variants": [
-                                  {
-                                    "discriminantValue": "text",
-                                    "description": "Text content of the message.",
-                                    "type": "object",
-                                    "extends": [],
-                                    "properties": [
-                                      {
-                                        "key": "type",
-                                        "valueShape": {
-                                          "type": "enum",
-                                          "values": [
-                                            {
-                                              "value": "text"
-                                            }
-                                          ]
-                                        }
-                                      },
-                                      {
-                                        "key": "text",
-                                        "valueShape": {
-                                          "type": "alias",
-                                          "value": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string"
-                                            }
-                                          }
-                                        }
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            }
-                          }
-                        }
-                      ]
+                      "variants": []
                     }
                   }
                 }
@@ -31685,64 +30897,7 @@
                 "key": "content",
                 "valueShape": {
                   "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "discriminatedUnion",
-                            "discriminant": "type",
-                            "variants": [
-                              {
-                                "discriminantValue": "text",
-                                "description": "Text content of the message.",
-                                "type": "object",
-                                "extends": [],
-                                "properties": [
-                                  {
-                                    "key": "type",
-                                    "valueShape": {
-                                      "type": "enum",
-                                      "values": [
-                                        {
-                                          "value": "text"
-                                        }
-                                      ]
-                                    }
-                                  },
-                                  {
-                                    "key": "text",
-                                    "valueShape": {
-                                      "type": "alias",
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string"
-                                        }
-                                      }
-                                    }
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "variants": []
                 }
               }
             ]
@@ -31781,34 +30936,7 @@
                 "key": "content",
                 "valueShape": {
                   "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "ToolContent"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  ]
+                  "variants": []
                 },
                 "description": "Outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks"
               }

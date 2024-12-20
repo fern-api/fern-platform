@@ -39,7 +39,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     protected streamingFormat: ResponseStreamingFormat | undefined,
     protected path: string,
     protected statusCode: number,
-    protected redocExamplesNode: RedocExampleConverterNode
+    protected redocExamplesNode: RedocExampleConverterNode | undefined
   ) {
     super(args);
     this.safeParse(contentType);
@@ -228,7 +228,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
   convertTypeShapeIntoHttpResponseBodyShape(
     shape: FernRegistry.api.latest.TypeShape | undefined,
-    seenVariants: Set<string> = new Set()
+    seenVariants = new Set<string>()
   ): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
     if (
       shape == null ||

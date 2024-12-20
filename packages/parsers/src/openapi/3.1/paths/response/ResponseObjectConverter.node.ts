@@ -28,7 +28,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     >,
     protected path: string,
     protected statusCode: number,
-    protected redocExamplesNode: RedocExampleConverterNode
+    protected redocExamplesNode: RedocExampleConverterNode | undefined
   ) {
     super(args);
     this.safeParse();

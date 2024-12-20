@@ -47,13 +47,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/v1/text-to-speech",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_textToSpeech.generateFromPrompt": {
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
@@ -109,13 +103,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/v1/text-to-speech/from-prompt",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     },
     "endpoint_voices.list": {
       "description": "Retrieve all voices associated with the current workspace.",
@@ -218,43 +206,11 @@
         {
           "contentType": "multipart/form-data",
           "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The name of the new voice."
-              },
-              {
-                "type": "file",
-                "key": "file",
-                "isOptional": false,
-                "description": "The audio file for the voice."
-              },
-              {
-                "type": "property",
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Optional description of the voice."
-              }
-            ]
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "CreateVoiceRequest"
+            }
           }
         }
       ],
@@ -436,43 +392,11 @@
         {
           "contentType": "multipart/form-data",
           "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The name of the new voice."
-              },
-              {
-                "type": "file",
-                "key": "file",
-                "isOptional": true,
-                "description": "The audio file for the voice."
-              },
-              {
-                "type": "property",
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Optional description of the voice."
-              }
-            ]
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "UpdateVoiceRequest"
+            }
           }
         }
       ],
@@ -565,13 +489,7 @@
       ],
       "responses": [],
       "errors": [],
-      "examples": [
-        {
-          "path": "/v1/voices/{voice_id}",
-          "responseStatusCode": 200,
-          "snippets": {}
-        }
-      ]
+      "examples": []
     }
   },
   "websockets": {},

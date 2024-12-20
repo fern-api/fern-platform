@@ -59,15 +59,13 @@ describe("OpenAPI snapshot tests", () => {
 
       // Create snapshot
       if (errors.length > 0) {
-        // eslint-disable-next-line no-console
         console.error("errors:", errors);
       }
       // expect(errors).toHaveLength(0);
       if (warnings.length > 0) {
-        // eslint-disable-next-line no-console
-        // console.warn("warnings:", warnings);
+        console.warn("warnings:", warnings);
       }
-      // @ts-expect-error id is not part of the expected output
+
       converted.id = "test-uuid-replacement";
       await expect(
         replaceEndpointUUIDs(JSON.stringify(converted, null, 2))

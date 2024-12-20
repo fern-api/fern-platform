@@ -228,7 +228,7 @@
               "id": "Pet"
             }
           },
-          "description": "A Pet in JSON format",
+          "description": "Invalid ID supplied",
           "name": "Bad Request",
           "examples": [
             {
@@ -253,7 +253,7 @@
               "id": "Pet"
             }
           },
-          "description": "A Pet in JSON format",
+          "description": "Pet not found",
           "name": "Not Found",
           "examples": [
             {
