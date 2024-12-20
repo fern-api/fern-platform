@@ -125,16 +125,22 @@ export function resetPosthog(): void {
     });
 }
 
-export function capturePosthogEvent(eventName: string, properties?: Record<string, unknown>): void {
+export function capturePosthogEventInternal(eventName: string, properties?: Record<string, unknown>): void {
     void safeAccessPosthog((posthog) => {
         posthog.capture(eventName, properties);
+    });
+}
+
+export function capturePosthogEventCustomer(eventName: string, properties?: Record<string, unknown>): void {
+    void safeAccessPosthog((posthog) => {
         ifCustomer(posthog, (posthog) => posthog.customer.capture(eventName, properties));
     });
 }
 
 const trackPageView = (url: string) => {
     safeCall(() => {
-        capturePosthogEvent("$pageview");
+        capturePosthogEventCustomer("$pageview");
+        capturePosthogEventInternal("$pageview");
         typeof window !== "undefined" &&
             window?.analytics &&
             typeof window.analytics.page === "function" &&

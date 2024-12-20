@@ -39,6 +39,7 @@ export default function GoogleTagManager(props: GTMParams): ReactNode {
             <Head>
                 <script
                     key="ga"
+                    id="_fern-gtm"
                     dangerouslySetInnerHTML={{
                         __html: `
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -51,7 +52,7 @@ j=d.createElement(s),dl=l!='${dataLayerName}'?'&l='+l:'';j.async=true;j.src=
                     nonce={nonce}
                 />
             </Head>
-            <noscript nonce={nonce}>
+            <noscript nonce={nonce} id="_fern-gtm-noscript">
                 <iframe
                     src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
                     height="0"

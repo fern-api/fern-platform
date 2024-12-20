@@ -1,4 +1,4 @@
-export { capturePosthogEvent } from "./analytics/posthog";
+export { track } from "./analytics";
 export { type CustomerAnalytics } from "./analytics/types";
 export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
