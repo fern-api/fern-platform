@@ -6,342 +6,351 @@ import { RequestMediaTypeObjectConverterNode } from "../../request/RequestMediaT
 import { ResponseMediaTypeObjectConverterNode } from "../../response/ResponseMediaTypeObjectConverter.node";
 
 describe("ExampleObjectConverterNode", () => {
-    const mockContext = createMockContext();
+  const mockContext = createMockContext();
 
-    const baseArgs: BaseOpenApiV3_1ConverterNodeConstructorArgs<{
-        requestExample: OpenAPIV3_1.ExampleObject | undefined;
-        responseExample: OpenAPIV3_1.ExampleObject | undefined;
-    }> = {
-        input: {
-            requestExample: undefined,
+  const baseArgs: BaseOpenApiV3_1ConverterNodeConstructorArgs<{
+    requestExample: OpenAPIV3_1.ExampleObject | undefined;
+    responseExample: OpenAPIV3_1.ExampleObject | undefined;
+  }> = {
+    input: {
+      requestExample: undefined,
+      responseExample: undefined,
+    },
+    context: mockContext,
+    accessPath: [],
+    pathId: "test",
+  };
+
+  const mockPath = "/users";
+  const mockResponseStatusCode = 200;
+  const mockRequestBody = {
+    contentType: "json" as const,
+    resolvedSchema: {},
+  };
+  const mockResponseBody = {
+    contentType: "json" as const,
+    resolvedSchema: {},
+  };
+
+  describe("parse()", () => {
+    it("should error if request body schema is missing", () => {
+      new ExampleObjectConverterNode(
+        baseArgs,
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        {
+          ...mockRequestBody,
+          resolvedSchema: undefined,
+        } as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      expect(mockContext.errors.error).toHaveBeenCalledWith({
+        message: "Request body schema is required",
+        path: ["test"],
+      });
+    });
+
+    it("should error if json example is not an object", () => {
+      new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: {
+              value: "not an object",
+            },
             responseExample: undefined,
+          },
         },
-        context: mockContext,
-        accessPath: [],
-        pathId: "test",
-    };
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
 
-    const mockPath = "/users";
-    const mockResponseStatusCode = 200;
-    const mockRequestBody = {
-        contentType: "json" as const,
-        resolvedSchema: {},
-    };
-    const mockResponseBody = {
-        contentType: "json" as const,
-        resolvedSchema: {},
-    };
-
-    describe("parse()", () => {
-        it("should error if request body schema is missing", () => {
-            new ExampleObjectConverterNode(
-                baseArgs,
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                { ...mockRequestBody, resolvedSchema: undefined } as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Request body schema is required",
-                path: ["test"],
-            });
-        });
-
-        it("should error if json example is not an object", () => {
-            new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: {
-                            value: "not an object",
-                        },
-                        responseExample: undefined,
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Invalid example object, expected object for json",
-                path: ["test"],
-            });
-        });
-
-        it("should error if response body schema is missing", () => {
-            new ExampleObjectConverterNode(
-                baseArgs,
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                { ...mockResponseBody, resolvedSchema: undefined } as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Response body schema is required",
-                path: ["test"],
-            });
-        });
-
-        it("should error if response json example is not an object", () => {
-            new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: undefined,
-                        responseExample: {
-                            value: "not an object",
-                        },
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            expect(mockContext.errors.error).toHaveBeenCalledWith({
-                message: "Invalid example object, expected object for json",
-                path: ["test"],
-            });
-        });
+      expect(mockContext.errors.error).toHaveBeenCalledWith({
+        message: "Invalid example object, expected object for json",
+        path: ["test"],
+      });
     });
 
-    describe("convert()", () => {
-        it("should convert json request body", () => {
-            const value = { foo: "bar" };
-            const converter = new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: {
-                            value,
-                            summary: "Test example",
-                            description: "Test description",
-                        },
-                        responseExample: undefined,
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
+    it("should error if response body schema is missing", () => {
+      new ExampleObjectConverterNode(
+        baseArgs,
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+        {
+          ...mockResponseBody,
+          resolvedSchema: undefined,
+        } as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
 
-            const result = converter.convert();
-
-            expect(result).toEqual({
-                path: mockPath,
-                responseStatusCode: mockResponseStatusCode,
-                name: "Test example",
-                description: "Test description",
-                pathParameters: undefined,
-                queryParameters: undefined,
-                headers: undefined,
-                requestBody: {
-                    type: "json",
-                    value,
-                },
-                responseBody: undefined,
-                snippets: undefined,
-            });
-        });
-
-        it("should convert json response body", () => {
-            const value = { id: "123", name: "Test User" };
-            const converter = new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: undefined,
-                        responseExample: {
-                            value,
-                            summary: "Test response",
-                            description: "Test response description",
-                        },
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            const result = converter.convert();
-
-            expect(result).toEqual({
-                path: mockPath,
-                responseStatusCode: mockResponseStatusCode,
-                name: "Test response",
-                description: "Test response description",
-                pathParameters: undefined,
-                queryParameters: undefined,
-                headers: undefined,
-                requestBody: undefined,
-                responseBody: {
-                    type: "json",
-                    value,
-                },
-                snippets: undefined,
-            });
-        });
-
-        it("should convert bytes request body", () => {
-            const value = "base64string";
-            const converter = new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: {
-                            value,
-                        },
-                        responseExample: undefined,
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                { ...mockRequestBody, contentType: "bytes" as const } as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            const result = converter.convert();
-
-            expect(result?.requestBody).toEqual({
-                type: "bytes",
-                value: {
-                    type: "base64",
-                    value,
-                },
-            });
-        });
-
-        it("should convert bytes response body", () => {
-            const value = "base64string";
-            const converter = new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: undefined,
-                        responseExample: {
-                            value,
-                        },
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-                {
-                    ...mockResponseBody,
-                    contentType: "bytes" as const,
-                } as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            const result = converter.convert();
-
-            expect(result?.responseBody).toEqual({
-                type: "bytes",
-                value: {
-                    type: "base64",
-                    value,
-                },
-            });
-        });
+      expect(mockContext.errors.error).toHaveBeenCalledWith({
+        message: "Response body schema is required",
+        path: ["test"],
+      });
     });
 
-    describe("validateFormDataExample()", () => {
-        it("should validate file field", () => {
-            const converter = new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: {
-                            value: {
-                                file: {
-                                    filename: "test.txt",
-                                    data: "base64data",
-                                },
-                            },
-                        },
-                        responseExample: undefined,
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                {
-                    ...mockRequestBody,
-                    contentType: "form-data" as const,
-                    fields: {
-                        file: {
-                            multipartType: "file",
-                        },
-                    },
-                } as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
+    it("should error if response json example is not an object", () => {
+      new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: undefined,
+            responseExample: {
+              value: "not an object",
+            },
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
 
-            expect(converter.validateFormDataRequestExample()).toBe(true);
-        });
-
-        it("should validate files field", () => {
-            const converter = new ExampleObjectConverterNode(
-                {
-                    ...baseArgs,
-                    input: {
-                        requestExample: {
-                            value: {
-                                files: [
-                                    {
-                                        filename: "test1.txt",
-                                        data: "base64data1",
-                                    },
-                                    {
-                                        filename: "test2.txt",
-                                        data: "base64data2",
-                                    },
-                                ],
-                            },
-                        },
-                        responseExample: undefined,
-                    },
-                },
-                mockPath,
-                mockResponseStatusCode,
-                "test",
-                {
-                    ...mockRequestBody,
-                    contentType: "form-data" as const,
-                    fields: {
-                        files: {
-                            multipartType: "files",
-                        },
-                    },
-                } as unknown as RequestMediaTypeObjectConverterNode,
-                mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-                undefined,
-            );
-
-            expect(converter.validateFormDataRequestExample()).toBe(true);
-        });
+      expect(mockContext.errors.error).toHaveBeenCalledWith({
+        message: "Invalid example object, expected object for json",
+        path: ["test"],
+      });
     });
+  });
+
+  describe("convert()", () => {
+    it("should convert json request body", () => {
+      const value = { foo: "bar" };
+      const converter = new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: {
+              value,
+              summary: "Test example",
+              description: "Test description",
+            },
+            responseExample: undefined,
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      const result = converter.convert();
+
+      expect(result).toEqual({
+        path: mockPath,
+        responseStatusCode: mockResponseStatusCode,
+        name: "Test example",
+        description: "Test description",
+        pathParameters: undefined,
+        queryParameters: undefined,
+        headers: undefined,
+        requestBody: {
+          type: "json",
+          value,
+        },
+        responseBody: undefined,
+        snippets: undefined,
+      });
+    });
+
+    it("should convert json response body", () => {
+      const value = { id: "123", name: "Test User" };
+      const converter = new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: undefined,
+            responseExample: {
+              value,
+              summary: "Test response",
+              description: "Test response description",
+            },
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      const result = converter.convert();
+
+      expect(result).toEqual({
+        path: mockPath,
+        responseStatusCode: mockResponseStatusCode,
+        name: "Test response",
+        description: "Test response description",
+        pathParameters: undefined,
+        queryParameters: undefined,
+        headers: undefined,
+        requestBody: undefined,
+        responseBody: {
+          type: "json",
+          value,
+        },
+        snippets: undefined,
+      });
+    });
+
+    it("should convert bytes request body", () => {
+      const value = "base64string";
+      const converter = new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: {
+              value,
+            },
+            responseExample: undefined,
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        {
+          ...mockRequestBody,
+          contentType: "bytes" as const,
+        } as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      const result = converter.convert();
+
+      expect(result?.requestBody).toEqual({
+        type: "bytes",
+        value: {
+          type: "base64",
+          value,
+        },
+      });
+    });
+
+    it("should convert bytes response body", () => {
+      const value = "base64string";
+      const converter = new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: undefined,
+            responseExample: {
+              value,
+            },
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+        {
+          ...mockResponseBody,
+          contentType: "bytes" as const,
+        } as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      const result = converter.convert();
+
+      expect(result?.responseBody).toEqual({
+        type: "bytes",
+        value: {
+          type: "base64",
+          value,
+        },
+      });
+    });
+  });
+
+  describe("validateFormDataExample()", () => {
+    it("should validate file field", () => {
+      const converter = new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: {
+              value: {
+                file: {
+                  filename: "test.txt",
+                  data: "base64data",
+                },
+              },
+            },
+            responseExample: undefined,
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        {
+          ...mockRequestBody,
+          contentType: "form-data" as const,
+          fields: {
+            file: {
+              multipartType: "file",
+            },
+          },
+        } as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      expect(converter.validateFormDataRequestExample()).toBe(true);
+    });
+
+    it("should validate files field", () => {
+      const converter = new ExampleObjectConverterNode(
+        {
+          ...baseArgs,
+          input: {
+            requestExample: {
+              value: {
+                files: [
+                  {
+                    filename: "test1.txt",
+                    data: "base64data1",
+                  },
+                  {
+                    filename: "test2.txt",
+                    data: "base64data2",
+                  },
+                ],
+              },
+            },
+            responseExample: undefined,
+          },
+        },
+        mockPath,
+        mockResponseStatusCode,
+        "test",
+        {
+          ...mockRequestBody,
+          contentType: "form-data" as const,
+          fields: {
+            files: {
+              multipartType: "files",
+            },
+          },
+        } as unknown as RequestMediaTypeObjectConverterNode,
+        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        undefined
+      );
+
+      expect(converter.validateFormDataRequestExample()).toBe(true);
+    });
+  });
 });
