@@ -29,18 +29,21 @@ export function readFixtureToRootNode(
   pages: Record<string, string>;
 } {
   const root = FernNavigation.utils.toRootNode(fixture);
-  const apis = Object.fromEntries(
-    Object.values(fixture.definition.apis).map((api) => {
-      return [
-        api.id,
-        ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
-          useJavaScriptAsTypeScript: false,
-          alwaysEnableJavaScriptFetch: false,
-          usesApplicationJsonInFormDataValue: false,
-        }).migrate(),
-      ];
-    })
-  );
+  const apis = {
+    ...Object.fromEntries(
+      Object.values(fixture.definition.apis).map((api) => {
+        return [
+          api.id,
+          ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
+            useJavaScriptAsTypeScript: false,
+            alwaysEnableJavaScriptFetch: false,
+            usesApplicationJsonInFormDataValue: false,
+          }).migrate(),
+        ];
+      })
+    ),
+    ...fixture.definition.apisV2,
+  };
   const pages = mapValues(fixture.definition.pages, (page) => page.markdown);
   return { root, apis, pages };
 }

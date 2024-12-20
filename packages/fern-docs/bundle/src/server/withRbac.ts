@@ -68,6 +68,7 @@ export function withBasicTokenAnonymousCheck(
     // }
 
     const predicate = rbacViewGate([], false);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return predicate(node as NavigationNode, parents);
   };
 }

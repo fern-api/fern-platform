@@ -62,6 +62,7 @@ export async function withResolvedDocsContent({
         : found.next,
 
     apis: definition.apis,
+    apisV2: definition.apisV2,
     pages: definition.pages,
     featureFlags,
     mdxOptions: {

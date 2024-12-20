@@ -5,8 +5,8 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig } from "@fern-docs/auth";
-import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import { ApiDefinitionLoader } from "@fern-docs/server";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithAuthState } from "./withRbac";
@@ -103,13 +103,14 @@ export class DocsLoader {
       return undefined;
     }
     const v1 = res.definition.apis[key];
-    if (!v1) {
+    const latest =
+      res.definition.apisV2?.[key] ??
+      (v1 != null
+        ? ApiDefinitionV1ToLatest.from(v1, this.featureFlags).migrate()
+        : undefined);
+    if (!latest) {
       return undefined;
     }
-    const latest = ApiDefinitionV1ToLatest.from(
-      v1,
-      this.featureFlags
-    ).migrate();
     return ApiDefinitionLoader.create(this.domain, key)
       .withApiDefinition(latest)
       .withFlags(this.featureFlags)
