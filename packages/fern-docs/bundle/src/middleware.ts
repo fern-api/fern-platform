@@ -2,15 +2,16 @@ import { rewritePosthog } from "@/server/analytics/rewritePosthog";
 import { extractNextDataPathname } from "@/server/extractNextDataPathname";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextResponse, type NextMiddleware } from "next/server";
+import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withMiddlewareAuth } from "./server/withMiddlewareAuth";
 import { withMiddlewareRewrite } from "./server/withMiddlewareRewrite";
 import { withPathname } from "./server/withPathname";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
-const CHANGELOG_PATTERN = /\.(rss|atom)$/;
-const MARKDOWN_PATTERN = /\.(md|mdx)$/;
 
 export const middleware: NextMiddleware = async (request) => {
+  const headers = new Headers(request.headers);
+
   let pathname = extractNextDataPathname(
     removeTrailingSlash(request.nextUrl.pathname)
   );
@@ -20,8 +21,6 @@ export const middleware: NextMiddleware = async (request) => {
    * so that nextjs doesn't incorrectly match this request to __next_data_catchall
    */
   if (pathname === "/404" || pathname === "/500" || pathname === "/_error") {
-    const headers = new Headers(request.headers);
-
     if (
       request.nextUrl.pathname.includes("/_next/data/") &&
       pathname === "/404"
@@ -46,42 +45,42 @@ export const middleware: NextMiddleware = async (request) => {
    * Rewrite robots.txt
    */
   if (pathname.endsWith("/robots.txt")) {
-    pathname = "/api/fern-docs/robots.txt";
-    return NextResponse.rewrite(withPathname(request, pathname));
+    if (pathname === "/robots.txt") {
+      return NextResponse.next();
+    }
+
+    headers.set("x-fern-basepath", pathname.replace(/\/robots\.txt$/, ""));
+
+    return NextResponse.rewrite(withPathname(request, "/robots.txt"), {
+      request: { headers },
+    });
   }
 
   /**
    * Rewrite sitemap.xml
    */
   if (pathname.endsWith("/sitemap.xml")) {
-    pathname = "/api/fern-docs/sitemap.xml";
-    return NextResponse.rewrite(withPathname(request, pathname));
+    if (pathname === "/sitemap.xml") {
+      return NextResponse.next();
+    }
+
+    headers.set("x-fern-basepath", pathname.replace(/\/sitemap\.xml$/, ""));
+
+    return NextResponse.rewrite(withPathname(request, "/sitemap.xml"), {
+      request: { headers },
+    });
   }
 
   /**
-   * Rewrite llms.txt
+   * Rewrite llms.txt and llms-full.txt
    */
-  if (pathname.endsWith("/llms.txt")) {
-    const leadingPathname = pathname.replace(/\/llms\.txt$/, "") || "/";
-    const searchParams = new URLSearchParams(request.nextUrl.searchParams);
-    searchParams.set("path", leadingPathname);
-    pathname = "/api/fern-docs/llms.txt";
-    return NextResponse.rewrite(
-      withPathname(request, pathname, `?${String(searchParams)}`)
-    );
-  }
-
-  /**
-   * Rewrite llms-full.txt
-   */
-  if (pathname.endsWith("/llms-full.txt")) {
-    const leadingPathname = pathname.replace(/\/llms-full\.txt$/, "") || "/";
-    const searchParams = new URLSearchParams(request.nextUrl.searchParams);
-    searchParams.set("path", leadingPathname);
-    pathname = "/api/fern-docs/llms-full.txt";
-    return NextResponse.rewrite(
-      withPathname(request, pathname, `?${String(searchParams)}`)
-    );
+  if (
+    pathname.endsWith("/llms.txt") ||
+    pathname.endsWith("/llms-full.txt") ||
+    pathname.match(MARKDOWN_PATTERN) ||
+    pathname.match(RSS_PATTERN)
+  ) {
+    return NextResponse.next();
   }
 
   /**
@@ -105,17 +104,17 @@ export const middleware: NextMiddleware = async (request) => {
   /**
    * Rewrite changelog rss and atom feeds
    */
-  const changelogFormat = pathname.match(CHANGELOG_PATTERN)?.[1];
-  if (changelogFormat != null) {
-    pathname = pathname.replace(new RegExp(`.${changelogFormat}$`), "");
-    if (pathname === "/index") {
-      pathname = "/";
-    }
-    const url = new URL("/api/fern-docs/changelog", request.nextUrl.origin);
-    url.searchParams.set("format", changelogFormat);
-    url.searchParams.set("path", pathname);
-    return NextResponse.rewrite(String(url));
-  }
+  // const changelogFormat = pathname.match(RSS_PATTERN)?.[1];
+  // if (changelogFormat != null) {
+  //   pathname = pathname.replace(new RegExp(`.${changelogFormat}$`), "");
+  //   if (pathname === "/index") {
+  //     pathname = "/";
+  //   }
+  //   const url = new URL("/api/fern-docs/changelog", request.nextUrl.origin);
+  //   url.searchParams.set("format", changelogFormat);
+  //   url.searchParams.set("path", pathname);
+  //   return NextResponse.rewrite(String(url));
+  // }
 
   const markdownExtension = pathname.match(MARKDOWN_PATTERN)?.[1];
   if (markdownExtension != null) {

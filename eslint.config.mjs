@@ -20,6 +20,8 @@ export default tseslint.config(
       "**/.next",
       "**/storybook-static",
       "**/out",
+      "**/node_modules",
+      "fern/**",
     ],
   },
   eslint.configs.recommended,
