@@ -53,18 +53,24 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
 
     convert(): FernRegistry.api.latest.HttpRequest[] {
         return Object.entries(this.requestBodiesByContentType ?? {})
-            .map(([contentType, mediaTypeObject]) => {
-                const body = mediaTypeObject.convert();
+            .flatMap(([contentType, mediaTypeObject]) => {
+                const bodies = mediaTypeObject.convert();
 
-                if (body == null) {
+                if (bodies == null) {
                     return undefined;
                 }
 
-                return {
-                    description: this.description,
-                    contentType,
-                    body,
-                };
+                return bodies.map((body) => {
+                    if (body == null) {
+                        return undefined;
+                    }
+
+                    return {
+                        description: this.description,
+                        contentType,
+                        body,
+                    };
+                });
             })
             .filter(isNonNullish);
     }

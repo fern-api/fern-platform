@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
@@ -21,7 +22,7 @@ export type ResponseStreamingFormat = ConstArrayToType<typeof SUPPORTED_STREAMIN
 
 export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     OpenAPIV3_1.MediaTypeObject,
-    FernRegistry.api.latest.HttpResponseBodyShape
+    FernRegistry.api.latest.HttpResponseBodyShape[]
 > {
     schema: SchemaConverterNode | undefined;
     contentType: ResponseContentType | undefined;
@@ -57,7 +58,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                     input: this.input.schema,
                     context: this.context,
                     accessPath: this.accessPath,
-                    pathId: "type",
+                    pathId: "schema",
                 });
             }
         } else if (mediaType?.isOctetStream()) {
@@ -211,22 +212,72 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         }
     }
 
-    convert(): FernRegistry.api.latest.HttpResponseBodyShape | undefined {
+    convertTypeShapeIntoHttpResponseBodyShape(
+        shape: FernRegistry.api.latest.TypeShape | undefined,
+        seenVariants: Set<string> = new Set(),
+    ): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
+        if (
+            shape == null ||
+            (shape.type === "alias" && shape.value.type === "id" && seenVariants.has(shape.value.id))
+        ) {
+            return undefined;
+        }
+
+        const type = shape.type;
+        switch (type) {
+            case "object":
+            case "alias":
+                return [shape];
+            case "undiscriminatedUnion": {
+                const newSeenVariants = new Set(seenVariants);
+                shape.variants.forEach(
+                    (variant) =>
+                        variant.shape.type === "alias" &&
+                        variant.shape.value.type === "id" &&
+                        newSeenVariants.add(variant.shape.value.id),
+                );
+                return shape.variants
+                    .flatMap((variant) =>
+                        this.convertTypeShapeIntoHttpResponseBodyShape(variant.shape, newSeenVariants),
+                    )
+                    .filter(isNonNullish);
+            }
+            case "discriminatedUnion":
+                return shape.variants.map((variant) => ({
+                    type: "object",
+                    properties: variant.properties,
+                    extraProperties: variant.extraProperties,
+                    extends: variant.extends,
+                }));
+            case "enum":
+                return shape.values.map((value) => ({
+                    type: "alias",
+                    value: {
+                        type: "literal",
+                        value: {
+                            type: "stringLiteral",
+                            value: value.value,
+                        },
+                    },
+                }));
+            default:
+                new UnreachableCaseError(type);
+                return undefined;
+        }
+    }
+
+    convert(): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
         switch (this.contentType) {
             case "application/json":
                 if (this.streamingFormat == null) {
-                    const shape = this.schema?.convert();
-                    if (shape == null || (shape.type !== "object" && shape.type !== "alias")) {
-                        return undefined;
-                    }
-                    return shape;
+                    return this.convertTypeShapeIntoHttpResponseBodyShape(this.schema?.convert());
                 } else {
-                    return this.convertStreamingFormat();
+                    return [this.convertStreamingFormat()].filter(isNonNullish);
                 }
             case "application/octet-stream":
-                return { type: "fileDownload", contentType: this.contentSubtype };
+                return [{ type: "fileDownload", contentType: this.contentSubtype }];
             case "text/event-stream":
-                return this.convertStreamingFormat();
+                return [this.convertStreamingFormat()].filter(isNonNullish);
             case undefined:
                 return undefined;
             default:

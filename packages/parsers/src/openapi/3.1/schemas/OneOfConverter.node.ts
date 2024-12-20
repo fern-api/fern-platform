@@ -27,12 +27,12 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
         if (this.input.oneOf != null) {
             if (this.input.discriminator == null) {
                 this.discriminated = false;
-                this.undiscriminatedMapping = this.input.oneOf?.map((schema) => {
+                this.undiscriminatedMapping = this.input.oneOf?.map((schema, i) => {
                     return new SchemaConverterNode({
                         input: schema,
                         context: this.context,
                         accessPath: this.accessPath,
-                        pathId: this.pathId,
+                        pathId: `oneOf[${i}]`,
                     });
                 });
             } else {
@@ -87,15 +87,33 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
                   variants: Object.entries(this.discriminatedMapping)
                       .map(([key, node]) => {
                           const convertedShape = node.convert();
-                          if (convertedShape == null || convertedShape.type !== "object") {
+                          if (
+                              convertedShape == null ||
+                              (convertedShape.type !== "object" && convertedShape.type !== "alias")
+                          ) {
                               return undefined;
                           }
+
+                          if (convertedShape.type === "alias") {
+                              return {
+                                  discriminantValue: key,
+                                  displayName: undefined,
+                                  availability: node.availability?.convert(),
+                                  description: node.description,
+                                  properties: [],
+                                  extraProperties: undefined,
+                                  extends:
+                                      convertedShape.value.type === "id"
+                                          ? [FernRegistry.TypeId(convertedShape.value.id)]
+                                          : [],
+                              };
+                          }
+
                           return {
                               discriminantValue: key,
                               // TODO x-fern-display-name extension
                               displayName: undefined,
-                              // TODO x-fern-availability extension
-                              availability: undefined,
+                              availability: node.availability?.convert(),
                               description: node.description,
                               ...convertedShape,
                           };
@@ -108,15 +126,17 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
                     variants: this.undiscriminatedMapping
                         .map((node) => {
                             const convertedShape = node.convert();
-                            if (convertedShape == null || convertedShape.type !== "object") {
+                            if (
+                                convertedShape == null ||
+                                (convertedShape.type !== "object" && convertedShape.type !== "alias")
+                            ) {
                                 return undefined;
                             }
                             return {
                                 displayName: node.name,
                                 shape: convertedShape,
                                 description: node.description,
-                                // TODO: handle availability
-                                availability: undefined,
+                                availability: node.availability?.convert(),
                             };
                         })
                         .filter(isNonNullish),

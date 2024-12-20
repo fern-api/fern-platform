@@ -359,7 +359,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             queryParameters: convertOperationObjectProperties(this.queryParameters),
             requestHeaders: convertOperationObjectProperties(this.requestHeaders),
             responseHeaders: responses?.[0]?.headers,
-            // TODO: revisit fdr shape to suport multiple requests
             requests: this.requests?.convert(),
             responses: responses?.map((response) => response.response),
             errors,

@@ -2130,7 +2130,26 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -2186,6 +2205,15 @@
           "shape": {
             "type": "undiscriminatedUnion",
             "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
               {
                 "shape": {
                   "type": "object",
@@ -2587,7 +2615,26 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -2643,6 +2690,15 @@
           "shape": {
             "type": "undiscriminatedUnion",
             "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
               {
                 "shape": {
                   "type": "object",
@@ -3535,7 +3591,17 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [
@@ -7045,7 +7111,20 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -8874,7 +8953,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseWebhooksError"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [
@@ -9127,7 +9225,85 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/x-www-form-urlencoded",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "target_url",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_target"
+                  }
+                }
+              },
+              {
+                "key": "event",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_event"
+                  }
+                }
+              },
+              {
+                "key": "is_active",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "webhook_is_active"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "signing_secret",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "webhook_signing_secret"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "version",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "webhook_version_of_request"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 201,
@@ -9146,7 +9322,35 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseWebhooksError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhookTargetUrlError"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [
@@ -9779,7 +9983,57 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/x-www-form-urlencoded",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "target_url",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_target"
+                  }
+                }
+              },
+              {
+                "key": "event",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_event"
+                  }
+                }
+              },
+              {
+                "key": "is_active",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_is_active"
+                  }
+                }
+              },
+              {
+                "key": "signing_secret",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_signing_secret"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -10062,14 +10316,62 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/x-www-form-urlencoded",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "target_url",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhook_target"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
       "responses": [],
       "errors": [
         {
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseWebhooksError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhookTargetUrlError"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [
@@ -10450,7 +10752,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseDocsConversionError"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [
@@ -10798,6 +11119,33 @@
           "shape": {
             "type": "undiscriminatedUnion",
             "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseDocsConversionError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "jsonObjectParseError"
+                  }
+                }
+              },
               {
                 "shape": {
                   "type": "object",
@@ -11169,7 +11517,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseDocsConversionError"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [
@@ -11571,6 +11938,33 @@
             "variants": [
               {
                 "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseVideoConversionError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "jsonObjectParseError"
+                  }
+                }
+              },
+              {
+                "shape": {
                   "type": "object",
                   "extends": [],
                   "properties": [
@@ -11955,7 +12349,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseVideoConversionError"
+                  }
+                }
+              }
+            ]
           },
           "name": "Bad Request",
           "examples": [

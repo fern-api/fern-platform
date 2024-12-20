@@ -218,11 +218,43 @@
         {
           "contentType": "multipart/form-data",
           "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "CreateVoiceRequest"
-            }
+            "type": "formData",
+            "fields": [
+              {
+                "type": "property",
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The name of the new voice."
+              },
+              {
+                "type": "file",
+                "key": "file",
+                "isOptional": false,
+                "description": "The audio file for the voice."
+              },
+              {
+                "type": "property",
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Optional description of the voice."
+              }
+            ]
           }
         }
       ],
@@ -404,11 +436,43 @@
         {
           "contentType": "multipart/form-data",
           "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "UpdateVoiceRequest"
-            }
+            "type": "formData",
+            "fields": [
+              {
+                "type": "property",
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The name of the new voice."
+              },
+              {
+                "type": "file",
+                "key": "file",
+                "isOptional": true,
+                "description": "The audio file for the voice."
+              },
+              {
+                "type": "property",
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Optional description of the voice."
+              }
+            ]
           }
         }
       ],
