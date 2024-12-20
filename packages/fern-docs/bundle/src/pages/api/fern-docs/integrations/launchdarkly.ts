@@ -6,7 +6,6 @@ import {
   getLaunchDarklySettings,
 } from "@fern-docs/edge-config";
 import { COOKIE_EMAIL, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { randomUUID } from "crypto";
 import { NextRequest, NextResponse, userAgent } from "next/server";
 
 export const runtime = "edge";
@@ -84,7 +83,7 @@ async function getUserContext(
   );
 
   if (user) {
-    const key = (await hashString(user.email)) ?? randomUUID();
+    const key = (await hashString(user.email)) ?? crypto.randomUUID();
     return {
       key: `fern-docs-user-${key}`,
       email: user.email,
@@ -93,7 +92,7 @@ async function getUserContext(
   }
 
   if (email) {
-    const key = (await hashString(email)) ?? randomUUID();
+    const key = (await hashString(email)) ?? crypto.randomUUID();
     return { key: `fern-docs-user-${key}`, email };
   }
 
@@ -105,7 +104,7 @@ async function getDeviceContext(
 ): Promise<LaunchDarklyInfo["device"]> {
   const agent = userAgent(req);
 
-  const hash = (await hashString(agent.ua)) ?? randomUUID();
+  const hash = (await hashString(agent.ua)) ?? crypto.randomUUID();
 
   return {
     ...agent,
