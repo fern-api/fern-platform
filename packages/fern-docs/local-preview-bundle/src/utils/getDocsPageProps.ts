@@ -1,12 +1,6 @@
 import { FdrAPI, type DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { SidebarTab } from "@fern-platform/fdr-utils";
-import {
-  DEFAULT_FEATURE_FLAGS,
-  getRedirectForPath,
-  type FeatureFlags,
-} from "@fern-docs/utils";
 import {
   DocsPage,
   NavbarLink,
@@ -17,6 +11,12 @@ import {
   resolveDocsContent,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
+import {
+  DEFAULT_FEATURE_FLAGS,
+  getRedirectForPath,
+  type FeatureFlags,
+} from "@fern-docs/utils";
+import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import urljoin from "url-join";

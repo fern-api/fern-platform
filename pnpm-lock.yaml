@@ -165,9 +165,6 @@ importers:
       lint-staged:
         specifier: ^13.0.3
         version: 13.3.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       playwright:
         specifier: ^1.47.1
         version: 1.47.1
@@ -268,9 +265,6 @@ importers:
       execa:
         specifier: ^9.5.1
         version: 9.5.1
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -320,9 +314,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -409,9 +400,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -446,9 +434,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -483,9 +468,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -520,9 +502,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -572,9 +551,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -696,9 +672,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -896,9 +869,6 @@ importers:
       glslify-loader:
         specifier: ^2.0.0
         version: 2.0.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -957,9 +927,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1144,9 +1111,6 @@ importers:
       jsdom:
         specifier: ^24.0.0
         version: 24.0.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       postcss-import:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
@@ -1211,9 +1175,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1303,9 +1264,6 @@ importers:
       next:
         specifier: npm:@fern-api/next@14.2.9-fork.2
         version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1428,9 +1386,6 @@ importers:
       glslify-loader:
         specifier: ^2.0.0
         version: 2.0.0
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -1570,9 +1525,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1613,9 +1565,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1692,9 +1641,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1955,9 +1901,6 @@ importers:
       instantsearch.js:
         specifier: 4.75.4
         version: 4.75.4(algoliasearch@5.13.0)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2368,9 +2311,6 @@ importers:
       next-router-mock:
         specifier: ^0.9.13
         version: 0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       postcss-import:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
@@ -2429,9 +2369,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2487,9 +2424,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2585,9 +2519,6 @@ importers:
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -2625,9 +2556,6 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.19.33)(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2))
-      organize-imports-cli:
-        specifier: ^0.10.0
-        version: 0.10.0
       typescript:
         specifier: 5.7.2
         version: 5.7.2
@@ -6740,7 +6668,7 @@ packages:
     resolution: {integrity: sha512-GWrNeElMYHO8FVETjW205u2s9IXFs46fmVKY8T1dHgksCm3JV8w4k14gM2eaZbOUOH/tGcOuz5YbqJl8iKkA8w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      next: npm:@fern-api/next@14.2.9-fork.2
+      next: ^13.5.0 || ^14.0.0 || ^15.0.0
       react: 18.3.1
       react-dom: 18.3.1
       storybook: ^8.4.4
@@ -6951,9 +6879,6 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
-
-  '@ts-morph/common@0.16.0':
-    resolution: {integrity: sha512-SgJpzkTgZKLKqQniCjLaE3c2L2sdL7UShvmTmPBejAKd2OKV/yfMpQ2IWpAuA+VY5wy7PkSUaEObIqEK6afFuw==}
 
   '@ts-morph/common@0.20.0':
     resolution: {integrity: sha512-7uKjByfbPpwuzkstL3L5MQyuXPSKdoNG93Fmi2JoDcTf3pEP731JdRFAduRVkOs8oqxPsXKA+ScrWkdQ8t/I+Q==}
@@ -7291,12 +7216,6 @@ packages:
 
   '@types/stats.js@0.17.3':
     resolution: {integrity: sha512-pXNfAD3KHOdif9EQXZ9deK82HVNaXP5ZIF5RP2QG6OQFNTaY2YIetfrE9t528vEreGQvEPRDDc8muaoYeK0SxQ==}
-
-  '@types/strip-bom@3.0.0':
-    resolution: {integrity: sha512-xevGOReSYGM7g/kUBZzPqCrR/KYAo+F0yiPc85WFTJa0MSLtyFTVTU6cJu/aV4mid7IffDIWqo69THF2o4JiEQ==}
-
-  '@types/strip-json-comments@0.0.30':
-    resolution: {integrity: sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==}
 
   '@types/three@0.170.0':
     resolution: {integrity: sha512-CUm2uckq+zkCY7ZbFpviRttY+6f9fvwm6YqSqPfA5K22s9w7R4VnA3rzJse8kHVvuzLcTx+CjNCs2NYe0QFAyg==}
@@ -8839,9 +8758,6 @@ packages:
     resolution: {integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==}
     engines: {iojs: '>= 1.0.0', node: '>= 0.12.0'}
 
-  code-block-writer@11.0.3:
-    resolution: {integrity: sha512-NiujjUFB4SwScJq2bwbYUtXbZhBSlY6vYzm++3Q6oC+U+injTqfPYFK8wS9COOmb2lueqp0ZRB4nK1VYeHgNyw==}
-
   code-block-writer@12.0.0:
     resolution: {integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==}
 
@@ -9670,10 +9586,6 @@ packages:
 
   ecdsa-sig-formatter@1.0.11:
     resolution: {integrity: sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ==}
-
-  editorconfig@0.15.3:
-    resolution: {integrity: sha512-M9wIMFx96vq0R4F+gRpY3o2exzb8hEj/n9S8unZtHSvYjibBp/iMufSzvmOcV/laG0ZtuTVGtiJggPOSW2r93g==}
-    hasBin: true
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
@@ -12105,9 +12017,6 @@ packages:
     resolution: {integrity: sha512-9hp3Vp2/hFQUiIwKo8XCeFVnrg8Pk3TYNPIR7tJADKi5YfcF7vEaK7avFHTlSy3kOKYaJQaalfEo6YuXdceBOQ==}
     engines: {node: 14 || >=16.14}
 
-  lru-cache@4.1.5:
-    resolution: {integrity: sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==}
-
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
@@ -12913,10 +12822,6 @@ packages:
     resolution: {integrity: sha512-5b6Y85tPxZZ7QytO+BQzysW31HJku27cRIlkbAXaNx+BdcVi+LlRFmVXzeF6a7JCwJpyw5c4b+YSVImQIrBpuQ==}
     engines: {node: '>=10'}
 
-  organize-imports-cli@0.10.0:
-    resolution: {integrity: sha512-cVyNEeiDxX/zA6gdK1QS2rr3TK1VymIkT0LagnAk4f6eE0IC0bo3BeUkMzm3q3GnCJzYC+6lfuMpBE0Cequ7Vg==}
-    hasBin: true
-
   os-browserify@0.3.0:
     resolution: {integrity: sha512-gjcpUc3clBf9+210TRaDWbf+rZZZEshZ+DlXMRCeAjp0xhTrnQsKHypIy1J3d5hKdUzj69t708EHtU8P6bUn0A==}
 
@@ -13713,9 +13618,6 @@ packages:
 
   prr@1.0.1:
     resolution: {integrity: sha512-yPw4Sng1gWghHQWj0B3ZggWUm4qVbPwPFcRG8KyxiU7J2OHFSoEHKS+EZ3fv5l1t9CyCiop6l/ZYeWbrgoQejw==}
-
-  pseudomap@1.0.2:
-    resolution: {integrity: sha512-b/YwNhb8lk1Zz2+bXXpS/LK9OisiZZ1SNsSLxN1x2OXVEhW2Ckr/7mWE5vrC1ZTiJlD9g19jWszTmJsB+oEpFQ==}
 
   psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
@@ -14537,9 +14439,6 @@ packages:
   siginfo@2.0.0:
     resolution: {integrity: sha512-ybx0WO1/8bSBLEWXZvEd7gMW3Sn3JFlW3TvX1nREbDLRNQNaeNN8WK0meBwPdAaOI7TtRRRJn/Es1zhrrCHu7g==}
 
-  sigmund@1.0.1:
-    resolution: {integrity: sha512-fCvEXfh6NWpm+YSuY2bpXb/VIihqWA6hLsgboC+0nl71Q7N7o2eaCW8mJa/NLvQhs6jpd3VZV4UiUQlV6+lc8g==}
-
   signal-exit@3.0.7:
     resolution: {integrity: sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==}
 
@@ -15314,9 +15213,6 @@ packages:
     resolution: {integrity: sha512-uivwYcQaxAucv1CzRp2n/QdYPo4ILf9VXgH19zEIjFx2EJufV16P0JtJVpYHy89DItG6Kwj2oIUjrcK5au+4tQ==}
     engines: {node: '>=8'}
 
-  ts-morph@15.1.0:
-    resolution: {integrity: sha512-RBsGE2sDzUXFTnv8Ba22QfeuKbgvAGJFuTN7HfmIRUkgT/NaVLfDM/8OFm2NlFkGlWEXdpW5OaFIp1jvqdDuOg==}
-
   ts-morph@19.0.0:
     resolution: {integrity: sha512-D6qcpiJdn46tUqV45vr5UGM2dnIEuTGNxVhg0sk5NX11orcouwj6i1bMqZIz2mZTZB1Hcgy7C3oEVhAT+f6mbQ==}
 
@@ -15369,9 +15265,6 @@ packages:
   tsconfig-paths@4.2.0:
     resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
     engines: {node: '>=6'}
-
-  tsconfig@7.0.0:
-    resolution: {integrity: sha512-vZXmzPrL+EmC4T/4rVlT2jNVMWCi/O4DIiSj3UHg1OE5kCKbk4mfrXc6dZksLgRM/TZlKnousKH9bbTazUWRRw==}
 
   tslib@1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
@@ -16152,9 +16045,6 @@ packages:
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
     engines: {node: '>=10'}
-
-  yallist@2.1.2:
-    resolution: {integrity: sha512-ncTzHV7NvsQZkYe1DW7cbDLm0YpzHmZF5r/iyP3ZnQtMiJ+pjzisCiMNI+Sj+xQF5pXhSHxSB3uDbsBTzY/c2A==}
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -21790,13 +21680,6 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@ts-morph/common@0.16.0':
-    dependencies:
-      fast-glob: 3.3.2
-      minimatch: 5.1.6
-      mkdirp: 1.0.4
-      path-browserify: 1.0.1
-
   '@ts-morph/common@0.20.0':
     dependencies:
       fast-glob: 3.3.2
@@ -22166,10 +22049,6 @@ snapshots:
   '@types/stack-utils@2.0.3': {}
 
   '@types/stats.js@0.17.3': {}
-
-  '@types/strip-bom@3.0.0': {}
-
-  '@types/strip-json-comments@0.0.30': {}
 
   '@types/three@0.170.0':
     dependencies:
@@ -24546,8 +24425,6 @@ snapshots:
 
   co@4.6.0: {}
 
-  code-block-writer@11.0.3: {}
-
   code-block-writer@12.0.0: {}
 
   cohere-ai@7.9.5:
@@ -25498,13 +25375,6 @@ snapshots:
   ecdsa-sig-formatter@1.0.11:
     dependencies:
       safe-buffer: 5.2.1
-
-  editorconfig@0.15.3:
-    dependencies:
-      commander: 2.20.3
-      lru-cache: 4.1.5
-      semver: 5.7.2
-      sigmund: 1.0.1
 
   ee-first@1.1.1: {}
 
@@ -28666,11 +28536,6 @@ snapshots:
 
   lru-cache@10.2.2: {}
 
-  lru-cache@4.1.5:
-    dependencies:
-      pseudomap: 1.0.2
-      yallist: 2.1.2
-
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
@@ -29958,13 +29823,6 @@ snapshots:
       strip-ansi: 6.0.1
       wcwidth: 1.0.1
 
-  organize-imports-cli@0.10.0:
-    dependencies:
-      chalk: 4.1.2
-      editorconfig: 0.15.3
-      ts-morph: 15.1.0
-      tsconfig: 7.0.0
-
   os-browserify@0.3.0: {}
 
   os-tmpdir@1.0.2: {}
@@ -30650,8 +30508,6 @@ snapshots:
 
   prr@1.0.1:
     optional: true
-
-  pseudomap@1.0.2: {}
 
   psl@1.9.0: {}
 
@@ -31594,7 +31450,8 @@ snapshots:
 
   semver-compare@1.0.0: {}
 
-  semver@5.7.2: {}
+  semver@5.7.2:
+    optional: true
 
   semver@6.3.1: {}
 
@@ -31804,8 +31661,6 @@ snapshots:
       side-channel-weakmap: 1.0.2
 
   siginfo@2.0.0: {}
-
-  sigmund@1.0.1: {}
 
   signal-exit@3.0.7: {}
 
@@ -32666,11 +32521,6 @@ snapshots:
     dependencies:
       tslib: 2.8.0
 
-  ts-morph@15.1.0:
-    dependencies:
-      '@ts-morph/common': 0.16.0
-      code-block-writer: 11.0.3
-
   ts-morph@19.0.0:
     dependencies:
       '@ts-morph/common': 0.20.0
@@ -32726,13 +32576,6 @@ snapshots:
       json5: 2.2.3
       minimist: 1.2.8
       strip-bom: 3.0.0
-
-  tsconfig@7.0.0:
-    dependencies:
-      '@types/strip-bom': 3.0.0
-      '@types/strip-json-comments': 0.0.30
-      strip-bom: 3.0.0
-      strip-json-comments: 2.0.1
 
   tslib@1.14.1: {}
 
@@ -33757,8 +33600,6 @@ snapshots:
   xtend@4.0.2: {}
 
   y18n@5.0.8: {}
-
-  yallist@2.1.2: {}
 
   yallist@3.1.1: {}
 

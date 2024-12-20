@@ -1,6 +1,6 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { type DocsPage } from "@fern-docs/ui";
+import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import type { NextApiRequestCookies } from "next/dist/server/api-utils";
 import type { GetServerSidePropsResult } from "next/types";
 import type { ComponentProps } from "react";

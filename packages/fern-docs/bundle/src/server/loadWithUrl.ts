@@ -1,6 +1,6 @@
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { withoutStaging } from "@fern-docs/utils";
 import { provideRegistryService } from "@fern-docs/ui";
+import { withoutStaging } from "@fern-docs/utils";
 
 export type LoadWithUrlResponse = APIResponse<
   FdrAPI.docs.v2.read.LoadDocsForUrlResponse,

@@ -26,7 +26,6 @@
     "format:check": "prettier --check --ignore-unknown \"**\"",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest run --passWithNoTests --globals"
   },
   "dependencies": {
@@ -43,7 +42,6 @@
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.3",
     "eslint": "^9",
-    "organize-imports-cli": "^0.10.0",
     "prettier": "^3.4.2",
     "typescript": "^5",
     "vitest": "^2.1.4"

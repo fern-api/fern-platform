@@ -28,7 +28,6 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "start": "node server.js",
     "test": "vitest --run --passWithNoTests --globals"
   },
@@ -66,7 +65,6 @@
     "express": "^4.20.0",
     "glslify-import": "^3.1.0",
     "glslify-loader": "^2.0.0",
-    "organize-imports-cli": "^0.10.0",
     "postcss": "^8.4.33",
     "prettier": "^3.4.2",
     "raw-loader": "^4.0.2",
