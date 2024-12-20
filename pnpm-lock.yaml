@@ -1539,9 +1539,6 @@ importers:
       micromark-extension-mdxjs:
         specifier: ^3.0.0
         version: 3.0.0
-      pnpm:
-        specifier: ^9.12.1
-        version: 9.12.1
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
