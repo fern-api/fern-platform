@@ -174,6 +174,7 @@ export function SearchV2(): ReactElement | false {
               return (
                 <Feedback
                   feedbackQuestion="Was this response helpful?"
+                  type="conversational-search"
                   metadata={() => ({
                     user: user?.content,
                     assistant: assistant.content,

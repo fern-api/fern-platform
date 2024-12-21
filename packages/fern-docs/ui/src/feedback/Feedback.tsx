@@ -11,6 +11,7 @@ import { FeedbackFormDialog } from "./FeedbackFormDialog";
 
 export interface FeedbackProps {
   className?: string;
+  type?: string;
   feedbackQuestion?: string;
   metadata?: Record<string, unknown> | (() => Record<string, unknown>);
 }
@@ -18,6 +19,7 @@ export interface FeedbackProps {
 export const Feedback: FC<FeedbackProps> = ({
   className,
   feedbackQuestion = "Was this page helpful?",
+  type = "on-page-feedback",
   metadata,
 }) => {
   const [sent, setSent] = useState(false);
@@ -45,6 +47,8 @@ export const Feedback: FC<FeedbackProps> = ({
     textareaRef.current?.focus();
     track("feedback_voted", {
       satisfied: true,
+      feedbackQuestion,
+      type,
       ...(typeof metadata === "function" ? metadata() : metadata),
     });
   };
@@ -54,6 +58,8 @@ export const Feedback: FC<FeedbackProps> = ({
     textareaRef.current?.focus();
     track("feedback_voted", {
       satisfied: false,
+      feedbackQuestion,
+      type,
       ...(typeof metadata === "function" ? metadata() : metadata),
     });
   };
@@ -79,12 +85,14 @@ export const Feedback: FC<FeedbackProps> = ({
         message: feedbackMessage,
         email,
         allowFollowUpViaEmail: showEmailInput === true,
+        feedbackQuestion,
+        type,
         ...(typeof metadata === "function" ? metadata() : metadata),
       });
       toast.success("Thank you for submitting feedback!");
       setSent(true);
     },
-    [isHelpful, metadata]
+    [isHelpful, metadata, feedbackQuestion, type]
   );
 
   useKeyboardPress({
