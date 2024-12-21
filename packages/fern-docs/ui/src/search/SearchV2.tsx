@@ -1,6 +1,5 @@
 import {
   CommandActions,
-  CommandAskAIGroup,
   CommandEmpty,
   CommandGroupFilters,
   CommandGroupPlayground,
@@ -153,7 +152,6 @@ export function SearchV2(): ReactElement | false {
       <DesktopSearchDialog
         open={open}
         onOpenChange={setOpen}
-        asChild
         trigger={<DesktopSearchButton />}
       >
         {isAskAiEnabled ? (
@@ -184,13 +182,6 @@ export function SearchV2(): ReactElement | false {
               );
             }}
           >
-            <CommandAskAIGroup
-              onAskAI={(initialInput) => {
-                setInitialInput(initialInput);
-                setAskAi(true);
-              }}
-              forceMount
-            />
             {children}
           </DesktopCommandWithAskAI>
         ) : (
