@@ -600,7 +600,7 @@ const AskAICommandItems = memo<{
                     </div>
                     <div className="flex items-start justify-start gap-4">
                       <Sparkles className="my-1 size-4 shrink-0" />
-                      <section className="prose prose-sm dark:prose-invert flex-1 shrink cursor-text">
+                      <section className="prose prose-sm dark:prose-invert min-w-0 flex-1 shrink cursor-text">
                         {message.assistant?.content && (
                           <MarkdownContent
                             components={{
