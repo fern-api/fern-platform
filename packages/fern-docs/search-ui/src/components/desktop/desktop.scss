@@ -3,7 +3,26 @@
   border: 1px solid var(--grayscale-a6);
   background-color: var(--grayscale-a1);
   backdrop-filter: blur(40px);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
+  transition: transform 100ms ease;
+  position: relative;
+
+  --cmdk-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--cmdk-shadow);
+
+  &::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: -50;
+    background: var(--white-a9);
+    backdrop-filter: blur(40px);
+
+    :is(.dark) & {
+      background: var(--black-a9);
+    }
+  }
 
   :is(.dark) & {
     background-color: var(--grayscale-a2);
@@ -81,6 +100,10 @@
     &:focus {
       outline: none;
     }
+  }
+
+  &[data-mode="ask-ai"] [data-cmdk-list] {
+    height: 400px;
   }
 
   [data-cmdk-list-sizer] {

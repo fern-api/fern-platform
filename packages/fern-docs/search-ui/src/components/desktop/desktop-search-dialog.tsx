@@ -70,8 +70,7 @@ export const DesktopSearchDialog = memo(
 
           <Dialog.Content
             className={cn(
-              "fixed left-1/2 top-[15%] w-[640px] origin-left -translate-x-1/2 overflow-hidden shadow-xl outline-none",
-              "before:pointer-events-none before:absolute before:inset-0 before:-z-50 before:bg-[var(--white-a9)] dark:before:bg-[var(--black-a9)]"
+              "fixed left-1/2 top-[15%] w-[640px] origin-center -translate-x-1/2 outline-none"
             )}
             asChild={asChild}
             onEscapeKeyDown={(e) => {

@@ -46,6 +46,7 @@ import * as Command from "../cmdk";
 import { CodeBlock } from "../code-block";
 import { MarkdownContent } from "../md-content";
 import { useFacetFilters } from "../search-client";
+import { CommandAskAIGroup } from "../shared";
 import { CommandLink } from "../shared/command-link";
 import tunnel from "../tunnel-rat";
 import { cn } from "../ui/cn";
@@ -60,7 +61,7 @@ const headerActions = tunnel();
 
 export const DesktopCommandWithAskAI = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<typeof DesktopCommandRoot> & {
+  Omit<ComponentPropsWithoutRef<typeof DesktopCommandRoot>, "children"> & {
     askAI?: boolean;
     defaultAskAI?: boolean;
     setAskAI?: (askAI: boolean) => void;
@@ -76,6 +77,8 @@ export const DesktopCommandWithAskAI = forwardRef<
     domain: string;
     onData?: (data: unknown[]) => void;
     renderActions?: (message: SqueezedMessage) => ReactNode;
+    setInitialInput?: (initialInput: string) => void;
+    children?: ReactNode;
   }
 >(
   (
@@ -95,10 +98,13 @@ export const DesktopCommandWithAskAI = forwardRef<
       composerActions,
       domain,
       renderActions,
+      setInitialInput,
       ...props
     },
-    ref
+    forwardedRef
   ) => {
+    const ref = useRef<HTMLDivElement>(null);
+
     const [askAI, setAskAI] = useControllableState<boolean>({
       defaultProp: defaultAskAI,
       prop: askAIProp,
@@ -106,11 +112,51 @@ export const DesktopCommandWithAskAI = forwardRef<
     });
     const { filters, handlePopState: handlePopFilters } = useFacetFilters();
 
+    function glow() {
+      if (ref.current) {
+        ref.current.animate(
+          {
+            boxShadow: [
+              "0 0 0px var(--accent-a5), var(--cmdk-shadow)",
+              "0 0 100px var(--accent-a5), var(--cmdk-shadow)",
+              "0 0 200px transparent, var(--cmdk-shadow)",
+            ],
+          },
+          { duration: 400, easing: "ease-out" }
+        );
+      }
+    }
+
+    // animate on presence
+    useEffect(() => {
+      if (ref.current) {
+        ref.current.animate(
+          { transform: ["scale(0.96)", "scale(1)"] },
+          { duration: 100, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }
+        );
+
+        if (askAI) {
+          glow();
+        }
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // bounce on action
+    function bounce() {
+      if (ref.current) {
+        ref.current.animate(
+          { transform: ["scale(1)", "scale(0.96)", "scale(1)"] },
+          { duration: 200, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }
+        );
+      }
+    }
+
     return (
       <DesktopCommandRoot
         label={askAI ? "Ask AI" : "Search"}
         {...props}
-        ref={ref}
+        ref={composeRefs(forwardedRef, ref)}
         shouldFilter={!askAI}
         disableAutoSelection={askAI}
         onPopState={
@@ -122,6 +168,7 @@ export const DesktopCommandWithAskAI = forwardRef<
         }
         onEscapeKeyDown={props.onEscapeKeyDown}
         escapeKeyShouldPopState={!askAI && filters.length > 0}
+        data-mode={askAI ? "ask-ai" : "search"}
       >
         {askAI ? (
           <DesktopAskAIContent
@@ -129,7 +176,10 @@ export const DesktopCommandWithAskAI = forwardRef<
             suggestionsApi={suggestionsApi}
             body={body}
             headers={headers}
-            onReturnToSearch={() => setAskAI(false)}
+            onReturnToSearch={() => {
+              setAskAI(false);
+              bounce();
+            }}
             initialInput={initialInput}
             chatId={chatId}
             onSelectHit={onSelectHit}
@@ -139,7 +189,18 @@ export const DesktopCommandWithAskAI = forwardRef<
             renderActions={renderActions}
           />
         ) : (
-          <DesktopCommandContent>{children}</DesktopCommandContent>
+          <DesktopCommandContent>
+            <CommandAskAIGroup
+              onAskAI={(initialInput) => {
+                setInitialInput?.(initialInput);
+                setAskAI(true);
+                bounce();
+                glow();
+              }}
+              forceMount
+            />
+            {children}
+          </DesktopCommandContent>
         )}
       </DesktopCommandRoot>
     );

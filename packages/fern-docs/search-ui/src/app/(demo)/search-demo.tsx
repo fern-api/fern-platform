@@ -19,7 +19,6 @@ import {
 } from "@/components";
 import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
-import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
@@ -150,7 +149,7 @@ export function DemoInstantSearchClient({
           </MobileCommand>
         </AppSidebar>
       ) : (
-        <DesktopSearchDialog open={open} onOpenChange={setOpen} asChild>
+        <DesktopSearchDialog open={open} onOpenChange={setOpen}>
           <DesktopCommandWithAskAI
             domain={domain}
             askAI={askAi}
@@ -159,6 +158,7 @@ export function DemoInstantSearchClient({
             onEscapeKeyDown={() => setOpen(false)}
             suggestionsApi="/api/suggest"
             initialInput={initialInput}
+            setInitialInput={setInitialInput}
             body={
               isTrieve
                 ? {
@@ -198,14 +198,6 @@ export function DemoInstantSearchClient({
             }}
           >
             <DefaultDesktopBackButton />
-
-            <CommandAskAIGroup
-              onAskAI={(initialInput) => {
-                setInitialInput(initialInput);
-                setAskAi(true);
-              }}
-              forceMount
-            />
 
             <CommandGroupFilters />
             <CommandEmpty />
