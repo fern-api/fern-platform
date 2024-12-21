@@ -25,7 +25,7 @@ export default tseslint.config(
       "fern/**",
     ],
   },
-  
+
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,

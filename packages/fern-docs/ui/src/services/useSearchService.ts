@@ -29,10 +29,13 @@ export function useSearchConfig(): SearchConfig {
     return { isAvailable: false };
   }
 
-  const { data } = useApiRouteSWR<SearchConfig>("/api/fern-docs/search", {
-    refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
-    revalidateOnFocus: false,
-  });
+  const { data } = useApiRouteSWR<SearchConfig>(
+    "/api/fern-docs/search/v1/key",
+    {
+      refreshInterval: 1000 * 60 * 60 * 2, // 2 hours
+      revalidateOnFocus: false,
+    }
+  );
 
   return data ?? { isAvailable: false };
 }
