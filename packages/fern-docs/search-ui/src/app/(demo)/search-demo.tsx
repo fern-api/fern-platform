@@ -166,6 +166,8 @@ export function DemoInstantSearchClient({
                     datasetId: trieveDatasetId,
                     organizationId: trieveOrganizationId,
                     topicId: trieveTopicId,
+                    // for suggestions:
+                    algoliaSearchKey: apiKey,
                   }
                 : {
                     algoliaSearchKey: apiKey,

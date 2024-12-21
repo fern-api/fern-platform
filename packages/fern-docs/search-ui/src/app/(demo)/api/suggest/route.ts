@@ -6,7 +6,6 @@ import {
   SEARCH_INDEX,
   type AlgoliaRecord,
 } from "@fern-docs/search-server/algolia";
-import { kv } from "@vercel/kv";
 import { streamObject } from "ai";
 import { z } from "zod";
 
@@ -29,13 +28,13 @@ export async function POST(request: Request): Promise<Response> {
     return new Response("Missing search key", { status: 400 });
   }
 
-  const cacheKey = `suggestions:${algoliaSearchKey}`;
-  const cachedSuggestions = await kv.get<string>(cacheKey);
-  if (cachedSuggestions) {
-    return new Response(JSON.stringify(cachedSuggestions), {
-      headers: { "Content-Type": "text/plain; charset=utf-8" },
-    });
-  }
+  // const cacheKey = `suggestions:${algoliaSearchKey}`;
+  // const cachedSuggestions = await kv.get<string>(cacheKey);
+  // if (cachedSuggestions) {
+  //   return new Response(JSON.stringify(cachedSuggestions), {
+  //     headers: { "Content-Type": "text/plain; charset=utf-8" },
+  //   });
+  // }
 
   const client = searchClient(algoliaAppId(), algoliaSearchKey);
   const response = await client.searchSingleIndex<AlgoliaRecord>({
@@ -55,12 +54,12 @@ export async function POST(request: Request): Promise<Response> {
       .join("\n\n"),
     maxRetries: 3,
     schema: SuggestionsSchema,
-    onFinish: async ({ object }) => {
-      if (object) {
-        await kv.set(cacheKey, object);
-        await kv.expire(cacheKey, 60 * 60);
-      }
-    },
+    // onFinish: async ({ object }) => {
+    //   if (object) {
+    //     await kv.set(cacheKey, object);
+    //     await kv.expire(cacheKey, 60 * 60);
+    //   }
+    // },
   });
 
   return result.toTextStreamResponse();
