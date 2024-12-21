@@ -164,6 +164,7 @@ export function SearchV2(): ReactElement | false {
             api={chatEndpoint}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
+            setInitialInput={setInitialInput}
             body={{ algoliaSearchKey: apiKey }}
             onSelectHit={handleNavigate}
             onEscapeKeyDown={() => setOpen(false)}

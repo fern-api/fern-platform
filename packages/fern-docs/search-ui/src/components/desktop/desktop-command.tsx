@@ -49,11 +49,23 @@ const DesktopCommand = forwardRef<
   DesktopCommandProps & ComponentPropsWithoutRef<typeof DesktopCommandRoot>
 >(({ onPopState, children, placeholder, ...props }, forwardedRef) => {
   const { filters, handlePopState: handlePopFilters } = useFacetFilters();
+  const ref = useRef<HTMLDivElement>(null);
+
+  // animate on presence
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.animate(
+        { transform: ["scale(0.96)", "scale(1)"] },
+        { duration: 100, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)" }
+      );
+    }
+  }, []);
+
   return (
     <DesktopCommandRoot
       label="Search"
       {...props}
-      ref={forwardedRef}
+      ref={composeRefs(forwardedRef, ref)}
       onPopState={composeEventHandlers(onPopState, handlePopFilters, {
         checkForDefaultPrevented: false,
       })}
