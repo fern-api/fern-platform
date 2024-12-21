@@ -492,7 +492,7 @@ const AskAIComposer = forwardRef<
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
-        className="cursor-text border-t border-[var(--grayscale-a6)]"
+        className="cursor-text border-t border-[var(--grayscale-a6)] p-2"
         onClick={() => inputRef.current?.focus()}
       >
         <DesktopCommandInput asChild>
@@ -549,12 +549,12 @@ const AskAIComposer = forwardRef<
             )}
           />
         </DesktopCommandInput>
-        <div className="flex items-center justify-between px-2 pb-2">
+        <div className="flex items-center justify-between">
           <div>{actions}</div>
           <Button
             size="icon"
             className="rounded-full"
-            variant="ghost"
+            variant="default"
             onClick={isLoading ? stop : () => onSend?.(value)}
             disabled={!isLoading && !canSubmit}
           >
