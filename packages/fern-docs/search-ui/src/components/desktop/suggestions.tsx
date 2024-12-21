@@ -2,8 +2,9 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { SuggestionsSchema } from "@fern-docs/search-server";
 import { experimental_useObject } from "ai/react";
 import { debounce } from "es-toolkit/function";
-import { ReactNode, useEffect, useMemo } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import * as Command from "../cmdk";
+import { Skeleton } from "../ui/skeleton";
 
 export const Suggestions = ({
   api,
@@ -16,27 +17,34 @@ export const Suggestions = ({
   headers?: Record<string, string>;
   askAI: (suggestion: string) => void;
 }): ReactNode => {
+  const [isLoading, setIsLoading] = useState(true);
   const { object, submit } = experimental_useObject({
     api,
     schema: SuggestionsSchema,
     headers,
+    onFinish: () => setIsLoading(false),
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSubmit = useMemo(() => debounce(submit, 500), []);
+  const debouncedSubmit = useMemo(
+    () => debounce(submit, 500, { edges: ["leading"] }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   useEffect(() => {
     debouncedSubmit(body);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (object?.suggestions == null) {
+  if (object?.suggestions == null && !isLoading) {
     return false;
   }
 
+  const suggestions = object?.suggestions?.filter(isNonNullish) ?? [];
+
   return (
     <Command.Group forceMount heading="Suggestions">
-      {object?.suggestions?.filter(isNonNullish).map((suggestion) => (
+      {suggestions.map((suggestion) => (
         <Command.Item
           key={suggestion}
           value={suggestion}
@@ -46,6 +54,13 @@ export const Suggestions = ({
           {suggestion}
         </Command.Item>
       ))}
+      {isLoading &&
+        suggestions.length < 5 &&
+        Array.from({ length: 5 - suggestions.length }).map((_, index) => (
+          <Command.Item key={`skeleton-${index}`} forceMount disabled>
+            <Skeleton className="h-5 w-full" />
+          </Command.Item>
+        ))}
     </Command.Group>
   );
 };

@@ -15,7 +15,7 @@ const SearchResult = z.object({
 
 export type SearchResult = z.infer<typeof SearchResult>;
 
-interface SqueezedMessage {
+export interface SqueezedMessage {
   user?: {
     id: string;
     createdAt?: Date;

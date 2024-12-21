@@ -20,6 +20,8 @@
     ".": "./src/index.ts",
     "./src/index.scss": "./src/index.scss",
     "./badges": "./src/badges/index.ts",
+    "./button": "./src/FernButtonV2.tsx",
+    "./kbd": "./src/kbd.tsx",
     "./src/colors.css": "./src/colors.css",
     "./src/fern-accent.scss": "./src/fern-accent.scss",
     "./src/badges/index.scss": "./src/badges/index.scss",

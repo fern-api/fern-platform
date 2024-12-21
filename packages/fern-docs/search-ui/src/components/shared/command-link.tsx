@@ -25,9 +25,7 @@ export const CommandLink = forwardRef<
     forwardedRef
   ) => {
     const ref = useRef<HTMLAnchorElement>(null);
-    const isSelected = Command.useCommandState(
-      (state) => state.value === href
-    ) as boolean;
+    const isSelected = Command.useCommandState((state) => state.value === href);
     const handleSelect = useCallback(() => {
       const url = new URL(href, withDefaultProtocol(domain));
       if (url.host === domain) {

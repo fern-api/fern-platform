@@ -11,11 +11,17 @@ import { FeedbackFormDialog } from "./FeedbackFormDialog";
 
 export interface FeedbackProps {
   className?: string;
+  feedbackQuestion?: string;
+  metadata?: Record<string, unknown> | (() => Record<string, unknown>);
 }
 
-export const Feedback: FC<FeedbackProps> = ({ className }) => {
+export const Feedback: FC<FeedbackProps> = ({
+  className,
+  feedbackQuestion = "Was this page helpful?",
+  metadata,
+}) => {
   const [sent, setSent] = useState(false);
-  const [isHelpful, setIsHelpful] = useState<boolean>();
+  const [isHelpful, setIsHelpful] = useState<"yes" | "no" | undefined>();
   const [showFeedbackInput, setShowFeedbackInput] = useState(false);
 
   const ref = useRef<HTMLDivElement>(null);
@@ -34,19 +40,21 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
   }, []);
 
   const handleYes = () => {
-    setIsHelpful(true);
+    setIsHelpful("yes");
     setShowFeedbackInput(true);
     textareaRef.current?.focus();
     track("feedback_voted", {
       satisfied: true,
+      ...(typeof metadata === "function" ? metadata() : metadata),
     });
   };
   const handleNo = () => {
-    setIsHelpful(false);
+    setIsHelpful("no");
     setShowFeedbackInput(true);
     textareaRef.current?.focus();
     track("feedback_voted", {
       satisfied: false,
+      ...(typeof metadata === "function" ? metadata() : metadata),
     });
   };
 
@@ -64,16 +72,19 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
     }) => {
       registerPosthogProperties({ email });
       track("feedback_submitted", {
-        satisfied: isHelpful ? true : false,
+        // satisfied must be a boolean because it's how the zapier integration is set
+        satisfied:
+          isHelpful === "yes" ? true : isHelpful === "no" ? false : undefined,
         feedback: feedbackId,
         message: feedbackMessage,
         email,
         allowFollowUpViaEmail: showEmailInput === true,
+        ...(typeof metadata === "function" ? metadata() : metadata),
       });
       toast.success("Thank you for submitting feedback!");
       setSent(true);
     },
-    [isHelpful]
+    [isHelpful, metadata]
   );
 
   useKeyboardPress({
@@ -90,27 +101,31 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
       {!sent ? (
         <div className="flex flex-wrap items-center justify-start gap-4">
           <span className="t-muted text-sm font-medium">
-            Was this page helpful?
+            {feedbackQuestion}
           </span>
           <FernButtonGroup>
             <FeedbackFormDialog
               content={
-                <FeedbackForm
-                  isHelpful={isHelpful}
-                  onSubmit={handleSubmitFeedback}
-                />
+                isHelpful && (
+                  <FeedbackForm
+                    isHelpful={isHelpful}
+                    onSubmit={handleSubmitFeedback}
+                  />
+                )
               }
               trigger={
                 <FernButton
                   icon={
                     <ThumbsUp
-                      className={clsx({ "animate-thumb-rock": isHelpful })}
+                      className={clsx({
+                        "animate-thumb-rock": isHelpful === "yes",
+                      })}
                     />
                   }
                   variant="outlined"
-                  intent={isHelpful ? "success" : "none"}
+                  intent={isHelpful === "yes" ? "success" : "none"}
                   onClick={handleYes}
-                  active={isHelpful}
+                  active={isHelpful === "yes"}
                 >
                   Yes
                 </FernButton>
@@ -118,24 +133,26 @@ export const Feedback: FC<FeedbackProps> = ({ className }) => {
             />
             <FeedbackFormDialog
               content={
-                <FeedbackForm
-                  isHelpful={isHelpful}
-                  onSubmit={handleSubmitFeedback}
-                />
+                isHelpful && (
+                  <FeedbackForm
+                    isHelpful={isHelpful}
+                    onSubmit={handleSubmitFeedback}
+                  />
+                )
               }
               trigger={
                 <FernButton
                   icon={
                     <ThumbsDown
                       className={clsx({
-                        "animate-thumb-rock": isHelpful === false,
+                        "animate-thumb-rock": isHelpful === "no",
                       })}
                     />
                   }
                   variant="outlined"
-                  intent={isHelpful === false ? "danger" : "none"}
+                  intent={isHelpful === "no" ? "danger" : "none"}
                   onClick={handleNo}
-                  active={isHelpful === false}
+                  active={isHelpful === "no"}
                 >
                   No
                 </FernButton>
