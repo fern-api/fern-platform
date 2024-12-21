@@ -177,7 +177,11 @@ export function DemoInstantSearchClient({
             }
             onSelectHit={handleSubmit}
             composerActions={
-              !isTrieve && (
+              isTrieve ? (
+                <span className="text-xs text-[var(--grayscale-a9)]">
+                  Powered by <a href="https://trieve.ai">Trieve</a>
+                </span>
+              ) : (
                 <ChatbotModelSelect value={model} onValueChange={setModel} />
               )
             }
