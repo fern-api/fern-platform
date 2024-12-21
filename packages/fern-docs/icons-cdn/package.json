@@ -19,7 +19,6 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "start": "next start",
     "test": "vitest --run --passWithNoTests --globals"
   },
@@ -46,7 +45,6 @@
     "depcheck": "^1.4.3",
     "eslint": "^9",
     "next": "npm:@fern-api/next@14.2.9-fork.2",
-    "organize-imports-cli": "^0.10.0",
     "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
     "typescript": "^5",

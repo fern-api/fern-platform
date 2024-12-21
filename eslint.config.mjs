@@ -25,6 +25,7 @@ export default tseslint.config(
       "fern/**",
     ],
   },
+  
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
@@ -60,7 +61,7 @@ export default tseslint.config(
   }),
 
   {
-    files: ["**/*.test.ts", "**/*.test.tsx"],
+    files: ["**/*.test.{ts,tsx}"],
     plugins: {
       vitest,
     },

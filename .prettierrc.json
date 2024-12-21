@@ -1,5 +1,9 @@
 {
   "trailingComma": "es5",
-  "plugins": ["prettier-plugin-packagejson", "prettier-plugin-tailwindcss"],
+  "plugins": [
+    "prettier-plugin-packagejson",
+    "prettier-plugin-organize-imports",
+    "prettier-plugin-tailwindcss"
+  ],
   "tailwindFunctions": ["clsx", "cn", "cva"]
 }

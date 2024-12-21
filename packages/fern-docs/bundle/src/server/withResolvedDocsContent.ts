@@ -1,8 +1,8 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FeatureFlags } from "@fern-docs/utils";
 import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
 import { getMdxBundler } from "@fern-docs/ui/bundlers";
+import { FeatureFlags } from "@fern-docs/utils";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 
