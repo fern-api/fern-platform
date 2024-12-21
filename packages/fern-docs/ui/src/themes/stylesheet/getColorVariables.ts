@@ -367,7 +367,7 @@ export function getColorVariables(
       [CSS_VARIABLES.ACCENT_PRIMARY_AAA]: `${accentPrimaryLightAAA.r}, ${accentPrimaryLightAAA.g}, ${accentPrimaryLightAAA.b}`,
       [CSS_VARIABLES.ACCENT_PRIMARY_TINTED]: `${accentPrimaryLightTinted.r}, ${accentPrimaryLightTinted.g}, ${accentPrimaryLightTinted.b}`,
       [CSS_VARIABLES.BACKGROUND]: `${backgroundColorLight.r}, ${backgroundColorLight.g}, ${backgroundColorLight.b}`,
-      [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `${accentPrimaryLightContrast.r}, ${accentPrimaryLightContrast.g}, ${accentPrimaryLightContrast.b}`,
+      [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `rgb(${accentPrimaryLightContrast.r}, ${accentPrimaryLightContrast.g}, ${accentPrimaryLightContrast.b})`,
       [CSS_VARIABLES.CARD_BACKGROUND]:
         cardBackgroundLight?.toRgbString() ??
         tinycolor("white").setAlpha(0.7).toRgbString(),
@@ -452,7 +452,7 @@ export function getColorVariables(
       [CSS_VARIABLES.ACCENT_PRIMARY_AAA]: `${accentPrimaryDarkAAA.r}, ${accentPrimaryDarkAAA.g}, ${accentPrimaryDarkAAA.b}`,
       [CSS_VARIABLES.ACCENT_PRIMARY_TINTED]: `${accentPrimaryDarkTinted.r}, ${accentPrimaryDarkTinted.g}, ${accentPrimaryDarkTinted.b}`,
       [CSS_VARIABLES.BACKGROUND]: `${backgroundColorDark.r}, ${backgroundColorDark.g}, ${backgroundColorDark.b}`,
-      [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b}`,
+      [CSS_VARIABLES.ACCENT_PRIMARY_CONTRAST]: `rgb(${accentPrimaryDarkContrast.r}, ${accentPrimaryDarkContrast.g}, ${accentPrimaryDarkContrast.b})`,
       [CSS_VARIABLES.CARD_BACKGROUND]:
         cardBackgroundDark?.toRgbString() ??
         tinycolor(backgroundColorDark).darken(2).setAlpha(0.5).toRgbString(),
