@@ -16,7 +16,7 @@ import { FC, FormEvent, useCallback, useMemo, useRef, useState } from "react";
 const MotionFernRadioGroup = motion(FernRadioGroup);
 
 interface FeedbackFormProps {
-  isHelpful: boolean | undefined;
+  isHelpful: "yes" | "no";
   onSubmit: (feedback: {
     feedbackId: string;
     feedbackMessage: string;
@@ -45,13 +45,13 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
 
   const legend = isHelpful
     ? "What did you like?"
-    : isHelpful === false
+    : isHelpful === "no"
       ? "What went wrong?"
       : "Feedback";
   const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
     const options = isHelpful
       ? POSITIVE_FEEDBACK
-      : isHelpful === false
+      : isHelpful === "no"
         ? NEGATIVE_FEEDBACK
         : [];
     const transformedOptions: FernDropdown.Option[] = options.map(

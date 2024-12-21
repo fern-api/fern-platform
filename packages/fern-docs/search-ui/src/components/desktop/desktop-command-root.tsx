@@ -9,24 +9,27 @@ import {
   useState,
 } from "react";
 
-import { useSearchHitsRerender } from "../../hooks/use-search-hits";
 import * as Command from "../cmdk";
 import { CommandUxProvider } from "../shared/command-ux";
 
 export const DesktopCommandRoot = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Command.Root> & {
-    onEscape?: KeyboardEventHandler<HTMLDivElement>;
+    onEscapeKeyDown?: KeyboardEventHandler<HTMLDivElement>;
     onPopState?: KeyboardEventHandler<HTMLDivElement>;
-    escapeKeyShouldPopFilters?: boolean;
+    escapeKeyShouldPopState?: boolean;
   }
 >(
   (
-    { children, onEscape, onPopState, escapeKeyShouldPopFilters, ...props },
+    {
+      children,
+      onEscapeKeyDown,
+      onPopState,
+      escapeKeyShouldPopState,
+      ...props
+    },
     forwardedRef
   ) => {
-    useSearchHitsRerender();
-
     const ref = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(
       null
@@ -52,8 +55,8 @@ export const DesktopCommandRoot = forwardRef<
           ref={composeRefs(forwardedRef, ref)}
           {...props}
           id="fern-search-desktop-command"
-          onKeyDownCapture={composeEventHandlers(
-            props.onKeyDownCapture,
+          onKeyDown={composeEventHandlers(
+            props.onKeyDown,
             (e) => {
               // on keydown, clear input error
               setInputError(null);
@@ -61,11 +64,13 @@ export const DesktopCommandRoot = forwardRef<
               // if escape, handle it
               if (e.key === "Escape") {
                 if (inputRef.current?.value.length) {
-                  inputRef.current.value = "";
-                } else if (escapeKeyShouldPopFilters) {
+                  inputRef.current?.dispatchEvent(
+                    new Event("cmdk-fern-clear-input")
+                  );
+                } else if (escapeKeyShouldPopState) {
                   onPopState?.(e);
                 } else {
-                  onEscape?.(e);
+                  onEscapeKeyDown?.(e);
                 }
                 return;
               }
@@ -76,12 +81,12 @@ export const DesktopCommandRoot = forwardRef<
                 onPopState?.(e);
                 return;
               }
-
-              // if input is focused, do nothing
-              if (document.activeElement === input) {
-                return;
-              }
-
+            },
+            { checkForDefaultPrevented: false }
+          )}
+          onKeyDownCapture={composeEventHandlers(
+            props.onKeyDownCapture,
+            (e) => {
               // if input is alphanumeric, space, backspace, delete, arrow left, arrow right, then focus input
               // note: this func is onKeyDownCapture so it will fire before the input
               // which is important so that the first character typed isn't swallowed
@@ -94,10 +99,9 @@ export const DesktopCommandRoot = forwardRef<
                 e.key === "ArrowRight"
               ) {
                 // focus input immediately:
-                input?.focus();
+                inputRef.current?.focus();
               }
-            },
-            { checkForDefaultPrevented: false }
+            }
           )}
         >
           {children}

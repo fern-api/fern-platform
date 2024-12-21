@@ -1,3 +1,4 @@
+import { useDebouncedCallback } from "@fern-ui/react-commons";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { useId } from "@radix-ui/react-id";
 import { Primitive } from "@radix-ui/react-primitive";
@@ -22,6 +23,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { noop } from "ts-essentials";
 import { z } from "zod";
 import { commandScore } from "./command-score";
 
@@ -153,6 +155,10 @@ type CommandProps = Children &
      * Set to `false` to disable ctrl+n/j/p/k shortcuts. Defaults to `true`.
      */
     vimBindings?: boolean;
+    /**
+     * Optionally set to `true` to disable automatic selection of the first item.
+     */
+    disableAutoSelection?: boolean;
   };
 
 type Context = {
@@ -208,6 +214,11 @@ const useCommand = () => useContext(CommandContext);
 const StoreContext = createContext<Store>(undefined as unknown as Store);
 const useStore = () => useContext(StoreContext);
 const GroupContext = createContext<Group>(undefined as unknown as Group);
+const ScrollContext = createContext<() => void>(noop);
+const useScrollSelectedIntoView = (): (() => void) => useContext(ScrollContext);
+const TriggerSelectionContext = createContext<() => void>(noop);
+const useTriggerSelection = (): (() => void) =>
+  useContext(TriggerSelectionContext);
 
 // const getId = (() => {
 //     let i = 0;
@@ -249,7 +260,8 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     filter,
     shouldFilter,
     loop,
-    // disablePointerSelection = false,
+    disablePointerSelection,
+    disableAutoSelection,
     vimBindings = true,
     ...etc
   } = props;
@@ -416,7 +428,7 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     if (
       !state.current.search ||
       // Explicitly false, because true | undefined is the default
-      propsRef.current.shouldFilter === false
+      !propsRef.current.shouldFilter
     ) {
       return;
     }
@@ -485,7 +497,14 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
       });
   }
 
+  const pointerInside = useRef(false);
   function selectFirstItem() {
+    if (propsRef.current.disableAutoSelection) {
+      if (!pointerInside.current) {
+        store.setState("value", "");
+      }
+      return;
+    }
     const item = getValidItems().find(
       (item) => item.getAttribute("aria-disabled") !== "true"
     );
@@ -498,7 +517,7 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     if (
       !state.current.search ||
       // Explicitly false, because true | undefined is the default
-      propsRef.current.shouldFilter === false
+      !propsRef.current.shouldFilter
     ) {
       state.current.filtered.count = allItems.current.size;
       // Do nothing, each item will know to show itself because search is empty
@@ -533,40 +552,47 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     state.current.filtered.count = itemCount;
   }
 
-  function scrollSelectedIntoView() {
-    const item = getSelectedItem();
+  // the following query selectors are expensive, and we call them on every keystroke.
+  // debouncing improves performance— 150ms is typically human-friendly
+  const scrollSelectedIntoView = useDebouncedCallback(
+    () => {
+      const item = getSelectedItem();
 
-    if (item) {
-      if (item.parentElement?.firstChild === item) {
-        // First item in Group, ensure heading is in view
-        item
-          .closest(GROUP_SELECTOR)
-          ?.querySelector(GROUP_HEADING_SELECTOR)
-          ?.scrollIntoView({
+      if (item) {
+        if (item.parentElement?.firstChild === item) {
+          // First item in Group, ensure heading is in view
+          item
+            .closest(GROUP_SELECTOR)
+            ?.querySelector(GROUP_HEADING_SELECTOR)
+            ?.scrollIntoView({
+              block:
+                ScrollLogicalPositionSchema.safeParse(
+                  item.getAttribute("data-scroll-logical-position")
+                ).data ?? "nearest",
+            });
+
+          // Ensure the item is always in view under the heading
+          item.scrollIntoView({
             block:
               ScrollLogicalPositionSchema.safeParse(
                 item.getAttribute("data-scroll-logical-position")
               ).data ?? "nearest",
           });
-
-        // Ensure the item is always in view under the heading
-        item.scrollIntoView({
-          block:
-            ScrollLogicalPositionSchema.safeParse(
-              item.getAttribute("data-scroll-logical-position")
-            ).data ?? "nearest",
-        });
-      } else {
-        // Ensure the item is always in view
-        item.scrollIntoView({
-          block:
-            ScrollLogicalPositionSchema.safeParse(
-              item.getAttribute("data-scroll-logical-position")
-            ).data ?? "nearest",
-        });
+        } else {
+          // Ensure the item is always in view
+          item.scrollIntoView({
+            block:
+              ScrollLogicalPositionSchema.safeParse(
+                item.getAttribute("data-scroll-logical-position")
+              ).data ?? "nearest",
+          });
+        }
       }
-    }
-  }
+    },
+    [],
+    150,
+    { edges: ["leading", "trailing"] }
+  );
 
   /** Getters */
 
@@ -592,13 +618,13 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
     }
   }
 
-  function updateSelectedByItem(change: 1 | -1) {
+  function updateSelectedByItem(change: 1 | 0 | -1) {
     const selected = getSelectedItem();
     const items = getValidItems();
     const index = items.findIndex((item) => item === selected);
 
     // Get item at this index
-    let newSelected = items[index + change];
+    let newSelected = items[index + change] ?? items[0];
 
     if (propsRef.current?.loop) {
       newSelected =
@@ -611,6 +637,9 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
 
     if (newSelected) {
       store.setState("value", newSelected.getAttribute(VALUE_ATTR) ?? "");
+      setTimeout(() => {
+        scrollSelectedIntoView();
+      });
     }
   }
 
@@ -732,6 +761,12 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
           }
         }
       }}
+      onPointerEnter={() => {
+        pointerInside.current = true;
+      }}
+      onPointerLeave={() => {
+        pointerInside.current = false;
+      }}
     >
       <label
         data-cmdk-label=""
@@ -745,7 +780,13 @@ const Root = forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
       {SlottableWithNestedChildren(props, (child) => (
         <StoreContext.Provider value={store}>
           <CommandContext.Provider value={context}>
-            {child}
+            <ScrollContext.Provider value={scrollSelectedIntoView}>
+              <TriggerSelectionContext.Provider
+                value={() => updateSelectedByItem(0)}
+              >
+                {child}
+              </TriggerSelectionContext.Provider>
+            </ScrollContext.Provider>
           </CommandContext.Provider>
         </StoreContext.Provider>
       ))}
@@ -773,7 +814,6 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
       return context.item(id, groupContext?.id);
     }
     return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [forceMount]);
 
   const value = useValue(
@@ -787,10 +827,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
   const selected = useCmdk(
     (state) => state.value && state.value === value.current
   );
+
   const render = useCmdk((state) =>
     forceMount
       ? true
-      : context.filter() === false
+      : !context.filter()
         ? true
         : !state.search
           ? true
@@ -868,7 +909,7 @@ const Group = forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
   const render = useCmdk((state) =>
     forceMount
       ? true
-      : context.filter() === false
+      : !context.filter()
         ? true
         : !state.search
           ? true
@@ -877,7 +918,6 @@ const Group = forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
 
   useIsomorphicLayoutEffect(() => {
     return context.group(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useValue(id, ref, [props.value, props.heading, headingRef]);
@@ -1067,6 +1107,7 @@ const Dialog = forwardRef<HTMLDivElement, DialogProps>(
   (props, forwardedRef) => {
     const {
       open,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       onOpenChange,
       overlayClassName,
       contentClassName,
@@ -1157,6 +1198,8 @@ export {
   Separator,
   defaultFilter,
   useCmdk as useCommandState,
+  useScrollSelectedIntoView,
+  useTriggerSelection,
 };
 
 /**
@@ -1208,14 +1251,14 @@ function useLazyRef<T>(fn: () => T) {
     ref.current = fn();
   }
 
-  return ref as MutableRefObject<T>;
+  return ref as unknown as MutableRefObject<T>;
 }
 
 // ESM is still a nightmare with Next.js so I'm just gonna copy the package code in
 // https://github.com/gregberge/react-merge-refs
 // Copyright (c) 2020 Greg Bergé
 function mergeRefs<T = any>(
-  refs: Array<MutableRefObject<T> | LegacyRef<T>>
+  refs: (MutableRefObject<T> | LegacyRef<T>)[]
 ): RefCallback<T> {
   return (value) => {
     refs.forEach((ref) => {

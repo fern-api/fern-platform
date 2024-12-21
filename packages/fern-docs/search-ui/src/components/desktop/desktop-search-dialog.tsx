@@ -1,3 +1,4 @@
+import { Button } from "@fern-docs/components/button";
 import * as Dialog from "@radix-ui/react-dialog";
 import { TooltipPortal } from "@radix-ui/react-tooltip";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
@@ -7,7 +8,7 @@ import {
   ReactNode,
   memo,
 } from "react";
-import { Button } from "../ui/button";
+
 import { cn } from "../ui/cn";
 import {
   Tooltip,

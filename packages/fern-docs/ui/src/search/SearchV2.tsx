@@ -6,17 +6,13 @@ import {
   CommandGroupPlayground,
   CommandGroupTheme,
   CommandSearchHits,
-  DesktopBackButton,
+  DefaultDesktopBackButton,
   DesktopCommand,
-  DesktopCommandAboveInput,
-  DesktopCommandBadges,
-  DesktopCommandBeforeInput,
   DesktopCommandWithAskAI,
   DesktopSearchButton,
   DesktopSearchDialog,
   SEARCH_INDEX,
   SearchClientRoot,
-  useFacetFilters,
   useIsMobile,
 } from "@fern-docs/search-ui";
 import { useEventCallback } from "@fern-ui/react-commons";
@@ -46,6 +42,7 @@ import {
   useSetTheme,
   useTogglePlayground,
 } from "../atoms";
+import { Feedback } from "../feedback/Feedback";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
 
@@ -127,12 +124,7 @@ export function SearchV2(): ReactElement | false {
 
   const children = (
     <>
-      <DesktopCommandAboveInput>
-        <DesktopCommandBadges />
-      </DesktopCommandAboveInput>
-      <DesktopCommandBeforeInput>
-        <BackButton />
-      </DesktopCommandBeforeInput>
+      <DefaultDesktopBackButton />
       <CommandGroupFilters />
       <CommandEmpty />
       <CommandSearchHits
@@ -167,7 +159,6 @@ export function SearchV2(): ReactElement | false {
         {isAskAiEnabled ? (
           <DesktopCommandWithAskAI
             domain={domain}
-            onClose={() => setOpen(false)}
             askAI={askAi}
             setAskAI={setAskAi}
             api={chatEndpoint}
@@ -175,6 +166,22 @@ export function SearchV2(): ReactElement | false {
             initialInput={initialInput}
             body={{ algoliaSearchKey: apiKey }}
             onSelectHit={handleNavigate}
+            onEscapeKeyDown={() => setOpen(false)}
+            renderActions={({ user, assistant }) => {
+              if (!assistant) {
+                return null;
+              }
+              return (
+                <Feedback
+                  feedbackQuestion="Was this response helpful?"
+                  type="conversational-search"
+                  metadata={() => ({
+                    user: user?.content,
+                    assistant: assistant.content,
+                  })}
+                />
+              );
+            }}
           >
             <CommandAskAIGroup
               onAskAI={(initialInput) => {
@@ -186,7 +193,7 @@ export function SearchV2(): ReactElement | false {
             {children}
           </DesktopCommandWithAskAI>
         ) : (
-          <DesktopCommand onClose={() => setOpen(false)}>
+          <DesktopCommand onEscapeKeyDown={() => setOpen(false)}>
             {children}
           </DesktopCommand>
         )}
@@ -228,14 +235,6 @@ function CommandTheme({ onClose }: { onClose: () => void }) {
       }}
     />
   );
-}
-
-function BackButton() {
-  const { filters, popFilter, clearFilters } = useFacetFilters();
-  if (filters.length === 0) {
-    return false;
-  }
-  return <DesktopBackButton pop={popFilter} clear={clearFilters} />;
 }
 
 function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
