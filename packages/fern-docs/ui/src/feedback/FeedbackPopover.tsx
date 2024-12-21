@@ -78,13 +78,13 @@ const FeedbackPopover = forwardRef<
   SelectionTextToolbarElement,
   SelectionTextToolbarProps
 >(({ children }, forwardedRef) => {
-  const [isHelpful, setIsHelpful] = useState<boolean>();
+  const [isHelpful, setIsHelpful] = useState<"yes" | "no" | undefined>();
   const [isFeedbackSubmitted, setIsFeedbackSubmitted] =
     useState<boolean>(false);
   const { selection } = useSelection();
 
   const handleThumbsUp = useCallback(() => {
-    setIsHelpful(true);
+    setIsHelpful("yes");
     track("feedback_voted", {
       satisfied: true,
       selectedText: selection?.toString().trim(),
@@ -92,7 +92,7 @@ const FeedbackPopover = forwardRef<
   }, [selection]);
 
   const handleThumbsDown = useCallback(() => {
-    setIsHelpful(false);
+    setIsHelpful("no");
     track("feedback_voted", {
       satisfied: false,
       selectedText: selection?.toString().trim(),
@@ -136,13 +136,13 @@ const FeedbackPopover = forwardRef<
           icon={
             <ThumbsUp
               className={clsx("opacity-60", {
-                "animate-thumb-rock": isHelpful,
+                "animate-thumb-rock": isHelpful === "yes",
               })}
             />
           }
           variant="minimal"
-          intent={isHelpful ? "success" : "none"}
-          active={isHelpful}
+          intent={isHelpful === "yes" ? "success" : "none"}
+          active={isHelpful === "yes"}
           onClick={handleThumbsUp}
           className={clsx({ "w-full": isHelpful !== undefined })}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}
@@ -154,13 +154,13 @@ const FeedbackPopover = forwardRef<
           icon={
             <ThumbsDown
               className={clsx("opacity-60", {
-                "animate-thumb-rock": !isHelpful,
+                "animate-thumb-rock": isHelpful === "no",
               })}
             />
           }
           variant="minimal"
-          intent={!isHelpful ? "danger" : "none"}
-          active={!isHelpful}
+          intent={isHelpful === "no" ? "danger" : "none"}
+          active={isHelpful === "no"}
           onClick={handleThumbsDown}
           className={clsx({ "w-full": isHelpful !== undefined })}
           transition={{ type: "spring", duration: 0.3, bounce: 0 }}

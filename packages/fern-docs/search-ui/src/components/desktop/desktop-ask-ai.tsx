@@ -1,4 +1,5 @@
 import { Badge } from "@fern-docs/components/badges";
+import { Button } from "@fern-docs/components/button";
 import { useDebouncedCallback, useEventCallback } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
@@ -30,19 +31,23 @@ import {
 } from "react";
 import { Components } from "react-markdown";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
+
 import { FootnoteSup, FootnotesSection } from "../chatbot/footnote";
 import {
   ChatbotTurnContextProvider,
   useChatbotTurnContext,
 } from "../chatbot/turn-context";
-import { combineSearchResults, squeezeMessages } from "../chatbot/utils";
+import {
+  SqueezedMessage,
+  combineSearchResults,
+  squeezeMessages,
+} from "../chatbot/utils";
 import * as Command from "../cmdk";
 import { CodeBlock } from "../code-block";
 import { MarkdownContent } from "../md-content";
 import { useFacetFilters } from "../search-client";
 import { CommandLink } from "../shared/command-link";
 import tunnel from "../tunnel-rat";
-import { Button } from "../ui/button";
 import { cn } from "../ui/cn";
 import { TextArea } from "../ui/textarea";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
@@ -59,7 +64,6 @@ export const DesktopCommandWithAskAI = forwardRef<
     askAI?: boolean;
     defaultAskAI?: boolean;
     setAskAI?: (askAI: boolean) => void;
-    onClose?: () => void;
     api?: string;
     suggestionsApi?: string;
     body?: object;
@@ -70,6 +74,7 @@ export const DesktopCommandWithAskAI = forwardRef<
     prefetch?: (path: string) => Promise<void>;
     composerActions?: ReactNode;
     domain: string;
+    renderActions?: (message: SqueezedMessage) => ReactNode;
   }
 >(
   (
@@ -79,7 +84,6 @@ export const DesktopCommandWithAskAI = forwardRef<
       suggestionsApi,
       body,
       headers,
-      onClose,
       askAI: askAIProp,
       setAskAI: setAskAIProp,
       defaultAskAI,
@@ -89,6 +93,7 @@ export const DesktopCommandWithAskAI = forwardRef<
       prefetch,
       composerActions,
       domain,
+      renderActions,
       ...props
     },
     ref
@@ -106,6 +111,7 @@ export const DesktopCommandWithAskAI = forwardRef<
         {...props}
         ref={ref}
         shouldFilter={!askAI}
+        disableAutoSelection={askAI}
         onPopState={
           askAI
             ? props.onPopState
@@ -113,10 +119,8 @@ export const DesktopCommandWithAskAI = forwardRef<
                 checkForDefaultPrevented: false,
               })
         }
-        onEscape={composeEventHandlers(props.onEscape, () => onClose?.(), {
-          checkForDefaultPrevented: false,
-        })}
-        escapeKeyShouldPopFilters={!askAI && filters.length > 0}
+        onEscapeKeyDown={props.onEscapeKeyDown}
+        escapeKeyShouldPopState={!askAI && filters.length > 0}
       >
         {askAI ? (
           <DesktopAskAIContent
@@ -131,6 +135,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             prefetch={prefetch}
             composerActions={composerActions}
             domain={domain}
+            renderActions={renderActions}
           />
         ) : (
           <DesktopCommandContent>{children}</DesktopCommandContent>
@@ -154,6 +159,7 @@ const DesktopAskAIContent = (props: {
   prefetch?: (path: string) => Promise<void>;
   composerActions?: ReactNode;
   domain: string;
+  renderActions?: (message: SqueezedMessage) => ReactNode;
 }) => {
   return (
     <>
@@ -194,6 +200,7 @@ const DesktopAskAIChat = ({
   prefetch,
   composerActions,
   domain,
+  renderActions,
 }: {
   onReturnToSearch?: () => void;
   initialInput?: string;
@@ -206,6 +213,7 @@ const DesktopAskAIChat = ({
   prefetch?: (path: string) => Promise<void>;
   composerActions?: ReactNode;
   domain: string;
+  renderActions?: (message: SqueezedMessage) => ReactNode;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);
@@ -361,6 +369,7 @@ const DesktopAskAIChat = ({
           isLoading={chat.isLoading}
           userScrolled={userScrolled}
           domain={domain}
+          renderActions={renderActions}
         >
           {suggestionsApi && (
             <Suggestions
@@ -496,6 +505,7 @@ const AskAICommandItems = memo<{
   children?: ReactNode;
   prefetch?: (path: string) => Promise<void>;
   domain: string;
+  renderActions?: (message: SqueezedMessage) => ReactNode;
 }>(
   ({
     messages,
@@ -506,6 +516,7 @@ const AskAICommandItems = memo<{
     children,
     prefetch,
     domain,
+    renderActions,
   }): ReactElement => {
     const squeezedMessages = squeezeMessages(messages);
 
@@ -533,7 +544,7 @@ const AskAICommandItems = memo<{
       if (lastConversationRef.current && isLoading && !userScrolled) {
         lastConversationRef.current.scrollIntoView({
           behavior: "smooth",
-          block: "start",
+          block: "end",
         });
       }
     });
@@ -558,6 +569,7 @@ const AskAICommandItems = memo<{
     return (
       <>
         {squeezedMessages.map((message, idx) => {
+          const isLastMessage = idx === squeezedMessages.length - 1;
           const searchResults = combineSearchResults([message]);
           return (
             <ChatbotTurnContextProvider
@@ -588,7 +600,7 @@ const AskAICommandItems = memo<{
                     </div>
                     <div className="flex items-start justify-start gap-4">
                       <Sparkles className="my-1 size-4 shrink-0" />
-                      <section className="prose prose-sm dark:prose-invert flex-1 shrink cursor-text">
+                      <section className="prose prose-sm dark:prose-invert min-w-0 flex-1 shrink cursor-text">
                         {message.assistant?.content && (
                           <MarkdownContent
                             components={{
@@ -632,6 +644,8 @@ const AskAICommandItems = memo<{
                               Thinking...
                             </p>
                           )}
+                        {(!isLastMessage || !isLoading) &&
+                          renderActions?.(message)}
                       </section>
                     </div>
                   </article>

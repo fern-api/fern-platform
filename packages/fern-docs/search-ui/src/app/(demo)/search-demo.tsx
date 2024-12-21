@@ -12,14 +12,10 @@ import {
   CommandGroupFilters,
   CommandGroupTheme,
   CommandSearchHits,
-  DesktopBackButton,
-  DesktopCommandAboveInput,
-  DesktopCommandBadges,
-  DesktopCommandBeforeInput,
+  DefaultDesktopBackButton,
   DesktopSearchDialog,
   MobileCommand,
   SearchClientRoot,
-  useFacetFilters,
 } from "@/components";
 import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
@@ -146,7 +142,7 @@ export function DemoInstantSearchClient({
             domain={domain}
             askAI={askAi}
             setAskAI={setAskAi}
-            onClose={() => setOpen(false)}
+            onEscapeKeyDown={() => setOpen(false)}
             api="/api/chat"
             suggestionsApi="/api/suggest"
             initialInput={initialInput}
@@ -160,13 +156,7 @@ export function DemoInstantSearchClient({
               <ChatbotModelSelect value={model} onValueChange={setModel} />
             }
           >
-            <DesktopCommandAboveInput>
-              <DesktopCommandBadges />
-            </DesktopCommandAboveInput>
-
-            <DesktopCommandBeforeInput>
-              <BackButton askAi={askAi} setAskAi={setAskAi} />
-            </DesktopCommandBeforeInput>
+            <DefaultDesktopBackButton />
 
             <CommandAskAIGroup
               onAskAI={(initialInput) => {
@@ -186,40 +176,6 @@ export function DemoInstantSearchClient({
         </DesktopSearchDialog>
       )}
     </SearchClientRoot>
-  );
-}
-
-function BackButton({
-  askAi,
-  setAskAi,
-}: {
-  askAi: boolean;
-  setAskAi: (askAi: boolean) => void;
-}) {
-  const { filters, popFilter, clearFilters } = useFacetFilters();
-  // const { focus } = useCommandUx();
-
-  if (filters.length === 0 && !askAi) {
-    return false;
-  }
-
-  return (
-    <DesktopBackButton
-      pop={() => {
-        if (askAi) {
-          setAskAi(false);
-        } else {
-          popFilter();
-        }
-      }}
-      clear={() => {
-        if (askAi) {
-          setAskAi(false);
-        } else {
-          clearFilters();
-        }
-      }}
-    />
   );
 }
 

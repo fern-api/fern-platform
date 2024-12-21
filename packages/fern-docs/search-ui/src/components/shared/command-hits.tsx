@@ -1,5 +1,5 @@
 import { TooltipPortal } from "@radix-ui/react-tooltip";
-import { PropsWithChildren, ReactNode, memo } from "react";
+import { PropsWithChildren, ReactNode, memo, useEffect } from "react";
 import { Snippet } from "react-instantsearch";
 
 import { useSearchHits } from "../../hooks/use-search-hits";
@@ -28,8 +28,13 @@ export const CommandSearchHits = ({
 }): ReactNode => {
   const isQueryEmpty = Command.useCommandState(
     (state) => state.search.trimStart().length === 0
-  ) as boolean;
+  );
   const items = useSearchHits();
+  const triggerSelection = Command.useTriggerSelection();
+  useEffect(() => {
+    triggerSelection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items]);
 
   const { filters } = useFacetFilters();
 
@@ -139,9 +144,7 @@ function CommandGroupSearchHitTooltip({
   path,
   children,
 }: PropsWithChildren<{ hit: AlgoliaRecordHit; path: string }>) {
-  const open = Command.useCommandState(
-    (state) => state.value === path
-  ) as boolean;
+  const open = Command.useCommandState((state) => state.value === path);
 
   if (
     hit._snippetResult?.content == null &&
@@ -170,7 +173,7 @@ const MemoizedTooltip = memo(
           side="right"
           sideOffset={16}
           align="start"
-          className="max-h-[var(--radix-tooltip-content-available-height)] max-w-[var(--radix-tooltip-content-available-width)] space-y-2 [&_mark]:bg-[var(--accent-a3)] [&_mark]:text-[var(--accent-a11)]"
+          className="max-h-[var(--radix-tooltip-content-available-height)] max-w-[min(var(--radix-tooltip-content-available-width),384px)] space-y-2 [&_mark]:bg-[var(--accent-a3)] [&_mark]:text-[var(--accent-a11)]"
           avoidCollisions
           animate={false}
           collisionPadding={10}
