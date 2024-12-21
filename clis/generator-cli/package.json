@@ -20,7 +20,6 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
   },
@@ -38,7 +37,6 @@
     "esbuild": "0.20.2",
     "eslint": "^9",
     "execa": "^9.5.1",
-    "organize-imports-cli": "^0.10.0",
     "prettier": "^3.4.2",
     "tmp-promise": "^3.0.3",
     "tsup": "^8.3.5",

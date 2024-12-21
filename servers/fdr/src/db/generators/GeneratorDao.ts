@@ -6,7 +6,6 @@ import {
   GeneratorLanguage,
   GeneratorScripts,
   GeneratorType,
-  Script,
 } from "../../api/generated/api/resources/generators";
 import { assertNever, readBuffer, writeBuffer } from "../../util";
 

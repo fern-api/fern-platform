@@ -23,7 +23,6 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "test": "vitest --run --passWithNoTests --globals",
     "test:update": "vitest -u --run --passWithNoTests --globals"
   },

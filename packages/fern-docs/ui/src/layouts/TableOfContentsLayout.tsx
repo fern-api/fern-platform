@@ -1,5 +1,5 @@
-import type { TableOfContentsItem } from "@fern-docs/mdx";
 import { FernScrollArea } from "@fern-docs/components";
+import type { TableOfContentsItem } from "@fern-docs/mdx";
 import { ReactElement } from "react";
 import { TableOfContents } from "../components/table-of-contents/TableOfContents";
 

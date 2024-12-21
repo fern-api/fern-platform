@@ -1,7 +1,7 @@
 import { evaluateEnv } from "@libs/env";
 import { handlerWrapper } from "@libs/handler-wrapper";
-import { updateFDRRepoDataInternal } from "./actions/updateFDRRepoData";
 import { RepoData } from "@libs/schemas";
+import { updateFDRRepoDataInternal } from "./actions/updateFDRRepoData";
 
 const updateFDRRepoData = async (event: unknown) => {
   console.debug(

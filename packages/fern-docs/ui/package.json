@@ -33,7 +33,6 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "storybook": "storybook dev -p 6006",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept"
   },
@@ -160,7 +159,6 @@
     "instantsearch.js": "^4.75.4",
     "jsdom": "^24.0.0",
     "next-router-mock": "^0.9.13",
-    "organize-imports-cli": "^0.10.0",
     "postcss-import": "^16.0.1",
     "prettier": "^3.4.2",
     "sass": "^1.74.1",

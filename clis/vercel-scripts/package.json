@@ -10,7 +10,6 @@
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "organize-imports": "organize-imports-cli tsconfig.json",
     "vercel-scripts": "pnpm tsx src/cli.ts"
   },
   "dependencies": {
@@ -25,7 +24,6 @@
     "@types/yargs": "^17.0.32",
     "depcheck": "^1.4.3",
     "eslint": "^9",
-    "organize-imports-cli": "^0.10.0",
     "prettier": "^3.4.2",
     "tsx": "^4.7.1",
     "typescript": "4.9.5",

@@ -1,5 +1,5 @@
-import { parseStringStyle, visit } from "@fern-docs/mdx";
 import { FernScrollArea } from "@fern-docs/components";
+import { parseStringStyle, visit } from "@fern-docs/mdx";
 import cn from "clsx";
 import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
