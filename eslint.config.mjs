@@ -13,9 +13,6 @@ const compat = new FlatCompat({
 
 export default tseslint.config(
   {
-    files: [
-      "**/*.{ts,tsx,js,jsx,mjs,mts,mjsx,mtsx,cjs,cjsx,cts,ctsx,es,es6,esm}",
-    ],
     ignores: [
       "**/generated",
       "**/dist",
@@ -28,6 +25,7 @@ export default tseslint.config(
       "fern/**",
     ],
   },
+  
   eslint.configs.recommended,
   tseslint.configs.strictTypeChecked,
   tseslint.configs.stylisticTypeChecked,
