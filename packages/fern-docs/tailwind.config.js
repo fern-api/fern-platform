@@ -100,7 +100,7 @@ module.exports = {
         "accent-aa": withOpacity("--accent-aa"),
         "accent-aaa": withOpacity("--accent-aaa"),
         "accent-tinted": "var(--accent-10)",
-        "accent-contrast": withOpacity("--accent-contrast"),
+        "accent-contrast": "var(--accent-contrast)",
         "accent-muted": `var(--accent-6)`,
         "accent-highlight": "var(--accent-3)",
         "accent-highlight-faded": "var(--accent-2)",

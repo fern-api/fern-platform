@@ -75,6 +75,7 @@ export const DesktopCommandWithAskAI = forwardRef<
     prefetch?: (path: string) => Promise<void>;
     composerActions?: ReactNode;
     domain: string;
+    onData?: (data: unknown[]) => void;
     renderActions?: (message: SqueezedMessage) => ReactNode;
     setInitialInput?: (initialInput: string) => void;
     children?: ReactNode;
@@ -220,6 +221,7 @@ const DesktopAskAIContent = (props: {
   prefetch?: (path: string) => Promise<void>;
   composerActions?: ReactNode;
   domain: string;
+  onData?: (data: unknown[]) => void;
   renderActions?: (message: SqueezedMessage) => ReactNode;
 }) => {
   return (
@@ -261,6 +263,7 @@ const DesktopAskAIChat = ({
   prefetch,
   composerActions,
   domain,
+  onData,
   renderActions,
 }: {
   onReturnToSearch?: () => void;
@@ -274,6 +277,7 @@ const DesktopAskAIChat = ({
   prefetch?: (path: string) => Promise<void>;
   composerActions?: ReactNode;
   domain: string;
+  onData?: (data: unknown[]) => void;
   renderActions?: (message: SqueezedMessage) => ReactNode;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -292,6 +296,13 @@ const DesktopAskAIChat = ({
       setInitialConversation(chat.messages);
     }),
   });
+
+  useEffect(() => {
+    if (chat.data) {
+      onData?.(chat.data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chat.data]);
 
   // Reset userScrolled when the chat is loading
   useIsomorphicLayoutEffect(() => {
@@ -481,7 +492,7 @@ const AskAIComposer = forwardRef<
     const inputRef = useRef<HTMLTextAreaElement>(null);
     return (
       <div
-        className="cursor-text border-t border-[var(--grayscale-a6)]"
+        className="cursor-text border-t border-[var(--grayscale-a6)] p-2"
         onClick={() => inputRef.current?.focus()}
       >
         <DesktopCommandInput asChild>
@@ -538,12 +549,12 @@ const AskAIComposer = forwardRef<
             )}
           />
         </DesktopCommandInput>
-        <div className="flex items-center justify-between px-2 pb-2">
+        <div className="flex items-center justify-between">
           <div>{actions}</div>
           <Button
             size="icon"
             className="rounded-full"
-            variant="ghost"
+            variant="default"
             onClick={isLoading ? stop : () => onSend?.(value)}
             disabled={!isLoading && !canSubmit}
           >

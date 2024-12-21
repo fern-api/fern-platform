@@ -29,7 +29,7 @@
   --accent-aaa: 49, 99, 29;
   --accent-tinted: 55, 111, 32;
   --background: 255, 255, 255;
-  --accent-contrast: 255, 255, 255;
+  --accent-contrast: #fff;
   --bg-color-card: rgba(255, 255, 255, 70%);
   --sidebar-background: transparent;
   --header-background: transparent;
@@ -63,7 +63,7 @@
   --accent-aaa: 173, 255, 140;
   --accent-tinted: 191, 255, 165;
   --background: 0, 0, 0;
-  --accent-contrast: 0, 0, 0;
+  --accent-contrast: #000;
   --bg-color-card: var(--grayscale-a2);
   --sidebar-background: transparent;
   --header-background: transparent;
