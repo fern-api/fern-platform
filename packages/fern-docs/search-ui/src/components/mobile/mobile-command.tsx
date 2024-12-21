@@ -1,6 +1,6 @@
+import { Button } from "@fern-docs/components/button";
 import { ComponentPropsWithoutRef, forwardRef, useRef, useState } from "react";
 import { useSearchBox } from "react-instantsearch";
-import { Button } from "@fern-docs/components/button";
 
 import { FacetFilter } from "../../types";
 import { FACET_DISPLAY_NAME_MAP } from "../../utils/facet-display";
