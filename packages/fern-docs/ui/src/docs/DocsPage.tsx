@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import {
   HydrateAtoms,
+  useFeatureFlag,
   useMessageHandler,
   useSetJustNavigated,
   type DocsProps,
@@ -58,10 +59,21 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
     }
   );
 
+  const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
+  const isApiPlaygroundEnabled = useFeatureFlag("isApiPlaygroundEnabled");
+
   return (
     <>
-      <LinkPreloadApiRoute href="/api/fern-docs/search" />
-      <LinkPreloadApiRoute href="/api/fern-docs/auth/api-key-injection" />
+      <LinkPreloadApiRoute
+        href={
+          isSearchV2Enabled
+            ? "/api/fern-docs/search/v2/key"
+            : "/api/fern-docs/search/v1/key"
+        }
+      />
+      {isApiPlaygroundEnabled && (
+        <LinkPreloadApiRoute href="/api/fern-docs/auth/api-key-injection" />
+      )}
       <NextSeo />
       <InitializeTheme />
       <SearchDialog />
