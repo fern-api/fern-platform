@@ -185,7 +185,7 @@ export const useIsChildSelected = (
 
 export const useToggleExpandedSidebarNode = (
   nodeId: FernNavigation.NodeId
-): (() => void) => {
+): ((e: React.MouseEvent<HTMLElement>) => void) => {
   return useAtomCallback(
     useCallbackOne(
       (get, set) => {

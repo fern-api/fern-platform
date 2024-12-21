@@ -1,5 +1,7 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn, { clsx } from "clsx";
 import { range } from "es-toolkit/math";
 import { Lock, NavArrowDown } from "iconoir-react";
@@ -14,8 +16,6 @@ import {
   createElement,
   forwardRef,
   memo,
-  useCallback,
-  useImperativeHandle,
   useRef,
 } from "react";
 import { useCallbackOne } from "use-memo-one";
@@ -43,7 +43,7 @@ interface SidebarSlugLinkProps {
   selected?: boolean;
   showIndicator?: boolean;
   depth?: number;
-  toggleExpand?: () => void;
+  toggleExpand?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
   expanded?: boolean;
   rightElement?: ReactNode;
   tooltipContent?: ReactNode;
@@ -64,7 +64,7 @@ type SidebarLinkProps = PropsWithChildren<
 >;
 
 const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
-  (props, parentRef) => {
+  (props, forwardRef) => {
     const {
       icon,
       className,
@@ -89,8 +89,6 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
     } = props;
 
     const ref = useRef<HTMLDivElement>(null);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(parentRef, () => ref.current!);
 
     if (hidden && !expanded && !selected) {
       return null;
@@ -105,10 +103,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
         <FernLink
           href={href}
           className={linkClassName}
-          onClick={(e) => {
-            onClick?.(e);
-            toggleExpand?.();
-          }}
+          onClick={composeEventHandlers(toggleExpand, onClick)}
           shallow={shallow}
           target={target}
           rel={rel}
@@ -119,10 +114,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
       ) : (
         <button
           className={linkClassName}
-          onClick={(e) => {
-            onClick?.(e);
-            toggleExpand?.();
-          }}
+          onClick={composeEventHandlers(toggleExpand, onClick)}
         >
           {child}
         </button>
@@ -171,7 +163,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
 
     return (
       <div
-        ref={ref}
+        ref={composeRefs(forwardRef, ref)}
         className={cn("fern-sidebar-link-container", className)}
         data-state={selected ? "active" : "inactive"}
       >
@@ -221,11 +213,9 @@ export const SidebarLink = memo(SidebarLinkInternal);
 export const SidebarSlugLink = forwardRef<
   HTMLDivElement,
   PropsWithChildren<SidebarSlugLinkProps>
->((props, parentRef) => {
-  const { slug, onClick, toggleExpand, ...innerProps } = props;
+>((props, forwardRef) => {
+  const { slug, ...innerProps } = props;
   const ref = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(parentRef, () => ref.current!);
   const closeMobileSidebar = useCloseMobileSidebar();
 
   useAtomEffect(
@@ -244,28 +234,17 @@ export const SidebarSlugLink = forwardRef<
   );
 
   const href = useHref(slug);
-  const handleClick = useCallback<
-    React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>
-  >(
-    (e) => {
-      onClick?.(e);
-      if (href != null) {
-        closeMobileSidebar();
-        if (innerProps.shallow) {
-          scrollToRoute(href);
-        }
-      }
-    },
-    [closeMobileSidebar, href, innerProps.shallow, onClick]
-  );
-
   return (
     <SidebarLink
       {...innerProps}
-      ref={ref}
+      ref={composeRefs(forwardRef, ref)}
       href={href}
-      onClick={handleClick}
-      toggleExpand={toggleExpand}
+      onClick={composeEventHandlers(innerProps.onClick, () => {
+        closeMobileSidebar();
+        if (href) {
+          scrollToRoute(href);
+        }
+      })}
       shallow={innerProps.shallow || innerProps.selected}
       scroll={!innerProps.shallow}
     />
