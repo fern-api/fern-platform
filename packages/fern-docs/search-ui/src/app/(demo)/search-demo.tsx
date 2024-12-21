@@ -179,7 +179,9 @@ export function DemoInstantSearchClient({
             }
             onSelectHit={handleSubmit}
             composerActions={
-              <ChatbotModelSelect value={model} onValueChange={setModel} />
+              !isTrieve && (
+                <ChatbotModelSelect value={model} onValueChange={setModel} />
+              )
             }
             onData={(data) => {
               const topicId = data
