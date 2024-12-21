@@ -25,9 +25,11 @@ import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
 import { CommandAskAIGroup } from "@/components/shared/command-ask-ai";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { isPlainObject } from "@fern-api/ui-core-utils";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
+import { useSearchParams } from "next/navigation";
 
 const USER_TOKEN_KEY = "user-token";
 
@@ -46,11 +48,22 @@ export function DemoInstantSearchClient({
   appId: string;
   domain: string;
 }): ReactElement | false {
+  const searchParams = useSearchParams();
+  const isTrieve = searchParams.get("provider") === "trieve";
+  const trieveApiKey = isTrieve ? searchParams.get("apiKey") : undefined;
+  const trieveDatasetId = isTrieve ? searchParams.get("datasetId") : undefined;
+  const trieveOrganizationId = isTrieve
+    ? searchParams.get("organizationId")
+    : undefined;
   const [initialInput, setInitialInput] = useState("");
   const [askAi, setAskAi] = useState(false);
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
   const isMobile = useIsMobile();
+
+  const [trieveTopicId, setTrieveTopicId] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -147,18 +160,35 @@ export function DemoInstantSearchClient({
             askAI={askAi}
             setAskAI={setAskAi}
             onClose={() => setOpen(false)}
-            api="/api/chat"
+            api={isTrieve ? "/api/trieve" : "/api/chat"}
             suggestionsApi="/api/suggest"
             initialInput={initialInput}
-            body={{
-              algoliaSearchKey: apiKey,
-              domain,
-              model,
-            }}
+            body={
+              isTrieve
+                ? {
+                    apiKey: trieveApiKey,
+                    datasetId: trieveDatasetId,
+                    organizationId: trieveOrganizationId,
+                    topicId: trieveTopicId,
+                  }
+                : {
+                    algoliaSearchKey: apiKey,
+                    domain,
+                    model,
+                  }
+            }
             onSelectHit={handleSubmit}
             composerActions={
               <ChatbotModelSelect value={model} onValueChange={setModel} />
             }
+            onData={(data) => {
+              const topicId = data
+                .filter(isPlainObject)
+                .find((d) => d.type === "topic_id")?.topic_id;
+              if (topicId && typeof topicId === "string") {
+                setTrieveTopicId(topicId);
+              }
+            }}
           >
             <DesktopCommandAboveInput>
               <DesktopCommandBadges />

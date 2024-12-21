@@ -70,6 +70,7 @@ export const DesktopCommandWithAskAI = forwardRef<
     prefetch?: (path: string) => Promise<void>;
     composerActions?: ReactNode;
     domain: string;
+    onData?: (data: unknown[]) => void;
   }
 >(
   (
@@ -154,6 +155,7 @@ const DesktopAskAIContent = (props: {
   prefetch?: (path: string) => Promise<void>;
   composerActions?: ReactNode;
   domain: string;
+  onData?: (data: unknown[]) => void;
 }) => {
   return (
     <>
@@ -194,6 +196,7 @@ const DesktopAskAIChat = ({
   prefetch,
   composerActions,
   domain,
+  onData,
 }: {
   onReturnToSearch?: () => void;
   initialInput?: string;
@@ -206,6 +209,7 @@ const DesktopAskAIChat = ({
   prefetch?: (path: string) => Promise<void>;
   composerActions?: ReactNode;
   domain: string;
+  onData?: (data: unknown[]) => void;
 }) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userScrolled, setUserScrolled] = useState(false);
@@ -223,6 +227,13 @@ const DesktopAskAIChat = ({
       setInitialConversation(chat.messages);
     }),
   });
+
+  useEffect(() => {
+    if (chat.data) {
+      onData?.(chat.data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chat.data]);
 
   // Reset userScrolled when the chat is loading
   useIsomorphicLayoutEffect(() => {
