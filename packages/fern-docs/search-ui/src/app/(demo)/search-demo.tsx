@@ -178,7 +178,7 @@ export function DemoInstantSearchClient({
             onSelectHit={handleSubmit}
             composerActions={
               isTrieve ? (
-                <span className="self-end text-xs text-[var(--grayscale-a9)]">
+                <span className="align-bottom text-xs text-[var(--grayscale-a9)]">
                   Powered by{" "}
                   <a href="https://trieve.ai" target="_blank">
                     Trieve
