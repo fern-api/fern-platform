@@ -118,11 +118,11 @@ export const DesktopCommandWithAskAI = forwardRef<
           {
             boxShadow: [
               "0 0 0px var(--accent-a5), var(--cmdk-shadow)",
-              "0 0 100px var(--accent-a5), var(--cmdk-shadow)",
-              "0 0 200px transparent, var(--cmdk-shadow)",
+              "0 0 75px var(--accent-a5), var(--cmdk-shadow)",
+              "0 0 150px transparent, var(--cmdk-shadow)",
             ],
           },
-          { duration: 400, easing: "ease-out" }
+          { duration: 800, easing: "ease-out" }
         );
       }
     }
