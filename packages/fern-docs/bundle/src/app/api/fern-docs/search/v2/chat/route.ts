@@ -104,6 +104,19 @@ export async function POST(req: NextRequest) {
         },
       }),
     },
+    experimental_telemetry: {
+      isEnabled: true,
+      recordInputs: true,
+      recordOutputs: true,
+      functionId: "ask_ai_chat",
+      metadata: {
+        domain,
+        languageModel: languageModel.modelId,
+        embeddingModel: embeddingModel.modelId,
+        db: "turbopuffer",
+        namespace,
+      },
+    },
     onFinish: async (e) => {
       const end = Date.now();
       await track("ask_ai", {

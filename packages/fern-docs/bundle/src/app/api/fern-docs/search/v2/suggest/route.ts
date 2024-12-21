@@ -77,6 +77,17 @@ export async function POST(req: NextRequest): Promise<Response> {
       .join("\n\n"),
     maxRetries: 3,
     schema: SuggestionsSchema,
+    experimental_telemetry: {
+      isEnabled: true,
+      recordInputs: true,
+      recordOutputs: true,
+      functionId: "ask_ai_suggest",
+      metadata: {
+        domain,
+        indexName: SEARCH_INDEX,
+        languageModel: languageModel.modelId,
+      },
+    },
     onFinish: async (e) => {
       const end = Date.now();
       await track("ask_ai_suggestions", {
