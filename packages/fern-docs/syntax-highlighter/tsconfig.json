@@ -1,0 +1,16 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/react-library.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../mdx/tsconfig.json"
+    },
+    {
+      "path": "../components/tsconfig.json"
+    }
+  ]
+}

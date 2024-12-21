@@ -34,16 +34,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -396,16 +399,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazon:AmazonGetBuyAgainResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazon:AmazonGetBuyAgainResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -771,61 +777,65 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "asin",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "asin",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "itemUrl",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "itemUrl",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazon:AmazonOrderItemResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazon:AmazonOrderItemResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -1245,61 +1255,65 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "asin",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "asin",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "itemUrl",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "itemUrl",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazon:AmazonAddToCartResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazon:AmazonAddToCartResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -1751,16 +1765,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazon:AmazonSearchItemsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazon:AmazonSearchItemsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -2189,16 +2206,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -2605,16 +2625,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazonBusiness:AmazonBusinessGetOrdersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazonBusiness:AmazonBusinessGetOrdersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -3066,16 +3089,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazonBusiness:AmazonBusinessGetBuyAgainResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazonBusiness:AmazonBusinessGetBuyAgainResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -3441,61 +3467,65 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "itemUrl",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "itemUrl",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "asin",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "asin",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/amazonBusiness:AmazonBusinessOrderItemResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/amazonBusiness:AmazonBusinessOrderItemResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -3915,16 +3945,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -4277,16 +4310,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -4656,35 +4692,39 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "customer",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/dispatchMe:DispatchMeCustomer"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "customer",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/dispatchMe:DispatchMeCustomer"
+                    }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:EditCustomerResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:EditCustomerResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -5986,35 +6026,39 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "customer",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/dispatchMe:DispatchMeCustomer"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "customer",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/dispatchMe:DispatchMeCustomer"
+                    }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:CreateDispatchMeCustomerResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:CreateDispatchMeCustomerResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -7276,16 +7320,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:GetCustomersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:GetCustomersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -7636,16 +7683,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:GetAccountOrganizationsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:GetAccountOrganizationsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -8050,16 +8100,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:GetJobsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:GetJobsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -8554,16 +8607,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:GetDispatchMeUsersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:GetDispatchMeUsersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -8977,35 +9033,39 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "appointment",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/dispatchMe:DispatchMeAppointment"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "appointment",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/dispatchMe:DispatchMeAppointment"
+                    }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:CreateDispatchMeAppointmentResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:CreateDispatchMeAppointmentResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -9599,35 +9659,39 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "note",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/dispatchMe:DispatchMeNote"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "note",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/dispatchMe:DispatchMeNote"
+                    }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/dispatchMe:CreateDispatchMeNoteResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/dispatchMe:CreateDispatchMeNoteResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -10133,16 +10197,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -10517,38 +10584,42 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "message",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "message",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "The message to post to the group"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/facebook:PostGroupMessageResponse"
+                  },
+                  "description": "The message to post to the group"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/facebook:PostGroupMessageResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -11026,16 +11097,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/facebook:JoinGroupResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/facebook:JoinGroupResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -11441,16 +11515,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/facebook:SearchGroupsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/facebook:SearchGroupsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -11852,16 +11929,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -12214,16 +12294,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -12576,16 +12659,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:InvitationRequestsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:InvitationRequestsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -12945,37 +13031,41 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "profileUrl",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "profileUrl",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:AcceptInvitationResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:AcceptInvitationResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -13391,37 +13481,41 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "content",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "content",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:CreatePostResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:CreatePostResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -13893,16 +13987,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:SearchResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:SearchResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -14382,16 +14479,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:GetConnectionsResult"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:GetConnectionsResult"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -14814,50 +14914,54 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "to",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "to",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
+                  },
+                  "description": "The profile name of the person to send the message to. For example for the account with the url \"https://www.linkedin.com/in/zacharyashen/\" the profile name would be \"zacharyashen\""
                 },
-                "description": "The profile name of the person to send the message to. For example for the account with the url \"https://www.linkedin.com/in/zacharyashen/\" the profile name would be \"zacharyashen\""
-              },
-              {
-                "key": "content",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "content",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:LinkedInSendMessageResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:LinkedInSendMessageResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -15334,16 +15438,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/linkedin:LinkedInGetMessagesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/linkedin:LinkedInGetMessagesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -15782,16 +15889,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -16144,26 +16254,30 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:Customer"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:Customer"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:CreateCustomerResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:CreateCustomerResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -17224,16 +17338,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:SearchCustomerDetailsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:SearchCustomerDetailsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -17648,89 +17765,93 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "firstName",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "firstName",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "key": "lastName",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "key": "lastName",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "key": "phoneNumber",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "key": "phoneNumber",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "key": "serviceCallRequest",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/ppp:ServiceCallRequest"
+                },
+                {
+                  "key": "serviceCallRequest",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/ppp:ServiceCallRequest"
+                    }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:CreateAppointmentResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:CreateAppointmentResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -18971,16 +19092,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetBillingTermsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetBillingTermsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -19332,16 +19456,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetInvoiceTypesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetInvoiceTypesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -19693,16 +19820,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetCustomerTypesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetCustomerTypesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -20054,16 +20184,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetArrivalWindowResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetArrivalWindowResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -20415,16 +20548,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetServiceCallTypeResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetServiceCallTypeResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -20776,16 +20912,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetDiagnosticFeeResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetDiagnosticFeeResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -21137,16 +21276,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetServiceCallStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetServiceCallStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -21498,16 +21640,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetLeadSourceResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetLeadSourceResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -21859,16 +22004,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetBoardIdsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetBoardIdsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -22220,16 +22368,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetTechniciansResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetTechniciansResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -22607,16 +22758,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/ppp:GetCalendarResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/ppp:GetCalendarResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -23031,16 +23185,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -23407,16 +23564,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/servicebox:ReceptionnairesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/servicebox:ReceptionnairesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -23814,16 +23974,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/servicebox:EquippesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/servicebox:EquippesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -24206,16 +24369,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/servicebox:BarGraphResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/servicebox:BarGraphResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -24668,16 +24834,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/servicebox:CalendarResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/servicebox:CalendarResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -25114,16 +25283,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -25475,16 +25647,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/toast:GetMenusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/toast:GetMenusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -25836,16 +26011,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -26197,55 +26375,59 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "origin",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/uber:UberAddress"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "origin",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/uber:UberAddress"
+                    }
+                  }
+                },
+                {
+                  "key": "destination",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/uber:UberAddress"
+                    }
+                  }
+                },
+                {
+                  "key": "carType",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_integrations/uber:UberCarTypes"
+                    }
                   }
                 }
-              },
-              {
-                "key": "destination",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/uber:UberAddress"
-                  }
-                }
-              },
-              {
-                "key": "carType",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/uber:UberCarTypes"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/uber:OrderRideResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/uber:OrderRideResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -26806,16 +26988,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -27167,16 +27352,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/venmo:GetTransactionsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/venmo:GetTransactionsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -27581,16 +27769,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -27943,109 +28134,113 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "leadId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "leadId",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "customerId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "dealerId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "description",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "endDate",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "startDate",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "assignedUserId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              },
-              {
-                "key": "customerId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "dealerId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "description",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "endDate",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "startDate",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              },
-              {
-                "key": "assignedUserId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:CreateVinAppointmentResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:CreateVinAppointmentResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -28619,16 +28814,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:GetSalesAppointmentsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:GetSalesAppointmentsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -29027,16 +29225,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:GetUsersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:GetUsersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -29388,16 +29589,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:GetVinDealersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:GetVinDealersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -29775,16 +29979,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:SearchVinCustomersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:SearchVinCustomersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -30213,16 +30420,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:GetVinVehiclesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:GetVinVehiclesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -30615,47 +30825,51 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "customer",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_integrations/vin:VinCustomer"
-                  }
-                }
-              },
-              {
-                "key": "dealerId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "customer",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_integrations/vin:VinCustomer"
+                    }
+                  }
+                },
+                {
+                  "key": "dealerId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/vin:CreateVinCustomerResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/vin:CreateVinCustomerResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -31271,16 +31485,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -31633,50 +31850,54 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "to",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "to",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
+                  },
+                  "description": "The phone number to send the message to."
                 },
-                "description": "The phone number to send the message to."
-              },
-              {
-                "key": "message",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "message",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/whatsapp:SendMessageResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/whatsapp:SendMessageResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -32114,37 +32335,41 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "statusMessage",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "statusMessage",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/whatsapp:ChangeStatusResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/whatsapp:ChangeStatusResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -32578,16 +32803,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/whatsapp:ReadMessagesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/whatsapp:ReadMessagesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -32986,16 +33214,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_common/types:CreateSessionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_common/types:CreateSessionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -33368,16 +33599,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/x:GetXFollowersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/x:GetXFollowersResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -33801,16 +34035,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_integrations/x:GetXFollowingTweetsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_integrations/x:GetXFollowingTweetsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -34206,35 +34443,39 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "linkConfig",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_common/types:LinkConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "linkConfig",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_common/types:LinkConfig"
+                    }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_link:CreateLinkResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_link:CreateLinkResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -34737,16 +34978,19 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_linked-accounts:GetLinkedAccountsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_linked-accounts:GetLinkedAccountsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -35016,16 +35260,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_linked-accounts:GetLinkedAccountResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_linked-accounts:GetLinkedAccountResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -35443,16 +35690,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_linked-accounts:DeleteLinkedAccountResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_linked-accounts:DeleteLinkedAccountResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -35842,37 +36092,41 @@
             "baseUrl": "https://api.trykeet.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "publicToken",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "publicToken",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_linked-accounts:GetTokenResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_linked-accounts:GetTokenResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Unauthorized",

@@ -1,0 +1,10 @@
+@layer components {
+  .fern-segmented-control {
+    @apply h-9 rounded-[6px] bg-white dark:bg-white/5;
+    @apply ring-default flex items-center space-x-px p-0.5 ring-1;
+
+    .fern-button {
+      @apply min-w-0 shrink rounded-[4px];
+    }
+  }
+}

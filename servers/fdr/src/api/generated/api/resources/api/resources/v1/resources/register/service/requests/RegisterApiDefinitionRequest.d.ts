@@ -5,6 +5,7 @@ import * as FernRegistry from "../../../../../../../../index";
 export interface RegisterApiDefinitionRequest {
     orgId: FernRegistry.OrgId;
     apiId: FernRegistry.ApiId;
-    definition: FernRegistry.api.v1.register.ApiDefinition;
+    definition?: FernRegistry.api.v1.register.ApiDefinition;
+    definitionV2?: FernRegistry.api.latest.ApiDefinition;
     sources?: Record<FernRegistry.api.v1.register.SourceId, FernRegistry.api.v1.register.Source>;
 }

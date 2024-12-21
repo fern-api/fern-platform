@@ -45,16 +45,19 @@
             "description": "Unique file identifier"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:File"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:File"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Not Found",
@@ -175,16 +178,19 @@
             "description": "Unique file identifier"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:File"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:File"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Not Found",
@@ -322,12 +328,15 @@
             "description": "An optional filename that users will see instead of the original name."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "fileDownload"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "fileDownload"
+            }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/d7fe74ac-65b8-4ade-875f-ccd92759a70f/cat.jpg",
@@ -689,108 +698,112 @@
             "baseUrl": "https://upload.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "UPLOADCARE_PUB_KEY",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:ProjectPublicKeyType"
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "UPLOADCARE_PUB_KEY",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:ProjectPublicKeyType"
+                    }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "UPLOADCARE_STORE",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:StoreType"
+                },
+                {
+                  "type": "property",
+                  "key": "UPLOADCARE_STORE",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:StoreType"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "file",
+                  "key": "{filename}",
+                  "isOptional": false
+                },
+                {
+                  "type": "property",
+                  "key": "metadata[{key}]",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:MetadataValue"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "signature",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SignatureType"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "property",
+                  "key": "expire",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ExpireType"
+                        }
                       }
                     }
                   }
                 }
-              },
-              {
-                "type": "file",
-                "key": "{filename}",
-                "isOptional": false
-              },
-              {
-                "type": "property",
-                "key": "metadata[{key}]",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:MetadataValue"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "signature",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SignatureType"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "type": "property",
-                "key": "expire",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:ExpireType"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_upload:BaseUploadResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_upload:BaseUploadResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1039,157 +1052,161 @@
             "baseUrl": "https://upload.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "UPLOADCARE_PUB_KEY",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:ProjectPublicKeyType"
-                  }
-                }
-              },
-              {
-                "key": "UPLOADCARE_STORE",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:StoreType"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "filename",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "UPLOADCARE_PUB_KEY",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_:ProjectPublicKeyType"
                     }
                   }
                 },
-                "description": "Original file name of the uploaded file"
-              },
-              {
-                "key": "size",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "UPLOADCARE_STORE",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "integer"
-                    }
-                  }
-                },
-                "description": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n"
-              },
-              {
-                "key": "part_size",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "integer"
+                          "type": "id",
+                          "id": "type_:StoreType"
                         }
                       }
                     }
                   }
                 },
-                "description": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n"
-              },
-              {
-                "key": "content_type",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "filename",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Original file name of the uploaded file"
+                },
+                {
+                  "key": "size",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "integer"
+                      }
+                    }
+                  },
+                  "description": "Precise file size of the uploaded file (in bytes).\n**Note**: The size should not exceed max file size cap for your project.\n"
+                },
+                {
+                  "key": "part_size",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Multipart Uploads expect that you will split the uploaded file into equally sized\nparts (except for the last part) and then will upload them to AWS S3 (possibly in parallel).\nBy default, we assume that you will upload the files in 5 megabyte chunks,\nso we return a list of presigned AWS S3 URLs accordingly.\nIf you intend to upload large files (for example, larger than a gigabyte),\nwe recommend to bump the part size and to pass the expected chunk size\nto us as a value of the `part_size` parameter (in bytes).\n"
+                },
+                {
+                  "key": "content_type",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "File's MIME-type."
+                },
+                {
+                  "key": "metadata[{key}]",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:MetadataValue"
+                        }
+                      }
                     }
                   }
                 },
-                "description": "File's MIME-type."
-              },
-              {
-                "key": "metadata[{key}]",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:MetadataValue"
+                {
+                  "key": "signature",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SignatureType"
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "expire",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ExpireType"
+                        }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "signature",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SignatureType"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "expire",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:ExpireType"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_upload:MultipartFileUploadStartResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_upload:MultipartFileUploadStartResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1421,14 +1438,17 @@
             "baseUrl": "https://upload.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/octet-stream",
-          "body": {
-            "type": "bytes",
-            "isOptional": false,
-            "contentType": "application/octet-stream"
+        "requests": [
+          {
+            "contentType": "application/octet-stream",
+            "body": {
+              "type": "bytes",
+              "isOptional": false,
+              "contentType": "application/octet-stream"
+            }
           }
-        },
+        ],
+        "responses": [],
         "examples": [
           {
             "path": "/<presigned-url-x>",
@@ -1468,48 +1488,52 @@
             "baseUrl": "https://upload.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "UPLOADCARE_PUB_KEY",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:ProjectPublicKeyType"
-                  }
-                }
-              },
-              {
-                "key": "uuid",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "UPLOADCARE_PUB_KEY",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_:ProjectPublicKeyType"
                     }
                   }
                 },
-                "description": "File's UUID from the `/multipart/start/` endpoint."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:FileUploadInfo"
+                {
+                  "key": "uuid",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "File's UUID from the `/multipart/start/` endpoint."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileUploadInfo"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1819,165 +1843,169 @@
             "baseUrl": "https://upload.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "pub_key",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:ProjectPublicKeyType"
-                  }
-                }
-              },
-              {
-                "key": "source_url",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "pub_key",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_:ProjectPublicKeyType"
                     }
                   }
                 },
-                "description": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n"
-              },
-              {
-                "key": "store",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                {
+                  "key": "source_url",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_:StoreType"
+                        "type": "string"
                       }
                     }
-                  }
-                }
-              },
-              {
-                "key": "filename",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                  },
+                  "description": "Source URL of the file to fetch and upload.\n\n**Note**: The URL should point to a resource publicly available via HTTP/HTTPS.\n"
+                },
+                {
+                  "key": "store",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_:StoreType"
                         }
                       }
                     }
                   }
                 },
-                "description": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n"
-              },
-              {
-                "key": "check_URL_duplicates",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_upload:FromUrlUploadRequestCheckUrlDuplicates"
+                {
+                  "key": "filename",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Sets the file name of the resource fetched from the source URL.\nIf not defined, the file name is obtained from either HTTP\nresponse headers or the `source_url`'s path.\n\n**Note:** The filename will be sanitized to only contain the following symbols:\n`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._`.\n"
+                },
+                {
+                  "key": "check_URL_duplicates",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_upload:FromUrlUploadRequestCheckUrlDuplicates"
+                        }
+                      }
+                    }
+                  },
+                  "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n"
+                },
+                {
+                  "key": "save_URL_duplicates",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_upload:FromUrlUploadRequestSaveUrlDuplicates"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n"
+                },
+                {
+                  "key": "metadata[{key}]",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:MetadataValue"
+                        }
                       }
                     }
                   }
                 },
-                "description": "If set to \"1\", enables the `source_url` duplicates prevention.\nSpecifically, if the `source_url` had already been fetched and uploaded previously,\nthis request will return information about the already uploaded file.\n"
-              },
-              {
-                "key": "save_URL_duplicates",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_upload:FromUrlUploadRequestSaveUrlDuplicates"
+                {
+                  "key": "signature",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SignatureType"
+                        }
                       }
                     }
                   }
                 },
-                "description": "Determines if the requested `source_url` should be kept in the history of\nfetched/uploaded URLs. If the value is not defined explicitly, it is set\nto the value of the `check_URL_duplicates` parameter.\n"
-              },
-              {
-                "key": "metadata[{key}]",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:MetadataValue"
+                {
+                  "key": "expire",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ExpireType"
+                        }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "signature",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SignatureType"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "expire",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:ExpireType"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_upload:FromUrlUploadResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_upload:FromUrlUploadResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2210,16 +2238,19 @@
             "description": "Token returned by the `/from_url/` endpoint that identifies a request to fetch/upload a file from a URL."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_upload:FromUrlUploadStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_upload:FromUrlUploadStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2374,16 +2405,19 @@
             "description": "File's unique ID."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:FileUploadInfo"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:FileUploadInfo"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2677,86 +2711,90 @@
             "baseUrl": "https://upload.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "pub_key",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:ProjectPublicKeyType"
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "pub_key",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_:ProjectPublicKeyType"
+                    }
                   }
-                }
-              },
-              {
-                "key": "files[]",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                },
+                {
+                  "key": "files[]",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n"
+                },
+                {
+                  "key": "signature",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:SignatureType"
                         }
                       }
                     }
                   }
                 },
-                "description": "Set of files you want to add to the group.\nEach element can be a file UUID with or without the applied image\nprocessing operations.\n"
-              },
-              {
-                "key": "signature",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:SignatureType"
+                {
+                  "key": "expire",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:ExpireType"
+                        }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "expire",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:ExpireType"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:GroupInfo"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:GroupInfo"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -3032,16 +3070,19 @@
             "description": "Group's unique ID. Group IDs look like `UUID~N`, where the `~N` part reflects the number of the files in the group."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:GroupInfo"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:GroupInfo"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6184,30 +6225,33 @@
             "description": "File UUID."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "map",
-              "keyShape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "map",
+                "keyShape": {
+                  "type": "alias",
                   "value": {
-                    "type": "string"
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
                   }
-                }
-              },
-              "valueShape": {
-                "type": "alias",
-                "value": {
-                  "type": "unknown"
+                },
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "unknown"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6496,16 +6540,19 @@
             "description": "Include additional fields to the file object, such as: appdata."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_file:FilesListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_file:FilesListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6916,16 +6963,19 @@
             "description": "File UUID."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:File"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:File"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -7358,16 +7408,19 @@
             "description": "File UUID."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:File"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:File"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -7762,16 +7815,19 @@
             "description": "Include additional fields to the file object, such as: appdata."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:File"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:File"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8134,34 +8190,38 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
                   "value": {
-                    "type": "string"
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
                   }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_file:FilesStoringResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_file:FilesStoringResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8556,34 +8616,38 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
                   "value": {
-                    "type": "string"
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
                   }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_file:FilesDeleteResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_file:FilesDeleteResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8978,86 +9042,90 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "source",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "source",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "A CDN URL or just UUID of a file subjected to copy."
-              },
-              {
-                "key": "store",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_file:CreateLocalCopyRequestStore"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "A CDN URL or just UUID of a file subjected to copy."
                 },
-                "description": "The parameter only applies to the Uploadcare storage and MUST be either true or false."
-              },
-              {
-                "key": "metadata",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "map",
-                        "keyShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+                {
+                  "key": "store",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_file:CreateLocalCopyRequestStore"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The parameter only applies to the Uploadcare storage and MUST be either true or false."
+                },
+                {
+                  "key": "metadata",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "map",
+                          "keyShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
-                          }
-                        },
-                        "valueShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "unknown"
+                          },
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "unknown"
+                            }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Arbitrary additional metadata."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:LocalCopyResponse"
+                  },
+                  "description": "Arbitrary additional metadata."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:LocalCopyResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -9307,87 +9375,91 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "source",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "source",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "A CDN URL or just UUID of a file subjected to copy."
-              },
-              {
-                "key": "target",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Identifies a custom storage name related to your project. It implies that you are copying a file to a specified custom storage. Keep in mind that you can have multiple storages associated with a single S3 bucket."
-              },
-              {
-                "key": "make_public",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "A CDN URL or just UUID of a file subjected to copy."
+                },
+                {
+                  "key": "target",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "Identifies a custom storage name related to your project. It implies that you are copying a file to a specified custom storage. Keep in mind that you can have multiple storages associated with a single S3 bucket."
+                },
+                {
+                  "key": "make_public",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "boolean"
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean"
+                          }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "MUST be either `true` or `false`. The `true` value makes copied files available via public links, `false` does the opposite."
                 },
-                "description": "MUST be either `true` or `false`. The `true` value makes copied files available via public links, `false` does the opposite."
-              },
-              {
-                "key": "pattern",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_file:CreateRemoteCopyRequestPattern"
+                {
+                  "key": "pattern",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_file:CreateRemoteCopyRequestPattern"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "The parameter is used to specify file names Uploadcare passes to a custom storage. If the parameter is omitted, your custom storages pattern is used. Use any combination of allowed values.\n\nParameter values:\n- `${default}` = `${uuid}/${auto_filename}`\n- `${auto_filename}` = `${filename}${effects}${ext}`\n- `${effects}` = processing operations put into a CDN URL\n- `${filename}` = original filename without extension\n- `${uuid}` = file UUID\n- `${ext}` = file extension, including period, e.g. .jpg\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CopiedFileUrl"
+                  },
+                  "description": "The parameter is used to specify file names Uploadcare passes to a custom storage. If the parameter is omitted, your custom storages pattern is used. Use any combination of allowed values.\n\nParameter values:\n- `${default}` = `${uuid}/${auto_filename}`\n- `${auto_filename}` = `${filename}${effects}${ext}`\n- `${effects}` = processing operations put into a CDN URL\n- `${filename}` = original filename without extension\n- `${uuid}` = file UUID\n- `${ext}` = file extension, including period, e.g. .jpg\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CopiedFileUrl"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -9618,38 +9690,42 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "target",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "Unique ID of the file to process"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:AwsRekognitionExecuteResponse"
+                  },
+                  "description": "Unique ID of the file to process"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:AwsRekognitionExecuteResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -9921,16 +9997,19 @@
             "description": "Request ID returned by the Add-On execution request described above."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:AwsRekognitionExecutionStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:AwsRekognitionExecutionStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10095,38 +10174,42 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "target",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
                     }
-                  }
-                },
-                "description": "Unique ID of the file to process"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:AwsRekognitionDetectModerationLabelsExecuteResponse"
+                  },
+                  "description": "Unique ID of the file to process"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:AwsRekognitionDetectModerationLabelsExecuteResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10390,16 +10473,19 @@
             "description": "Request ID returned by the Add-On execution request described above."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:AwsRekognitionDetectModerationLabelsExecutionStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:AwsRekognitionDetectModerationLabelsExecutionStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10556,55 +10642,59 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "target",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Unique ID of the file to process"
-              },
-              {
-                "key": "params",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_addOns:UcClamavVirusScanExecuteRequestParams"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "Unique ID of the file to process"
                 },
-                "description": "Optional object with Add-On specific parameters"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:UcClamavVirusScanExecuteResponse"
+                {
+                  "key": "params",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_addOns:UcClamavVirusScanExecuteRequestParams"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optional object with Add-On specific parameters"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:UcClamavVirusScanExecuteResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10887,16 +10977,19 @@
             "description": "Request ID returned by the Add-On execution request described above."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:UcClamavVirusScanExecutionStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:UcClamavVirusScanExecutionStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11069,55 +11162,59 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "target",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "target",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Unique ID of the file to process"
-              },
-              {
-                "key": "params",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_addOns:RemoveBgExecuteRequestParams"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "Unique ID of the file to process"
                 },
-                "description": "Optional object with Add-On specific parameters"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:RemoveBgExecuteResponse"
+                {
+                  "key": "params",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_addOns:RemoveBgExecuteRequestParams"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Optional object with Add-On specific parameters"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:RemoveBgExecuteResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11395,16 +11492,19 @@
             "description": "Request ID returned by the Add-On execution request described above."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_addOns:RemoveBgExecutionStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_addOns:RemoveBgExecutionStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11612,16 +11712,19 @@
             "description": "Key of file metadata.\nList of allowed characters for the key:\n\n- Latin letters in lower or upper case (a-z,A-Z)\n- digits (0-9)\n- underscore `_`\n- a hyphen `-`\n- dot `.`\n- colon `:`"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:MetadataItemValue"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:MetadataItemValue"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11835,28 +11938,32 @@
             "description": "Key of file metadata.\nList of allowed characters for the key:\n\n- Latin letters in lower or upper case (a-z,A-Z)\n- digits (0-9)\n- underscore `_`\n- a hyphen `-`\n- dot `.`\n- colon `:`"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
               "value": {
-                "type": "string"
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:MetadataItemValue"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:MetadataItemValue"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -12082,6 +12189,8 @@
             "description": "Key of file metadata.\nList of allowed characters for the key:\n\n- Latin letters in lower or upper case (a-z,A-Z)\n- digits (0-9)\n- underscore `_`\n- a hyphen `-`\n- dot `.`\n- colon `:`"
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -12308,16 +12417,19 @@
             "description": "Specifies the way groups should be sorted in the returned list.\n`datetime_created` for the ascending order (default),\n`-datetime_created` for the descending one."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_group:GroupsListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_group:GroupsListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -12561,16 +12673,19 @@
             "description": "Group UUID."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:GroupWithFiles"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:GroupWithFiles"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -12843,6 +12958,8 @@
             "description": "Group UUID."
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -13081,16 +13198,19 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:Project"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:Project"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -13291,22 +13411,25 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_:WebhookOfListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_:WebhookOfListResponse"
+                  }
                 }
               }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -13517,16 +13640,19 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:WebhookOfListResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:WebhookOfListResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -13754,16 +13880,19 @@
             "description": "Webhook ID."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:Webhook"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:Webhook"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Unauthorized",
@@ -13980,6 +14109,8 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
+        "requests": [],
+        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -14193,16 +14324,19 @@
             "description": "File uuid."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_conversion:DocumentConvertInfoResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_conversion:DocumentConvertInfoResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -14449,84 +14583,88 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "paths",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "paths",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An array of UUIDs of your source documents to convert together with the specified target format (see [documentation](https://uploadcare.com/docs/transformations/document-conversion/))."
                 },
-                "description": "An array of UUIDs of your source documents to convert together with the specified target format (see [documentation](https://uploadcare.com/docs/transformations/document-conversion/))."
-              },
-              {
-                "key": "store",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_conversion:DocumentJobSubmitParametersStore"
+                {
+                  "key": "store",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_conversion:DocumentJobSubmitParametersStore"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "When `store` is set to `\"0\"`, the converted files will only be available for 24 hours. `\"1\"` makes converted files available permanently. If the parameter is omitted, it checks the `Auto file storing` setting of your Uploadcare project identified by the `public_key` provided in the `auth-param`.\n"
                 },
-                "description": "When `store` is set to `\"0\"`, the converted files will only be available for 24 hours. `\"1\"` makes converted files available permanently. If the parameter is omitted, it checks the `Auto file storing` setting of your Uploadcare project identified by the `public_key` provided in the `auth-param`.\n"
-              },
-              {
-                "key": "save_in_group",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_conversion:DocumentJobSubmitParametersSaveInGroup"
+                {
+                  "key": "save_in_group",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_conversion:DocumentJobSubmitParametersSaveInGroup"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "When `save_in_group` is set to `\"1\"`, multi-page documents additionally will be saved as a file group.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_conversion:DocumentConvertResponse"
+                  },
+                  "description": "When `save_in_group` is set to `\"1\"`, multi-page documents additionally will be saved as a file group.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_conversion:DocumentConvertResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -14738,16 +14876,19 @@
             "description": "Job token."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_conversion:DocumentConvertStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_conversion:DocumentConvertStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -15032,67 +15173,71 @@
             "baseUrl": "https://api.uploadcare.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "paths",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "paths",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "An array of UUIDs of your video files to process together with a set of assigned operations (see [documentation](https://uploadcare.com/docs/transformations/video-encoding/))."
                 },
-                "description": "An array of UUIDs of your video files to process together with a set of assigned operations (see [documentation](https://uploadcare.com/docs/transformations/video-encoding/))."
-              },
-              {
-                "key": "store",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_conversion:VideoJobSubmitParametersStore"
+                {
+                  "key": "store",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_conversion:VideoJobSubmitParametersStore"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "When `store` is set to `\"0\"`, the converted files will only be available for 24 hours. `\"1\"` makes converted files available permanently. If the parameter is omitted, it checks the `Auto file storing` setting of your Uploadcare project identified by the `public_key` provided in the `auth-param`.\n"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_conversion:VideoConvertResponse"
+                  },
+                  "description": "When `store` is set to `\"0\"`, the converted files will only be available for 24 hours. `\"1\"` makes converted files available permanently. If the parameter is omitted, it checks the `Auto file storing` setting of your Uploadcare project identified by the `public_key` provided in the `auth-param`.\n"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_conversion:VideoConvertResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -15305,16 +15450,19 @@
             "description": "Job token."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_conversion:VideoConvertStatusResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_conversion:VideoConvertStatusResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",

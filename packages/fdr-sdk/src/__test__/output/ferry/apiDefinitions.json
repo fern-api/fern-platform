@@ -23,144 +23,148 @@
             "baseUrl": "https://api.ferry.health"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "patient",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:AppointmentTaskRequestPatient"
-                  }
-                },
-                "description": "The patient for whom the appointment is being requested."
-              },
-              {
-                "key": "providerSpecialty",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "patient",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "id",
+                      "id": "type_:AppointmentTaskRequestPatient"
                     }
-                  }
+                  },
+                  "description": "The patient for whom the appointment is being requested."
                 },
-                "description": "The specialty of the provider that the patient needs to see."
-              },
-              {
-                "key": "providerSubspecialty",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The subspecialty of the provider that the patient needs to see."
-              },
-              {
-                "key": "reasonForVisit",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+                {
+                  "key": "providerSpecialty",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "The reason for the patient's visit."
-              },
-              {
-                "key": "timeFrame",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
-                        }
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "The specialty of the provider that the patient needs to see."
                 },
-                "description": "The time frame in which the patient needs to have the appointment. This can be in any reasonable format and Ferry will parse it."
-              },
-              {
-                "key": "distanceInMiles",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "providerSubspecialty",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "double"
-                        }
-                      }
-                    }
-                  }
-                },
-                "description": "The maximum distance (in miles) from the patient's home where the provider can be located."
-              },
-              {
-                "key": "npis",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                          "type": "primitive",
                           "value": {
-                            "type": "primitive",
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The subspecialty of the provider that the patient needs to see."
+                },
+                {
+                  "key": "reasonForVisit",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "The reason for the patient's visit."
+                },
+                {
+                  "key": "timeFrame",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The time frame in which the patient needs to have the appointment. This can be in any reasonable format and Ferry will parse it."
+                },
+                {
+                  "key": "distanceInMiles",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The maximum distance (in miles) from the patient's home where the provider can be located."
+                },
+                {
+                  "key": "npis",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
                             "value": {
-                              "type": "string"
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
                             }
                           }
                         }
                       }
                     }
-                  }
-                },
-                "description": "A list of Provider NPIs to search across. Providing this list will limit the search to just these NPIs."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CreateAppointmentTaskResponse"
+                  },
+                  "description": "A list of Provider NPIs to search across. Providing this list will limit the search to just these NPIs."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CreateAppointmentTaskResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/api/v1/appointment-tasks/create",
@@ -245,16 +249,19 @@
             "description": "The ID of the task to load."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:GetAppointmentTaskResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:GetAppointmentTaskResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e",
@@ -338,6 +345,8 @@
             "description": "The ID of the task to load."
           }
         ],
+        "requests": [],
+        "responses": [],
         "examples": [
           {
             "path": "/api/v1/appointment-tasks/ferry.task-appointment.a3327c6c-1cc2-4f56-a137-6c457550a04e/cancel",
@@ -420,16 +429,19 @@
             "description": "The number page to load, starting at 0."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:GetAllAppointmentTasksResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:GetAllAppointmentTasksResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/api/v1/appointment-tasks",

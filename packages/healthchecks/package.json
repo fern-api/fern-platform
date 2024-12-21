@@ -1,57 +1,55 @@
 {
   "name": "@fern-api/healthchecks",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
     "directory": "packages/healthchecks"
   },
-  "private": true,
-  "files": [
-    "lib"
-  ],
-  "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "sideEffects": false,
+  "type": "module",
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
   "bin": {
     "fern-health": "./dist/cli.cjs"
   },
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsup ./src/cli.ts --format cjs",
-    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept"
+  },
+  "dependencies": {
+    "algoliasearch": "^5.13.0",
+    "console-table-printer": "^2.12.0",
+    "node-emoji": "^2.1.3"
   },
   "devDependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-fern/vercel": "0.0.7",
     "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-fern/vercel": "0.0.7",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.7.18",
     "@types/yargs": "^17.0.32",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.3",
     "esbuild": "0.20.2",
-    "eslint": "^8.56.0",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.3.2",
+    "eslint": "^9",
+    "prettier": "^3.4.2",
     "tsup": "^8.3.5",
     "typescript": "4.9.5",
     "vitest": "^2.1.4",
     "yargs": "^17.4.1"
-  },
-  "dependencies": {
-    "algoliasearch": "^5.13.0",
-    "console-table-printer": "^2.12.0",
-    "node-emoji": "^2.1.3"
   }
 }
