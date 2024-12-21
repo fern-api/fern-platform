@@ -35,6 +35,7 @@ interface SidebarSlugLinkProps {
   icon?: ReactElement | string;
   slug?: FernNavigation.Slug;
   onClick?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+  onClickIndicator?: React.MouseEventHandler<HTMLSpanElement>;
   className?: string;
   linkClassName?: string;
   title?: ReactNode;
@@ -43,7 +44,7 @@ interface SidebarSlugLinkProps {
   selected?: boolean;
   showIndicator?: boolean;
   depth?: number;
-  toggleExpand?: React.MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
+  expandable?: boolean;
   expanded?: boolean;
   rightElement?: ReactNode;
   tooltipContent?: ReactNode;
@@ -71,13 +72,14 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
       linkClassName: linkClassNameProp,
       title,
       onClick,
+      onClickIndicator,
       shallow,
       scroll,
       href,
       selected,
       showIndicator,
       depth = 0,
-      toggleExpand,
+      expandable = false,
       expanded = false,
       rightElement,
       tooltipContent,
@@ -89,6 +91,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
     } = props;
 
     const ref = useRef<HTMLDivElement>(null);
+    const closeMobileSidebar = useCloseMobileSidebar();
 
     if (hidden && !expanded && !selected) {
       return null;
@@ -103,7 +106,9 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
         <FernLink
           href={href}
           className={linkClassName}
-          onClick={composeEventHandlers(toggleExpand, onClick)}
+          onClick={composeEventHandlers(onClick, () => {
+            closeMobileSidebar();
+          })}
           shallow={shallow}
           target={target}
           rel={rel}
@@ -114,7 +119,9 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
       ) : (
         <button
           className={linkClassName}
-          onClick={composeEventHandlers(toggleExpand, onClick)}
+          onClick={composeEventHandlers(onClick, () => {
+            closeMobileSidebar();
+          })}
         >
           {child}
         </button>
@@ -144,13 +151,14 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
       );
     };
 
-    const expandButton = (toggleExpand != null || expanded) && (
+    const expandButton = (expandable || expanded) && (
       <span
         className={clsx("fern-sidebar-link-expand", {
           "opacity-50 transition-opacity group-hover:opacity-80":
             !showIndicator,
         })}
         data-state={showIndicator ? "active" : "inactive"}
+        onClick={onClickIndicator}
       >
         <NavArrowDown
           className={cn("size-icon-md lg:size-icon", {
@@ -216,7 +224,6 @@ export const SidebarSlugLink = forwardRef<
 >((props, forwardRef) => {
   const { slug, ...innerProps } = props;
   const ref = useRef<HTMLDivElement>(null);
-  const closeMobileSidebar = useCloseMobileSidebar();
 
   useAtomEffect(
     useCallbackOne(
@@ -240,7 +247,6 @@ export const SidebarSlugLink = forwardRef<
       ref={composeRefs(forwardRef, ref)}
       href={href}
       onClick={composeEventHandlers(innerProps.onClick, () => {
-        closeMobileSidebar();
         if (href) {
           scrollToRoute(href);
         }

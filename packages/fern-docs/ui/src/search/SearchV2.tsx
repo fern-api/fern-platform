@@ -39,6 +39,7 @@ import {
   HAS_API_PLAYGROUND,
   THEME_SWITCH_ENABLED_ATOM,
   atomWithStorageString,
+  useClosePlayground,
   useFeatureFlags,
   useFernUser,
   useIsPlaygroundOpen,
@@ -76,6 +77,7 @@ export function SearchV2(): ReactElement | false {
   const user = useFernUser();
 
   const [open, setOpen] = useCommandTrigger();
+  const setCloseApiPlayground = useClosePlayground();
   const [askAi, setAskAi] = useAtom(askAiAtom);
   const [initialInput, setInitialInput] = useState("");
   const domain = useAtomValue(DOMAIN_ATOM);
@@ -96,6 +98,7 @@ export function SearchV2(): ReactElement | false {
   const handleNavigate = useEventCallback((path: string) => {
     void router.push(path).then(() => {
       setOpen(false);
+      setCloseApiPlayground();
     });
   });
 
