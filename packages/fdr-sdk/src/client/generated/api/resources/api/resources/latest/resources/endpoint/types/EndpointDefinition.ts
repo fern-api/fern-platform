@@ -18,8 +18,8 @@ export interface EndpointDefinition
     queryParameters: FernRegistry.api.latest.ObjectProperty[] | undefined;
     requestHeaders: FernRegistry.api.latest.ObjectProperty[] | undefined;
     responseHeaders: FernRegistry.api.latest.ObjectProperty[] | undefined;
-    request: FernRegistry.api.latest.HttpRequest | undefined;
-    response: FernRegistry.api.latest.HttpResponse | undefined;
+    requests: FernRegistry.api.latest.HttpRequest[] | undefined;
+    responses: FernRegistry.api.latest.HttpResponse[] | undefined;
     errors: FernRegistry.api.latest.ErrorResponse[] | undefined;
     examples: FernRegistry.api.latest.ExampleEndpointCall[] | undefined;
     snippetTemplates: FernRegistry.api.latest.EndpointSnippetTemplates | undefined;

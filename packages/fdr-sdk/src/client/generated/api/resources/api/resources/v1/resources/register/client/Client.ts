@@ -533,6 +533,178 @@ export class Register {
      *                     }]
      *             }
      *         },
+     *         definitionV2: {
+     *             id: FernRegistry.ApiDefinitionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+     *             endpoints: {
+     *                 "string": {
+     *                     id: FernRegistry.EndpointId("string"),
+     *                     method: "GET",
+     *                     path: [{
+     *                             type: "literal",
+     *                             value: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     auth: [{
+     *                             "key": "value"
+     *                         }],
+     *                     defaultEnvironment: FernRegistry.EnvironmentId("string"),
+     *                     environments: [{
+     *                             "key": "value"
+     *                         }],
+     *                     pathParameters: [{
+     *                             "key": "value"
+     *                         }],
+     *                     queryParameters: [{
+     *                             "key": "value"
+     *                         }],
+     *                     requestHeaders: [{
+     *                             "key": "value"
+     *                         }],
+     *                     responseHeaders: [{
+     *                             "key": "value"
+     *                         }],
+     *                     requests: [{
+     *                             "key": "value"
+     *                         }],
+     *                     responses: [{
+     *                             "key": "value"
+     *                         }],
+     *                     errors: [{
+     *                             "key": "value"
+     *                         }],
+     *                     examples: [{
+     *                             "key": "value"
+     *                         }],
+     *                     snippetTemplates: {
+     *                         typescript: {
+     *                             "key": "value"
+     *                         },
+     *                         python: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     description: "string",
+     *                     availability: "Stable",
+     *                     namespace: [{
+     *                             "key": "value"
+     *                         }]
+     *                 }
+     *             },
+     *             websockets: {
+     *                 "string": {
+     *                     id: FernRegistry.WebSocketId("string"),
+     *                     path: [{
+     *                             type: "literal",
+     *                             value: {
+     *                                 "key": "value"
+     *                             }
+     *                         }],
+     *                     messages: [{
+     *                             type: FernRegistry.api.v1.WebSocketMessageId("string"),
+     *                             displayName: {
+     *                                 "key": "value"
+     *                             },
+     *                             origin: "client",
+     *                             body: {
+     *                                 type: "alias",
+     *                                 value: {
+     *                                     "key": "value"
+     *                                 }
+     *                             },
+     *                             description: "string",
+     *                             availability: "Stable"
+     *                         }],
+     *                     auth: [{
+     *                             "key": "value"
+     *                         }],
+     *                     defaultEnvironment: FernRegistry.EnvironmentId("string"),
+     *                     environments: [{
+     *                             "key": "value"
+     *                         }],
+     *                     pathParameters: [{
+     *                             "key": "value"
+     *                         }],
+     *                     queryParameters: [{
+     *                             "key": "value"
+     *                         }],
+     *                     requestHeaders: [{
+     *                             "key": "value"
+     *                         }],
+     *                     examples: [{
+     *                             "key": "value"
+     *                         }],
+     *                     description: "string",
+     *                     availability: "Stable",
+     *                     namespace: [{
+     *                             "key": "value"
+     *                         }]
+     *                 }
+     *             },
+     *             webhooks: {
+     *                 "string": {
+     *                     id: FernRegistry.WebhookId("string"),
+     *                     method: "GET",
+     *                     path: ["string"],
+     *                     headers: [{
+     *                             "key": "value"
+     *                         }],
+     *                     payload: {
+     *                         shape: {
+     *                             type: "alias",
+     *                             value: {
+     *                                 "key": "value"
+     *                             }
+     *                         },
+     *                         description: "string"
+     *                     },
+     *                     examples: [{
+     *                             "key": "value"
+     *                         }],
+     *                     description: "string",
+     *                     availability: "Stable",
+     *                     namespace: [{
+     *                             "key": "value"
+     *                         }]
+     *                 }
+     *             },
+     *             types: {
+     *                 "string": {
+     *                     name: "string",
+     *                     shape: {
+     *                         type: "alias",
+     *                         value: {
+     *                             type: "id"
+     *                         }
+     *                     },
+     *                     description: "string",
+     *                     availability: "Stable"
+     *                 }
+     *             },
+     *             subpackages: {
+     *                 "string": {
+     *                     id: FernRegistry.api.v1.SubpackageId("string"),
+     *                     name: "string",
+     *                     displayName: "string"
+     *                 }
+     *             },
+     *             auths: {
+     *                 "string": {
+     *                     type: "bearerAuth"
+     *                 }
+     *             },
+     *             globalHeaders: [{
+     *                     key: FernRegistry.PropertyKey("string"),
+     *                     valueShape: {
+     *                         type: "alias",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     },
+     *                     description: "string",
+     *                     availability: "Stable"
+     *                 }]
+     *         },
      *         sources: {
      *             "string": {
      *                 type: "openapi"

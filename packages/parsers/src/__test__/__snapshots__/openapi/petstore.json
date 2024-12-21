@@ -1,98 +1,181 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "post-pet": {
+    "endpoint_pet.addPet": {
       "description": "Add a new pet to the store",
-      "id": "post-pet",
+      "namespace": [
+        "pet"
+      ],
+      "id": "endpoint_pet.addPet",
       "method": "POST",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
           }
         },
-        "description": "Successful operation"
-      },
+        {
+          "contentType": "application/xml",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
       "errors": [],
-      "examples": []
+      "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
-    "put-pet": {
+    "endpoint_pet.updatePet": {
       "description": "Update an existing pet by Id",
-      "id": "put-pet",
+      "namespace": [
+        "pet"
+      ],
+      "id": "endpoint_pet.updatePet",
       "method": "PUT",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
-      "request": {
-        "contentType": "application/json",
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        }
-      },
-      "response": {
-        "statusCode": 200,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
           }
         },
-        "description": "Successful operation"
-      },
+        {
+          "contentType": "application/xml",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
       "errors": [],
-      "examples": []
+      "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
-    "get-pet-pet-id": {
+    "endpoint_pets.getPetById": {
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
-      "id": "get-pet-pet-id",
+      "namespace": [
+        "pets"
+      ],
+      "id": "endpoint_pets.getPetById",
       "method": "GET",
       "path": [
         {
           "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
           "value": "pet"
+        },
+        {
+          "type": "literal",
+          "value": "/"
         },
         {
           "type": "pathParameter",
@@ -100,10 +183,10 @@
         }
       ],
       "auth": [],
-      "defaultEnvironment": "x-fern-server-name",
+      "defaultEnvironment": "/api/v31",
       "environments": [
         {
-          "id": "x-fern-server-name",
+          "id": "/api/v31",
           "baseUrl": "/api/v31"
         }
       ],
@@ -122,17 +205,19 @@
           "description": "ID of pet that needs to be fetched"
         }
       ],
-      "response": {
-        "statusCode": null,
-        "body": {
-          "type": "alias",
-          "value": {
-            "type": "id",
-            "id": "Pet"
-          }
-        },
-        "description": "The pet"
-      },
+      "responses": [
+        {
+          "statusCode": null,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "The pet"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -144,7 +229,20 @@
             }
           },
           "description": "Invalid ID supplied",
-          "name": "Bad Request"
+          "name": "Bad Request",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -156,10 +254,38 @@
             }
           },
           "description": "Pet not found",
-          "name": "Not Found"
+          "name": "Not Found",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
+              }
+            }
+          ]
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "path": "/pet/{petId}",
+          "responseStatusCode": null,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        }
+      ]
     }
   },
   "websockets": {},
@@ -695,6 +821,15 @@
       }
     }
   },
-  "subpackages": {},
+  "subpackages": {
+    "pet": {
+      "id": "pet",
+      "name": "pet"
+    },
+    "pets": {
+      "id": "pets",
+      "name": "pets"
+    }
+  },
   "auths": {}
 }

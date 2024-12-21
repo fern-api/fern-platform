@@ -25,6 +25,8 @@ export interface Frontmatter
      * If `description` is not set, this will be used for the <meta name="description"> tag in the HTML.
      */
     subtitle: string | undefined;
+    /** The logo for this page. */
+    logo: FernRegistry.docs.latest.Logo | undefined;
     /** The URL to this page's image. This is currently an alias for `og:image`, but its purpose may change to a be a cover-image (pre-title). */
     image: FernRegistry.docs.latest.FileIdOrUrl | undefined;
     /** Reners an "Edit this page" link at the bottom of the page. */

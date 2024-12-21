@@ -29,16 +29,19 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_accounts:AccountResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_accounts:AccountResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/accounts/current",
@@ -114,26 +117,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_accounts:AccountPatch"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_accounts:AccountPatch"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_accounts:AccountResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_accounts:AccountResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/accounts/current",
@@ -210,26 +217,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Action"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Action"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_actions:ActionResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_actions:ActionResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/actions",
@@ -360,26 +371,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_actions:Actions"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_actions:Actions"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_actions:ActionsResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_actions:ActionsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/actions/bulk",
@@ -531,16 +546,19 @@
             "description": "The id of the action to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_actions:ActionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_actions:ActionResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/actions/:actionId",
@@ -684,26 +702,30 @@
             "description": "The id of the action to patch"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:ActionUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:ActionUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_actions:ActionResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_actions:ActionResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/actions/:actionId",
@@ -851,16 +873,19 @@
             "description": "The id of the action to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/actions/:actionId",
@@ -926,16 +951,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:ListAgentsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:ListAgentsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/agents",
@@ -1028,26 +1056,30 @@
             }
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:AgentConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:AgentConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:AgentResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:AgentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1244,16 +1276,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:AgentResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:AgentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1478,16 +1513,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:ListAgentVersionsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:ListAgentVersionsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1685,16 +1723,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:AgentVersionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:AgentVersionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1877,16 +1918,19 @@
             "description": "The agent id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:ListActorRolesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:ListActorRolesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2104,26 +2148,30 @@
             "description": "The agent id"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:AssignActorRoleRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:AssignActorRoleRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:AssignRoleResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:AssignRoleResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2382,16 +2430,19 @@
             "description": "The actor role id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2616,16 +2667,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:GetAgentLogsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:GetAgentLogsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -2859,16 +2913,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:GetDetailedAgentLogResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:GetDetailedAgentLogResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -3146,16 +3203,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:GetDetailedAgentLogsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:GetDetailedAgentLogsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -3442,16 +3502,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_agents:GetExecutionsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_agents:GetExecutionsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -3689,16 +3752,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -3890,16 +3956,19 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:AppsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:AppsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps",
@@ -3988,16 +4057,19 @@
             "description": "ID of app"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:AppResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:AppResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/us_app_YOUR_ID",
@@ -4110,26 +4182,30 @@
             "description": "ID of app"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:AppPatch"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:AppPatch"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:AppResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:AppResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/us_app_YOUR_ID",
@@ -4234,26 +4310,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:AppCreate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:AppCreate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:AppResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:AppResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps",
@@ -4378,16 +4458,19 @@
             "description": "ID of app to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:SuccessResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:SuccessResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/us_app_YOUR_ID",
@@ -4501,16 +4584,19 @@
             "description": "Whether to include built-in constraints"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints",
@@ -4603,26 +4689,30 @@
             "description": "ID of the app"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintCreate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintCreate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints",
@@ -4730,16 +4820,19 @@
             "description": "ID of the constraint"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints/:constraintId",
@@ -4848,16 +4941,19 @@
             "description": "ID of the constraint"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintVersionsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintVersionsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints/:constraintId/versions",
@@ -4987,16 +5083,19 @@
             "description": "Version of the constraint"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintVersionResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintVersionResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints/:constraintId/versions/0",
@@ -5104,26 +5203,30 @@
             "description": "ID of the constraint"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:ConstraintResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:ConstraintResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints/:constraintId",
@@ -5232,16 +5335,19 @@
             "description": "ID of the constraint"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_apps:SuccessResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_apps:SuccessResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/apps/:appId/constraints/:constraintId",
@@ -5356,16 +5462,19 @@
             "description": "Based on pageSize, which page of prompts to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_assistant:PromptsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_assistant:PromptsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/prompts",
@@ -5455,16 +5564,19 @@
             "description": "ID of prompts"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_assistant:PromptResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_assistant:PromptResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/prompts/us_pr_YOUR_ID",
@@ -5549,26 +5661,30 @@
             "description": "ID of prompts"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_assistant:PromptPatch"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_assistant:PromptPatch"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_assistant:PromptResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_assistant:PromptResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/prompts/us_pr_YOUR_ID",
@@ -5642,26 +5758,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_assistant:PromptCreate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_assistant:PromptCreate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_assistant:PromptResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_assistant:PromptResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/prompts",
@@ -5752,16 +5872,19 @@
             "description": "ID of prompts"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/prompts/us_pr_YOUR_ID",
@@ -5838,16 +5961,19 @@
             "description": "ID of the commit version to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commits:CommitResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commits:CommitResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6061,16 +6187,19 @@
             "description": "ID of the commit version to complete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6238,16 +6367,19 @@
             "description": "ID of the commit version to re-emit a commit:created event for"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6409,16 +6541,19 @@
             "description": "The associated Environment ID of the policy."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_data-retention-policies:ListDataRetentionPoliciesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_data-retention-policies:ListDataRetentionPoliciesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6611,26 +6746,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_data-retention-policies:DataRetentionPolicyConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_data-retention-policies:DataRetentionPolicyConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_data-retention-policies:DataRetentionPolicyResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_data-retention-policies:DataRetentionPolicyResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -6860,16 +6999,19 @@
             "description": "ID of data retention policy to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_data-retention-policies:DataRetentionPolicyResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_data-retention-policies:DataRetentionPolicyResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -7081,26 +7223,30 @@
             "description": "ID of data retention policy to update"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_data-retention-policies:DataRetentionPolicyConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_data-retention-policies:DataRetentionPolicyConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_data-retention-policies:DataRetentionPolicyResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_data-retention-policies:DataRetentionPolicyResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -7336,16 +7482,19 @@
             "description": "ID of data retention policy to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -7509,16 +7658,19 @@
             "description": "ID of space to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:ListDocumentsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:ListDocumentsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -7762,26 +7914,30 @@
             "description": "ID of space to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:DocumentConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:DocumentConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:DocumentResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:DocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8053,16 +8209,19 @@
             "description": "ID of document to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:DocumentResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:DocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8307,26 +8466,30 @@
             "description": "ID of document to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:DocumentConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:DocumentConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_documents:DocumentResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_documents:DocumentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8592,16 +8755,19 @@
             "description": "ID of document to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -8762,16 +8928,19 @@
             "description": "The associated Resource ID for the entitlements."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_entitlements:ListEntitlementsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_entitlements:ListEntitlementsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -9002,16 +9171,19 @@
             "description": "Based on pageSize, which page of environments to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_environments:ListEnvironmentsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_environments:ListEnvironmentsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/environments",
@@ -9091,26 +9263,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_environments:EnvironmentConfigCreate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_environments:EnvironmentConfigCreate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_environments:EnvironmentResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_environments:EnvironmentResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/environments",
@@ -9221,16 +9397,19 @@
             "description": "ID of environment to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:EventTokenResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:EventTokenResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -9442,16 +9621,19 @@
             "description": "ID of the environment to return. To fetch the current environment, pass `current`"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_environments:EnvironmentResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_environments:EnvironmentResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -9670,26 +9852,30 @@
             "description": "ID of the environment to update"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_environments:EnvironmentConfigUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_environments:EnvironmentConfigUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_environments:Environment"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_environments:Environment"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/environments/us_env_YOUR_ID",
@@ -9806,16 +9992,19 @@
             "description": "ID of the environment to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10108,16 +10297,19 @@
             "description": "Include acknowledged events"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_events:ListAllEventsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_events:ListAllEventsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/events",
@@ -10207,26 +10399,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_events:CreateEventConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_events:CreateEventConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_events:EventResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_events:EventResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10488,16 +10684,19 @@
             "description": "The event id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_events:EventResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_events:EventResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/events/us_evt_YOUR_ID",
@@ -10608,16 +10807,19 @@
             "description": "The event id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/events/:eventId/ack",
@@ -10711,16 +10913,19 @@
             "availability": "Deprecated"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:EventTokenResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:EventTokenResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -10983,16 +11188,19 @@
             "description": "The storage mode of file to fetch, defaults to \"import\""
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_files:ListFilesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_files:ListFilesResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/files",
@@ -11077,111 +11285,115 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "multipart/form-data",
-          "body": {
-            "type": "formData",
-            "fields": [
-              {
-                "type": "property",
-                "key": "spaceId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_commons:SpaceId"
+        "requests": [
+          {
+            "contentType": "multipart/form-data",
+            "body": {
+              "type": "formData",
+              "fields": [
+                {
+                  "type": "property",
+                  "key": "spaceId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_commons:SpaceId"
+                    }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "environmentId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_commons:EnvironmentId"
+                },
+                {
+                  "type": "property",
+                  "key": "environmentId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_commons:EnvironmentId"
+                    }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "mode",
-                "description": "The storage mode of file to insert, defaults to \"import\"",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_files:Mode"
+                },
+                {
+                  "type": "property",
+                  "key": "mode",
+                  "description": "The storage mode of file to insert, defaults to \"import\"",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_files:Mode"
+                        }
                       }
                     }
                   }
-                }
-              },
-              {
-                "type": "file",
-                "key": "file",
-                "isOptional": false
-              },
-              {
-                "type": "property",
-                "key": "actions",
-                "description": "The actions attached to the file",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
-                          "value": {
-                            "type": "id",
-                            "id": "type_commons:Action"
+                },
+                {
+                  "type": "file",
+                  "key": "file",
+                  "isOptional": false
+                },
+                {
+                  "type": "property",
+                  "key": "actions",
+                  "description": "The actions attached to the file",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_commons:Action"
+                            }
                           }
                         }
                       }
                     }
                   }
-                }
-              },
-              {
-                "type": "property",
-                "key": "origin",
-                "description": "The origin of the file, ie filesystem",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_files:FileOrigin"
+                },
+                {
+                  "type": "property",
+                  "key": "origin",
+                  "description": "The origin of the file, ie filesystem",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_files:FileOrigin"
+                        }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_files:FileResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_files:FileResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11437,16 +11649,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_files:FileResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_files:FileResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11664,16 +11879,19 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -11839,117 +12057,121 @@
             "description": "ID of file to update"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "workbookId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_commons:WorkbookId"
-                      }
-                    }
-                  }
-                }
-              },
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "workbookId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "id",
+                          "id": "type_commons:WorkbookId"
                         }
                       }
                     }
                   }
                 },
-                "description": "The name of the file"
-              },
-              {
-                "key": "mode",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_files:Mode"
-                      }
-                    }
-                  }
-                },
-                "description": "The storage mode of file to update"
-              },
-              {
-                "key": "status",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_files:ModelFileStatusEnum"
-                      }
-                    }
-                  }
-                },
-                "description": "Status of the file"
-              },
-              {
-                "key": "actions",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "list",
-                        "itemShape": {
-                          "type": "alias",
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
                           "value": {
-                            "type": "id",
-                            "id": "type_commons:Action"
+                            "type": "string"
                           }
                         }
                       }
                     }
-                  }
+                  },
+                  "description": "The name of the file"
                 },
-                "description": "The actions attached to the file"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_files:FileResponse"
+                {
+                  "key": "mode",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_files:Mode"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The storage mode of file to update"
+                },
+                {
+                  "key": "status",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_files:ModelFileStatusEnum"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Status of the file"
+                },
+                {
+                  "key": "actions",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "list",
+                          "itemShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "type_commons:Action"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "description": "The actions attached to the file"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_files:FileResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -12183,12 +12405,15 @@
             }
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "fileDownload"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "fileDownload"
+            }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -12359,16 +12584,19 @@
             "description": "Email of guest to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_guests:ListGuestsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_guests:ListGuestsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/guests",
@@ -12456,32 +12684,36 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_guests:GuestConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_guests:GuestConfig"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_guests:CreateGuestResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_guests:CreateGuestResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/guests",
@@ -12605,16 +12837,19 @@
             "description": "ID of guest to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_guests:GuestResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_guests:GuestResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/guests/us_g_YOUR_ID",
@@ -12717,16 +12952,19 @@
             "description": "ID of guest to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/guests/us_g_YOUR_ID",
@@ -12813,26 +13051,30 @@
             "description": "ID of guest to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_guests:GuestConfigUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_guests:GuestConfigUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_guests:GuestResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_guests:GuestResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/guests/us_g_YOUR_ID",
@@ -12965,16 +13207,19 @@
             "description": "ID of space to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_guests:GuestTokenResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_guests:GuestTokenResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/guests/us_g_YOUR_ID/token",
@@ -13066,16 +13311,19 @@
             "description": "The guest id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:ListActorRolesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:ListActorRolesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -13289,26 +13537,30 @@
             "description": "The guest id"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:AssignActorRoleRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:AssignActorRoleRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:AssignRoleResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:AssignRoleResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -13563,16 +13815,19 @@
             "description": "The actor role id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -13762,32 +14017,36 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_guests:Invite"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_guests:Invite"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/invitations",
@@ -14026,16 +14285,19 @@
             "description": "When true, only top-level jobs will be returned unless a parentId is specified"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:ListJobsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:ListJobsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs",
@@ -14137,26 +14399,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs",
@@ -14277,16 +14543,19 @@
             "description": "The id of the job to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID",
@@ -14401,26 +14670,30 @@
             "description": "The id of the job to patch"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID",
@@ -14543,16 +14816,19 @@
             "description": "The id of the job to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID",
@@ -14649,16 +14925,19 @@
             "description": "ID of job to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/execute",
@@ -14753,16 +15032,19 @@
             "description": "ID of job to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobPlanResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobPlanResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/plan",
@@ -14932,26 +15214,30 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobExecutionPlanRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobExecutionPlanRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobPlanResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobPlanResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/plan",
@@ -15171,26 +15457,30 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobExecutionPlanConfigRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobExecutionPlanConfigRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobPlanResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobPlanResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/:jobId/plan",
@@ -15761,32 +16051,36 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_jobs:JobAckDetails"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_jobs:JobAckDetails"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/ack",
@@ -15914,16 +16208,19 @@
             "description": "ID of job to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/outcome/ack",
@@ -16043,32 +16340,36 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_jobs:JobCompleteDetails"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_jobs:JobCompleteDetails"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/complete",
@@ -16204,32 +16505,36 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_jobs:JobCompleteDetails"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_jobs:JobCompleteDetails"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/fail",
@@ -16365,32 +16670,36 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_jobs:JobCancelDetails"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_jobs:JobCancelDetails"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/cancel",
@@ -16516,16 +16825,19 @@
             "description": "ID of job to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/:jobId/retry",
@@ -16635,26 +16947,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:MutateJobConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:MutateJobConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_records:DiffRecordsResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_records:DiffRecordsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/preview-mutation",
@@ -16794,26 +17110,30 @@
             "description": "ID of job to return"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobSplitDetails"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobSplitDetails"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_jobs:JobResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_jobs:JobResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/jobs/us_jb_YOUR_ID/split",
@@ -16917,26 +17237,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:ProgramConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:ProgramConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:ProgramResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:ProgramResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -17174,41 +17498,45 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "environmentId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_commons:EnvironmentId"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "environmentId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_commons:EnvironmentId"
+                        }
                       }
                     }
                   }
                 }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -17543,16 +17871,19 @@
             "description": "Filter by destination keys"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:ProgramsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:ProgramsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -17709,16 +18040,19 @@
             "description": "ID of the program"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:ProgramResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:ProgramResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -17914,26 +18248,30 @@
             "description": "ID of the program"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:ProgramConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:ProgramConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:ProgramResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:ProgramResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -18198,16 +18536,19 @@
             "description": "ID of the program"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -18375,26 +18716,30 @@
             "description": "ID of the program"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:CreateMappingRulesRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:CreateMappingRulesRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:MappingRulesResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:MappingRulesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -18602,42 +18947,46 @@
             "description": "ID of the program"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "ruleIds",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_commons:MappingId"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "ruleIds",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_commons:MappingId"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "Array of rule IDs to be deleted"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+                  },
+                  "description": "Array of rule IDs to be deleted"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -18829,16 +19178,19 @@
             "description": "ID of the program"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:MappingRulesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:MappingRulesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -19074,16 +19426,19 @@
             "description": "ID of mapping rule"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:MappingRuleResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:MappingRuleResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -19320,26 +19675,30 @@
             "description": "ID of mapping rule"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:MappingRuleConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:MappingRuleConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:MappingRuleResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:MappingRuleResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -19584,26 +19943,30 @@
             "description": "ID of the program"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:UpdateMappingRulesRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:UpdateMappingRulesRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_mapping:MappingRulesResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_mapping:MappingRulesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -19835,16 +20198,19 @@
             "description": "ID of mapping rule"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -20408,16 +20774,19 @@
             "description": "An FFQL query used to filter the result set"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_records:GetRecordsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_records:GetRecordsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -20665,26 +21034,30 @@
             "description": "ID of sheet"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_records:Records"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_records:Records"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_versions:VersionResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_versions:VersionResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -20943,32 +21316,36 @@
             "description": "ID of sheet"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "list",
-              "itemShape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_records:RecordData"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_records:RecordData"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_records:RecordsResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_records:RecordsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -21261,16 +21638,19 @@
             "description": "A list of record IDs to delete. Maximum of 100 allowed."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -21586,72 +21966,76 @@
             "description": "An FFQL query used to filter the result set"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "find",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_records:CellValueUnion"
-                      }
-                    }
-                  }
-                },
-                "description": "A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes (\"Bob\")"
-              },
-              {
-                "key": "replace",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_records:CellValueUnion"
-                      }
-                    }
-                  }
-                },
-                "description": "The value to replace found values with"
-              },
-              {
-                "key": "fieldKey",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "find",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_records:CellValueUnion"
+                        }
+                      }
                     }
-                  }
+                  },
+                  "description": "A value to find for a given field in a sheet. For exact matches, wrap the value in double quotes (\"Bob\")"
                 },
-                "description": "A unique key used to identify a field in a sheet"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_versions:VersionResponse"
+                {
+                  "key": "replace",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_records:CellValueUnion"
+                        }
+                      }
+                    }
+                  },
+                  "description": "The value to replace found values with"
+                },
+                {
+                  "key": "fieldKey",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "description": "A unique key used to identify a field in a sheet"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_versions:VersionResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/sheets/us_sh_YOUR_ID/find-replace",
@@ -21727,16 +22111,19 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:ListRolesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:ListRolesResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/roles",
@@ -21848,16 +22235,19 @@
             "description": "The Actor of the secret."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_secrets:SecretsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_secrets:SecretsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -22052,26 +22442,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_secrets:WriteSecret"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_secrets:WriteSecret"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_secrets:SecretsResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_secrets:SecretsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -22303,16 +22697,19 @@
             "description": "The ID of the secret."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_secrets:SecretsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_secrets:SecretsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -22518,16 +22915,19 @@
             "description": "ID of workbook"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_sheets:ListSheetsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_sheets:ListSheetsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sheets",
@@ -22652,16 +23052,19 @@
             "description": "ID of sheet"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_sheets:SheetResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_sheets:SheetResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sheets/us_sh_YOUR_ID",
@@ -22784,16 +23187,19 @@
             "description": "ID of sheet"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -23004,16 +23410,19 @@
             "description": "ID of sheet"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -23417,12 +23826,15 @@
             "description": "The Record Ids param (ids) is a list of record ids that can be passed to several record endpoints allowing the user to identify specific records to INCLUDE in the query, or specific records to EXCLUDE, depending on whether or not filters are being applied. When passing a query param that filters the record dataset, such as 'searchValue', or a 'filter' of 'valid' | 'error' | 'all', the 'ids' param will EXCLUDE those records from the filtered results. For basic queries that do not filter the dataset, passing record ids in the 'ids' param will limit the dataset to INCLUDE just those specific records"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "fileDownload"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "fileDownload"
+            }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sheets/:sheetId/download",
@@ -23680,16 +24092,19 @@
             "description": "An FFQL query used to filter the result set to be counted"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_sheets:RecordCountsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_sheets:RecordCountsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sheets/us_sh_YOUR_ID/counts",
@@ -23812,16 +24227,19 @@
             "description": "If true, only return commits that have been completed. If false, only return commits that have not been completed. If not provided, return all commits."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commits:ListCommitsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commits:ListCommitsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sheets/us_sh_YOUR_ID/commits",
@@ -23921,16 +24339,19 @@
             "description": "ID of sheet"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -24141,16 +24562,19 @@
             "description": "ID of sheet"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -24522,16 +24946,19 @@
             "description": "A value to find for a given field in a sheet. Wrap the value in \"\" for exact match"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_sheets:CellsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_sheets:CellsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/sheets/us_sh_YOUR_ID/cells",
@@ -24647,26 +25074,30 @@
             "description": "ID of sheet"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_sheets:SheetUpdateRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_sheets:SheetUpdateRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_sheets:SheetResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_sheets:SheetResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -24903,55 +25334,59 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "sheetId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_commons:SheetId"
-                  }
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "sheetId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "type_commons:SheetId"
+                    }
+                  },
+                  "description": "ID of sheet"
                 },
-                "description": "ID of sheet"
-              },
-              {
-                "key": "label",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+                {
+                  "key": "label",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
                         }
                       }
                     }
-                  }
-                },
-                "description": "Label for the snapshot"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_snapshots:SnapshotResponse"
+                  },
+                  "description": "Label for the snapshot"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_snapshots:SnapshotResponse"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -25211,16 +25646,19 @@
             "description": "ID of sheet"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_snapshots:SnapshotsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_snapshots:SnapshotsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -25492,16 +25930,19 @@
             "description": "Whether to include a summary in the snapshot response"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_snapshots:SnapshotResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_snapshots:SnapshotResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -25762,16 +26203,19 @@
             "description": "ID of snapshot"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -25982,32 +26426,36 @@
             "description": "ID of snapshot"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "type_snapshots:RestoreOptions"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_snapshots:RestoreOptions"
+                  }
                 }
               }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_snapshots:SnapshotResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_snapshots:SnapshotResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -26337,16 +26785,19 @@
             "description": "Filter records by change type"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_records:DiffRecordsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_records:DiffRecordsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -26725,16 +27176,19 @@
             "description": "Flag for collaborative (project) spaces"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:ListSpacesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:ListSpacesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -26889,26 +27343,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:SpaceConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:SpaceConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:SpaceResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:SpaceResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -27144,16 +27602,19 @@
             "description": "ID of space to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:SpaceResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:SpaceResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -27378,16 +27839,19 @@
             "description": "ID of space to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -27586,16 +28050,19 @@
             "description": "List of ids for the spaces to be deleted"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -27802,26 +28269,30 @@
             "description": "ID of space to update"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:SpaceConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:SpaceConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_spaces:SpaceResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_spaces:SpaceResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -28064,16 +28535,19 @@
             "description": "ID of space to archive"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -28284,16 +28758,19 @@
             "description": "ID of space to unarchive"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -28570,16 +29047,19 @@
             "description": "Based on pageSize, which page of users to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:ListUsersResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:ListUsersResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/users",
@@ -28661,26 +29141,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserCreateAndInviteRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserCreateAndInviteRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserWithRolesResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserWithRolesResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/users/invite",
@@ -28814,16 +29298,19 @@
             "description": "The user id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/users/:userId/resend-invite",
@@ -28895,61 +29382,65 @@
             "description": "The user id"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
                         "value": {
-                          "type": "string"
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "key": "dashboard",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "integer"
+                          }
                         }
                       }
                     }
                   }
                 }
-              },
-              {
-                "key": "dashboard",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserResponse"
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/users/:userId",
@@ -29037,16 +29528,19 @@
             "description": "The user id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/users/us_usr_YOUR_ID",
@@ -29143,16 +29637,19 @@
             "description": "The user id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/users/:userId",
@@ -29228,16 +29725,19 @@
             "description": "The user id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:ListActorRolesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:ListActorRolesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -29451,26 +29951,30 @@
             "description": "The user id"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:AssignActorRoleRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:AssignActorRoleRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_roles:AssignRoleResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_roles:AssignRoleResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -29725,16 +30229,19 @@
             "description": "The actor role id"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -29924,59 +30431,63 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "sheetId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_commons:SheetId"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "sheetId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_commons:SheetId"
+                        }
                       }
                     }
-                  }
+                  },
+                  "description": "The ID of the Sheet."
                 },
-                "description": "The ID of the Sheet."
-              },
-              {
-                "key": "parentVersionId",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "optional",
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_commons:VersionId"
+                {
+                  "key": "parentVersionId",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "optional",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_commons:VersionId"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "Deprecated, creating or updating a group of records together will automatically generate a commitId to group those record changes together."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_versions:VersionResponse"
+                  },
+                  "description": "Deprecated, creating or updating a group of records together will automatically generate a commitId to group those record changes together."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_versions:VersionResponse"
+              }
+            }
+          }
+        ],
         "examples": [
           {
             "path": "/versions",
@@ -30102,16 +30613,19 @@
             "description": "Based on pageSize, which page of prompts to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_views:ListViewsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_views:ListViewsResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -30318,26 +30832,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_views:ViewCreate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_views:ViewCreate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_views:ViewResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_views:ViewResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -30578,16 +31096,19 @@
             "description": "ID of view to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_views:ViewResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_views:ViewResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -30804,26 +31325,30 @@
             "description": "ID of view to update"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_views:ViewUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_views:ViewUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_views:ViewResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_views:ViewResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -31065,16 +31590,19 @@
             "description": "ID of view to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/views/us_vi_YOUR_ID",
@@ -31277,16 +31805,19 @@
             "description": "Include counts for the workbook. **DEPRECATED** Counts will return 0s. Use GET /sheets/:sheetId/counts"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_workbooks:ListWorkbooksResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_workbooks:ListWorkbooksResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -31476,26 +32007,30 @@
             "baseUrl": "https://api.x.flatfile.com/v1"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_workbooks:CreateWorkbookConfig"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_workbooks:CreateWorkbookConfig"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_workbooks:WorkbookResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_workbooks:WorkbookResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -31750,16 +32285,19 @@
             "description": "ID of workbook to return"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_workbooks:WorkbookResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_workbooks:WorkbookResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -32024,16 +32562,19 @@
             "description": "ID of workbook to delete"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commons:Success"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commons:Success"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -32240,26 +32781,30 @@
             "description": "ID of workbook to update"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_workbooks:WorkbookUpdate"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_workbooks:WorkbookUpdate"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_workbooks:WorkbookResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_workbooks:WorkbookResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -32575,16 +33120,19 @@
             "description": "If true, only return commits that have been completed. If false, only return commits that have not been completed. If not provided, return all commits."
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_commits:ListCommitsResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_commits:ListCommitsResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "path": "/workbooks/us_wb_YOUR_ID/commits",

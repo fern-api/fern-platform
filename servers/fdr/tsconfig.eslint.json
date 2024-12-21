@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "noEmit": true
+  },
+  "include": ["src/**/*", "ts-loader.js", "vitest.config.ts"],
+  "exclude": ["**/generated"]
+}
