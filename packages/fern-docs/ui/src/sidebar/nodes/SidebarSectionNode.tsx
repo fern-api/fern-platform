@@ -56,7 +56,20 @@ export function SidebarSectionNode({
         depth={Math.max(depth - 1, 0)}
         title={node.title}
         expanded={expanded}
-        toggleExpand={handleToggleExpand}
+        onClick={(e) => {
+          if (e.isDefaultPrevented()) {
+            return;
+          }
+          if (selected && expanded) {
+            e.preventDefault();
+          }
+          handleToggleExpand();
+        }}
+        onClickIndicator={(e) => {
+          handleToggleExpand();
+          e.preventDefault();
+        }}
+        expandable={node.children.length > 0}
         showIndicator={showIndicator}
         hidden={node.hidden}
         authed={node.authed}
