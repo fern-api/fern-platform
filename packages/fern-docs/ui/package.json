@@ -88,7 +88,7 @@
     "iconoir-react": "^7.7.0",
     "jose": "^5.2.3",
     "jotai": "^2.10.4",
-    "jotai-effect": "^1.0.5",
+    "jotai-effect": "^1.0.6",
     "jotai-location": "^0.5.5",
     "jsonpath": "^1.1.1",
     "launchdarkly-js-client-sdk": "^3.4.0",

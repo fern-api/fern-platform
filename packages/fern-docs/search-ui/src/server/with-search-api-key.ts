@@ -1,8 +1,8 @@
 import {
   DEFAULT_SEARCH_API_KEY_EXPIRATION_SECONDS,
   SEARCH_INDEX,
-  getSearchApiKey,
 } from "@fern-docs/search-server/algolia";
+import { getSearchApiKey } from "@fern-docs/search-server/algolia/edge";
 
 interface WithSearchApiKeyOptions {
   searchApiKey: string;
