@@ -43,16 +43,19 @@
             "description": "Detection ID"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DetectionObject"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DetectionObject"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -286,26 +289,30 @@
             "description": "The type of event being created. To create an event type, see the event types API."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CreateEventSyncRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CreateEventSyncRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CreateEventSyncResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CreateEventSyncResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -638,26 +645,30 @@
             "description": "The type of event being created. To create an event type, see the event types API."
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CreateEventAsyncRequest"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CreateEventAsyncRequest"
+              }
             }
           }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:CreateEventAsyncResponse"
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:CreateEventAsyncResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -960,16 +971,19 @@
             "baseUrl": "https://intrinsicapi.com"
           }
         ],
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:ListEventTypesResponse"
+        "requests": [],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:ListEventTypesResponse"
+              }
             }
           }
-        },
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1131,55 +1145,59 @@
             "baseUrl": "https://intrinsicapi.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "name",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "name",
+                  "valueShape": {
+                    "type": "alias",
                     "value": {
-                      "type": "string"
-                    }
-                  }
-                },
-                "description": "Name of the event type to create."
-              },
-              {
-                "key": "fields",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
+                      "type": "primitive",
                       "value": {
-                        "type": "id",
-                        "id": "type_:EventTypeField"
+                        "type": "string"
                       }
                     }
-                  }
+                  },
+                  "description": "Name of the event type to create."
                 },
-                "description": "Fields of the event type"
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EventTypeObject"
+                {
+                  "key": "fields",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:EventTypeField"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Fields of the event type"
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EventTypeObject"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",
@@ -1375,42 +1393,46 @@
             "baseUrl": "https://intrinsicapi.com"
           }
         ],
-        "request": {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "fields",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "list",
-                    "itemShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "type_:PatchEventTypeField"
+        "requests": [
+          {
+            "contentType": "application/json",
+            "body": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "fields",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "type_:PatchEventTypeField"
+                        }
                       }
                     }
-                  }
-                },
-                "description": "Fields to add to the event type."
-              }
-            ]
-          }
-        },
-        "response": {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:EventTypeObject"
+                  },
+                  "description": "Fields to add to the event type."
+                }
+              ]
             }
           }
-        },
+        ],
+        "responses": [
+          {
+            "statusCode": 200,
+            "body": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:EventTypeObject"
+              }
+            }
+          }
+        ],
         "errors": [
           {
             "name": "Bad Request",

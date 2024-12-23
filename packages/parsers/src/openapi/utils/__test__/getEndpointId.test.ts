@@ -1,27 +1,50 @@
 import { getEndpointId } from "../getEndpointId";
 
 describe("getEndpointId", () => {
-    it("converts method and path to kebab case", () => {
-        expect(getEndpointId("GET", "/users")).toBe("get-users");
-    });
+  it("returns undefined when path is undefined", () => {
+    expect(
+      getEndpointId("namespace", undefined, "method", "opId")
+    ).toBeUndefined();
+  });
 
-    it("handles multiple path segments", () => {
-        expect(getEndpointId("POST", "/users/orders/items")).toBe("post-users-orders-items");
-    });
+  it("handles string namespace", () => {
+    expect(getEndpointId("pets", "/pets/get", "getById", undefined)).toBe(
+      "endpoint_pets.getById"
+    );
+  });
 
-    it("handles uppercase methods", () => {
-        expect(getEndpointId("DELETE", "/users")).toBe("delete-users");
-    });
+  it("handles array namespace", () => {
+    expect(
+      getEndpointId(["pets", "v1"], "/pets/get", "getById", undefined)
+    ).toBe("endpoint_petsV1.getById");
+  });
 
-    it("handles path parameters", () => {
-        expect(getEndpointId("PUT", "/users/{userId}")).toBe("put-users-user-id");
-    });
+  it("handles undefined namespace", () => {
+    expect(getEndpointId(undefined, "/pets/get", "getById", undefined)).toBe(
+      "endpoint_.getById"
+    );
+  });
 
-    it("handles empty path", () => {
-        expect(getEndpointId("GET", "")).toBe("get");
-    });
+  it("uses operationId when sdkMethodName is undefined", () => {
+    expect(getEndpointId("pets", "/pets/get", undefined, "getPetById")).toBe(
+      "endpoint_pets.getPetById"
+    );
+  });
 
-    it("handles path with trailing slash", () => {
-        expect(getEndpointId("POST", "/users/")).toBe("post-users");
-    });
+  it("falls back to path endpoint when no sdkMethodName or operationId", () => {
+    expect(getEndpointId("pets", "/pets/get", undefined, undefined)).toBe(
+      "endpoint_pets.get"
+    );
+  });
+
+  it("handles complex paths", () => {
+    expect(
+      getEndpointId(
+        "pets",
+        "/api/v1/pets/{petId}/details",
+        "getDetails",
+        undefined
+      )
+    ).toBe("endpoint_pets.getDetails");
+  });
 });

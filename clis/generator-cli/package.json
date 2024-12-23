@@ -1,28 +1,30 @@
 {
   "name": "@fern-api/generator-cli",
   "version": "0.0.0",
-  "files": [
-    "dist"
-  ],
   "type": "module",
-  "source": "src/index.ts",
   "main": "dist/cli.cjs",
+  "source": "src/index.ts",
   "bin": {
     "generator-cli": "dist/cli.cjs"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
     "compile": "tsup ./src/cli.ts --format cjs && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
-    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
-    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
+  },
+  "dependencies": {
+    "es-toolkit": "^1.30.0"
   },
   "devDependencies": {
     "@fern-api/fs-utils": "0.15.0-rc63",
@@ -33,17 +35,13 @@
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.3",
     "esbuild": "0.20.2",
-    "eslint": "^8.56.0",
+    "eslint": "^9",
     "execa": "^9.5.1",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.4.2",
     "tmp-promise": "^3.0.3",
     "tsup": "^8.3.5",
     "typescript": "4.9.5",
     "vitest": "^2.1.4",
     "yargs": "^17.4.1"
-  },
-  "dependencies": {
-    "es-toolkit": "^1.30.0"
   }
 }

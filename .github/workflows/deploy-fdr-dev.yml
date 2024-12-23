@@ -13,7 +13,7 @@ on:
       - ".github/workflows/publish-fdr-sdk.yml"
       - "packages/fdr-sdk/**"
       # Remove this once fdr is no longer needed in the generation
-      - "packages/ui/fern-docs-search-server/**"
+      - "packages/fern-docs/search-server/**"
       - "pnpm-lock.yaml"
 
 env:

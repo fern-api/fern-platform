@@ -3,32 +3,30 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "vercel-scripts": "pnpm tsx src/cli.ts",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
+    "depcheck": "depcheck",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
     "lint:style:fix": "pnpm lint:style --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
-  },
-  "devDependencies": {
-    "@fern-platform/configs": "workspace:*",
-    "@types/node": "^18.7.18",
-    "@types/yargs": "^17.0.32",
-    "depcheck": "^1.4.3",
-    "eslint": "^8.56.0",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^3.3.2",
-    "tsx": "^4.7.1",
-    "typescript": "4.9.5",
-    "yargs": "^17.4.1"
+    "vercel-scripts": "pnpm tsx src/cli.ts"
   },
   "dependencies": {
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-fern/vercel": "0.0.4655",
     "execa": "^9.5.1",
     "ts-essentials": "^10.0.1"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/node": "^18.7.18",
+    "@types/yargs": "^17.0.32",
+    "depcheck": "^1.4.3",
+    "eslint": "^9",
+    "prettier": "^3.4.2",
+    "tsx": "^4.7.1",
+    "typescript": "4.9.5",
+    "yargs": "^17.4.1"
   }
 }

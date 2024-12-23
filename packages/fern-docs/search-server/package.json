@@ -1,0 +1,86 @@
+{
+  "name": "@fern-docs/search-server",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fern-docs/search-server"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./algolia": {
+      "types": "./dist/algolia/index.d.ts",
+      "default": "./dist/algolia/index.js"
+    },
+    "./algolia/types": {
+      "types": "./dist/algolia/types.d.ts",
+      "default": "./dist/algolia/types.js"
+    },
+    "./algolia/edge": {
+      "types": "./dist/algolia/edge/index.d.ts",
+      "default": "./dist/algolia/edge/index.js"
+    },
+    "./archive": {
+      "types": "./dist/algolia/records/archive/index.d.ts",
+      "default": "./dist/algolia/records/archive/index.js"
+    },
+    "./turbopuffer": {
+      "types": "./dist/turbopuffer/index.d.ts",
+      "default": "./dist/turbopuffer/index.js"
+    },
+    "./turbopuffer/types": {
+      "types": "./dist/turbopuffer/types.d.ts",
+      "default": "./dist/turbopuffer/types.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-docs/mdx": "workspace:*",
+    "@fern-docs/utils": "workspace:*",
+    "@langchain/textsplitters": "^0.1.0",
+    "@turbopuffer/turbopuffer": "^0.5.11",
+    "algoliasearch": "^5.13.0",
+    "es-toolkit": "^1.27.0",
+    "html-entities": "^2.5.2",
+    "html-to-text": "^9.0.5",
+    "marked": "^5.1.0",
+    "pnpm": "^9.15.0",
+    "ts-essentials": "^10.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/html-to-text": "^9.0.1",
+    "@types/marked": "^5.0.0",
+    "@types/node": "^18.7.18",
+    "depcheck": "^1.4.3",
+    "eslint": "^9",
+    "prettier": "^3.4.2",
+    "stylelint": "^16.1.0",
+    "typescript": "^5",
+    "vitest": "^2.1.4"
+  }
+}

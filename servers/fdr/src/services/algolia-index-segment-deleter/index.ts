@@ -1,4 +1,4 @@
 export {
-    AlgoliaIndexSegmentDeleterServiceImpl,
-    type AlgoliaIndexSegmentDeleterService,
+  AlgoliaIndexSegmentDeleterServiceImpl,
+  type AlgoliaIndexSegmentDeleterService,
 } from "./AlgoliaIndexSegmentDeleterService";
