@@ -149,7 +149,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
   visit(nodeToVisit, (node) => {
     if (isMdxJsxElementHast(node) && node.name === "CodeBlock") {
       const jsxAttributes: MdxJsxAttribute[] = node.attributes.filter(
-        (attr) => attr.type === "mdxJsxAttribute"
+        (attr): attr is MdxJsxAttribute => attr.type === "mdxJsxAttribute"
       );
       const title = jsxAttributes.find((attr) => attr.name === "title");
       visit(node, "element", (child) => {
