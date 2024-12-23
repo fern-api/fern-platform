@@ -16,7 +16,7 @@ import {
   toDocuments,
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { embed, EmbeddingModel, streamText, tool } from "ai";
+import { EmbeddingModel, embed, streamText, tool } from "ai";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";

@@ -5,7 +5,7 @@ import {
 } from "@/server/getMarkdownForPath";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { getFeatureFlags } from "@fern-docs/edge-config";
-import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";

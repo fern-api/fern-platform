@@ -1,7 +1,4 @@
-export * from "./badges";
 export * from "./BuiltWithFern";
-export * from "./cn";
-export * from "./colors";
 export * from "./CopyToClipboardButton";
 export * from "./Empty";
 export * from "./FernAudioPlayer";
@@ -27,5 +24,8 @@ export * from "./FernTextarea";
 export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./FontAwesomeIcon";
+export * from "./badges";
+export * from "./cn";
+export * from "./colors";
 export * from "./kbd";
 export * from "./util/shared-component-types";

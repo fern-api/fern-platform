@@ -5,7 +5,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
-import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 import { Feed, Item } from "feed";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";

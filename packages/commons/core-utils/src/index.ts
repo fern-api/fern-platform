@@ -1,3 +1,7 @@
+export {
+  visitObject,
+  type ObjectPropertiesVisitor,
+} from "./ObjectPropertiesVisitor";
 export { addPrefixToString } from "./addPrefixToString";
 export { assertNever, assertNeverNoThrow } from "./assertNever";
 export { assertVoidNoThrow } from "./assertVoidNoThrow";
@@ -9,10 +13,6 @@ export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty";
 export { formatUtc } from "./formatUtc";
 export { identity } from "./identity";
 export { assertNonNullish, isNonNullish } from "./isNonNullish";
-export {
-  visitObject,
-  type ObjectPropertiesVisitor,
-} from "./ObjectPropertiesVisitor";
 export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";

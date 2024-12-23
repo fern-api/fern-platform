@@ -6,7 +6,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { getFeatureFlags } from "@fern-docs/edge-config";
-import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 import { uniqBy } from "es-toolkit/array";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
