@@ -253,11 +253,11 @@ function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
         // support for / key (only if not in an input)
         if (
           event.key === "/" &&
-          !(event.currentTarget instanceof HTMLInputElement) &&
-          !(event.currentTarget instanceof HTMLTextAreaElement) &&
+          !(document.activeElement instanceof HTMLInputElement) &&
+          !(document.activeElement instanceof HTMLTextAreaElement) &&
           !(
-            event.currentTarget instanceof HTMLElement &&
-            event.currentTarget.isContentEditable
+            document.activeElement instanceof HTMLElement &&
+            document.activeElement.isContentEditable
           )
         ) {
           event.preventDefault();
