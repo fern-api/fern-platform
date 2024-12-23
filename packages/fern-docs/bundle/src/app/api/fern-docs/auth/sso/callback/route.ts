@@ -66,7 +66,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     // if the url.host exists in the edge config, we should add it to the allowed destinations
     if (await getAuthEdgeConfig(url.host)) {
-      allowedDestinations.push(withDefaultProtocol(url.host));
+      allowedDestinations.push(url.origin);
     }
 
     return FernNextResponse.redirect(req, {
