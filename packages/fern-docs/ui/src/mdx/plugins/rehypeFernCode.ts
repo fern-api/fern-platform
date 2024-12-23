@@ -4,6 +4,7 @@ import {
   isHastText,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
+  type MdxJsxAttribute,
   type MdxJsxElementHast,
 } from "@fern-docs/mdx";
 import type { FernSyntaxHighlighterProps } from "@fern-docs/syntax-highlighter";
@@ -147,7 +148,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
   const codeBlockItems: CodeBlockItem[] = [];
   visit(nodeToVisit, (node) => {
     if (isMdxJsxElementHast(node) && node.name === "CodeBlock") {
-      const jsxAttributes = node.attributes.filter(
+      const jsxAttributes: MdxJsxAttribute[] = node.attributes.filter(
         (attr) => attr.type === "mdxJsxAttribute"
       );
       const title = jsxAttributes.find((attr) => attr.name === "title");

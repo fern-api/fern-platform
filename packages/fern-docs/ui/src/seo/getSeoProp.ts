@@ -276,7 +276,7 @@ export function getSeoProps(
     const image = files[favicon];
     additionalLinkTags.push({
       rel: "icon",
-      href: image.url,
+      href: image!.url,
       crossOrigin: "anonymous",
     });
   }
