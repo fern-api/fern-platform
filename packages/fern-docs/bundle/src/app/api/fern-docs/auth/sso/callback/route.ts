@@ -6,6 +6,7 @@ import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -42,7 +43,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return new NextResponse(null, { status: 400 });
   }
 
-  // TODO: this is a security risk (open redirect)! We need to verify that the target host is one of ours.
   // if the current url is app.buildwithfern.com, we should redirect to ***.docs.buildwithfern.com
   if (req.nextUrl.host !== url.host && getDocsDomainEdge(req) !== url.host) {
     if (
@@ -62,9 +62,16 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       url.origin
     );
     destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
+    const allowedDestinations = [withDefaultProtocol(getDocsDomainEdge(req))];
+
+    // if the url.host exists in the edge config, we should add it to the allowed destinations
+    if (await getAuthEdgeConfig(url.host)) {
+      allowedDestinations.push(withDefaultProtocol(url.host));
+    }
+
     return FernNextResponse.redirect(req, {
       destination,
-      allowedDestinations: [withDefaultProtocol(getDocsDomainEdge(req))],
+      allowedDestinations,
     });
   }
 
