@@ -11,6 +11,19 @@ const compat = new FlatCompat({
   allConfig: eslint.configs.all,
 });
 
+function dedupePlugins(...plugins){
+  const foundPlugins = new Set();
+  return plugins.filter(plugin => {
+    if (plugin.name === undefined) return true;
+    if (foundPlugins.has(plugin.name)) return false;
+    foundPlugins.add(plugin.name);
+    if (plugin.name === 'typescript-eslint/base') {
+      delete plugin.plugins?.['@typescript-eslint'];
+    }
+    return true;
+  });
+}
+
 export default tseslint.config(
   {
     ignores: [
@@ -27,11 +40,14 @@ export default tseslint.config(
   },
 
   eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
+  ...dedupePlugins(
+    ...tseslint.configs.strictTypeChecked,
+    ...tseslint.configs.stylisticTypeChecked
+  ),
   {
     languageOptions: {
       parserOptions: {
+        sourceType: "module",
         project: ["./tsconfig.eslint.json"],
         tsconfigRootDir: import.meta.dirname,
       },
