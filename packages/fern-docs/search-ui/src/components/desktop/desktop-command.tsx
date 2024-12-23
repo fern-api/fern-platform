@@ -47,7 +47,7 @@ export const afterInput = tunnel();
 const DesktopCommand = forwardRef<
   HTMLDivElement,
   DesktopCommandProps & ComponentPropsWithoutRef<typeof DesktopCommandRoot>
->(({ onPopState, children, placeholder, ...props }, forwardedRef) => {
+>(({ onPopState, children, placeholder, asChild, ...props }, forwardedRef) => {
   const { filters, handlePopState: handlePopFilters } = useFacetFilters();
   const ref = useRef<HTMLDivElement>(null);
 
@@ -71,7 +71,9 @@ const DesktopCommand = forwardRef<
       })}
       escapeKeyShouldPopState={filters.length > 0}
     >
-      {children}
+      <DesktopCommandContent asChild={asChild}>
+        {children}
+      </DesktopCommandContent>
     </DesktopCommandRoot>
   );
 });
