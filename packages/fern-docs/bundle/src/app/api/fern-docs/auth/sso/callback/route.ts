@@ -5,6 +5,7 @@ import { encryptSession } from "@/server/auth/workos-session";
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -61,7 +62,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       url.origin
     );
     destination.searchParams.set(FORWARDED_HOST_QUERY, req.nextUrl.host);
-    return FernNextResponse.redirect(req, { destination });
+    return FernNextResponse.redirect(req, {
+      destination,
+      allowedDestinations: [withDefaultProtocol(getDocsDomainEdge(req))],
+    });
   }
 
   const code = req.nextUrl.searchParams.get(CODE_QUERY);
