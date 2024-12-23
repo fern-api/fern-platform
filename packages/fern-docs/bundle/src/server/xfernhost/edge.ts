@@ -27,12 +27,7 @@ export function getDocsDomainEdge(req: NextRequest): string {
   return "buildwithfern.com";
 }
 
-// use this for testing auth-based redirects on development and preview environments
+// if x-fern-host is set, assume it's proxied:
 export function getHostEdge(req: NextRequest): string {
-  // if x-fern-host is set, assume it's proxied:
-  return (
-    req.headers.get(HEADER_X_FERN_HOST) ??
-    req.headers.get("host") ??
-    req.nextUrl.host
-  );
+  return req.headers.get(HEADER_X_FERN_HOST) ?? req.nextUrl.host;
 }
