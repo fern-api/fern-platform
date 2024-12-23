@@ -43,17 +43,19 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
   const [showEmailInput, setShowEmailInput] = useAtom(SHOW_EMAIL_INPUT_ATOM);
   const [email, setEmail] = useAtom(EMAIL_ATOM);
 
-  const legend = isHelpful
-    ? "What did you like?"
-    : isHelpful === "no"
-      ? "What went wrong?"
-      : "Feedback";
-  const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
-    const options = isHelpful
-      ? POSITIVE_FEEDBACK
+  const legend =
+    isHelpful === "yes"
+      ? "What did you like?"
       : isHelpful === "no"
-        ? NEGATIVE_FEEDBACK
-        : [];
+        ? "What went wrong?"
+        : "Feedback";
+  const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
+    const options =
+      isHelpful === "yes"
+        ? POSITIVE_FEEDBACK
+        : isHelpful === "no"
+          ? NEGATIVE_FEEDBACK
+          : [];
     const transformedOptions: FernDropdown.Option[] = options.map(
       (option): FernDropdown.Option => ({
         type: "value",
