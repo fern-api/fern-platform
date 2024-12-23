@@ -244,9 +244,21 @@ function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
           return prev;
         }
 
+        // support for cmd+k
+        if ((event.metaKey || event.ctrlKey) && event.key === "k") {
+          event.preventDefault();
+          return true;
+        }
+
+        // support for / key (only if not in an input)
         if (
-          event.key === "/" ||
-          ((event.metaKey || event.ctrlKey) && event.key === "k")
+          event.key === "/" &&
+          !(event.currentTarget instanceof HTMLInputElement) &&
+          !(event.currentTarget instanceof HTMLTextAreaElement) &&
+          !(
+            event.currentTarget instanceof HTMLElement &&
+            event.currentTarget.isContentEditable
+          )
         ) {
           event.preventDefault();
           return true;

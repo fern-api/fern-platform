@@ -98,6 +98,7 @@ export const DesktopCommandWithAskAI = forwardRef<
       domain,
       renderActions,
       setInitialInput,
+      asChild,
       ...props
     },
     forwardedRef
@@ -188,7 +189,7 @@ export const DesktopCommandWithAskAI = forwardRef<
             renderActions={renderActions}
           />
         ) : (
-          <DesktopCommandContent>
+          <DesktopCommandContent asChild={asChild}>
             <CommandAskAIGroup
               onAskAI={(initialInput) => {
                 setInitialInput?.(initialInput);
