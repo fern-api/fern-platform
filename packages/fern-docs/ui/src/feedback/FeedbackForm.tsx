@@ -49,11 +49,12 @@ export const FeedbackForm: FC<FeedbackFormProps> = ({
       ? "What went wrong?"
       : "Feedback";
   const feedbackOptions = useMemo<FernDropdown.Option[]>(() => {
-    const options = isHelpful
-      ? POSITIVE_FEEDBACK
-      : isHelpful === "no"
-        ? NEGATIVE_FEEDBACK
-        : [];
+    const options =
+      isHelpful === "yes"
+        ? POSITIVE_FEEDBACK
+        : isHelpful === "no"
+          ? NEGATIVE_FEEDBACK
+          : [];
     const transformedOptions: FernDropdown.Option[] = options.map(
       (option): FernDropdown.Option => ({
         type: "value",
