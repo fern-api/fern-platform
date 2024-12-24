@@ -31,7 +31,6 @@ export function PlaygroundCardTriggerManual({
     _other: () => "Enter your credentials",
   });
 
-
   if (isAuthed(auth, authState)) {
     return (
       <FernButton
