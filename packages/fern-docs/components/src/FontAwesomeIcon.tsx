@@ -66,12 +66,14 @@ function getCdnHost() {
   );
 }
 
+// parse any font awesome icon into two parts: style and icon name
 function parseFontAwesomeIcon(icon: string): [string, string] | undefined {
   const parts = icon.replaceAll("fa-", "").split(" ");
   if (parts.length === 0) {
     return;
   }
 
+  // if no style is specified, default to solid style
   if (parts.length === 1 && parts[0] != null) {
     return ["solid", parts[0]];
   }
@@ -80,6 +82,8 @@ function parseFontAwesomeIcon(icon: string): [string, string] | undefined {
   if (iconName == null) {
     return;
   }
+
+  // if multiple styles are specified, join them with a dash
   const style = parts.join("-");
   return [style, iconName];
 }
