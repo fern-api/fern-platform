@@ -23,7 +23,13 @@ export function PlaygroundCardTriggerManual({
 }: PlaygroundCardTriggerManualProps): ReactElement | false {
   const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
 
-  const authButtonCopy = "Login to send a real request";
+  const authButtonCopy = visitDiscriminatedUnion(auth)._visit({
+    bearerAuth: () => "Enter your bearer token",
+    basicAuth: () => "Enter your username and password",
+    header: () => "Enter your credentials",
+    oAuth: () => "Enter your credentials",
+    _other: () => "Enter your credentials",
+  });
 
   if (isAuthed(auth, authState)) {
     return (
