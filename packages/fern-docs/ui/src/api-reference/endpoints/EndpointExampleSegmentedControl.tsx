@@ -34,7 +34,7 @@ export function EndpointExampleSegmentedControl({
             }
             mono
             size="small"
-            variant={"outlined"}
+            variant="outlined"
             intent={
               exampleKey === selectedExample?.exampleKey ? "primary" : "none"
             }
