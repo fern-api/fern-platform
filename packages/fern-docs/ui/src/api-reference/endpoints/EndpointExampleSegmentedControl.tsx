@@ -26,14 +26,15 @@ export function EndpointExampleSegmentedControl({
             onClick={() => {
               onSelectExample(exampleKey);
             }}
-            className="min-w-0 shrink truncate"
+            className={
+              "min-w-0 shrink truncate" +
+              (exampleKey === selectedExample?.exampleKey
+                ? " ring-primary-500"
+                : " ring-transparent")
+            }
             mono
             size="small"
-            variant={
-              exampleKey === selectedExample?.exampleKey
-                ? "outlined"
-                : "minimal"
-            }
+            variant={"outlined"}
             intent={
               exampleKey === selectedExample?.exampleKey ? "primary" : "none"
             }
