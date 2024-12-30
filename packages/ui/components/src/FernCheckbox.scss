@@ -1,0 +1,21 @@
+@layer components {
+    .fern-checkbox-label {
+        @apply flex cursor-pointer;
+    }
+
+    .fern-checkbox-item {
+        @apply ring-default relative mt-0.5 inline-block size-4 ring-1 rounded-sm ring-inset;
+    }
+
+    .fern-checkbox-item:hover {
+        @apply bg-tag-primary;
+    }
+
+    .fern-checkbox-item:focus {
+        @apply outline outline-4 outline-offset-0 outline-tag-primary;
+    }
+
+    .fern-checkbox-indicator {
+        @apply size-4 bg-accent flex items-center justify-center text-accent-contrast rounded-sm;
+    }
+}

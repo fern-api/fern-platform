@@ -116,19 +116,16 @@
             "description": "A list of field names to sort by, and whether to show results as ascending or descending. Formatted as `<fieldName>:asc` or `<fieldName>:desc`."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:OrganizationsPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:OrganizationsPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -412,19 +409,16 @@
             "description": "Whether to show only Organization metadata."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Organization"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Organization"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -730,68 +724,64 @@
             "description": "The Organization's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "billingEmail",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "billingEmail",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The Organization's billing email."
+                  }
                 },
-                {
-                  "key": "isScimEnabled",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The Organization's billing email."
+              },
+              {
+                "key": "isScimEnabled",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
-                  },
-                  "description": "Whether SCIM is enabled for the Organization."
+                  }
                 },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "Whether SCIM is enabled for the Organization."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The name of the Organization."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Organization"
+                  }
+                },
+                "description": "The name of the Organization."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Organization"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -1169,25 +1159,22 @@
             "description": "The cluster type."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:ClusterOptions"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:ClusterOptions"
                 }
               }
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -1583,19 +1570,16 @@
             "description": "The cloud provider of the cluster for the deployment."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:DeploymentOptions"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:DeploymentOptions"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -2012,19 +1996,16 @@
             "description": "A list of field names to sort by, and whether to show results as ascending or descending. Formatted as `<fieldName>:asc` or `<fieldName>:desc`."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ClustersPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ClustersPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -2308,30 +2289,26 @@
             "description": "The ID of the Organization to create the cluster in."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:CreateClusterRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:CreateClusterRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Cluster"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Cluster"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -2726,19 +2703,16 @@
             "description": "The cluster's ID."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Cluster"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Cluster"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -3069,30 +3043,26 @@
             "description": "The cluster's ID"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:UpdateClusterRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:UpdateClusterRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Cluster"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Cluster"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -3483,8 +3453,6 @@
             "description": "The cluster's ID."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -3859,19 +3827,16 @@
             "description": "A list of field names to sort by, and whether to show results as ascending or descending. Formatted as `<fieldName>:asc` or `<fieldName>:desc`."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:DeploymentsPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:DeploymentsPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -4202,30 +4167,26 @@
             "description": "The ID of the Organization in which to create the Deployment."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:CreateDeploymentRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:CreateDeploymentRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deployment"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deployment"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -4690,19 +4651,16 @@
             "description": "The Deployment's ID."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deployment"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deployment"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -5095,30 +5053,26 @@
             "description": "The Deployment's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:UpdateDeploymentRequest"
-              }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:UpdateDeploymentRequest"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deployment"
-              }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deployment"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -5663,8 +5617,6 @@
             "description": "The Deployment's ID."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -5945,61 +5897,57 @@
             "description": "The Deployment ID"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "isHibernating",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "isHibernating",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
-                  },
-                  "description": "The type of override to perform. Set this value to 'true' to have the Deployment hibernate regardless of its hibernation schedule. Set the value to 'false' to have the Deployment wake up regardless of its hibernation schedule. Use 'OverrideUntil' to define the length of the override."
+                  }
                 },
-                {
-                  "key": "overrideUntil",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                "description": "The type of override to perform. Set this value to 'true' to have the Deployment hibernate regardless of its hibernation schedule. Set the value to 'false' to have the Deployment wake up regardless of its hibernation schedule. Use 'OverrideUntil' to define the length of the override."
+              },
+              {
+                "key": "overrideUntil",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "datetime"
-                          }
+                          "type": "datetime"
                         }
                       }
                     }
-                  },
-                  "description": "The end of the override time in UTC, formatted as 'YYYY-MM-DDTHH:MM:SSZ'. If this value isn't specified, the override persists until you end it through the Astro UI or another API call."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:DeploymentHibernationOverride"
+                  }
+                },
+                "description": "The end of the override time in UTC, formatted as 'YYYY-MM-DDTHH:MM:SSZ'. If this value isn't specified, the override persists until you end it through the Astro UI or another API call."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:DeploymentHibernationOverride"
             }
           }
-        ],
+        },
         "examples": [
           {
             "path": "/organizations/organizationId/deployments/deploymentId/hibernation-override",
@@ -6102,8 +6050,6 @@
             "description": "The Deployment ID"
           }
         ],
-        "requests": [],
-        "responses": [],
         "examples": [
           {
             "path": "/organizations/organizationId/deployments/deploymentId/hibernation-override",
@@ -6233,19 +6179,16 @@
             "description": "The maximum number of results to return."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:DeploysPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:DeploysPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -6583,59 +6526,55 @@
             "description": "The Deployment's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The deploy's description."
+                  }
                 },
-                {
-                  "key": "type",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_deploy:CreateDeployRequestType"
-                    }
-                  },
-                  "description": "The type of the deploy."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deploy"
+                "description": "The deploy's description."
+              },
+              {
+                "key": "type",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_deploy:CreateDeployRequestType"
+                  }
+                },
+                "description": "The type of the deploy."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deploy"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -7007,19 +6946,16 @@
             "description": "The Deploy's ID."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deploy"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deploy"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -7360,48 +7296,44 @@
             "description": "The Deploy's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The deploy's description."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deploy"
+                  }
+                },
+                "description": "The deploy's description."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deploy"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -7772,48 +7704,44 @@
             "description": "The Deploy's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "dagTarballVersion",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "dagTarballVersion",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The deploy's DAG tarball version, also known as the Bundle Version in the Astro UI. Required if DAG deploys are enabled on the Deployment, and deploy type is either IMAGE_AND_DAG or DAG_ONLY."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deploy"
+                  }
+                },
+                "description": "The deploy's DAG tarball version, also known as the Bundle Version in the Astro UI. Required if DAG deploys are enabled on the Deployment, and deploy type is either IMAGE_AND_DAG or DAG_ONLY."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deploy"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -8139,47 +8067,43 @@
             "description": "The Deploy's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Deploy"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Deploy"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -8601,19 +8525,16 @@
             "description": "A list of field names to sort by, and whether to show results as ascending or descending. Formatted as `<fieldName>:asc` or `<fieldName>:desc`."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:WorkspacesPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:WorkspacesPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -8877,80 +8798,76 @@
             "description": "The ID of the Organization to which the Workspace will belong."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "cicdEnforcedDefault",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "Whether new Deployments enforce CI/CD deploys by default."
-                },
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "The Workspace's description."
-                },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "cicdEnforcedDefault",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
                       "value": {
-                        "type": "string"
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
                       }
                     }
-                  },
-                  "description": "The Workspace's name."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Workspace"
+                  }
+                },
+                "description": "Whether new Deployments enforce CI/CD deploys by default."
+              },
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The Workspace's description."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The Workspace's name."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Workspace"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -9289,19 +9206,16 @@
             "description": "The Workspace's ID."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Workspace"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Workspace"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -9608,68 +9522,64 @@
             "description": "The Workspace's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "cicdEnforcedDefault",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "cicdEnforcedDefault",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "boolean"
-                      }
+                      "type": "boolean"
                     }
-                  },
-                  "description": "Whether new Deployments enforce CI/CD deploys by default."
+                  }
                 },
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "Whether new Deployments enforce CI/CD deploys by default."
+              },
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The Workspace's description."
+                  }
                 },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The Workspace's description."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The Workspace's name."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Workspace"
+                  }
+                },
+                "description": "The Workspace's name."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Workspace"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -10024,8 +9934,6 @@
             "description": "The Workspace's ID."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -18769,25 +18677,22 @@
             "description": "Filter the returned permissions based on the scope they apply to. Note that currently, the only available permissions are in the `DEPLOYMENT` scope."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:PermissionGroup"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:PermissionGroup"
                 }
               }
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -19019,53 +18924,49 @@
             "description": "The ID of the Organization to invite the user to."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "inviteeEmail",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "inviteeEmail",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The email of the user to invite."
+                  }
                 },
-                {
-                  "key": "role",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_invite:CreateUserInviteRequestRole"
-                    }
-                  },
-                  "description": "The user's Organization role."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Invite"
+                "description": "The email of the user to invite."
+              },
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_invite:CreateUserInviteRequestRole"
+                  }
+                },
+                "description": "The user's Organization role."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Invite"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -19405,8 +19306,6 @@
             "description": "The invite's ID."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -19686,25 +19585,22 @@
             "description": "Filter role templates based on the scope of permissions they include."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "type_:RoleTemplate"
-                  }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "type_:RoleTemplate"
                 }
               }
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -20075,19 +19971,16 @@
             "description": "Sorting criteria, each criterion should conform to format 'fieldName:asc' or 'fieldName:desc'."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:RolesPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:RolesPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -20402,118 +20295,114 @@
             "description": "The ID of the Organization where you want to create the custom role."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "The role's description."
-                },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
                       "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "The role's name."
-                },
-                {
-                  "key": "permissions",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The permissions included in the role."
+                  }
                 },
-                {
-                  "key": "restrictedWorkspaceIds",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The role's description."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The role's name."
+              },
+              {
+                "key": "permissions",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The permissions included in the role."
+              },
+              {
+                "key": "restrictedWorkspaceIds",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
+                              "type": "string"
                             }
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The IDs of the Workspaces that the role is restricted to."
+                  }
                 },
-                {
-                  "key": "scopeType",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The IDs of the Workspaces that the role is restricted to."
+              },
+              {
+                "key": "scopeType",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "literal",
                     "value": {
-                      "type": "literal",
-                      "value": {
-                        "type": "stringLiteral",
-                        "value": "DEPLOYMENT"
-                      }
+                      "type": "stringLiteral",
+                      "value": "DEPLOYMENT"
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:RoleWithPermission"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:RoleWithPermission"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -20879,105 +20768,101 @@
             "description": "The custom role's ID."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "The role's description."
-                },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
                       "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "The role's name."
-                },
-                {
-                  "key": "permissions",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The permissions included in the role."
+                  }
                 },
-                {
-                  "key": "restrictedWorkspaceIds",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The role's description."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The role's name."
+              },
+              {
+                "key": "permissions",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The permissions included in the role."
+              },
+              {
+                "key": "restrictedWorkspaceIds",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
+                              "type": "string"
                             }
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The IDs of the Workspaces that the role is restricted to."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:RoleWithPermission"
+                  }
+                },
+                "description": "The IDs of the Workspaces that the role is restricted to."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:RoleWithPermission"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -21343,8 +21228,6 @@
             "description": "The ID of the role to delete."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -21622,19 +21505,16 @@
             "description": "The role's ID."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:RoleWithPermission"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:RoleWithPermission"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -22004,19 +21884,16 @@
             "description": "Sorting criteria, each criterion should conform to format 'fieldName:asc' or 'fieldName:desc'"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:TeamsPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:TeamsPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -22333,103 +22210,99 @@
             "description": "The ID of the Organization where the Team is created."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The Team's description."
+                  }
                 },
-                {
-                  "key": "memberIds",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
+                "description": "The Team's description."
+              },
+              {
+                "key": "memberIds",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
                             "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
+                              "type": "string"
                             }
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The list of IDs for users to add to the Team."
+                  }
                 },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The list of IDs for users to add to the Team."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The Team's name."
+              },
+              {
+                "key": "organizationRole",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
                       "value": {
-                        "type": "string"
+                        "type": "id",
+                        "id": "type_team:CreateTeamRequestOrganizationRole"
                       }
                     }
-                  },
-                  "description": "The Team's name."
+                  }
                 },
-                {
-                  "key": "organizationRole",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_team:CreateTeamRequestOrganizationRole"
-                        }
-                      }
-                    }
-                  },
-                  "description": "The Team's Organization role."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Team"
+                "description": "The Team's Organization role."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Team"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -22780,19 +22653,16 @@
             "description": "The ID of the Team to retrieve data for."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Team"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Team"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -23112,61 +22982,57 @@
             "description": "The ID of the Team to update."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The Team's description."
+                  }
                 },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The Team's description."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The Team's name."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:Team"
+                  }
+                },
+                "description": "The Team's name."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:Team"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -23523,8 +23389,6 @@
             "description": "The ID of the Team to delete."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -23863,19 +23727,16 @@
             "description": "Sorting criteria, each criterion should conform to format 'fieldName:asc' or 'fieldName:desc'"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:TeamMembersPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:TeamMembersPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -24189,37 +24050,34 @@
             "description": "team ID"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "memberIds",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "memberIds",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The list of IDs for users to add to the Team."
-                }
-              ]
-            }
+                  }
+                },
+                "description": "The list of IDs for users to add to the Team."
+              }
+            ]
           }
-        ],
-        "responses": [],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -24566,8 +24424,6 @@
             "description": "The ID of the user to remove."
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -24855,86 +24711,82 @@
             "description": "The ID of the Team to update roles for."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "deploymentRoles",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "type_:DeploymentRole"
-                            }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "deploymentRoles",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "type_:DeploymentRole"
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The user's updated Deployment roles. The Deployments you specify must belong to the Team's Organization."
+                  }
                 },
-                {
-                  "key": "organizationRole",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_team:UpdateTeamRolesRequestOrganizationRole"
-                    }
-                  },
-                  "description": "The Team's Organization roles."
+                "description": "The user's updated Deployment roles. The Deployments you specify must belong to the Team's Organization."
+              },
+              {
+                "key": "organizationRole",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_team:UpdateTeamRolesRequestOrganizationRole"
+                  }
                 },
-                {
-                  "key": "workspaceRoles",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "type_:WorkspaceRole"
-                            }
+                "description": "The Team's Organization roles."
+              },
+              {
+                "key": "workspaceRoles",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "type_:WorkspaceRole"
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The Team's updated Workspace roles. The Workspaces you specify must belong to the Team's Organization."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:SubjectRoles"
+                  }
+                },
+                "description": "The Team's updated Workspace roles. The Workspaces you specify must belong to the Team's Organization."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:SubjectRoles"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -25375,19 +25227,16 @@
             "description": "Sorting criteria, each criterion should conform to format 'fieldName:asc' or 'fieldName:desc'"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ApiTokensPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ApiTokensPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -25702,123 +25551,119 @@
             "description": "The ID of the Organization where you want to create the token."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "The description for the API token."
-                },
-                {
-                  "key": "entityId",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "description": "The ID of the Workspace or Deployment to which the API token is scoped. It is required if `Type` is `WORKSPACE` or `DEPLOYMENT`."
-                },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
                       "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "The name of the API token."
-                },
-                {
-                  "key": "role",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "The role of the API token."
-                },
-                {
-                  "key": "tokenExpiryPeriodInDays",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The expiry period of the API token in days. If not specified, the token will never expire."
+                  }
                 },
-                {
-                  "key": "type",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "id",
-                      "id": "type_apiToken:CreateApiTokenRequestType"
+                "description": "The description for the API token."
+              },
+              {
+                "key": "entityId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
-                  },
-                  "description": "The scope of the API token."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ApiToken"
+                  }
+                },
+                "description": "The ID of the Workspace or Deployment to which the API token is scoped. It is required if `Type` is `WORKSPACE` or `DEPLOYMENT`."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The name of the API token."
+              },
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The role of the API token."
+              },
+              {
+                "key": "tokenExpiryPeriodInDays",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The expiry period of the API token in days. If not specified, the token will never expire."
+              },
+              {
+                "key": "type",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "type_apiToken:CreateApiTokenRequestType"
+                  }
+                },
+                "description": "The scope of the API token."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ApiToken"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -26181,19 +26026,16 @@
             "description": "The ID of the token that you want to retrieve data for."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ApiToken"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ApiToken"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -26511,61 +26353,57 @@
             "description": "The API token you want to update."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "description",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "description",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "The description of the API token."
+                  }
                 },
-                {
-                  "key": "name",
-                  "valueShape": {
-                    "type": "alias",
+                "description": "The description of the API token."
+              },
+              {
+                "key": "name",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The name of the API token."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ApiToken"
+                  }
+                },
+                "description": "The name of the API token."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ApiToken"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -26920,8 +26758,6 @@
             "description": "The API token ID"
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "name": "Bad Request",
@@ -27203,46 +27039,42 @@
             "description": "The API token you want to update."
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "roles",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_:ApiTokenRole"
-                        }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "roles",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_:ApiTokenRole"
                       }
                     }
-                  },
-                  "description": "The roles of the API token."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:SubjectRoles"
+                  }
+                },
+                "description": "The roles of the API token."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:SubjectRoles"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -27614,19 +27446,16 @@
             "description": "The token to rotate"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ApiToken"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ApiToken"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -28022,19 +27851,16 @@
             "description": "Sorting criteria, each criterion should conform to format 'fieldName:asc' or 'fieldName:desc'"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:UsersPaginated"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:UsersPaginated"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -28313,19 +28139,16 @@
             "description": "The user's ID."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:User"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:User"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",
@@ -28632,92 +28455,88 @@
             "description": "The user's ID"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "deploymentRoles",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "type_:DeploymentRole"
-                            }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "deploymentRoles",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "type_:DeploymentRole"
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The user's updated Deployment roles. Requires also specifying an `OrganizationRole`."
+                  }
                 },
-                {
-                  "key": "organizationRole",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_user:UpdateUserRolesRequestOrganizationRole"
-                        }
+                "description": "The user's updated Deployment roles. Requires also specifying an `OrganizationRole`."
+              },
+              {
+                "key": "organizationRole",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_user:UpdateUserRolesRequestOrganizationRole"
                       }
                     }
-                  },
-                  "description": "The user's updated Organization role."
+                  }
                 },
-                {
-                  "key": "workspaceRoles",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "list",
-                          "itemShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "type_:WorkspaceRole"
-                            }
+                "description": "The user's updated Organization role."
+              },
+              {
+                "key": "workspaceRoles",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "type_:WorkspaceRole"
                           }
                         }
                       }
                     }
-                  },
-                  "description": "The user's updated Workspace roles. Requires also specifying an `OrganizationRole`."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:SubjectRoles"
+                  }
+                },
+                "description": "The user's updated Workspace roles. Requires also specifying an `OrganizationRole`."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:SubjectRoles"
             }
           }
-        ],
+        },
         "errors": [
           {
             "name": "Bad Request",

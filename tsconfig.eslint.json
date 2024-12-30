@@ -1,6 +1,7 @@
 {
+  "extends": "./shared/tsconfig.shared.json",
   "compilerOptions": {
+    "types": ["@types/node"],
     "noEmit": true
-  },
-  "include": ["clis", "packages", "servers", "playwright", "eslint.config.mjs"]
+  }
 }

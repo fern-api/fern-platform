@@ -78,7 +78,7 @@ To build and run the NextJS docs UI, run:
 The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
 
 ```bash
-# packages/fern-docs/bundle/.env.local
+# packages/ui/docs-bundle/.env.local
 
 # uncomment the next line when targeting the production cloud environment
 # NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com
@@ -103,8 +103,8 @@ Then link vercel to the project:
 - When prompted to link to the project, say `yes`
 
 Then, run `vercel pull`, which will create `/fern-platform/.vercel/.env.development.local`
-Then, copy that file (creating if necessary) to `/fern-platform/packages/fern-docs/bundle/.env.local`
-Finally, to run the dev server, `cd /packages/fern-docs/bundle` and run `pnpm docs:dev`, which should begin running on `localhost:3000`
+Then, copy that file (creating if necessary) to `/fern-platform/packages/ui/docs-bundle/.env.local`
+Finally, to run the dev server, `cd /packages/ui/docs-bundle` and run `pnpm docs:dev`, which should begin running on `localhost:3000`
 
 Optionally, to reroute to a different docs domain, add a `NEXT_PUBLIC_DOCS_DOMAIN` to `.env.local`
 

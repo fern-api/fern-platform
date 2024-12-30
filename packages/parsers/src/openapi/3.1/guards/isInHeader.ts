@@ -1,10 +1,5 @@
 export function isInHeader(input: unknown): input is {
-  in: "header";
+    in: "header";
 } {
-  return (
-    typeof input === "object" &&
-    input != null &&
-    "in" in input &&
-    input.in === "header"
-  );
+    return typeof input === "object" && input != null && "in" in input && input.in === "header";
 }

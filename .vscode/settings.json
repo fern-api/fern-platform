@@ -1,28 +1,11 @@
 {
   "search.exclude": {
-    ".vscode": true,
-    "pnpm-lock.yaml": true,
     "**/.pnp.*": true,
-    "**/.yarn": true,
-    "**/node_modules": true,
-    "**/dist": true,
-    "**/build": true,
-    "**/out": true,
-    "**/lib": true,
-    "**/.next": true,
-    "**/storybook-static": true,
-    "**/generated": true,
-    "**/__test__/**/fixtures": true,
-    "**/__test__/**/output": true,
-    "**/__snapshots__/**": true,
-    "tests": true
+    "**/.yarn": true
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": [
-    "source.fixAll",
-    "source.sortMembers",
-  ],
+  "editor.codeActionsOnSave": ["source.fixAll", "source.organizeImports", "source.sortMembers"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"

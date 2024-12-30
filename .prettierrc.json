@@ -1,9 +1,18 @@
 {
-  "trailingComma": "es5",
-  "plugins": [
-    "prettier-plugin-packagejson",
-    "prettier-plugin-organize-imports",
-    "prettier-plugin-tailwindcss"
-  ],
-  "tailwindFunctions": ["clsx", "cn", "cva"]
+  "printWidth": 120,
+  "tabWidth": 4,
+  "overrides": [
+    {
+      "files": "*.{yml,yaml,json,md,mdx}",
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": "*.{json,cjs}",
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
 }

@@ -6,79 +6,72 @@ import { AlgoliaSearchRecordGeneratorV2 } from "./AlgoliaSearchRecordGeneratorV2
 import type { AlgoliaSearchRecord, ConfigSegmentTuple } from "./types";
 
 export interface AlgoliaService {
-  deleteIndexSegmentRecords(indexSegmentIds: string[]): Promise<void>;
+    deleteIndexSegmentRecords(indexSegmentIds: string[]): Promise<void>;
 
-  generateSearchRecords(params: {
-    url: string;
-    docsDefinition: DocsV1Db.DocsDefinitionDb;
-    apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
-    configSegmentTuples: ConfigSegmentTuple[];
-  }): Promise<AlgoliaSearchRecord[]>;
+    generateSearchRecords(params: {
+        url: string;
+        docsDefinition: DocsV1Db.DocsDefinitionDb;
+        apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
+        configSegmentTuples: ConfigSegmentTuple[];
+    }): Promise<AlgoliaSearchRecord[]>;
 
-  uploadSearchRecords(records: AlgoliaSearchRecord[]): Promise<void>;
+    uploadSearchRecords(records: AlgoliaSearchRecord[]): Promise<void>;
 
-  generateSearchApiKey(filters: string, validUntil: Date): string;
+    generateSearchApiKey(filters: string, validUntil: Date): string;
 }
 
 export class AlgoliaServiceImpl implements AlgoliaService {
-  private readonly client: SearchClient;
+    private readonly client: SearchClient;
 
-  private get baseSearchApiKey() {
-    return this.app.config.algoliaSearchApiKey;
-  }
+    private get baseSearchApiKey() {
+        return this.app.config.algoliaSearchApiKey;
+    }
 
-  private get index() {
-    return this.client.initIndex(this.app.config.algoliaSearchIndex);
-  }
+    private get index() {
+        return this.client.initIndex(this.app.config.algoliaSearchIndex);
+    }
 
-  public constructor(private readonly app: FdrApplication) {
-    const { config } = app;
-    this.client = algolia(config.algoliaAppId, config.algoliaAdminApiKey);
-  }
+    public constructor(private readonly app: FdrApplication) {
+        const { config } = app;
+        this.client = algolia(config.algoliaAppId, config.algoliaAdminApiKey);
+    }
 
-  public async uploadSearchRecords(records: AlgoliaSearchRecord[]) {
-    await this.index.saveObjects(records).wait();
-  }
+    public async uploadSearchRecords(records: AlgoliaSearchRecord[]) {
+        await this.index.saveObjects(records).wait();
+    }
 
-  public async generateSearchRecords({
-    url,
-    docsDefinition,
-    apiDefinitionsById,
-    configSegmentTuples,
-  }: {
-    url: string;
-    docsDefinition: DocsV1Db.DocsDefinitionDb;
-    apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
-    configSegmentTuples: ConfigSegmentTuple[];
-  }) {
-    return configSegmentTuples.flatMap(([config, indexSegment]) => {
-      const generator = new (
-        url.includes("workato")
-          ? AlgoliaSearchRecordGeneratorV2
-          : AlgoliaSearchRecordGenerator
-      )({ docsDefinition, apiDefinitionsById });
+    public async generateSearchRecords({
+        url,
+        docsDefinition,
+        apiDefinitionsById,
+        configSegmentTuples,
+    }: {
+        url: string;
+        docsDefinition: DocsV1Db.DocsDefinitionDb;
+        apiDefinitionsById: Record<string, APIV1Db.DbApiDefinition>;
+        configSegmentTuples: ConfigSegmentTuple[];
+    }) {
+        return configSegmentTuples.flatMap(([config, indexSegment]) => {
+            const generator = new (
+                url.includes("workato") ? AlgoliaSearchRecordGeneratorV2 : AlgoliaSearchRecordGenerator
+            )({ docsDefinition, apiDefinitionsById });
 
-      if (config == null) {
-        return [];
-      }
-      return generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(
-        config,
-        indexSegment
-      );
-    });
-  }
+            if (config == null) {
+                return [];
+            }
+            return generator.generateAlgoliaSearchRecordsForSpecificDocsVersion(config, indexSegment);
+        });
+    }
 
-  public generateSearchApiKey(filters: string, validUntil: Date) {
-    return this.client.generateSecuredApiKey(this.baseSearchApiKey, {
-      filters,
-      validUntil: Math.floor(validUntil.getTime() / 1_000),
-    });
-  }
+    public generateSearchApiKey(filters: string, validUntil: Date) {
+        return this.client.generateSecuredApiKey(this.baseSearchApiKey, {
+            filters,
+            validUntil: Math.floor(validUntil.getTime() / 1_000),
+        });
+    }
 
-  public async deleteIndexSegmentRecords(indexSegmentIds: string[]) {
-    const filters = indexSegmentIds
-      .map((indexSegmentId) => `indexSegmentId:${indexSegmentId}`)
-      .join(" OR ");
-    await this.index.deleteBy({ filters }).wait();
-  }
+    public async deleteIndexSegmentRecords(indexSegmentIds: string[]) {
+        const filters = indexSegmentIds.map((indexSegmentId) => `indexSegmentId:${indexSegmentId}`).join(" OR ");
+        await this.index.deleteBy({ filters }).wait();
+    }
 }

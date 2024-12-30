@@ -23,54 +23,50 @@
             "baseUrl": "https://api2.boundaryml.com/v3"
           }
         ],
-        "requests": [
-          {
-            "contentType": "multipart/form-data",
-            "body": {
-              "type": "formData",
-              "fields": [
-                {
-                  "type": "files",
-                  "key": "files",
-                  "isOptional": false
-                },
-                {
-                  "type": "property",
-                  "key": "prompt",
-                  "description": "Instruction for data extraction. Like \"focus on the colors of the images in this document\" or \"only focus on extracting addresses\"",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "multipart/form-data",
+          "body": {
+            "type": "formData",
+            "fields": [
+              {
+                "type": "files",
+                "key": "files",
+                "isOptional": false
+              },
+              {
+                "type": "property",
+                "key": "prompt",
+                "description": "Instruction for data extraction. Like \"focus on the colors of the images in this document\" or \"only focus on extracting addresses\"",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
                   }
                 }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "description": "Successful Response",
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_:ExtractResponse"
               }
+            ]
+          }
+        },
+        "response": {
+          "description": "Successful Response",
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_:ExtractResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Invalid Request Parameters",

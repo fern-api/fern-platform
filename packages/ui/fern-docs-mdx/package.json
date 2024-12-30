@@ -1,0 +1,86 @@
+{
+  "name": "@fern-ui/fern-docs-mdx",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/ui/fern-docs-mdx"
+  },
+  "private": true,
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./plugins": {
+      "types": "./dist/plugins/index.d.ts",
+      "default": "./dist/plugins/index.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "vitest --run --passWithNoTests --globals",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev"
+  },
+  "dependencies": {
+    "@fern-api/fdr-sdk": "workspace:*",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@types/estree": "^1.0.5",
+    "@types/hast": "^3.0.4",
+    "@types/mdast": "^4.0.3",
+    "@types/unist": "^3.0.3",
+    "collapse-white-space": "^2.1.0",
+    "es-toolkit": "^1.27.0",
+    "estree-util-value-to-estree": "^3.1.2",
+    "estree-walker": "^3.0.3",
+    "github-slugger": "^2.0.0",
+    "gray-matter": "^4.0.3",
+    "hast-util-heading-rank": "^3.0.0",
+    "hast-util-to-estree": "^3.1.0",
+    "hast-util-to-string": "^3.0.0",
+    "hastscript": "^9.0.0",
+    "mdast-util-from-markdown": "^2.0.0",
+    "mdast-util-gfm": "^3.0.0",
+    "mdast-util-math": "^3.0.0",
+    "mdast-util-mdx": "^3.0.0",
+    "mdast-util-mdx-jsx": "^3.1.0",
+    "mdast-util-mdxjs-esm": "^2.0.1",
+    "mdast-util-to-hast": "^13.1.0",
+    "mdast-util-to-markdown": "^2.1.0",
+    "micromark-extension-gfm": "^3.0.0",
+    "micromark-extension-math": "^3.1.0",
+    "micromark-extension-mdxjs": "^3.0.0",
+    "pnpm": "^9.12.1",
+    "rehype-slug": "^6.0.0",
+    "style-to-object": "^1.0.5",
+    "ts-essentials": "^10.0.1",
+    "unist-util-visit": "^5.0.0",
+    "vfile-message": "^4.0.2"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/node": "^18.7.18",
+    "depcheck": "^1.4.3",
+    "eslint": "^8.56.0",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^3.3.2",
+    "stylelint": "^16.1.0",
+    "typescript": "5.4.3",
+    "vitest": "^2.1.4"
+  }
+}

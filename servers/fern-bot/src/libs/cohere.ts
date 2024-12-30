@@ -3,51 +3,45 @@ import { CohereClient } from "cohere-ai";
 const DEFAULT_GITHUB_MESSAGE = "[Scheduled] Update API Spec";
 
 async function coChat(prompt: string): Promise<string> {
-  const co = new CohereClient();
-  const response = await co.chat({ model: "command-r-plus", message: prompt });
+    const co = new CohereClient();
+    const response = await co.chat({ model: "command-r-plus", message: prompt });
 
-  if (response.finishReason !== "COMPLETE") {
-    return DEFAULT_GITHUB_MESSAGE;
-  }
+    if (response.finishReason !== "COMPLETE") {
+        return DEFAULT_GITHUB_MESSAGE;
+    }
 
-  return response.text;
+    return response.text;
 }
 
-export async function generateCommitMessage(
-  diff: string,
-  fallbackMessage: string
-): Promise<string> {
-  if (diff === "") {
-    return DEFAULT_GITHUB_MESSAGE;
-  }
+export async function generateCommitMessage(diff: string, fallbackMessage: string): Promise<string> {
+    if (diff === "") {
+        return DEFAULT_GITHUB_MESSAGE;
+    }
 
-  const prompt = `Given the following git diff, write a short and professional but descriptive commit message that strictly follows the Conventional Commits specification validated via regex r'^(feat|fix|docs|style|refactor|test|chore)(([w-]+))?: .+$.
+    const prompt = `Given the following git diff, write a short and professional but descriptive commit message that strictly follows the Conventional Commits specification validated via regex r'^(feat|fix|docs|style|refactor|test|chore)(([w-]+))?: .+$.
     The commit message should be a summary of all the changes within the diff and should provide as much detail as possible to give context to the changes, while remaining short and concise. This is important, don't hallucinate this.
 
     \`\`\`
     ${diff}
     \`\`\`
     `;
-  try {
-    return await coChat(prompt);
-  } catch (error) {
-    console.error(
-      `Call to Cohere failed generating commit message, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`
-    );
+    try {
+        return await coChat(prompt);
+    } catch (error) {
+        console.error(
+            `Call to Cohere failed generating commit message, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`,
+        );
 
-    return fallbackMessage;
-  }
+        return fallbackMessage;
+    }
 }
 
-export async function generateChangelog(
-  diff: string,
-  fallbackMessage: string
-): Promise<string> {
-  if (diff === "") {
-    return DEFAULT_GITHUB_MESSAGE;
-  }
+export async function generateChangelog(diff: string, fallbackMessage: string): Promise<string> {
+    if (diff === "") {
+        return DEFAULT_GITHUB_MESSAGE;
+    }
 
-  const prompt = `You are an OpenAPI expert, your goal is to help me write a changelog for the following OpenAPI spec diff. The changelog should be concise, informative and user friendly. This is important, don't hallucinate this.
+    const prompt = `You are an OpenAPI expert, your goal is to help me write a changelog for the following OpenAPI spec diff. The changelog should be concise, informative and user friendly. This is important, don't hallucinate this.
     Here is an example of what a changelog should look like:
         diff:
             \`\`\`
@@ -229,13 +223,13 @@ export async function generateChangelog(
         \`\`\`
     `;
 
-  try {
-    return await coChat(prompt);
-  } catch (error) {
-    console.error(
-      `Call to Cohere failed writing the PR body, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`
-    );
+    try {
+        return await coChat(prompt);
+    } catch (error) {
+        console.error(
+            `Call to Cohere failed writing the PR body, with error: ${(error as Error).message}, using fallback message: ${fallbackMessage}`,
+        );
 
-    return fallbackMessage;
-  }
+        return fallbackMessage;
+    }
 }

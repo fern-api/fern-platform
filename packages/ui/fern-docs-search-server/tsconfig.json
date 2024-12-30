@@ -1,0 +1,25 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/library.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["./src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../fdr-sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../fern-docs-mdx"
+    },
+    {
+      "path": "../fern-docs-utils"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+@layer components {
+    a.fern-anchor {
+        @apply flex items-center border-0 relative size-6 rounded-md;
+    }
+
+    .fern-anchor-icon {
+        @apply absolute left-0 flex size-6 items-center justify-center rounded-md;
+
+        > svg {
+            @apply size-4;
+        }
+    }
+
+    .fern-anchor-icon:not(.copied) {
+        @apply bg-card t-muted ring-1 backdrop-blur ring-card-border;
+    }
+
+    .fern-anchor-icon.copied {
+        @apply bg-tag-primary ring-border-accent-muted ring-1 backdrop-blur;
+
+        > svg {
+            @apply t-accent;
+        }
+    }
+}

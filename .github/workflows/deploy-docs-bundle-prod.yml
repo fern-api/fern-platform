@@ -1,4 +1,4 @@
-name: Deploy @fern-docs/bundle
+name: Deploy @fern-ui/docs-bundle
 
 on:
   push:
@@ -88,8 +88,6 @@ jobs:
     if: success()
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/install
       - name: Revalidate all app.buildwithfern.com deployments
         run: pnpm vercel-scripts revalidate-all app.buildwithfern.com --token ${{ secrets.VERCEL_TOKEN }}
 
@@ -100,8 +98,6 @@ jobs:
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/install
       - name: Rollback on failure # remove this step once we switch back to pre-promotion testing
         run: |
           echo "E2E tests failed. Rolling back deployment"

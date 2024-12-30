@@ -1,8 +1,0 @@
-# Run this command to always ignore formatting commits in `git blame`
-# git config blame.ignoreRevsFile .git-blame-ignore-revs
-
-# https://github.com/fern-api/fern-platform/pull/1152 - reorganize mdx components
-26d108f0317eca8fc63764b32695ef8d3e2b7f19
-
-# https://github.com/fern-api/fern-platform/pull/1917 - formatting and reorganizing
-6506692288b1102cea252a6fd3cc99afffe5b18a

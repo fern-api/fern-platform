@@ -25,28 +25,24 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/octet-stream",
-            "body": {
-              "type": "bytes",
-              "isOptional": false,
-              "contentType": "application/octet-stream"
+        "request": {
+          "contentType": "application/octet-stream",
+          "body": {
+            "type": "bytes",
+            "isOptional": false,
+            "contentType": "application/octet-stream"
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_files:UploadedFile"
             }
           }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_files:UploadedFile"
-              }
-            }
-          }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -511,19 +507,16 @@
             "description": "Only get throttled transcripts, overrides the status filter"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:TranscriptList"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:TranscriptList"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -874,44 +867,40 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [
-                "type_transcripts:TranscriptOptionalParams"
-              ],
-              "properties": [
-                {
-                  "key": "audio_url",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [
+              "type_transcripts:TranscriptOptionalParams"
+            ],
+            "properties": [
+              {
+                "key": "audio_url",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "The URL of the audio or video file to transcribe."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:Transcript"
+                  }
+                },
+                "description": "The URL of the audio or video file to transcribe."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:Transcript"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -2024,19 +2013,16 @@
             "description": "ID of the transcript"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:Transcript"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:Transcript"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -3067,19 +3053,16 @@
             "description": "ID of the transcript"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:Transcript"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:Transcript"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -4150,8 +4133,6 @@
             "description": "The maximum number of characters per caption"
           }
         ],
-        "requests": [],
-        "responses": [],
         "errors": [
           {
             "description": "Bad request",
@@ -4503,19 +4484,16 @@
             "description": "ID of the transcript"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:SentencesResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:SentencesResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -4931,19 +4909,16 @@
             "description": "ID of the transcript"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:ParagraphsResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:ParagraphsResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -5362,19 +5337,16 @@
             "description": "Keywords to search for"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:WordSearchResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:WordSearchResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -5739,19 +5711,16 @@
             "description": "ID of the transcript"
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_transcripts:RedactedAudioResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_transcripts:RedactedAudioResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -6063,44 +6032,40 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [
-                "type_lemur:LemurBaseParams"
-              ],
-              "properties": [
-                {
-                  "key": "prompt",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [
+              "type_lemur:LemurBaseParams"
+            ],
+            "properties": [
+              {
+                "key": "prompt",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+                      "type": "string"
                     }
-                  },
-                  "description": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model."
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_lemur:LemurTaskResponse"
+                  }
+                },
+                "description": "Your text to prompt the model to produce a desired output, including any context you want to pass into the model."
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_lemur:LemurTaskResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -6451,50 +6416,46 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [
-                "type_lemur:LemurBaseParams"
-              ],
-              "properties": [
-                {
-                  "key": "answer_format",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [
+              "type_lemur:LemurBaseParams"
+            ],
+            "properties": [
+              {
+                "key": "answer_format",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "type": "string"
                         }
                       }
                     }
-                  },
-                  "description": "How you want the summary to be returned. This can be any text. Examples: \"TLDR\", \"bullet points\"\n"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_lemur:LemurSummaryResponse"
+                  }
+                },
+                "description": "How you want the summary to be returned. This can be any text. Examples: \"TLDR\", \"bullet points\"\n"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_lemur:LemurSummaryResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -6830,48 +6791,44 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [
-                "type_lemur:LemurBaseParams"
-              ],
-              "properties": [
-                {
-                  "key": "questions",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "list",
-                      "itemShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "type_lemur:LemurQuestion"
-                        }
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [
+              "type_lemur:LemurBaseParams"
+            ],
+            "properties": [
+              {
+                "key": "questions",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "type_lemur:LemurQuestion"
                       }
                     }
-                  },
-                  "description": "A list of questions to ask"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_lemur:LemurQuestionAnswerResponse"
+                  }
+                },
+                "description": "A list of questions to ask"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_lemur:LemurQuestionAnswerResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -7275,51 +7232,47 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [
-                "type_lemur:LemurBaseParams"
-              ],
-              "properties": [
-                {
-                  "key": "answer_format",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [
+              "type_lemur:LemurBaseParams"
+            ],
+            "properties": [
+              {
+                "key": "answer_format",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string",
-                            "default": "Bullet Points"
-                          }
+                          "type": "string",
+                          "default": "Bullet Points"
                         }
                       }
                     }
-                  },
-                  "description": "How you want the action items to be returned. This can be any text.\nDefaults to \"Bullet Points\".\n"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_lemur:LemurActionItemsResponse"
+                  }
+                },
+                "description": "How you want the action items to be returned. This can be any text.\nDefaults to \"Bullet Points\".\n"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_lemur:LemurActionItemsResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -7675,19 +7628,16 @@
             "description": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request."
           }
         ],
-        "requests": [],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_lemur:PurgeLemurRequestDataResponse"
-              }
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_lemur:PurgeLemurRequestDataResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
@@ -8000,43 +7950,39 @@
             "baseUrl": "https://api.assemblyai.com"
           }
         ],
-        "requests": [
-          {
-            "contentType": "application/json",
-            "body": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "expires_in",
-                  "valueShape": {
-                    "type": "alias",
+        "request": {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "expires_in",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "integer",
-                        "minimum": 60
-                      }
+                      "type": "integer",
+                      "minimum": 60
                     }
-                  },
-                  "description": "The amount of time until the token expires in seconds"
-                }
-              ]
-            }
-          }
-        ],
-        "responses": [
-          {
-            "statusCode": 200,
-            "body": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "type_realtime:RealtimeTemporaryTokenResponse"
+                  }
+                },
+                "description": "The amount of time until the token expires in seconds"
               }
+            ]
+          }
+        },
+        "response": {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "type_realtime:RealtimeTemporaryTokenResponse"
             }
           }
-        ],
+        },
         "errors": [
           {
             "description": "Bad request",
