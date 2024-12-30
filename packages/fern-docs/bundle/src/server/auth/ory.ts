@@ -47,7 +47,8 @@ export class OryOAuth2Client {
     if (response.ok) {
       return OAuthTokenResponseSchema.parse(await response.json());
     }
-    console.error("OAuth token request form parameters:", {
+    console.error("OAuth token request parameters:", {
+      url: urlJoin(this.environment, "/token"),
       code,
       client_secret: this.clientSecret,
       grant_type: "authorization_code",
