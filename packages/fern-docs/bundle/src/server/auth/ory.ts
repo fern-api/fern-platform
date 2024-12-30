@@ -50,14 +50,6 @@ export class OryOAuth2Client {
     if (response.ok) {
       return OAuthTokenResponseSchema.parse(await response.json());
     }
-    console.error("OAuth token request parameters:", {
-      url: urlJoin(this.environment, "/token"),
-      code,
-      client_secret: this.clientSecret,
-      grant_type: "authorization_code",
-      client_id: this.clientId,
-      redirect_uri: this.redirectUri,
-    });
     throw new Error(
       `Failed to get OAuth token: ${response.status} ${await response.text()}`
     );
