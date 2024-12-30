@@ -16,6 +16,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
 import type { FdrConfig } from "../../app";
+import { InvalidFileUploadError } from "../../api/generated/api";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
@@ -189,6 +190,9 @@ export class S3ServiceImpl implements S3Service {
   }): Promise<Record<DocsV1Write.FilePath, S3DocsFileInfo>> {
     const result: Record<DocsV1Write.FilePath, S3DocsFileInfo> = {};
     const time: string = new Date().toISOString();
+
+    const fileUploadErrors: any[] = [];
+
     for (let i = 0; i < filepaths.length; i++) {
       const filepath = filepaths[i];
       const filesize =
@@ -197,23 +201,31 @@ export class S3ServiceImpl implements S3Service {
         typeof mimeTypes === "undefined" ? undefined : mimeTypes[i];
       if (typeof filepath === "undefined") continue;
 
-      const { url, key } =
-        await this.createPresignedDocsAssetsUploadUrlWithClient({
-          domain,
-          time,
+      try {
+        const { url, key } =
+          await this.createPresignedDocsAssetsUploadUrlWithClient({
+            domain,
+            time,
+            filepath,
+            isPrivate,
+            filesize,
+            mimeType,
+          });
+        result[filepath] = {
+          presignedUrl: {
+            fileId: APIV1Write.FileId(uuidv4()),
+            uploadUrl: url,
+          },
+          key,
+          imageMetadata: undefined,
+        };
+      } catch (e) {
+        fileUploadErrors.push({
           filepath,
-          isPrivate,
           filesize,
-          mimeType,
-        });
-      result[filepath] = {
-        presignedUrl: {
-          fileId: APIV1Write.FileId(uuidv4()),
-          uploadUrl: url,
-        },
-        key,
-        imageMetadata: undefined,
-      };
+          mimeType
+        })
+      }
     }
     for (let i = 0; i < images.length; i++) {
       const image = images[i];
@@ -228,28 +240,40 @@ export class S3ServiceImpl implements S3Service {
           : mimeTypes[i + filepaths.length];
       if (typeof image === "undefined") continue;
 
-      const { url, key } =
-        await this.createPresignedDocsAssetsUploadUrlWithClient({
-          domain,
-          time,
+      try {
+        const { url, key } =
+          await this.createPresignedDocsAssetsUploadUrlWithClient({
+            domain,
+            time,
+            filepath: image.filePath,
+            isPrivate,
+            filesize,
+            mimeType,
+          });
+        result[image.filePath] = {
+          presignedUrl: {
+            fileId: APIV1Write.FileId(uuidv4()),
+            uploadUrl: url,
+          },
+          key,
+          imageMetadata: {
+            width: image.width,
+            height: image.height,
+            blurDataUrl: image.blurDataUrl,
+            alt: image.alt,
+          },
+        };
+      } catch (e) {
+        fileUploadErrors.push({
           filepath: image.filePath,
-          isPrivate,
           filesize,
-          mimeType,
-        });
-      result[image.filePath] = {
-        presignedUrl: {
-          fileId: APIV1Write.FileId(uuidv4()),
-          uploadUrl: url,
-        },
-        key,
-        imageMetadata: {
-          width: image.width,
-          height: image.height,
-          blurDataUrl: image.blurDataUrl,
-          alt: image.alt,
-        },
-      };
+          mimeType
+        })
+      }
+    }
+
+    if (fileUploadErrors.length > 0) {
+      throw new InvalidFileUploadError("Invalid files: " + JSON.stringify(fileUploadErrors));
     }
     return result;
   }
@@ -281,7 +305,7 @@ export class S3ServiceImpl implements S3Service {
     }
     if (typeof mimeType !== "undefined") {
       if (!ALLOWED_FILE_TYPES.has(mimeType)) {
-        throw new Error("Invalid mime-type: " + mimeType); // TODO: are these generated somewhere?
+        throw new InvalidFileUploadError("Filepath: " + filepath + ", Invalid MIME Type: " + mimeType);
       }
       conditions.push(["eq", "$Content-Type", mimeType]);
     }

@@ -109,3 +109,7 @@ errors:
   UnavailableError:
     status-code: 503
     type: string
+
+  InvalidFileUploadError:
+    status-code: 400
+    type: string

@@ -39,6 +39,7 @@ service:
         - InvalidCustomDomainError
         - rootCommons.DomainBelongsToAnotherOrgError
         - rootCommons.InvalidURLError
+        - rootCommons.InvalidFileUploadError
 
     startDocsPreviewRegister:
       auth: true
