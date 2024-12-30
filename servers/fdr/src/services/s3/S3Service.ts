@@ -4,8 +4,8 @@ import {
   PutObjectCommandInput,
   S3Client,
 } from "@aws-sdk/client-s3";
+import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { createPresignedPost } from '@aws-sdk/s3-presigned-post';
 import {
   APIV1Write,
   DocsV1Write,
@@ -42,7 +42,7 @@ const ALLOWED_FILE_TYPES = new Set<string>([
   "font/woff",
   "font/woff2",
   "font/otf",
-  "font/ttf"
+  "font/ttf",
 ]);
 
 export interface S3DocsFileInfo {
@@ -191,8 +191,10 @@ export class S3ServiceImpl implements S3Service {
     const time: string = new Date().toISOString();
     for (let i = 0; i < filepaths.length; i++) {
       const filepath = filepaths[i];
-      const filesize = typeof filesizes === "undefined" ? undefined : filesizes[i];
-      const mimeType = typeof mimeTypes === "undefined" ? undefined : mimeTypes[i];
+      const filesize =
+        typeof filesizes === "undefined" ? undefined : filesizes[i];
+      const mimeType =
+        typeof mimeTypes === "undefined" ? undefined : mimeTypes[i];
       if (typeof filepath === "undefined") continue;
 
       const { url, key } =
@@ -202,7 +204,7 @@ export class S3ServiceImpl implements S3Service {
           filepath,
           isPrivate,
           filesize,
-          mimeType
+          mimeType,
         });
       result[filepath] = {
         presignedUrl: {
@@ -216,8 +218,14 @@ export class S3ServiceImpl implements S3Service {
     for (let i = 0; i < images.length; i++) {
       const image = images[i];
       // expected sizes for images + files are concatenated in the filesize/mimeType array
-      const filesize = typeof filesizes === "undefined" ? undefined : filesizes[i + filepaths.length];
-      const mimeType = typeof mimeTypes === "undefined" ? undefined : mimeTypes[i + filepaths.length];
+      const filesize =
+        typeof filesizes === "undefined"
+          ? undefined
+          : filesizes[i + filepaths.length];
+      const mimeType =
+        typeof mimeTypes === "undefined"
+          ? undefined
+          : mimeTypes[i + filepaths.length];
       if (typeof image === "undefined") continue;
 
       const { url, key } =
@@ -227,7 +235,7 @@ export class S3ServiceImpl implements S3Service {
           filepath: image.filePath,
           isPrivate,
           filesize,
-          mimeType
+          mimeType,
         });
       result[image.filePath] = {
         presignedUrl: {
@@ -269,13 +277,13 @@ export class S3ServiceImpl implements S3Service {
 
     let conditions: any[] | undefined = [];
     if (typeof filesize !== "undefined") {
-      conditions.push(['content-length-range', filesize, filesize]);
+      conditions.push(["content-length-range", filesize, filesize]);
     }
     if (typeof mimeType !== "undefined") {
       if (!ALLOWED_FILE_TYPES.has(mimeType)) {
         throw new Error("Invalid mime-type: " + mimeType); // TODO: are these generated somewhere?
       }
-      conditions.push(['eq', '$Content-Type', mimeType]);
+      conditions.push(["eq", "$Content-Type", mimeType]);
     }
     if (conditions.length === 0) {
       conditions = undefined;
@@ -289,9 +297,9 @@ export class S3ServiceImpl implements S3Service {
     });
 
     return {
-      url, 
+      url,
       key,
-    }
+    };
   }
 
   async getPresignedApiDefinitionSourceDownloadUrl({
