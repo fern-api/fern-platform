@@ -2621,7 +2621,7 @@ importers:
         specifier: ^3.685.0
         version: 3.685.0
       '@aws-sdk/s3-presigned-post':
-        specifier: 3.685.0
+        specifier: ^3.685.0
         version: 3.685.0
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.685.0
