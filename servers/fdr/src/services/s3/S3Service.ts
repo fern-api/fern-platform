@@ -15,8 +15,8 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
-import type { FdrConfig } from "../../app";
 import { InvalidFileUploadError } from "../../api/generated/api";
+import type { FdrConfig } from "../../app";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
@@ -223,8 +223,8 @@ export class S3ServiceImpl implements S3Service {
         fileUploadErrors.push({
           filepath,
           filesize,
-          mimeType
-        })
+          mimeType,
+        });
       }
     }
     for (let i = 0; i < images.length; i++) {
@@ -267,13 +267,15 @@ export class S3ServiceImpl implements S3Service {
         fileUploadErrors.push({
           filepath: image.filePath,
           filesize,
-          mimeType
-        })
+          mimeType,
+        });
       }
     }
 
     if (fileUploadErrors.length > 0) {
-      throw new InvalidFileUploadError("Invalid files: " + JSON.stringify(fileUploadErrors));
+      throw new InvalidFileUploadError(
+        "Invalid files: " + JSON.stringify(fileUploadErrors)
+      );
     }
     return result;
   }
@@ -305,7 +307,9 @@ export class S3ServiceImpl implements S3Service {
     }
     if (typeof mimeType !== "undefined") {
       if (!ALLOWED_FILE_TYPES.has(mimeType)) {
-        throw new InvalidFileUploadError("Filepath: " + filepath + ", Invalid MIME Type: " + mimeType);
+        throw new InvalidFileUploadError(
+          "Filepath: " + filepath + ", Invalid MIME Type: " + mimeType
+        );
       }
       conditions.push(["eq", "$Content-Type", mimeType]);
     }
