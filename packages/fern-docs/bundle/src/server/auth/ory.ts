@@ -30,18 +30,21 @@ export class OryOAuth2Client {
   }
 
   public async getToken(code: string): Promise<OAuthTokenResponse> {
-    const form = new FormData();
-    form.append("code", code);
-    form.append("client_secret", this.clientSecret);
-    form.append("grant_type", "authorization_code");
-    form.append("client_id", this.clientId);
+    const formData = new URLSearchParams();
+    formData.append("code", code);
+    formData.append("client_secret", this.clientSecret);
+    formData.append("grant_type", "authorization_code");
+    formData.append("client_id", this.clientId);
     if (this.redirectUri != null) {
-      form.append("redirect_uri", this.redirectUri);
+      formData.append("redirect_uri", this.redirectUri);
     }
 
     const response = await fetch(urlJoin(this.environment, "/token"), {
       method: "POST",
-      body: form,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData,
     });
 
     if (response.ok) {
@@ -63,18 +66,21 @@ export class OryOAuth2Client {
   public async refreshToken(
     refresh_token: string
   ): Promise<OAuthTokenResponse> {
-    const form = new FormData();
-    form.append("refresh_token", refresh_token);
-    form.append("client_secret", this.clientSecret);
-    form.append("grant_type", "refresh_token");
-    form.append("client_id", this.clientId);
+    const formData = new URLSearchParams();
+    formData.append("refresh_token", refresh_token);
+    formData.append("client_secret", this.clientSecret);
+    formData.append("grant_type", "refresh_token");
+    formData.append("client_id", this.clientId);
     if (this.redirectUri != null) {
-      form.append("redirect_uri", this.redirectUri);
+      formData.append("redirect_uri", this.redirectUri);
     }
 
     const response = await fetch(urlJoin(this.environment, "/token"), {
       method: "POST",
-      body: form,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: formData,
     });
 
     if (response.ok) {
