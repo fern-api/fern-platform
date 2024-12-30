@@ -5,6 +5,7 @@ import {
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+import { createPresignedPost } from '@aws-sdk/s3-presigned-post';
 import {
   APIV1Write,
   DocsV1Write,
@@ -15,8 +16,35 @@ import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
 import type { FdrConfig } from "../../app";
+import { string } from "@fern-api/venus-api-sdk/core/schemas";
 
 const ONE_WEEK_IN_SECONDS = 604800;
+
+const ALLOWED_FILE_TYPES = new Set<string>([
+  // image files
+  "image/jpeg",
+  "image/png",
+  "image/gif",
+  "image/webp",
+  "image/tiff",
+  "image/x-icon",
+  // video files
+  "video/quicktime",
+  "video/mp4",
+  "video/webm",
+  // audio files
+  "audio/mpeg",
+  "audio/ogg",
+  "audio/wav",
+  // document files
+  "application/pdf",
+  "application/xml",
+  // font files
+  "font/woff",
+  "font/woff2",
+  "font/otf",
+  "font/ttf"
+]);
 
 export interface S3DocsFileInfo {
   presignedUrl: DocsV1Write.FileS3UploadUrl;
@@ -150,21 +178,32 @@ export class S3ServiceImpl implements S3Service {
     filepaths,
     images,
     isPrivate,
+    filesizes,
+    mimeTypes,
   }: {
     domain: string;
     filepaths: DocsV1Write.FilePath[];
     images: DocsV2Write.ImageFilePath[];
     isPrivate: boolean;
+    filesizes?: number[];
+    mimeTypes?: string[];
   }): Promise<Record<DocsV1Write.FilePath, S3DocsFileInfo>> {
     const result: Record<DocsV1Write.FilePath, S3DocsFileInfo> = {};
     const time: string = new Date().toISOString();
-    for (const filepath of filepaths) {
+    for (let i = 0; i < filepaths.length; i++) {
+      const filepath = filepaths[i];
+      const filesize = typeof filesizes === "undefined" ? undefined : filesizes[i];
+      const mimeType = typeof mimeTypes === "undefined" ? undefined : mimeTypes[i];
+      if (typeof filepath === "undefined") continue;
+
       const { url, key } =
         await this.createPresignedDocsAssetsUploadUrlWithClient({
           domain,
           time,
           filepath,
           isPrivate,
+          filesize,
+          mimeType
         });
       result[filepath] = {
         presignedUrl: {
@@ -175,13 +214,21 @@ export class S3ServiceImpl implements S3Service {
         imageMetadata: undefined,
       };
     }
-    for (const image of images) {
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      // expected sizes for images + files are concatenated in the filesize/mimeType array
+      const filesize = typeof filesizes === "undefined" ? undefined : filesizes[i + filepaths.length];
+      const mimeType = typeof mimeTypes === "undefined" ? undefined : mimeTypes[i + filepaths.length];
+      if (typeof image === "undefined") continue;
+
       const { url, key } =
         await this.createPresignedDocsAssetsUploadUrlWithClient({
           domain,
           time,
           filepath: image.filePath,
           isPrivate,
+          filesize,
+          mimeType
         });
       result[image.filePath] = {
         presignedUrl: {
@@ -205,32 +252,47 @@ export class S3ServiceImpl implements S3Service {
     time,
     filepath,
     isPrivate,
+    filesize,
+    mimeType,
   }: {
     domain: string;
     time: string;
     filepath: DocsV1Write.FilePath;
     isPrivate: boolean;
+    filesize?: number | undefined;
+    mimeType?: string | undefined;
   }): Promise<{ url: string; key: string }> {
-    const key = this.constructS3DocsKey({ domain, time, filepath });
+    const s3Client = isPrivate ? this.privateDocsS3 : this.publicDocsS3;
     const bucketName = isPrivate
       ? this.config.privateDocsS3.bucketName
       : this.config.publicDocsS3.bucketName;
-    const input: PutObjectCommandInput = {
+    const key = this.constructS3DocsKey({ domain, time, filepath });
+
+    let conditions: any[] | undefined = [];
+    if (typeof filesize !== "undefined") {
+      conditions.push(['content-length-range', filesize, filesize]);
+    }
+    if (typeof mimeType !== "undefined") {
+      if (!ALLOWED_FILE_TYPES.has(mimeType)) {
+        throw new Error("Invalid mime-type: " + mimeType); // TODO: are these generated somewhere?
+      }
+      conditions.push(['eq', '$Content-Type', mimeType]);
+    }
+    if (conditions.length === 0) {
+      conditions = undefined;
+    }
+
+    const { url } = await createPresignedPost(s3Client, {
       Bucket: bucketName,
       Key: key,
-    };
-    if (filepath.endsWith(".svg")) {
-      input.ContentType = "image/svg+xml";
-    }
-    const command = new PutObjectCommand(input);
+      Conditions: conditions,
+      Expires: 3600,
+    });
+
     return {
-      url: await getSignedUrl(
-        isPrivate ? this.privateDocsS3 : this.publicDocsS3,
-        command,
-        { expiresIn: 3600 }
-      ),
+      url, 
       key,
-    };
+    }
   }
 
   async getPresignedApiDefinitionSourceDownloadUrl({
