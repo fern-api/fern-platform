@@ -16,7 +16,6 @@ import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
 import type { FdrConfig } from "../../app";
-import { string } from "@fern-api/venus-api-sdk/core/schemas";
 
 const ONE_WEEK_IN_SECONDS = 604800;
 
