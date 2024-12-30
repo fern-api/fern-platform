@@ -32,12 +32,21 @@ import {
   ApplicationProtocol,
   HttpCodeElb,
 } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import * as iam from "aws-cdk-lib/aws-iam";
+import * as lambda from "aws-cdk-lib/aws-lambda";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
-import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import {
+  BlockPublicAccess,
+  Bucket,
+  BucketEncryption,
+  EventType,
+  HttpMethods,
+} from "aws-cdk-lib/aws-s3";
+import * as s3n from "aws-cdk-lib/aws-s3-notifications";
 import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
@@ -187,6 +196,54 @@ export class FdrDeployStack extends Stack {
       versioned: true,
     });
     publicDocsBucket.grantPublicAccess();
+
+    // Files are moved to the quarantine bucket if sophos deems them infected
+    const quarantineBucket = new Bucket(
+      this,
+      "fdr-docs-files-public-quarantine",
+      {
+        versioned: true,
+        encryption: BucketEncryption.S3_MANAGED,
+        blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+        removalPolicy: RemovalPolicy.RETAIN,
+      }
+    );
+
+    // Lambda function for processing scan results
+    const scanProcessor = new lambda.Function(this, "ScanProcessor", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      handler: "index.handler",
+      code: lambda.Code.fromAsset("sophos-lambda"),
+      timeout: Duration.minutes(5),
+      environment: {
+        QUARANTINE_BUCKET: quarantineBucket.bucketName,
+      },
+    });
+
+    // IAM role for Sophos AV Scanner
+    const sophosRole = new iam.Role(this, "SophosAVRole", {
+      assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
+    });
+
+    publicDocsBucket.grantRead(sophosRole);
+    quarantineBucket.grantWrite(sophosRole);
+    publicDocsBucket.grantReadWrite(scanProcessor);
+    quarantineBucket.grantWrite(scanProcessor);
+
+    publicDocsBucket.addEventNotification(
+      EventType.OBJECT_CREATED,
+      new s3n.LambdaDestination(scanProcessor)
+    );
+
+    new CfnOutput(this, "SourceBucketName", {
+      value: publicDocsBucket.bucketName,
+      description: "Name of the source bucket where clean files remain",
+    });
+
+    new CfnOutput(this, "QuarantineBucketName", {
+      value: quarantineBucket.bucketName,
+      description: "Name of the quarantine bucket for infected files",
+    });
 
     const publicDocsFilesDomainName = getPublicBucketDomainName(
       environmentType,
