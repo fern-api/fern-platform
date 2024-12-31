@@ -39,12 +39,20 @@ export function EndpointExampleSegmentedControl({
               exampleKey === selectedExample?.exampleKey ? "primary" : "none"
             }
           >
-            {(exampleKey === selectedExample?.exampleKey
-              ? selectedExample?.name
-              : undefined) ??
-              examples[0]?.name ??
-              examples[0]?.exampleCall.name ??
-              `Example ${exampleIndex + 1}`}
+            <span
+              className={
+                exampleKey === selectedExample?.exampleKey
+                  ? "text-accent-aa"
+                  : "t-muted"
+              }
+            >
+              {(exampleKey === selectedExample?.exampleKey
+                ? selectedExample?.name
+                : undefined) ??
+                examples[0]?.name ??
+                examples[0]?.exampleCall.name ??
+                `Example ${exampleIndex + 1}`}
+            </span>
           </FernButton>
         );
       })}
