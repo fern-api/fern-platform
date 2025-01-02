@@ -197,6 +197,18 @@ export class FdrDeployStack extends Stack {
     });
     publicDocsBucket.grantPublicAccess();
 
+
+    const sophosTestDocsBucket = new Bucket(this, "sophos-test-docs-bucket", {
+      bucketName: `sophos-test-docs-bucket`,
+      blockPublicAccess: {
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      },
+      versioned: true,
+    });
+    sophosTestDocsBucket.grantPublicAccess();  
     // Files are moved to the quarantine bucket if sophos deems them infected
     const quarantineBucket = new Bucket(
       this,
@@ -225,18 +237,18 @@ export class FdrDeployStack extends Stack {
       assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
     });
 
-    publicDocsBucket.grantRead(sophosRole);
+    sophosTestDocsBucket.grantRead(sophosRole);
     quarantineBucket.grantWrite(sophosRole);
-    publicDocsBucket.grantReadWrite(scanProcessor);
+    sophosTestDocsBucket.grantReadWrite(scanProcessor);
     quarantineBucket.grantWrite(scanProcessor);
 
-    publicDocsBucket.addEventNotification(
+    sophosTestDocsBucket.addEventNotification(
       EventType.OBJECT_CREATED,
       new s3n.LambdaDestination(scanProcessor)
     );
 
     new CfnOutput(this, "SourceBucketName", {
-      value: publicDocsBucket.bucketName,
+      value: sophosTestDocsBucket.bucketName,
       description: "Name of the source bucket where clean files remain",
     });
 
