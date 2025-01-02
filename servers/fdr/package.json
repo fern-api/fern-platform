@@ -55,7 +55,7 @@
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.27.0",
-    "express": "^4.20.0",
+    "express": "^4.21.2",
     "gray-matter": "^4.0.3",
     "html-to-text": "^9.0.5",
     "httpsnippet": "^3.0.1",
