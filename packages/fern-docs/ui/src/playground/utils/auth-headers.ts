@@ -39,7 +39,7 @@ export function buildAuthHeaders(
         if (redacted) {
           value = obfuscateSecret(value);
         }
-        headers[pascalCaseHeaderKey(header.headerWireValue)] =
+        headers[header.headerWireValue] =
           header.prefix != null ? `${header.prefix} ${value}` : value;
       },
       basicAuth: () => {
