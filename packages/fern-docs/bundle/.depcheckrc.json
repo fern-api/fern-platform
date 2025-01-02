@@ -16,7 +16,8 @@
     "esbuild",
     "glslify-import",
     "glslify-loader",
-    "raw-loader"
+    "raw-loader",
+    "@upstash/qstash"
   ],
   "ignore-patterns": ["dist"]
 }
