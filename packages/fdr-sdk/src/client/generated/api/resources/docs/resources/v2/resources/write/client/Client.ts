@@ -96,6 +96,7 @@ export class Write {
                 case "InvalidCustomDomainError":
                 case "DomainBelongsToAnotherOrgError":
                 case "InvalidURLError":
+                case "InvalidFileUploadError":
                     return {
                         ok: false,
                         error: _response.error.body as FernRegistry.docs.v2.write.startDocsRegister.Error,
