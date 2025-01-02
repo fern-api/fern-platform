@@ -197,7 +197,6 @@ export class FdrDeployStack extends Stack {
     });
     publicDocsBucket.grantPublicAccess();
 
-
     const sophosTestDocsBucket = new Bucket(this, "sophos-test-docs-bucket", {
       bucketName: `sophos-test-docs-bucket`,
       blockPublicAccess: {
@@ -208,7 +207,7 @@ export class FdrDeployStack extends Stack {
       },
       versioned: true,
     });
-    sophosTestDocsBucket.grantPublicAccess();  
+    sophosTestDocsBucket.grantPublicAccess();
     // Files are moved to the quarantine bucket if sophos deems them infected
     const quarantineBucket = new Bucket(
       this,
