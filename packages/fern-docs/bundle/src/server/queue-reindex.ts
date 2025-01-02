@@ -62,7 +62,7 @@ export const queueAlgoliaReindex = async (
     domain,
     basepath_,
     "/api/fern-docs/search/v2/reindex/algolia",
-    request: {
+    {
       method: "GET",
     }
   );
@@ -78,7 +78,7 @@ export const queueTurbopufferReindex = async (
     domain,
     basepath_,
     "/api/fern-docs/search/v2/reindex/turbopuffer",
-    request: {
+    {
       method: "GET",
     }
   );
