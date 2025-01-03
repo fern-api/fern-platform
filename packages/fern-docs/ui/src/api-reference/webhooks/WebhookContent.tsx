@@ -1,7 +1,7 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
-import { memo, useCallback, useRef } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
@@ -14,6 +14,7 @@ import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
+import { WebhookExampleSegmentedControl } from "./webhook-examples/WebhookExampleSegementedControl";
 
 export declare namespace WebhookContent {
   export interface Props {
@@ -41,7 +42,10 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
     [setHoveredPayloadPropertyPath]
   );
 
-  const example = webhook.examples?.[0]; // TODO: Need a way to show all the examples
+  const [selectedExampleIndex, setSelectedExampleIndex] = useState(0);
+  const selectedExample = webhook.examples?.[selectedExampleIndex];
+
+  const example = selectedExample; // TODO: Need a way to show all the examples
 
   const webhookExample = example ? <WebhookExample example={example} /> : null;
 
@@ -130,22 +134,21 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
             </div>
           </div>
         </div>
-        <div
-          className={cn(
-            "max-w-content-width",
-            "top-header-offset sticky flex-1 self-start",
-            // the py-10 is the same as the 40px below
-            "pb-10 pt-8",
-            // the 4rem is the same as the h-10 as the Header
-            "max-h-content",
-            // hide on mobile,
-            "hidden md:flex"
+        <div className="fern-endpoint-code-snippets">
+          {(webhook?.examples ?? []).length > 1 && (
+            <WebhookExampleSegmentedControl
+              segmentedControlExamples={(webhook?.examples ?? []).map(
+                (example, index) => ({
+                  exampleKey: String(index),
+                  example,
+                })
+              )}
+              selectedExample={selectedExample}
+              onSelectExample={(exampleKey) => {
+                setSelectedExampleIndex(Number(exampleKey));
+              }}
+            />
           )}
-        >
-          {webhookExample}
-        </div>
-
-        <div className="mt-10 flex max-h-[150vh] md:mt-0 md:hidden">
           {webhookExample}
         </div>
       </div>
