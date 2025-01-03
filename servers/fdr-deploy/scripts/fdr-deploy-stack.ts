@@ -213,6 +213,7 @@ export class FdrDeployStack extends Stack {
       this,
       "fdr-docs-files-public-quarantine",
       {
+        bucketName: "fdr-docs-files-public-quarantine",
         versioned: true,
         encryption: BucketEncryption.S3_MANAGED,
         blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
