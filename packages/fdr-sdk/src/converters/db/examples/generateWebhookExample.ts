@@ -19,6 +19,7 @@ export function generateWebhookExample({
       return typeDefinition;
     };
     return {
+      name: undefined,
       payload: generateWebhookPayloadExample(
         webhookDefinition.payload.type,
         resolveTypeById
