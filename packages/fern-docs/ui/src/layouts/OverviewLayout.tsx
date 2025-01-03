@@ -9,18 +9,20 @@ interface OverviewLayoutProps {
   children: ReactNode;
   editThisPageUrl: string | undefined;
   hideFeedback: boolean | undefined;
+  hideTableOfContents: boolean | undefined;
 }
 
 export function OverviewLayout({
   PageHeader,
   TableOfContents,
   children,
+  hideTableOfContents,
   editThisPageUrl,
   hideFeedback,
 }: OverviewLayoutProps): ReactElement {
   return (
     <main className="fern-overview-layout">
-      <TableOfContents />
+      {!hideTableOfContents && <TableOfContents />}
       <article className="fern-layout-content max-w-content-wide-width">
         <PageHeader />
         <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">

@@ -8,6 +8,7 @@ interface GuideLayoutProps {
   PageHeader: FC;
   TableOfContents: FC;
   children: ReactNode;
+  hideTableOfContents: boolean | undefined;
   editThisPageUrl: string | undefined;
   hideFeedback: boolean | undefined;
   hideNavLinks: boolean | undefined;
@@ -17,13 +18,14 @@ export function GuideLayout({
   PageHeader,
   TableOfContents,
   children,
+  hideTableOfContents,
   editThisPageUrl,
   hideFeedback,
   hideNavLinks,
 }: GuideLayoutProps): ReactElement {
   return (
     <main className="fern-guide-layout">
-      <TableOfContents />
+      {!hideTableOfContents && <TableOfContents />}
       <article className="fern-layout-content max-w-content-width">
         <PageHeader />
         <div className="prose dark:prose-invert prose-h1:mt-[1.5em] first:prose-h1:mt-0 max-w-full break-words">
