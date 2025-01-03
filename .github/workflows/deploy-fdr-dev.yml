@@ -4,17 +4,18 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "fern/apis/fdr/**"
-      - "fern/fern.config.json"
-      - "servers/fdr-deploy/**"
-      - "servers/fdr/**"
-      - ".github/workflows/deploy-fdr-dev.yml"
-      - ".github/workflows/publish-fdr-sdk.yml"
-      - "packages/fdr-sdk/**"
-      # Remove this once fdr is no longer needed in the generation
-      - "packages/fern-docs/search-server/**"
-      - "pnpm-lock.yaml"
+      - dd/cdk-for-sophos
+    # paths:
+      # - "fern/apis/fdr/**"
+      # - "fern/fern.config.json"
+      # - "servers/fdr-deploy/**"
+      # - "servers/fdr/**"
+      # - ".github/workflows/deploy-fdr-dev.yml"
+      # - ".github/workflows/publish-fdr-sdk.yml"
+      # - "packages/fdr-sdk/**"
+      # # Remove this once fdr is no longer needed in the generation
+      # - "packages/fern-docs/search-server/**"
+      # - "pnpm-lock.yaml"
 
 env:
   PACKAGE_NAME: "@fern-platform/fdr"
