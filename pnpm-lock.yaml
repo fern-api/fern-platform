@@ -772,8 +772,8 @@ importers:
         specifier: ^1.10.0
         version: 1.10.0(@opentelemetry/api-logs@0.57.0)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))
       '@workos-inc/node':
-        specifier: ^7.36.0
-        version: 7.36.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)
+        specifier: 7.31.0
+        version: 7.31.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)
       ai:
         specifier: ^4.0.18
         version: 4.0.18(react@18.3.1)(zod@3.23.8)
@@ -7586,8 +7586,8 @@ packages:
   '@webgpu/types@0.1.51':
     resolution: {integrity: sha512-ktR3u64NPjwIViNCck+z9QeyN0iPkQCUOQ07ZCV1RzlkfP+olLTeEZ95O1QHS+v4w9vJeY9xj/uJuSphsHy5rQ==}
 
-  '@workos-inc/node@7.36.0':
-    resolution: {integrity: sha512-BceSfN9em5kuXxmk9A02Ox2a/SWXSYq7TlxLYf0N2BJySDuwvHObgt4Ag81fs1QSwGW6lpEtsMgFpkeeo23kFQ==}
+  '@workos-inc/node@7.31.0':
+    resolution: {integrity: sha512-HYiIi0f20wTvPka0Xwh6TpPE1xeRvpPcEQL8G5nDpykhUujce/D8ECrF85gJjscGgPjnmgqW8K520DshwqnHNg==}
     engines: {node: '>=16'}
 
   '@wry/caches@1.0.1':
@@ -22632,7 +22632,7 @@ snapshots:
 
   '@webgpu/types@0.1.51': {}
 
-  '@workos-inc/node@7.36.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)':
+  '@workos-inc/node@7.31.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)':
     dependencies:
       iron-session: 6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)
       jose: 5.6.3

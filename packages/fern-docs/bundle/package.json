@@ -51,7 +51,7 @@
     "@upstash/qstash": "^2.7.16",
     "@vercel/kv": "^2.0.0",
     "@vercel/otel": "^1.10.0",
-    "@workos-inc/node": "^7.36.0",
+    "@workos-inc/node": "^7.31.0",
     "ai": "^4.0.18",
     "algoliasearch": "^5.13.0",
     "cssnano": "^6.0.3",
