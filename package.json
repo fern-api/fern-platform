@@ -94,7 +94,7 @@
     "eslint-plugin-tailwindcss": "^3.17.5",
     "eslint-plugin-vitest": "^0.5.4",
     "execa": "^5.1.1",
-    "express": "^4.20.0",
+    "express": "^4.21.2",
     "globals": "^15.14.0",
     "http-proxy-middleware": "^3.0.3",
     "husky": "^8.0.1",
