@@ -198,7 +198,7 @@ export class FdrDeployStack extends Stack {
     publicDocsBucket.grantPublicAccess();
 
     const sophosTestDocsBucket = new Bucket(this, "sophos-test-docs-bucket", {
-      bucketName: `sophos-test-docs-bucket`,
+      bucketName: `fdr-${environmentType.toLowerCase()}-sophos-test-docs-bucket`,
       blockPublicAccess: {
         blockPublicAcls: false,
         blockPublicPolicy: false,
@@ -213,7 +213,7 @@ export class FdrDeployStack extends Stack {
       this,
       "fdr-docs-files-public-quarantine",
       {
-        bucketName: "fdr-docs-files-public-quarantine",
+        bucketName: `fdr-${environmentType.toLowerCase()}-docs-files-public-quarantine`,
         versioned: true,
         encryption: BucketEncryption.S3_MANAGED,
         blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
