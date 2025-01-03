@@ -214,26 +214,21 @@ export const handler = async (event: S3Event): Promise<void> => {
       const isMalware = await scanner.completeCheckForMalware(downloadPath);
 
       if (isMalware) {
-        console.log(
-          `This file CONTAINS MALWARE!! Removing file upload... s3://${bucket}/${key}`
-        );
-        await s3Client.deleteObject({ Bucket: bucket, Key: key });
-      } else {
         const outputBucket = process.env.QUARANTINE_BUCKET;
         if (!outputBucket) {
-          throw new Error("OUTPUT_BUCKET environment variable not set");
+          throw new Error("QUARANTINE_BUCKET environment variable not set");
         }
-
         console.log(
-          `This file is clean, copying to quarantine bucket: ${outputBucket}`
+          `This file CONTAINS MALWARE!! Moving to quarantine bucket: ${outputBucket}`
         );
         await s3Client.copyObject({
           CopySource: `${bucket}/${key}`,
           Bucket: outputBucket,
           Key: key,
         });
-
         await s3Client.deleteObject({ Bucket: bucket, Key: key });
+      } else {
+        console.log("This file is clean, no action needed");
       }
 
       // Clean up temporary file
