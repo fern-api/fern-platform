@@ -157,7 +157,7 @@
     "depcheck": "^1.4.3",
     "eslint": "^9",
     "eslint-plugin-storybook": "^0.8.0",
-    "express": "^4.20.0",
+    "express": "^4.21.2",
     "instantsearch.js": "^4.75.4",
     "jsdom": "^24.0.0",
     "next-router-mock": "^0.9.13",
