@@ -197,11 +197,18 @@ export const handler = async (event: S3Event): Promise<void> => {
 
     try {
       // Download the file
-      await s3Client.getObject({
+      const response = await s3Client.getObject({
         Bucket: bucket,
-        Key: key,
-        ResponseContentFile: downloadPath,
+        Key: key
       });
+      
+      if (!response.Body) {
+        throw new Error('No body received from S3');
+      }
+
+      // Convert the response body to bytes and write to file
+      const bodyContents = await response.Body.transformToByteArray();
+      await fs.promises.writeFile(downloadPath, bodyContents);
 
       // Scan the file
       const isMalware = await scanner.completeCheckForMalware(downloadPath);
