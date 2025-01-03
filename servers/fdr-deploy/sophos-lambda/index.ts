@@ -199,11 +199,11 @@ export const handler = async (event: S3Event): Promise<void> => {
       // Download the file
       const response = await s3Client.getObject({
         Bucket: bucket,
-        Key: key
+        Key: key,
       });
-      
+
       if (!response.Body) {
-        throw new Error('No body received from S3');
+        throw new Error("No body received from S3");
       }
 
       // Convert the response body to bytes and write to file
