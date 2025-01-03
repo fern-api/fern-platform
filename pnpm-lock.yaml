@@ -2850,21 +2850,22 @@ importers:
 
   servers/fdr-deploy/sophos-lambda:
     dependencies:
+      '@types/uuid':
+        specifier: ^10.0.0
+        version: 10.0.0
+      uuid:
+        specifier: ^9.x
+        version: 9.0.1
+    devDependencies:
       '@aws-sdk/client-s3':
         specifier: ^3.x
         version: 3.685.0
       '@types/aws-lambda':
         specifier: ^8.10.146
         version: 8.10.146
-      '@types/uuid':
-        specifier: ^10.0.0
-        version: 10.0.0
       aws-lambda:
         specifier: ^1.0.7
         version: 1.0.7
-      uuid:
-        specifier: ^9.x
-        version: 9.0.1
 
   servers/fern-bot:
     dependencies:

@@ -221,8 +221,13 @@ export class FdrDeployStack extends Stack {
       }
     );
 
+    // IAM role for Sophos AV Scanner
+    const sophosRole = new iam.Role(this, "SophosAVRole", {
+      assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
+    });
+
     // Lambda function for processing scan results
-    const scanProcessor = new lambda.Function(this, "ScanProcessor", {
+    const scanProcessor = new lambda.Function(this, "SophosScanProcessor", {
       runtime: lambda.Runtime.NODEJS_18_X,
       handler: "index.handler",
       code: lambda.Code.fromAsset("sophos-lambda"),
@@ -230,11 +235,7 @@ export class FdrDeployStack extends Stack {
       environment: {
         QUARANTINE_BUCKET: quarantineBucket.bucketName,
       },
-    });
-
-    // IAM role for Sophos AV Scanner
-    const sophosRole = new iam.Role(this, "SophosAVRole", {
-      assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
+      role: sophosRole,
     });
 
     sophosTestDocsBucket.grantRead(sophosRole);
