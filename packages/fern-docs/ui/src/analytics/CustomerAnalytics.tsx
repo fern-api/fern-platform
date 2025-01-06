@@ -37,8 +37,13 @@ const ANALYTICS_CONFIG_ATOM = selectAtom<DocsProps, DocsV1Read.AnalyticsConfig>(
 export const CustomerAnalytics = memo(
   function CustomerAnalytics(): ReactElement | null {
     const domain = useAtomValue(DOMAIN_ATOM);
-    const { ga4, gtm } = useAtomValue(ANALYTICS_ATOM);
+    const analytics = useAtomValue(ANALYTICS_ATOM);
     const config = useAtomValue(ANALYTICS_CONFIG_ATOM);
+
+    // Prefer values from customer config (if supplied) over legacy Vercel edge config
+    const ga4 = config.ga4 != null ? config.ga4 : analytics.ga4;
+    const gtm =
+      config.gtm != null ? config.gtm.containerId : analytics.gtm?.tagId;
 
     return (
       <>
@@ -55,7 +60,7 @@ export const CustomerAnalytics = memo(
 
         {/* renders Google Analytics 4 or Google Tag Manager */}
         {ga4 != null && <GoogleAnalytics gaId={ga4.measurementId} />}
-        {gtm != null && <GoogleTagManager gtmId={gtm.tagId} />}
+        {gtm != null && <GoogleTagManager gtmId={gtm} />}
       </>
     );
   }
