@@ -321,7 +321,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     if (this.isWebhook) {
-      if ((this.method !== "POST" && this.method !== "GET") || this.endpointId == null) {
+      if (
+        (this.method !== "POST" && this.method !== "GET") ||
+        this.endpointId == null
+      ) {
         return undefined;
       }
 
