@@ -1,3 +1,7 @@
+/**
+ * In order to prevent open-redirection, we need to curate a list of allowed domains where the server can redirect to.
+ */
+
 import { AuthEdgeConfig, OAuth2, SSOWorkOS } from "@fern-docs/auth";
 import { PreviewUrlAuth } from "@fern-docs/edge-config";
 import { compact } from "es-toolkit/array";
@@ -23,6 +27,7 @@ function getAllowedRedirectUrlsForAuthConfig(authConfig?: AuthEdgeConfig) {
 
   switch (authConfig.type) {
     case "basic_token_verification":
+      // since the `redirect` and `logout` are configured in the edge config, we can trust them
       return compact([authConfig.redirect, authConfig.logout]);
     case "sso":
       return getAllowedRedirectUrlsForSSO(authConfig);
@@ -59,6 +64,7 @@ function getAllowedRedirectUrlsForSSO(_authConfig: SSOWorkOS) {
 function getAllowedRedirectUrlsForOAuth2(authConfig: OAuth2) {
   switch (authConfig.partner) {
     case "ory":
+      // since the environment is configured in the edge config, we can trust it
       return [authConfig.environment];
     case "webflow":
       return [WEBFLOW_API_URL];
