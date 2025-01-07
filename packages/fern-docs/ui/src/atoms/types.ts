@@ -51,12 +51,10 @@ export interface GithubNavbarLink {
 
 export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
 
-// TODO: move this to some other file?
 export interface LaunchDarklyInfo {
   clientSideId: string;
 }
 
-// TODO: move this to some other file?
 export interface FeatureFlags {
   launchDarkly: LaunchDarklyInfo | undefined;
 }
@@ -85,5 +83,5 @@ export interface DocsProps {
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   stylesheet: string;
-  featureFlags: FeatureFlags | undefined; // TODO: be smarter about this
+  featureFlags: FeatureFlags | undefined;
 }

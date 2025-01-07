@@ -1,5 +1,3 @@
-// TODO: move this to a better place ?
-
 import { LDProvider, useLDClient } from "launchdarkly-react-client-sdk";
 import { FC, ReactNode, useEffect } from "react";
 
