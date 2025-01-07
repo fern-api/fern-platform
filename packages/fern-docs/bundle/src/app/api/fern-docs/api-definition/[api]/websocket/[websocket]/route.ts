@@ -28,7 +28,7 @@ export async function GET(
     authState.domain,
     ApiDefinition.ApiDefinitionId(api)
   )
-    .withFlags(flags)
+    .withEdgeFlags(flags)
     .withMdxBundler(serializeMdx, engine)
     .withPrune({
       type: "webSocket",

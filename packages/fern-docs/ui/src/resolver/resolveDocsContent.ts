@@ -74,7 +74,7 @@ export async function resolveDocsContent({
     ...mapValues(apis, (api) => {
       return ApiDefinitionLoader.create(domain, api.id)
         .withMdxBundler(serializeMdx, engine)
-        .withFlags(edgeFlags)
+        .withEdgeFlags(edgeFlags)
         .withApiDefinition(
           ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
         )
@@ -84,7 +84,7 @@ export async function resolveDocsContent({
     ...mapValues(apisV2 ?? {}, (api) => {
       return ApiDefinitionLoader.create(domain, api.id)
         .withMdxBundler(serializeMdx, engine)
-        .withFlags(edgeFlags)
+        .withEdgeFlags(edgeFlags)
         .withApiDefinition(api)
         .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
         .withResolveDescriptions();

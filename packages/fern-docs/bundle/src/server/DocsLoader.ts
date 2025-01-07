@@ -113,7 +113,7 @@ export class DocsLoader {
     }
     return ApiDefinitionLoader.create(this.domain, key)
       .withApiDefinition(latest)
-      .withFlags(this.edgeFlags)
+      .withEdgeFlags(this.edgeFlags)
       .withResolveDescriptions(false)
       .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
       .load();
