@@ -47,6 +47,8 @@ describe("PlaygroundCodeSnippetBuilder", () => {
         baseUrl: "https://example.com",
       },
     ],
+    displayName: "endpoint-1",
+    operationId: "endpoint-1",
     method: "POST",
     path: [
       { type: "literal", value: "/test/" },

@@ -518,6 +518,8 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                 "key": "value"
  *                             }
  *                         }],
+ *                     displayName: "string",
+ *                     operationId: "string",
  *                     auth: [{
  *                             "key": "value"
  *                         }],
@@ -567,6 +569,8 @@ import * as FernRegistry from "../../../../../../../../index";
  *             websockets: {
  *                 "string": {
  *                     id: FernRegistry.WebSocketId("string"),
+ *                     displayName: "string",
+ *                     operationId: "string",
  *                     path: [{
  *                             type: "literal",
  *                             value: {
@@ -617,6 +621,8 @@ import * as FernRegistry from "../../../../../../../../index";
  *             webhooks: {
  *                 "string": {
  *                     id: FernRegistry.WebhookId("string"),
+ *                     displayName: "string",
+ *                     operationId: "string",
  *                     method: "GET",
  *                     path: ["string"],
  *                     headers: [{

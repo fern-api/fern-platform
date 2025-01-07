@@ -4,6 +4,8 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface WebSocketChannel extends FernRegistry.api.latest.WithDescription, FernRegistry.api.latest.WithAvailability, FernRegistry.api.latest.WithNamespace {
     id: FernRegistry.WebSocketId;
+    displayName: string | undefined;
+    operationId: string | undefined;
     path: FernRegistry.api.latest.PathPart[];
     /** The messages that can be sent and received on this channel */
     messages: FernRegistry.api.latest.WebSocketMessage[];

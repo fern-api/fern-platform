@@ -21,6 +21,8 @@ types:
       - commons.WithNamespace
     properties:
       id: rootCommons.WebSocketId
+      displayName: optional<string>
+      operationId: optional<string>
       path: list<commons.PathPart>
       messages:
         type: list<WebSocketMessage>

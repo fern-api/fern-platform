@@ -32,6 +32,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
   endpointId: string | undefined;
   description: string | undefined;
+  displayName: string | undefined;
+  operationId: string | undefined;
   pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
   queryParameters: Record<string, ParameterBaseObjectConverterNode> | undefined;
   requestHeaders: Record<string, ParameterBaseObjectConverterNode> | undefined;
@@ -66,6 +68,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     this.description = this.input.description;
+    this.displayName = this.input.summary;
+    this.operationId = this.input.operationId;
 
     this.availability = new AvailabilityConverterNode({
       input: this.input,
@@ -317,15 +321,17 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     if (this.isWebhook) {
-      if (this.method !== "POST" && this.method !== "GET") {
+      if ((this.method !== "POST" && this.method !== "GET") || this.endpointId == null) {
         return undefined;
       }
 
       return {
+        id: FernRegistry.WebhookId(this.endpointId),
         description: this.description,
         availability: this.availability?.convert(),
+        displayName: this.displayName,
+        operationId: this.operationId,
         namespace: this.namespace?.convert(),
-        id: FernRegistry.WebhookId("x-fern-webhook-name"),
         method: this.method,
         // This is a little bit weird, consider changing the shape of fdr
         path:
@@ -374,10 +380,12 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     }
 
     return {
+      id: FernRegistry.EndpointId(this.endpointId),
       description: this.description,
       availability: this.availability?.convert(),
       namespace: this.namespace?.convert(),
-      id: FernRegistry.EndpointId(this.endpointId),
+      displayName: this.displayName,
+      operationId: this.operationId,
       method: this.method,
       path: pathParts,
       auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),

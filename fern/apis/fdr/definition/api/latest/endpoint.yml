@@ -23,6 +23,8 @@ types:
       id: rootCommons.EndpointId # or original endpoint id?
       method: rootCommons.HttpMethod
       path: list<commons.PathPart>
+      displayName: optional<string>
+      operationId: optional<string>
 
       auth: optional<list<auth.AuthSchemeId>>
       defaultEnvironment: optional<rootCommons.EnvironmentId>

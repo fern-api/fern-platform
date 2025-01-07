@@ -545,6 +545,8 @@ export class Register {
      *                                 "key": "value"
      *                             }
      *                         }],
+     *                     displayName: "string",
+     *                     operationId: "string",
      *                     auth: [{
      *                             "key": "value"
      *                         }],
@@ -594,6 +596,8 @@ export class Register {
      *             websockets: {
      *                 "string": {
      *                     id: FernRegistry.WebSocketId("string"),
+     *                     displayName: "string",
+     *                     operationId: "string",
      *                     path: [{
      *                             type: "literal",
      *                             value: {
@@ -644,6 +648,8 @@ export class Register {
      *             webhooks: {
      *                 "string": {
      *                     id: FernRegistry.WebhookId("string"),
+     *                     displayName: "string",
+     *                     operationId: "string",
      *                     method: "GET",
      *                     path: ["string"],
      *                     headers: [{
