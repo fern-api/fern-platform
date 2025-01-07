@@ -27,8 +27,10 @@ export class FernNextResponse {
       !allowedDomains.includes(redirectLocation.host) &&
       !isBuildWithFern(redirectLocation.host)
     ) {
-      // open redirect to unknown host detected:
-      return new NextResponse(null, { status: 410 });
+      console.error(
+        `Redirect to ${redirectLocation.host} is not allowed. Allowed domains: ${allowedDomains.join(", ")}`
+      );
+      return new NextResponse(null, { status: 403 });
     }
 
     return NextResponse.redirect(redirectLocation, init);
