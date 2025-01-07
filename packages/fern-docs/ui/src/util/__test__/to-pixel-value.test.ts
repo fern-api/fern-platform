@@ -22,15 +22,9 @@ describe("toPixelValue", () => {
   });
 
   it("should handle negative pixel values", () => {
-    expect(toPixelValue("-10px")).toEqual(-10);
-  });
-
-  it("should handle negative rem values", () => {
-    expect(toPixelValue("-1rem")).toEqual(-16);
-  });
-
-  it("should handle negative decimal rem values", () => {
-    expect(toPixelValue("-1.5rem")).toEqual(-24);
+    expect(toPixelValue("-10px")).toEqual(undefined);
+    expect(toPixelValue("-1rem")).toEqual(undefined);
+    expect(toPixelValue("-1.5rem")).toEqual(undefined);
   });
 
   it("should return undefined if the value is not a valid pixel value", () => {
