@@ -1,100 +1,111 @@
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import Image, { ImageProps } from "next/image";
-import { ReactElement } from "react";
+import Image from "next/image";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 
-export declare namespace FernImage {
-  export interface Props extends Omit<ImageProps, "src" | "alt"> {
-    // FDR may return a URL or an image object depending on the version of the Fern CLI used to build the docs.
-    // If the file has width/height metadata, we can render it using next/image for optimized loading.
+export const FernImage = forwardRef<
+  HTMLImageElement,
+  Omit<ComponentPropsWithoutRef<typeof Image>, "src" | "alt"> & {
+    /**
+     * FDR may return a URL or an image object depending on the version of the Fern CLI used to build the docs.
+     * If the file has width/height metadata, we can render it using next/image for optimized loading.
+     */
     src: DocsV1Read.File_ | undefined;
+    /**
+     * The alt text for the image.
+     * @default ""
+     */
     alt?: string;
-    maxWidth?: number;
   }
-}
-
-export function FernImage({
-  src,
-  maxWidth,
-  ...props
-}: FernImage.Props): ReactElement | null {
+>(({ src, ...props }, ref) => {
   if (src == null) {
     return null;
   }
 
-  const {
-    fill,
-    loader,
-    quality,
-    priority,
-    placeholder,
-    blurDataURL,
-    unoptimized,
-    ...imgProps
-  } = props;
+  const { width, height } =
+    src.type === "image"
+      ? getDimensions({
+          intrinsicWidth: src.width,
+          intrinsicHeight: src.height,
+          width: props.width,
+          height: props.height,
+        })
+      : props;
 
-  return visitDiscriminatedUnion(src, "type")._visit({
-    url: ({ url }) => {
-      // eslint-disable-next-line @next/next/no-img-element
-      return <img {...imgProps} src={url} alt={props.alt ?? ""} />;
-    },
-    image: ({
-      url,
-      width: realWidth,
-      height: realHeight,
-      blurDataUrl,
-      alt,
-    }) => {
-      try {
-        const pathname = new URL(url).pathname.toLowerCase();
-        if (pathname.endsWith(".gif") || pathname.endsWith(".svg")) {
-          // eslint-disable-next-line @next/next/no-img-element
-          return <img {...imgProps} src={url} alt={props.alt ?? ""} />;
-        }
-      } catch (_e) {
-        // Ignore errors
+  const blurDataURL =
+    props.blurDataURL ?? (src.type === "image" ? src.blurDataUrl : undefined);
+
+  const pathname = safeGetPathname(src.url);
+
+  return (
+    <Image
+      ref={ref}
+      {...props}
+      src={src.url}
+      overrideSrc={src.url}
+      width={width}
+      height={height}
+      alt={props.alt ?? (src.type === "image" ? src.alt : undefined) ?? ""}
+      placeholder={
+        props.placeholder ?? (blurDataURL != null ? "blur" : "empty")
       }
+      blurDataURL={blurDataURL}
+      unoptimized={
+        pathname?.endsWith(".gif") ||
+        pathname?.endsWith(".svg") ||
+        props.unoptimized ||
+        src.type === "url" // if the src is a URL, we don't want to optimize it because it's likely not allowlisted in next.config.js
+      }
+    />
+  );
+});
 
-      const { width, height } = getDimensions(
-        maxWidth ?? props.width,
-        realWidth,
-        realHeight
-      );
+FernImage.displayName = "FernImage";
 
-      return (
-        <Image
-          {...props}
-          src={url}
-          width={width}
-          height={height}
-          alt={props.alt ?? alt ?? ""}
-          placeholder={
-            props.placeholder ?? (blurDataUrl != null ? "blur" : "empty")
-          }
-          blurDataURL={props.blurDataURL ?? blurDataUrl}
-          overrideSrc={url}
-        />
-      );
-    },
-    _other: () => null,
-  });
+function safeGetPathname(url: string): string | undefined {
+  try {
+    return new URL(url, "https://n").pathname.toLowerCase();
+  } catch (_e) {
+    return undefined;
+  }
 }
 
-function getDimensions(
-  layoutWidth: number | `${number}` | undefined,
-  realWidth: number,
-  realHeight: number
-): { width: number; height: number } {
-  layoutWidth =
-    typeof layoutWidth === "string" ? parseInt(layoutWidth, 10) : layoutWidth;
-  if (layoutWidth != null && isNaN(layoutWidth)) {
-    layoutWidth = undefined;
+export function getDimensions({
+  intrinsicWidth,
+  intrinsicHeight,
+  width,
+  height,
+}: {
+  intrinsicWidth: number;
+  intrinsicHeight: number;
+  width?: number | `${number}`;
+  height?: number | `${number}`;
+}): { width: number; height: number } {
+  const propWidth = asNumber(width);
+  const propHeight = asNumber(height);
+
+  // If the user has explicitly set the width and height, use those values.
+  if (propWidth != null && propHeight != null) {
+    return { width: propWidth, height: propHeight };
   }
-  if (layoutWidth != null && layoutWidth < realWidth) {
-    return {
-      width: layoutWidth,
-      height: (layoutWidth / realWidth) * realHeight,
-    };
+
+  const aspectRatio = intrinsicWidth / intrinsicHeight;
+
+  // if the user has the width and height, use that to determine the aspect ratio
+  if (propWidth != null) {
+    return { width: propWidth, height: propWidth / aspectRatio };
+  } else if (propHeight != null) {
+    return { width: propHeight * aspectRatio, height: propHeight };
   }
-  return { width: realWidth, height: realHeight };
+
+  return { width: intrinsicWidth, height: intrinsicHeight };
+}
+
+function asNumber(value: number | `${number}` | undefined): number | undefined {
+  if (value == null) {
+    return undefined;
+  }
+  if (typeof value === "string") {
+    return parseInt(value, 10);
+  }
+  return value;
 }
