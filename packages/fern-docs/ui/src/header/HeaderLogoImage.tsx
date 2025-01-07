@@ -1,27 +1,39 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
-import { ReactElement } from "react";
+import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
 import { DOCS_ATOM, LOGO_IMAGE_ATOM, useFile, useLogoHeight } from "../atoms";
 import { FernImage } from "../components/FernImage";
 
-function FernFileImage({
-  fileId,
-  ...props
-}: Omit<FernImage.Props, "src"> & { fileId: DocsV1Read.FileId }): ReactElement {
-  return <FernImage src={useFile(fileId)} {...props} />;
-}
-
-function FernFileOrUrlImage({
-  fileIdOrUrl,
-  ...props
-}: Omit<FernImage.Props, "src"> & {
-  fileIdOrUrl: DocsV1Read.FileIdOrUrl;
-}): ReactElement {
-  if (fileIdOrUrl.type === "fileId") {
-    return <FernFileImage fileId={fileIdOrUrl.value} {...props} />;
+const FernFileImage = forwardRef<
+  HTMLImageElement,
+  Omit<ComponentPropsWithoutRef<typeof FernImage>, "src"> & {
+    fileId: DocsV1Read.FileId;
   }
-  return <FernImage src={{ type: "url", url: fileIdOrUrl.value }} {...props} />;
-}
+>(({ fileId, ...props }, ref) => {
+  return <FernImage {...props} ref={ref} src={useFile(fileId)} />;
+});
+
+FernFileImage.displayName = "FernFileImage";
+
+const FernFileOrUrlImage = forwardRef<
+  HTMLImageElement,
+  Omit<ComponentPropsWithoutRef<typeof FernImage>, "src"> & {
+    fileIdOrUrl: DocsV1Read.FileIdOrUrl;
+  }
+>(({ fileIdOrUrl, ...props }, ref) => {
+  if (fileIdOrUrl.type === "fileId") {
+    return <FernFileImage {...props} ref={ref} fileId={fileIdOrUrl.value} />;
+  }
+  return (
+    <FernImage
+      {...props}
+      ref={ref}
+      src={{ type: "url", url: fileIdOrUrl.value }}
+    />
+  );
+});
+
+FernFileOrUrlImage.displayName = "FernFileOrUrlImage";
 
 export function HeaderLogoImage(): ReactElement | null {
   const logoImageHeight = useLogoHeight();
@@ -36,7 +48,6 @@ export function HeaderLogoImage(): ReactElement | null {
           fileIdOrUrl={light}
           className="fern-logo-light"
           height={logoImageHeight}
-          style={{ height: logoImageHeight }}
           priority={true}
           loading="eager"
           quality={100}
@@ -46,7 +57,6 @@ export function HeaderLogoImage(): ReactElement | null {
           fileIdOrUrl={dark}
           className="fern-logo-dark"
           height={logoImageHeight}
-          style={{ height: logoImageHeight }}
           priority={true}
           loading="eager"
           quality={100}

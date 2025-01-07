@@ -27,6 +27,7 @@ import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
 import { useWithAside } from "../../../contexts/api-page";
 import { useFrontmatter } from "../../../contexts/frontmatter";
+import { toPixelValue } from "../../../util/to-pixel-value";
 
 export const HeadingRenderer = (
   level: number,
@@ -122,8 +123,8 @@ export interface ImgProps extends ComponentProps<"img"> {
 export const Image = forwardRef<HTMLImageElement, ImgProps>((props, ref) => {
   const {
     src: srcProp,
-    width: w,
-    height: h,
+    width,
+    height,
     noZoom: isImageZoomDisabledProp = false,
     enableZoom: isImageZoomEnabledOverride = false,
     style,
@@ -133,20 +134,19 @@ export const Image = forwardRef<HTMLImageElement, ImgProps>((props, ref) => {
   const files = useAtomValue(FILES_ATOM);
   const src = srcProp ? selectFile(files, srcProp) : undefined;
 
-  const width = stripUnits(w);
-  const height = stripUnits(h);
   const maxWidth = useMaxLayoutWidth();
 
   const fernImage = (
     <FernImage
       ref={ref}
       src={src}
-      width={width}
-      height={height}
+      width={toPixelValue(width)}
+      height={toPixelValue(height)}
       maxWidth={maxWidth}
       style={{
-        width: w,
-        height: h,
+        // since the `toPixelValue` will return undefined for non-pixel values, we need to preserve the original values using the `style` prop
+        width,
+        height,
         ...style,
       }}
       {...rest}
@@ -258,23 +258,4 @@ function selectFile(
   // and fallback as "url" if not found.
   const fileId = FdrAPI.FileId(src.startsWith("file:") ? src.slice(5) : src);
   return files[fileId] ?? { type: "url", url: FdrAPI.Url(src) };
-}
-
-// preserves pixel widths and heights, but strips units from other values
-function stripUnits(
-  str: string | number | undefined
-): number | `${number}` | undefined {
-  if (str == null || typeof str === "number") {
-    return str;
-  } else if (/^\d+$/.test(str)) {
-    // if str is a number, return it as a string
-    return str as `${number}`;
-  } else if (/^\d+(\.\d+)?(px)$/.test(str)) {
-    // if str is a number followed by "px", return the number as a string
-    return str.slice(0, -2) as `${number}`;
-  }
-
-  // TODO: handle rem
-
-  return undefined;
 }
