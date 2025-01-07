@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_account"
         ],
+        "displayName": "Get fields on an account",
+        "operationId": "get-account",
         "description": "Return fields on an account",
         "method": "GET",
         "path": [
@@ -74,6 +76,8 @@
         "namespace": [
           "subpackage_account"
         ],
+        "displayName": "Update fields on an account",
+        "operationId": "patch-account",
         "description": "Update fields on account",
         "method": "PATCH",
         "path": [
@@ -182,6 +186,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "Create new endpoint",
+        "operationId": "create-endpoint",
         "description": "Create new endpoint",
         "method": "POST",
         "path": [
@@ -302,6 +308,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "Get description of an endpoint",
+        "operationId": "get-endpoint",
         "description": "Return description of an endpoint",
         "method": "GET",
         "path": [
@@ -424,6 +432,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "Delete an endpoint",
+        "operationId": "delete-endpoint",
         "description": "Delete an endpoint",
         "method": "DELETE",
         "path": [
@@ -506,6 +516,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "Update an endpoint",
+        "operationId": "patch-endpoint",
         "description": "Updates an endpoint",
         "method": "PATCH",
         "path": [
@@ -643,6 +655,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "List endpoints",
+        "operationId": "get-endpoints",
         "description": "Return list of endpoints",
         "method": "GET",
         "path": [
@@ -752,6 +766,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "Get container metadata",
+        "operationId": "get-container-metadata",
         "description": "Return container metadata",
         "method": "GET",
         "path": [
@@ -850,6 +866,8 @@
         "namespace": [
           "subpackage_endpoint"
         ],
+        "displayName": "Get token for accessing the volume",
+        "operationId": "get-endpoint-volume-token",
         "description": "Returns a token for accessing the volume",
         "method": "GET",
         "path": [
@@ -936,6 +954,8 @@
         "namespace": [
           "subpackage_telemetry"
         ],
+        "displayName": "Get endpoint logs",
+        "operationId": "get-endpoint-logs",
         "description": "Return endpoint logs",
         "method": "GET",
         "path": [
@@ -1106,6 +1126,8 @@
         "namespace": [
           "subpackage_telemetry"
         ],
+        "displayName": "Get endpoint logs as stream",
+        "operationId": "get-endpoint-logs-stream",
         "description": "Return endpoint logs as stream",
         "method": "GET",
         "path": [
@@ -1223,6 +1245,8 @@
         "namespace": [
           "subpackage_telemetry"
         ],
+        "displayName": "Get endpoint events",
+        "operationId": "get-endpoint-events",
         "description": "Return endpoint events",
         "method": "GET",
         "path": [
@@ -1400,6 +1424,8 @@
         "namespace": [
           "subpackage_telemetry"
         ],
+        "displayName": "Get endpoint events as stream",
+        "operationId": "get-endpoint-events-stream",
         "description": "Return endpoint events as stream",
         "method": "GET",
         "path": [
@@ -1524,6 +1550,8 @@
         "namespace": [
           "subpackage_secret"
         ],
+        "displayName": "Create new secret",
+        "operationId": "create-secret",
         "description": "Create new secret",
         "method": "POST",
         "path": [
@@ -1604,6 +1632,8 @@
         "namespace": [
           "subpackage_secret"
         ],
+        "displayName": "Retrieve secret by key",
+        "operationId": "get-secret",
         "method": "GET",
         "path": [
           {
@@ -1686,6 +1716,8 @@
         "namespace": [
           "subpackage_secret"
         ],
+        "displayName": "Update secret by key",
+        "operationId": "update-secret",
         "method": "PUT",
         "path": [
           {
@@ -1796,6 +1828,8 @@
         "namespace": [
           "subpackage_secret"
         ],
+        "displayName": "Delete secret by key",
+        "operationId": "delete-secret",
         "method": "DELETE",
         "path": [
           {
@@ -1877,6 +1911,8 @@
         "namespace": [
           "subpackage_secret"
         ],
+        "displayName": "Get secret",
+        "operationId": "get-secrets",
         "description": "Return list of secrets",
         "method": "GET",
         "path": [
@@ -1946,6 +1982,8 @@
         "namespace": [
           "subpackage_registryCredential"
         ],
+        "displayName": "Create new registry credentials",
+        "operationId": "create-registry-credential",
         "description": "Create new registry credentials",
         "method": "POST",
         "path": [
@@ -2027,6 +2065,8 @@
         "namespace": [
           "subpackage_registryCredential"
         ],
+        "displayName": "Retrieve registry credentials by key",
+        "operationId": "get-registry-credential",
         "method": "GET",
         "path": [
           {
@@ -2110,6 +2150,8 @@
         "namespace": [
           "subpackage_registryCredential"
         ],
+        "displayName": "Update registry credentials",
+        "operationId": "update-registry-credential",
         "method": "PUT",
         "path": [
           {
@@ -2242,6 +2284,8 @@
         "namespace": [
           "subpackage_registryCredential"
         ],
+        "displayName": "Delete registry credentials",
+        "operationId": "delete-registry-credential",
         "method": "DELETE",
         "path": [
           {
@@ -2323,6 +2367,8 @@
         "namespace": [
           "subpackage_registryCredential"
         ],
+        "displayName": "Get registry credentials",
+        "operationId": "get-registry-credentials",
         "description": "Return list of registry credentials",
         "method": "GET",
         "path": [
@@ -2393,6 +2439,8 @@
         "namespace": [
           "subpackage_publicEndpoint"
         ],
+        "displayName": "List public, OctoAI-deployed endpoints",
+        "operationId": "get-public-endpoints",
         "description": "Return list of public, OctoAI-deployed endpoints",
         "method": "GET",
         "path": [
@@ -2493,6 +2541,8 @@
         "namespace": [
           "subpackage_instanceTypes"
         ],
+        "displayName": "List hardware instance types",
+        "operationId": "get-instance-types",
         "description": "Return list of available instance types to deploy an endpoint to",
         "method": "GET",
         "path": [
@@ -4536,6 +4586,8 @@
       "endpoint_.upscale": {
         "id": "endpoint_.upscale",
         "namespace": [],
+        "displayName": "Upscaling",
+        "operationId": "upscale",
         "description": "Upscale the given image.",
         "method": "POST",
         "path": [
@@ -4793,6 +4845,8 @@
       "endpoint_.remove_background": {
         "id": "endpoint_.remove_background",
         "namespace": [],
+        "displayName": "Remove Background",
+        "operationId": "remove-background",
         "description": "Remove background from the given image.",
         "method": "POST",
         "path": [
@@ -5093,6 +5147,8 @@
       "endpoint_.generate_images": {
         "id": "endpoint_.generate_images",
         "namespace": [],
+        "displayName": "Adetailer",
+        "operationId": "generate-images",
         "description": "Detail the given image.",
         "method": "POST",
         "path": [
@@ -6107,6 +6163,8 @@
         "namespace": [
           "subpackage_asset-library"
         ],
+        "displayName": "List Assets",
+        "operationId": "list",
         "method": "GET",
         "path": [
           {
@@ -6880,6 +6938,8 @@
         "namespace": [
           "subpackage_asset-library"
         ],
+        "displayName": "Create Asset",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -8665,6 +8725,8 @@
         "namespace": [
           "subpackage_asset-library"
         ],
+        "displayName": "Delete Asset",
+        "operationId": "delete",
         "method": "DELETE",
         "path": [
           {
@@ -8894,6 +8956,8 @@
         "namespace": [
           "subpackage_asset-library"
         ],
+        "displayName": "Complete Asset Upload",
+        "operationId": "complete-upload",
         "method": "POST",
         "path": [
           {
@@ -9259,6 +9323,8 @@
         "namespace": [
           "subpackage_asset-library"
         ],
+        "displayName": "Retrieve Asset",
+        "operationId": "get",
         "method": "GET",
         "path": [
           {
@@ -9581,6 +9647,8 @@
         "namespace": [
           "subpackage_fine-tuning"
         ],
+        "displayName": "Create Tune",
+        "operationId": "create",
         "description": "Spawn a tune.",
         "method": "POST",
         "path": [
@@ -10597,6 +10665,8 @@
         "namespace": [
           "subpackage_fine-tuning"
         ],
+        "displayName": "Get Tune",
+        "operationId": "get",
         "description": "Get the specific tune.",
         "method": "GET",
         "path": [
@@ -10872,6 +10942,8 @@
         "namespace": [
           "subpackage_fine-tuning"
         ],
+        "displayName": "Delete Tune",
+        "operationId": "delete",
         "description": "Delete the specified tune.",
         "method": "DELETE",
         "path": [
@@ -11118,6 +11190,8 @@
         "namespace": [
           "subpackage_fine-tuning"
         ],
+        "displayName": "Cancel Tune",
+        "operationId": "cancel",
         "description": "Cancel the specified tune.",
         "method": "POST",
         "path": [
@@ -11397,6 +11471,8 @@
         "namespace": [
           "subpackage_fine-tuning"
         ],
+        "displayName": "List Tunes",
+        "operationId": "list",
         "description": "List all tunes owned by the current user.",
         "method": "GET",
         "path": [
@@ -11940,6 +12016,8 @@
         "namespace": [
           "subpackage_image-gen"
         ],
+        "displayName": "Generate SSD",
+        "operationId": "generate-ssd",
         "description": "Generate images in response to the given request.",
         "method": "POST",
         "path": [
@@ -13542,6 +13620,8 @@
         "namespace": [
           "subpackage_image-gen"
         ],
+        "displayName": "Generate ControlNet SDXL",
+        "operationId": "generate-controlnet-sdxl",
         "description": "Generate images in response to the given request.",
         "method": "POST",
         "path": [
@@ -15144,6 +15224,8 @@
         "namespace": [
           "subpackage_image-gen"
         ],
+        "displayName": "Generate ControlNet SD1.5",
+        "operationId": "generate-controlnet-sd-15",
         "description": "Generate images in response to the given request.",
         "method": "POST",
         "path": [
@@ -16746,6 +16828,8 @@
         "namespace": [
           "subpackage_image-gen"
         ],
+        "displayName": "Generate SDXL",
+        "operationId": "generate-sdxl",
         "description": "Generate images in response to the given request.",
         "method": "POST",
         "path": [
@@ -18348,6 +18432,8 @@
         "namespace": [
           "subpackage_image-gen"
         ],
+        "displayName": "Generate SD1.5",
+        "operationId": "generate-sd",
         "description": "Generate images in response to the given request.",
         "method": "POST",
         "path": [
@@ -19950,6 +20036,8 @@
         "namespace": [
           "subpackage_image-gen"
         ],
+        "displayName": "Generate SVD Animations",
+        "operationId": "generate-svd",
         "description": "Generate videos in response to the given request.",
         "method": "POST",
         "path": [
@@ -20791,6 +20879,8 @@
         "namespace": [
           "subpackage_text-gen"
         ],
+        "displayName": "Create Chat Completion",
+        "operationId": "create-chat-completion-stream",
         "description": "Create a Chat Completion.",
         "method": "POST",
         "path": [
@@ -22664,6 +22754,8 @@
         "namespace": [
           "subpackage_text-gen"
         ],
+        "displayName": "Create Chat Completion",
+        "operationId": "create-chat-completion",
         "description": "Create a Chat Completion.",
         "method": "POST",
         "path": [
@@ -24472,6 +24564,8 @@
         "namespace": [
           "subpackage_text-gen"
         ],
+        "displayName": "Create Completion",
+        "operationId": "create-completion-stream",
         "method": "POST",
         "path": [
           {
@@ -25796,6 +25890,8 @@
         "namespace": [
           "subpackage_text-gen"
         ],
+        "displayName": "Create Completion",
+        "operationId": "create-completion",
         "method": "POST",
         "path": [
           {

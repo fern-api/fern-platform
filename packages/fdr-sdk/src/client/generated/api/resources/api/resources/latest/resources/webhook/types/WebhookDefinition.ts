@@ -9,6 +9,8 @@ export interface WebhookDefinition
         FernRegistry.api.latest.WithAvailability,
         FernRegistry.api.latest.WithNamespace {
     id: FernRegistry.WebhookId;
+    displayName: string | undefined;
+    operationId: string | undefined;
     method: FernRegistry.api.latest.WebhookHttpMethod;
     path: string[];
     headers: FernRegistry.api.latest.ObjectProperty[] | undefined;

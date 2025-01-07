@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_tasks"
         ],
+        "displayName": "List video indexing tasks",
+        "operationId": "list",
         "description": "This method returns a list of the video indexing tasks in your account. The API returns your video indexing tasks sorted by creation date, with the newest at the top of the list.",
         "method": "GET",
         "path": [
@@ -961,6 +963,8 @@
         "namespace": [
           "subpackage_tasks"
         ],
+        "displayName": "Create a video indexing task",
+        "operationId": "create",
         "description": "This method creates a video indexing task that uploads and indexes a video.\nEnsure your video meets the requirements in the [Prerequisites](/docs/upload-single-videos#prerequisites) section of the **Upload single videos** page.\n\nUpload options:\n\n- **Local file**: Use the `video_file` parameter.\n- **Publicly accessible URL**: Use the `video_url` parameter.\n\n**NOTES**:\n\n- The platform supports video URLs that can play without additional user interaction or custom video players. Ensure your URL points to the raw video file, not a web page containing the video. Links to third-party hosting sites, cloud storage services, or videos requiring extra steps to play are not supported.\n- This endpoint is rate-limited. For details, see the [Rate limits](/docs/rate-limits) page.",
         "method": "POST",
         "path": [
@@ -1663,6 +1667,8 @@
         "namespace": [
           "subpackage_tasks"
         ],
+        "displayName": "Retrieve a video indexing task",
+        "operationId": "retrieve",
         "description": "This method retrieves a video indexing task.",
         "method": "GET",
         "path": [
@@ -1984,6 +1990,8 @@
         "namespace": [
           "subpackage_tasks"
         ],
+        "displayName": "Delete a video indexing task",
+        "operationId": "delete",
         "description": "This action cannot be undone.\nNote the following about deleting a video indexing task:\n\n- You can only delete video indexing tasks for which the status is `ready` or `failed`.\n- If the status of your video indexing task is `ready`, you must first delete the video vector associated with your video indexing task by calling the [`DELETE`](/reference/delete-video-information) method of the `/indexes/videos` endpoint.",
         "method": "DELETE",
         "path": [
@@ -2263,6 +2271,8 @@
         "namespace": [
           "subpackage_tasks"
         ],
+        "displayName": "Retrieve tasks by status",
+        "operationId": "status",
         "description": "This method retrieves the number video indexing tasks in each status for the specified index.",
         "method": "GET",
         "path": [
@@ -2561,6 +2571,8 @@
         "namespace": [
           "subpackage_tasks"
         ],
+        "displayName": "Transfers",
+        "operationId": "transfers",
         "method": "POST",
         "path": [
           {
@@ -2712,6 +2724,8 @@
         "namespace": [
           "subpackage_uploadVideos"
         ],
+        "displayName": "Import videos",
+        "operationId": "cloud-to-cloud-import-videos",
         "description": "An import represents the process of uploading and indexing all videos from the specified integration. This method initiates an asynchronous import and returns two lists:\n\n- Videos that will be imported.\n- Videos that will not be imported, typically due to unmet [prerequisites](/docs/upload-single-videos#prerequisites).\n\nThe actual uploading and indexing of videos occur asynchronously after you invoke this method. To monitor the status of each upload after invoking this method, use the [`GET`](/reference/cloud-to-cloud-retrieve-status) method of the `/tasks/transfers/import/{integration-id}/status` endpoint.\n\n**NOTES**:\n\n- Before importing videos, you must set up an integration. For details, see the [Set up an integration](/docs/upload-cloud#set-up-an-integration) section.\n- The videos you wish to upload must meet the requirements in the [Prerequisites](/docs/upload-single-videos#prerequisites) section of the **Upload single videos** page.",
         "method": "POST",
         "path": [
@@ -3113,6 +3127,8 @@
         "namespace": [
           "subpackage_uploadVideos"
         ],
+        "displayName": "Retrieve import status",
+        "operationId": "cloud-to-cloud-retrieve-status",
         "description": "This method retrieves the current status for each video from a specified integration and index. It returns an object containing lists of videos grouped by status. See the [Task object](/reference/the-task-object) page for details on each status.",
         "method": "GET",
         "path": [
@@ -3354,6 +3370,8 @@
         "namespace": [
           "subpackage_uploadVideos"
         ],
+        "displayName": "Retrieve import logs",
+        "operationId": "cloud-to-cloud-retrieve-import-logs",
         "description": "This endpoint returns a chronological list of import operations for the specified integration. The list is sorted by creation date, with the oldest imports first. Each item in the list contains:\n\n- The number of videos in each status\n- Detailed error information for failed uploads, including filenames and error messages.\n\nUse this endpoint to track import progress and troubleshoot potential issues across multiple operations.",
         "method": "GET",
         "path": [
@@ -3550,6 +3568,8 @@
         "namespace": [
           "subpackage_indexes"
         ],
+        "displayName": "List indexes",
+        "operationId": "list",
         "description": "This method returns a list of the indexes in your account. The API returns indexes sorted by creation date, with the oldest indexes at the top of the list.",
         "method": "GET",
         "path": [
@@ -4439,6 +4459,8 @@
         "namespace": [
           "subpackage_indexes"
         ],
+        "displayName": "Create an index",
+        "operationId": "create",
         "description": "This method creates an index.",
         "method": "POST",
         "path": [
@@ -5007,6 +5029,8 @@
         "namespace": [
           "subpackage_indexes"
         ],
+        "displayName": "Retrieve an index",
+        "operationId": "retrieve",
         "description": "This method retrieves details about the specified index.",
         "method": "GET",
         "path": [
@@ -5334,6 +5358,8 @@
         "namespace": [
           "subpackage_indexes"
         ],
+        "displayName": "Update an index",
+        "operationId": "update",
         "description": "This method updates the name of the specified index.",
         "method": "PUT",
         "path": [
@@ -5692,6 +5718,8 @@
         "namespace": [
           "subpackage_indexes"
         ],
+        "displayName": "Delete an index",
+        "operationId": "delete",
         "description": "This method deletes the specified index and all the videos within it. This action cannot be undone.",
         "method": "DELETE",
         "path": [
@@ -5971,6 +5999,8 @@
         "namespace": [
           "subpackage_summarize"
         ],
+        "displayName": "Summaries, chapters, or highlights",
+        "operationId": "create",
         "description": "This endpoint generates summaries, chapters, or highlights for your videos. Optionally, you can provide a prompt to customize the output.\n\n**NOTE**: This endpoint is rate-limited. For details, see the [Rate limits](/docs/rate-limits) page.",
         "method": "POST",
         "path": [
@@ -6494,6 +6524,8 @@
         "namespace": [
           "subpackage_generate"
         ],
+        "displayName": "Open-ended texts",
+        "operationId": "create",
         "description": "This endpoint generates open-ended texts based on your videos, including but not limited to tables of content, action items, memos, and detailed analyses.\n\n**NOTES**:\n\n- This endpoint is rate-limited. For details, see the [Rate limits](/docs/rate-limits) page.\n- This endpoint supports streaming responses. For details on integrating this feature into your application, refer to the [Streaming response](/docs/streaming-responses) guide.",
         "method": "POST",
         "path": [
@@ -7162,6 +7194,8 @@
         "namespace": [
           "subpackage_embed"
         ],
+        "displayName": "Create embeddings for text, image, and audio",
+        "operationId": "create",
         "description": "This method creates embedings for text, image, and audio content.\n\nBefore you create an embedding, ensure that the following prerequisites are met:\n\n- [Text embeddings](/docs/create-text-embeddings#prerequisites)\n- [Image embeddings](/docs/create-image-embeddings#prerequisites)\n- [Audio embeddings](/docs/create-audio-embeddings#prerequisites)\n\nParameters for embeddings:\n\n- **Common parameters**:\n  - `engine_name`: The video understanding engine you want to use. Example: \"Marengo-retrieval-2.6\".\n- **Text embeddings**:\n  - `text`: Text for which to create an embedding.\n- **Image embeddings**:\n  Provide one of the following:\n  - `image_url`: Publicly accessible URL of your image file.\n  - `image_file`: Local image file.\n- **Audio embeddings**:\n  Provide one of the following:\n  - `audio_url`: Publicly accessible URL of your audio file.\n  - `audio_file`: Local audio file.\n\n**NOTES**:\n\n- The “Marengo-retrieval-2.6” video understanding engine generates embeddings for all modalities in the same latent space. This shared space enables any-to-any searches across different types of content.\n- You can create multiple types of embeddings in a single API call.\n- Audio embeddings combine generic sound and human speech in a single embedding. For videos with transcriptions, you can [retrieve transcriptions](/reference/retrieve-transcription) and then [create text embeddings](/reference/create-text-embedding) from these transcriptions.\n\n> 🚧 Important\n> The response includes breaking changes that might require updates to your application code.\n> **Common changes**:\n>\n> - The `is_success` boolean flag has been removed.\n>   **Media-specific changes**:\n> - **Text**:The response now includes a nested array named `segments`.\n> - **Image**: The response now includes a nested array named `segments`.\n> - **Audio**: No additional changes.",
         "method": "POST",
         "path": [
@@ -7787,6 +7821,8 @@
         "namespace": [
           "subpackage_search"
         ],
+        "displayName": "Make any-to-video search requests",
+        "operationId": "query",
         "description": "Use this endpoint to search for relevant matches in an index using text or various media queries.\n\n**Text queries**:\n\n- Use the `query_text` parameter to specify your query.\n\n**Media queries**:\n\n- Set the `query_media_type` parameter to the corresponding media type (example: `image`).\n- Specify either one of the following parameters:\n  - `query_media_url`: Publicly accessible URL of your media file.\n  - `query_media_file`: Local media file.\n    If both `query_media_url` and `query_media_file` are specified in the same request, `query_media_url` takes precedence.\n\nBefore using a media file as a query, ensure that the file meets the [prerequisites](/docs/single-queries-prerequisites).\n\n**NOTE**: This endpoint is rate-limited. For details, see the [Rate limits](/docs/rate-limits) page.",
         "method": "POST",
         "path": [
@@ -9067,6 +9103,8 @@
         "namespace": [
           "subpackage_search"
         ],
+        "displayName": "Retrieve a specific page of search results",
+        "operationId": "retrieve",
         "description": "Use this endpoint to retrieve a specific page of search results.\n\n**NOTE**: When you use pagination, you will not be charged for retrieving subsequent pages of results.",
         "method": "GET",
         "path": [
@@ -9396,6 +9434,8 @@
         "namespace": [
           "subpackage_gist"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -9580,6 +9620,8 @@
         "namespace": [
           "subpackage_embedNew"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -9852,6 +9894,8 @@
           "subpackage_embed",
           "subpackage_embed/tasks"
         ],
+        "displayName": "List video embedding tasks",
+        "operationId": "list",
         "description": "This method returns a list of the video embedding tasks in your account. The platform returns your video embedding tasks sorted by creation date, with the newest at the top of the list.\n\n**NOTES**:\n\n- Video embeddings are stored for seven days\n- When you invoke this method without specifying the `started_at` and `ended_at` parameters, the platform returns all the video embedding tasks created within the last seven days.",
         "method": "GET",
         "path": [
@@ -10417,6 +10461,8 @@
           "subpackage_embed",
           "subpackage_embed/tasks"
         ],
+        "displayName": "Create a video embedding task",
+        "operationId": "create",
         "description": "This method creates a new video embedding task that uploads a video to the platform and creates one or multiple video embeddings.\n\nEnsure your video meets the requirements in the [Prerequisites](/docs/create-video-embeddings#prerequisites) section of the **Create video embeddings** page.\n\nUpload options:\n\n- **Local file**: Use the `video_file` parameter\n- **Publicly accessible URL**: Use the `video_url` parameter.\n\nSpecify at least one option. If both are provided, `video_url` takes precedence.\n\n**NOTES**:\n\n- The “Marengo-retrieval-2.6” video understanding engine generates embeddings for all modalities in the same latent space. This shared space enables any-to-any searches across different types of content.\n- Video embeddings are stored for seven days.\n- The platform supports uploading video files that can play without additional user interaction or custom video players. Ensure your URL points to the raw video file, not a web page containing the video. Links to third-party hosting sites, cloud storage services, or videos requiring extra steps to play are not supported.",
         "method": "POST",
         "path": [
@@ -11083,6 +11129,8 @@
           "subpackage_embed",
           "subpackage_embed/tasks"
         ],
+        "displayName": "Retrieve video embeddings",
+        "operationId": "retrieve",
         "description": "This method retrieves embeddings for a specific video embedding task. Ensure the task status is `ready` before invoking this method. Refer to the [Retrieve a video embedding](/reference/retrieve-video-embeding-task) task page for instructions on checking the task status.\n\n> 🚧 Important\n> The response includes breaking changes that might require updates to your application code. Key differences:\n>\n> - The `video_embeddings` field has been renamed to `video_embedding` (plural to singular)\n> - The response now includes a nested array named `segments`.\n\n- The `metadata` field is now nested under `video_embedding`.",
         "method": "GET",
         "path": [
@@ -11435,6 +11483,8 @@
           "subpackage_embed/tasks",
           "subpackage_embed/tasks/status"
         ],
+        "displayName": "Retrieve the status of a video embedding task",
+        "operationId": "retrieve",
         "description": "This method retrieves the status of a video embedding task. Check the task status of a video embedding task to determine when you can retrieve the embedding.\n\nA task can have one of the following statuses:\n\n- `processing`: The platform is creating the embeddings.\n- `ready`: Processing is complete. Retrieve the embeddings by invoking the [`GET`](/reference/retrieve-video-embeding) method of the `/embed/tasks/{task_id} endpoint`.\n- `failed`: The task could not be completed, and the embeddings haven't been created.",
         "method": "GET",
         "path": [
@@ -11749,6 +11799,8 @@
           "subpackage_indexes",
           "subpackage_indexes/videos"
         ],
+        "displayName": "List videos",
+        "operationId": "list",
         "description": "This method returns a list of the videos in the specified index. By default, the API returns your videos sorted by creation date, with the newest at the top of the list.",
         "method": "GET",
         "path": [
@@ -13007,6 +13059,8 @@
           "subpackage_indexes",
           "subpackage_indexes/videos"
         ],
+        "displayName": "Retrieve video information",
+        "operationId": "retrieve",
         "description": "This method retrieves information about the specified video.\n\n> 🚧 Important\n> When retrieving video embeddings, the response includes breaking changes that might require updates to your application code. Key differences:\n>\n> - The `video_embeddings` field has been renamed to `video_embedding` (plural to singular)\n> - The response now includes a nested array named `segments`.",
         "method": "GET",
         "path": [
@@ -13411,6 +13465,8 @@
           "subpackage_indexes",
           "subpackage_indexes/videos"
         ],
+        "displayName": "Update video information",
+        "operationId": "update",
         "description": "Use this method to update the title and the metadata of a video.",
         "method": "PUT",
         "path": [
@@ -13971,6 +14027,8 @@
           "subpackage_indexes",
           "subpackage_indexes/videos"
         ],
+        "displayName": "Delete video information",
+        "operationId": "delete",
         "description": "This method deletes all the information about the specified video This action cannot be undone.",
         "method": "DELETE",
         "path": [

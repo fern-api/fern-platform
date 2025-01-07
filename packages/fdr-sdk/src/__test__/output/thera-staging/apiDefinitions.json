@@ -9,6 +9,8 @@
           "subpackage_api/aiprise",
           "subpackage_api/aiprise/aiprise_webhook_api"
         ],
+        "displayName": "Verify User Callback",
+        "operationId": "verify",
         "description": "Not to be used by FE. AiPrise calls this API automatically.",
         "method": "POST",
         "path": [
@@ -75,6 +77,8 @@
           "subpackage_api/dev",
           "subpackage_api/dev/dev"
         ],
+        "displayName": "Upload Eor",
+        "operationId": "upload-eor",
         "method": "POST",
         "path": [
           {
@@ -165,6 +169,8 @@
           "subpackage_api/services",
           "subpackage_api/services/file"
         ],
+        "displayName": "Attach Document To Employment",
+        "operationId": "attach-document-to-employment",
         "method": "POST",
         "path": [
           {
@@ -275,6 +281,8 @@
           "subpackage_api/services",
           "subpackage_api/services/file"
         ],
+        "displayName": "Delete Document From Employment",
+        "operationId": "delete-document-from-employment",
         "method": "DELETE",
         "path": [
           {
@@ -387,6 +395,8 @@
           "subpackage_api/services",
           "subpackage_api/services/file"
         ],
+        "displayName": "Load Generic Document From Employment",
+        "operationId": "load-generic-document-from-employment",
         "method": "GET",
         "path": [
           {
@@ -492,6 +502,8 @@
           "subpackage_api/services",
           "subpackage_api/services/file"
         ],
+        "displayName": "Load Payslip From Eor Employment",
+        "operationId": "load-payslip-from-eor-employment",
         "method": "GET",
         "path": [
           {
@@ -597,6 +609,8 @@
           "subpackage_api/services",
           "subpackage_api/services/file"
         ],
+        "displayName": "Load Pay In From Eor Employment",
+        "operationId": "load-pay-in-from-eor-employment",
         "method": "GET",
         "path": [
           {
@@ -703,6 +717,8 @@
           "subpackage_api/thera/accounting",
           "subpackage_api/thera/accounting/accounting_api"
         ],
+        "displayName": "Change Accounting Integration Setting",
+        "operationId": "change-accounting-integration-setting",
         "method": "PUT",
         "path": [
           {
@@ -836,6 +852,8 @@
           "subpackage_api/thera/accounting",
           "subpackage_api/thera/accounting/accounting_api"
         ],
+        "displayName": "Get Company Accounting Integrations Info",
+        "operationId": "get-accounting-integrations-info",
         "method": "GET",
         "path": [
           {
@@ -928,6 +946,8 @@
           "subpackage_api/thera/accounting",
           "subpackage_api/thera/accounting/accounting_api"
         ],
+        "displayName": "Get Company Accounting Mapping Details",
+        "operationId": "get-company-accounting-mapping-details",
         "method": "GET",
         "path": [
           {
@@ -1017,6 +1037,8 @@
           "subpackage_api/thera/accounting",
           "subpackage_api/thera/accounting/accounting_api"
         ],
+        "displayName": "Complete Accounting Integration Auth",
+        "operationId": "complete-accounting-integration-auth",
         "method": "POST",
         "path": [
           {
@@ -1109,6 +1131,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Plaid Bank Account Details",
+        "operationId": "get-plaid-bank-details",
         "description": "Get Plaid Bank Account Details (employer/admin's bank account status). Contains Status, etc",
         "method": "GET",
         "path": [
@@ -1197,6 +1221,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Generate Plaid Update Flow Link Token",
+        "operationId": "generate-plaid-update-flow-link-token",
         "method": "POST",
         "path": [
           {
@@ -1322,6 +1348,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Generate Bank Signup Token",
+        "operationId": "generate-bank-signup",
         "description": "Get Plaid's link-token",
         "method": "POST",
         "path": [
@@ -1422,6 +1450,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Complete Bank Signup",
+        "operationId": "complete-bank-signup",
         "description": "Calling this API to signify that company's bank account has been provided to Plaid",
         "method": "POST",
         "path": [
@@ -1481,6 +1511,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Re-attach Stripe Mandate",
+        "operationId": "reattach-stripe-mandate",
         "description": "Calling this API to re-attach Stripe Mandate",
         "method": "POST",
         "path": [
@@ -1540,6 +1572,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Payment Methods",
+        "operationId": "get-payment-methods",
         "description": "Gets a company's payment methods",
         "method": "GET",
         "path": [
@@ -1634,6 +1668,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Delete Payment Method",
+        "operationId": "delete-payment-method",
         "description": "Delete a company's payment method",
         "method": "DELETE",
         "path": [
@@ -1716,6 +1752,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Choose W2 Payment Method",
+        "operationId": "choose-w-2-payment-method",
         "description": "Select the payment method that should be used for this company's W2 payroll",
         "method": "POST",
         "path": [
@@ -1802,6 +1840,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Verify Bank Signup",
+        "operationId": "verify-bank-signup",
         "description": "Used for Manual Verification. Calling this API to check in Plaid if the account has been verified",
         "method": "POST",
         "path": [
@@ -1929,6 +1969,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Set Autopay",
+        "operationId": "set-auto-pay",
         "description": "Adjust autopay settings for a given team",
         "method": "POST",
         "path": [
@@ -2063,6 +2105,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Withdrawal Method Currencies",
+        "operationId": "get-withdrawal-method-currencies",
         "description": "Get the Supported Currencies for Each Withdrawal Method",
         "method": "GET",
         "path": [
@@ -2152,6 +2196,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Bank Transfer Currencies By Country",
+        "operationId": "get-bank-transfer-currencies-by-country",
         "description": "Get the Supported Currencies for Bank Transfer Withdrawals by Country",
         "method": "GET",
         "path": [
@@ -2216,6 +2262,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Withdrawal Limits By Method",
+        "operationId": "get-withdrawal-limits-by-method",
         "description": "Get the minimum and maximum amount that can be withdrawn for a given currency to avoid incurring silly fees or not meeting\nprovider limits.",
         "method": "GET",
         "path": [
@@ -2349,6 +2397,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Withdrawal Minimum By Currency (DEPRECATED SOON)",
+        "operationId": "get-withdrawal-minimum-by-currency",
         "description": "Get the minimum amount that must be withdrawn for a given currency to avoid incurring silly fees.\nWill be deprecated shortly in favor of `getWithdrawalMinimumByMethod`.",
         "method": "GET",
         "path": [
@@ -2423,6 +2473,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Withdrawal Minimum By Method",
+        "operationId": "get-withdrawal-minimum-by-method",
         "description": "Get the minimum amount that must be withdrawn for a given currency to avoid incurring silly fees or not meeting\nprovider minimums.",
         "method": "GET",
         "path": [
@@ -2555,6 +2607,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Supported Withdrawal Methods",
+        "operationId": "get-supported-withdrawal-methods",
         "description": "This endpoint should be used to dynamically create a form that allows a worker to enter their withdrawal method information. The user should initially be prompted to provide their `currency`. FE should then pass this with user's address that we've already saved in their `employeeInformation` for `recipientAddress`, and the user's first name and last name for `accountHolderName`. A response will be returned a list of `type`s that the user should select from, then provide the corresponding `details` for in the form. This is the same response returned by [this endpoint] (https://docs.wise.com/api-docs/api-reference/recipient#account-requirements) in Wise. These `details` should continue to be posted to this endpoint whenever a field with `refreshRequirementsOnChange = true` is changed to get the most up to date requirements, just like the Wise endpoint.",
         "method": "POST",
         "path": [
@@ -2681,6 +2735,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Save Withdrawal Methods",
+        "operationId": "save-withdrawal-method",
         "description": "After gathering all the dynamic fields required for the `Get Supported Withdrawal Methods`, they should be submitted here in order to save the payment method.",
         "method": "POST",
         "path": [
@@ -2810,6 +2866,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Delete Withdrawal Methods",
+        "operationId": "delete-withdrawal-method",
         "method": "DELETE",
         "path": [
           {
@@ -2906,6 +2964,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Edit Withdrawal Methods",
+        "operationId": "edit-withdrawal-method",
         "method": "PATCH",
         "path": [
           {
@@ -3031,6 +3091,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Withdrawal Preview",
+        "operationId": "get-worker-withdrawal-preview",
         "method": "POST",
         "path": [
           {
@@ -3157,6 +3219,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Initiate Worker Withdrawal",
+        "operationId": "initiate-worker-withdrawal",
         "method": "POST",
         "path": [
           {
@@ -3278,6 +3342,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Balance",
+        "operationId": "get-worker-balance",
         "method": "GET",
         "path": [
           {
@@ -3386,6 +3452,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Transactions",
+        "operationId": "get-worker-transactions",
         "method": "GET",
         "path": [
           {
@@ -3504,6 +3572,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Worker Transactions",
+        "operationId": "get-worker-withdrawal-delivery-estimate",
         "method": "GET",
         "path": [
           {
@@ -3581,6 +3651,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Pay in History",
+        "operationId": "get-pay-in-history",
         "method": "GET",
         "path": [
           {
@@ -3727,6 +3799,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Pay In Details",
+        "operationId": "get-pay-in-details",
         "method": "GET",
         "path": [
           {
@@ -3868,6 +3942,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Delete Off Platform Payment",
+        "operationId": "delete-off-platform-payment",
         "description": "Deletes an off platform pay in. Intended to be used when client made a mistake and didn't mean to initiate\nthis particular off platform payment. Only pending off platform payments can be deleted, and requires the\nsame permissions as paying all of the invoices.",
         "method": "DELETE",
         "path": [
@@ -3965,6 +4041,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Get Currency Conversion",
+        "operationId": "get-currency-conversion",
         "method": "GET",
         "path": [
           {
@@ -4065,6 +4143,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Set Auto-Withdrawals for Worker",
+        "operationId": "set-auto-withdrawals",
         "method": "POST",
         "path": [
           {
@@ -4193,6 +4273,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Create Check Payment Method from Plaid",
+        "operationId": "create-check-payment-method-from-plaid",
         "method": "POST",
         "path": [
           {
@@ -4261,6 +4343,8 @@
           "subpackage_api/thera/bank",
           "subpackage_api/thera/bank/bank_api"
         ],
+        "displayName": "Create Stripe Payment Method from Plaid",
+        "operationId": "create-stripe-payment-method-from-plaid",
         "method": "POST",
         "path": [
           {
@@ -4347,6 +4431,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Get Monite Token",
+        "operationId": "get-monite-token",
         "description": "",
         "method": "POST",
         "path": [
@@ -4463,6 +4549,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Create Contract",
+        "operationId": "invite-contractor",
         "description": "Invite Contractor or Create Contract",
         "method": "POST",
         "path": [
@@ -4816,6 +4904,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Invite Manager",
+        "operationId": "invite-manager",
         "description": "Invite manager to the platform",
         "method": "POST",
         "path": [
@@ -5011,6 +5101,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Edit Manager Roles",
+        "operationId": "edit-manager-roles",
         "description": "Edit the teams / roles that the manager belongs to. If no team role is provided, their role is removed for that team.",
         "method": "POST",
         "path": [
@@ -5186,6 +5278,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Edit Org Roles (Org Admins or Org Manager)",
+        "operationId": "edit-org-roles",
         "description": "Edit org admins with ultimate admin permissions across the platform or Org Managers. These users must already be managers of the org.",
         "method": "POST",
         "path": [
@@ -5385,6 +5479,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Remove Manager",
+        "operationId": "remove-manager",
         "description": "< Removes a manager from the org entirely, revoking all team and org level roles.",
         "method": "DELETE",
         "path": [
@@ -5482,6 +5578,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Change Contract Team",
+        "operationId": "change-contract-team",
         "description": "< Add org admins, with ultimate admin permissions across the platform. These users must already be managers of the org.",
         "method": "POST",
         "path": [
@@ -5624,6 +5722,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Get Teams For Company",
+        "operationId": "get-teams",
         "description": "Get all of the teams and their contracts for a company",
         "method": "GET",
         "path": [
@@ -5724,6 +5824,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Get Managers",
+        "operationId": "get-managers",
         "description": "Get all of the managers for a company",
         "method": "GET",
         "path": [
@@ -5977,6 +6079,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Create Team",
+        "operationId": "create-team",
         "description": "Create a team within a company. At least one Team Admin must be added.",
         "method": "POST",
         "path": [
@@ -6112,6 +6216,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Delete Team",
+        "operationId": "delete-team",
         "description": "Delete a team. All contracts must be removed from this team first",
         "method": "DELETE",
         "path": [
@@ -6209,6 +6315,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Edit Team",
+        "operationId": "edit-team",
         "description": "Change details related to a team. For now, you can just edit its name.",
         "method": "PATCH",
         "path": [
@@ -6334,6 +6442,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Get All Company Affiliations",
+        "operationId": "get-all-company-affiliations",
         "description": "Gets all team and org permissions across all orgs for a given user, along with the contracts on which they're the worker.",
         "method": "GET",
         "path": [
@@ -6814,6 +6924,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Check Can Create Account",
+        "operationId": "check-can-create-account",
         "description": "Check that a new user is authorized to create a new account. This is determined by an allow list that is stored in our db.",
         "method": "GET",
         "path": [
@@ -6888,6 +7000,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Add EOR Employee",
+        "operationId": "add-eor-employee",
         "description": "For now, just messages Slack with employee information. The rest is handled manually (nothing is persisted).",
         "method": "POST",
         "path": [
@@ -7006,6 +7120,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Get Contractor CSV",
+        "operationId": "get-contractor-csv",
         "description": "Get CSV with Details About Each Worker and Their Contracts",
         "method": "GET",
         "path": [
@@ -7109,6 +7225,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_api"
         ],
+        "displayName": "Get Contracts CSV",
+        "operationId": "get-contracts-csv",
         "description": "Get CSV with Details About Contracts Within a Date Range",
         "method": "GET",
         "path": [
@@ -7260,6 +7378,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_w2payroll_api"
         ],
+        "displayName": "Onboard W2 Payroll",
+        "operationId": "onboard-w-2-payroll",
         "description": "",
         "method": "POST",
         "path": [
@@ -7320,6 +7440,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_w2payroll_api"
         ],
+        "displayName": "Toggle W2 Payroll Onboarding Flow Complete",
+        "operationId": "toggle-w-2-payroll-onboarding-flow-complete",
         "description": "Sets the field `company.w2payroll.onboardingFlowComplete`. Should be called when Thera's multi step onboarding\nflow is completed.",
         "method": "POST",
         "path": [
@@ -7413,6 +7535,8 @@
           "subpackage_api/thera/company",
           "subpackage_api/thera/company/company_w2payroll_api"
         ],
+        "displayName": "Setup W2 Payroll",
+        "operationId": "setup-payroll",
         "description": "Call this API only after W2 company has finished onboarding, but hasn't finished setting up payroll yet.",
         "method": "POST",
         "path": [
@@ -7504,6 +7628,8 @@
           "subpackage_api/thera/contractor",
           "subpackage_api/thera/contractor/contractor_api"
         ],
+        "displayName": "Get US Contractors Tax Info API",
+        "operationId": "get-us-contractors-tax-info",
         "method": "GET",
         "path": [
           {
@@ -7609,6 +7735,8 @@
           "subpackage_api/thera/contractor",
           "subpackage_api/thera/contractor/contractor_api"
         ],
+        "displayName": "Update US Contractors Tax Info",
+        "operationId": "update-us-contractor-tax-info",
         "method": "PUT",
         "path": [
           {
@@ -7753,6 +7881,8 @@
           "subpackage_api/thera/contractor",
           "subpackage_api/thera/contractor/contractor_api"
         ],
+        "displayName": "Onboard Contractors Via CSV",
+        "operationId": "onboard-contractors-csv",
         "method": "POST",
         "path": [
           {
@@ -7924,6 +8054,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_api"
         ],
+        "displayName": "Upload CSV Invoice",
+        "operationId": "upload-csv-invoice",
         "method": "POST",
         "path": [
           {
@@ -8087,6 +8219,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_api"
         ],
+        "displayName": "Create Disbursement",
+        "operationId": "create-disbursement",
         "description": "For the response type, please check Swagger. Info for the Invoice Work Unit type: 1. `workUnitTotal` is used to replace `hours`. 2. Check the WageType of Invoice in the Contract API to know if it's hourly, daily or weekly invoice.",
         "method": "POST",
         "path": [
@@ -8167,6 +8301,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_api"
         ],
+        "displayName": "Approve Invoice",
+        "operationId": "approve-invoice",
         "description": "Approve Invoice",
         "method": "POST",
         "path": [
@@ -8232,6 +8368,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_api"
         ],
+        "displayName": "Create Invoice Deduction",
+        "operationId": "create-invoice-deduction",
         "description": "Add a deduction to an invoice.",
         "method": "POST",
         "path": [
@@ -8330,6 +8468,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_api"
         ],
+        "displayName": "Delete Invoice Deduction",
+        "operationId": "delete-invoice-deduction",
         "description": "Delete a deduction to an invoice.",
         "method": "DELETE",
         "path": [
@@ -8426,6 +8566,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_api"
         ],
+        "displayName": "Get Invoices CSV",
+        "operationId": "get-invoices-csv",
         "description": "Retrieve invoices as CSV within a specified date range",
         "method": "GET",
         "path": [
@@ -8575,6 +8717,8 @@
           "subpackage_api/thera/disbursement",
           "subpackage_api/thera/disbursement/disbursement_webhook_api"
         ],
+        "displayName": "Invoice Webhook",
+        "operationId": "invoice-webhook",
         "description": "Calling this API will trigger automatic creation of invoices that need to be created",
         "method": "POST",
         "path": [
@@ -8663,6 +8807,8 @@
           "subpackage_api/thera/document",
           "subpackage_api/thera/document/document_api"
         ],
+        "displayName": "Get US IRS W9 Document API",
+        "operationId": "get-w-9-document",
         "method": "GET",
         "path": [
           {
@@ -8733,6 +8879,8 @@
           "subpackage_api/thera/document",
           "subpackage_api/thera/document/document_api"
         ],
+        "displayName": "Get US IRS 1099-NEC Document Metadata",
+        "operationId": "get-us-irs-1099-nec-document",
         "method": "GET",
         "path": [
           {
@@ -8897,6 +9045,8 @@
           "subpackage_api/thera/document",
           "subpackage_api/thera/document/document_api"
         ],
+        "displayName": "Bulk File US IRS 1099-NEC Documents",
+        "operationId": "bulk-file-us-irs-1099-nec-document",
         "method": "POST",
         "path": [
           {
@@ -9037,6 +9187,8 @@
           "subpackage_api/thera/email",
           "subpackage_api/thera/email/email_api"
         ],
+        "displayName": "Send Login Email",
+        "operationId": "send-login-email",
         "method": "POST",
         "path": [
           {
@@ -9095,6 +9247,8 @@
           "subpackage_api/thera/email",
           "subpackage_api/thera/email/email_api"
         ],
+        "displayName": "Change User's Email",
+        "operationId": "update-user-email",
         "description": "Change User's Email by userId",
         "method": "PUT",
         "path": [
@@ -9188,6 +9342,8 @@
           "subpackage_api/thera/employment",
           "subpackage_api/thera/employment/employment_api"
         ],
+        "displayName": "Delete Contract's Invoice Item Recurrence",
+        "operationId": "delete-invoice-item-recurrence",
         "method": "DELETE",
         "path": [
           {
@@ -9301,6 +9457,8 @@
           "subpackage_api/thera/employment",
           "subpackage_api/thera/employment/employment_api"
         ],
+        "displayName": "Estimate Contract",
+        "operationId": "estimate-contract",
         "description": "Get estimate for this contract (cycle date, list of cycles, etc) based on provided paycycle",
         "method": "POST",
         "path": [
@@ -9409,6 +9567,8 @@
           "subpackage_api/thera/employment",
           "subpackage_api/thera/employment/employment_api"
         ],
+        "displayName": "Hard Delete Contract",
+        "operationId": "delete-contract",
         "description": "Hard delete contract",
         "method": "DELETE",
         "path": [
@@ -9470,6 +9630,8 @@
           "subpackage_api/thera/employment",
           "subpackage_api/thera/employment/employment_api"
         ],
+        "displayName": "Cancel Contract Termination",
+        "operationId": "cancel-contract-termination",
         "description": "Cancel contract termination",
         "method": "POST",
         "path": [
@@ -9565,6 +9727,8 @@
           "subpackage_api/thera/employment",
           "subpackage_api/thera/employment/employment_api"
         ],
+        "displayName": "Get Pay Cycle",
+        "operationId": "get-pay-cycle",
         "description": "Get Cycle for this contract given a date",
         "method": "GET",
         "path": [
@@ -9665,6 +9829,8 @@
           "subpackage_api/thera/misc",
           "subpackage_api/thera/misc/misc"
         ],
+        "displayName": "Daily Cron",
+        "operationId": "regular-cron",
         "description": "Calling this API will trigger automatic payouts for all workers that have auto-withdrawals turned on. This cron may be re-used for other daily tasks in the future",
         "method": "POST",
         "path": [
@@ -9773,6 +9939,8 @@
           "subpackage_api/thera/misc",
           "subpackage_api/thera/misc/misc"
         ],
+        "displayName": "Auto Pay Cron",
+        "operationId": "auto-pay-cron",
         "description": "Calling this API will trigger automatic auto payment of invoices for all companies that have auto-pay turned on.",
         "method": "POST",
         "path": [
@@ -9827,6 +9995,8 @@
           "subpackage_api/thera/misc",
           "subpackage_api/thera/misc/misc"
         ],
+        "displayName": "Email Notification Cron",
+        "operationId": "auto-pay-email-notification-cron",
         "description": "Calling this API will trigger automatic email notifications for all companies that have auto-pay turned on.",
         "method": "POST",
         "path": [
@@ -9881,6 +10051,8 @@
           "subpackage_api/thera/misc",
           "subpackage_api/thera/misc/misc"
         ],
+        "displayName": "Contract Renewal Cron",
+        "operationId": "contract-renewal-cron",
         "description": "Calling this API will trigger a check for contracts that need renewal and notify the Slack TODO channel.",
         "method": "POST",
         "path": [
@@ -9954,6 +10126,8 @@
           "subpackage_api/thera/payroll",
           "subpackage_api/thera/payroll/offcycle_api"
         ],
+        "displayName": "Get Current Offcycle Checks",
+        "operationId": "get-current-off-cycle-checks",
         "description": "",
         "method": "GET",
         "path": [
@@ -10047,6 +10221,8 @@
           "subpackage_api/thera/payroll",
           "subpackage_api/thera/payroll/oncycle_api"
         ],
+        "displayName": "Approve Oncycle Checks",
+        "operationId": "approve-oncycle-checks",
         "description": "",
         "method": "POST",
         "path": [
@@ -10134,6 +10310,8 @@
           "subpackage_api/thera/payroll",
           "subpackage_api/thera/payroll/oncycle_api"
         ],
+        "displayName": "Get Oncycle Checks",
+        "operationId": "get-on-cycle-checks",
         "description": "",
         "method": "GET",
         "path": [
@@ -10226,6 +10404,8 @@
           "subpackage_api/thera/payroll",
           "subpackage_api/thera/payroll/oncycle_api"
         ],
+        "displayName": "Cancel Current Autopilot Payroll",
+        "operationId": "cancel-current-autopilot-payroll",
         "description": "",
         "method": "POST",
         "path": [
@@ -10291,6 +10471,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Associate Time Off Policy To Contractors",
+        "operationId": "associate-time-off-policy-to-contractor",
         "description": "Submit a list of complete contractors to be associated to the policy. Contractors not in the request are then automatically removed from the policy.",
         "method": "POST",
         "path": [
@@ -10396,6 +10578,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Request PTO For Contractor",
+        "operationId": "request-pto-for-contractor",
         "description": "",
         "method": "POST",
         "path": [
@@ -10506,6 +10690,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Add Timeoff Policy",
+        "operationId": "add-time-off-policy",
         "description": "Adds a timeoff policy to company",
         "method": "POST",
         "path": [
@@ -10609,6 +10795,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Get Timeoff Policy",
+        "operationId": "get-time-off-policy",
         "description": "Gets a timeoff policy from company",
         "method": "GET",
         "path": [
@@ -10723,6 +10911,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Update Timeoff Policy",
+        "operationId": "update-time-off-policy",
         "description": "Modifys a timeoff policy to company",
         "method": "PUT",
         "path": [
@@ -10843,6 +11033,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Deletes a Timeoff Policy",
+        "operationId": "delete-time-off-policy",
         "description": "Deletes a timeoff policy from company",
         "method": "DELETE",
         "path": [
@@ -10939,6 +11131,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Get All Contractors' Time Off by Company",
+        "operationId": "get-contractors-time-off-history-by-company",
         "description": "Get All Contractors' Time Offs by Company",
         "method": "GET",
         "path": [
@@ -11082,6 +11276,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Get Time Off History By Contractor",
+        "operationId": "get-time-off-history-by-contractor",
         "description": "Get Time Off History By Contractor",
         "method": "GET",
         "path": [
@@ -11205,6 +11401,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Get Contractor Policies' Details By Policy",
+        "operationId": "get-contractors-policies-details-by-policy",
         "description": "Get Contractor Policies' Details By Policy",
         "method": "GET",
         "path": [
@@ -11320,6 +11518,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Get Contractor's Policies Details",
+        "operationId": "get-contractors-policies-details-by-contractor",
         "description": "Get Contractor's Policies Details",
         "method": "GET",
         "path": [
@@ -11435,6 +11635,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Modify Time Off Status",
+        "operationId": "modify-time-off-status",
         "description": "Modify Time Off Status",
         "method": "POST",
         "path": [
@@ -11732,6 +11934,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Bulk Modify Time Off Statuses",
+        "operationId": "bulk-modify-time-off-statuses",
         "description": "Bulk Modify Time Off Statuses",
         "method": "POST",
         "path": [
@@ -11840,6 +12044,8 @@
           "subpackage_api/thera/timeoff",
           "subpackage_api/thera/timeoff/timeoff_api"
         ],
+        "displayName": "Update PTO For Contractor",
+        "operationId": "update-pto-for-contractor",
         "description": "Update PTO For Contractor",
         "method": "PUT",
         "path": [
@@ -11979,6 +12185,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Add Company Banking Details",
+        "operationId": "add-company-banking-details",
         "description": "Final step of company onboarding, if the company is using Thera banking.",
         "method": "POST",
         "path": [
@@ -12145,6 +12353,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Get NAICS Codes",
+        "operationId": "get-naics-codes",
         "description": "Get NAICS codes to be usd in the `addCompanyBankingDetails` endpoint.",
         "method": "GET",
         "path": [
@@ -12208,6 +12418,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Process payments to fbo accounts",
+        "operationId": "process-treasury-prime-payment",
         "description": "Process funds from company account to fbo account",
         "method": "POST",
         "path": [
@@ -12308,6 +12520,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Create TP counter party required for processing payments",
+        "operationId": "create-counter-party-for-banking",
         "description": "Create TP counter party required for processing payments, each payment method needs to have a counterparty before initiating payments",
         "method": "POST",
         "path": [
@@ -12404,6 +12618,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Get All Accounts for a Given Company",
+        "operationId": "get-tp-accounts-for-company",
         "description": "Get all tp accounts to display the account info by fe",
         "method": "GET",
         "path": [
@@ -12483,6 +12699,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Get a TP Account",
+        "operationId": "get-tp-account",
         "description": "Get a tp accounts to display the detailed account info",
         "method": "GET",
         "path": [
@@ -12579,6 +12797,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "transfer funds from FBO to omnibus account",
+        "operationId": "transfer-funds-to-omnibus-account",
         "description": "Transfer funds from FBO to omnibus account",
         "method": "POST",
         "path": [
@@ -12676,6 +12896,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Get all account Transactions",
+        "operationId": "transaction-history",
         "description": "Get all account Transactions",
         "method": "GET",
         "path": [
@@ -12805,6 +13027,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Get a detailed account transaction",
+        "operationId": "deatiled-tp-transaction",
         "description": "Get a detailed account transaction",
         "method": "GET",
         "path": [
@@ -12926,6 +13150,8 @@
           "subpackage_api/thera/tp",
           "subpackage_api/thera/tp/tp_api"
         ],
+        "displayName": "Use for sending funds to wise/dlocal from omnibus Account",
+        "operationId": "external-transfer-fund",
         "description": "Use for sending funds to wise/dlocal from omnibus Account",
         "method": "POST",
         "path": [
@@ -13018,6 +13244,8 @@
           "subpackage_api/thera/user",
           "subpackage_api/thera/user/user_api"
         ],
+        "displayName": "Set User Compliance Setting",
+        "operationId": "set-user-compliance-setting",
         "description": "Set User Compliance Setting (KYC and Compliance docs)",
         "method": "POST",
         "path": [
@@ -13118,6 +13346,8 @@
           "subpackage_api/thera/user",
           "subpackage_api/thera/user/user_api"
         ],
+        "displayName": "Get User Compliance Setting",
+        "operationId": "get-compliance-user-setting",
         "description": "Get Compliance User Setting (KYC and Compliance docs). How it works: 1. If ANY of the created contract has KYC or Compliance setting enabled, then the respective setting for that user will be considered as enabled. 2. If ALL of the contracts has KYC or Compliant Setting disabled, then the respective setting for that user is disabled In the future, this API will accept team ID.",
         "method": "GET",
         "path": [
@@ -13246,6 +13476,8 @@
           "subpackage_api/thera/user",
           "subpackage_api/thera/user/user_api"
         ],
+        "displayName": "Get User",
+        "operationId": "get-user",
         "description": "Get User API",
         "method": "GET",
         "path": [

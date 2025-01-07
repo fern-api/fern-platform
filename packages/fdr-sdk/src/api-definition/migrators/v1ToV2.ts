@@ -181,6 +181,8 @@ export class ApiDefinitionV1ToLatest {
     const toRet: V2.EndpointDefinition = {
       id,
       namespace,
+      displayName: v1.name,
+      operationId: v1.urlSlug.split("/").pop(),
       description: v1.description,
       availability: v1.availability,
       method: v1.method,
@@ -213,6 +215,8 @@ export class ApiDefinitionV1ToLatest {
     return {
       id,
       namespace,
+      displayName: v1.name,
+      operationId: v1.urlSlug.split("/").pop(),
       description: v1.description,
       availability: v1.availability,
       path: v1.path.parts.filter((part) => part.value !== ""),
@@ -236,6 +240,8 @@ export class ApiDefinitionV1ToLatest {
     return {
       id,
       namespace,
+      displayName: v1.name,
+      operationId: v1.urlSlug.split("/").pop(),
       description: v1.description,
       availability: undefined,
       method: v1.method,

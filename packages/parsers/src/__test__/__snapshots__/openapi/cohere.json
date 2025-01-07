@@ -2,8 +2,10 @@
   "id": "test-uuid-replacement",
   "endpoints": {
     "endpoint_.chat": {
-      "description": "Generates a text response to a user message.\nTo learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).\n",
       "id": "endpoint_.chat",
+      "description": "Generates a text response to a user message.\nTo learn how to use the Chat API and RAG follow our [Text Generation guides](https://docs.cohere.com/docs/chat-api).\n",
+      "displayName": "Chat",
+      "operationId": "chat",
       "method": "POST",
       "path": [
         {
@@ -1625,11 +1627,13 @@
       ]
     },
     "endpoint_v2.chat": {
+      "id": "endpoint_v2.chat",
       "description": "Generates a text response to a user message and streams it down, token by token. To learn how to use the Chat API with streaming follow our [Text Generation guides](https://docs.cohere.com/v2/docs/chat-api).\n\nFollow the [Migration Guide](https://docs.cohere.com/v2/docs/migrating-v1-to-v2) for instructions on moving from API v1 to API v2.\n",
       "namespace": [
         "v2"
       ],
-      "id": "endpoint_v2.chat",
+      "displayName": "Chat with the model",
+      "operationId": "chatv2",
       "method": "POST",
       "path": [
         {
@@ -2942,8 +2946,10 @@
       ]
     },
     "endpoint_.generate": {
-      "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates realistic text conditioned on a given input.\n",
       "id": "endpoint_.generate",
+      "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates realistic text conditioned on a given input.\n",
+      "displayName": "Generate",
+      "operationId": "generate",
       "method": "POST",
       "path": [
         {
@@ -3937,8 +3943,10 @@
       ]
     },
     "endpoint_.embed": {
-      "description": "This endpoint returns text and image embeddings. An embedding is a list of floating point numbers that captures semantic information about the content that it represents.\n\nEmbeddings can be used to create classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
       "id": "endpoint_.embed",
+      "description": "This endpoint returns text and image embeddings. An embedding is a list of floating point numbers that captures semantic information about the content that it represents.\n\nEmbeddings can be used to create classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
+      "displayName": "Embed",
+      "operationId": "embed",
       "method": "POST",
       "path": [
         {
@@ -7743,11 +7751,13 @@
       ]
     },
     "endpoint_v2.embed": {
+      "id": "endpoint_v2.embed",
       "description": "This endpoint returns text embeddings. An embedding is a list of floating point numbers that captures semantic information about the text that it represents.\n\nEmbeddings can be used to create text classifiers as well as empower semantic search. To learn more about embeddings, see the embedding page.\n\nIf you want to learn more how to use the embedding model, have a look at the [Semantic Search Guide](https://docs.cohere.com/docs/semantic-search).",
       "namespace": [
         "v2"
       ],
-      "id": "endpoint_v2.embed",
+      "displayName": "Embed",
+      "operationId": "embedv2",
       "method": "POST",
       "path": [
         {
@@ -11652,11 +11662,13 @@
       ]
     },
     "endpoint_embedJobs.list": {
+      "id": "endpoint_embedJobs.list",
       "description": "The list embed job endpoint allows users to view all embed jobs history for that specific user.",
       "namespace": [
         "embed-jobs"
       ],
-      "id": "endpoint_embedJobs.list",
+      "displayName": "List Embed Jobs",
+      "operationId": "list-embed-jobs",
       "method": "GET",
       "path": [
         {
@@ -12151,11 +12163,13 @@
       ]
     },
     "endpoint_embedJobs.create": {
+      "id": "endpoint_embedJobs.create",
       "description": "This API launches an async Embed job for a [Dataset](https://docs.cohere.com/docs/datasets) of type `embed-input`. The result of a completed embed job is new Dataset of type `embed-output`, which contains the original text entries and the corresponding embeddings.",
       "namespace": [
         "embed-jobs"
       ],
-      "id": "endpoint_embedJobs.create",
+      "displayName": "Create an Embed Job",
+      "operationId": "create-embed-job",
       "method": "POST",
       "path": [
         {
@@ -12708,11 +12722,13 @@
       ]
     },
     "endpoint_embedJobs.get": {
+      "id": "endpoint_embedJobs.get",
       "description": "This API retrieves the details about an embed job started by the same user.",
       "namespace": [
         "embed-jobs"
       ],
-      "id": "endpoint_embedJobs.get",
+      "displayName": "Fetch an Embed Job",
+      "operationId": "get-embed-job",
       "method": "GET",
       "path": [
         {
@@ -13226,11 +13242,13 @@
       ]
     },
     "endpoint_embedJobs.cancel": {
+      "id": "endpoint_embedJobs.cancel",
       "description": "This API allows users to cancel an active embed job. Once invoked, the embedding process will be terminated, and users will be charged for the embeddings processed up to the cancellation point. It's important to note that partial results will not be available to users after cancellation.",
       "namespace": [
         "embed-jobs"
       ],
-      "id": "endpoint_embedJobs.cancel",
+      "displayName": "Cancel an Embed Job",
+      "operationId": "cancel-embed-job",
       "method": "POST",
       "path": [
         {
@@ -13702,8 +13720,10 @@
       "examples": []
     },
     "endpoint_.rerank": {
-      "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
       "id": "endpoint_.rerank",
+      "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
+      "displayName": "Rerank",
+      "operationId": "rerank",
       "method": "POST",
       "path": [
         {
@@ -14527,11 +14547,13 @@
       ]
     },
     "endpoint_v2.rerank": {
+      "id": "endpoint_v2.rerank",
       "description": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
       "namespace": [
         "v2"
       ],
-      "id": "endpoint_v2.rerank",
+      "displayName": "Rerank",
+      "operationId": "rerankv2",
       "method": "POST",
       "path": [
         {
@@ -15262,8 +15284,10 @@
       ]
     },
     "endpoint_.classify": {
-      "description": "This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.\nNote: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.",
       "id": "endpoint_.classify",
+      "description": "This endpoint makes a prediction about which label fits the specified text inputs best. To make a prediction, Classify uses the provided `examples` of text + label pairs as a reference.\nNote: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) trained on classification examples don't require the `examples` parameter to be passed in explicitly.",
+      "displayName": "Classify",
+      "operationId": "classify",
       "method": "POST",
       "path": [
         {
@@ -16218,11 +16242,13 @@
       ]
     },
     "endpoint_datasets.list": {
+      "id": "endpoint_datasets.list",
       "description": "List datasets that have been created.",
       "namespace": [
         "datasets"
       ],
-      "id": "endpoint_datasets.list",
+      "displayName": "List Datasets",
+      "operationId": "list-datasets",
       "method": "GET",
       "path": [
         {
@@ -16825,11 +16851,13 @@
       ]
     },
     "endpoint_datasets.create": {
+      "id": "endpoint_datasets.create",
       "description": "Create a dataset by uploading a file. See ['Dataset Creation'](https://docs.cohere.com/docs/datasets#dataset-creation) for more information.",
       "namespace": [
         "datasets"
       ],
-      "id": "endpoint_datasets.create",
+      "displayName": "Create a Dataset",
+      "operationId": "create-dataset",
       "method": "POST",
       "path": [
         {
@@ -17535,11 +17563,13 @@
       ]
     },
     "endpoint_datasets.getUsage": {
+      "id": "endpoint_datasets.getUsage",
       "description": "View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.",
       "namespace": [
         "datasets"
       ],
-      "id": "endpoint_datasets.getUsage",
+      "displayName": "Get Dataset Usage",
+      "operationId": "get-dataset-usage",
       "method": "GET",
       "path": [
         {
@@ -18024,11 +18054,13 @@
       ]
     },
     "endpoint_datasets.get": {
+      "id": "endpoint_datasets.get",
       "description": "Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.",
       "namespace": [
         "datasets"
       ],
-      "id": "endpoint_datasets.get",
+      "displayName": "Get a Dataset",
+      "operationId": "get-dataset",
       "method": "GET",
       "path": [
         {
@@ -18531,11 +18563,13 @@
       ]
     },
     "endpoint_datasets.delete": {
+      "id": "endpoint_datasets.delete",
       "description": "Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.",
       "namespace": [
         "datasets"
       ],
-      "id": "endpoint_datasets.delete",
+      "displayName": "Delete a Dataset",
+      "operationId": "delete-dataset",
       "method": "DELETE",
       "path": [
         {
@@ -19018,8 +19052,10 @@
       ]
     },
     "endpoint_.summarize": {
-      "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates a summary in English for a given text.\n",
       "id": "endpoint_.summarize",
+      "description": "<Warning>\nThis API is marked as \"Legacy\" and is no longer maintained. Follow the [migration guide](https://docs.cohere.com/docs/migrating-from-cogenerate-to-cochat) to start using the Chat API.\n</Warning>\nGenerates a summary in English for a given text.\n",
+      "displayName": "Summarize",
+      "operationId": "summarize",
       "method": "POST",
       "path": [
         {
@@ -19796,8 +19832,10 @@
       ]
     },
     "endpoint_.tokenize": {
-      "description": "This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.",
       "id": "endpoint_.tokenize",
+      "description": "This endpoint splits input text into smaller units called tokens using byte-pair encoding (BPE). To learn more about tokenization and byte pair encoding, see the tokens page.",
+      "displayName": "Tokenize",
+      "operationId": "tokenize",
       "method": "POST",
       "path": [
         {
@@ -20487,8 +20525,10 @@
       ]
     },
     "endpoint_.detokenize": {
-      "description": "This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.",
       "id": "endpoint_.detokenize",
+      "description": "This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.",
+      "displayName": "Detokenize",
+      "operationId": "detokenize",
       "method": "POST",
       "path": [
         {
@@ -21125,11 +21165,13 @@
       ]
     },
     "endpoint_connectors.list": {
+      "id": "endpoint_connectors.list",
       "description": "Returns a list of connectors ordered by descending creation date (newer first). See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.",
       "namespace": [
         "connectors"
       ],
-      "id": "endpoint_connectors.list",
+      "displayName": "List Connectors",
+      "operationId": "list-connectors",
       "method": "GET",
       "path": [
         {
@@ -21643,11 +21685,13 @@
       ]
     },
     "endpoint_connectors.create": {
+      "id": "endpoint_connectors.create",
       "description": "Creates a new connector. The connector is tested during registration and will cancel registration when the test is unsuccessful. See ['Creating and Deploying a Connector'](https://docs.cohere.com/v1/docs/creating-and-deploying-a-connector) for more information.",
       "namespace": [
         "connectors"
       ],
-      "id": "endpoint_connectors.create",
+      "displayName": "Create a Connector",
+      "operationId": "create-connector",
       "method": "POST",
       "path": [
         {
@@ -22184,11 +22228,13 @@
       ]
     },
     "endpoint_connectors.get": {
+      "id": "endpoint_connectors.get",
       "description": "Retrieve a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
       "namespace": [
         "connectors"
       ],
-      "id": "endpoint_connectors.get",
+      "displayName": "Get a Connector",
+      "operationId": "get-connector",
       "method": "GET",
       "path": [
         {
@@ -22681,11 +22727,13 @@
       ]
     },
     "endpoint_connectors.update": {
+      "id": "endpoint_connectors.update",
       "description": "Update a connector by ID. Omitted fields will not be updated. See ['Managing your Connector'](https://docs.cohere.com/docs/managing-your-connector) for more information.",
       "namespace": [
         "connectors"
       ],
-      "id": "endpoint_connectors.update",
+      "displayName": "Update a Connector",
+      "operationId": "update-connector",
       "method": "PATCH",
       "path": [
         {
@@ -23245,11 +23293,13 @@
       ]
     },
     "endpoint_connectors.delete": {
+      "id": "endpoint_connectors.delete",
       "description": "Delete a connector by ID. See ['Connectors'](https://docs.cohere.com/docs/connectors) for more information.",
       "namespace": [
         "connectors"
       ],
-      "id": "endpoint_connectors.delete",
+      "displayName": "Delete a Connector",
+      "operationId": "delete-connector",
       "method": "DELETE",
       "path": [
         {
@@ -23735,11 +23785,13 @@
       ]
     },
     "endpoint_connectors.oAuthAuthorize": {
+      "id": "endpoint_connectors.oAuthAuthorize",
       "description": "Authorize the connector with the given ID for the connector oauth app.  See ['Connector Authentication'](https://docs.cohere.com/docs/connector-authentication) for more information.",
       "namespace": [
         "connectors"
       ],
-      "id": "endpoint_connectors.oAuthAuthorize",
+      "displayName": "Authorize with oAuth",
+      "operationId": "oAuthAuthorize-connector",
       "method": "POST",
       "path": [
         {
@@ -24264,11 +24316,13 @@
       ]
     },
     "endpoint_models.get": {
+      "id": "endpoint_models.get",
       "description": "Returns the details of a model, provided its name.",
       "namespace": [
         "models"
       ],
-      "id": "endpoint_models.get",
+      "displayName": "Get a Model",
+      "operationId": "get-model",
       "method": "GET",
       "path": [
         {
@@ -24785,11 +24839,13 @@
       ]
     },
     "endpoint_models.list": {
+      "id": "endpoint_models.list",
       "description": "Returns a list of models available for use. The list contains models from Cohere as well as your fine-tuned models.",
       "namespace": [
         "models"
       ],
-      "id": "endpoint_models.list",
+      "displayName": "List Models",
+      "operationId": "list-models",
       "method": "GET",
       "path": [
         {
@@ -25322,8 +25378,10 @@
       ]
     },
     "endpoint_.checkAPIKey": {
-      "description": "Checks that the api key in the Authorization header is valid and active\n",
       "id": "endpoint_.checkAPIKey",
+      "description": "Checks that the api key in the Authorization header is valid and active\n",
+      "displayName": "Check API key",
+      "operationId": "checkAPIKey",
       "method": "POST",
       "path": [
         {
@@ -25835,10 +25893,12 @@
       ]
     },
     "endpoint_finetuning.ListFinetunedModels": {
+      "id": "endpoint_finetuning.ListFinetunedModels",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.ListFinetunedModels",
+      "displayName": "Lists fine-tuned models.",
+      "operationId": "ListFinetunedModels",
       "method": "GET",
       "path": [
         {
@@ -26130,10 +26190,12 @@
       ]
     },
     "endpoint_finetuning.CreateFinetunedModel": {
+      "id": "endpoint_finetuning.CreateFinetunedModel",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.CreateFinetunedModel",
+      "displayName": "Trains and deploys a fine-tuned model.",
+      "operationId": "CreateFinetunedModel",
       "method": "POST",
       "path": [
         {
@@ -26429,10 +26491,12 @@
       ]
     },
     "endpoint_finetuning.GetFinetunedModel": {
+      "id": "endpoint_finetuning.GetFinetunedModel",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.GetFinetunedModel",
+      "displayName": "Returns a fine-tuned model by ID.",
+      "operationId": "GetFinetunedModel",
       "method": "GET",
       "path": [
         {
@@ -26684,10 +26748,12 @@
       ]
     },
     "endpoint_finetuning.UpdateFinetunedModel": {
+      "id": "endpoint_finetuning.UpdateFinetunedModel",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.UpdateFinetunedModel",
+      "displayName": "Updates a fine-tuned model.",
+      "operationId": "UpdateFinetunedModel",
       "method": "PATCH",
       "path": [
         {
@@ -27163,10 +27229,12 @@
       ]
     },
     "endpoint_finetuning.DeleteFinetunedModel": {
+      "id": "endpoint_finetuning.DeleteFinetunedModel",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.DeleteFinetunedModel",
+      "displayName": "Deletes a fine-tuned model.",
+      "operationId": "DeleteFinetunedModel",
       "method": "DELETE",
       "path": [
         {
@@ -27408,10 +27476,12 @@
       ]
     },
     "endpoint_finetuning.ListEvents": {
+      "id": "endpoint_finetuning.ListEvents",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.ListEvents",
+      "displayName": "Retrieves the chronology of statuses the fine-tuned model has been through.",
+      "operationId": "ListEvents",
       "method": "GET",
       "path": [
         {
@@ -27730,10 +27800,12 @@
       ]
     },
     "endpoint_finetuning.ListTrainingStepMetrics": {
+      "id": "endpoint_finetuning.ListTrainingStepMetrics",
       "namespace": [
         "finetuning"
       ],
-      "id": "endpoint_finetuning.ListTrainingStepMetrics",
+      "displayName": "Retrieves metrics measured during the training of a fine-tuned model.",
+      "operationId": "ListTrainingStepMetrics",
       "method": "GET",
       "path": [
         {

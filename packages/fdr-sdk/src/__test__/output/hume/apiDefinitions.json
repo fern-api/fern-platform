@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "List files",
+        "operationId": "list-files",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -171,6 +173,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Create files",
+        "operationId": "create-files",
         "description": "Returns 201 if successful",
         "method": "POST",
         "path": [
@@ -298,6 +302,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Upload file",
+        "operationId": "upload-file",
         "description": "Upload a file synchronously. Returns 201 if successful. Files must have a name. Files must specify Content-Type. Request bodies, and therefore files, are limited to 100MB",
         "method": "POST",
         "path": [
@@ -415,6 +421,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Get file",
+        "operationId": "get-file",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -525,6 +533,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Delete file",
+        "operationId": "delete-file",
         "description": "Returns 204 if successful",
         "method": "DELETE",
         "path": [
@@ -608,6 +618,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Update file name",
+        "operationId": "update-file-name",
         "description": "Returns 200 if successful",
         "method": "PATCH",
         "path": [
@@ -735,6 +747,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Get file predictions",
+        "operationId": "get-file-predictions",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -822,6 +836,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List datasets",
+        "operationId": "list-datasets",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -1011,6 +1027,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Create dataset",
+        "operationId": "create-dataset",
         "description": "Returns 201 if successful",
         "method": "POST",
         "path": [
@@ -1137,6 +1155,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Get dataset",
+        "operationId": "get-dataset",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -1238,6 +1258,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Create dataset version",
+        "operationId": "create-dataset-version",
         "description": "Returns 200 if successful",
         "method": "POST",
         "path": [
@@ -1375,6 +1397,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Delete dataset",
+        "operationId": "delete-dataset",
         "description": "Returns 204 if successful",
         "method": "DELETE",
         "path": [
@@ -1458,6 +1482,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List dataset versions",
+        "operationId": "list-dataset-versions",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -1643,6 +1669,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List dataset files",
+        "operationId": "list-dataset-files",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -1829,6 +1857,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Get dataset version",
+        "operationId": "get-dataset-version",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -1919,6 +1949,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List dataset version files",
+        "operationId": "list-dataset-version-files",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -2105,6 +2137,8 @@
         "namespace": [
           "subpackage_models"
         ],
+        "displayName": "List models",
+        "operationId": "list-models",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -2292,6 +2326,8 @@
         "namespace": [
           "subpackage_models"
         ],
+        "displayName": "Get model details",
+        "operationId": "get-model-details",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -2407,6 +2443,8 @@
         "namespace": [
           "subpackage_models"
         ],
+        "displayName": "Update model name",
+        "operationId": "update-model-name",
         "description": "Returns 200 if successful",
         "method": "PATCH",
         "path": [
@@ -2539,6 +2577,8 @@
         "namespace": [
           "subpackage_models"
         ],
+        "displayName": "List model versions",
+        "operationId": "list-model-versions",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -2710,6 +2750,8 @@
         "namespace": [
           "subpackage_models"
         ],
+        "displayName": "Get model version",
+        "operationId": "get-model-version",
         "description": "Returns 200 if successful",
         "method": "GET",
         "path": [
@@ -2837,6 +2879,8 @@
         "namespace": [
           "subpackage_models"
         ],
+        "displayName": "Update model description",
+        "operationId": "update-model-description",
         "description": "Returns 200 if successful",
         "method": "PATCH",
         "path": [
@@ -2959,6 +3003,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Start training job",
+        "operationId": "start-training-job",
         "description": "Start a new custom models training job.",
         "method": "POST",
         "path": [
@@ -3043,6 +3089,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Start custom models inference job",
+        "operationId": "start-custom-models-inference-job",
         "description": "Start a new custom models inference job.",
         "method": "POST",
         "path": [
@@ -11124,6 +11172,8 @@
         "namespace": [
           "subpackage_batch"
         ],
+        "displayName": "List jobs",
+        "operationId": "list-jobs",
         "description": "Sort and filter jobs.",
         "method": "GET",
         "path": [
@@ -11362,6 +11412,8 @@
         "namespace": [
           "subpackage_batch"
         ],
+        "displayName": "Start inference job",
+        "operationId": "start-inference-job",
         "description": "Start a new measurement inference job.",
         "method": "POST",
         "path": [
@@ -11458,6 +11510,8 @@
         "namespace": [
           "subpackage_batch"
         ],
+        "displayName": "Get job details",
+        "operationId": "get-job-details",
         "description": "Get the request details and state of a given job.",
         "method": "GET",
         "path": [
@@ -11595,6 +11649,8 @@
         "namespace": [
           "subpackage_batch"
         ],
+        "displayName": "Get job predictions",
+        "operationId": "get-job-predictions",
         "description": "Get the JSON predictions of a completed inference job.",
         "method": "GET",
         "path": [
@@ -11931,6 +11987,8 @@
         "namespace": [
           "subpackage_batch"
         ],
+        "displayName": "Get job artifacts",
+        "operationId": "get-job-artifacts",
         "description": "Get the artifacts ZIP of a completed inference job.",
         "method": "GET",
         "path": [
@@ -12012,6 +12070,8 @@
         "namespace": [
           "subpackage_batch"
         ],
+        "displayName": "Start inference job from local file",
+        "operationId": "start-inference-job-from-local-file",
         "description": "Start a new batch inference job.",
         "method": "POST",
         "path": [
@@ -12137,6 +12197,8 @@
         "namespace": [
           "subpackage_stream"
         ],
+        "displayName": "Stream",
+        "operationId": "stream",
         "path": [
           {
             "type": "literal",
@@ -19421,6 +19483,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "List tools",
+        "operationId": "list-tools",
         "description": "Fetches a paginated list of **Tools**.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "GET",
         "path": [
@@ -19671,6 +19735,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Create tool",
+        "operationId": "create-tool",
         "description": "Creates a **Tool** that can be added to an [EVI configuration](/reference/empathic-voice-interface-evi/configs/create-config).\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "POST",
         "path": [
@@ -19932,6 +19998,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "List tool versions",
+        "operationId": "list-tool-versions",
         "description": "Fetches a list of a **Tool's** versions.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "GET",
         "path": [
@@ -20170,6 +20238,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Create tool version",
+        "operationId": "create-tool-version",
         "description": "Updates a **Tool** by creating a new version of the **Tool**.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "POST",
         "path": [
@@ -20439,6 +20509,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Delete tool",
+        "operationId": "delete-tool",
         "description": "Deletes a **Tool** and its versions.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "DELETE",
         "path": [
@@ -20579,6 +20651,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Update tool name",
+        "operationId": "update-tool-name",
         "description": "Updates the name of a **Tool**.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "PATCH",
         "path": [
@@ -20754,6 +20828,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Get tool version",
+        "operationId": "get-tool-version",
         "description": "Fetches a specified version of a **Tool**.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "GET",
         "path": [
@@ -20951,6 +21027,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Delete tool version",
+        "operationId": "delete-tool-version",
         "description": "Deletes a specified version of a **Tool**.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "DELETE",
         "path": [
@@ -21114,6 +21192,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Update tool description",
+        "operationId": "update-tool-description",
         "description": "Updates the description of a specified **Tool** version.\n\nRefer to our [tool use](/docs/empathic-voice-interface-evi/tool-use#function-calling) guide for comprehensive instructions on defining and integrating tools into EVI.",
         "method": "PATCH",
         "path": [
@@ -21350,6 +21430,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "List prompts",
+        "operationId": "list-prompts",
         "description": "Fetches a paginated list of **Prompts**.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "GET",
         "path": [
@@ -21594,6 +21676,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Create prompt",
+        "operationId": "create-prompt",
         "description": "Creates a **Prompt** that can be added to an [EVI configuration](/reference/empathic-voice-interface-evi/configs/create-config).\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "POST",
         "path": [
@@ -21810,6 +21894,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "List prompt versions",
+        "operationId": "list-prompt-versions",
         "description": "Fetches a list of a **Prompt's** versions.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "GET",
         "path": [
@@ -22045,6 +22131,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Create prompt version",
+        "operationId": "create-prompt-verison",
         "description": "Updates a **Prompt** by creating a new version of the **Prompt**.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "POST",
         "path": [
@@ -22271,6 +22359,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Delete prompt",
+        "operationId": "delete-prompt",
         "description": "Deletes a **Prompt** and its versions.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "DELETE",
         "path": [
@@ -22411,6 +22501,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Update prompt name",
+        "operationId": "update-prompt-name",
         "description": "Updates the name of a **Prompt**.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "PATCH",
         "path": [
@@ -22586,6 +22678,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Get prompt version",
+        "operationId": "get-prompt-version",
         "description": "Fetches a specified version of a **Prompt**.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "GET",
         "path": [
@@ -22780,6 +22874,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Delete prompt version",
+        "operationId": "delete-prompt-version",
         "description": "Deletes a specified version of a **Prompt**.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "DELETE",
         "path": [
@@ -22943,6 +23039,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Update prompt description",
+        "operationId": "update-prompt-description",
         "description": "Updates the description of a **Prompt**.\n\nSee our [prompting guide](/docs/empathic-voice-interface-evi/phone-calling) for tips on crafting your system prompt.",
         "method": "PATCH",
         "path": [
@@ -23176,6 +23274,8 @@
         "namespace": [
           "subpackage_customVoices"
         ],
+        "displayName": "List custom voices",
+        "operationId": "list-custom-voices",
         "description": "Fetches a paginated list of **Custom Voices**.\n\nRefer to our [voices guide](/docs/empathic-voice-interface-evi/voices) for details on creating a custom voice.",
         "method": "GET",
         "path": [
@@ -23387,6 +23487,8 @@
         "namespace": [
           "subpackage_customVoices"
         ],
+        "displayName": "Create custom voice",
+        "operationId": "create-custom-voice",
         "description": "Creates a **Custom Voice** that can be added to an [EVI configuration](/reference/empathic-voice-interface-evi/configs/create-config).\n\nRefer to our [voices guide](/docs/empathic-voice-interface-evi/voices) for details on creating a custom voice.",
         "method": "POST",
         "path": [
@@ -23568,6 +23670,8 @@
         "namespace": [
           "subpackage_customVoices"
         ],
+        "displayName": "Get specific custom voice by ID",
+        "operationId": "get-custom-voice",
         "description": "Fetches a specific **Custom Voice** by ID.\n\nRefer to our [voices guide](/docs/empathic-voice-interface-evi/voices) for details on creating a custom voice.",
         "method": "GET",
         "path": [
@@ -23745,6 +23849,8 @@
         "namespace": [
           "subpackage_customVoices"
         ],
+        "displayName": "Create new version of existing custom voice",
+        "operationId": "create-custom-voice-version",
         "description": "Updates a **Custom Voice** by creating a new version of the **Custom Voice**.\n\nRefer to our [voices guide](/docs/empathic-voice-interface-evi/voices) for details on creating a custom voice.",
         "method": "POST",
         "path": [
@@ -23949,6 +24055,8 @@
         "namespace": [
           "subpackage_customVoices"
         ],
+        "displayName": "Delete a custom voice",
+        "operationId": "delete-custom-voice",
         "description": "Deletes a **Custom Voice** and its versions.\n\nRefer to our [voices guide](/docs/empathic-voice-interface-evi/voices) for details on creating a custom voice.",
         "method": "DELETE",
         "path": [
@@ -24089,6 +24197,8 @@
         "namespace": [
           "subpackage_customVoices"
         ],
+        "displayName": "Update custom voice name",
+        "operationId": "update-custom-voice-name",
         "description": "Updates the name of a **Custom Voice**.\n\nRefer to our [voices guide](/docs/empathic-voice-interface-evi/voices) for details on creating a custom voice.",
         "method": "PATCH",
         "path": [
@@ -24236,6 +24346,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "List configs",
+        "operationId": "list-configs",
         "description": "Fetches a paginated list of **Configs**.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "GET",
         "path": [
@@ -24539,6 +24651,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Create config",
+        "operationId": "create-config",
         "description": "Creates a **Config** which can be applied to EVI.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "POST",
         "path": [
@@ -25003,6 +25117,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "List config versions",
+        "operationId": "list-config-versions",
         "description": "Fetches a list of a **Config's** versions.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "GET",
         "path": [
@@ -25307,6 +25423,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Create config version",
+        "operationId": "create-config-version",
         "description": "Updates a **Config** by creating a new version of the **Config**.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "POST",
         "path": [
@@ -25783,6 +25901,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Delete config",
+        "operationId": "delete-config",
         "description": "Deletes a **Config** and its versions.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "DELETE",
         "path": [
@@ -25923,6 +26043,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Update config name",
+        "operationId": "update-config-name",
         "description": "Updates the name of a **Config**.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "PATCH",
         "path": [
@@ -26098,6 +26220,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Get config version",
+        "operationId": "get-config-version",
         "description": "Fetches a specified version of a **Config**.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "GET",
         "path": [
@@ -26355,6 +26479,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Delete config version",
+        "operationId": "delete-config-version",
         "description": "Deletes a specified version of a **Config**.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "DELETE",
         "path": [
@@ -26518,6 +26644,8 @@
         "namespace": [
           "subpackage_configs"
         ],
+        "displayName": "Update config description",
+        "operationId": "update-config-description",
         "description": "Updates the description of a **Config**.\n\nFor more details on configuration options and how to configure EVI, see our [configuration guide](/docs/empathic-voice-interface-evi/configuration).",
         "method": "PATCH",
         "path": [
@@ -26814,6 +26942,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "List chats",
+        "operationId": "list-chats",
         "description": "Fetches a paginated list of **Chats**.",
         "method": "GET",
         "path": [
@@ -27034,6 +27164,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "List chat events",
+        "operationId": "list-chat-events",
         "description": "Fetches a paginated list of **Chat** events.",
         "method": "GET",
         "path": [
@@ -27304,6 +27436,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Get chat audio",
+        "operationId": "get-audio",
         "description": "Fetches the audio of a previous **Chat**. For more details, see our guide on audio reconstruction [here](/docs/empathic-voice-interface-evi/faq#can-i-access-the-audio-of-previous-conversations-with-evi).",
         "method": "GET",
         "path": [
@@ -27472,6 +27606,8 @@
         "namespace": [
           "subpackage_chatGroups"
         ],
+        "displayName": "List chat_groups",
+        "operationId": "list-chat-groups",
         "description": "Fetches a paginated list of **Chat Groups**.",
         "method": "GET",
         "path": [
@@ -27707,6 +27843,8 @@
         "namespace": [
           "subpackage_chatGroups"
         ],
+        "displayName": "Get chat_group",
+        "operationId": "get-chat-group",
         "description": "Fetches a **ChatGroup** by ID, including a paginated list of **Chats** associated with the **ChatGroup**.",
         "method": "GET",
         "path": [
@@ -27950,6 +28088,8 @@
         "namespace": [
           "subpackage_chatGroups"
         ],
+        "displayName": "List chat events from a specific chat_group",
+        "operationId": "list-chat-group-events",
         "description": "Fetches a paginated list of **Chat** events associated with a **Chat Group**.",
         "method": "GET",
         "path": [
@@ -28215,6 +28355,8 @@
         "namespace": [
           "subpackage_chatGroups"
         ],
+        "displayName": "Get chat group audio",
+        "operationId": "get-audio",
         "description": "Fetches a paginated list of audio for each **Chat** within the specified **Chat Group**. For more details, see our guide on audio reconstruction [here](/docs/empathic-voice-interface-evi/faq#can-i-access-the-audio-of-previous-conversations-with-evi).",
         "method": "GET",
         "path": [
@@ -28463,6 +28605,8 @@
         "namespace": [
           "subpackage_chat"
         ],
+        "displayName": "Chat",
+        "operationId": "chat",
         "path": [
           {
             "type": "literal",

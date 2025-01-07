@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_detections"
         ],
+        "displayName": "Get a detection by ID",
+        "operationId": "get-detection",
         "method": "GET",
         "path": [
           {
@@ -252,6 +254,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "Create an Event synchronously",
+        "operationId": "create-event-sync",
         "description": "Creates an event in a synchronous, blocking matter. Note for long-running tasks, the Asynchronous API is recommended instead. Returns an ID for the event created as well as the set of detections that were run.",
         "method": "POST",
         "path": [
@@ -608,6 +612,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "Create an Event asynchronously",
+        "operationId": "create-event-async",
         "description": "Creates an event in an asynchronous manner. Returns an ID for the event created as well as the set of detection ids associated with the event.",
         "method": "POST",
         "path": [
@@ -953,6 +959,8 @@
         "namespace": [
           "subpackage_eventTypes"
         ],
+        "displayName": "List all event types",
+        "operationId": "get-event-types",
         "description": "Get all event types",
         "method": "GET",
         "path": [
@@ -1127,6 +1135,8 @@
         "namespace": [
           "subpackage_eventTypes"
         ],
+        "displayName": "Create an event type",
+        "operationId": "create-event-type",
         "description": "Create a new event type",
         "method": "POST",
         "path": [
@@ -1375,6 +1385,8 @@
         "namespace": [
           "subpackage_eventTypes"
         ],
+        "displayName": "Add fields to an event type",
+        "operationId": "patch-event-type",
         "description": "Add fields to an existing event type. All added fields will be optional. Existing fields cannot be updated or deleted.",
         "method": "PATCH",
         "path": [

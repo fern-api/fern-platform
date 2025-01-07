@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Chat",
+        "operationId": "create-stream",
         "description": "Get a chat response by providing details of the model configuration in the request.",
         "method": "POST",
         "path": [
@@ -775,6 +777,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Chat",
+        "operationId": "create",
         "description": "Get a chat response by providing details of the model configuration in the request.",
         "method": "POST",
         "path": [
@@ -1432,6 +1436,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Chat Deployed",
+        "operationId": "create-deployed-stream",
         "description": "Get a chat response using the project's active deployment.\n\nThe active deployment can be a specific model configuration.",
         "method": "POST",
         "path": [
@@ -2202,6 +2208,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Chat Deployed",
+        "operationId": "create-deployed",
         "description": "Get a chat response using the project's active deployment.\n\nThe active deployment can be a specific model configuration.",
         "method": "POST",
         "path": [
@@ -2936,6 +2944,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Chat Model Config",
+        "operationId": "create-config-stream",
         "description": "Get chat response for a specific model configuration.",
         "method": "POST",
         "path": [
@@ -3702,6 +3712,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Chat Model Config",
+        "operationId": "create-config",
         "description": "Get chat response for a specific model configuration.",
         "method": "POST",
         "path": [
@@ -4329,6 +4341,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Create Experiment Stream",
+        "operationId": "create-experiment-stream",
         "method": "POST",
         "path": [
           {
@@ -4588,6 +4602,8 @@
         "namespace": [
           "subpackage_chats"
         ],
+        "displayName": "Create Experiment",
+        "operationId": "create-experiment",
         "method": "POST",
         "path": [
           {
@@ -4708,6 +4724,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Create",
+        "operationId": "create-stream",
         "description": "Create a completion by providing details of the model configuration in the request.",
         "method": "POST",
         "path": [
@@ -5321,6 +5339,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create a completion by providing details of the model configuration in the request.",
         "method": "POST",
         "path": [
@@ -6014,6 +6034,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Completion Deployed",
+        "operationId": "create-deployed-stream",
         "description": "Create a completion using the project's active deployment.\n\nThe active deployment can be a specific model configuration.",
         "method": "POST",
         "path": [
@@ -6629,6 +6651,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Completion Deployed",
+        "operationId": "create-deployed",
         "description": "Create a completion using the project's active deployment.\n\nThe active deployment can be a specific model configuration.",
         "method": "POST",
         "path": [
@@ -7198,6 +7222,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Completion Model Config",
+        "operationId": "create-config-stream",
         "description": "Create a completion for a specific model configuration.",
         "method": "POST",
         "path": [
@@ -7809,6 +7835,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Completion Model Config",
+        "operationId": "create-config",
         "description": "Create a completion for a specific model configuration.",
         "method": "POST",
         "path": [
@@ -8374,6 +8402,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Create Experiment Stream",
+        "operationId": "create-experiment-stream",
         "method": "POST",
         "path": [
           {
@@ -8519,6 +8549,8 @@
         "namespace": [
           "subpackage_completions"
         ],
+        "displayName": "Create Experiment",
+        "operationId": "create-experiment",
         "method": "POST",
         "path": [
           {
@@ -8618,6 +8650,8 @@
         "namespace": [
           "subpackage_datapoints"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get a datapoint by ID.",
         "method": "GET",
         "path": [
@@ -8774,6 +8808,8 @@
         "namespace": [
           "subpackage_datapoints"
         ],
+        "displayName": "Update",
+        "operationId": "update",
         "description": "Edit the input, messages and criteria fields of a datapoint.\n\nWARNING: This endpoint has been decommissioned and no longer works. Please use the v5 datasets API instead.",
         "availability": "Deprecated",
         "method": "PATCH",
@@ -8931,6 +8967,8 @@
         "namespace": [
           "subpackage_datapoints"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete a list of datapoints by their IDs.\n\nWARNING: This endpoint has been decommissioned and no longer works. Please use the v5 datasets API instead.",
         "availability": "Deprecated",
         "method": "DELETE",
@@ -9021,6 +9059,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "List For Project",
+        "operationId": "list-datasets",
         "description": "Get all datasets for a project.",
         "availability": "Deprecated",
         "method": "GET",
@@ -9168,6 +9208,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "List For Project",
+        "operationId": "list-evaluations",
         "description": "Get all the evaluations associated with your project.\n\nDeprecated: This is a legacy unpaginated endpoint. Use `/evaluations` instead, with appropriate\nsorting, filtering and pagination options.",
         "availability": "Deprecated",
         "method": "GET",
@@ -9409,6 +9451,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Get a paginated list of files.",
         "method": "GET",
         "path": [
@@ -9680,6 +9724,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create a new project.",
         "method": "POST",
         "path": [
@@ -9912,6 +9958,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get a specific project.",
         "method": "GET",
         "path": [
@@ -10113,6 +10161,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete a specific file.",
         "method": "DELETE",
         "path": [
@@ -10225,6 +10275,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Update",
+        "operationId": "update",
         "description": "Update a specific project.\n\nSet the project's active model config by passing `active_model_config_id`.\nThese will be set to the Default environment unless a list of environments\nare also passed in specifically detailing which environments to assign the\nactive config.",
         "method": "PATCH",
         "path": [
@@ -10501,6 +10553,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "List Configs",
+        "operationId": "list-configs",
         "description": "Get an array of versions associated to your file.",
         "method": "GET",
         "path": [
@@ -10691,6 +10745,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Create Feedback Type",
+        "operationId": "create-feedback-type",
         "availability": "Deprecated",
         "method": "POST",
         "path": [
@@ -10901,6 +10957,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Update Feedback Types",
+        "operationId": "update-feedback-types",
         "description": "Update feedback types.\n\nWARNING: This endpoint has been decommissioned and no longer works. Please use the v5 Human Evaluators API instead.",
         "availability": "Deprecated",
         "method": "PATCH",
@@ -11034,6 +11092,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Export",
+        "operationId": "export",
         "description": "Export all logged datapoints associated to your project.\n\nResults are paginated and sorts the datapoints based on `created_at` in\ndescending order.",
         "method": "POST",
         "path": [
@@ -11301,6 +11361,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create a new dataset for a project.",
         "method": "POST",
         "path": [
@@ -11489,6 +11551,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Get all Datasets for an organization.",
         "method": "GET",
         "path": [
@@ -11609,6 +11673,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get a single dataset by ID.",
         "method": "GET",
         "path": [
@@ -11744,6 +11810,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete a dataset by ID.",
         "method": "DELETE",
         "path": [
@@ -11872,6 +11940,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Update",
+        "operationId": "update",
         "description": "Update a testset by ID.",
         "method": "PATCH",
         "path": [
@@ -12063,6 +12133,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Datapoints",
+        "operationId": "list-datapoints",
         "description": "Get datapoints for a dataset.",
         "method": "GET",
         "path": [
@@ -12256,6 +12328,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Create Datapoint",
+        "operationId": "create-datapoint",
         "description": "Create a new datapoint for a dataset.\n\nHere in the v4 API, this has the following behaviour:\n\n- Retrieve the current latest version of the dataset.\n- Construct a new version of the dataset with the new testcases added.\n- Store that latest version as a committed version with an autogenerated commit\n  message and return the new datapoints",
         "method": "POST",
         "path": [
@@ -12436,6 +12510,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get evaluation by ID.",
         "method": "GET",
         "path": [
@@ -12690,6 +12766,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "List Datapoints",
+        "operationId": "list-datapoints",
         "description": "Get testcases by evaluation ID.",
         "method": "GET",
         "path": [
@@ -12925,6 +13003,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create an evaluation.",
         "method": "POST",
         "path": [
@@ -13270,6 +13350,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Log",
+        "operationId": "log",
         "description": "Log an external generation to an evaluation run for a datapoint.\n\nThe run must have status 'running'.",
         "method": "POST",
         "path": [
@@ -13476,6 +13558,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Result",
+        "operationId": "result",
         "description": "Log an evaluation result to an evaluation run.\n\nThe run must have status 'running'. One of `result` or `error` must be provided.",
         "method": "POST",
         "path": [
@@ -13934,6 +14018,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Update Status",
+        "operationId": "update-status",
         "description": "Update the status of an evaluation run.\n\nCan only be used to update the status of an evaluation run that uses external or human evaluators.\nThe evaluation must currently have status 'running' if swithcing to completed, or it must have status\n'completed' if switching back to 'running'.",
         "method": "PATCH",
         "path": [
@@ -14182,6 +14268,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Add Evaluators",
+        "operationId": "add-evaluators",
         "description": "Add evaluators to an existing evaluation run.",
         "method": "PATCH",
         "path": [
@@ -14465,6 +14553,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Get Evaluations",
+        "operationId": "list",
         "description": "Get the evaluations associated with a project.\n\nSorting and filtering are supported through query params for categorical columns\nand the `created_at` timestamp.\n\nSorting is supported for the `dataset`, `config`, `status` and `evaluator-{evaluator_id}` columns.\nSpecify sorting with the `sort` query param, with values `{column}.{ordering}`.\nE.g. ?sort=dataset.asc&sort=status.desc will yield a multi-column sort. First by dataset then by status.\n\nFiltering is supported for the `id`, `dataset`, `config` and `status` columns.\n\nSpecify filtering with the `id_filter`, `dataset_filter`, `config_filter` and `status_filter` query params.\n\nE.g. ?dataset_filter=my_dataset&dataset_filter=my_other_dataset&status_filter=running\nwill only show rows where the dataset is \"my_dataset\" or \"my_other_dataset\", and where the status is \"running\".\n\nAn additional date range filter is supported for the `created_at` column. Use the `start_date` and `end_date`\nquery parameters to configure this.",
         "method": "GET",
         "path": [
@@ -14756,6 +14846,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Get all evaluators within your organization.",
         "method": "GET",
         "path": [
@@ -14952,6 +15044,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create an evaluator within your organization.",
         "method": "POST",
         "path": [
@@ -15278,6 +15372,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get an evaluator within your organization.",
         "method": "GET",
         "path": [
@@ -15499,6 +15595,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete an evaluator within your organization.",
         "method": "DELETE",
         "path": [
@@ -15610,6 +15708,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Update",
+        "operationId": "update",
         "description": "Update an evaluator within your organization.",
         "method": "PATCH",
         "path": [
@@ -15957,6 +16057,8 @@
         "namespace": [
           "subpackage_feedback"
         ],
+        "displayName": "Feedback",
+        "operationId": "feedback",
         "description": "Submit an array of feedback for existing `data_ids`",
         "method": "POST",
         "path": [
@@ -16097,6 +16199,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Retrieve paginated logs from the server.\n\nSorting and filtering are supported through query params.\n\nSorting is supported for the `source`, `model`, `timestamp`, and `feedback-{output_name}` columns.\nSpecify sorting with the `sort` query param, with values `{column}.{ordering}`.\nE.g. ?sort=source.asc&sort=model.desc will yield a multi-column sort. First by source then by model.\n\nFiltering is supported for the `source`, `model`, `feedback-{output_name}`,\n`evaluator-{evaluator_external_id}` columns.\n\nSpecify filtering with the `source_filter`, `model_filter`, `feedback-{output.name}_filter` and\n`evaluator-{evaluator_external_id}_filter` query params.\n\nE.g. `?source_filter=AI&source_filter=user_1234&feedback-explicit_filter=good`\nwill only show rows where the source is \"AI\" or \"user_1234\", and where the latest feedback for the \"explicit\" output\ngroup is \"good\".\n\nAn additional date range filter is supported for the `Timestamp` column (i.e. `Log.created_at`).\nThese are supported through the `start_date` and `end_date` query parameters.\nThe date format could be either date: `YYYY-MM-DD`, e.g. 2024-01-01\nor datetime: YYYY-MM-DD[T]HH:MM[:SS[.ffffff]][Z or [±]HH[:]MM], e.g. 2024-01-01T00:00:00Z.\n\nSearching is supported for the model inputs and output.\nSpecify a search term with the `search` query param.\nE.g. `?search=hello%20there` will cause a case-insensitive search across model inputs and output.",
         "method": "GET",
         "path": [
@@ -16438,6 +16542,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Log",
+        "operationId": "log",
         "description": "Log a datapoint or array of datapoints to your Humanloop project.",
         "method": "POST",
         "path": [
@@ -16571,6 +16677,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "method": "DELETE",
         "path": [
           {
@@ -16681,6 +16789,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Update By Reference",
+        "operationId": "update-by-ref",
         "description": "Update a logged datapoint by its reference ID.\n\nThe `reference_id` query parameter must be provided, and refers to the\n`reference_id` of a previously-logged datapoint.",
         "method": "PATCH",
         "path": [
@@ -16960,6 +17070,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Retrieve a log by log id.",
         "method": "GET",
         "path": [
@@ -17224,6 +17336,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Update",
+        "operationId": "update",
         "description": "Update a logged datapoint in your Humanloop project.",
         "method": "PATCH",
         "path": [
@@ -17507,6 +17621,8 @@
         "namespace": [
           "subpackage_modelConfigs"
         ],
+        "displayName": "Register",
+        "operationId": "register",
         "description": "Register a model config to a project.\n\nIf the project name provided does not exist, a new project will be created\nautomatically.\n\nIf the model config is the first to be associated to the project, it will\nbe set as the active model config.",
         "method": "POST",
         "path": [
@@ -18036,6 +18152,8 @@
         "namespace": [
           "subpackage_modelConfigs"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get a specific model config by ID.",
         "method": "GET",
         "path": [
@@ -18245,6 +18363,8 @@
         "namespace": [
           "subpackage_modelConfigs"
         ],
+        "displayName": "Export by ID",
+        "operationId": "export",
         "description": "Export a model config to a .prompt file by ID.",
         "method": "POST",
         "path": [
@@ -18378,6 +18498,8 @@
         "namespace": [
           "subpackage_modelConfigs"
         ],
+        "displayName": "Serialize",
+        "operationId": "serialize",
         "description": "Serialize a model config to a .prompt file format.",
         "method": "POST",
         "path": [
@@ -18507,6 +18629,8 @@
         "namespace": [
           "subpackage_modelConfigs"
         ],
+        "displayName": "Deserialize",
+        "operationId": "deserialize",
         "description": "Deserialize a model config from a .prompt file format.",
         "method": "POST",
         "path": [
@@ -18727,6 +18851,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Get a page of sessions.",
         "method": "GET",
         "path": [
@@ -18914,6 +19040,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create a new session.\n\nReturns a session ID that can be used to log datapoints to the session.",
         "method": "POST",
         "path": [
@@ -19020,6 +19148,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get a session by ID.",
         "method": "GET",
         "path": [
@@ -19165,6 +19295,8 @@
           "subpackage_projects",
           "subpackage_projects/activeConfig"
         ],
+        "displayName": "Get Active Config",
+        "operationId": "get",
         "description": "Retrieves a config to use to execute your model.\n\nA config will be selected based on the project's\nactive config settings.",
         "method": "GET",
         "path": [
@@ -19352,6 +19484,8 @@
           "subpackage_projects",
           "subpackage_projects/activeConfig"
         ],
+        "displayName": "Deactivate Config",
+        "operationId": "deactivate",
         "description": "Remove the project's active config, if set.\n\nThis has no effect if the project does not have an active model config set.",
         "method": "DELETE",
         "path": [
@@ -19581,6 +19715,8 @@
           "subpackage_projects",
           "subpackage_projects/deployedConfig"
         ],
+        "displayName": "List Deployed Configs",
+        "operationId": "list",
         "description": "Get an array of environments with the deployed configs associated to your project.",
         "method": "GET",
         "path": [
@@ -19729,6 +19865,8 @@
           "subpackage_projects",
           "subpackage_projects/deployedConfig"
         ],
+        "displayName": "Deploy Config",
+        "operationId": "deploy",
         "description": "Deploy a model config to an environment.\n\nIf the environment already has a model config deployed, it will be replaced.",
         "method": "PATCH",
         "path": [
@@ -19934,6 +20072,8 @@
           "subpackage_projects",
           "subpackage_projects/deployedConfig"
         ],
+        "displayName": "Delete Deployed Config",
+        "operationId": "delete",
         "description": "Remove the version deployed to environment.\n\nThis has no effect if the project does not have an active version set.",
         "method": "DELETE",
         "path": [
@@ -31172,6 +31312,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Log",
+        "operationId": "log",
         "description": "Log to a Prompt.\n\nYou can use query parameters `version_id`, or `environment`, to target\nan existing version of the Prompt. Otherwise, the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nPrompt details in the request body. In this case, we will check if the details correspond\nto an existing version of the Prompt. If they do not, we will create a new version. This is helpful\nin the case where you are storing or deriving your Prompt details in code.",
         "method": "POST",
         "path": [
@@ -34245,6 +34387,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Update Log",
+        "operationId": "update",
         "description": "Update a Log.\n\nUpdate the details of a Log with the given ID.",
         "method": "PATCH",
         "path": [
@@ -36305,6 +36449,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Call",
+        "operationId": "call-stream",
         "description": "Call a Prompt.\n\nCalling a Prompt calls the model provider before logging\nthe request, responses and metadata to Humanloop.\n\nYou can use query parameters `version_id`, or `environment`, to target\nan existing version of the Prompt. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nPrompt details in the request body. In this case, we will check if the details correspond\nto an existing version of the Prompt. If they do not, we will create a new version. This is helpful\nin the case where you are storing or deriving your Prompt details in code.",
         "method": "POST",
         "path": [
@@ -38877,6 +39023,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Call",
+        "operationId": "call",
         "description": "Call a Prompt.\n\nCalling a Prompt calls the model provider before logging\nthe request, responses and metadata to Humanloop.\n\nYou can use query parameters `version_id`, or `environment`, to target\nan existing version of the Prompt. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nPrompt details in the request body. In this case, we will check if the details correspond\nto an existing version of the Prompt. If they do not, we will create a new version. This is helpful\nin the case where you are storing or deriving your Prompt details in code.",
         "method": "POST",
         "path": [
@@ -41650,6 +41798,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Get a list of all Prompts.",
         "method": "GET",
         "path": [
@@ -42117,6 +42267,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Upsert",
+        "operationId": "upsert",
         "description": "Create a Prompt or update it with a new version if it already exists.\n\nPrompts are identified by the `ID` or their `path`. The parameters (i.e. the prompt template, temperature, model etc.) determine the versions of the Prompt.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
         "method": "POST",
         "path": [
@@ -43709,6 +43861,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Retrieve the Prompt with the given ID.\n\nBy default, the deployed version of the Prompt is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Prompt.",
         "method": "GET",
         "path": [
@@ -44080,6 +44234,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete the Prompt with the given ID.",
         "method": "DELETE",
         "path": [
@@ -44301,6 +44457,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Move",
+        "operationId": "move",
         "description": "Move the Prompt to a different path or change the name.",
         "method": "PATCH",
         "path": [
@@ -44687,6 +44845,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "List Versions",
+        "operationId": "list-versions",
         "description": "Get a list of all the versions of a Prompt.",
         "method": "GET",
         "path": [
@@ -45068,6 +45228,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Commit",
+        "operationId": "commit",
         "description": "Commit a version of the Prompt with a commit message.\n\nIf the version is already committed, an exception will be raised.",
         "method": "POST",
         "path": [
@@ -45458,6 +45620,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Update Monitoring",
+        "operationId": "update-monitoring",
         "description": "Activate and deactivate Evaluators for monitoring the Prompt.\n\nAn activated Evaluator will automatically be run on all new Logs\nwithin the Prompt for monitoring purposes.",
         "method": "POST",
         "path": [
@@ -46002,6 +46166,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Set Deployment",
+        "operationId": "set-deployment",
         "description": "Deploy Prompt to an Environment.\n\nSet the deployed version for the specified Environment. This Prompt\nwill be used for calls made to the Prompt in this Environment.",
         "method": "POST",
         "path": [
@@ -46409,6 +46575,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "Remove Deployment",
+        "operationId": "remove-deployment",
         "description": "Remove deployed Prompt from the Environment.\n\nRemove the deployed version for the specified Environment. This Prompt\nwill no longer be used for calls made to the Prompt in this Environment.",
         "method": "DELETE",
         "path": [
@@ -46668,6 +46836,8 @@
         "namespace": [
           "subpackage_prompts"
         ],
+        "displayName": "List Environments",
+        "operationId": "list-environments",
         "description": "List all Environments and their deployed versions for the Prompt.",
         "method": "GET",
         "path": [
@@ -46970,6 +47140,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Log",
+        "operationId": "log",
         "description": "Log to a Tool.\n\nYou can use query parameters `version_id`, or `environment`, to target\nan existing version of the Tool. Otherwise the default deployed version will be chosen.\n\nInstead of targeting an existing version explicitly, you can instead pass in\nTool details in the request body. In this case, we will check if the details correspond\nto an existing version of the Tool, if not we will create a new version. This is helpful\nin the case where you are storing or deriving your Tool details in code.",
         "method": "POST",
         "path": [
@@ -48386,6 +48558,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Update Log",
+        "operationId": "update",
         "description": "Update a Log.\n\nUpdate the details of a Log with the given ID.",
         "method": "PATCH",
         "path": [
@@ -49467,6 +49641,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Get a list of all Tools.",
         "method": "GET",
         "path": [
@@ -49904,6 +50080,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Upsert",
+        "operationId": "upsert",
         "description": "Create a Tool or update it with a new version if it already exists.\n\nTools are identified by the `ID` or their `path`. The name, description and parameters determine the versions of the Tool.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
         "method": "POST",
         "path": [
@@ -50598,6 +50776,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Retrieve the Tool with the given ID.\n\nBy default, the deployed version of the Tool is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Tool.",
         "method": "GET",
         "path": [
@@ -50938,6 +51118,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete the Tool with the given ID.",
         "method": "DELETE",
         "path": [
@@ -51159,6 +51341,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Move",
+        "operationId": "move",
         "description": "Move the Tool to a different path or change the name.",
         "method": "PATCH",
         "path": [
@@ -51514,6 +51698,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "List Versions",
+        "operationId": "list-versions",
         "description": "Get a list of all the versions of a Tool.",
         "method": "GET",
         "path": [
@@ -51864,6 +52050,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Commit",
+        "operationId": "commit",
         "description": "Commit a version of the Tool with a commit message.\n\nIf the version is already committed, an exception will be raised.",
         "method": "POST",
         "path": [
@@ -52223,6 +52411,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Update Monitoring",
+        "operationId": "update-monitoring",
         "description": "Activate and deactivate Evaluators for monitoring the Tool.\n\nAn activated Evaluator will automatically be run on all new Logs\nwithin the Tool for monitoring purposes.",
         "method": "POST",
         "path": [
@@ -52736,6 +52926,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Set Deployment",
+        "operationId": "set-deployment",
         "description": "Deploy Tool to an Environment.\n\nSet the deployed version for the specified Environment. This Prompt\nwill be used for calls made to the Tool in this Environment.",
         "method": "POST",
         "path": [
@@ -53075,6 +53267,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "Remove Deployment",
+        "operationId": "remove-deployment",
         "description": "Remove deployed Tool from the Environment.\n\nRemove the deployed version for the specified Environment. This Tool\nwill no longer be used for calls made to the Tool in this Environment.",
         "method": "DELETE",
         "path": [
@@ -53335,6 +53529,8 @@
         "namespace": [
           "subpackage_tools"
         ],
+        "displayName": "List Environments",
+        "operationId": "list-environments",
         "description": "List all Environments and their deployed versions for the Tool.",
         "method": "GET",
         "path": [
@@ -53606,6 +53802,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "List all Datasets.",
         "method": "GET",
         "path": [
@@ -54043,6 +54241,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Upsert",
+        "operationId": "upsert",
         "description": "Create a Dataset or update it with a new version if it already exists.\n\nDatasets are identified by the `ID` or their `path`. The datapoints determine the versions of the Dataset.\n\nBy default, the new Dataset version will be set to the list of Datapoints provided in\nthe request. You can also create a new version by adding or removing Datapoints from an existing version\nby specifying `action` as `add` or `remove` respectively. In this case, you may specify\nthe `version_id` or `environment` query parameters to identify the existing version to base\nthe new version on. If neither is provided, the default deployed version will be used.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.\n\nHumanloop also deduplicates Datapoints. If you try to add a Datapoint that already\nexists, it will be ignored. If you intentionally want to add a duplicate Datapoint,\nyou can add a unique identifier to the Datapoint's inputs such as `{_dedupe_id: <unique ID>}`.",
         "method": "POST",
         "path": [
@@ -55230,6 +55430,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Retrieve the Dataset with the given ID.\n\nUnless `include_datapoints` is set to `true`, the response will not include\nthe Datapoints.\nUse the List Datapoints endpoint (`GET /{id}/datapoints`) to efficiently\nretrieve Datapoints for a large Dataset.\n\nBy default, the deployed version of the Dataset is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Dataset.",
         "method": "GET",
         "path": [
@@ -55622,6 +55824,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete the Dataset with the given ID.",
         "method": "DELETE",
         "path": [
@@ -55842,6 +56046,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Move",
+        "operationId": "move",
         "description": "Move the Dataset to a different path or change the name.",
         "method": "PATCH",
         "path": [
@@ -56222,6 +56428,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List Datapoints",
+        "operationId": "list-datapoints",
         "description": "List all Datapoints for the Dataset with the given ID.",
         "method": "GET",
         "path": [
@@ -56651,6 +56859,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List Versions",
+        "operationId": "list-versions",
         "description": "Get a list of the versions for a Dataset.",
         "method": "GET",
         "path": [
@@ -56965,6 +57175,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Commit",
+        "operationId": "commit",
         "description": "Commit a version of the Dataset with a commit message.\n\nIf the version is already committed, an exception will be raised.",
         "method": "POST",
         "path": [
@@ -57324,6 +57536,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Upload Csv",
+        "operationId": "upload-csv",
         "description": "Add Datapoints from a CSV file to a Dataset.\n\nThis will create a new committed version of the Dataset with the Datapoints from the CSV file.\n\nIf either `version_id` or `environment` is provided, the new version will be based on the specified version,\nwith the Datapoints from the CSV file added to the existing Datapoints in the version.\nIf neither `version_id` nor `environment` is provided, the new version will be based on the version\nof the Dataset that is deployed to the default Environment.",
         "method": "POST",
         "path": [
@@ -57795,6 +58009,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Set Deployment",
+        "operationId": "set-deployment",
         "description": "Deploy Dataset to Environment.\n\nSet the deployed version for the specified Environment.",
         "method": "POST",
         "path": [
@@ -58134,6 +58350,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "Remove Deployment",
+        "operationId": "remove-deployment",
         "description": "Remove deployed Dataset from Environment.\n\nRemove the deployed version for the specified Environment.",
         "method": "DELETE",
         "path": [
@@ -58394,6 +58612,8 @@
         "namespace": [
           "subpackage_datasets"
         ],
+        "displayName": "List Environments",
+        "operationId": "list-environments",
         "description": "List all Environments and their deployed versions for the Dataset.",
         "method": "GET",
         "path": [
@@ -58721,6 +58941,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Get a list of all Evaluators.",
         "method": "GET",
         "path": [
@@ -59164,6 +59386,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Upsert",
+        "operationId": "upsert",
         "description": "Create an Evaluator or update it with a new version if it already exists.\n\nEvaluators are identified by the `ID` or their `path`. The spec provided determines the version of the Evaluator.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
         "method": "POST",
         "path": [
@@ -60847,6 +61071,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Retrieve the Evaluator with the given ID.\n\nBy default, the deployed version of the Evaluator is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Evaluator.",
         "method": "GET",
         "path": [
@@ -61193,6 +61419,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete the Evaluator with the given ID.",
         "method": "DELETE",
         "path": [
@@ -61414,6 +61642,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Move",
+        "operationId": "move",
         "description": "Move the Evaluator to a different path or change the name.",
         "method": "PATCH",
         "path": [
@@ -61775,6 +62005,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "List Versions",
+        "operationId": "list-versions",
         "description": "Get a list of all the versions of an Evaluator.",
         "method": "GET",
         "path": [
@@ -62129,6 +62361,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Commit",
+        "operationId": "commit",
         "description": "Commit a version of the Evaluator with a commit message.\n\nIf the version is already committed, an exception will be raised.",
         "method": "POST",
         "path": [
@@ -62494,6 +62728,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Set Deployment",
+        "operationId": "set-deployment",
         "description": "Deploy Evaluator to an Environment.\n\nSet the deployed version for the specified Environment. This Evaluator\nwill be used for calls made to the Evaluator in this Environment.",
         "method": "POST",
         "path": [
@@ -62839,6 +63075,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Remove Deployment",
+        "operationId": "remove-deployment",
         "description": "Remove deployed Evaluator from the Environment.\n\nRemove the deployed version for the specified Environment. This Evaluator\nwill no longer be used for calls made to the Evaluator in this Environment.",
         "method": "DELETE",
         "path": [
@@ -63099,6 +63337,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "List Environments",
+        "operationId": "list-environments",
         "description": "List all Environments and their deployed versions for the Evaluator.",
         "method": "GET",
         "path": [
@@ -63376,6 +63616,8 @@
         "namespace": [
           "subpackage_evaluators"
         ],
+        "displayName": "Log",
+        "operationId": "log",
         "description": "Submit Evaluator judgment for an existing Log.\n\nCreates a new Log. The evaluated Log will be set as the parent of the created Log.",
         "method": "POST",
         "path": [
@@ -66029,6 +66271,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Retrieve the Flow with the given ID.\n\nBy default, the deployed version of the Flow is returned. Use the query parameters\n`version_id` or `environment` to target a specific version of the Flow.",
         "method": "GET",
         "path": [
@@ -66445,6 +66689,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete the Flow with the given ID.",
         "method": "DELETE",
         "path": [
@@ -66665,6 +66911,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Move",
+        "operationId": "move",
         "description": "Move the Flow to a different path or change the name.",
         "method": "PATCH",
         "path": [
@@ -67129,6 +67377,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "Get a list of Flows.",
         "method": "GET",
         "path": [
@@ -67617,6 +67867,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Upsert",
+        "operationId": "upsert",
         "description": "Create or update a Flow.\n\nFlows can also be identified by the `ID` or their `path`.\n\nIf you provide a commit message, then the new version will be committed;\notherwise it will be uncommitted. If you try to commit an already committed version,\nan exception will be raised.",
         "method": "POST",
         "path": [
@@ -68104,6 +68356,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Log",
+        "operationId": "log",
         "description": "Log to a Flow.\n\nYou can use query parameters `version_id`, or `environment`, to target\nan existing version of the Flow. Otherwise, the default deployed version will be chosen.",
         "method": "POST",
         "path": [
@@ -69437,6 +69691,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Update Log",
+        "operationId": "update-log",
         "description": "Update the status, inputs, output of a Flow Log.\n\nMarking a Flow Log as complete will trigger any monitoring Evaluators to run.\nInputs and output (or error) must be provided in order to mark it as complete.",
         "method": "PATCH",
         "path": [
@@ -70183,6 +70439,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "List Versions",
+        "operationId": "list-versions",
         "description": "Get a list of all the versions of a Flow.",
         "method": "GET",
         "path": [
@@ -70584,6 +70842,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Commit",
+        "operationId": "commit",
         "description": "Commit a version of the Flow with a commit message.\n\nIf the version is already committed, an exception will be raised.",
         "method": "POST",
         "path": [
@@ -71019,6 +71279,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Set Deployment",
+        "operationId": "set-deployment",
         "description": "Deploy Flow to an Environment.\n\nSet the deployed version for the specified Environment. This Flow\nwill be used for calls made to the Flow in this Environment.",
         "method": "POST",
         "path": [
@@ -71434,6 +71696,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Remove Deployment",
+        "operationId": "remove-deployment",
         "description": "Remove deployed Flow from the Environment.\n\nRemove the deployed version for the specified Environment. This Flow\nwill no longer be used for calls made to the Flow in this Environment.",
         "method": "DELETE",
         "path": [
@@ -71693,6 +71957,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "List Environments",
+        "operationId": "list-environments",
         "description": "List all Environments and their deployed versions for the Flow.",
         "method": "GET",
         "path": [
@@ -72020,6 +72286,8 @@
         "namespace": [
           "subpackage_flows"
         ],
+        "displayName": "Update Monitoring",
+        "operationId": "update-monitoring",
         "description": "Activate and deactivate Evaluators for monitoring the Flow.\n\nAn activated Evaluator will automatically be run on all new \"completed\" Logs\nwithin the Flow for monitoring purposes.",
         "method": "POST",
         "path": [
@@ -72603,6 +72871,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Get a paginated list of files.",
         "method": "GET",
         "path": [
@@ -73131,6 +73401,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "List all Evaluations for the specified `file_id`.\n\nRetrieve a list of Evaluations that evaluate versions of the specified File.",
         "method": "GET",
         "path": [
@@ -73549,6 +73821,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Create an Evaluation.\n\nCreate a new Evaluation by specifying the Dataset, versions to be\nevaluated (Evaluatees), and which Evaluators to provide judgments.\n\nHumanloop will automatically start generating Logs and running Evaluators where\n`orchestrated=true`. If you own the runtime for the Evaluatee or Evaluator, you\ncan set `orchestrated=false` and then generate and submit the required logs using\nyour runtime.\n\nTo keep updated on the progress of the Evaluation, you can poll the Evaluation using\nthe GET /evaluations/{id} endpoint and check its status.",
         "method": "POST",
         "path": [
@@ -74336,6 +74610,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Get",
+        "operationId": "get",
         "description": "Get an Evaluation.",
         "method": "GET",
         "path": [
@@ -74678,6 +74954,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete an Evaluation.\n\nRemove an Evaluation from Humanloop. The Logs and Versions used in the Evaluation\nwill not be deleted.",
         "method": "DELETE",
         "path": [
@@ -74899,6 +75177,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Update Setup",
+        "operationId": "update-setup",
         "description": "Update an Evaluation.\n\nUpdate the setup of an Evaluation by specifying the Dataset, versions to be\nevaluated (Evaluatees), and which Evaluators to provide judgments.",
         "method": "PATCH",
         "path": [
@@ -75744,6 +76024,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Update Status",
+        "operationId": "update-status",
         "description": "Update the status of an Evaluation.\n\nCan be used to cancel a running Evaluation, or mark an Evaluation that uses\nexternal or human evaluators as completed.",
         "method": "PATCH",
         "path": [
@@ -76145,6 +76427,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Get Stats",
+        "operationId": "get-stats",
         "description": "Get Evaluation Stats.\n\nRetrieve aggregate stats for the specified Evaluation.\nThis includes the number of generated Logs for each evaluated version and the\ncorresponding Evaluator statistics (such as the mean and percentiles).",
         "method": "GET",
         "path": [
@@ -76417,6 +76701,8 @@
         "namespace": [
           "subpackage_evaluations"
         ],
+        "displayName": "Get Logs",
+        "operationId": "get-logs",
         "description": "Get the Logs associated to a specific Evaluation.\n\nEach Datapoint in your Dataset will have a corresponding Log for each File version evaluated.\ne.g. If you have 50 Datapoints and are evaluating 2 Prompts, there will be 100 Logs associated with the Evaluation.",
         "method": "GET",
         "path": [
@@ -76872,6 +77158,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "List ",
+        "operationId": "list",
         "description": "List all Logs for the given filter criteria.",
         "method": "GET",
         "path": [
@@ -77487,6 +77775,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Delete",
+        "operationId": "delete",
         "description": "Delete Logs with the given IDs.",
         "method": "DELETE",
         "path": [
@@ -77709,6 +77999,8 @@
         "namespace": [
           "subpackage_logs"
         ],
+        "displayName": "Get Log",
+        "operationId": "get",
         "description": "Retrieve the Log with the given ID.",
         "method": "GET",
         "path": [

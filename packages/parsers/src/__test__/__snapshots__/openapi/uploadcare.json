@@ -2,11 +2,13 @@
   "id": "test-uuid-replacement",
   "endpoints": {
     "endpoint_file.filesList": {
+      "id": "endpoint_file.filesList",
       "description": "Getting a paginated list of files. If you need multiple results pages, use `previous`/`next` from the response to navigate back/forth.",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.filesList",
+      "displayName": "List of files",
+      "operationId": "filesList",
       "method": "GET",
       "path": [
         {
@@ -699,11 +701,13 @@
       ]
     },
     "endpoint_file.storeFile": {
+      "id": "endpoint_file.storeFile",
       "description": "Store a single file by UUID. When file is stored, it is available permanently. If not stored — it will only be available for 24 hours. If the parameter is omitted, it checks the `Auto file storing` setting of your Uploadcare project identified by the `public_key` provided in the `auth-param`.",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.storeFile",
+      "displayName": "Store file",
+      "operationId": "storeFile",
       "method": "PUT",
       "path": [
         {
@@ -1142,11 +1146,13 @@
       ]
     },
     "endpoint_file.deleteFileStorage": {
+      "id": "endpoint_file.deleteFileStorage",
       "description": "Removes individual files. Returns file info.\n\nNote: this operation removes the file from storage but doesn't invalidate CDN cache.\n",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.deleteFileStorage",
+      "displayName": "Delete file",
+      "operationId": "deleteFileStorage",
       "method": "DELETE",
       "path": [
         {
@@ -1511,11 +1517,13 @@
       ]
     },
     "endpoint_file.fileInfo": {
+      "id": "endpoint_file.fileInfo",
       "description": "Get file information by its UUID (immutable).",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.fileInfo",
+      "displayName": "File info",
+      "operationId": "fileInfo",
       "method": "GET",
       "path": [
         {
@@ -2073,11 +2081,13 @@
       ]
     },
     "endpoint_file.filesStoring": {
+      "id": "endpoint_file.filesStoring",
       "description": "Used to store multiple files in one go. Up to 100 files are supported per request. A JSON object holding your File list SHOULD be put into a request body.",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.filesStoring",
+      "displayName": "Batch file storing",
+      "operationId": "filesStoring",
       "method": "PUT",
       "path": [
         {
@@ -2530,11 +2540,13 @@
       ]
     },
     "endpoint_file.filesDelete": {
+      "id": "endpoint_file.filesDelete",
       "description": "Used to delete multiple files in one go. Up to 100 files are supported per request. A JSON object holding your File list SHOULD be put into a request body.\n\nNote: this operation removes files from storage but doesn't invalidate CDN cache.\n",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.filesDelete",
+      "displayName": "Batch file delete",
+      "operationId": "filesDelete",
       "method": "DELETE",
       "path": [
         {
@@ -2987,11 +2999,13 @@
       ]
     },
     "endpoint_file.createLocalCopy": {
+      "id": "endpoint_file.createLocalCopy",
       "description": "POST requests are used to copy original files or their modified versions to a default storage.\n\nSource files MAY either be stored or just uploaded and MUST NOT be deleted.\n\nCopying of large files is not supported at the moment. If the file CDN URL includes transformation operators, its size MUST NOT exceed 100 MB. If not, the size MUST NOT exceed 5 GB.\n",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.createLocalCopy",
+      "displayName": "Copy file to local storage",
+      "operationId": "createLocalCopy",
       "method": "POST",
       "path": [
         {
@@ -3359,11 +3373,13 @@
       ]
     },
     "endpoint_file.createRemoteCopy": {
+      "id": "endpoint_file.createRemoteCopy",
       "description": "POST requests are used to copy original files or their modified versions to a custom storage.\n\nSource files MAY either be stored or just uploaded and MUST NOT be deleted.\n\nCopying of large files is not supported at the moment. File size MUST NOT exceed 5 GB.\n",
       "namespace": [
         "File"
       ],
-      "id": "endpoint_file.createRemoteCopy",
+      "displayName": "Copy file to remote storage",
+      "operationId": "createRemoteCopy",
       "method": "POST",
       "path": [
         {
@@ -3792,11 +3808,13 @@
       ]
     },
     "endpoint_addOns.awsRekognitionExecute": {
+      "id": "endpoint_addOns.awsRekognitionExecute",
       "description": "An `Add-On` is an application implemented by Uploadcare that accepts uploaded files as an\ninput and can produce other files and/or [appdata](/docs/api/rest/file/info/#response.body.appdata) as an output.\n\nExecute [AWS Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/labels-detect-labels-image.html) Add-On for a given target to detect labels in images. **Note:** Detected labels are stored in the file's appdata.\n",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.awsRekognitionExecute",
+      "displayName": "Execute AWS Rekognition",
+      "operationId": "awsRekognitionExecute",
       "method": "POST",
       "path": [
         {
@@ -4122,11 +4140,13 @@
       ]
     },
     "endpoint_addOns.awsRekognitionExecutionStatus": {
+      "id": "endpoint_addOns.awsRekognitionExecutionStatus",
       "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](/docs/api/rest/add-ons/aws-rekognition-execute/) operation.\n",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.awsRekognitionExecutionStatus",
+      "displayName": "Check AWS Rekognition execution status",
+      "operationId": "awsRekognitionExecutionStatus",
       "method": "GET",
       "path": [
         {
@@ -4394,11 +4414,13 @@
       ]
     },
     "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute": {
+      "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute",
       "description": "Execute [AWS Rekognition Moderation](https://docs.aws.amazon.com/rekognition/latest/dg/moderation.html) Add-On for a given target to detect moderation labels in images. **Note:** Detected moderation labels are stored in the file's appdata.",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute",
+      "displayName": "Execute AWS Rekognition Moderation",
+      "operationId": "awsRekognitionDetectModerationLabelsExecute",
       "method": "POST",
       "path": [
         {
@@ -4724,11 +4746,13 @@
       ]
     },
     "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus": {
+      "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
       "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](/docs/api/rest/add-ons/aws-rekognition-detect-moderation-labels-execution-status/) operation.\n",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
+      "displayName": "Check AWS Rekognition Moderation execution status",
+      "operationId": "awsRekognitionDetectModerationLabelsExecutionStatus",
       "method": "GET",
       "path": [
         {
@@ -4996,11 +5020,13 @@
       ]
     },
     "endpoint_addOns.ucClamavVirusScanExecute": {
+      "id": "endpoint_addOns.ucClamavVirusScanExecute",
       "description": "Execute [ClamAV](https://www.clamav.net/) virus checking Add-On for a given target.",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.ucClamavVirusScanExecute",
+      "displayName": "Execute ClamAV",
+      "operationId": "ucClamavVirusScanExecute",
       "method": "POST",
       "path": [
         {
@@ -5363,11 +5389,13 @@
       ]
     },
     "endpoint_addOns.ucClamavVirusScanExecutionStatus": {
+      "id": "endpoint_addOns.ucClamavVirusScanExecutionStatus",
       "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](/docs/api/rest/add-ons/uc-clamav-virus-scan-execute/) operation.\n",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.ucClamavVirusScanExecutionStatus",
+      "displayName": "Check ClamAV execution status",
+      "operationId": "ucClamavVirusScanExecutionStatus",
       "method": "GET",
       "path": [
         {
@@ -5643,11 +5671,13 @@
       ]
     },
     "endpoint_addOns.removeBgExecute": {
+      "id": "endpoint_addOns.removeBgExecute",
       "description": "Execute [remove.bg](https://remove.bg/) background image removal Add-On for a given target.",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.removeBgExecute",
+      "displayName": "Execute Remove.bg",
+      "operationId": "removeBgExecute",
       "method": "POST",
       "path": [
         {
@@ -6143,11 +6173,13 @@
       ]
     },
     "endpoint_addOns.removeBgExecutionStatus": {
+      "id": "endpoint_addOns.removeBgExecutionStatus",
       "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](/docs/api/rest/add-ons/remove-bg-execute/) operation.\n",
       "namespace": [
         "Add-Ons"
       ],
-      "id": "endpoint_addOns.removeBgExecutionStatus",
+      "displayName": "Check Remove.bg execution status",
+      "operationId": "removeBgExecutionStatus",
       "method": "GET",
       "path": [
         {
@@ -6422,11 +6454,13 @@
       ]
     },
     "endpoint_fileMetadata._fileMetadata": {
+      "id": "endpoint_fileMetadata._fileMetadata",
       "description": "File metadata is additional, arbitrary data, associated with uploaded file. As an example, you could store unique file identifier from your system.\n\nMetadata is key-value data. You can specify up to 50 keys, with key names up to 64 characters long and values up to 512 characters long.\nRead more in the [docs](/docs/file-metadata/).\n\n**Notice:** Do not store any sensitive information (bank account numbers, card details, etc.) as metadata.\n\n**Notice:** File metadata is provided by the end-users uploading the files and can contain symbols unsafe in, for example, HTML context. Please escape the metadata before use according to the rules of the target runtime context (HTML browser, SQL query parameter, etc).\n\nGet file's metadata keys and values.\n",
       "namespace": [
         "File metadata"
       ],
-      "id": "endpoint_fileMetadata._fileMetadata",
+      "displayName": "Get file's metadata",
+      "operationId": "_fileMetadata",
       "method": "GET",
       "path": [
         {
@@ -6673,11 +6707,13 @@
       ]
     },
     "endpoint_fileMetadata.fileMetadataKey": {
+      "id": "endpoint_fileMetadata.fileMetadataKey",
       "description": "Get the value of a single metadata key.",
       "namespace": [
         "File metadata"
       ],
-      "id": "endpoint_fileMetadata.fileMetadataKey",
+      "displayName": "Get metadata key's value",
+      "operationId": "fileMetadataKey",
       "method": "GET",
       "path": [
         {
@@ -6945,11 +6981,13 @@
       ]
     },
     "endpoint_fileMetadata.updateFileMetadataKey": {
+      "id": "endpoint_fileMetadata.updateFileMetadataKey",
       "description": "Update the value of a single metadata key. If the key does not exist, it will be created.",
       "namespace": [
         "File metadata"
       ],
-      "id": "endpoint_fileMetadata.updateFileMetadataKey",
+      "displayName": "Update metadata key's value",
+      "operationId": "updateFileMetadataKey",
       "method": "PUT",
       "path": [
         {
@@ -7287,11 +7325,13 @@
       ]
     },
     "endpoint_fileMetadata.deleteFileMetadataKey": {
+      "id": "endpoint_fileMetadata.deleteFileMetadataKey",
       "description": "Delete a file's metadata key.",
       "namespace": [
         "File metadata"
       ],
-      "id": "endpoint_fileMetadata.deleteFileMetadataKey",
+      "displayName": "Delete metadata key",
+      "operationId": "deleteFileMetadataKey",
       "method": "DELETE",
       "path": [
         {
@@ -7543,11 +7583,13 @@
       ]
     },
     "endpoint_group.groupsList": {
+      "id": "endpoint_group.groupsList",
       "description": "Get a paginated list of groups.",
       "namespace": [
         "Group"
       ],
-      "id": "endpoint_group.groupsList",
+      "displayName": "List of groups",
+      "operationId": "groupsList",
       "method": "GET",
       "path": [
         {
@@ -7946,11 +7988,13 @@
       ]
     },
     "endpoint_group.groupInfo": {
+      "id": "endpoint_group.groupInfo",
       "description": "Get a file group by its ID.\n\nGroups are identified in a way similar to individual files. A group ID consists of a UUID\nfollowed by a “~” (tilde) character and a group size: integer number of the files in the group.\n",
       "namespace": [
         "Group"
       ],
-      "id": "endpoint_group.groupInfo",
+      "displayName": "Group info",
+      "operationId": "groupInfo",
       "method": "GET",
       "path": [
         {
@@ -8262,11 +8306,13 @@
       ]
     },
     "endpoint_group.deleteGroup": {
+      "id": "endpoint_group.deleteGroup",
       "description": "Delete a file group by its ID.\n\n**Note**: The operation only removes the group object itself. **All the files that were part of the group are left as is.**\n",
       "namespace": [
         "Group"
       ],
-      "id": "endpoint_group.deleteGroup",
+      "displayName": "Delete group",
+      "operationId": "deleteGroup",
       "method": "DELETE",
       "path": [
         {
@@ -8553,11 +8599,13 @@
       ]
     },
     "endpoint_project.projectInfo": {
+      "id": "endpoint_project.projectInfo",
       "description": "Getting info about account project.",
       "namespace": [
         "Project"
       ],
-      "id": "endpoint_project.projectInfo",
+      "displayName": "Project info",
+      "operationId": "projectInfo",
       "method": "GET",
       "path": [
         {
@@ -8802,11 +8850,13 @@
       ]
     },
     "endpoint_webhook.webhooksList": {
+      "id": "endpoint_webhook.webhooksList",
       "description": "List of project webhooks.",
       "namespace": [
         "Webhook"
       ],
-      "id": "endpoint_webhook.webhooksList",
+      "displayName": "List of webhooks",
+      "operationId": "webhooksList",
       "method": "GET",
       "path": [
         {
@@ -9080,11 +9130,13 @@
       ]
     },
     "endpoint_webhook.webhookCreate": {
+      "id": "endpoint_webhook.webhookCreate",
       "description": "Create and subscribe to a webhook. You can use webhooks to receive notifications about your uploads. For instance, once a file gets uploaded to your project, we can notify you by sending a message to a target URL.",
       "namespace": [
         "Webhook"
       ],
-      "id": "endpoint_webhook.webhookCreate",
+      "displayName": "Create webhook",
+      "operationId": "webhookCreate",
       "method": "POST",
       "path": [
         {
@@ -9360,11 +9412,13 @@
       ]
     },
     "endpoint_webhookCallbacks.fileUploaded": {
+      "id": "endpoint_webhookCallbacks.fileUploaded",
       "description": "file.uploaded event payload",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "id": "endpoint_webhookCallbacks.fileUploaded",
+      "displayName": "file.uploaded",
+      "operationId": "fileUploaded",
       "method": "POST",
       "path": [
         {
@@ -9424,11 +9478,13 @@
       "examples": []
     },
     "endpoint_webhookCallbacks.fileInfected": {
+      "id": "endpoint_webhookCallbacks.fileInfected",
       "description": "file.infected event payload",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "id": "endpoint_webhookCallbacks.fileInfected",
+      "displayName": "file.infected",
+      "operationId": "fileInfected",
       "method": "POST",
       "path": [
         {
@@ -9488,11 +9544,13 @@
       "examples": []
     },
     "endpoint_webhookCallbacks.fileStored": {
+      "id": "endpoint_webhookCallbacks.fileStored",
       "description": "file.stored event payload",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "id": "endpoint_webhookCallbacks.fileStored",
+      "displayName": "file.stored",
+      "operationId": "fileStored",
       "method": "POST",
       "path": [
         {
@@ -9552,11 +9610,13 @@
       "examples": []
     },
     "endpoint_webhookCallbacks.fileDeleted": {
+      "id": "endpoint_webhookCallbacks.fileDeleted",
       "description": "file.deleted event payload",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "id": "endpoint_webhookCallbacks.fileDeleted",
+      "displayName": "file.deleted",
+      "operationId": "fileDeleted",
       "method": "POST",
       "path": [
         {
@@ -9616,11 +9676,13 @@
       "examples": []
     },
     "endpoint_webhookCallbacks.fileInfoUpdated": {
+      "id": "endpoint_webhookCallbacks.fileInfoUpdated",
       "description": "file.info_updated event payload",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "id": "endpoint_webhookCallbacks.fileInfoUpdated",
+      "displayName": "file.info_updated",
+      "operationId": "fileInfoUpdated",
       "method": "POST",
       "path": [
         {
@@ -9680,11 +9742,13 @@
       "examples": []
     },
     "endpoint_webhook.updateWebhook": {
+      "id": "endpoint_webhook.updateWebhook",
       "description": "Update webhook attributes.",
       "namespace": [
         "Webhook"
       ],
-      "id": "endpoint_webhook.updateWebhook",
+      "displayName": "Update webhook",
+      "operationId": "updateWebhook",
       "method": "PUT",
       "path": [
         {
@@ -9979,11 +10043,13 @@
       ]
     },
     "endpoint_webhook.webhookUnsubscribe": {
+      "id": "endpoint_webhook.webhookUnsubscribe",
       "description": "Unsubscribe and delete a webhook.",
       "namespace": [
         "Webhook"
       ],
-      "id": "endpoint_webhook.webhookUnsubscribe",
+      "displayName": "Delete webhook",
+      "operationId": "webhookUnsubscribe",
       "method": "DELETE",
       "path": [
         {
@@ -10241,11 +10307,13 @@
       ]
     },
     "endpoint_conversion.documentConvertInfo": {
+      "id": "endpoint_conversion.documentConvertInfo",
       "description": "The endpoint allows you to determine the document format and possible conversion formats.",
       "namespace": [
         "Conversion"
       ],
-      "id": "endpoint_conversion.documentConvertInfo",
+      "displayName": "Document info",
+      "operationId": "documentConvertInfo",
       "method": "GET",
       "path": [
         {
@@ -10619,11 +10687,13 @@
       ]
     },
     "endpoint_conversion.documentConvert": {
+      "id": "endpoint_conversion.documentConvert",
       "description": "Uploadcare allows you to convert files to different target formats. Check out the [conversion capabilities](/docs/transformations/document-conversion/#document-file-formats) for each supported format.",
       "namespace": [
         "Conversion"
       ],
-      "id": "endpoint_conversion.documentConvert",
+      "displayName": "Convert document",
+      "operationId": "documentConvert",
       "method": "POST",
       "path": [
         {
@@ -10983,11 +11053,13 @@
       ]
     },
     "endpoint_conversion.documentConvertStatus": {
+      "id": "endpoint_conversion.documentConvertStatus",
       "description": "Once you get a conversion job result, you can acquire a conversion job status via token. Just put it in your request URL as `:token`.",
       "namespace": [
         "Conversion"
       ],
-      "id": "endpoint_conversion.documentConvertStatus",
+      "displayName": "Document conversion job status",
+      "operationId": "documentConvertStatus",
       "method": "GET",
       "path": [
         {
@@ -11380,11 +11452,13 @@
       ]
     },
     "endpoint_conversion.videoConvert": {
+      "id": "endpoint_conversion.videoConvert",
       "description": "Uploadcare video processing adjusts video quality, format (mp4, webm, ogg), and size, cuts it, and generates thumbnails. Processed video is instantly available over CDN.",
       "namespace": [
         "Conversion"
       ],
-      "id": "endpoint_conversion.videoConvert",
+      "displayName": "Convert video",
+      "operationId": "videoConvert",
       "method": "POST",
       "path": [
         {
@@ -11759,11 +11833,13 @@
       ]
     },
     "endpoint_conversion.videoConvertStatus": {
+      "id": "endpoint_conversion.videoConvertStatus",
       "description": "Once you get a processing job result, you can acquire a processing job status via token. Just put it in your request URL as `:token`.",
       "namespace": [
         "Conversion"
       ],
-      "id": "endpoint_conversion.videoConvertStatus",
+      "displayName": "Video conversion job status",
+      "operationId": "videoConvertStatus",
       "method": "GET",
       "path": [
         {

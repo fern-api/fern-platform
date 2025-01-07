@@ -5,6 +5,8 @@
       "endpoint_.apiV1": {
         "id": "endpoint_.apiV1",
         "namespace": [],
+        "displayName": "/api/v1",
+        "operationId": "api-v-1",
         "description": "Returns a human-readable message with some useful information about the API.",
         "method": "GET",
         "path": [],
@@ -178,6 +180,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "List contact channels",
+        "operationId": "list-contact-channels",
         "description": "",
         "method": "GET",
         "path": [
@@ -290,6 +294,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Create a contact channel",
+        "operationId": "create-a-contact-channel",
         "description": "",
         "method": "POST",
         "path": [
@@ -486,6 +492,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Verify an email",
+        "operationId": "verify-an-email",
         "description": "Verify an email address of a user",
         "method": "POST",
         "path": [
@@ -572,6 +580,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Check email verification code",
+        "operationId": "check-email-verification-code",
         "description": "Check if an email verification code is valid without using it",
         "method": "POST",
         "path": [
@@ -658,6 +668,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Get a contact channel",
+        "operationId": "get-a-contact-channel",
         "description": "",
         "method": "GET",
         "path": [
@@ -806,6 +818,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Delete a contact channel",
+        "operationId": "delete-a-contact-channel",
         "description": "",
         "method": "DELETE",
         "path": [
@@ -948,6 +962,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Update a contact channel",
+        "operationId": "update-a-contact-channel",
         "description": "",
         "method": "PATCH",
         "path": [
@@ -1191,6 +1207,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Send contact channel verification code",
+        "operationId": "send-contact-channel-verification-code",
         "description": "Send a code to the user's contact channel for verifying the contact channel.",
         "method": "POST",
         "path": [
@@ -1325,6 +1343,8 @@
         "namespace": [
           "subpackage_oauth"
         ],
+        "displayName": "OAuth token endpoints",
+        "operationId": "o-auth-token-endpoints",
         "description": "This endpoint is used to exchange an authorization code or refresh token for an access token.",
         "method": "POST",
         "path": [
@@ -1410,6 +1430,8 @@
         "namespace": [
           "subpackage_oauth"
         ],
+        "displayName": "OAuth authorize endpoint",
+        "operationId": "o-auth-authorize-endpoint",
         "description": "This endpoint is used to initiate the OAuth authorization flow. there are two purposes for this endpoint: 1. Authenticate a user with an OAuth provider. 2. Link an existing user with an OAuth provider.",
         "method": "GET",
         "path": [
@@ -1681,6 +1703,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "Sign in with a code",
+        "operationId": "sign-in-with-a-code",
         "description": "Sign in with a code",
         "method": "POST",
         "path": [
@@ -1770,6 +1794,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "Send sign-in code",
+        "operationId": "send-sign-in-code",
         "description": "Send a code to the user's email address for sign-in.",
         "method": "POST",
         "path": [
@@ -1871,6 +1897,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "MFA sign in",
+        "operationId": "mfa-sign-in",
         "description": "Complete multi-factor authorization to sign in, with a TOTP and an MFA attempt code",
         "method": "POST",
         "path": [
@@ -1986,6 +2014,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "Check sign in code",
+        "operationId": "check-sign-in-code",
         "description": "Check if a sign in code is valid without using it",
         "method": "POST",
         "path": [
@@ -2072,6 +2102,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Update password",
+        "operationId": "update-password",
         "description": "Update the password of the current user, requires the old password",
         "method": "POST",
         "path": [
@@ -2191,6 +2223,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Sign up with email and password",
+        "operationId": "sign-up-with-email-and-password",
         "description": "Create a new account with email and password",
         "method": "POST",
         "path": [
@@ -2307,6 +2341,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Sign in with email and password",
+        "operationId": "sign-in-with-email-and-password",
         "description": "Sign in to an account with email and password",
         "method": "POST",
         "path": [
@@ -2408,6 +2444,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Set password",
+        "operationId": "set-password",
         "description": "Set a new password for the current user",
         "method": "POST",
         "path": [
@@ -2494,6 +2532,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Send reset password code",
+        "operationId": "send-reset-password-code",
         "description": "Send a code to the user's email address for resetting the password.",
         "method": "POST",
         "path": [
@@ -2593,6 +2633,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Reset password with a code",
+        "operationId": "reset-password-with-a-code",
         "description": "Reset password with a code",
         "method": "POST",
         "path": [
@@ -2692,6 +2734,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Check reset password code",
+        "operationId": "check-reset-password-code",
         "description": "Check if a reset password code is valid without using it",
         "method": "POST",
         "path": [
@@ -2778,6 +2822,8 @@
         "namespace": [
           "subpackage_permissions"
         ],
+        "displayName": "List team permissions",
+        "operationId": "list-team-permissions",
         "description": "List team permissions of the current user. `user_id=me` must be set for client requests. Note that this might contain the permissions with the same permission ID across different teams. `(team_id, user_id, permission_id)` together uniquely identify a permission.",
         "method": "GET",
         "path": [
@@ -2928,6 +2974,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Get the current project",
+        "operationId": "get-the-current-project",
         "description": "Get the current project information including display name, oauth providers and authentication methods. Useful for display the available login options to the user.",
         "method": "GET",
         "path": [
@@ -2995,6 +3043,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Sign out of the current session",
+        "operationId": "sign-out-of-the-current-session",
         "description": "Sign out of the current session and invalidate the refresh token",
         "method": "DELETE",
         "path": [
@@ -3069,6 +3119,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Refresh access token",
+        "operationId": "refresh-access-token",
         "description": "Get a new access token using a refresh token",
         "method": "POST",
         "path": [
@@ -3143,6 +3195,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "List teams",
+        "operationId": "list-teams",
         "description": "List all the teams that the current user is a member of. `user_id=me` must be passed in the query parameters.",
         "method": "GET",
         "path": [
@@ -3239,6 +3293,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Create a team",
+        "operationId": "create-a-team",
         "description": "Create a new team and optionally add the current user as a member.",
         "method": "POST",
         "path": [
@@ -3408,6 +3464,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "List team members profiles",
+        "operationId": "list-team-members-profiles",
         "description": "List team members profiles. You always need to specify a `team_id` that your are a member of on the client. You can always filter for your own profile by setting `me` as the `user_id` in the path parameters. If you want list all the profiles in a team, you need to have the `$read_members` permission in that team.",
         "method": "GET",
         "path": [
@@ -3514,6 +3572,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Get a team",
+        "operationId": "get-a-team",
         "description": "Get a team that the current user is a member of.",
         "method": "GET",
         "path": [
@@ -3600,6 +3660,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Delete a team",
+        "operationId": "delete-a-team",
         "description": "Delete a team. Only allowed if the current user is a member of the team and has the `$delete_team` permission.",
         "method": "DELETE",
         "path": [
@@ -3678,6 +3740,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Update a team",
+        "operationId": "update-a-team",
         "description": "Update the team information. Only allowed if the current user is a member of the team and has the `$update_team` permission.",
         "method": "PATCH",
         "path": [
@@ -3853,6 +3917,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Send an email to invite a user to a team",
+        "operationId": "send-an-email-to-invite-a-user-to-a-team",
         "description": "The user receiving this email can join the team by clicking on the link in the email. If the user does not have an account yet, they will be prompted to create one.",
         "method": "POST",
         "path": [
@@ -3968,6 +4034,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Invite a user to a team",
+        "operationId": "invite-a-user-to-a-team",
         "description": "Send an email to a user to invite them to a team",
         "method": "POST",
         "path": [
@@ -4052,6 +4120,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Remove a user from a team",
+        "operationId": "remove-a-user-from-a-team",
         "description": "All the users are allowed to remove themselves from a team (`user_id=me`). Only the users who have the `$remove_members` permission are allowed to remove other users from a team. `team_id` is must an ID of a team that the user is a member of.",
         "method": "DELETE",
         "path": [
@@ -4152,6 +4222,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Get a team member profile",
+        "operationId": "get-a-team-member-profile",
         "description": "Get a team member profile. you can always get your own profile by setting `me` as the `user_id` in the path parameters on the client. If you want to get someone else's profile in a team, you need to have the `$read_members` permission in that team.",
         "method": "GET",
         "path": [
@@ -4255,6 +4327,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Update your team member profile",
+        "operationId": "update-your-team-member-profile",
         "description": "Update your own team member profile. `user_id` must be `me` in the path parameters on the client.",
         "method": "PATCH",
         "path": [
@@ -4413,6 +4487,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Get team invitation details",
+        "operationId": "get-team-invitation-details",
         "description": "Get additional information about a team invitation code",
         "method": "POST",
         "path": [
@@ -4500,6 +4576,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Check if a team invitation code is valid",
+        "operationId": "check-if-a-team-invitation-code-is-valid",
         "description": "Check if a team invitation code is valid without using it",
         "method": "POST",
         "path": [
@@ -4586,6 +4664,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Get current user",
+        "operationId": "get-current-user",
         "description": "Gets the currently authenticated user.",
         "method": "GET",
         "path": [
@@ -4667,6 +4747,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Delete current user",
+        "operationId": "delete-current-user",
         "description": "Deletes the currently authenticated user. Use this with caution.",
         "method": "DELETE",
         "path": [
@@ -4725,6 +4807,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Update current user",
+        "operationId": "update-current-user",
         "description": "Updates the currently authenticated user. Only the values provided will be updated.",
         "method": "PATCH",
         "path": [
@@ -7802,6 +7886,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "user.created",
+        "operationId": "user-created",
         "description": "This event is triggered when a user is created.",
         "method": "POST",
         "path": [],
@@ -7862,6 +7948,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "user.updated",
+        "operationId": "user-updated",
         "description": "This event is triggered when a user is updated.",
         "method": "POST",
         "path": [],
@@ -7922,6 +8010,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "user.deleted",
+        "operationId": "user-deleted",
         "description": "This event is triggered when a user is deleted.",
         "method": "POST",
         "path": [],
@@ -7955,6 +8045,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "team.created",
+        "operationId": "team-created",
         "description": "This event is triggered when a team is created.",
         "method": "POST",
         "path": [],
@@ -7995,6 +8087,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "team.updated",
+        "operationId": "team-updated",
         "description": "This event is triggered when a team is updated.",
         "method": "POST",
         "path": [],
@@ -8035,6 +8129,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "team.deleted",
+        "operationId": "team-deleted",
         "description": "This event is triggered when a team is deleted.",
         "method": "POST",
         "path": [],
@@ -8063,6 +8159,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "team_membership.created",
+        "operationId": "team-membership-created",
         "description": "This event is triggered when a user is added to a team.",
         "method": "POST",
         "path": [],
@@ -8092,6 +8190,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "team_membership.deleted",
+        "operationId": "team-membership-deleted",
         "description": "This event is triggered when a user is removed from a team.",
         "method": "POST",
         "path": [],
@@ -9698,6 +9798,8 @@
       "endpoint_.apiV1": {
         "id": "endpoint_.apiV1",
         "namespace": [],
+        "displayName": "/api/v1",
+        "operationId": "api-v-1",
         "description": "Returns a human-readable message with some useful information about the API.",
         "method": "GET",
         "path": [],
@@ -9871,6 +9973,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "List contact channels",
+        "operationId": "list-contact-channels",
         "description": "",
         "method": "GET",
         "path": [
@@ -9983,6 +10087,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Create a contact channel",
+        "operationId": "create-a-contact-channel",
         "description": "",
         "method": "POST",
         "path": [
@@ -10199,6 +10305,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Verify an email",
+        "operationId": "verify-an-email",
         "description": "Verify an email address of a user",
         "method": "POST",
         "path": [
@@ -10285,6 +10393,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Check email verification code",
+        "operationId": "check-email-verification-code",
         "description": "Check if an email verification code is valid without using it",
         "method": "POST",
         "path": [
@@ -10371,6 +10481,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Get a contact channel",
+        "operationId": "get-a-contact-channel",
         "description": "",
         "method": "GET",
         "path": [
@@ -10519,6 +10631,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Delete a contact channel",
+        "operationId": "delete-a-contact-channel",
         "description": "",
         "method": "DELETE",
         "path": [
@@ -10661,6 +10775,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Update a contact channel",
+        "operationId": "update-a-contact-channel",
         "description": "",
         "method": "PATCH",
         "path": [
@@ -10924,6 +11040,8 @@
         "namespace": [
           "subpackage_contactChannels"
         ],
+        "displayName": "Send contact channel verification code",
+        "operationId": "send-contact-channel-verification-code",
         "description": "Send a code to the user's contact channel for verifying the contact channel.",
         "method": "POST",
         "path": [
@@ -11058,6 +11176,8 @@
         "namespace": [
           "subpackage_oauth"
         ],
+        "displayName": "OAuth token endpoints",
+        "operationId": "o-auth-token-endpoints",
         "description": "This endpoint is used to exchange an authorization code or refresh token for an access token.",
         "method": "POST",
         "path": [
@@ -11143,6 +11263,8 @@
         "namespace": [
           "subpackage_oauth"
         ],
+        "displayName": "OAuth authorize endpoint",
+        "operationId": "o-auth-authorize-endpoint",
         "description": "This endpoint is used to initiate the OAuth authorization flow. there are two purposes for this endpoint: 1. Authenticate a user with an OAuth provider. 2. Link an existing user with an OAuth provider.",
         "method": "GET",
         "path": [
@@ -11414,6 +11536,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "Sign in with a code",
+        "operationId": "sign-in-with-a-code",
         "description": "Sign in with a code",
         "method": "POST",
         "path": [
@@ -11503,6 +11627,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "Send sign-in code",
+        "operationId": "send-sign-in-code",
         "description": "Send a code to the user's email address for sign-in.",
         "method": "POST",
         "path": [
@@ -11604,6 +11730,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "MFA sign in",
+        "operationId": "mfa-sign-in",
         "description": "Complete multi-factor authorization to sign in, with a TOTP and an MFA attempt code",
         "method": "POST",
         "path": [
@@ -11719,6 +11847,8 @@
         "namespace": [
           "subpackage_otp"
         ],
+        "displayName": "Check sign in code",
+        "operationId": "check-sign-in-code",
         "description": "Check if a sign in code is valid without using it",
         "method": "POST",
         "path": [
@@ -11805,6 +11935,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Update password",
+        "operationId": "update-password",
         "description": "Update the password of the current user, requires the old password",
         "method": "POST",
         "path": [
@@ -11924,6 +12056,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Sign up with email and password",
+        "operationId": "sign-up-with-email-and-password",
         "description": "Create a new account with email and password",
         "method": "POST",
         "path": [
@@ -12040,6 +12174,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Sign in with email and password",
+        "operationId": "sign-in-with-email-and-password",
         "description": "Sign in to an account with email and password",
         "method": "POST",
         "path": [
@@ -12141,6 +12277,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Set password",
+        "operationId": "set-password",
         "description": "Set a new password for the current user",
         "method": "POST",
         "path": [
@@ -12227,6 +12365,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Send reset password code",
+        "operationId": "send-reset-password-code",
         "description": "Send a code to the user's email address for resetting the password.",
         "method": "POST",
         "path": [
@@ -12326,6 +12466,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Reset password with a code",
+        "operationId": "reset-password-with-a-code",
         "description": "Reset password with a code",
         "method": "POST",
         "path": [
@@ -12425,6 +12567,8 @@
         "namespace": [
           "subpackage_password"
         ],
+        "displayName": "Check reset password code",
+        "operationId": "check-reset-password-code",
         "description": "Check if a reset password code is valid without using it",
         "method": "POST",
         "path": [
@@ -12511,6 +12655,8 @@
         "namespace": [
           "subpackage_permissions"
         ],
+        "displayName": "List team permissions of a user",
+        "operationId": "list-team-permissions-of-a-user",
         "description": "Query and filter the permission with `team_id`, `user_id`, and `permission_id`. Note that this might contain the permissions with the same permission ID across different teams and users. `(team_id, user_id, permission_id)` together uniquely identify a permission.",
         "method": "GET",
         "path": [
@@ -12661,6 +12807,8 @@
         "namespace": [
           "subpackage_permissions"
         ],
+        "displayName": "Grant a team permission to a user",
+        "operationId": "grant-a-team-permission-to-a-user",
         "description": "Grant a team permission to a user (the team permission must be created first on the Stack dashboard)",
         "method": "POST",
         "path": [
@@ -12898,6 +13046,8 @@
         "namespace": [
           "subpackage_permissions"
         ],
+        "displayName": "Revoke a team permission from a user",
+        "operationId": "revoke-a-team-permission-from-a-user",
         "description": "Revoke a team permission from a user",
         "method": "DELETE",
         "path": [
@@ -13103,6 +13253,8 @@
         "namespace": [
           "subpackage_projects"
         ],
+        "displayName": "Get the current project",
+        "operationId": "get-the-current-project",
         "description": "Get the current project information including display name, oauth providers and authentication methods. Useful for display the available login options to the user.",
         "method": "GET",
         "path": [
@@ -13170,6 +13322,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Create session",
+        "operationId": "create-session",
         "description": "Create a new session for a given user. This will return a refresh token that can be used to impersonate the user.",
         "method": "POST",
         "path": [
@@ -13277,6 +13431,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Sign out of the current session",
+        "operationId": "sign-out-of-the-current-session",
         "description": "Sign out of the current session and invalidate the refresh token",
         "method": "DELETE",
         "path": [
@@ -13351,6 +13507,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Refresh access token",
+        "operationId": "refresh-access-token",
         "description": "Get a new access token using a refresh token",
         "method": "POST",
         "path": [
@@ -13425,6 +13583,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "List teams",
+        "operationId": "list-teams",
         "description": "List all the teams in the project.",
         "method": "GET",
         "path": [
@@ -13525,6 +13685,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Create a team",
+        "operationId": "create-a-team",
         "description": "Create a new team and optionally add the current user as a member.",
         "method": "POST",
         "path": [
@@ -13766,6 +13928,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "List team members profiles",
+        "operationId": "list-team-members-profiles",
         "description": "List team members profiles and filter by team ID and user ID",
         "method": "GET",
         "path": [
@@ -13907,6 +14071,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Get a team",
+        "operationId": "get-a-team",
         "description": "Get a team by ID.",
         "method": "GET",
         "path": [
@@ -13997,6 +14163,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Delete a team",
+        "operationId": "delete-a-team",
         "description": "Delete a team by ID.",
         "method": "DELETE",
         "path": [
@@ -14075,6 +14243,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Update a team",
+        "operationId": "update-a-team",
         "description": "Update the team information by ID.",
         "method": "PATCH",
         "path": [
@@ -14322,6 +14492,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Send an email to invite a user to a team",
+        "operationId": "send-an-email-to-invite-a-user-to-a-team",
         "description": "The user receiving this email can join the team by clicking on the link in the email. If the user does not have an account yet, they will be prompted to create one.",
         "method": "POST",
         "path": [
@@ -14437,6 +14609,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Invite a user to a team",
+        "operationId": "invite-a-user-to-a-team",
         "description": "Send an email to a user to invite them to a team",
         "method": "POST",
         "path": [
@@ -14521,6 +14695,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Add a user to a team",
+        "operationId": "add-a-user-to-a-team",
         "description": "",
         "method": "POST",
         "path": [
@@ -14646,6 +14822,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Remove a user from a team",
+        "operationId": "remove-a-user-from-a-team",
         "description": "",
         "method": "DELETE",
         "path": [
@@ -14746,6 +14924,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Get a team member profile",
+        "operationId": "get-a-team-member-profile",
         "description": "Get a team member profile by user ID",
         "method": "GET",
         "path": [
@@ -14884,6 +15064,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Update a team member profile",
+        "operationId": "update-a-team-member-profile",
         "description": "Update a team member profile by user ID",
         "method": "PATCH",
         "path": [
@@ -15077,6 +15259,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Get team invitation details",
+        "operationId": "get-team-invitation-details",
         "description": "Get additional information about a team invitation code",
         "method": "POST",
         "path": [
@@ -15164,6 +15348,8 @@
         "namespace": [
           "subpackage_teams"
         ],
+        "displayName": "Check if a team invitation code is valid",
+        "operationId": "check-if-a-team-invitation-code-is-valid",
         "description": "Check if a team invitation code is valid without using it",
         "method": "POST",
         "path": [
@@ -15250,6 +15436,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "List users",
+        "operationId": "list-users",
         "description": "Lists all the users in the project.",
         "method": "GET",
         "path": [
@@ -15463,6 +15651,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Create user",
+        "operationId": "create-user",
         "description": "Creates a new user. E-mail authentication is always enabled, and no password is set, meaning the only way to authenticate the newly created user is through magic link.",
         "method": "POST",
         "path": [
@@ -15810,6 +16000,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Get current user",
+        "operationId": "get-current-user",
         "description": "Gets the currently authenticated user.",
         "method": "GET",
         "path": [
@@ -15900,6 +16092,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Delete current user",
+        "operationId": "delete-current-user",
         "description": "Deletes the currently authenticated user. Use this with caution.",
         "method": "DELETE",
         "path": [
@@ -15958,6 +16152,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Update current user",
+        "operationId": "update-current-user",
         "description": "Updates the currently authenticated user. Only the values provided will be updated.",
         "method": "PATCH",
         "path": [
@@ -16325,6 +16521,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Get user",
+        "operationId": "get-user",
         "description": "Gets a user by user ID.",
         "method": "GET",
         "path": [
@@ -16436,6 +16634,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Delete user",
+        "operationId": "delete-user",
         "description": "Deletes a user. Use this with caution.",
         "method": "DELETE",
         "path": [
@@ -16515,6 +16715,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Update user",
+        "operationId": "update-user",
         "description": "Updates a user. Only the values provided will be updated.",
         "method": "PATCH",
         "path": [

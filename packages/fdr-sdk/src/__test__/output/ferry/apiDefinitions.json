@@ -5,6 +5,8 @@
       "endpoint_.CreateAppointmentTask": {
         "id": "endpoint_.CreateAppointmentTask",
         "namespace": [],
+        "displayName": "Create Appointment Task",
+        "operationId": "create-appointment-task",
         "description": "Create an appointment task for a patient.\n\nOnce you create a task, Ferry will asynchronously process the task to find providers with validated availability. You can poll for the status of the task with the [Get Appointment Task](/api-reference/appointment-tasks/get-appointment-task) endpoint.",
         "method": "POST",
         "path": [
@@ -212,6 +214,8 @@
       "endpoint_.GetAppointmentTask": {
         "id": "endpoint_.GetAppointmentTask",
         "namespace": [],
+        "displayName": "Get Appointment Task",
+        "operationId": "get-appointment-task",
         "description": "Load a task by its ID.",
         "method": "GET",
         "path": [
@@ -304,6 +308,8 @@
       "endpoint_.CancelAppointmentTask": {
         "id": "endpoint_.CancelAppointmentTask",
         "namespace": [],
+        "displayName": "Cancel Appointment Task",
+        "operationId": "cancel-appointment-task",
         "description": "Cancel a task. This stops Ferry from processing the task.",
         "method": "POST",
         "path": [
@@ -371,6 +377,8 @@
       "endpoint_.GetAllAppointmentTasks": {
         "id": "endpoint_.GetAllAppointmentTasks",
         "namespace": [],
+        "displayName": "Get All Appointment Tasks",
+        "operationId": "get-all-appointment-tasks",
         "description": "Get all appointment task IDs. You can load the details of a task using the [Get Appointment Task](/api-reference/appointment-tasks/get-appointment-task) endpoint.",
         "method": "GET",
         "path": [

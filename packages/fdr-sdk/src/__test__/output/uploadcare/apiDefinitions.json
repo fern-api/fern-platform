@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_fileInformation"
         ],
+        "displayName": "File info as JSON",
+        "operationId": "file-info-json",
         "description": "Returns file-related information, such as image dimensions or geo\ntagging data in the JSON format.",
         "method": "GET",
         "path": [
@@ -140,6 +142,8 @@
         "namespace": [
           "subpackage_fileInformation"
         ],
+        "displayName": "File info as application/javascript",
+        "operationId": "file-info-jsonp",
         "description": "Same as the example above, but it returns data as the\n`application/javascript` type.\nThe callback name should always be `uploadcare_callback`. It should\nreceive the two following arguments: `id` and a response object.\nFor original files, id is equivalent to their UUIDs.\nFor processed files, `id` is equivalent to their URLs, excluding\nthe last operation, `jsonp`.",
         "method": "GET",
         "path": [
@@ -273,6 +277,8 @@
         "namespace": [
           "subpackage_fileNames"
         ],
+        "displayName": "File with a custom name",
+        "operationId": "file-with-name",
         "description": "You can set an optional filename that users will see instead of\nthe original name.",
         "method": "GET",
         "path": [
@@ -683,6 +689,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Direct uploads",
+        "operationId": "base-upload",
         "description": "Direct file uploads comply with the [RFC 7578](https://www.rfc-editor.org/rfc/rfc7578) standard.\nIn other words, you can perform a direct upload by making an HTTP POST request with the Content-Type\nheader set to `multipart/form-data`.\n\n**Note**: Direct file uploads support files smaller than 100 megabytes only.\nIf you would like to upload larger files, please use [Multipart Uploads](/api-refs/upload-api/#operation/multipartFileUploadStart) instead.\n\nFile upload example with curl:\n\n```\ncurl -F \"UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY\" -F \"my_file.jpg=@my_file.jpg\" \"https://upload.uploadcare.com/base/\"\n```",
         "method": "POST",
         "path": [
@@ -1037,6 +1045,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Start multipart upload",
+        "operationId": "multipart-file-upload-start",
         "description": "Multipart uploads should be used if you need to upload files larger than 100 megabytes or if you want to\nexplicitly trigger [AWS S3 Transfer Acceleration](https://aws.amazon.com/s3/transfer-acceleration/).\nWhen you use Multipart Uploads your files go straight to AWS S3 bypassing our upload instances.\n\nTo upload large files, 3 requests are sent in sequence:\n\n1. `/multipart/start/`\n2. `<presigned-url-x>`\n3. `/multipart/complete/`.\n\n**Note**: Multipart uploads support files larger than 10 megabytes only.",
         "method": "POST",
         "path": [
@@ -1423,6 +1433,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Upload individual file parts",
+        "operationId": "multipart-file-upload-part",
         "description": "The second phase is about uploading the file parts to the presigned upload URLs returned from the\n`/multipart/start/` endpoint.\n\nEach uploaded part should be at least 5 MiB (5242880 bytes) in size except for the last one, which can be smaller.\nYou can upload the file parts in parallel provided that the byte order stays unchanged.\n\n**Note**: You MUST define `Content-Type` header for your data.",
         "method": "PUT",
         "path": [
@@ -1473,6 +1485,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Complete multipart upload",
+        "operationId": "multipart-file-upload-complete",
         "description": "Once all the file parts have been uploaded successfully, complete the\nupload session to assemble all the file parts into a single resulting file.",
         "method": "POST",
         "path": [
@@ -1828,6 +1842,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Upload files from URLs",
+        "operationId": "from-url-upload",
         "description": "Uploadcare can fetch a file from a publicly available URL and then automatically upload the\nfetched file to your project.\n\n#### Upload tokens\n\nRequests to the endpoint return a JSON dictionary with a `token` that can be further used\nto [check the status](/api-refs/upload-api/#operation/fromURLUploadStatus) of the upload\nrequest.\n\n**Note:** The token is not a file ID and can't be used to address the file directly.\nThe actual file ID should be retrieved by calling the `/from_url/status/` endpoint.\n\n#### Duplicates prevention\n\nBy default, every call to the `/from_url/` endpoint with the same `source_url` results in\na new upload leading to file duplication.\n\nIf you would like Uploadcare to keep track of the requested URLs and avoid the duplicate\nuploads, pass the `save_URL_duplicates` and `check_URL_duplicates` parameters described below.",
         "method": "POST",
         "path": [
@@ -2208,6 +2224,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Check the status of a task to fetch/upload a file from a URL",
+        "operationId": "from-url-upload-status",
         "description": "The endpoint notifies about the progress of the task by changing the value of the `status` field:\n\n- the field is set to `waiting` initially\n- once the system starts processing the request, the field is set to `progress`\n- if the file is fetched and uploaded successfully, the `status` field is set to `success`\n  and the endpoint returns a JSON object holding information about the uploaded file\n- if the system fails to fetch/upload the file, the `status` field is set to `error` and\n  the `error` field is set to the cause of the error.",
         "method": "GET",
         "path": [
@@ -2365,6 +2383,8 @@
         "namespace": [
           "subpackage_upload"
         ],
+        "displayName": "Get information about an uploaded file",
+        "operationId": "file-upload-info",
         "description": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).",
         "method": "GET",
         "path": [
@@ -2696,6 +2716,8 @@
         "namespace": [
           "subpackage_groups"
         ],
+        "displayName": "Create a file group",
+        "operationId": "create-files-group",
         "description": "Create a file group from a set of already uploaded files.\n\nThe most common use case for creating a file group is when a user uploads\nmultiple files at once and then wants to display them together.\n\n**Note:** A group itself and files within it MUST belong to the same project.\n\n**Note:** Groups are immutable and the only way to add/remove a file to a group\nis to create a new one.",
         "method": "POST",
         "path": [
@@ -3030,6 +3052,8 @@
         "namespace": [
           "subpackage_groups"
         ],
+        "displayName": "Get information about a file group",
+        "operationId": "files-group-info",
         "description": "Returns a JSON object with information about a file group (when the group was created,\nnumber of the files in the group, etc).",
         "method": "GET",
         "path": [
@@ -6184,6 +6208,8 @@
       "__package__.File metadata": {
         "id": "__package__.File metadata",
         "namespace": [],
+        "displayName": "Get file's metadata",
+        "operationId": "file-metadata",
         "description": "Get file's metadata keys and values.",
         "method": "GET",
         "path": [
@@ -6408,6 +6434,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "List of files",
+        "operationId": "files-list",
         "description": "Getting a paginated list of files. If you need multiple results pages, use `previous`/`next` from the response to navigate back/forth.",
         "method": "GET",
         "path": [
@@ -6922,6 +6950,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "Store file",
+        "operationId": "store-file",
         "description": "Store a single file by UUID. When file is stored, it is available permanently. If not stored — it will only be available for 24 hours. If the parameter is omitted, it checks the `Auto file storing` setting of your Uploadcare project identified by the `public_key` provided in the `auth-param`.",
         "method": "PUT",
         "path": [
@@ -7367,6 +7397,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "Delete file",
+        "operationId": "delete-file-storage",
         "description": "Removes individual files. Returns file info.\n\nNote: this operation removes the file from storage but doesn't invalidate CDN cache.",
         "method": "DELETE",
         "path": [
@@ -7757,6 +7789,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "File info",
+        "operationId": "info",
         "description": "Get file information by its UUID (immutable).",
         "method": "GET",
         "path": [
@@ -8172,6 +8206,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "Batch file storing",
+        "operationId": "files-storing",
         "description": "Used to store multiple files in one go. Up to 100 files are supported per request. A JSON object holding your File list SHOULD be put into a request body.",
         "method": "PUT",
         "path": [
@@ -8598,6 +8634,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "Batch file delete",
+        "operationId": "files-delete",
         "description": "Used to delete multiple files in one go. Up to 100 files are supported per request. A JSON object holding your File list SHOULD be put into a request body.\n\nNote: this operation removes files from storage but doesn't invalidate CDN cache.",
         "method": "DELETE",
         "path": [
@@ -9024,6 +9062,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "Copy file to local storage",
+        "operationId": "create-local-copy",
         "description": "POST requests are used to copy original files or their modified versions to a default storage.\n\nSource files MAY either be stored or just uploaded and MUST NOT be deleted.\n\nCopying of large files is not supported at the moment. If the file CDN URL includes transformation operators, its size MUST NOT exceed 100 MB. If not, the size MUST NOT exceed 5 GB.",
         "method": "POST",
         "path": [
@@ -9357,6 +9397,8 @@
         "namespace": [
           "subpackage_file"
         ],
+        "displayName": "Copy file to remote storage",
+        "operationId": "create-remote-copy",
         "description": "POST requests are used to copy original files or their modified versions to a custom storage.\n\nSource files MAY either be stored or just uploaded and MUST NOT be deleted.\n\nCopying of large files is not supported at the moment. File size MUST NOT exceed 5 GB.",
         "method": "POST",
         "path": [
@@ -9672,6 +9714,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Execute AWS Rekognition",
+        "operationId": "aws-rekognition-execute",
         "description": "Execute [AWS Rekognition](https://docs.aws.amazon.com/rekognition/latest/dg/labels-detect-labels-image.html) Add-On for a given target to detect labels in an image. **Note:** Detected labels are stored in the file's appdata.",
         "method": "POST",
         "path": [
@@ -9964,6 +10008,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Check AWS Rekognition execution status",
+        "operationId": "aws-rekognition-execution-status",
         "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](#operation/awsRekognitionExecute) operation.",
         "method": "GET",
         "path": [
@@ -10156,6 +10202,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Execute AWS Rekognition Moderation",
+        "operationId": "aws-rekognition-detect-moderation-labels-execute",
         "description": "Execute [AWS Rekognition Moderation](https://docs.aws.amazon.com/rekognition/latest/dg/moderation.html) Add-On for a given target to detect moderation labels in an image. **Note:** Detected moderation labels are stored in the file's appdata.",
         "method": "POST",
         "path": [
@@ -10440,6 +10488,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Check AWS Rekognition Moderation execution status",
+        "operationId": "aws-rekognition-detect-moderation-labels-execution-status",
         "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](#operation/awsRekognitionDetectModerationLabelsExecute) operation.",
         "method": "GET",
         "path": [
@@ -10624,6 +10674,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Execute ClamAV",
+        "operationId": "uc-clamav-virus-scan-execute",
         "description": "Execute [ClamAV](https://www.clamav.net/) virus checking Add-On for a given target.",
         "method": "POST",
         "path": [
@@ -10944,6 +10996,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Check ClamAV execution status",
+        "operationId": "uc-clamav-virus-scan-execution-status",
         "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](#operation/ucClamavVirusScanExecute) operation.",
         "method": "GET",
         "path": [
@@ -11144,6 +11198,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Execute Remove.bg",
+        "operationId": "remove-bg-execute",
         "description": "Execute [remove.bg](https://remove.bg/) background image removal Add-On for a given target.",
         "method": "POST",
         "path": [
@@ -11459,6 +11515,8 @@
         "namespace": [
           "subpackage_addOns"
         ],
+        "displayName": "Check Remove.bg execution status",
+        "operationId": "remove-bg-execution-status",
         "description": "Check the status of an Add-On execution request that had been started\nusing the [Execute Add-On](#operation/removeBgExecute) operation.",
         "method": "GET",
         "path": [
@@ -11654,6 +11712,8 @@
         "namespace": [
           "subpackage_fileMetadata"
         ],
+        "displayName": "Get metadata key's value",
+        "operationId": "key",
         "description": "Get the value of a single metadata key.",
         "method": "GET",
         "path": [
@@ -11880,6 +11940,8 @@
         "namespace": [
           "subpackage_fileMetadata"
         ],
+        "displayName": "Update metadata key's value",
+        "operationId": "update-file-metadata-key",
         "description": "Update the value of a single metadata key. If the key does not exist, it will be created.",
         "method": "PUT",
         "path": [
@@ -12131,6 +12193,8 @@
         "namespace": [
           "subpackage_fileMetadata"
         ],
+        "displayName": "Delete metadata key",
+        "operationId": "delete-file-metadata-key",
         "description": "Delete a file's metadata key.",
         "method": "DELETE",
         "path": [
@@ -12342,6 +12406,8 @@
         "namespace": [
           "subpackage_group"
         ],
+        "displayName": "List of groups",
+        "operationId": "groups-list",
         "description": "Get a paginated list of groups.",
         "method": "GET",
         "path": [
@@ -12636,6 +12702,8 @@
         "namespace": [
           "subpackage_group"
         ],
+        "displayName": "Group info",
+        "operationId": "info",
         "description": "Get a file group by its ID.\n\nGroups are identified in a way similar to individual files. A group ID consists of a UUID\nfollowed by a “~” (tilde) character and a group size: integer number of the files in the group.",
         "method": "GET",
         "path": [
@@ -12921,6 +12989,8 @@
         "namespace": [
           "subpackage_group"
         ],
+        "displayName": "Delete group",
+        "operationId": "delete-group",
         "description": "Delete a file group by its ID.\n\n**Note**: The operation only removes the group object itself. **All the files that were part of the group are left as is.**",
         "method": "DELETE",
         "path": [
@@ -13180,6 +13250,8 @@
         "namespace": [
           "subpackage_project"
         ],
+        "displayName": "Project info",
+        "operationId": "info",
         "description": "Getting info about account project.",
         "method": "GET",
         "path": [
@@ -13393,6 +13465,8 @@
         "namespace": [
           "subpackage_webhook"
         ],
+        "displayName": "List of webhooks",
+        "operationId": "webhooks-list",
         "description": "List of project webhooks.",
         "method": "GET",
         "path": [
@@ -13622,6 +13696,8 @@
         "namespace": [
           "subpackage_webhook"
         ],
+        "displayName": "Create webhook",
+        "operationId": "create",
         "description": "Create and subscribe to a webhook. You can use webhooks to receive notifications about your uploads. For instance, once a file gets uploaded to your project, we can notify you by sending a message to a target URL.",
         "method": "POST",
         "path": [
@@ -13843,6 +13919,8 @@
         "namespace": [
           "subpackage_webhook"
         ],
+        "displayName": "Update webhook",
+        "operationId": "update-webhook",
         "description": "Update webhook attributes.",
         "method": "PUT",
         "path": [
@@ -14091,6 +14169,8 @@
         "namespace": [
           "subpackage_webhook"
         ],
+        "displayName": "Delete webhook",
+        "operationId": "unsubscribe",
         "description": "Unsubscribe and delete a webhook.",
         "method": "DELETE",
         "path": [
@@ -14287,6 +14367,8 @@
         "namespace": [
           "subpackage_conversion"
         ],
+        "displayName": "Document info",
+        "operationId": "document-convert-info",
         "description": "The endpoint allows you to determine the document format and possible conversion formats.",
         "method": "GET",
         "path": [
@@ -14565,6 +14647,8 @@
         "namespace": [
           "subpackage_conversion"
         ],
+        "displayName": "Convert document",
+        "operationId": "document-convert",
         "description": "Uploadcare allows you to convert files to different target formats. Check out the [conversion capabilities](https://uploadcare.com/docs/transformations/document-conversion/#document-file-formats) for each supported format.",
         "method": "POST",
         "path": [
@@ -14839,6 +14923,8 @@
         "namespace": [
           "subpackage_conversion"
         ],
+        "displayName": "Document conversion job status",
+        "operationId": "document-convert-status",
         "description": "Once you get a conversion job result, you can acquire a conversion job status via token. Just put it in your request URL as `:token`.",
         "method": "GET",
         "path": [
@@ -15155,6 +15241,8 @@
         "namespace": [
           "subpackage_conversion"
         ],
+        "displayName": "Convert video",
+        "operationId": "video-convert",
         "description": "Uploadcare video processing adjusts video quality, format (mp4, webm, ogg), and size, cuts it, and generates thumbnails. Processed video is instantly available over CDN.",
         "method": "POST",
         "path": [
@@ -15413,6 +15501,8 @@
         "namespace": [
           "subpackage_conversion"
         ],
+        "displayName": "Video conversion job status",
+        "operationId": "video-convert-status",
         "description": "Once you get a processing job result, you can acquire a processing job status via token. Just put it in your request URL as `:token`.",
         "method": "GET",
         "path": [

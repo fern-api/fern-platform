@@ -15,6 +15,8 @@ const PRIMITIVE_SHAPE: Latest.TypeReference.Primitive = {
 
 const endpoint1: Latest.EndpointDefinition = {
   id: Latest.EndpointId("endpoint-1"),
+  displayName: "endpoint-1",
+  operationId: "endpoint-1",
   namespace: [],
   method: "GET",
   path: [],
@@ -55,6 +57,8 @@ const endpoint1: Latest.EndpointDefinition = {
 
 const endpoint2: Latest.EndpointDefinition = {
   id: Latest.EndpointId("endpoint-2"),
+  displayName: "endpoint-2",
+  operationId: "endpoint-2",
   namespace: [],
   method: "GET",
   path: [],
@@ -95,6 +99,8 @@ const endpoint2: Latest.EndpointDefinition = {
 
 const websocket1: Latest.WebSocketChannel = {
   id: Latest.WebSocketId("websocket-1"),
+  displayName: "websocket-1",
+  operationId: "websocket-1",
   namespace: [],
   path: [],
   messages: [

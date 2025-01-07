@@ -8,6 +8,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazon"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Amazon session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -373,6 +375,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazon"
         ],
+        "displayName": "Get Buy Again Items",
+        "operationId": "get-buy-again-items",
         "description": "Get a list of products that you can buy again or have purchased before.",
         "method": "GET",
         "path": [
@@ -751,6 +755,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazon"
         ],
+        "displayName": "Buy Now",
+        "operationId": "buy-now",
         "description": "Order an item. **The end user must have a default address and payment method set**. Either ASIN or a valid amazon url to the item must be present. If both are present, the ASIN will be used.",
         "method": "POST",
         "path": [
@@ -1229,6 +1235,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazon"
         ],
+        "displayName": "Add To Cart",
+        "operationId": "add-to-cart",
         "description": "Add an item to the cart. **The end user must have a default address and payment method set**. Either ASIN or a valid amazon url to the item must be present. If both are present, the ASIN will be used.",
         "method": "POST",
         "path": [
@@ -1707,6 +1715,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazon"
         ],
+        "displayName": "Search",
+        "operationId": "search",
         "description": "Search for items.",
         "method": "GET",
         "path": [
@@ -2180,6 +2190,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazonBusiness"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Amazon business session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -2545,6 +2557,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazonBusiness"
         ],
+        "displayName": "Get Orders",
+        "operationId": "get-orders",
         "description": "Get your Amazon Business orders. The default timespan is 30 days and default startIndex is 0.",
         "method": "GET",
         "path": [
@@ -3063,6 +3077,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazonBusiness"
         ],
+        "displayName": "Get Buy Again Items",
+        "operationId": "get-buy-again-items",
         "description": "Get a list of products that you can buy again or have purchased before.",
         "method": "GET",
         "path": [
@@ -3441,6 +3457,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazonBusiness"
         ],
+        "displayName": "Buy Now",
+        "operationId": "buy-now",
         "description": "Order an item. **The end user must have a default address and payment method set**. Either ASIN or a valid amazon url to the item must be present. If both are present, the ASIN will be used.",
         "method": "POST",
         "path": [
@@ -3919,6 +3937,8 @@
           "subpackage_integrations",
           "subpackage_integrations/amazonSeller"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Amazon Seller session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -4284,6 +4304,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Dispatch Me session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -4649,6 +4671,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Edit Customer",
+        "operationId": "edit-customer",
         "method": "PUT",
         "path": [
           {
@@ -6001,6 +6025,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Create Customer",
+        "operationId": "create-customer",
         "method": "POST",
         "path": [
           {
@@ -7295,6 +7321,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Get Customers",
+        "operationId": "get-customers",
         "method": "GET",
         "path": [
           {
@@ -7658,6 +7686,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Get Account Organizations",
+        "operationId": "get-account-organizations",
         "method": "GET",
         "path": [
           {
@@ -8021,6 +8051,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Get Jobs",
+        "operationId": "get-jobs",
         "method": "GET",
         "path": [
           {
@@ -8550,6 +8582,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Get Users",
+        "operationId": "get-users",
         "method": "GET",
         "path": [
           {
@@ -9008,6 +9042,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Create Appointment",
+        "operationId": "create-appointment",
         "method": "POST",
         "path": [
           {
@@ -9634,6 +9670,8 @@
           "subpackage_integrations",
           "subpackage_integrations/dispatchMe"
         ],
+        "displayName": "Create Note",
+        "operationId": "create-note",
         "method": "POST",
         "path": [
           {
@@ -10171,6 +10209,8 @@
           "subpackage_integrations",
           "subpackage_integrations/facebook"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Facebook session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -10536,6 +10576,8 @@
           "subpackage_integrations",
           "subpackage_integrations/facebook"
         ],
+        "displayName": "Post Group Message",
+        "operationId": "post-group-message",
         "description": "Post a message to a group",
         "method": "POST",
         "path": [
@@ -11049,6 +11091,8 @@
           "subpackage_integrations",
           "subpackage_integrations/facebook"
         ],
+        "displayName": "Join Group",
+        "operationId": "join-group",
         "description": "Join a group",
         "method": "POST",
         "path": [
@@ -11475,6 +11519,8 @@
           "subpackage_integrations",
           "subpackage_integrations/facebook"
         ],
+        "displayName": "Search Groups",
+        "operationId": "search-groups",
         "description": "Search for groups",
         "method": "GET",
         "path": [
@@ -11903,6 +11949,8 @@
           "subpackage_integrations",
           "subpackage_integrations/instagram"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Instagram session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -12268,6 +12316,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a LinkedIn session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -12633,6 +12683,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Get Connection Invitations",
+        "operationId": "get-connection-invitations",
         "description": "Get your the list of pending LinkedIn connection requests.",
         "method": "GET",
         "path": [
@@ -13005,6 +13057,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Accept Connection Invitation",
+        "operationId": "accept-connection-invitation",
         "description": "Accept a LinkedIn connection invitation",
         "method": "POST",
         "path": [
@@ -13455,6 +13509,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Create Post",
+        "operationId": "create-post",
         "description": "Create a new LinkedIn post",
         "method": "POST",
         "path": [
@@ -13905,6 +13961,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Search",
+        "operationId": "search",
         "description": "Search for people on LinkedIn",
         "method": "GET",
         "path": [
@@ -14415,6 +14473,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Get Connections",
+        "operationId": "get-connections",
         "description": "Get your LinkedIn connections",
         "method": "GET",
         "path": [
@@ -14888,6 +14948,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Send Message",
+        "operationId": "send-message",
         "description": "Send a LinkedIn message",
         "method": "POST",
         "path": [
@@ -15373,6 +15435,8 @@
           "subpackage_integrations",
           "subpackage_integrations/linkedin"
         ],
+        "displayName": "Get Messages",
+        "operationId": "get-messages",
         "description": "Get your LinkedIn messages",
         "method": "GET",
         "path": [
@@ -15863,6 +15927,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a perfect pricing session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -16228,6 +16294,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Create Customer",
+        "operationId": "create-customer",
         "description": "Create a perfect pricing customer",
         "method": "POST",
         "path": [
@@ -17256,6 +17324,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Search Customer Details",
+        "operationId": "search-customer-details",
         "description": "Search for perfect pricing customer",
         "method": "GET",
         "path": [
@@ -17739,6 +17809,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Create Appointment",
+        "operationId": "create-appointment",
         "description": "Create a perfect pricing appointment",
         "method": "POST",
         "path": [
@@ -19066,6 +19138,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Billing Terms",
+        "operationId": "get-billing-terms",
         "description": "Get perfect pricing billing terms",
         "method": "GET",
         "path": [
@@ -19430,6 +19504,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Invoice Types",
+        "operationId": "get-invoice-types",
         "description": "Get perfect pricing invoice types",
         "method": "GET",
         "path": [
@@ -19794,6 +19870,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Customer Types",
+        "operationId": "get-customer-types",
         "description": "Get perfect pricing customer types",
         "method": "GET",
         "path": [
@@ -20158,6 +20236,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Arrival Window",
+        "operationId": "get-arrival-window",
         "description": "Get perfect pricing arrival window",
         "method": "GET",
         "path": [
@@ -20522,6 +20602,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Service Call Type",
+        "operationId": "get-service-call-type",
         "description": "Get perfect pricing service call type",
         "method": "GET",
         "path": [
@@ -20886,6 +20968,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Diagnostic Fee",
+        "operationId": "get-diagnostic-fee",
         "description": "Get perfect pricing diagnostic fee",
         "method": "GET",
         "path": [
@@ -21250,6 +21334,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Service Call Status",
+        "operationId": "get-service-call-status",
         "description": "Get perfect pricing service call status",
         "method": "GET",
         "path": [
@@ -21614,6 +21700,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Lead Source",
+        "operationId": "get-lead-source",
         "description": "Get perfect pricing lead source",
         "method": "GET",
         "path": [
@@ -21978,6 +22066,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Board Ids",
+        "operationId": "get-board-ids",
         "description": "Get perfect pricing board ids",
         "method": "GET",
         "path": [
@@ -22342,6 +22432,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Technicians",
+        "operationId": "get-technicians",
         "description": "Get perfect pricing technicians",
         "method": "GET",
         "path": [
@@ -22706,6 +22798,8 @@
           "subpackage_integrations",
           "subpackage_integrations/ppp"
         ],
+        "displayName": "Get Calendar",
+        "operationId": "get-calendar",
         "description": "Get perfect pricing calendar",
         "method": "GET",
         "path": [
@@ -23159,6 +23253,8 @@
           "subpackage_integrations",
           "subpackage_integrations/servicebox"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Service Box session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -23524,6 +23620,8 @@
           "subpackage_integrations",
           "subpackage_integrations/servicebox"
         ],
+        "displayName": "Get Receptionnaires",
+        "operationId": "get-receptionnaires",
         "description": "Get the list of receptionnaires associated with this account",
         "method": "GET",
         "path": [
@@ -23948,6 +24046,8 @@
           "subpackage_integrations",
           "subpackage_integrations/servicebox"
         ],
+        "displayName": "Get Equippes",
+        "operationId": "get-equippes",
         "description": "Get the list of equippes associated with this account",
         "method": "GET",
         "path": [
@@ -24317,6 +24417,8 @@
           "subpackage_integrations",
           "subpackage_integrations/servicebox"
         ],
+        "displayName": "Get Bar Graph",
+        "operationId": "get-bar-graph",
         "description": "Get a bar graph of the number of events in each location",
         "method": "GET",
         "path": [
@@ -24770,6 +24872,8 @@
           "subpackage_integrations",
           "subpackage_integrations/servicebox"
         ],
+        "displayName": "Get Calendar",
+        "operationId": "get-calendar",
         "description": "Get the calendar",
         "method": "GET",
         "path": [
@@ -25257,6 +25361,8 @@
           "subpackage_integrations",
           "subpackage_integrations/toast"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Toast session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -25622,6 +25728,8 @@
           "subpackage_integrations",
           "subpackage_integrations/toast"
         ],
+        "displayName": "Get Menu",
+        "operationId": "get-menu",
         "method": "GET",
         "path": [
           {
@@ -25985,6 +26093,8 @@
           "subpackage_integrations",
           "subpackage_integrations/uber"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Uber session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -26350,6 +26460,8 @@
           "subpackage_integrations",
           "subpackage_integrations/uber"
         ],
+        "displayName": "Order Ride",
+        "operationId": "order-ride",
         "method": "POST",
         "path": [
           {
@@ -26962,6 +27074,8 @@
           "subpackage_integrations",
           "subpackage_integrations/venmo"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Venmo session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -27327,6 +27441,8 @@
           "subpackage_integrations",
           "subpackage_integrations/venmo"
         ],
+        "displayName": "Get Transactions",
+        "operationId": "get-transactions",
         "method": "GET",
         "path": [
           {
@@ -27743,6 +27859,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a Vin session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -28108,6 +28226,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Create Sales Appointment",
+        "operationId": "create-sales-appointment",
         "description": "Create a sales appointment",
         "method": "POST",
         "path": [
@@ -28762,6 +28882,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Get Appointments",
+        "operationId": "get-appointments",
         "description": "Get a list of sales appointments",
         "method": "GET",
         "path": [
@@ -29199,6 +29321,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Get Users",
+        "operationId": "get-users",
         "description": "Get a list of users and assigned users ids.",
         "method": "GET",
         "path": [
@@ -29563,6 +29687,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Get Dealers",
+        "operationId": "get-dealers",
         "description": "Get a list of dealers",
         "method": "GET",
         "path": [
@@ -29927,6 +30053,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Search Customers",
+        "operationId": "search-customers",
         "description": "Search for customers",
         "method": "GET",
         "path": [
@@ -30380,6 +30508,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Get Vehicles",
+        "operationId": "get-vehicles",
         "description": "Get a list of vehicles",
         "method": "GET",
         "path": [
@@ -30799,6 +30929,8 @@
           "subpackage_integrations",
           "subpackage_integrations/vin"
         ],
+        "displayName": "Create Customer",
+        "operationId": "create-customer",
         "description": "Create a customer",
         "method": "POST",
         "path": [
@@ -31459,6 +31591,8 @@
           "subpackage_integrations",
           "subpackage_integrations/whatsapp"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a WhatsApp session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -31824,6 +31958,8 @@
           "subpackage_integrations",
           "subpackage_integrations/whatsapp"
         ],
+        "displayName": "Send Message",
+        "operationId": "send-message",
         "description": "Send a message to a WhatsApp number.",
         "method": "POST",
         "path": [
@@ -32309,6 +32445,8 @@
           "subpackage_integrations",
           "subpackage_integrations/whatsapp"
         ],
+        "displayName": "Change Status",
+        "operationId": "change-status",
         "description": "Change the status on WhatsApp. Text only supported",
         "method": "POST",
         "path": [
@@ -32759,6 +32897,8 @@
           "subpackage_integrations",
           "subpackage_integrations/whatsapp"
         ],
+        "displayName": "Read Messages",
+        "operationId": "read-messages",
         "description": "Read messages from WhatsApp",
         "method": "GET",
         "path": [
@@ -33188,6 +33328,8 @@
           "subpackage_integrations",
           "subpackage_integrations/x"
         ],
+        "displayName": "Create Session",
+        "operationId": "create-session",
         "description": "Create a X session that you can connect to via playwright. See [this link](/overview/integrations/custom-automations) for more info.",
         "method": "POST",
         "path": [
@@ -33553,6 +33695,8 @@
           "subpackage_integrations",
           "subpackage_integrations/x"
         ],
+        "displayName": "Get Followers",
+        "operationId": "get-followers",
         "description": "Get the list of followers associated with this account",
         "method": "GET",
         "path": [
@@ -33989,6 +34133,8 @@
           "subpackage_integrations",
           "subpackage_integrations/x"
         ],
+        "displayName": "Get Following Tweets",
+        "operationId": "get-following-tweets",
         "description": "Get the latest tweets from the accounts you follow",
         "method": "GET",
         "path": [
@@ -34417,6 +34563,8 @@
         "namespace": [
           "subpackage_link"
         ],
+        "displayName": "Create Link Token",
+        "operationId": "create-link-token",
         "description": "Create a link token that can be used to link accounts",
         "method": "POST",
         "path": [
@@ -34957,6 +35105,8 @@
         "namespace": [
           "subpackage_linked-accounts"
         ],
+        "displayName": "Get Linked Accounts",
+        "operationId": "get-linked-accounts",
         "method": "GET",
         "path": [
           {
@@ -35217,6 +35367,8 @@
         "namespace": [
           "subpackage_linked-accounts"
         ],
+        "displayName": "Get Linked Account",
+        "operationId": "get-linked-account",
         "method": "GET",
         "path": [
           {
@@ -35647,6 +35799,8 @@
         "namespace": [
           "subpackage_linked-accounts"
         ],
+        "displayName": "Delete Linked Account",
+        "operationId": "delete-linked-account",
         "method": "DELETE",
         "path": [
           {
@@ -36067,6 +36221,8 @@
         "namespace": [
           "subpackage_linked-accounts"
         ],
+        "displayName": "Get Token",
+        "operationId": "get-token",
         "method": "POST",
         "path": [
           {

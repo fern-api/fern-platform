@@ -16,6 +16,8 @@ const PRIMITIVE_SHAPE: Latest.TypeReference.Primitive = {
 const endpoint1: Latest.EndpointDefinition = {
   id: Latest.EndpointId("endpoint-1"),
   namespace: [],
+  displayName: "endpoint-1",
+  operationId: "endpoint-1",
   method: "GET",
   path: [],
   defaultEnvironment: Latest.EnvironmentId("production"),
@@ -56,6 +58,8 @@ const endpoint1: Latest.EndpointDefinition = {
 const endpoint2: Latest.EndpointDefinition = {
   id: Latest.EndpointId("endpoint-2"),
   namespace: [],
+  displayName: "endpoint-2",
+  operationId: "endpoint-2",
   method: "GET",
   path: [],
   defaultEnvironment: Latest.EnvironmentId("production"),
@@ -97,6 +101,8 @@ const websocket1: Latest.WebSocketChannel = {
   id: Latest.WebSocketId("websocket-1"),
   namespace: [],
   path: [],
+  displayName: "websocket-1",
+  operationId: "websocket-1",
   messages: [
     {
       type: APIV1Read.WebSocketMessageId("message-1"),

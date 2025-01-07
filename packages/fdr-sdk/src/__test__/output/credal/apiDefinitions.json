@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Create Copilot",
+        "operationId": "create-copilot",
         "description": "Create a new copilot. The API key used will be added to the copilot for future Requests",
         "availability": "Beta",
         "method": "POST",
@@ -154,6 +156,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Create Conversation",
+        "operationId": "create-conversation",
         "description": "OPTIONAL. Create a new conversation with the Copilot. The conversation ID can be used in the `sendMessage` endpoint. The `sendMessage` endpoint automatically creates new conversations upon first request, but calling this endpoint can simplify certain use cases where it is helpful for the application to have the conversation ID before the first message is sent.",
         "method": "POST",
         "path": [
@@ -277,6 +281,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Provide Message Feedback",
+        "operationId": "provide-message-feedback",
         "method": "POST",
         "path": [
           {
@@ -411,6 +417,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Send Message",
+        "operationId": "send-message",
         "method": "POST",
         "path": [
           {
@@ -656,6 +664,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Stream Message",
+        "operationId": "stream-message",
         "description": "This endpoint allows you to send a message to a specific copilot and get the response back as a streamed set of Server-Sent Events.",
         "availability": "Beta",
         "method": "POST",
@@ -959,6 +969,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Add Collection To Copilot",
+        "operationId": "add-collection-to-copilot",
         "description": "Link a collection with a copilot. The API Key used must be added to both the collection and the copilot beforehand.",
         "availability": "Beta",
         "method": "POST",
@@ -1066,6 +1078,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Remove Collection From Copilot",
+        "operationId": "remove-collection-from-copilot",
         "description": "Unlink a collection with a copilot. The API Key used must be added to both the collection and the copilot beforehand.",
         "availability": "Beta",
         "method": "POST",
@@ -1173,6 +1187,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Update Configuration",
+        "operationId": "update-configuration",
         "description": "Update the configuration for a copilot",
         "availability": "Beta",
         "method": "POST",
@@ -1285,6 +1301,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Delete Copilot",
+        "operationId": "delete-copilot",
         "availability": "Beta",
         "method": "DELETE",
         "path": [
@@ -1394,6 +1412,8 @@
         "namespace": [
           "subpackage_documentCatalog"
         ],
+        "displayName": "Upload Document Contents",
+        "operationId": "upload-document-contents",
         "method": "POST",
         "path": [
           {
@@ -1659,6 +1679,8 @@
         "namespace": [
           "subpackage_documentCatalog"
         ],
+        "displayName": "Metadata",
+        "operationId": "metadata",
         "description": "Bulk patch metadata for documents, synced natively by Credal or manual API uploads",
         "method": "PATCH",
         "path": [
@@ -1763,6 +1785,8 @@
         "namespace": [
           "subpackage_documentCollections"
         ],
+        "displayName": "Add Documents To Collection",
+        "operationId": "add-documents-to-collection",
         "description": "Add documents to a document collection. Note that the documents must already exist in the document catalog to use this endpoint. If you want to upload a new document to a collection, use the `uploadDocumentContents` endpoint.",
         "method": "POST",
         "path": [
@@ -1884,6 +1908,8 @@
         "namespace": [
           "subpackage_documentCollections"
         ],
+        "displayName": "Remove Documents From Collection",
+        "operationId": "remove-documents-from-collection",
         "description": "Remove documents from a collection",
         "availability": "Beta",
         "method": "DELETE",
@@ -2006,6 +2032,8 @@
         "namespace": [
           "subpackage_documentCollections"
         ],
+        "displayName": "Create Collection",
+        "operationId": "create-collection",
         "description": "Create a new copilot. The API key used will be added to the copilot for future Requests",
         "availability": "Beta",
         "method": "POST",
@@ -2153,6 +2181,8 @@
         "namespace": [
           "subpackage_documentCollections"
         ],
+        "displayName": "Delete Collection",
+        "operationId": "delete-collection",
         "description": "Delete the collection.",
         "availability": "Beta",
         "method": "DELETE",
@@ -2262,6 +2292,8 @@
         "namespace": [
           "subpackage_documentCollections"
         ],
+        "displayName": "Create Mongo Collection Sync",
+        "operationId": "create-mongo-collection-sync",
         "description": "Credal lets you easily sync your MongoDB data for use in Collections and Copilots. Create a new sync from a MongoDB collection to a Credal collection.",
         "availability": "Beta",
         "method": "POST",
@@ -2411,6 +2443,8 @@
         "namespace": [
           "subpackage_documentCollections"
         ],
+        "displayName": "Update Mongo Collection Sync",
+        "operationId": "update-mongo-collection-sync",
         "description": "Credal lets you easily sync your MongoDB data for use in Collections and Copilots. Update an existing sync from a MongoDB collection to a Credal collection via the `mongoCredentialId`, to disambiguate between multiple potential syncs to a given collection.",
         "availability": "Beta",
         "method": "POST",
@@ -2560,6 +2594,8 @@
         "namespace": [
           "subpackage_permissionsService"
         ],
+        "displayName": "Check Resource Authorization For User",
+        "operationId": "check-resource-authorization-for-user",
         "description": "Admin endpoint to check whether the specified user is authorized to read the specified resource.",
         "availability": "Beta",
         "method": "POST",
@@ -2705,6 +2741,8 @@
         "namespace": [
           "subpackage_permissionsService"
         ],
+        "displayName": "Check Bulk Resources Authorization For User",
+        "operationId": "check-bulk-resources-authorization-for-user",
         "description": "Admin endpoint to check whether the specified user is authorized to read the specified set of resources.",
         "availability": "Beta",
         "method": "POST",
@@ -2876,6 +2914,8 @@
         "namespace": [
           "subpackage_permissionsService"
         ],
+        "displayName": "List Cached Authorized Resources For User",
+        "operationId": "list-cached-authorized-resources-for-user",
         "description": "Admin endpoint to list all resources that the specified user is authorized to read. Note this endpoint returns cached results and may not be up-to-date. You can use the checkResourceAuthorizationForUser endpoint with disableCache set to true to get the most up-to-date results.",
         "availability": "Beta",
         "method": "POST",
@@ -3054,6 +3094,8 @@
         "namespace": [
           "subpackage_search"
         ],
+        "displayName": "Search Document Collection",
+        "operationId": "search-document-collection",
         "description": "Search across all documents in a document collection using the document metadata and contents.",
         "method": "POST",
         "path": [
@@ -3333,6 +3375,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Metadata",
+        "operationId": "metadata",
         "description": "Bulk patch metadata for users",
         "method": "PATCH",
         "path": [

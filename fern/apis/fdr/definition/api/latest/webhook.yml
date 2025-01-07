@@ -14,6 +14,8 @@ types:
       - commons.WithNamespace
     properties:
       id: rootCommons.WebhookId
+      displayName: optional<string>
+      operationId: optional<string>
       method: WebhookHttpMethod
       path: list<string>
       headers: optional<list<type.ObjectProperty>>
