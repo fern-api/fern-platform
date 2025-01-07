@@ -11,7 +11,11 @@ import {
   resolveDocsContent,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
-import { DEFAULT_EDGE_FLAGS, getRedirectForPath } from "@fern-docs/utils";
+import {
+  DEFAULT_EDGE_FLAGS,
+  EdgeFlags,
+  getRedirectForPath,
+} from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
@@ -240,6 +244,7 @@ export async function getDocsPageProps(
       docs.definition.filesV2,
       node.tabs.length > 0
     ),
+    featureFlags: undefined, // TODO: match loading logic in withInitialProps ?
   };
 
   // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
