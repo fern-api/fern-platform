@@ -1,13 +1,9 @@
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import {
-  anthropicApiKey,
-  openaiApiKey,
-  turbopufferApiKey,
-} from "@/server/env-variables";
+import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { createAnthropic } from "@ai-sdk/anthropic";
+import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
@@ -22,8 +18,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 export async function POST(req: NextRequest) {
-  const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-  const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
+  const bedrock = createAmazonBedrock({
+    region: "us-east-1",
+    // AWS credentials taken from .env.local
+  });
+  const model = bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0");
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
@@ -77,7 +76,7 @@ export async function POST(req: NextRequest) {
   });
 
   const result = streamText({
-    model: languageModel,
+    model: model,
     system,
     messages,
     maxSteps: 10,
@@ -111,7 +110,7 @@ export async function POST(req: NextRequest) {
       functionId: "ask_ai_chat",
       metadata: {
         domain,
-        languageModel: languageModel.modelId,
+        languageModel: model.modelId,
         embeddingModel: embeddingModel.modelId,
         db: "turbopuffer",
         namespace,
@@ -120,7 +119,7 @@ export async function POST(req: NextRequest) {
     onFinish: async (e) => {
       const end = Date.now();
       await track("ask_ai", {
-        languageModel: languageModel.modelId,
+        languageModel: model.modelId,
         embeddingModel: embeddingModel.modelId,
         durationMs: end - start,
         domain,
