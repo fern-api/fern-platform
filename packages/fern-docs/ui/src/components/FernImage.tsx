@@ -57,7 +57,6 @@ export function FernImage({
 
       const { width, height } = getDimensions(
         maxWidth ?? props.width,
-        undefined,
         realWidth,
         realHeight
       );
@@ -83,35 +82,18 @@ export function FernImage({
 
 function getDimensions(
   layoutWidth: number | `${number}` | undefined,
-  layoutHeight: number | `${number}` | undefined,
   realWidth: number,
   realHeight: number
 ): { width: number; height: number } {
   layoutWidth =
     typeof layoutWidth === "string" ? parseInt(layoutWidth, 10) : layoutWidth;
-  layoutHeight =
-    typeof layoutHeight === "string"
-      ? parseInt(layoutHeight, 10)
-      : layoutHeight;
   if (layoutWidth != null && isNaN(layoutWidth)) {
     layoutWidth = undefined;
   }
-  if (layoutHeight != null && isNaN(layoutHeight)) {
-    layoutHeight = undefined;
-  }
-  if (layoutWidth != null && layoutHeight != null) {
-    return { width: layoutWidth, height: layoutHeight };
-  }
-  if (layoutWidth != null) {
+  if (layoutWidth != null && layoutWidth < realWidth) {
     return {
       width: layoutWidth,
       height: (layoutWidth / realWidth) * realHeight,
-    };
-  }
-  if (layoutHeight != null) {
-    return {
-      width: (layoutHeight / realHeight) * realWidth,
-      height: layoutHeight,
     };
   }
   return { width: realWidth, height: realHeight };
