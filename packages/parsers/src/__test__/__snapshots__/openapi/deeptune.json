@@ -2,11 +2,13 @@
   "id": "test-uuid-replacement",
   "endpoints": {
     "endpoint_textToSpeech.generate": {
+      "id": "endpoint_textToSpeech.generate",
       "description": "API that converts text into lifelike speech with best-in-class latency & uses the most advanced AI audio model ever. Create voiceovers for your videos, audiobooks, or create AI chatbots for free.",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "endpoint_textToSpeech.generate",
+      "displayName": "Text to Speech",
+      "operationId": "textToSpeech",
       "method": "POST",
       "path": [
         {
@@ -50,11 +52,13 @@
       "examples": []
     },
     "endpoint_textToSpeech.generateFromPrompt": {
+      "id": "endpoint_textToSpeech.generateFromPrompt",
       "description": "If you prefer to manage voices on your own, you can use your own audio file as a reference for the voice clone.x",
       "namespace": [
         "text_to_speech"
       ],
-      "id": "endpoint_textToSpeech.generateFromPrompt",
+      "displayName": "Text to Speech (via prompt audio)",
+      "operationId": "textToSpeechFromPrompt",
       "method": "POST",
       "path": [
         {
@@ -106,11 +110,13 @@
       "examples": []
     },
     "endpoint_voices.list": {
+      "id": "endpoint_voices.list",
       "description": "Retrieve all voices associated with the current workspace.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.list",
+      "displayName": "List voices in workspace",
+      "operationId": "listVoices",
       "method": "GET",
       "path": [
         {
@@ -171,11 +177,13 @@
       ]
     },
     "endpoint_voices.create": {
+      "id": "endpoint_voices.create",
       "description": "Create a new voice with a name, optional description, and audio file.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.create",
+      "displayName": "Create a cloned voice",
+      "operationId": "createVoice",
       "method": "POST",
       "path": [
         {
@@ -247,11 +255,13 @@
       ]
     },
     "endpoint_voices.get": {
+      "id": "endpoint_voices.get",
       "description": "Retrieve a specific voice by its ID.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.get",
+      "displayName": "Get an existing voice",
+      "operationId": "getVoiceById",
       "method": "GET",
       "path": [
         {
@@ -334,11 +344,13 @@
       ]
     },
     "endpoint_voices.update": {
+      "id": "endpoint_voices.update",
       "description": "Update an existing voice with new name, description, or audio file.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.update",
+      "displayName": "Update an existing voice",
+      "operationId": "updateVoice",
       "method": "PUT",
       "path": [
         {
@@ -433,11 +445,13 @@
       ]
     },
     "endpoint_voices.delete": {
+      "id": "endpoint_voices.delete",
       "description": "Delete an existing voice by its ID.",
       "namespace": [
         "voices"
       ],
-      "id": "endpoint_voices.delete",
+      "displayName": "Delete a voice",
+      "operationId": "deleteVoice",
       "method": "DELETE",
       "path": [
         {

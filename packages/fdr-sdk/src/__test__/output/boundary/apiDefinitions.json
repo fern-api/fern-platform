@@ -5,6 +5,8 @@
       "endpoint_.extractData": {
         "id": "endpoint_.extractData",
         "namespace": [],
+        "displayName": "Extract",
+        "operationId": "extract-data",
         "description": "Upload one or more files along with a prompt to extract data. The API processes the files based on the prompt and returns the extracted information.\n\nA PDF may generate an array of many extracted JSON blobs, 1 per page for example.",
         "method": "POST",
         "path": [

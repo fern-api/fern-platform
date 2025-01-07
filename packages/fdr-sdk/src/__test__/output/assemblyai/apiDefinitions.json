@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Upload a media file",
+        "operationId": "upload",
         "description": "Upload a media file to AssemblyAI's servers.",
         "method": "POST",
         "path": [
@@ -379,6 +381,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "List transcripts",
+        "operationId": "list",
         "description": "Retrieve a list of transcripts you created.\nTranscripts are sorted from newest to oldest. The previous URL always points to a page with older transcripts.",
         "method": "GET",
         "path": [
@@ -856,6 +860,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Transcribe audio",
+        "operationId": "submit",
         "description": "Create a transcript from a media file that is accessible via a URL.",
         "method": "POST",
         "path": [
@@ -1987,6 +1993,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Get transcript",
+        "operationId": "get",
         "description": "Get the transcript resource. The transcript is ready when the \"status\" is \"completed\".",
         "method": "GET",
         "path": [
@@ -3030,6 +3038,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Delete transcript",
+        "operationId": "delete",
         "description": "Delete the transcript.\nDeleting does not delete the resource itself, but removes the data from the resource and marks it as deleted.",
         "method": "DELETE",
         "path": [
@@ -4073,6 +4083,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Get subtitles for transcript",
+        "operationId": "get-subtitles",
         "description": "Export your transcript in SRT or VTT format to use with a video player for subtitles and closed captions.",
         "method": "GET",
         "path": [
@@ -4462,6 +4474,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Get sentences in transcript",
+        "operationId": "get-sentences",
         "description": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
         "method": "GET",
         "path": [
@@ -4890,6 +4904,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Get paragraphs in transcript",
+        "operationId": "get-paragraphs",
         "description": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
         "method": "GET",
         "path": [
@@ -5300,6 +5316,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Search words in transcript",
+        "operationId": "word-search",
         "description": "Search through the transcript for keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
         "method": "GET",
         "path": [
@@ -5698,6 +5716,8 @@
         "namespace": [
           "subpackage_transcripts"
         ],
+        "displayName": "Get redacted audio",
+        "operationId": "get-redacted-audio",
         "description": "Retrieve the redacted audio object containing the status and URL to the redacted audio.",
         "method": "GET",
         "path": [
@@ -6045,6 +6065,8 @@
         "namespace": [
           "subpackage_lemur"
         ],
+        "displayName": "Run a task using LeMUR",
+        "operationId": "task",
         "description": "Use the LeMUR task endpoint to input your own LLM prompt.",
         "method": "POST",
         "path": [
@@ -6433,6 +6455,8 @@
         "namespace": [
           "subpackage_lemur"
         ],
+        "displayName": "Summarize a transcript using LeMUR",
+        "operationId": "summary",
         "description": "Custom Summary allows you to distill a piece of audio into a few impactful sentences.\nYou can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
         "method": "POST",
         "path": [
@@ -6812,6 +6836,8 @@
         "namespace": [
           "subpackage_lemur"
         ],
+        "displayName": "Ask questions using LeMUR",
+        "operationId": "question-answer",
         "description": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts.\nThe questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
         "method": "POST",
         "path": [
@@ -7257,6 +7283,8 @@
         "namespace": [
           "subpackage_lemur"
         ],
+        "displayName": "Extract action items",
+        "operationId": "action-items",
         "description": "Use LeMUR to generate a list of action items from a transcript",
         "method": "POST",
         "path": [
@@ -7638,6 +7666,8 @@
         "namespace": [
           "subpackage_lemur"
         ],
+        "displayName": "Purge LeMUR request data",
+        "operationId": "purge-request-data",
         "description": "Delete the data for a previously submitted LeMUR request.\nThe LLM response data, as well as any context provided in the original request will be removed.",
         "method": "DELETE",
         "path": [
@@ -7982,6 +8012,8 @@
         "namespace": [
           "subpackage_streaming"
         ],
+        "displayName": "Create temporary authentication token for Streaming STT",
+        "operationId": "create-temporary-token",
         "description": "Create a temporary authentication token for Streaming Speech-to-Text",
         "method": "POST",
         "path": [
@@ -8363,6 +8395,8 @@
         "namespace": [
           "subpackage_streaming"
         ],
+        "displayName": "Streaming",
+        "operationId": "streaming",
         "path": [
           {
             "type": "literal",

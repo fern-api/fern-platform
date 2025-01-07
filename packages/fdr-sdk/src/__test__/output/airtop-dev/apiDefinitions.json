@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_profiles"
         ],
+        "displayName": "Get profiles",
+        "operationId": "get",
         "description": "Get profiles matching by id",
         "method": "GET",
         "path": [
@@ -265,6 +267,8 @@
         "namespace": [
           "subpackage_profiles"
         ],
+        "displayName": "Delete profiles",
+        "operationId": "delete",
         "description": "Delete profiles matching by id",
         "method": "DELETE",
         "path": [
@@ -479,6 +483,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Get a list of sessions",
+        "operationId": "list",
         "description": "Get a list of sessions by ID",
         "method": "GET",
         "path": [
@@ -1145,6 +1151,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Create a session",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -2040,6 +2048,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Get info for a session",
+        "operationId": "get-info",
         "description": "Get a session by ID",
         "method": "GET",
         "path": [
@@ -2457,6 +2467,8 @@
         "namespace": [
           "subpackage_sessions"
         ],
+        "displayName": "Ends a session",
+        "operationId": "terminate",
         "description": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
         "method": "DELETE",
         "path": [
@@ -2671,6 +2683,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Creates a new browser window in a session",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -3164,6 +3178,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Get information about a browser window in a session",
+        "operationId": "get-window-info",
         "method": "GET",
         "path": [
           {
@@ -3642,6 +3658,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Loads a specified url on a given window",
+        "operationId": "load-url",
         "method": "POST",
         "path": [
           {
@@ -4128,6 +4146,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Close the specified window",
+        "operationId": "close",
         "method": "DELETE",
         "path": [
           {
@@ -4437,6 +4457,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Submit a prompt about the content in a specific browser window.",
+        "operationId": "prompt-content",
         "method": "POST",
         "path": [
           {
@@ -5050,6 +5072,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Scrape a window",
+        "operationId": "scrape-content",
         "method": "POST",
         "path": [
           {
@@ -5555,6 +5579,8 @@
         "namespace": [
           "subpackage_windows"
         ],
+        "displayName": "Get a summary of content in a browser window",
+        "operationId": "summarize-content",
         "availability": "Deprecated",
         "method": "POST",
         "path": [

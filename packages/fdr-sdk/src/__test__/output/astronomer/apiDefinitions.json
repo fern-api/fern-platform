@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_organization"
         ],
+        "displayName": "List Organizations",
+        "operationId": "list-organizations",
         "description": "List the details about all Organizations that you have access to. Requires using a personal access token (PAT) for authentication.",
         "method": "GET",
         "path": [
@@ -354,6 +356,8 @@
         "namespace": [
           "subpackage_organization"
         ],
+        "displayName": "Get an Organization",
+        "operationId": "get-organization",
         "description": "Retrieve information about a specific Organization.",
         "method": "GET",
         "path": [
@@ -693,6 +697,8 @@
         "namespace": [
           "subpackage_organization"
         ],
+        "displayName": "Update an Organization",
+        "operationId": "update-organization",
         "description": "Update an Organization's details.",
         "method": "POST",
         "path": [
@@ -1098,6 +1104,8 @@
         "namespace": [
           "subpackage_options"
         ],
+        "displayName": "Get cluster options",
+        "operationId": "get-cluster-options",
         "description": "Get all possible options for configuring a cluster.",
         "method": "GET",
         "path": [
@@ -1470,6 +1478,8 @@
         "namespace": [
           "subpackage_options"
         ],
+        "displayName": "Get Deployment options",
+        "operationId": "get-deployment-options",
         "description": "Get the options available for configuring a Deployment.",
         "method": "GET",
         "path": [
@@ -1878,6 +1888,8 @@
         "namespace": [
           "subpackage_cluster"
         ],
+        "displayName": "List clusters",
+        "operationId": "list-clusters",
         "description": "List clusters in an Organization.",
         "method": "GET",
         "path": [
@@ -2267,6 +2279,8 @@
         "namespace": [
           "subpackage_cluster"
         ],
+        "displayName": "Create a cluster",
+        "operationId": "create-cluster",
         "description": "Create a cluster in the Organization. An Astro cluster is a Kubernetes cluster that hosts the infrastructure required to run Deployments.",
         "method": "POST",
         "path": [
@@ -2668,6 +2682,8 @@
         "namespace": [
           "subpackage_cluster"
         ],
+        "displayName": "Get a cluster",
+        "operationId": "get-cluster",
         "description": "Retrieve details about a cluster.",
         "method": "GET",
         "path": [
@@ -3011,6 +3027,8 @@
         "namespace": [
           "subpackage_cluster"
         ],
+        "displayName": "Update a cluster",
+        "operationId": "update-cluster",
         "description": "Update a cluster in the Organization.",
         "method": "POST",
         "path": [
@@ -3425,6 +3443,8 @@
         "namespace": [
           "subpackage_cluster"
         ],
+        "displayName": "Delete a cluster",
+        "operationId": "delete-cluster",
         "description": "Delete a cluster.",
         "method": "DELETE",
         "path": [
@@ -3704,6 +3724,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "List Deployments",
+        "operationId": "list-deployments",
         "description": "List Deployments in an Organization.",
         "method": "GET",
         "path": [
@@ -4161,6 +4183,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "Create a Deployment",
+        "operationId": "create-deployment",
         "description": "Create a Deployment in the Organization. An Astro Deployment is an Airflow environment that is powered by all core Airflow components.",
         "method": "POST",
         "path": [
@@ -4632,6 +4656,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "Get a Deployment",
+        "operationId": "get-deployment",
         "description": "Retrieve details about a Deployment.",
         "method": "GET",
         "path": [
@@ -5037,6 +5063,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "Update a Deployment",
+        "operationId": "update-deployment",
         "description": "Update a Deployment in the Organization.",
         "method": "POST",
         "path": [
@@ -5605,6 +5633,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "Delete a Deployment",
+        "operationId": "delete-deployment",
         "description": "Delete a Deployment from an Organization.",
         "method": "DELETE",
         "path": [
@@ -5884,6 +5914,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "Configure a hibernation override for a deployment",
+        "operationId": "update-deployment-hibernation-override",
         "method": "POST",
         "path": [
           {
@@ -6041,6 +6073,8 @@
         "namespace": [
           "subpackage_deployment"
         ],
+        "displayName": "Delete a hibernation override for a deployment",
+        "operationId": "delete-deployment-hibernation-override",
         "method": "DELETE",
         "path": [
           {
@@ -6131,6 +6165,8 @@
         "namespace": [
           "subpackage_deploy"
         ],
+        "displayName": "List deploys for a deployment",
+        "operationId": "list-deploys",
         "description": "List deploys for a deployment",
         "method": "GET",
         "path": [
@@ -6521,6 +6557,8 @@
         "namespace": [
           "subpackage_deploy"
         ],
+        "displayName": "Create a Deploy",
+        "operationId": "create-deploy",
         "description": "Create a new Deploy. A Deploy represents an intent to deploy new DAG code to an Astro Deployment.",
         "method": "POST",
         "path": [
@@ -6928,6 +6966,8 @@
         "namespace": [
           "subpackage_deploy"
         ],
+        "displayName": "Get a deploy for a deployment",
+        "operationId": "get-deploy",
         "description": "Get a deploy for a deployment",
         "method": "GET",
         "path": [
@@ -7281,6 +7321,8 @@
         "namespace": [
           "subpackage_deploy"
         ],
+        "displayName": "Update a Deploy",
+        "operationId": "update-deploy",
         "description": "Update an existing Deploy. A Deploy represents an intent to deploy new DAG code to an Astro Deployment.",
         "method": "POST",
         "path": [
@@ -7689,6 +7731,8 @@
         "namespace": [
           "subpackage_deploy"
         ],
+        "displayName": "Finalize deploy of a deployment",
+        "operationId": "finalize-deploy",
         "description": "Finalize deploy of a deployment",
         "method": "POST",
         "path": [
@@ -8056,6 +8100,8 @@
         "namespace": [
           "subpackage_deploy"
         ],
+        "displayName": "Deploy rollback of a deployment",
+        "operationId": "deploy-rollback",
         "description": "Deploy rollback of a deployment",
         "method": "POST",
         "path": [
@@ -8465,6 +8511,8 @@
         "namespace": [
           "subpackage_workspace"
         ],
+        "displayName": "List Workspaces",
+        "operationId": "list-workspaces",
         "description": "List Workspaces in an Organization",
         "method": "GET",
         "path": [
@@ -8836,6 +8884,8 @@
         "namespace": [
           "subpackage_workspace"
         ],
+        "displayName": "Create Workspace",
+        "operationId": "create-workspace",
         "description": "Create a Workspace.",
         "method": "POST",
         "path": [
@@ -9231,6 +9281,8 @@
         "namespace": [
           "subpackage_workspace"
         ],
+        "displayName": "Get Workspace",
+        "operationId": "get-workspace",
         "description": "Get information about a Workspace.",
         "method": "GET",
         "path": [
@@ -9550,6 +9602,8 @@
         "namespace": [
           "subpackage_workspace"
         ],
+        "displayName": "Update Workspace",
+        "operationId": "update-workspace",
         "description": "Update a Workspace.",
         "method": "POST",
         "path": [
@@ -9966,6 +10020,8 @@
         "namespace": [
           "subpackage_workspace"
         ],
+        "displayName": "Delete Workspace",
+        "operationId": "delete-workspace",
         "description": "Delete a Workspace.",
         "method": "DELETE",
         "path": [
@@ -18732,6 +18788,8 @@
         "namespace": [
           "subpackage_authorization"
         ],
+        "displayName": "List authorization permission groups",
+        "operationId": "list-permission-groups",
         "description": "List the available permissions you can grant to a custom role.",
         "method": "GET",
         "path": [
@@ -18978,6 +19036,8 @@
         "namespace": [
           "subpackage_invite"
         ],
+        "displayName": "Create a user invitation",
+        "operationId": "create-user-invite",
         "description": "Invite a user to an Organization.",
         "method": "POST",
         "path": [
@@ -19347,6 +19407,8 @@
         "namespace": [
           "subpackage_invite"
         ],
+        "displayName": "Delete a user invite",
+        "operationId": "delete-user-invite",
         "description": "Delete an existing user invite.",
         "method": "DELETE",
         "path": [
@@ -19626,6 +19688,8 @@
         "namespace": [
           "subpackage_role"
         ],
+        "displayName": "Get role templates",
+        "operationId": "list-role-templates",
         "description": "Get a list of available role templates in an Organization. A role template can be used as the basis for creating a new custom role.",
         "method": "GET",
         "path": [
@@ -19941,6 +20005,8 @@
         "namespace": [
           "subpackage_role"
         ],
+        "displayName": "List roles",
+        "operationId": "list-roles",
         "description": "List available user roles in an Organization.",
         "method": "GET",
         "path": [
@@ -20361,6 +20427,8 @@
         "namespace": [
           "subpackage_role"
         ],
+        "displayName": "Create a custom role",
+        "operationId": "create-custom-role",
         "description": "Create a custom role that you can assign to users, Teams, and API tokens.",
         "method": "POST",
         "path": [
@@ -20821,6 +20889,8 @@
         "namespace": [
           "subpackage_role"
         ],
+        "displayName": "Update custom role",
+        "operationId": "update-custom-role",
         "description": "Update the metadata or included permissions for a custom role.",
         "method": "POST",
         "path": [
@@ -21285,6 +21355,8 @@
         "namespace": [
           "subpackage_role"
         ],
+        "displayName": "Delete a custom role",
+        "operationId": "delete-custom-role",
         "description": "Delete a custom role.",
         "method": "DELETE",
         "path": [
@@ -21564,6 +21636,8 @@
         "namespace": [
           "subpackage_role"
         ],
+        "displayName": "Get a custom role",
+        "operationId": "get-custom-role",
         "description": "Get details about a custom role.",
         "method": "GET",
         "path": [
@@ -21887,6 +21961,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "List Teams",
+        "operationId": "list-teams",
         "description": "List all Teams in an Organization.",
         "method": "GET",
         "path": [
@@ -22292,6 +22368,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Create a Team",
+        "operationId": "create-team",
         "description": "Create a Team in an Organization. A Team is a group of users that have the same set of permissions in an Organization or Workspace.",
         "method": "POST",
         "path": [
@@ -22722,6 +22800,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Get a Team",
+        "operationId": "get-team",
         "description": "Retrieve details about a specific Team.",
         "method": "GET",
         "path": [
@@ -23054,6 +23134,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Update a Team",
+        "operationId": "update-team",
         "description": "Update a Team's details.",
         "method": "POST",
         "path": [
@@ -23465,6 +23547,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Delete a Team",
+        "operationId": "delete-team",
         "description": "Delete a Team. Deleting a Team will remove all permissions associated with the Team. Users that previously belonged to the Team will no longer have these permissions.",
         "method": "DELETE",
         "path": [
@@ -23744,6 +23828,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "List Team members",
+        "operationId": "list-team-members",
         "description": "List the details about all users that belong to a specific Team.",
         "method": "GET",
         "path": [
@@ -24127,6 +24213,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Add members to a team",
+        "operationId": "add-team-members",
         "description": "Add members to a team",
         "method": "POST",
         "path": [
@@ -24487,6 +24575,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Remove Team member",
+        "operationId": "remove-team-member",
         "description": "Remove a user from a Team. The user loses all permissions associated with the Team.",
         "method": "DELETE",
         "path": [
@@ -24793,6 +24883,8 @@
         "namespace": [
           "subpackage_team"
         ],
+        "displayName": "Update Team roles",
+        "operationId": "update-team-roles",
         "description": "Update Organization and Workspace roles for a Team.",
         "method": "POST",
         "path": [
@@ -25220,6 +25312,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "List API tokens",
+        "operationId": "list-api-tokens",
         "description": "List information about all API tokens from an Organization. Filters on Workspace when Workspace ID is provided. When `includeOnlyOrganizationTokens` is `true`, only Organization API tokens are returned.",
         "method": "GET",
         "path": [
@@ -25661,6 +25755,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "Create an API token",
+        "operationId": "create-api-token",
         "description": "Create an API token. An API token is an alphanumeric token that grants programmatic access to Astro for automated workflows. An API token can be scoped to an Organization or a Workspace.",
         "method": "POST",
         "path": [
@@ -26123,6 +26219,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "Get an API token",
+        "operationId": "get-api-token",
         "description": "Retrieve information about a specific API token.",
         "method": "GET",
         "path": [
@@ -26453,6 +26551,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "Update an API token",
+        "operationId": "update-api-token",
         "description": "Update the name and description of an API token.",
         "method": "POST",
         "path": [
@@ -26862,6 +26962,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "Delete an API token",
+        "operationId": "delete-api-token",
         "description": "Delete an API token. When you delete an API token, make sure that no existing automation workflows are using it. After it's deleted, an API token cannot be recovered.",
         "method": "DELETE",
         "path": [
@@ -27141,6 +27243,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "Update API token roles",
+        "operationId": "update-api-token-roles",
         "description": "Update Workspace and Organization roles for an API token.",
         "method": "POST",
         "path": [
@@ -27552,6 +27656,8 @@
         "namespace": [
           "subpackage_apiToken"
         ],
+        "displayName": "Rotate API token",
+        "operationId": "rotate-api-token",
         "description": "Rotate an API token. Creates a new API token and invalidates the one you specify. Any workflows using the previous value stop working.",
         "method": "POST",
         "path": [
@@ -27886,6 +27992,8 @@
         "namespace": [
           "subpackage_user"
         ],
+        "displayName": "List users in an Organization",
+        "operationId": "list-users",
         "description": "List users in an Organization or a specific Workspace within an Organization.",
         "method": "GET",
         "path": [
@@ -28255,6 +28363,8 @@
         "namespace": [
           "subpackage_user"
         ],
+        "displayName": "Get user information",
+        "operationId": "get-user",
         "description": "Retrieve user information about a specific user account.",
         "method": "GET",
         "path": [
@@ -28570,6 +28680,8 @@
         "namespace": [
           "subpackage_user"
         ],
+        "displayName": "Update a user's roles",
+        "operationId": "update-user-roles",
         "description": "Update Organization and Workspace roles for a user.",
         "method": "POST",
         "path": [

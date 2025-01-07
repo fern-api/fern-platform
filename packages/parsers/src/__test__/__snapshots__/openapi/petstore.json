@@ -2,11 +2,13 @@
   "id": "test-uuid-replacement",
   "endpoints": {
     "endpoint_pet.addPet": {
+      "id": "endpoint_pet.addPet",
       "description": "Add a new pet to the store",
       "namespace": [
         "pet"
       ],
-      "id": "endpoint_pet.addPet",
+      "displayName": "Add a new pet to the store",
+      "operationId": "addPet",
       "method": "POST",
       "path": [
         {
@@ -80,11 +82,13 @@
       ]
     },
     "endpoint_pet.updatePet": {
+      "id": "endpoint_pet.updatePet",
       "description": "Update an existing pet by Id",
       "namespace": [
         "pet"
       ],
-      "id": "endpoint_pet.updatePet",
+      "displayName": "Update an existing pet",
+      "operationId": "updatePet",
       "method": "PUT",
       "path": [
         {
@@ -158,11 +162,13 @@
       ]
     },
     "endpoint_pets.getPetById": {
+      "id": "endpoint_pets.getPetById",
       "description": "Returns a pet when 0 < ID <= 10.  ID > 10 or nonintegers will simulate API error conditions",
       "namespace": [
         "pets"
       ],
-      "id": "endpoint_pets.getPetById",
+      "displayName": "Find pet by ID",
+      "operationId": "getPetById",
       "method": "GET",
       "path": [
         {

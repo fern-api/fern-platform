@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_accounts"
         ],
+        "displayName": "Get the current account",
+        "operationId": "get-current",
         "description": "Get the current account",
         "method": "GET",
         "path": [
@@ -95,6 +97,8 @@
         "namespace": [
           "subpackage_accounts"
         ],
+        "displayName": "Update the current account",
+        "operationId": "update-current",
         "description": "Update the current account",
         "method": "PATCH",
         "path": [
@@ -200,6 +204,8 @@
         "namespace": [
           "subpackage_actions"
         ],
+        "displayName": "Create an action",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -350,6 +356,8 @@
         "namespace": [
           "subpackage_actions"
         ],
+        "displayName": "Create several actions",
+        "operationId": "bulk-create",
         "method": "POST",
         "path": [
           {
@@ -508,6 +516,8 @@
         "namespace": [
           "subpackage_actions"
         ],
+        "displayName": "Get an action",
+        "operationId": "get",
         "method": "GET",
         "path": [
           {
@@ -664,6 +674,8 @@
         "namespace": [
           "subpackage_actions"
         ],
+        "displayName": "Update an action",
+        "operationId": "update",
         "method": "PATCH",
         "path": [
           {
@@ -835,6 +847,8 @@
         "namespace": [
           "subpackage_actions"
         ],
+        "displayName": "Delete an action",
+        "operationId": "delete",
         "method": "DELETE",
         "path": [
           {
@@ -922,6 +936,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "List agents",
+        "operationId": "list",
         "method": "GET",
         "path": [
           {
@@ -1027,6 +1043,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Create an agent",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -1221,6 +1239,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Get an agent",
+        "operationId": "get",
         "method": "GET",
         "path": [
           {
@@ -1472,6 +1492,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "List agent versions for an agent",
+        "operationId": "list-versions",
         "method": "GET",
         "path": [
           {
@@ -1664,6 +1686,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Revert to a specific agent version",
+        "operationId": "revert",
         "method": "GET",
         "path": [
           {
@@ -1875,6 +1899,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "List Agent Roles",
+        "operationId": "list-agent-roles",
         "description": "Lists roles assigned to an agent.",
         "method": "GET",
         "path": [
@@ -2105,6 +2131,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Assign Role to Agent",
+        "operationId": "assign-agent-role",
         "description": "Assigns a role to a agent.",
         "method": "POST",
         "path": [
@@ -2372,6 +2400,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Remove Role from Agent",
+        "operationId": "delete-agent-role",
         "description": "Removes a role from an agent.",
         "method": "DELETE",
         "path": [
@@ -2614,6 +2644,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Get logs for an agent",
+        "operationId": "get-agent-logs",
         "method": "GET",
         "path": [
           {
@@ -2864,6 +2896,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Get an agent log",
+        "operationId": "get-agent-log",
         "method": "GET",
         "path": [
           {
@@ -3106,6 +3140,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Get all agent logs in your environment",
+        "operationId": "get-environment-agent-logs",
         "method": "GET",
         "path": [
           {
@@ -3405,6 +3441,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Get all executions in your environment",
+        "operationId": "get-environment-agent-executions",
         "method": "GET",
         "path": [
           {
@@ -3702,6 +3740,8 @@
         "namespace": [
           "subpackage_agents"
         ],
+        "displayName": "Delete an agent",
+        "operationId": "delete",
         "description": "Deletes a single agent",
         "method": "DELETE",
         "path": [
@@ -3938,6 +3978,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "List apps",
+        "operationId": "list",
         "description": "Returns apps in an account",
         "method": "GET",
         "path": [
@@ -4018,6 +4060,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Get an app",
+        "operationId": "get",
         "description": "Returns an app",
         "method": "GET",
         "path": [
@@ -4143,6 +4187,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Update an app",
+        "operationId": "update",
         "description": "Updates an app",
         "method": "PATCH",
         "path": [
@@ -4292,6 +4338,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Create an app",
+        "operationId": "create",
         "description": "Creates an app",
         "method": "POST",
         "path": [
@@ -4419,6 +4467,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Delete an app",
+        "operationId": "delete",
         "description": "Deletes an app",
         "method": "DELETE",
         "path": [
@@ -4520,6 +4570,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Get constraints",
+        "operationId": "get-constraints",
         "description": "Returns constraints for an app",
         "method": "GET",
         "path": [
@@ -4646,6 +4698,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Create constraint",
+        "operationId": "create-constraint",
         "description": "Creates a new constraint for an app",
         "method": "POST",
         "path": [
@@ -4762,6 +4816,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Get constraint by ID",
+        "operationId": "get-constraint-by-id",
         "description": "Returns a specific constraint",
         "method": "GET",
         "path": [
@@ -4879,6 +4935,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Get constraint versions",
+        "operationId": "get-constraint-versions",
         "description": "Returns the versions of a specific constraint",
         "method": "GET",
         "path": [
@@ -5004,6 +5062,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Get constraint version",
+        "operationId": "get-constraint-version",
         "description": "Returns a specified version of a specific constraint",
         "method": "GET",
         "path": [
@@ -5145,6 +5205,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Update constraint",
+        "operationId": "update-constraint",
         "description": "Updates a specific constraint",
         "method": "PATCH",
         "path": [
@@ -5277,6 +5339,8 @@
         "namespace": [
           "subpackage_apps"
         ],
+        "displayName": "Delete constraint",
+        "operationId": "delete-constraint",
         "description": "Deletes a specific constraint",
         "method": "DELETE",
         "path": [
@@ -5383,6 +5447,8 @@
         "namespace": [
           "subpackage_assistant"
         ],
+        "displayName": "List prompts",
+        "operationId": "list",
         "description": "Returns prompts created by user",
         "method": "GET",
         "path": [
@@ -5525,6 +5591,8 @@
         "namespace": [
           "subpackage_assistant"
         ],
+        "displayName": "Get a prompt",
+        "operationId": "get",
         "description": "Returns a prompt",
         "method": "GET",
         "path": [
@@ -5622,6 +5690,8 @@
         "namespace": [
           "subpackage_assistant"
         ],
+        "displayName": "Update a prompt",
+        "operationId": "update",
         "description": "Updates a prompt",
         "method": "PATCH",
         "path": [
@@ -5736,6 +5806,8 @@
         "namespace": [
           "subpackage_assistant"
         ],
+        "displayName": "Create a prompt",
+        "operationId": "create",
         "description": "Creates a prompt",
         "method": "POST",
         "path": [
@@ -5833,6 +5905,8 @@
         "namespace": [
           "subpackage_assistant"
         ],
+        "displayName": "Delete a prompts",
+        "operationId": "delete",
         "description": "Deletes a prompts",
         "method": "DELETE",
         "path": [
@@ -5922,6 +5996,8 @@
         "namespace": [
           "subpackage_commits"
         ],
+        "displayName": "Get a commit version",
+        "operationId": "get",
         "description": "Returns the details of a commit version",
         "method": "GET",
         "path": [
@@ -6144,6 +6220,8 @@
         "namespace": [
           "subpackage_commits"
         ],
+        "displayName": "Complete a commit version",
+        "operationId": "complete",
         "description": "Completes a commit version. This marks the commit as complete and acknowledges that the changes have been applied to the sheet.",
         "method": "POST",
         "path": [
@@ -6324,6 +6402,8 @@
         "namespace": [
           "subpackage_commits"
         ],
+        "displayName": "Replay a commit version",
+        "operationId": "replay",
         "description": "Replays a commit:created event.",
         "method": "POST",
         "path": [
@@ -6504,6 +6584,8 @@
         "namespace": [
           "subpackage_data-retention-policies"
         ],
+        "displayName": "List data retention policies",
+        "operationId": "list",
         "description": "Returns all data retention policies on an account matching a filter for environmentId",
         "method": "GET",
         "path": [
@@ -6728,6 +6810,8 @@
         "namespace": [
           "subpackage_data-retention-policies"
         ],
+        "displayName": "Create a data retention policy",
+        "operationId": "create",
         "description": "Add a new data retention policy to the space",
         "method": "POST",
         "path": [
@@ -6960,6 +7044,8 @@
         "namespace": [
           "subpackage_data-retention-policies"
         ],
+        "displayName": "Get a data retention policy",
+        "operationId": "get",
         "description": "Returns a single data retention policy",
         "method": "GET",
         "path": [
@@ -7184,6 +7270,8 @@
         "namespace": [
           "subpackage_data-retention-policies"
         ],
+        "displayName": "Update a data retention policy",
+        "operationId": "update",
         "description": "Updates a single data retention policy",
         "method": "PATCH",
         "path": [
@@ -7443,6 +7531,8 @@
         "namespace": [
           "subpackage_data-retention-policies"
         ],
+        "displayName": "Delete a data retention policy",
+        "operationId": "delete",
         "description": "Deletes a single data retention policy",
         "method": "DELETE",
         "path": [
@@ -7619,6 +7709,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "List documents",
+        "operationId": "list",
         "description": "Returns all documents for a space",
         "method": "GET",
         "path": [
@@ -7875,6 +7967,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Create a document",
+        "operationId": "create",
         "description": "Add a new document to the space",
         "method": "POST",
         "path": [
@@ -8151,6 +8245,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Get a document",
+        "operationId": "get",
         "description": "Returns a single document",
         "method": "GET",
         "path": [
@@ -8408,6 +8504,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Update a document",
+        "operationId": "update",
         "description": "updates a single document, for only the body and title",
         "method": "PATCH",
         "path": [
@@ -8697,6 +8795,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Delete a document",
+        "operationId": "delete",
         "description": "Deletes a single document",
         "method": "DELETE",
         "path": [
@@ -8895,6 +8995,8 @@
         "namespace": [
           "subpackage_entitlements"
         ],
+        "displayName": "List entitlements",
+        "operationId": "list",
         "description": "Returns all entitlements matching a filter for resourceId",
         "method": "GET",
         "path": [
@@ -9113,6 +9215,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "List environments",
+        "operationId": "list",
         "description": "Get all environments",
         "method": "GET",
         "path": [
@@ -9245,6 +9349,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "Create an environment",
+        "operationId": "create",
         "description": "Create a new environment",
         "method": "POST",
         "path": [
@@ -9362,6 +9468,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "Get environment subscription credentials",
+        "operationId": "get-environment-event-token",
         "description": "Get a token which can be used to subscribe to events for this environment",
         "method": "GET",
         "path": [
@@ -9580,6 +9688,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "Get an environment",
+        "operationId": "get",
         "description": "Returns a single environment",
         "method": "GET",
         "path": [
@@ -9811,6 +9921,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "Update an environment",
+        "operationId": "update",
         "description": "Updates a single environment, to change the name for example",
         "method": "PATCH",
         "path": [
@@ -9951,6 +10063,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "Delete an environment",
+        "operationId": "delete",
         "description": "Deletes a single environment",
         "method": "DELETE",
         "path": [
@@ -10129,6 +10243,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "List events",
+        "operationId": "list",
         "description": "Event topics that the Flatfile Platform emits.",
         "method": "GET",
         "path": [
@@ -10382,6 +10498,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "Create an event",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -10650,6 +10768,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "Get an event",
+        "operationId": "get",
         "method": "GET",
         "path": [
           {
@@ -10769,6 +10889,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "Acknowledge an event",
+        "operationId": "ack",
         "method": "POST",
         "path": [
           {
@@ -10856,6 +10978,8 @@
         "namespace": [
           "subpackage_events"
         ],
+        "displayName": "Get subscription credentials",
+        "operationId": "get-event-token",
         "description": "Get a token which can be used to subscribe to events for this space",
         "method": "GET",
         "path": [
@@ -11096,6 +11220,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "List files",
+        "operationId": "list",
         "method": "GET",
         "path": [
           {
@@ -11268,6 +11394,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Upload a file",
+        "operationId": "upload",
         "method": "POST",
         "path": [
           {
@@ -11610,6 +11738,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Get a file",
+        "operationId": "get",
         "method": "GET",
         "path": [
           {
@@ -11840,6 +11970,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Delete a file",
+        "operationId": "delete",
         "method": "DELETE",
         "path": [
           {
@@ -12016,6 +12148,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Update a file",
+        "operationId": "update",
         "description": "Update a file, to change the workbook id for example",
         "method": "PATCH",
         "path": [
@@ -12364,6 +12498,8 @@
         "namespace": [
           "subpackage_files"
         ],
+        "displayName": "Download a file",
+        "operationId": "download",
         "method": "GET",
         "path": [
           {
@@ -12534,6 +12670,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "List guests",
+        "operationId": "list",
         "description": "Returns all guests",
         "method": "GET",
         "path": [
@@ -12666,6 +12804,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Create a guest",
+        "operationId": "create",
         "description": "Guests are only there to upload, edit, and download files and perform their tasks in a specific Space.",
         "method": "POST",
         "path": [
@@ -12802,6 +12942,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Get a guest",
+        "operationId": "get",
         "description": "Returns a single guest",
         "method": "GET",
         "path": [
@@ -12917,6 +13059,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Delete a guest",
+        "operationId": "delete",
         "description": "Deletes a single guest",
         "method": "DELETE",
         "path": [
@@ -13016,6 +13160,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Update a guest",
+        "operationId": "update",
         "description": "Updates a single guest, for example to change name or email",
         "method": "PATCH",
         "path": [
@@ -13149,6 +13295,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Get guest token",
+        "operationId": "get-guest-token",
         "description": "Returns a single guest token",
         "method": "GET",
         "path": [
@@ -13272,6 +13420,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "List Guest Roles",
+        "operationId": "list-guest-roles",
         "description": "Lists roles assigned to a guest.",
         "method": "GET",
         "path": [
@@ -13498,6 +13648,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Assign Role to Guest",
+        "operationId": "assign-guest-role",
         "description": "Assigns a role to a guest.",
         "method": "POST",
         "path": [
@@ -13761,6 +13913,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Remove Role from Guest",
+        "operationId": "delete-guest-role",
         "description": "Removes a role from a guest.",
         "method": "DELETE",
         "path": [
@@ -13999,6 +14153,8 @@
         "namespace": [
           "subpackage_guests"
         ],
+        "displayName": "Invite guests",
+        "operationId": "invite",
         "description": "Guests can be created as a named guest on the Space or there’s a global link that will let anonymous guests into the space.",
         "method": "POST",
         "path": [
@@ -14107,6 +14263,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "List jobs",
+        "operationId": "list",
         "method": "GET",
         "path": [
           {
@@ -14382,6 +14540,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Create a job",
+        "operationId": "create",
         "method": "POST",
         "path": [
           {
@@ -14505,6 +14665,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Get a job",
+        "operationId": "get",
         "method": "GET",
         "path": [
           {
@@ -14632,6 +14794,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Update a job",
+        "operationId": "update",
         "method": "PATCH",
         "path": [
           {
@@ -14778,6 +14942,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Delete a job",
+        "operationId": "delete",
         "method": "DELETE",
         "path": [
           {
@@ -14880,6 +15046,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Execute a job",
+        "operationId": "execute",
         "description": "Execute a job and return the job",
         "method": "POST",
         "path": [
@@ -14989,6 +15157,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Get a job's execution plan",
+        "operationId": "get-execution-plan",
         "description": "Returns a single job's execution plan",
         "method": "GET",
         "path": [
@@ -15171,6 +15341,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Replace a job's plan",
+        "operationId": "update-execution-plan",
         "description": "Update a job's entire execution plan",
         "method": "PUT",
         "path": [
@@ -15412,6 +15584,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Update a job's plan",
+        "operationId": "update-execution-plan-fields",
         "description": "Update one or more individual fields on a job's execution plan",
         "method": "PATCH",
         "path": [
@@ -16008,6 +16182,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Acknowledge a job",
+        "operationId": "ack",
         "description": "Acknowledge a job and return the job",
         "method": "POST",
         "path": [
@@ -16165,6 +16341,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Acknowledge a job outcome",
+        "operationId": "ack-outcome",
         "description": "Acknowledge a job outcome and return the job",
         "method": "POST",
         "path": [
@@ -16297,6 +16475,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Complete a job",
+        "operationId": "complete",
         "description": "Complete a job and return the job",
         "method": "POST",
         "path": [
@@ -16462,6 +16642,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Fail a job",
+        "operationId": "fail",
         "description": "Fail a job and return the job",
         "method": "POST",
         "path": [
@@ -16627,6 +16809,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Cancel a job",
+        "operationId": "cancel",
         "description": "Cancel a job and return the job",
         "method": "POST",
         "path": [
@@ -16782,6 +16966,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Retry a failed job",
+        "operationId": "retry",
         "description": "Retry a failt job and return the job",
         "method": "POST",
         "path": [
@@ -16925,6 +17111,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Preview a mutation",
+        "operationId": "preview-mutation",
         "description": "Preview the results of a mutation",
         "method": "POST",
         "path": [
@@ -17067,6 +17255,8 @@
         "namespace": [
           "subpackage_jobs"
         ],
+        "displayName": "Split a job",
+        "operationId": "split",
         "description": "Split a job and return the job",
         "method": "POST",
         "path": [
@@ -17219,6 +17409,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Create a mapping between two schemas",
+        "operationId": "create-mapping-program",
         "description": "Creates a list of mapping rules based on two provided schemas",
         "method": "POST",
         "path": [
@@ -17480,6 +17672,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Delete all history for the authenticated user",
+        "operationId": "delete-all-history-for-user",
         "description": "Deletes all history for the authenticated user",
         "method": "DELETE",
         "path": [
@@ -17667,6 +17861,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "List mapping programs",
+        "operationId": "list-mapping-programs",
         "description": "List all mapping programs",
         "method": "GET",
         "path": [
@@ -18001,6 +18197,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Get a mapping program",
+        "operationId": "get-mapping-program",
         "description": "Get a mapping program",
         "method": "GET",
         "path": [
@@ -18209,6 +18407,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Update a mapping program",
+        "operationId": "update-mapping-program",
         "description": "Updates a mapping program",
         "method": "PATCH",
         "path": [
@@ -18497,6 +18697,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Delete a mapping program",
+        "operationId": "delete-mapping-program",
         "description": "Deletes a mapping program",
         "method": "DELETE",
         "path": [
@@ -18673,6 +18875,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Add mapping rules to a program",
+        "operationId": "create-rules",
         "description": "Add mapping rules to a program",
         "method": "POST",
         "path": [
@@ -18904,6 +19108,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Delete multiple mapping rules",
+        "operationId": "delete-multiple-rules",
         "description": "Deletes multiple mapping rules from a program",
         "method": "DELETE",
         "path": [
@@ -19135,6 +19341,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "List mapping rules",
+        "operationId": "list-rules",
         "description": "List all mapping rules in a program",
         "method": "GET",
         "path": [
@@ -19368,6 +19576,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Get a mapping rule",
+        "operationId": "get-rule",
         "description": "Get a mapping rule from a program",
         "method": "GET",
         "path": [
@@ -19617,6 +19827,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Update a mapping rule",
+        "operationId": "update-rule",
         "description": "Updates a mapping rule in a program",
         "method": "PATCH",
         "path": [
@@ -19900,6 +20112,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Update a list of mapping rules",
+        "operationId": "update-rules",
         "description": "Updates a list of mapping rules in a program",
         "method": "PATCH",
         "path": [
@@ -20140,6 +20354,8 @@
         "namespace": [
           "subpackage_mapping"
         ],
+        "displayName": "Delete a mapping rule",
+        "operationId": "delete-rule",
         "description": "Deletes a mapping rule from a program",
         "method": "DELETE",
         "path": [
@@ -20381,6 +20597,8 @@
         "namespace": [
           "subpackage_records"
         ],
+        "displayName": "Get records",
+        "operationId": "get",
         "description": "Returns records from a sheet in a workbook",
         "method": "GET",
         "path": [
@@ -20995,6 +21213,8 @@
         "namespace": [
           "subpackage_records"
         ],
+        "displayName": "Update records",
+        "operationId": "update",
         "description": "Updates existing records in a workbook sheet",
         "method": "PUT",
         "path": [
@@ -21277,6 +21497,8 @@
         "namespace": [
           "subpackage_records"
         ],
+        "displayName": "Insert records",
+        "operationId": "insert",
         "description": "Adds records to a workbook sheet",
         "method": "POST",
         "path": [
@@ -21586,6 +21808,8 @@
         "namespace": [
           "subpackage_records"
         ],
+        "displayName": "Delete records",
+        "operationId": "delete",
         "description": "Deletes records from a workbook sheet",
         "method": "DELETE",
         "path": [
@@ -21824,6 +22048,8 @@
         "namespace": [
           "subpackage_records"
         ],
+        "displayName": "Finds and replaces field values matching search criteria\n",
+        "operationId": "find-and-replace",
         "description": "Searches for all values that match the 'find' value (globally or for a specific field via 'fieldKey') and replaces them with the 'replace' value. Wrap 'find' value in double quotes for exact match (\"\"). Returns a commitId for the updated records",
         "method": "PUT",
         "path": [
@@ -22093,6 +22319,8 @@
         "namespace": [
           "subpackage_roles"
         ],
+        "displayName": "List roles",
+        "operationId": "list",
         "description": "List all roles for an account",
         "method": "GET",
         "path": [
@@ -22164,6 +22392,8 @@
         "namespace": [
           "subpackage_secrets"
         ],
+        "displayName": "List secrets",
+        "operationId": "list",
         "description": "Fetch all secrets for a given environmentId and optionally apply space overrides",
         "method": "GET",
         "path": [
@@ -22424,6 +22654,8 @@
         "namespace": [
           "subpackage_secrets"
         ],
+        "displayName": "Upsert a Secret",
+        "operationId": "upsert",
         "description": "Insert or Update a Secret by name for environment or space",
         "method": "POST",
         "path": [
@@ -22658,6 +22890,8 @@
         "namespace": [
           "subpackage_secrets"
         ],
+        "displayName": "Delete a secret by it's Id",
+        "operationId": "delete",
         "description": "Deletes a specific Secret from the Environment or Space as is the case",
         "method": "DELETE",
         "path": [
@@ -22884,6 +23118,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "List sheets",
+        "operationId": "list",
         "description": "Returns sheets in a workbook",
         "method": "GET",
         "path": [
@@ -23013,6 +23249,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Get a sheet",
+        "operationId": "get",
         "description": "Returns a sheet in a workbook",
         "method": "GET",
         "path": [
@@ -23148,6 +23386,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Delete a sheet",
+        "operationId": "delete",
         "description": "Deletes a specific sheet from a workbook",
         "method": "DELETE",
         "path": [
@@ -23367,6 +23607,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Validate a sheet",
+        "operationId": "validate",
         "description": "Trigger data hooks and validation to run on a sheet",
         "method": "POST",
         "path": [
@@ -23590,6 +23832,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Download records as a CSV file",
+        "operationId": "get-records-as-csv",
         "description": "Returns records from a sheet in a workbook as a csv file",
         "method": "GET",
         "path": [
@@ -23870,6 +24114,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Get record counts",
+        "operationId": "get-record-counts",
         "description": "Returns counts of records from a sheet",
         "method": "GET",
         "path": [
@@ -24163,6 +24409,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Get commit versions for a sheet",
+        "operationId": "get-sheet-commits",
         "description": "Returns the commit versions for a sheet",
         "method": "GET",
         "path": [
@@ -24296,6 +24544,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Lock a sheet",
+        "operationId": "lock-sheet",
         "description": "Locks a sheet",
         "method": "POST",
         "path": [
@@ -24519,6 +24769,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Unlock a sheet",
+        "operationId": "unlock-sheet",
         "description": "Removes a lock from a sheet",
         "method": "POST",
         "path": [
@@ -24742,6 +24994,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Get record cells by field",
+        "operationId": "get-cell-values",
         "description": "Returns record cell values grouped by all fields in the sheet",
         "method": "GET",
         "path": [
@@ -25035,6 +25289,8 @@
         "namespace": [
           "subpackage_sheets"
         ],
+        "displayName": "Update a sheet",
+        "operationId": "update-sheet",
         "description": "Updates Sheet",
         "method": "PATCH",
         "path": [
@@ -25316,6 +25572,8 @@
         "namespace": [
           "subpackage_snapshots"
         ],
+        "displayName": "Create a snapshot",
+        "operationId": "create-snapshot",
         "description": "Creates a snapshot of a sheet",
         "method": "POST",
         "path": [
@@ -25615,6 +25873,8 @@
         "namespace": [
           "subpackage_snapshots"
         ],
+        "displayName": "List snapshots",
+        "operationId": "list-snapshots",
         "description": "List all snapshots of a sheet",
         "method": "GET",
         "path": [
@@ -25876,6 +26136,8 @@
         "namespace": [
           "subpackage_snapshots"
         ],
+        "displayName": "Get a snapshot",
+        "operationId": "get-snapshot",
         "description": "Gets a snapshot of a sheet",
         "method": "GET",
         "path": [
@@ -26164,6 +26426,8 @@
         "namespace": [
           "subpackage_snapshots"
         ],
+        "displayName": "Delete a snapshot",
+        "operationId": "delete-snapshot",
         "description": "Deletes a snapshot of a sheet",
         "method": "DELETE",
         "path": [
@@ -26383,6 +26647,8 @@
         "namespace": [
           "subpackage_snapshots"
         ],
+        "displayName": "Restore a snapshot",
+        "operationId": "restore-snapshot",
         "description": "Restores a snapshot of a sheet",
         "method": "POST",
         "path": [
@@ -26685,6 +26951,8 @@
         "namespace": [
           "subpackage_snapshots"
         ],
+        "displayName": "Get records from a snapshot",
+        "operationId": "get-snapshot-records",
         "description": "Gets records from a snapshot of a sheet",
         "method": "GET",
         "path": [
@@ -26991,6 +27259,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "List spaces",
+        "operationId": "list",
         "description": "Returns all spaces for an account or environment",
         "method": "GET",
         "path": [
@@ -27325,6 +27595,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Create a space",
+        "operationId": "create",
         "description": "Creates a new space based on an existing Space Config",
         "method": "POST",
         "path": [
@@ -27563,6 +27835,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Get a space",
+        "operationId": "get",
         "description": "Returns a single space",
         "method": "GET",
         "path": [
@@ -27800,6 +28074,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Delete a space",
+        "operationId": "delete",
         "description": "Delete a space",
         "method": "DELETE",
         "path": [
@@ -28019,6 +28295,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Delete spaces",
+        "operationId": "bulk-delete",
         "description": "Delete multiple spaces by id",
         "method": "DELETE",
         "path": [
@@ -28230,6 +28508,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Update a space",
+        "operationId": "update",
         "description": "Update a space, to change the name for example",
         "method": "PATCH",
         "path": [
@@ -28492,6 +28772,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Archives a space",
+        "operationId": "archive-space",
         "description": "Sets archivedAt timestamp on a space",
         "method": "POST",
         "path": [
@@ -28715,6 +28997,8 @@
         "namespace": [
           "subpackage_spaces"
         ],
+        "displayName": "Unarchives a space",
+        "operationId": "unarchive-space",
         "description": "Sets archivedAt timestamp on a space to null",
         "method": "POST",
         "path": [
@@ -28917,6 +29201,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "List users",
+        "operationId": "list",
         "description": "Gets a list of users",
         "method": "GET",
         "path": [
@@ -29123,6 +29409,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Create and Invite User",
+        "operationId": "create-and-invite",
         "description": "Creates and invites a new user to your account.",
         "method": "POST",
         "path": [
@@ -29259,6 +29547,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Resend User Invite",
+        "operationId": "resend-invite",
         "description": "Resends an invite to a user for your account.",
         "method": "POST",
         "path": [
@@ -29347,6 +29637,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Update a user",
+        "operationId": "update",
         "description": "Updates a user",
         "method": "PATCH",
         "path": [
@@ -29493,6 +29785,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Get a user",
+        "operationId": "get",
         "description": "Gets a user",
         "method": "GET",
         "path": [
@@ -29602,6 +29896,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Delete a user",
+        "operationId": "delete",
         "description": "Deletes a user",
         "method": "DELETE",
         "path": [
@@ -29686,6 +29982,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "List User Roles",
+        "operationId": "list-user-roles",
         "description": "Lists roles assigned to a user.",
         "method": "GET",
         "path": [
@@ -29912,6 +30210,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Assign Role to User",
+        "operationId": "assign-user-role",
         "description": "Assigns a role to a user.",
         "method": "POST",
         "path": [
@@ -30175,6 +30475,8 @@
         "namespace": [
           "subpackage_users"
         ],
+        "displayName": "Remove Role from User",
+        "operationId": "delete-user-role",
         "description": "Removes a role from a user.",
         "method": "DELETE",
         "path": [
@@ -30413,6 +30715,8 @@
         "namespace": [
           "subpackage_versions"
         ],
+        "displayName": "Create Id",
+        "operationId": "create-id",
         "availability": "Deprecated",
         "method": "POST",
         "path": [
@@ -30544,6 +30848,8 @@
         "namespace": [
           "subpackage_views"
         ],
+        "displayName": "List views by Sheet",
+        "operationId": "list",
         "description": "Returns all views for the sheet",
         "method": "GET",
         "path": [
@@ -30814,6 +31120,8 @@
         "namespace": [
           "subpackage_views"
         ],
+        "displayName": "Create a view",
+        "operationId": "create",
         "description": "Add a new view to the space",
         "method": "POST",
         "path": [
@@ -31057,6 +31365,8 @@
         "namespace": [
           "subpackage_views"
         ],
+        "displayName": "Get a view",
+        "operationId": "get",
         "description": "Returns a single view",
         "method": "GET",
         "path": [
@@ -31286,6 +31596,8 @@
         "namespace": [
           "subpackage_views"
         ],
+        "displayName": "Update a view",
+        "operationId": "update",
         "description": "Updates a single view",
         "method": "PATCH",
         "path": [
@@ -31551,6 +31863,8 @@
         "namespace": [
           "subpackage_views"
         ],
+        "displayName": "Delete a view",
+        "operationId": "delete",
         "description": "Deletes a single view",
         "method": "DELETE",
         "path": [
@@ -31654,6 +31968,8 @@
         "namespace": [
           "subpackage_workbooks"
         ],
+        "displayName": "List workbooks",
+        "operationId": "list",
         "description": "Returns all workbooks matching a filter for an account or space",
         "method": "GET",
         "path": [
@@ -31989,6 +32305,8 @@
         "namespace": [
           "subpackage_workbooks"
         ],
+        "displayName": "Create a workbook",
+        "operationId": "create",
         "description": "Creates a workbook and adds it to a space",
         "method": "POST",
         "path": [
@@ -32246,6 +32564,8 @@
         "namespace": [
           "subpackage_workbooks"
         ],
+        "displayName": "Get a workbook",
+        "operationId": "get",
         "description": "Returns a single workbook",
         "method": "GET",
         "path": [
@@ -32523,6 +32843,8 @@
         "namespace": [
           "subpackage_workbooks"
         ],
+        "displayName": "Delete a workbook",
+        "operationId": "delete",
         "description": "Deletes a workbook and all of its record data permanently",
         "method": "DELETE",
         "path": [
@@ -32742,6 +33064,8 @@
         "namespace": [
           "subpackage_workbooks"
         ],
+        "displayName": "Update a workbook",
+        "operationId": "update",
         "description": "Updates a workbook",
         "method": "PATCH",
         "path": [
@@ -33056,6 +33380,8 @@
         "namespace": [
           "subpackage_workbooks"
         ],
+        "displayName": "Get commits for a workbook",
+        "operationId": "get-workbook-commits",
         "description": "Returns the commits for a workbook",
         "method": "GET",
         "path": [

@@ -8,6 +8,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-card"
         ],
+        "displayName": "Add Card",
+        "operationId": "add-card",
         "description": "This endpoint allows you to add an additional card for an existing member under a specific membership. It is useful when a member needs a new card for identification or for cases where multiple cards are allowed for the same member (e.g., secondary or replacement cards).",
         "method": "POST",
         "path": [
@@ -211,6 +213,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-card"
         ],
+        "displayName": "Replace Card",
+        "operationId": "replace-card",
         "description": "Use this endpoint to replace an existing member card with a new one. When a card is replaced, the old card is blocked, and a new card is issued to the member. This is typically used when a card is lost, damaged, or needs to be reissued.",
         "method": "POST",
         "path": [
@@ -442,6 +446,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-card"
         ],
+        "displayName": "Get using Id",
+        "operationId": "get-card-id",
         "description": "Retrieve details about a specific card using its unique card ID. This endpoint provides detailed information about the card, such as the member it belongs to, its status, and its validity.",
         "method": "GET",
         "path": [
@@ -632,6 +638,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-card"
         ],
+        "displayName": "Get using Number",
+        "operationId": "get-card-number",
         "description": "Retrieve details of a specific card using its card number. This endpoint allows access to card information when the card number is known, providing key details such as the card's status and associated member.",
         "method": "GET",
         "path": [
@@ -822,6 +830,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-card"
         ],
+        "displayName": "Register Arrival",
+        "operationId": "register-arrival",
         "description": "This endpoint registers the member's arrival at a facility using their card. The card number is used to log the arrival and generate a ticket for the member. Use Ticketing API to retrieve ticket details using the ticket number.",
         "method": "POST",
         "path": [
@@ -1001,6 +1011,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-card"
         ],
+        "displayName": "Send to Wallet",
+        "operationId": "send-to-wallet",
         "description": "Sends the card to the apple wallet via email or phone number specified in the request.",
         "method": "POST",
         "path": [
@@ -1179,6 +1191,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-catalog"
         ],
+        "displayName": "Get Catalog",
+        "operationId": "get-catalog",
         "description": "Get the list of membership items and their descriptions for a specific store.",
         "method": "GET",
         "path": [
@@ -1348,6 +1362,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Get Membership History",
+        "operationId": "get-membership-history",
         "description": "Use this endpoint to retrieve the lifecycle history of a membership. It provides a chronological log of events, including creation, renewals, upgrades, and cancellations.",
         "method": "GET",
         "path": [
@@ -1534,6 +1550,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Activate Membership",
+        "operationId": "activate-membership",
         "description": "Activate a membership that has been created but is not yet active. This is commonly used when a membership is set up ahead of time and needs to be activated for use.",
         "method": "POST",
         "path": [
@@ -1720,6 +1738,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Cancel Membership",
+        "operationId": "cancel-membership",
         "description": "Cancel an active membership using this endpoint. You can provide a cancellation date, allowing the membership to run until that date, or cancel it immediately.",
         "method": "POST",
         "path": [
@@ -1923,6 +1943,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Get Renewal Options",
+        "operationId": "get-renewal-options",
         "description": "Retrieve a list of available renewal options for a membership. Each option is represented by an `itemNumber`, which includes predefined configurations such as price, duration, and other relevant details. The `itemNumber` returned from this endpoint can be used as a parameter in the `renewMembership` endpoint to proceed with the renewal.",
         "method": "GET",
         "path": [
@@ -2097,6 +2119,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Renew Membership",
+        "operationId": "renew-membership",
         "description": "Use this endpoint to renew an existing membership. The renewal will **add a new period** after the current membership period expires. To renew, you must provide the `itemNumber` from the `getRenewalOptions` endpoint, which specifies the predefined renewal configuration such as price and duration.",
         "method": "POST",
         "path": [
@@ -2313,6 +2337,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Get Upgrade Options",
+        "operationId": "get-upgrade-options",
         "description": "Retrieve a list of available upgrade options for a membership. Each upgrade option is represented by an `itemNumber`, which includes predefined details such as the upgraded benefits and any pricing adjustments. The `itemNumber` returned from this endpoint can be used as a parameter in the `upgradeMembership` endpoint to execute the upgrade.",
         "method": "GET",
         "path": [
@@ -2487,6 +2513,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Upgrade Membership",
+        "operationId": "upgrade-membership",
         "description": "Use this endpoint to upgrade an active membership to a higher (or lower) plan or tier. The upgrade will **terminate the current membership period** and apply the new membership tier immediately. However, the **overall membership duration remains unchanged**. You must provide the `itemNumber` from the `getUpgradeOptions` endpoint, which includes the predefined details for the upgrade.",
         "method": "POST",
         "path": [
@@ -2703,6 +2731,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Get Extend Options",
+        "operationId": "get-extend-options",
         "description": "Retrieve a list of available extension options for a membership. Each option is represented by an `itemNumber`, which includes predefined configurations such as new duration and pricing. The `itemNumber` returned from this endpoint can be used as a parameter in the `extendMembership` endpoint to apply the extension.",
         "method": "GET",
         "path": [
@@ -2877,6 +2907,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-lifecycle"
         ],
+        "displayName": "Extend Membership",
+        "operationId": "extend-membership",
         "description": "Use this endpoint to extend the duration of an active membership. The extension will **terminate the current period** and create a **new period starting from today**, based on the provided extension configuration. The **overall membership duration will be greater** than the original duration. You must provide the `itemNumber` from the `getExtendOptions` endpoint to apply the extension.",
         "method": "POST",
         "path": [
@@ -3093,6 +3125,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Add Member",
+        "operationId": "add-member",
         "description": "Use this endpoint to add a new member to a membership. This is used when a new individual needs to be linked to an existing membership, either at the time of membership creation or later.",
         "method": "POST",
         "path": [
@@ -3333,6 +3367,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Get using Id",
+        "operationId": "get-member-id",
         "description": "Retrieve details of a specific member using their unique member ID.",
         "method": "GET",
         "path": [
@@ -3531,6 +3567,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Get using Number",
+        "operationId": "get-member-number",
         "description": "Use this endpoint to retrieve details of a member based on their member number. This is helpful when the member number is available but the member ID is not known.",
         "method": "GET",
         "path": [
@@ -3729,6 +3767,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Block Member",
+        "operationId": "block-member",
         "description": "Block a specific member from further activity. This is typically used in scenarios where a member's access needs to be temporarily or permanently disabled. **Family Membership Downgrade** For family or group memberships, when the allowed number of valid members decreases (e.g., before a downgrade to a smaller membership plan), this endpoint can be used to block excess members to comply with the new membership limitations.",
         "method": "POST",
         "path": [
@@ -3906,6 +3946,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Unblock Member",
+        "operationId": "unblock-member",
         "description": "Unblock a previously blocked member, allowing them to resume activities associated with their membership. This endpoint re-enables access that was previously restricted.",
         "method": "POST",
         "path": [
@@ -4083,6 +4125,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Update Member",
+        "operationId": "update-member",
         "description": "Update the details of an existing member. This endpoint is used when a member's information needs to be changed, such as updating their contact details, name, or personal information.",
         "method": "PUT",
         "path": [
@@ -4286,6 +4330,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Get Member Image",
+        "operationId": "get-member-image",
         "description": "Retrieve the image associated with a specific member.",
         "method": "GET",
         "path": [
@@ -4447,6 +4493,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Set Member Image",
+        "operationId": "set-member-image",
         "description": "Create or update the image associated with a member. Use this endpoint to upload a new photo or update an existing one linked to the member’s profile.",
         "method": "PUT",
         "path": [
@@ -4625,6 +4673,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-member"
         ],
+        "displayName": "Find Members",
+        "operationId": "find-members",
         "description": "Search for members based on various criteria such as name, birth date, email, phone number, or card number. This endpoint allows you to perform a flexible search and return a list of members that match the provided criteria.",
         "method": "GET",
         "path": [
@@ -4947,6 +4997,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-membership"
         ],
+        "displayName": "Create Membership",
+        "operationId": "create-membership",
         "description": "Use this endpoint to create a new membership.",
         "method": "POST",
         "path": [
@@ -5117,6 +5169,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-membership"
         ],
+        "displayName": "Get using Id",
+        "operationId": "get-membership-id",
         "description": "This endpoint retrieves the details of a specific membership using its unique membership ID. It’s useful for checking the status, validity, and other details of an existing membership.",
         "method": "GET",
         "path": [
@@ -5284,6 +5338,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-membership"
         ],
+        "displayName": "Get using Number",
+        "operationId": "get-membership-number",
         "description": "Use this endpoint to retrieve membership details based on the membership number. This is helpful when the ID isn't available but the membership number is known.",
         "method": "GET",
         "path": [
@@ -5451,6 +5507,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-membership"
         ],
+        "displayName": "Block Membership",
+        "operationId": "block-membership",
         "description": "Use this endpoint to block a membership, preventing any further activity on it.",
         "method": "POST",
         "path": [
@@ -5622,6 +5680,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-membership"
         ],
+        "displayName": "Unblock Membership",
+        "operationId": "unblock-membership",
         "description": "Unblock a previously blocked membership using this endpoint. It reactivates the membership, allowing members to resume activity after a block period.",
         "method": "POST",
         "path": [
@@ -5793,6 +5853,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-membership"
         ],
+        "displayName": "Get Members",
+        "operationId": "get-members",
         "description": "This endpoint retrieves all members associated with a specific membership. It is useful you need to see a list of all participants or account holders under a single membership.",
         "method": "GET",
         "path": [
@@ -5995,6 +6057,8 @@
           "subpackage_memberships",
           "subpackage_memberships/service-misc"
         ],
+        "displayName": "Resolve Member Identifier",
+        "operationId": "resolve-identifier",
         "description": "Resolves number as a specific membership, member, or card",
         "method": "GET",
         "path": [
@@ -6164,6 +6228,8 @@
           "subpackage_systemservices",
           "subpackage_systemservices/companies"
         ],
+        "displayName": "Get all companies",
+        "operationId": "get-companies",
         "description": "Get list of all companies in the selected environment. More information how to work with companies can be found [here](/api-reference/system-services/companies).",
         "method": "GET",
         "path": [
@@ -6284,6 +6350,8 @@
           "subpackage_systemservices",
           "subpackage_systemservices/helloworld"
         ],
+        "displayName": "Hello World",
+        "operationId": "get-hello-world",
         "description": "Hello World provides a simple, data-agnostic method to test the API connection, ensuring that your integration is set up correctly and functioning as expected.",
         "method": "GET",
         "path": [
@@ -6406,6 +6474,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-capacity"
         ],
+        "displayName": "Get Capacity",
+        "operationId": "get-capacity",
         "description": "Retrieve the capacity and availability for a ticket item number.",
         "method": "GET",
         "path": [
@@ -6708,6 +6778,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-catalog"
         ],
+        "displayName": "Get Catalog",
+        "operationId": "get-catalog",
         "description": "Get the list of ticket items and their descriptions",
         "method": "GET",
         "path": [
@@ -6906,6 +6978,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Create Reservation",
+        "operationId": "create-reservation",
         "description": "Initiates a new reservation for tickets. Clients use this endpoint to provisionally hold tickets by specifying the desired items, quantities, and any specific admissions or schedules. Returns a token representing the reservation, along with its expiration time, allowing clients to manage or confirm the reservation before it expires.",
         "method": "POST",
         "path": [
@@ -7119,6 +7193,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Update Reservation",
+        "operationId": "update-reservation",
         "description": "Modifies an existing reservation identified by a token. This endpoint replaces the current reservation details with new ones provided in the request, such as changing quantities or items. Useful for adjusting reservations before confirmation, ensuring that held tickets are updated and previous allocations are released.",
         "method": "PUT",
         "path": [
@@ -7346,6 +7422,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Cancel Reservation",
+        "operationId": "cancel-reservation",
         "description": "Cancels an existing registered reservation using its token. This endpoint releases the held tickets back into the system, making them available for other customers. Note that confirmed reservations cannot be canceled using this endpoint; they must be revoked through a different process.",
         "method": "POST",
         "path": [
@@ -7506,6 +7584,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Pre Confirm Reservation",
+        "operationId": "pre-confirm-reservation",
         "description": "Extends the lifespan of a provisional reservation identified by a token. Clients use this endpoint to keep the reservation active for a longer period before confirming it, preventing the tickets from expiring and being released back into the system. This action is typically taken when you want to extend the reservation's lifespan just before starting the payment process.",
         "method": "POST",
         "path": [
@@ -7667,6 +7747,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Confirm Reservation",
+        "operationId": "confirm-reservation",
         "description": "Finalizes a provisional reservation, turning it into a confirmed booking. This endpoint requires the reservation token and may include additional customer information such as ticket holder details and payment reference. Upon successful confirmation, the reservation status is updated, and ticket numbers are assigned.",
         "method": "POST",
         "path": [
@@ -7895,6 +7977,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Get Reservation",
+        "operationId": "get-reservation",
         "description": "Retrieves the current details of an existing reservation using its token. This endpoint allows clients to check the status, contents, and expiration time of a reservation, whether it's registered or confirmed.",
         "method": "GET",
         "path": [
@@ -8170,6 +8254,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-reservations"
         ],
+        "displayName": "Get Tickets",
+        "operationId": "get-tickets",
         "description": "Obtains the detailed ticket information for a confirmed reservation identified by its token. Clients use this endpoint to retrieve ticket details such as ticket numbers, validity periods, and any other pertinent information needed for ticket delivery or display.",
         "method": "GET",
         "path": [
@@ -8379,6 +8465,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Get Ticket",
+        "operationId": "get-ticket",
         "description": "Retrieves detailed information about a specific ticket using its unique ticketNumber. Clients use this endpoint to obtain ticket details such as validity periods, admissions, and any associated information after a reservation has been confirmed.",
         "method": "GET",
         "path": [
@@ -8576,6 +8664,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Revoke Ticket",
+        "operationId": "revoke-ticket",
         "description": "Revokes a ticket identified by its ticketNumber, effectively canceling it after it has been confirmed. This action makes the ticket invalid for entry or use and releases any held resources. Useful for handling refunds or cancellations initiated by the customer or the system.",
         "method": "POST",
         "path": [
@@ -8737,6 +8827,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Validate Arrival",
+        "operationId": "validate-arrival",
         "description": "Validates a ticket for arrival at a specific admission point, marking the ticket as admitted. This endpoint is typically used at entry points (e.g., gates or doors) to verify the ticket's validity and record the customer's arrival. Optional parameters like admissionCode and scannerStation provide context for the validation.",
         "method": "POST",
         "path": [
@@ -8928,6 +9020,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Validate Departure",
+        "operationId": "validate-departure",
         "description": "Validates a ticket for departure from an admission, marking the ticket as departed. Used when tracking both entry and exit of customers, this endpoint helps manage capacities and ensures that the ticket is correctly processed upon leaving. Similar to arrival validation, it can include admissionCode and scannerStation.",
         "method": "POST",
         "path": [
@@ -9113,6 +9207,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Validate Member Arrival",
+        "operationId": "validate-member-arrival",
         "description": "Validates the arrival of a member using their member card number, possibly creating a reservation on-the-fly if necessary. This endpoint is used when members, such as season pass holders or VIPs, arrive at an admission point without a prior reservation. It ensures that their access is recorded and any tickets are generated accordingly.",
         "method": "POST",
         "path": [
@@ -9341,6 +9437,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Send to Wallet",
+        "operationId": "send-to-wallet",
         "description": "Sends a confirmed ticket as an e-ticket (\"apple\" wallet) to the customer's email address or phone number specified in the request. This endpoint facilitates electronic delivery of tickets, allowing customers to receive and present their tickets digitally. Useful for post-purchase communications and ensuring customers have access to their tickets.",
         "method": "POST",
         "path": [
@@ -9519,6 +9617,8 @@
           "subpackage_ticketing",
           "subpackage_ticketing/service-ticket"
         ],
+        "displayName": "Exchange For Coupon",
+        "operationId": "exchange-for-coupon",
         "description": "Exchanges a ticket for a coupon, which can be used for discounts on future purchases. This endpoint is used when a customer opts to convert their ticket into a coupon, providing multiple value retention options. The ticket is validated, and a coupon is issued, providing value retention for the customer.",
         "method": "POST",
         "path": [

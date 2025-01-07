@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_automationJourneys"
         ],
+        "displayName": "Add subscription to an automation",
+        "operationId": "create",
         "description": "Add an existing subscription to an automation flow. Requires the automation to have an active _Add by API_ trigger. The specified `email` or `subscription_id` will be matched against your existing subscribers. If an existing subscriber is found, they will be enrolled immediately.<br><br>\nLooking to enroll new subscribers? Use the **[Create Subscription](/api-reference/subscriptions/create)** endpoint instead and specify the `automation_ids` param.",
         "method": "POST",
         "path": [
@@ -421,6 +423,8 @@
         "namespace": [
           "subpackage_automationJourneys"
         ],
+        "displayName": "List automation journeys",
+        "operationId": "index",
         "description": "Retrieve a list of automation journeys that have occurred within a specific automation.",
         "method": "GET",
         "path": [
@@ -730,6 +734,8 @@
         "namespace": [
           "subpackage_automationJourneys"
         ],
+        "displayName": "Get automation journey",
+        "operationId": "show",
         "description": "Retrieve a single automation journey by ID.",
         "method": "GET",
         "path": [
@@ -1079,6 +1085,8 @@
         "namespace": [
           "subpackage_automations"
         ],
+        "displayName": "List automations",
+        "operationId": "index",
         "method": "GET",
         "path": [
           {
@@ -1441,6 +1449,8 @@
         "namespace": [
           "subpackage_automations"
         ],
+        "displayName": "Get automation",
+        "operationId": "show",
         "method": "GET",
         "path": [
           {
@@ -1765,6 +1775,8 @@
         "namespace": [
           "subpackage_bulkSubscriptionUpdates"
         ],
+        "displayName": "List subscription updates",
+        "operationId": "index",
         "description": "Returns a list of Subscription Update objects for a publication.",
         "method": "GET",
         "path": [
@@ -2077,6 +2089,8 @@
         "namespace": [
           "subpackage_bulkSubscriptionUpdates"
         ],
+        "displayName": "Get subscription update",
+        "operationId": "show",
         "description": "Returns a single Subscription Update object for a publication.",
         "method": "GET",
         "path": [
@@ -2409,6 +2423,8 @@
         "namespace": [
           "subpackage_bulkSubscriptionUpdates"
         ],
+        "displayName": "Update subscriptions",
+        "operationId": "put",
         "description": "Bulk update multiple subscriptions fields, including status, custom fields, and tiers.",
         "method": "PUT",
         "path": [
@@ -2796,6 +2812,8 @@
         "namespace": [
           "subpackage_bulkSubscriptionUpdates"
         ],
+        "displayName": "Update subscriptions",
+        "operationId": "patch",
         "description": "Bulk update multiple subscriptions fields, including status, custom fields, and tiers.",
         "method": "PATCH",
         "path": [
@@ -3183,6 +3201,8 @@
         "namespace": [
           "subpackage_bulkSubscriptionUpdates"
         ],
+        "displayName": "Update subscriptions' status",
+        "operationId": "put-status",
         "description": "Bulk update subscriptions' status.",
         "method": "PUT",
         "path": [
@@ -3302,6 +3322,8 @@
         "namespace": [
           "subpackage_bulkSubscriptionUpdates"
         ],
+        "displayName": "Update subscriptions' status",
+        "operationId": "patch-status",
         "description": "Bulk update subscriptions' status.",
         "method": "PATCH",
         "path": [
@@ -3421,6 +3443,8 @@
         "namespace": [
           "subpackage_customFields"
         ],
+        "displayName": "Create custom field",
+        "operationId": "create",
         "description": "Create a custom field on a publication, for use in subscriptions",
         "method": "POST",
         "path": [
@@ -3790,6 +3814,8 @@
         "namespace": [
           "subpackage_customFields"
         ],
+        "displayName": "Get custom field",
+        "operationId": "show",
         "description": "View a specific custom field on a publication",
         "method": "GET",
         "path": [
@@ -4114,6 +4140,8 @@
         "namespace": [
           "subpackage_customFields"
         ],
+        "displayName": "List custom fields",
+        "operationId": "index",
         "description": "List all custom fields on a publication",
         "method": "GET",
         "path": [
@@ -4393,6 +4421,8 @@
         "namespace": [
           "subpackage_customFields"
         ],
+        "displayName": "Update custom field",
+        "operationId": "put",
         "description": "Update a custom field on a publication",
         "method": "PUT",
         "path": [
@@ -4767,6 +4797,8 @@
         "namespace": [
           "subpackage_customFields"
         ],
+        "displayName": "Update custom field",
+        "operationId": "patch",
         "description": "Update a custom field on a publication",
         "method": "PATCH",
         "path": [
@@ -5141,6 +5173,8 @@
         "namespace": [
           "subpackage_customFields"
         ],
+        "displayName": "Delete custom field",
+        "operationId": "delete",
         "description": "Delete a custom field from a publication",
         "method": "DELETE",
         "path": [
@@ -5458,6 +5492,8 @@
         "namespace": [
           "subpackage_posts"
         ],
+        "displayName": "List posts",
+        "operationId": "index",
         "description": "Retrieve all posts belonging to a specific publication",
         "method": "GET",
         "path": [
@@ -5996,6 +6032,8 @@
         "namespace": [
           "subpackage_posts"
         ],
+        "displayName": "Get post",
+        "operationId": "show",
         "description": "Retreive a single Post belonging to a specific publication",
         "method": "GET",
         "path": [
@@ -6412,6 +6450,8 @@
         "namespace": [
           "subpackage_posts"
         ],
+        "displayName": "Delete post",
+        "operationId": "delete",
         "description": "Delete or Archive a post. Any post that has been confirmed will have it's status changed to `archived`. Posts in the `draft` status will be permenantly deleted.",
         "method": "DELETE",
         "path": [
@@ -6727,6 +6767,8 @@
         "namespace": [
           "subpackage_publications"
         ],
+        "displayName": "List publications",
+        "operationId": "index",
         "description": "Retrieve all publications associated with your API key.",
         "method": "GET",
         "path": [
@@ -7132,6 +7174,8 @@
         "namespace": [
           "subpackage_publications"
         ],
+        "displayName": "Get publication",
+        "operationId": "show",
         "description": "Retrieve a single publication",
         "method": "GET",
         "path": [
@@ -7482,6 +7526,8 @@
         "namespace": [
           "subpackage_referralProgram"
         ],
+        "displayName": "Get referral program",
+        "operationId": "show",
         "description": "Retrieve details about the publication's referral program, including milestones and rewards.",
         "method": "GET",
         "path": [
@@ -7848,6 +7894,8 @@
         "namespace": [
           "subpackage_segments"
         ],
+        "displayName": "List segments",
+        "operationId": "index",
         "description": "Retrieve information about all segments belonging to a specific publication",
         "method": "GET",
         "path": [
@@ -8279,6 +8327,8 @@
         "namespace": [
           "subpackage_segments"
         ],
+        "displayName": "Get segment",
+        "operationId": "show",
         "description": "Retrieve information about a specific segment belonging to a publication",
         "method": "GET",
         "path": [
@@ -8524,6 +8574,8 @@
         "namespace": [
           "subpackage_segments"
         ],
+        "displayName": "List segment subscribers",
+        "operationId": "expand-results",
         "description": "List the Subscriber Ids from the most recent calculation of a specific publication.",
         "method": "GET",
         "path": [
@@ -8904,6 +8956,8 @@
         "namespace": [
           "subpackage_segments"
         ],
+        "displayName": "Delete segment",
+        "operationId": "delete",
         "description": "Delete a segment. Deleting the segment does not effect the subscriptions in the segment.",
         "method": "DELETE",
         "path": [
@@ -9167,6 +9221,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "Create subscription",
+        "operationId": "create",
         "description": "Create new subscriptions for a publication.",
         "method": "POST",
         "path": [
@@ -9833,6 +9889,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "List subscriptions",
+        "operationId": "index",
         "description": "Retrieve all subscriptions belonging to a specific publication",
         "method": "GET",
         "path": [
@@ -10369,6 +10427,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "Get subscription by email",
+        "operationId": "get-by-email",
         "description": "<Info>Please note that this endpoint requires the email to be URL encoded. Please reference your language's documentation for the correct method of encoding.</Info> Retrieve a single subscription belonging to a specific email address in a specific publication.",
         "method": "GET",
         "path": [
@@ -10752,6 +10812,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "Get subscription by ID",
+        "operationId": "get-by-id",
         "description": "<Info>In previous versions of the API, another endpoint existed to retrieve a subscription by the subscriber ID. This endpoint is now deprecated and will be removed in a future version of the API. Please use this endpoint instead. The subscription ID can be found by exporting a list of subscriptions either via the `Settings > Publications > Export Data` or by exporting a CSV in a segment.</Info> Retrieve a single subscription belonging to a specific publication.",
         "method": "GET",
         "path": [
@@ -11077,6 +11139,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "Update subscription",
+        "operationId": "put",
         "description": "Update a single subscription.",
         "method": "PUT",
         "path": [
@@ -11531,6 +11595,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "Update subscription",
+        "operationId": "patch",
         "description": "Update a single subscription.",
         "method": "PATCH",
         "path": [
@@ -11985,6 +12051,8 @@
         "namespace": [
           "subpackage_subscriptions"
         ],
+        "displayName": "Delete subscription",
+        "operationId": "delete",
         "description": "<Warning>This cannot be undone. All data associated with the subscription will also be deleted. We recommend unsubscribing when possible instead of deleting.<br><br>If a premium subscription is deleted they will no longer be billed.</Warning> Deletes a subscription.",
         "method": "DELETE",
         "path": [
@@ -12300,6 +12368,8 @@
         "namespace": [
           "subpackage_subscriptionTags"
         ],
+        "displayName": "Add subscription tag",
+        "operationId": "create",
         "description": "Adds tags to a subscription. If the tag does not exist on the publication, it will be created automatically.",
         "method": "POST",
         "path": [
@@ -12696,6 +12766,8 @@
         "namespace": [
           "subpackage_tiers"
         ],
+        "displayName": "Create a tier",
+        "operationId": "create",
         "description": "Create a new tier for a publication.",
         "method": "POST",
         "path": [
@@ -13115,6 +13187,8 @@
         "namespace": [
           "subpackage_tiers"
         ],
+        "displayName": "List tiers",
+        "operationId": "index",
         "description": "Retrieve all tiers belonging to a specific publication",
         "method": "GET",
         "path": [
@@ -13520,6 +13594,8 @@
         "namespace": [
           "subpackage_tiers"
         ],
+        "displayName": "Get tier",
+        "operationId": "show",
         "description": "Retrieve a single tier belonging to a specific publication",
         "method": "GET",
         "path": [
@@ -13880,6 +13956,8 @@
         "namespace": [
           "subpackage_tiers"
         ],
+        "displayName": "Update a tier",
+        "operationId": "put",
         "description": "Update an existing tier belonging to a specific publication",
         "method": "PUT",
         "path": [
@@ -14316,6 +14394,8 @@
         "namespace": [
           "subpackage_tiers"
         ],
+        "displayName": "Update a tier",
+        "operationId": "patch",
         "description": "Update an existing tier belonging to a specific publication",
         "method": "PATCH",
         "path": [
@@ -14752,6 +14832,8 @@
         "namespace": [
           "subpackage_webhooks"
         ],
+        "displayName": "Create a webhook",
+        "operationId": "create",
         "description": "Create a new webhook for a given publication.",
         "method": "POST",
         "path": [
@@ -15163,6 +15245,8 @@
         "namespace": [
           "subpackage_webhooks"
         ],
+        "displayName": "List webhooks",
+        "operationId": "index",
         "description": "Retrieve all webhooks belonging to a specific publication.",
         "method": "GET",
         "path": [
@@ -15501,6 +15585,8 @@
         "namespace": [
           "subpackage_webhooks"
         ],
+        "displayName": "Get webhook",
+        "operationId": "show",
         "description": "Retrieve a specific webhook belonging to a publication.",
         "method": "GET",
         "path": [
@@ -15838,6 +15924,8 @@
         "namespace": [
           "subpackage_webhooks"
         ],
+        "displayName": "Delete a webhook",
+        "operationId": "delete",
         "description": "Delete a webhook subscription from a publication.",
         "method": "DELETE",
         "path": [
@@ -22511,6 +22599,8 @@
         "namespace": [
           "subpackage_post"
         ],
+        "displayName": "Post Sent",
+        "operationId": "sent",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22558,6 +22648,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Created",
+        "operationId": "created",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22602,6 +22694,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Confirmed",
+        "operationId": "confirmed",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22646,6 +22740,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Deleted",
+        "operationId": "deleted",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22690,6 +22786,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Upgraded",
+        "operationId": "upgraded",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22734,6 +22832,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Downgraded",
+        "operationId": "downgraded",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22778,6 +22878,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Tier Added",
+        "operationId": "tier-added",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22820,6 +22922,8 @@
         "namespace": [
           "subpackage_subscription"
         ],
+        "displayName": "Subscription Tier Deleted",
+        "operationId": "tier-deleted",
         "method": "POST",
         "path": [],
         "payload": {
@@ -22860,6 +22964,8 @@
         "namespace": [
           "subpackage_survey"
         ],
+        "displayName": "Survey Response Submitted",
+        "operationId": "submitted",
         "method": "POST",
         "path": [],
         "payload": {

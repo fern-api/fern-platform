@@ -5,6 +5,8 @@
       "endpoint_.execute-prompt": {
         "id": "endpoint_.execute-prompt",
         "namespace": [],
+        "displayName": "Execute Prompt",
+        "operationId": "execute-prompt",
         "description": "Executes a deployed Prompt and returns the result.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -603,6 +605,8 @@
       "endpoint_.execute-prompt-stream": {
         "id": "endpoint_.execute-prompt-stream",
         "namespace": [],
+        "displayName": "Execute Prompt Stream",
+        "operationId": "execute-prompt-stream",
         "description": "Executes a deployed Prompt and streams back the results.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -1191,6 +1195,8 @@
       "endpoint_.execute-workflow": {
         "id": "endpoint_.execute-workflow",
         "namespace": [],
+        "displayName": "Execute Workflow",
+        "operationId": "execute-workflow",
         "description": "Executes a deployed Workflow and returns its outputs.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -1686,6 +1692,8 @@
       "endpoint_.execute-workflow-stream": {
         "id": "endpoint_.execute-workflow-stream",
         "namespace": [],
+        "displayName": "Execute Workflow Stream",
+        "operationId": "execute-workflow-stream",
         "description": "Executes a deployed Workflow and streams back its results.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -2261,6 +2269,8 @@
       "endpoint_.search": {
         "id": "endpoint_.search",
         "namespace": [],
+        "displayName": "Search",
+        "operationId": "search",
         "description": "Perform a search against a document index.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -2629,6 +2639,8 @@
       "endpoint_.submit-completion-actuals": {
         "id": "endpoint_.submit-completion-actuals",
         "namespace": [],
+        "displayName": "Submit Completion Actuals",
+        "operationId": "submit-completion-actuals",
         "description": "Used to submit feedback regarding the quality of previously generated completions.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -2962,6 +2974,8 @@
       "endpoint_.submit-workflow-execution-actuals": {
         "id": "endpoint_.submit-workflow-execution-actuals",
         "namespace": [],
+        "displayName": "Submit Workflow Execution Actuals",
+        "operationId": "submit-workflow-execution-actuals",
         "description": "    Used to submit feedback regarding the quality of previous workflow execution and its outputs.\n\n    **Note:** Uses a base url of `https://predict.vellum.ai`.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -3105,6 +3119,8 @@
         "namespace": [
           "subpackage_deployments"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Used to list all Prompt Deployments.",
         "availability": "Beta",
         "method": "GET",
@@ -3285,6 +3301,8 @@
         "namespace": [
           "subpackage_deployments"
         ],
+        "displayName": "Retrieve",
+        "operationId": "retrieve",
         "description": "Used to retrieve a Prompt Deployment given its ID or name.",
         "availability": "Beta",
         "method": "GET",
@@ -3411,6 +3429,8 @@
         "namespace": [
           "subpackage_deployments"
         ],
+        "displayName": "Retrieve Deployment Release Tag",
+        "operationId": "retrieve-deployment-release-tag",
         "description": "Retrieve a Deployment Release Tag by tag name, associated with a specified Deployment.",
         "availability": "Beta",
         "method": "GET",
@@ -3542,6 +3562,8 @@
         "namespace": [
           "subpackage_deployments"
         ],
+        "displayName": "Update Deployment Release Tag",
+        "operationId": "update-deployment-release-tag",
         "description": "Updates an existing Release Tag associated with the specified Deployment.",
         "availability": "Beta",
         "method": "PATCH",
@@ -3706,6 +3728,8 @@
         "namespace": [
           "subpackage_deployments"
         ],
+        "displayName": "Retrieve Provider Payload",
+        "operationId": "retrieve-provider-payload",
         "description": "Given a set of input variable values, compile the exact payload that Vellum would send to the configured model provider\nfor execution if the execute-prompt endpoint had been invoked. Note that this endpoint does not actually execute the\nprompt or make an API call to the model provider.\n\nThis endpoint is useful if you don't want to proxy LLM provider requests through Vellum and prefer to send them directly\nto the provider yourself. Note that no guarantees are made on the format of this API's response schema, other than\nthat it will be a valid payload for the configured model provider. It's not recommended that you try to parse or\nderive meaning from the response body and instead, should simply pass it directly to the model provider as is.\n\nWe encourage you to seek advise from Vellum Support before integrating with this API for production use.",
         "availability": "Beta",
         "method": "POST",
@@ -4190,6 +4214,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Used to retrieve a list of Document Indexes.",
         "availability": "Beta",
         "method": "GET",
@@ -4389,6 +4415,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Creates a new document index.",
         "availability": "Beta",
         "method": "POST",
@@ -4772,6 +4800,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Retrieve",
+        "operationId": "retrieve",
         "description": "Used to retrieve a Document Index given its ID or name.",
         "availability": "Beta",
         "method": "GET",
@@ -4893,6 +4923,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Update",
+        "operationId": "update",
         "description": "Used to fully update a Document Index given its ID or name.",
         "availability": "Beta",
         "method": "PUT",
@@ -5079,6 +5111,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Destroy",
+        "operationId": "destroy",
         "description": "Used to delete a Document Index given its ID or name.",
         "availability": "Beta",
         "method": "DELETE",
@@ -5166,6 +5200,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Partial Update",
+        "operationId": "partial-update",
         "description": "Used to partial update a Document Index given its ID or name.",
         "availability": "Beta",
         "method": "PATCH",
@@ -5356,6 +5392,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Add Document",
+        "operationId": "add-document",
         "description": "Adds a previously uploaded Document to the specified Document Index.",
         "availability": "Beta",
         "method": "POST",
@@ -5465,6 +5503,8 @@
         "namespace": [
           "subpackage_documentIndexes"
         ],
+        "displayName": "Remove Document",
+        "operationId": "remove-document",
         "description": "Removes a Document from a Document Index without deleting the Document itself.",
         "availability": "Beta",
         "method": "DELETE",
@@ -5574,6 +5614,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Used to list documents. Optionally filter on supported fields.",
         "availability": "GenerallyAvailable",
         "method": "GET",
@@ -5760,6 +5802,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Retrieve",
+        "operationId": "retrieve",
         "description": "Retrieve a Document, keying off of either its Vellum-generated ID or its external ID.",
         "availability": "Beta",
         "method": "GET",
@@ -5881,6 +5925,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Destroy",
+        "operationId": "destroy",
         "description": "Delete a Document, keying off of either its Vellum-generated ID or its external ID.",
         "availability": "Beta",
         "method": "DELETE",
@@ -5968,6 +6014,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Partial Update",
+        "operationId": "partial-update",
         "description": "Update a Document, keying off of either its Vellum-generated ID or its external ID. Particularly useful for updating its metadata.",
         "availability": "Beta",
         "method": "PATCH",
@@ -6172,6 +6220,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Upload",
+        "operationId": "upload",
         "description": "Upload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.\n\nThis is a multipart/form-data request. The `contents` field should be a file upload. It also expects a JSON body with the following fields:\n\n- `add_to_index_names: list[str]` - Optionally include the names of all indexes that you'd like this document to be included in\n- `external_id: str | None` - Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.\n- `label: str` - A human-friendly name for this document. Typically the filename.\n- `keywords: list[str] | None` - Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.\n- `metadata: dict[str, Any]` - A stringified JSON object containing any metadata associated with the document that you'd like to filter upon later.",
         "availability": "GenerallyAvailable",
         "method": "POST",
@@ -6649,6 +6699,8 @@
         "namespace": [
           "subpackage_folderEntities"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "List all folder entities within a specified folder.",
         "availability": "Beta",
         "method": "GET",
@@ -6835,6 +6887,8 @@
         "namespace": [
           "subpackage_folderEntities"
         ],
+        "displayName": "Add Entity To Folder",
+        "operationId": "add-entity-to-folder",
         "description": "Add an entity to a specific folder or root directory.\n\nAdding an entity to a folder will remove it from any other folders it might have been a member of.",
         "availability": "Beta",
         "method": "POST",
@@ -6955,6 +7009,8 @@
         "namespace": [
           "subpackage_sandboxes"
         ],
+        "displayName": "Deploy Prompt",
+        "operationId": "deploy-prompt",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -7206,6 +7262,8 @@
         "namespace": [
           "subpackage_sandboxes"
         ],
+        "displayName": "Upsert Sandbox Scenario",
+        "operationId": "upsert-sandbox-scenario",
         "description": "Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.\n\nIf an id is provided and has a match, the scenario will be updated. If no id is provided or no match\nis found, a new scenario will be appended to the end.\n\nNote that a full replacement of the scenario is performed, so any fields not provided will be removed\nor overwritten with default values.",
         "availability": "Beta",
         "method": "POST",
@@ -7500,6 +7558,8 @@
         "namespace": [
           "subpackage_sandboxes"
         ],
+        "displayName": "Delete Sandbox Scenario",
+        "operationId": "delete-sandbox-scenario",
         "description": "Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
         "availability": "Beta",
         "method": "DELETE",
@@ -7609,6 +7669,8 @@
         "namespace": [
           "subpackage_testSuiteRuns"
         ],
+        "displayName": "Create",
+        "operationId": "create",
         "description": "Trigger a Test Suite and create a new Test Suite Run",
         "availability": "Beta",
         "method": "POST",
@@ -7800,6 +7862,8 @@
         "namespace": [
           "subpackage_testSuiteRuns"
         ],
+        "displayName": "Retrieve",
+        "operationId": "retrieve",
         "description": "Retrieve a specific Test Suite Run by ID",
         "availability": "Beta",
         "method": "GET",
@@ -7930,6 +7994,8 @@
         "namespace": [
           "subpackage_testSuiteRuns"
         ],
+        "displayName": "List Executions",
+        "operationId": "list-executions",
         "availability": "Beta",
         "method": "GET",
         "path": [
@@ -8126,6 +8192,8 @@
         "namespace": [
           "subpackage_testSuites"
         ],
+        "displayName": "List Test Suite Test Cases",
+        "operationId": "list-test-suite-test-cases",
         "description": "List the Test Cases associated with a Test Suite",
         "availability": "Beta",
         "method": "GET",
@@ -8297,6 +8365,8 @@
         "namespace": [
           "subpackage_testSuites"
         ],
+        "displayName": "Upsert Test Suite Test Case",
+        "operationId": "upsert-test-suite-test-case",
         "description": "Upserts a new test case for a test suite, keying off of the optionally provided test case id.\n\nIf an id is provided and has a match, the test case will be updated. If no id is provided or no match\nis found, a new test case will be appended to the end.\n\nNote that a full replacement of the test case is performed, so any fields not provided will be removed\nor overwritten with default values.",
         "availability": "Beta",
         "method": "POST",
@@ -8459,6 +8529,8 @@
         "namespace": [
           "subpackage_testSuites"
         ],
+        "displayName": "Test Suite Test Cases Bulk",
+        "operationId": "test-suite-test-cases-bulk",
         "description": "Created, replace, and delete Test Cases within the specified Test Suite in bulk",
         "availability": "Beta",
         "method": "POST",
@@ -8633,6 +8705,8 @@
         "namespace": [
           "subpackage_testSuites"
         ],
+        "displayName": "Delete Test Suite Test Case",
+        "operationId": "delete-test-suite-test-case",
         "description": "Deletes an existing test case for a test suite, keying off of the test case id.",
         "availability": "Beta",
         "method": "DELETE",
@@ -8742,6 +8816,8 @@
         "namespace": [
           "subpackage_workflowDeployments"
         ],
+        "displayName": "List",
+        "operationId": "list",
         "description": "Used to list all Workflow Deployments.",
         "availability": "Beta",
         "method": "GET",
@@ -8929,6 +9005,8 @@
         "namespace": [
           "subpackage_workflowDeployments"
         ],
+        "displayName": "Retrieve",
+        "operationId": "retrieve",
         "description": "Used to retrieve a workflow deployment given its ID or name.",
         "availability": "Beta",
         "method": "GET",
@@ -9063,6 +9141,8 @@
         "namespace": [
           "subpackage_workflowDeployments"
         ],
+        "displayName": "Retrieve Workflow Release Tag",
+        "operationId": "retrieve-workflow-release-tag",
         "description": "Retrieve a Workflow Release Tag by tag name, associated with a specified Workflow Deployment.",
         "availability": "Beta",
         "method": "GET",
@@ -9194,6 +9274,8 @@
         "namespace": [
           "subpackage_workflowDeployments"
         ],
+        "displayName": "Update Workflow Release Tag",
+        "operationId": "update-workflow-release-tag",
         "description": "Updates an existing Release Tag associated with the specified Workflow Deployment.",
         "availability": "Beta",
         "method": "PATCH",
@@ -9358,6 +9440,8 @@
         "namespace": [
           "subpackage_workflowSandboxes"
         ],
+        "displayName": "Deploy Workflow",
+        "operationId": "deploy-workflow",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -9617,6 +9701,8 @@
         "namespace": [
           "subpackage_workspaceSecrets"
         ],
+        "displayName": "Retrieve",
+        "operationId": "retrieve",
         "description": "Used to retrieve a Workspace Secret given its ID or name.",
         "availability": "Beta",
         "method": "GET",
@@ -9725,6 +9811,8 @@
         "namespace": [
           "subpackage_workspaceSecrets"
         ],
+        "displayName": "Partial Update",
+        "operationId": "partial-update",
         "description": "Used to update a Workspace Secret given its ID or name.",
         "availability": "Beta",
         "method": "PATCH",

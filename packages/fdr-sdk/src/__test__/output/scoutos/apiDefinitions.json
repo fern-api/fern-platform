@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "List all workflows",
+        "operationId": "list",
         "description": "List all workflows in the organization",
         "availability": "Beta",
         "method": "GET",
@@ -546,6 +548,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "Create a new workflow",
+        "operationId": "create",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -3548,6 +3552,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "Get a workflow by ID",
+        "operationId": "get",
         "description": "Fetch app configuration by ID.",
         "availability": "Beta",
         "method": "GET",
@@ -3889,6 +3895,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "Update a workflow",
+        "operationId": "update",
         "availability": "Beta",
         "method": "PUT",
         "path": [
@@ -6957,6 +6965,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "Delete a workflow",
+        "operationId": "delete",
         "availability": "Beta",
         "method": "DELETE",
         "path": [
@@ -7256,6 +7266,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "Execute a workflow.",
+        "operationId": "run-stream",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -8283,6 +8295,8 @@
         "namespace": [
           "subpackage_workflows"
         ],
+        "displayName": "Execute a workflow.",
+        "operationId": "run",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -9243,6 +9257,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "List all environments for a workflow",
+        "operationId": "list",
         "description": "List all environments for a workflow in the organization",
         "availability": "Beta",
         "method": "GET",
@@ -9600,6 +9616,8 @@
         "namespace": [
           "subpackage_environments"
         ],
+        "displayName": "Update a workflow environment",
+        "operationId": "update",
         "description": "Update deployments within a workflow environment",
         "availability": "Beta",
         "method": "PUT",
@@ -10250,6 +10268,8 @@
         "namespace": [
           "subpackage_revisions"
         ],
+        "displayName": "List all revisions for a workflow",
+        "operationId": "list",
         "description": "List all app revisions in the organization",
         "availability": "Beta",
         "method": "GET",
@@ -10585,6 +10605,8 @@
         "namespace": [
           "subpackage_revisions"
         ],
+        "displayName": "Make a revision the active revision for a workflow",
+        "operationId": "update",
         "availability": "Beta",
         "method": "PUT",
         "path": [
@@ -10983,6 +11005,8 @@
         "namespace": [
           "subpackage_revisions"
         ],
+        "displayName": "Delete a revision",
+        "operationId": "delete",
         "availability": "Beta",
         "method": "DELETE",
         "path": [
@@ -11336,6 +11360,8 @@
         "namespace": [
           "subpackage_usage"
         ],
+        "displayName": "Get usage information for the current organization.",
+        "operationId": "get",
         "availability": "Beta",
         "method": "GET",
         "path": [
@@ -11695,6 +11721,8 @@
         "namespace": [
           "subpackage_workflowLogs"
         ],
+        "displayName": "Get logs for a workflow",
+        "operationId": "get",
         "availability": "Beta",
         "method": "GET",
         "path": [
@@ -12291,6 +12319,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "List all copilots",
+        "operationId": "list",
         "description": "List all copilots in the organization",
         "availability": "Beta",
         "method": "GET",
@@ -12830,6 +12860,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Create a new copilot",
+        "operationId": "create",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -13639,6 +13671,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Get a copilot",
+        "operationId": "get",
         "description": "Fetch app configuration by ID.",
         "availability": "Beta",
         "method": "GET",
@@ -13978,6 +14012,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Update a copilot",
+        "operationId": "update",
         "availability": "Beta",
         "method": "PUT",
         "path": [
@@ -14853,6 +14889,8 @@
         "namespace": [
           "subpackage_copilots"
         ],
+        "displayName": "Delete a copilot",
+        "operationId": "delete",
         "availability": "Beta",
         "method": "DELETE",
         "path": [
@@ -15152,6 +15190,8 @@
         "namespace": [
           "subpackage_collections"
         ],
+        "displayName": "Get a collection by ID.",
+        "operationId": "get",
         "availability": "Beta",
         "method": "GET",
         "path": [
@@ -15488,6 +15528,8 @@
         "namespace": [
           "subpackage_collections"
         ],
+        "displayName": "Create a collection.",
+        "operationId": "create",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -17293,6 +17335,8 @@
         "namespace": [
           "subpackage_collections"
         ],
+        "displayName": "Update a collection by ID.",
+        "operationId": "update",
         "availability": "Beta",
         "method": "PUT",
         "path": [
@@ -19164,6 +19208,8 @@
         "namespace": [
           "subpackage_collections"
         ],
+        "displayName": "Delete a collection by ID.",
+        "operationId": "delete",
         "description": "Delete a collection given a collection_id.",
         "availability": "Beta",
         "method": "DELETE",
@@ -19464,6 +19510,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Get a document by ID.",
+        "operationId": "get",
         "availability": "Beta",
         "method": "GET",
         "path": [
@@ -19856,6 +19904,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Create a document in a collection.",
+        "operationId": "create",
         "availability": "Beta",
         "method": "POST",
         "path": [
@@ -20961,6 +21011,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Update a document by ID.",
+        "operationId": "update",
         "availability": "Beta",
         "method": "PUT",
         "path": [
@@ -21706,6 +21758,8 @@
         "namespace": [
           "subpackage_documents"
         ],
+        "displayName": "Delete a document by ID.",
+        "operationId": "delete",
         "description": "Delete a document given a document_id.",
         "availability": "Beta",
         "method": "DELETE",

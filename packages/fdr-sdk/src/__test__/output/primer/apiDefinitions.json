@@ -7,6 +7,8 @@
         "namespace": [
           "subpackage_paymentWebhooks"
         ],
+        "displayName": "Payment Status Update",
+        "operationId": "payment-status-webhook-event",
         "description": "Primer notifies you with a `PAYMENT.STATUS` webhook when a payment's status has been updated. This is especially useful for asynchronous processor Connections, which do not respond with an upfront authorization.\nThe webhook body contains the full payment object.\n\nExample payment status notification:\n\n```JSON\n{\n  \"eventType\":\"PAYMENT.STATUS\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Payment webhook\"\n  },\n  \"signedAt\": \"1689221338\",\n  \"version\":\"2.1\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2022-01-01T12:12:12.000000\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"paymentMethod\":{\n      \"paymentType\":\"FIRST_PAYMENT\",\n      \"paymentMethodToken\":\"-lcWjvBAAs2DnIRXwxNjUzNTYzNjIy\",\n      \"analyticsId\":\"LUi5pETUaVsdSEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"last4Digits\":\"1111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1GORasdasqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":0\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2022-05-26T11:14:11.946300\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"processorTransactionId\":\"pi_3L3edsGZasdasdc1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORasvasdNWFwi8c\",\n        \"processorStatus\":\"SETTLED\"\n      }\n    ]\n  }\n}\n```\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).",
         "method": "POST",
         "path": [
@@ -226,6 +228,8 @@
         "namespace": [
           "subpackage_paymentWebhooks"
         ],
+        "displayName": "Payment Refund",
+        "operationId": "payment-refund-webhook-event",
         "description": "Primer notifies you with a `PAYMENT.REFUND` Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.\n\nCheck the transaction with the most recent `transactionType: \"REFUND\"` in the `transactions` array:\n\n- if `processorStatus` is `SETTLED`, the refund was successful and the funds have been returned to the customer\n- if `processorStatus` is `FAILED`, the refund was unsuccessful\n\nExample refund notification:\n\n```JSON\n{\n  \"eventType\":\"PAYMENT.REFUND\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Refund webhook\"\n  },\n  \"signedAt\": \"1689221338\",\n  \"version\":\"2.1\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2022-01-01T12:12:12.000000\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"paymentMethod\":{\n      \"paymentMethodToken\":\"-lcWjvBASh2EpYaHgVwxNjUzNTYzNjIy\",\n      \"analyticsId\":\"LUi5pETUV2EpYaHgV77SEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"paymentType\":\"FIRST_PAYMENT\",\n        \"last4Digits\":\"1111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1G2EpYaHgVZqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":3000\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2022-05-26T11:14:11.946300\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"processorTransactionId\":\"pi_3L3ed23NWFwiNWFwi8c1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORcaGv23NWFwi8c\",\n        \"processorStatus\":\"SETTLED\"\n      },\n      {\n        \"date\":\"2022-05-26T11:14:11.946300\",\n        \"amount\":3001,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"REFUND\",\n        \"processorTransactionId\":\"pi_3L3ed23NWFwiNWFwi8c1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORcaGv23NWFwi8c\",\n        \"processorStatus\":\"FAILED\",\n        \"processorStatusReason\":{\n          \"type\":\"APPLICATION_ERROR\",\n          \"declineType\":\"SOFT_DECLINE\",\n          \"code\":\"UNKNOWN\",\n          \"message\":\"Refund amount too large\"\n        }\n      }\n    ]\n  }\n}\n```\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).",
         "method": "POST",
         "path": [
@@ -445,6 +449,8 @@
         "namespace": [
           "subpackage_disputeChargebacksWebhooks"
         ],
+        "displayName": "Dispute Open",
+        "operationId": "dispute-open-webhook-event",
         "description": "Primer notifies you with a `DISPUTE.OPEN` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.\n\nExample of dispute event:\n\n```JSON\n{\n  \"eventType\":\"DISPUTE.OPENED\",\n  \"version\":\"2.1\",\n  \"primerAccountId\":\"7fcd50f1-99f2-416e-8013-6ecd1c1285c3\",\n  \"transactionId\":\"c3f662ad-d197-492e-b78b-63eefa64a31d\",\n  \"orderId\":\"order-123\",\n  \"processorId\":\"Adyen\",\n  \"processorDisputeId\":\"adyen_ref_123\",\n  \"paymentId\":\"ecb8d3bc-805d-4d97-826e-ef8d4cc3d2a2\",\n  \"raw_processor_callback\":{\n      \"example\":{\n        \"raw_callback\":\"request\",\n        \"from\":\"Adyen\"\n      }\n  }\n}\n```\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).",
         "method": "POST",
         "path": [
@@ -4877,6 +4883,8 @@
         "namespace": [
           "subpackage_paymentWebhooks"
         ],
+        "displayName": "Payment Status Update",
+        "operationId": "payment-status-webhook-event",
         "description": "Primer notifies you with a `PAYMENT.STATUS` webhook when a payment's status has been updated. This is especially useful for asyncronous processor Connections, which do not respond with an upfront authorization.\nThe webhook events will arrive in the order that the payment status changes, for example you should expect a status of `PENDING`, then `AUTHORIZED`, then `SETTLED` (depending on how your workflow is set up).\nThe webhook body contains the full payment object.\n\nExample payment status notification:\n\n```JSON\n{\n  \"eventType\":\"PAYMENT.STATUS\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Payment webhook\"\n  },\n  \"version\":\"2.3\",\n  \"signedAt\": \"1689221338\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2021-02-21T15:34:16.367687\",\n    \"dateUpdated\":\"2021-02-21T15:35:16.133701\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"cardTokenType\":\"CARD_PAN\",\n    \"customer\": {\n      \"emailAddress\": \"test@primer.io\",\n      \"mobileNumber\": \"0123456789\",\n      \"billingAddress\": {\n        \"firstName\": \"John\",\n        \"postalCode\": \"CB94BQ\",\n        \"addressLine1\": \"10001 Alpha St\",\n        \"countryCode\": \"GB\",\n        \"city\": \"Cambridge\",\n        \"state\": \"Cambridgeshire\"\n      }\n    },\n    \"paymentMethod\":{\n      \"paymentType\":\"FIRST_PAYMENT\",\n      \"paymentMethodToken\":\"-lcWjvBAAs2DnIRXwxNjUzNTYzNjIy\",\n      \"isVaulted\": \"false\",\n      \"analyticsId\":\"LUi5pETUaVsdSEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"last4Digits\":\"1111\",\n        \"first6Digits\": \"411111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"authorizationType\": \"FINAL\",\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1GORasdasqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":0\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2021-02-21T15:34:16.367687\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"orderId\":\"order-123\",\n        \"processorTransactionId\":\"pi_3L3edsGZasdasdc1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORasvasdNWFwi8c\",\n        \"processorStatus\":\"SETTLED\",\n        \"cardTokenType\":\"CARD_PAN\"\n      }\n    ],\n    \"riskData\":{\n      \"fraudChecks\":{\n        \"source\":\"riskified\",\n        \"preAuthorizationResult\":\"THREE_DS\",\n        \"postAuthorizationResult\":\"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"processor\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"processor\",\n        \"result\": {\n          \"streetAddress\": \"NOT_MATCHED\",\n          \"postalCode\": \"NOT_VERIFIED\"\n        }\n      }\n    }\n  }\n}\n```\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).\n",
         "method": "POST",
         "path": [],
@@ -5030,6 +5038,8 @@
         "namespace": [
           "subpackage_paymentWebhooks"
         ],
+        "displayName": "Payment Refund",
+        "operationId": "payment-refund-webhook-event",
         "description": "Primer notifies you with a `PAYMENT.REFUND` Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.\n\nCheck the transaction with the most recent `transactionType: \"REFUND\"` in the `transactions` array:\n- if `processorStatus` is `SETTLED`, the refund was successful and the funds have been returned to the customer\n- if `processorStatus` is `FAILED`, the refund was unsuccessful\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).\n",
         "method": "POST",
         "path": [],
@@ -5183,6 +5193,8 @@
         "namespace": [
           "subpackage_disputeChargebacksWebhooks"
         ],
+        "displayName": "Dispute Open",
+        "operationId": "dispute-open-webhook-event",
         "description": "Primer notifies you with a `DISPUTE.OPEN` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).\n",
         "method": "POST",
         "path": [],
@@ -5242,6 +5254,8 @@
         "namespace": [
           "subpackage_disputeChargebacksWebhooks"
         ],
+        "displayName": "Dispute Status",
+        "operationId": "dispute-status-webhook-event",
         "description": "Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.\n\nThis notification is supported for processors Adyen, Braintree, Checkout.com & PayPal.\n\nThe `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.\n\nThe `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.\n\nLearn more about [managing disputes at Primer](https://primer.io/docs/accept-payments/manage-disputes).\n",
         "method": "POST",
         "path": [],
@@ -11017,6 +11031,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Retrieve a client session",
+        "operationId": "retrieve-client-side-token",
         "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in the request. The fields with empty values are excluded from the response.",
         "method": "GET",
         "path": [
@@ -11278,6 +11294,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Create a client session",
+        "operationId": "create-client-side-token",
         "description": "Creating a client session generates a client token: a temporary key used to initialize [Universal Checkout](https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web) and authenticate it against your account.\n\nUniversal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment methods and the checkout experience.\n\n<b>Note:</b>\nWhen creating a Client Session, please make sure to provide `currencyCode`, `orderId`, and at least one of `amount` or `lineItems`.\nIf any of these are not yet available, you can provide them w\nhen making the payment request.\n\n<code>POST /client-session</code> does not have required fields as all fields are not always known when a client session is created.\nUse <code>PATCH /client-session</code> to update the parameters throughout the checkout session.\n\nClient tokens expire after 24 hours.",
         "method": "POST",
         "path": [
@@ -11786,6 +11804,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Update client session",
+        "operationId": "update-client-side-token",
         "description": "You can update a clients session created earlier with the `PATCH /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nThe only required field for the request is `clientToken`. Other supported request fields are same as for the `POST /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nYou need to specify only the fields you wish to update. However, if the items that are to be updated are of type `array`, then you need to provide the complete array along with modified items.\n\nIf you wish to update nested fields on the client session, such as the customer `emailAddress` field, you can pass the `customer` object with only one field, `emailAddress`, to update.\n\nIf you simply wish to clear the value of the field, pass `null` as your input.\n\nYou can update `paymentMethod.vaultOnSuccess` field but updating of the `paymentMethod.options` field through `PATCH /client-session` is not supported.\n\nThe response will contain all the fields of the client session including the ones that were changed.",
         "method": "PATCH",
         "path": [
@@ -12311,6 +12331,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Search & list payments",
+        "operationId": "list-payments",
         "description": "<p/>\n\nRetrieve a list of your payments.\n\nResults are paginated, they will only return up to 100 payments maximum.\nTo access the next page of result, set the `cursor` query parameter to the value of `nextCursor` in\nyour current result payload. Use `prevCursor` to go back to the previous page.\n\n**Note:** this endpoint returns a list of\nsummarized payments. Not all payments attributes are present. You can use\nthe query parameters to filter payments. You can separate multiple query parameters with the `&` symbol.\nQuery parameters with types of the form \"Array of strings\" (such as the status parameter) can be specified as a comma-separated list.\n\nFor example, if you wanted to get both `FAILED` and `CANCELLED` payments, for customer `john-123`, you would use:\n\n```bash\ncurl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\n--header 'X-Api-Key: <YOUR_API_KEY>'\n```\n\nYou can alternatively specify a list by repeating the parameter multiple times.\n\n**Note:** payments will be available within a minute from being created.",
         "method": "GET",
         "path": [
@@ -12756,6 +12778,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Create a payment",
+        "operationId": "create-payment",
         "description": "<p/>\n\nCreate and authorize a payment for a given customer order. You\nshould provide a payment method token here to avoid PCI implications.\n\nIf only a payment method token is passed, the values passed with the Client Session is used to determine the amount, currency etc.\nNote: `amount`, `currencyCode` and `orderId` are required during payment creation. Make sure to pass these fields when creating a client session, or if not yet available, when creating a payment.\n\nAll fields provided on this request will take preference over any field on the `order` associated with the client session. E.g. if you pass `amount` on this request, it will override the `amount` on the `order` associated with the Client Session.\nParameters that are not on this request will be fetched from previously created Client Session and merged. E.g. if you specify `customer.billingAddress` in Client Session and then pass `customer.emailAddress` data with this request, it will automatically merge the `customer` fields and use both `billingAddress` and `emailAddress` for later calculations.",
         "method": "POST",
         "path": [
@@ -13277,6 +13301,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Authorize a payment",
+        "operationId": "authorize-payment",
         "description": "<p/>\n\nManually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow action.\nThe processor merchant ID must be provided which can be found on the [Integrations page](https://dashboard.primer.io/integrations).\nThe processor name is optional but it must be provided if your account has multiple processors configured which share the same merchant IDs.",
         "method": "POST",
         "path": [
@@ -13753,6 +13779,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Capture a payment",
+        "operationId": "capture-payment",
         "description": "<p/>\n\nIf you have successfully authorized a payment, you can now\nfully capture, or partially capture funds from the authorized payment, depending\non whether your selected payment processor supports it. The payment will\nbe updated to `SETTLED` or `SETTLING`, depending on the payment method type.\n\nThe payload sent in this capture request is completely optional. If you don't\nsend a payload with the capture request, the full amount that was authorized\nwill be sent for capture. Below are the available payload attributes, which\ngive you more granular control when capturing funds, if you require it.",
         "method": "POST",
         "path": [
@@ -14188,6 +14216,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Cancel a payment",
+        "operationId": "cancel-payment",
         "description": "<p/>\n\nProvided the payment has not reached `SETTLED` status, Primer will\nsend a \"void\" request to the payment processor, thereby cancelling the payment\nand releasing the hold on customer funds. Upon success, the payment will transition\nto `CANCELLED`. The payload is optional.",
         "method": "POST",
         "path": [
@@ -14502,6 +14532,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Refund a payment",
+        "operationId": "refund-payment",
         "description": "<p/>\n\nBy default, this request will refund the full amount.\n\nOptionally, pass in a lesser amount for a partial refund.",
         "method": "POST",
         "path": [
@@ -14904,6 +14936,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Resume a payment",
+        "operationId": "resume-payment",
         "description": "<p/>\n\nResume a payment's workflow execution from a paused state. This\nis usually required when a Workflow was paused in order to get further information\nfrom the customer, or when waiting for an asynchronous response from a third\nparty connection.",
         "method": "POST",
         "path": [
@@ -15193,6 +15227,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Adjust authorized amount",
+        "operationId": "adjust-authorization",
         "description": "<p/>\n\nAdjust authorized amount. This is only possible if `authorizationType` was set to\n`ESTIMATED` when the payment was created, and the mechanism is supported by the payment method.",
         "method": "POST",
         "path": [
@@ -15609,6 +15645,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Get a payment",
+        "operationId": "get-payment-by-id",
         "description": "<p/>\n\nRetrieve a payment by its ID.",
         "method": "GET",
         "path": [
@@ -15859,6 +15897,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Save a payment method token",
+        "operationId": "vault-payment-method-payment-methods-token-vault-post",
         "description": "<p/>\n\nSave a `SINGLE_USE` payment method token so it can be used\nagain later.\n\nIf you try to vault an already vaulted token, you will get the existing vaulted token back.",
         "method": "POST",
         "path": [
@@ -16093,6 +16133,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "List saved payment methods",
+        "operationId": "get-payment-methods-payment-methods-get",
         "description": "Retrieve a list of stored payment methods for a customer.",
         "method": "GET",
         "path": [
@@ -16192,6 +16234,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Delete a saved payment method",
+        "operationId": "delete-payment-method-payment-methods-token-delete",
         "description": "Delete a saved payment method.",
         "method": "DELETE",
         "path": [
@@ -16337,6 +16381,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Update the default saved payment method",
+        "operationId": "set-payment-method-default-payment-methods-token-default-post",
         "description": "Update a saved payment method to be the default stored payment method for a customer.",
         "method": "POST",
         "path": [
@@ -16486,6 +16532,8 @@
         "namespace": [
           "subpackage_observabilityApiBeta"
         ],
+        "displayName": "Create an external payment",
+        "operationId": "external-payment",
         "description": "The Observability API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreating a payment with the Observability API sends external payments data to Primer to populate [Observability Payment Insights dashboards](https://primer.io/observability). Payments created through the [Payments API](/reference/create_payment_payments_post) will be automatically populated and do not need to be sent in the Observability API.\n\nCreate an API key with the `observability-payments:write` scope.\n\nEach record must be created with a unique `paymentId`. To update a payment record with new data use the `PATCH` endpoint.",
         "method": "POST",
         "path": [
@@ -16622,6 +16670,8 @@
         "namespace": [
           "subpackage_observabilityApiBeta"
         ],
+        "displayName": "Update an external payment",
+        "operationId": "external-payment-update",
         "description": "The Observability API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nYou can update payments created earlier through the Observability API with this endpoint. The only required field for the request is `paymentId`. Other supported request fields are the same as for the [create an external payment](/reference/external_payment) API call.\n\nIf you wish to update nested fields on the payment, you only need to pass the fields that you wish to update. For example to update the processor name, you would pass in `processor.name` only.\n\nThe response will contain all the fields of the payment including the ones that were changed.",
         "method": "PATCH",
         "path": [
@@ -16997,6 +17047,8 @@
         "namespace": [
           "subpackage_loyaltyApi"
         ],
+        "displayName": "Get a loyalty customer's points balance",
+        "operationId": "get-loyalty-customer",
         "description": "The Loyalty API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreate an API key with the `loyalty-transactions:read` scopes.\n\nGet a loyalty customer by ID and connection ID. This includes the customer's points balance.\n\nThe `connectionId` is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\n\nThe `customerId` refers to the customer identifier on the loyalty provider's side.",
         "method": "GET",
         "path": [
@@ -17142,6 +17194,8 @@
         "namespace": [
           "subpackage_loyaltyApi"
         ],
+        "displayName": "List the transactions for a customer",
+        "operationId": "get-loyalty-customer-transactions",
         "description": "The Loyalty API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreate an API key with the `loyalty-transactions:read` scopes.\n\nGet all your loyalty transactions. You can filter by `connectionId` (recommended) and by `customerId` and `orderId`.\n\nAdditionally provide a `limit` to restrict the number of transactions in the response, and an `offset` to determine where to start.",
         "method": "GET",
         "path": [
@@ -17407,6 +17461,8 @@
         "namespace": [
           "subpackage_loyaltyApi"
         ],
+        "displayName": "Create a loyalty transaction",
+        "operationId": "post-loyalty-transaction",
         "description": "The Loyalty API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreate an API key with the `loyalty-transactions:write` scopes.\n\nCreate a loyalty transaction. This is either a points redemption or a points refund.",
         "method": "POST",
         "path": [
@@ -29352,6 +29408,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Retrieve a client session",
+        "operationId": "retrieve-client-side-token",
         "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in the request. The fields with empty values are excluded from the response.",
         "method": "GET",
         "path": [
@@ -29602,6 +29660,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Create a client session",
+        "operationId": "create-client-side-token",
         "description": "Creating a client session generates a client token: a temporary key used to initialize [Universal Checkout](https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web) and authenticate it against your account.\n\nUniversal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment methods and the checkout experience.\n\n<b>Note:</b>\nWhen creating a Client Session, please make sure to provide `currencyCode`, `orderId`, and at least one of `amount` or `lineItems`.\nIf any of these are not yet available, you can provide them when making the payment request.\n\n`POST /client-session` does not have required fields as all fields are not always known when a client session is created.\nUse `PATCH /client-session` to update the parameters throughout the checkout session.\n\nClient tokens expire after 24 hours.",
         "method": "POST",
         "path": [
@@ -30095,6 +30155,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Update client session",
+        "operationId": "update-client-side-token",
         "description": "You can update a clients session created earlier with the `PATCH /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nThe only required field for the request is `clientToken`. Other supported request fields are same as for the `POST /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nYou need to specify only the fields you wish to update. However, if the items that are to be updated are of type `array`, then you need to provide the complete array along with modified items.\n\nIf you wish to update nested fields on the client session, such as the customer `emailAddress` field, you can pass the `customer` object with only one field, `emailAddress`, to update.\n\nIf you simply wish to clear the value of the field, pass `null` as your input.\n\nYou can update `paymentMethod.vaultOnSuccess` field but updating of the `paymentMethod.options` field through `PATCH /client-session` is not supported.\n\nThe response will contain all the fields of the client session including the ones that were changed.",
         "method": "PATCH",
         "path": [
@@ -30603,6 +30665,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Search & list payments",
+        "operationId": "list-payments",
         "description": "<p/>\n\nRetrieve a list of your payments.\n\nResults are paginated, they will only return up to 100 payments maximum.\nTo access the next page of result, set the `cursor` query parameter to the value of `nextCursor` in\nyour current result payload. Use `prevCursor` to go back to the previous page.\n\n**Note:** this endpoint returns a list of\nsummarized payments. Not all payments attributes are present. You can use\nthe query parameters to filter payments. You can separate multiple query parameters with the `&` symbol.\nQuery parameters with types of the form \"Array of strings\" (such as the status parameter) can be specified as a comma-separated list.\n\nFor example, if you wanted to get both `FAILED` and `CANCELLED` payments, for customer `john-123`, you would use:\n\n```bash\ncurl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\n--header 'X-Api-Key: <YOUR_API_KEY>'\n```\n\nYou can alternatively specify a list by repeating the parameter multiple times.\n\n**Note:** payments will be available within a minute from being created.",
         "method": "GET",
         "path": [
@@ -31042,6 +31106,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Create a payment",
+        "operationId": "create-payment",
         "description": "<p/>\n\nCreate and authorize a payment for a given customer order. You\nshould provide a payment method token here to avoid PCI implications.\n\nIf only a payment method token is passed, the values passed with the Client Session determine the amount, currency etc.\n\nNote: `amount`, `currencyCode` and `orderId` are required during payment creation. Make sure to pass these fields when creating a client session, or if not yet available, when creating a payment.\n\nAll fields provided on this request will take preference over any field on the `order` associated with the client session. E.g. if you pass `amount` on this request, it will override the `amount` on the `order` associated with the Client Session.",
         "method": "POST",
         "path": [
@@ -31532,6 +31598,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Capture a payment",
+        "operationId": "capture-payment",
         "description": "<p/>\n\nIf you have successfully authorized a payment, you can now\nfully capture, or partially capture funds from the authorized payment, depending\non whether your selected payment processor supports it. The payment will\nbe updated to `SETTLED` or `SETTLING`, depending on the payment method type.\n\nThe payload sent in this capture request is completely optional. If you don't\nsend a payload with the capture request, the full amount that was authorized\nwill be sent for capture. Below are the available payload attributes, which\ngive you more granular control when capturing funds, if you require it.",
         "method": "POST",
         "path": [
@@ -31917,6 +31985,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Cancel a payment",
+        "operationId": "cancel-payment",
         "description": "<p/>\n\nProvided the payment has not reached `SETTLED` status, Primer will\nsend a \"void\" request to the payment processor, thereby cancelling the payment\nand releasing the hold on customer funds. Upon success, the payment will transition\nto `CANCELLED`. The payload is optional.",
         "method": "POST",
         "path": [
@@ -32204,6 +32274,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Refund a payment",
+        "operationId": "refund-payment",
         "description": "<p/>\n\nBy default, this request will refund the full amount.\n\nOptionally, pass in a lesser amount for a partial refund.",
         "method": "POST",
         "path": [
@@ -32577,6 +32649,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Resume a payment",
+        "operationId": "resume-payment",
         "description": "<p/>\n\nResume a payment's workflow execution from a paused state. This\nis usually required when a Workflow was paused in order to get further information\nfrom the customer, or when waiting for an asynchronous response from a third\nparty connection.",
         "method": "POST",
         "path": [
@@ -32839,6 +32913,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Get a payment",
+        "operationId": "get-payment-by-id",
         "description": "<p/>\n\nRetrieve a payment by its ID.",
         "method": "GET",
         "path": [
@@ -33062,6 +33138,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Save a payment method token",
+        "operationId": "vault-payment-method-payment-methods-token-vault-post",
         "description": "<p/>\n\nSave a `SINGLE_USE` payment method token so it can be used\nagain later.\n\nIf you try to vault an already vaulted token, you will get the existing vaulted token back.",
         "method": "POST",
         "path": [
@@ -33281,6 +33359,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "List saved payment methods",
+        "operationId": "get-payment-methods-payment-methods-get",
         "description": "Retrieve a list of stored payment methods for a customer.",
         "method": "GET",
         "path": [
@@ -33369,6 +33449,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Delete a saved payment method",
+        "operationId": "delete-payment-method-payment-methods-token-delete",
         "description": "Delete a saved payment method.",
         "method": "DELETE",
         "path": [
@@ -33501,6 +33583,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Update the default saved payment method",
+        "operationId": "set-payment-method-default-payment-methods-token-default-post",
         "description": "Update a saved payment method to be the default stored payment method for a customer.",
         "method": "POST",
         "path": [
@@ -40463,6 +40547,8 @@
         "namespace": [
           "subpackage_paymentWebhooks"
         ],
+        "displayName": "Payment Status Update",
+        "operationId": "payment-status-webhook-event",
         "description": "Primer notifies you with a `PAYMENT.STATUS` webhook when a payment's status has been updated. This is especially useful for asyncronous processor Connections, which do not respond with an upfront authorization.\nThe webhook events will arrive in the order that the payment status changes, for example you should expect a status of `PENDING`, then `AUTHORIZED`, then `SETTLED` (depending on how your workflow is set up).\nThe webhook body contains the full payment object.\n\nExample payment status notification:\n\n```JSON\n{\n  \"eventType\":\"PAYMENT.STATUS\",\n  \"date\":\"2021-02-21T15:36:16.367687\",\n  \"notificationConfig\":{\n    \"id\":\"cc51f9f0-7e1c-492b-9d37-f83a818f6070\",\n    \"description\":\"Payment webhook\"\n  },\n  \"version\":\"2.2\",\n  \"signedAt\": \"1689221338\",\n  \"payment\":{\n    \"id\":\"DdRZ6YY0\",\n    \"date\":\"2021-02-21T15:34:16.367687\",\n    \"dateUpdated\":\"2021-02-21T15:35:16.133701\",\n    \"amount\":3000,\n    \"currencyCode\":\"GBP\",\n    \"customerId\":\"cust-123\",\n    \"orderId\":\"order-123\",\n    \"status\":\"SETTLED\",\n    \"cardTokenType\":\"CARD_PAN\",\n    \"customer\": {\n      \"emailAddress\": \"test@primer.io\",\n      \"mobileNumber\": \"0123456789\",\n      \"billingAddress\": {\n        \"firstName\": \"John\",\n        \"postalCode\": \"CB94BQ\",\n        \"addressLine1\": \"10001 Alpha St\",\n        \"countryCode\": \"GB\",\n        \"city\": \"Cambridge\",\n        \"state\": \"Cambridgeshire\"\n      }\n    },\n    \"paymentMethod\":{\n      \"paymentType\":\"FIRST_PAYMENT\",\n      \"paymentMethodToken\":\"-lcWjvBAAs2DnIRXwxNjUzNTYzNjIy\",\n      \"isVaulted\": \"false\",\n      \"analyticsId\":\"LUi5pETUaVsdSEamK25L\",\n      \"paymentMethodType\":\"PAYMENT_CARD\",\n      \"paymentMethodData\":{\n        \"last4Digits\":\"1111\",\n        \"first6Digits\": \"411111\",\n        \"expirationMonth\":\"03\",\n        \"expirationYear\":\"2030\",\n        \"cardholderName\":\"ADYEN\",\n        \"network\":\"Visa\",\n        \"isNetworkTokenized\":false,\n        \"binData\":{\n          \"network\":\"VISA\",\n          \"issuerCountryCode\":\"US\",\n          \"issuerName\":\"JPMORGAN CHASE BANK, N.A.\",\n          \"regionalRestriction\":\"UNKNOWN\",\n          \"accountNumberType\":\"UNKNOWN\",\n          \"accountFundingType\":\"UNKNOWN\",\n          \"prepaidReloadableIndicator\":\"NOT_APPLICABLE\",\n          \"productUsageType\":\"UNKNOWN\",\n          \"productCode\":\"UNKNOWN\",\n          \"productName\":\"UNKNOWN\"\n        }\n      },\n      \"authorizationType\": \"FINAL\",\n      \"threeDSecureAuthentication\":{\n        \"responseCode\":\"NOT_PERFORMED\"\n      }\n    },\n    \"processor\":{\n      \"name\":\"STRIPE\",\n      \"processorMerchantId\":\"acct_1GORasdasqNWFwi8c\",\n      \"amountCaptured\":3000,\n      \"amountRefunded\":0\n    },\n    \"transactions\":[\n      {\n        \"date\":\"2021-02-21T15:34:16.367687\",\n        \"amount\":3000,\n        \"currencyCode\":\"GBP\",\n        \"transactionType\":\"SALE\",\n        \"orderId\":\"order-123\",\n        \"processorTransactionId\":\"pi_3L3edsGZasdasdc1iget38p\",\n        \"processorName\":\"STRIPE\",\n        \"processorMerchantId\":\"acct_1GORasvasdNWFwi8c\",\n        \"processorStatus\":\"SETTLED\",\n        \"cardTokenType\":\"CARD_PAN\"\n      }\n    ],\n    \"riskData\":{\n      \"fraudChecks\":{\n        \"source\":\"riskified\",\n        \"preAuthorizationResult\":\"THREE_DS\",\n        \"postAuthorizationResult\":\"ACCEPT\"\n      },\n      \"cvvCheck\": {\n        \"source\": \"processor\",\n        \"result\": \"MATCHED\"\n      },\n      \"avsCheck\": {\n        \"source\": \"processor\",\n        \"result\": {\n          \"streetAddress\": \"NOT_MATCHED\",\n          \"postalCode\": \"NOT_VERIFIED\"\n        }\n      }\n    }\n  }\n}\n```\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).\n",
         "method": "POST",
         "path": [],
@@ -40616,6 +40702,8 @@
         "namespace": [
           "subpackage_paymentWebhooks"
         ],
+        "displayName": "Payment Refund",
+        "operationId": "payment-refund-webhook-event",
         "description": "Primer notifies you with a `PAYMENT.REFUND` Webhook when a refund request has been fully processed by a payment processor and the refund has reached a final state.\n\nCheck the transaction with the most recent `transactionType: \"REFUND\"` in the `transactions` array:\n- if `processorStatus` is `SETTLED`, the refund was successful and the funds have been returned to the customer\n- if `processorStatus` is `FAILED`, the refund was unsuccessful\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).\n",
         "method": "POST",
         "path": [],
@@ -40769,6 +40857,8 @@
         "namespace": [
           "subpackage_disputeChargebacksWebhooks"
         ],
+        "displayName": "Dispute Open",
+        "operationId": "dispute-open-webhook-event",
         "description": "Primer notifies you with a `DISPUTE.OPEN` webhook on newly opened disputes or chargebacks. This notification is unified across all processors.\n\nLearn more about [how Primer handles webhooks](https://primer.io/docs/how-primer-works/webhooks).\n",
         "method": "POST",
         "path": [],
@@ -40828,6 +40918,8 @@
         "namespace": [
           "subpackage_disputeChargebacksWebhooks"
         ],
+        "displayName": "Dispute Status",
+        "operationId": "dispute-status-webhook-event",
         "description": "Primer notifies you with a `DISPUTE.STATUS` webhook that will provide information on retrievals, disputes (also known as chargebacks), and preabritration filings.\n\nThis notification is supported for processors Adyen, Braintree, Checkout.com & PayPal.\n\nThe `DISPUTE.STATUS` event can be used to proactively communicate with customers, issue refunds, send disputes to risk tools, or to proactively defend disputes.\n\nThe `DISPUTE.STATUS` event is currently in an open beta stage, as we continue to add more processors.\n\nLearn more about [managing disputes at Primer](https://primer.io/docs/accept-payments/manage-disputes).\n",
         "method": "POST",
         "path": [],
@@ -46603,6 +46695,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Retrieve a client session",
+        "operationId": "retrieve-client-side-token",
         "description": "This API call retrieves all the details associated with the client session corresponding to the client token that is provided in the request. The fields with empty values are excluded from the response.",
         "method": "GET",
         "path": [
@@ -46864,6 +46958,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Create a client session",
+        "operationId": "create-client-side-token",
         "description": "Creating a client session generates a client token: a temporary key used to initialize [Universal Checkout](https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web) and authenticate it against your account.\n\nUniversal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment methods and the checkout experience.\n\n<b>Note:</b>\nWhen creating a Client Session, please make sure to provide `currencyCode`, `orderId`, and at least one of `amount` or `lineItems`.\nIf any of these are not yet available, you can provide them w\nhen making the payment request.\n\n<code>POST /client-session</code> does not have required fields as all fields are not always known when a client session is created.\nUse <code>PATCH /client-session</code> to update the parameters throughout the checkout session.\n\nClient tokens expire after 24 hours.",
         "method": "POST",
         "path": [
@@ -47372,6 +47468,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Update client session",
+        "operationId": "update-client-side-token",
         "description": "You can update a clients session created earlier with the `PATCH /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nThe only required field for the request is `clientToken`. Other supported request fields are same as for the `POST /client-session` [API call](#operation/create_client_side_token_client_session_post).\n\nYou need to specify only the fields you wish to update. However, if the items that are to be updated are of type `array`, then you need to provide the complete array along with modified items.\n\nIf you wish to update nested fields on the client session, such as the customer `emailAddress` field, you can pass the `customer` object with only one field, `emailAddress`, to update.\n\nIf you simply wish to clear the value of the field, pass `null` as your input.\n\nYou can update `paymentMethod.vaultOnSuccess` field but updating of the `paymentMethod.options` field through `PATCH /client-session` is not supported.\n\nThe response will contain all the fields of the client session including the ones that were changed.",
         "method": "PATCH",
         "path": [
@@ -47897,6 +47995,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Search & list payments",
+        "operationId": "list-payments",
         "description": "<p/>\n\nRetrieve a list of your payments.\n\nResults are paginated, they will only return up to 100 payments maximum.\nTo access the next page of result, set the `cursor` query parameter to the value of `nextCursor` in\nyour current result payload. Use `prevCursor` to go back to the previous page.\n\n**Note:** this endpoint returns a list of\nsummarized payments. Not all payments attributes are present. You can use\nthe query parameters to filter payments. You can separate multiple query parameters with the `&` symbol.\nQuery parameters with types of the form \"Array of strings\" (such as the status parameter) can be specified as a comma-separated list.\n\nFor example, if you wanted to get both `FAILED` and `CANCELLED` payments, for customer `john-123`, you would use:\n\n```bash\ncurl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\n--header 'X-Api-Key: <YOUR_API_KEY>'\n```\n\nYou can alternatively specify a list by repeating the parameter multiple times.\n\n**Note:** payments will be available within a minute from being created.",
         "method": "GET",
         "path": [
@@ -48342,6 +48442,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Create a payment",
+        "operationId": "create-payment",
         "description": "<p/>\n\nCreate and authorize a payment for a given customer order. You\nshould provide a payment method token here to avoid PCI implications.\n\nIf only a payment method token is passed, the values passed with the Client Session is used to determine the amount, currency etc.\nNote: `amount`, `currencyCode` and `orderId` are required during payment creation. Make sure to pass these fields when creating a client session, or if not yet available, when creating a payment.\n\nAll fields provided on this request will take preference over any field on the `order` associated with the client session. E.g. if you pass `amount` on this request, it will override the `amount` on the `order` associated with the Client Session.\nParameters that are not on this request will be fetched from previously created Client Session and merged. E.g. if you specify `customer.billingAddress` in Client Session and then pass `customer.emailAddress` data with this request, it will automatically merge the `customer` fields and use both `billingAddress` and `emailAddress` for later calculations.",
         "method": "POST",
         "path": [
@@ -48863,6 +48965,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Authorize a payment",
+        "operationId": "authorize-payment",
         "description": "<p/>\n\nManually authorize a payment using a provided processor. This is useful if you want to authorize a payment without a workflow action.\nThe processor merchant ID must be provided which can be found on the [Integrations page](https://dashboard.primer.io/integrations).\nThe processor name is optional but it must be provided if your account has multiple processors configured which share the same merchant IDs.",
         "method": "POST",
         "path": [
@@ -49341,6 +49445,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Capture a payment",
+        "operationId": "capture-payment",
         "description": "<p/>\n\nIf you have successfully authorized a payment, you can now\nfully capture, or partially capture funds from the authorized payment, depending\non whether your selected payment processor supports it. The payment will\nbe updated to `SETTLED` or `SETTLING`, depending on the payment method type.\n\nThe payload sent in this capture request is completely optional. If you don't\nsend a payload with the capture request, the full amount that was authorized\nwill be sent for capture. Below are the available payload attributes, which\ngive you more granular control when capturing funds, if you require it.",
         "method": "POST",
         "path": [
@@ -49828,6 +49934,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Cancel a payment",
+        "operationId": "cancel-payment",
         "description": "<p/>\n\nProvided the payment has not reached `SETTLED` status, Primer will\nsend a \"void\" request to the payment processor, thereby cancelling the payment\nand releasing the hold on customer funds. Upon success, the payment will transition\nto `CANCELLED`. The payload is optional.",
         "method": "POST",
         "path": [
@@ -50194,6 +50302,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Refund a payment",
+        "operationId": "refund-payment",
         "description": "<p/>\n\nBy default, this request will refund the full amount.\n\nOptionally, pass in a lesser amount for a partial refund.",
         "method": "POST",
         "path": [
@@ -50648,6 +50758,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Resume a payment",
+        "operationId": "resume-payment",
         "description": "<p/>\n\nResume a payment's workflow execution from a paused state. This\nis usually required when a Workflow was paused in order to get further information\nfrom the customer, or when waiting for an asynchronous response from a third\nparty connection.",
         "method": "POST",
         "path": [
@@ -50937,6 +51049,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Adjust authorized amount",
+        "operationId": "adjust-authorization",
         "description": "<p/>\n\nAdjust authorized amount. This is only possible if `authorizationType` was set to\n`ESTIMATED` when the payment was created, and the mechanism is supported by the payment method.",
         "method": "POST",
         "path": [
@@ -51407,6 +51521,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Get a payment",
+        "operationId": "get-payment-by-id",
         "description": "<p/>\n\nRetrieve a payment by its ID.",
         "method": "GET",
         "path": [
@@ -51657,6 +51773,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Save a payment method token",
+        "operationId": "vault-payment-method-payment-methods-token-vault-post",
         "description": "<p/>\n\nSave a `SINGLE_USE` payment method token so it can be used\nagain later.\n\nIf you try to vault an already vaulted token, you will get the existing vaulted token back.",
         "method": "POST",
         "path": [
@@ -51891,6 +52009,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "List saved payment methods",
+        "operationId": "get-payment-methods-payment-methods-get",
         "description": "Retrieve a list of stored payment methods for a customer.",
         "method": "GET",
         "path": [
@@ -51990,6 +52110,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Delete a saved payment method",
+        "operationId": "delete-payment-method-payment-methods-token-delete",
         "description": "Delete a saved payment method.",
         "method": "DELETE",
         "path": [
@@ -52135,6 +52257,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Update the default saved payment method",
+        "operationId": "set-payment-method-default-payment-methods-token-default-post",
         "description": "Update a saved payment method to be the default stored payment method for a customer.",
         "method": "POST",
         "path": [
@@ -52284,6 +52408,8 @@
         "namespace": [
           "subpackage_observabilityApiBeta"
         ],
+        "displayName": "Create an external payment",
+        "operationId": "external-payment",
         "description": "The Observability API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreating a payment with the Observability API sends external payments data to Primer to populate [Observability Payment Insights dashboards](https://primer.io/observability). Payments created through the [Payments API](/reference/create_payment_payments_post) will be automatically populated and do not need to be sent in the Observability API.\n\nCreate an API key with the `observability-payments:write` scope.\n\nEach record must be created with a unique `paymentId`. To update a payment record with new data use the `PATCH` endpoint.",
         "method": "POST",
         "path": [
@@ -52420,6 +52546,8 @@
         "namespace": [
           "subpackage_observabilityApiBeta"
         ],
+        "displayName": "Update an external payment",
+        "operationId": "external-payment-update",
         "description": "The Observability API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nYou can update payments created earlier through the Observability API with this endpoint. The only required field for the request is `paymentId`. Other supported request fields are the same as for the [create an external payment](/reference/external_payment) API call.\n\nIf you wish to update nested fields on the payment, you only need to pass the fields that you wish to update. For example to update the processor name, you would pass in `processor.name` only.\n\nThe response will contain all the fields of the payment including the ones that were changed.",
         "method": "PATCH",
         "path": [
@@ -52795,6 +52923,8 @@
         "namespace": [
           "subpackage_loyaltyApi"
         ],
+        "displayName": "Get a loyalty customer's points balance",
+        "operationId": "get-loyalty-customer",
         "description": "The Loyalty API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreate an API key with the `loyalty-transactions:read` scopes.\n\nGet a loyalty customer by ID and connection ID. This includes the customer's points balance.\n\nThe `connectionId` is the unique Primer identifier for your loyalty provider connection. Primer will provide this once the loyalty provider connection is created.\n\nThe `customerId` refers to the customer identifier on the loyalty provider's side.",
         "method": "GET",
         "path": [
@@ -52940,6 +53070,8 @@
         "namespace": [
           "subpackage_loyaltyApi"
         ],
+        "displayName": "List the transactions for a customer",
+        "operationId": "get-loyalty-customer-transactions",
         "description": "The Loyalty API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreate an API key with the `loyalty-transactions:read` scopes.\n\nGet all your loyalty transactions. You can filter by `connectionId` (recommended) and by `customerId` and `orderId`.\n\nAdditionally provide a `limit` to restrict the number of transactions in the response, and an `offset` to determine where to start.",
         "method": "GET",
         "path": [
@@ -53205,6 +53337,8 @@
         "namespace": [
           "subpackage_loyaltyApi"
         ],
+        "displayName": "Create a loyalty transaction",
+        "operationId": "post-loyalty-transaction",
         "description": "The Loyalty API is currently in beta.\n\nPlease contact our Support Team via our [JIRA Service Desk](https://primerapi.atlassian.net/servicedesk/customer/portal/11) for access to the Beta.\nIf you don’t have access, please contact your account administrator for assistance.\n\nNot yet integrated with Primer and interested in learning more? [Contact us](https://primer.io/contact-us/).\n\nCreate an API key with the `loyalty-transactions:write` scopes.\n\nCreate a loyalty transaction. This is either a points redemption or a points refund.",
         "method": "POST",
         "path": [
@@ -65413,6 +65547,8 @@
         "namespace": [
           "subpackage_clientSessionApi"
         ],
+        "displayName": "Create a client session",
+        "operationId": "create-client-side-token",
         "description": "Creating a client session generates a client token: a temporary key used to initialize [Universal Checkout](https://primer.io/docs/accept-payments/setup-universal-checkout/installation/web) and authenticate it against your account.\n\nUniversal Checkout automatically retrieves all the settings from the client session and the Dashboard to configure the payment methods and the checkout experience.\n\n<b>Note:</b>\nWhen creating a Client Session, please make sure to provide `currencyCode`, `orderId`, and `amount`.\nIf any of these are not yet available, you can provide them when making the payment request.\n\nClient tokens expire after 24 hours.",
         "method": "POST",
         "path": [
@@ -65904,6 +66040,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Search & list payments",
+        "operationId": "list-payments",
         "description": "<p/>\n\nRetrieve a list of your payments.\n\nResults are paginated, they will only return up to 100 payments maximum.\nTo access the next page of result, set the `cursor` query parameter to the value of `nextCursor` in your current result payload. Use `prevCursor` to go back to the previous page.\n\n**Note:** this endpoint returns a list of summarized payments. Not all payments attributes are present. You can use the query parameters to filter payments.\nYou can separate multiple query parameters with the `&` symbol.\nQuery parameters with types of the form \"Array of strings\" (such as the status parameter) can be specified as a comma-separated list.\n\nFor example, if you wanted to get both `FAILED` and `CANCELLED` payments, for customer `john-123`, you would use:\n\n```bash\ncurl --location --request GET 'https://api.primer.io/payments?status=FAILED,CANCELLED&customer_id=john-123' \\\n--header 'X-Api-Key: <YOUR_API_KEY>'\n```\n\nYou can alternatively specify a list by repeating the parameter multiple times.\n\n**Note:** payments will be available within a minute from being created.",
         "method": "GET",
         "path": [
@@ -66339,6 +66477,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Create a payment",
+        "operationId": "create-payment",
         "description": "<p/>\n\nCreate and authorize a payment for a given customer order. You should provide a payment method token here to avoid PCI implications.\n\nIf only a payment method token is passed, the values passed with the Client Session determine the amount, currency etc.\n\nNote: `amount`, `currencyCode` and `orderId` are required during payment creation. Make sure to pass these fields when creating a client session, or if not yet available, when creating a payment.\n\nAll fields provided on this request will take preference over any field on the `order` associated with the client session. E.g. if you pass `amount` on this request, it will override the `amount` on the `order` associated with the Client Session.",
         "method": "POST",
         "path": [
@@ -66825,6 +66965,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Capture a payment",
+        "operationId": "capture-payment",
         "description": "<p/>\n\nIf you have successfully authorized a payment, you can now fully capture, or partially capture funds from the authorized payment, depending on whether your selected payment processor supports it. The payment will be updated to `SETTLED` or `SETTLING`, depending on the payment method type.\n\nThe payload sent in this capture request is completely optional. If you don't send a payload with the capture request, the full amount that was authorized will be sent for capture.\n\nBelow are the available payload attributes, which give you more granular control when capturing funds, if you require it.",
         "method": "POST",
         "path": [
@@ -67171,6 +67313,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Cancel a payment",
+        "operationId": "cancel-payment",
         "description": "<p/>\n\nProvided the payment has not reached `SETTLED` status, Primer will send a \"void\" request to the payment processor, thereby cancelling the payment and releasing the hold on customer funds.\n\nUpon success, the payment will transition to `CANCELLED`.\n\nThe payload is optional.",
         "method": "POST",
         "path": [
@@ -67454,6 +67598,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Refund a payment",
+        "operationId": "refund-payment",
         "description": "<p/>\n\nBy default, this request will refund the full amount.\n\nOptionally, pass in a lesser amount for a partial refund.",
         "method": "POST",
         "path": [
@@ -67819,6 +67965,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Resume a payment",
+        "operationId": "resume-payment",
         "description": "<p/>\n\nResume a payment's workflow execution from a paused state. This is usually required when a Workflow was paused in order to get further information from the customer, or when waiting for an asynchronous response from a third party connection.",
         "method": "POST",
         "path": [
@@ -68077,6 +68225,8 @@
         "namespace": [
           "subpackage_paymentsApi"
         ],
+        "displayName": "Get a payment",
+        "operationId": "get-payment-by-id",
         "description": "<p/>\n\nRetrieve a payment by its ID.",
         "method": "GET",
         "path": [
@@ -68296,6 +68446,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Save a payment method token",
+        "operationId": "vault-payment-method-payment-methods-token-vault-post",
         "description": "<p/>\n\nSave a `SINGLE_USE` payment method token so it can be used again later.\n\nIf you try to vault an already vaulted token, you will get the existing vaulted token back.",
         "method": "POST",
         "path": [
@@ -68463,6 +68615,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "List saved payment methods",
+        "operationId": "get-payment-methods-payment-methods-get",
         "description": "Retrieve a list of stored payment methods for a customer.",
         "method": "GET",
         "path": [
@@ -68551,6 +68705,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Delete a saved payment method",
+        "operationId": "delete-payment-method-payment-methods-token-delete",
         "description": "Delete a saved payment method.",
         "method": "DELETE",
         "path": [
@@ -68679,6 +68835,8 @@
         "namespace": [
           "subpackage_paymentMethodsApi"
         ],
+        "displayName": "Update the default saved payment method",
+        "operationId": "set-payment-method-default-payment-methods-token-default-post",
         "description": "Update a saved payment method to be the default stored payment method for a customer.",
         "method": "POST",
         "path": [
