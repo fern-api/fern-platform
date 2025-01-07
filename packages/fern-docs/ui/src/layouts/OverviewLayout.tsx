@@ -34,9 +34,7 @@ export function OverviewLayout({
               <div>{!hideFeedback && <Feedback />}</div>
               <EditThisPageButton editThisPageUrl={editThisPageUrl} />
             </div>
-            <div className="mx-auto my-8 w-fit">
-              <BuiltWithFern />
-            </div>
+            <BuiltWithFern className="mx-auto my-8 w-fit" />
           </footer>
         )}
       </article>

@@ -9,14 +9,23 @@ import {
   ReactElement,
   cloneElement,
   createElement,
+  forwardRef,
   isValidElement,
-  useMemo,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { FILES_ATOM, useFeatureFlags } from "../../../atoms";
+import {
+  FILES_ATOM,
+  LAYOUT_CONTENT_GUIDE_WIDTH_ATOM,
+  LAYOUT_CONTENT_OVERVIEW_WIDTH_ATOM,
+  LAYOUT_CONTENT_PAGE_WIDTH_ATOM,
+  LAYOUT_CONTENT_REFERENCE_COLUMN_WIDTH_ATOM,
+  LAYOUT_CONTENT_REFERENCE_WIDTH_ATOM,
+  useFeatureFlags,
+} from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernImage } from "../../../components/FernImage";
 import { FernLink } from "../../../components/FernLink";
+import { useWithAside } from "../../../contexts/api-page";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 
 export const HeadingRenderer = (
@@ -99,55 +108,42 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
 };
 
 export interface ImgProps extends ComponentProps<"img"> {
+  /**
+   * @default false
+   */
   noZoom?: boolean;
+  /**
+   * overrides `noZoom` if true
+   * @default false
+   */
   enableZoom?: boolean;
 }
 
-function isImgElement(
-  element: ReactElement
-): element is ReactElement<ImgProps> {
-  return element.type === Image;
-}
+export const Image = forwardRef<HTMLImageElement, ImgProps>((props, ref) => {
+  const {
+    src: srcProp,
+    width: w,
+    height: h,
+    noZoom: isImageZoomDisabledProp = false,
+    enableZoom: isImageZoomEnabledOverride = false,
+    style,
+    ...rest
+  } = props;
 
-export const Image: FC<ImgProps> = ({
-  src,
-  width: w,
-  height: h,
-  noZoom,
-  enableZoom,
-  style,
-  ...rest
-}) => {
   const files = useAtomValue(FILES_ATOM);
-  const { "no-image-zoom": noImageZoomFrontmatterOpt, layout } =
-    useFrontmatter();
-  const isImageZoomDisabled =
-    useFeatureFlags().isImageZoomDisabled ??
-    noImageZoomFrontmatterOpt ??
-    layout === "custom";
-
-  const fernImageSrc = useMemo((): DocsV1Read.File_ | undefined => {
-    if (src == null) {
-      return undefined;
-    }
-
-    // if src starts with `file:`, assume it's a referenced file; fallback to src if not found
-    if (src.startsWith("file:")) {
-      const fileId = FdrAPI.FileId(src.slice(5));
-      return files[fileId] ?? { type: "url", url: FdrAPI.Url(src) };
-    }
-
-    return { type: "url", url: FdrAPI.Url(src) };
-  }, [files, src]);
+  const src = srcProp ? selectFile(files, srcProp) : undefined;
 
   const width = stripUnits(w);
   const height = stripUnits(h);
+  const maxWidth = useMaxLayoutWidth();
 
   const fernImage = (
     <FernImage
-      src={fernImageSrc}
+      ref={ref}
+      src={src}
       width={width}
       height={height}
+      maxWidth={maxWidth}
       style={{
         width: w,
         height: h,
@@ -157,16 +153,112 @@ export const Image: FC<ImgProps> = ({
     />
   );
 
-  if (isImageZoomDisabled ? !enableZoom : noZoom) {
+  const isImageZoomDisabled = useIsImageZoomDisabbled({
+    noZoom: isImageZoomDisabledProp,
+    enableZoom: isImageZoomEnabledOverride,
+  });
+
+  if (isImageZoomDisabled) {
     return fernImage;
   }
 
   return (
-    <Zoom zoomImg={{ src: fernImageSrc?.url }} classDialog="custom-backdrop">
+    <Zoom zoomImg={{ src: src?.url }} classDialog="custom-backdrop">
       {fernImage}
     </Zoom>
   );
-};
+});
+
+Image.displayName = "Image";
+
+/**
+ * @param element - React element
+ * @returns true if the element is an `Image` component
+ */
+function isImgElement(
+  element: ReactElement
+): element is ReactElement<ImgProps> {
+  return element.type === Image;
+}
+
+/**
+ * There are multiple ways to disable (or enable) image zoom:
+ * - feature flag (set in the edge config) will disable image zoom globally, which can be overridden with `enableZoom`
+ * - frontmatter can set `no-image-zoom` to true, which will disable image zoom for that page, and specific images can be overridden with `enableZoom`
+ * - if layout is set to `custom`, by default the `no-image-zoom` frontmatter is interpreted as `true` but can be overridden as `no-image-zoom: false`
+ * - otherwise, if `noZoom` is true, image zoom is disabled, false otherwise
+ *
+ * @param opts - Options
+ * @returns true if image zoom is disabled
+ */
+function useIsImageZoomDisabbled({
+  noZoom,
+  enableZoom,
+}: {
+  noZoom: boolean;
+  enableZoom: boolean;
+}) {
+  const isImageZoomDisabledFeatureFlag = useFeatureFlags().isImageZoomDisabled;
+
+  const { "no-image-zoom": isImageZoomDisabledFrontmatter, layout } =
+    useFrontmatter();
+
+  const isImageZoomDisabledLayout =
+    isImageZoomDisabledFrontmatter ?? layout === "custom";
+
+  return isImageZoomDisabledFeatureFlag || isImageZoomDisabledLayout
+    ? !enableZoom
+    : noZoom;
+}
+
+function useMaxLayoutWidth(): number | undefined {
+  // guide is the default layout
+  const hasAside = useWithAside();
+  const { layout = hasAside ? "reference" : "guide" } = useFrontmatter();
+
+  const guideWidth = useAtomValue(LAYOUT_CONTENT_GUIDE_WIDTH_ATOM);
+  const overviewWidth = useAtomValue(LAYOUT_CONTENT_OVERVIEW_WIDTH_ATOM);
+  const pageWidth = useAtomValue(LAYOUT_CONTENT_PAGE_WIDTH_ATOM);
+  const referenceWidth = useAtomValue(LAYOUT_CONTENT_REFERENCE_WIDTH_ATOM);
+  const referenceColumnWidth = useAtomValue(
+    LAYOUT_CONTENT_REFERENCE_COLUMN_WIDTH_ATOM
+  );
+
+  switch (layout) {
+    case "guide":
+      return guideWidth;
+    case "overview":
+      return overviewWidth;
+    case "reference":
+      return hasAside ? referenceColumnWidth : referenceWidth;
+    case "page":
+      return pageWidth;
+    default:
+      return undefined;
+  }
+}
+
+/**
+ * Conforms the `src` prop to the File type.
+ * @param files - Files map
+ * @param src - Source
+ * @returns File
+ */
+function selectFile(
+  files: Record<string, DocsV1Read.File_>,
+  src: string
+): DocsV1Read.File_ | undefined {
+  if (src == null) {
+    return undefined;
+  }
+
+  // `file:` is a special signifier that the src references a file in the Files record.
+  // which was functionality introduced in https://github.com/fern-api/fern/pull/3847
+  // but this will be deprecated so that any string in the src prop can be used to lookup a file in the Files record,
+  // and fallback as "url" if not found.
+  const fileId = FdrAPI.FileId(src.startsWith("file:") ? src.slice(5) : src);
+  return files[fileId] ?? { type: "url", url: FdrAPI.Url(src) };
+}
 
 // preserves pixel widths and heights, but strips units from other values
 function stripUnits(

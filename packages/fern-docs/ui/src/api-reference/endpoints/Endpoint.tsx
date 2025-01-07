@@ -4,6 +4,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { memo, useMemo } from "react";
+import { WithAside } from "../../contexts/api-page";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
@@ -36,13 +37,15 @@ const UnmemoizedEndpoint: React.FC<Endpoint.Props> = ({
   }
 
   return (
-    <EndpointContent
-      breadcrumb={breadcrumb}
-      showErrors={showErrors}
-      context={context}
-      streamToggle={streamToggle}
-      last={last}
-    />
+    <WithAside.Provider value={true}>
+      <EndpointContent
+        breadcrumb={breadcrumb}
+        showErrors={showErrors}
+        context={context}
+        streamToggle={streamToggle}
+        last={last}
+      />
+    </WithAside.Provider>
   );
 };
 

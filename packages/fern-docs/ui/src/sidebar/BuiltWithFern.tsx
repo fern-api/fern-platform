@@ -1,13 +1,15 @@
 import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
-import { useDomain, useFeatureFlags } from "../atoms";
+import { createContext, useContext } from "react";
+import { useDomain, useFeatureFlag } from "../atoms";
 
 export const BuiltWithFern: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const domain = useDomain();
-  const { isWhitelabeled } = useFeatureFlags();
+  const isWhitelabeled = useFeatureFlag("isWhitelabeled");
+  const hideBuiltWithFern = useContext(HideBuiltWithFernContext);
 
-  if (isWhitelabeled) {
+  if (isWhitelabeled || hideBuiltWithFern) {
     return null;
   }
 
@@ -20,3 +22,5 @@ export const BuiltWithFern: React.FC<{ className?: string }> = ({
     />
   );
 };
+
+export const HideBuiltWithFernContext = createContext(false);

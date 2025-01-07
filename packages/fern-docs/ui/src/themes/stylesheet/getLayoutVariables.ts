@@ -19,7 +19,7 @@ export function getLayoutVariables(
 ): Record<Breakpoint, Record<string, string>> {
   const pageWidth =
     layout?.pageWidth == null
-      ? "88rem"
+      ? "88rem" // note: this is also hard-coded in LAYOUT_PAGE_WIDTH_ATOM
       : visitDiscriminatedUnion(layout.pageWidth, "type")._visit({
           px: (px) => `${px.value}px`,
           rem: (rem) => `${rem.value}rem`,
@@ -29,18 +29,18 @@ export function getLayoutVariables(
 
   const contentWidthRem =
     layout?.contentWidth == null
-      ? 44
+      ? 44 // note: this is also hard-coded in LAYOUT_CONTENT_WIDTH_ATOM
       : visitDiscriminatedUnion(layout.contentWidth, "type")._visit({
           px: (px) => px.value / 16,
           rem: (rem) => rem.value,
           _other: () => 44,
         });
 
-  const contentWideWidthRem = (contentWidthRem * 3) / 2 + 0.5;
+  const contentWideWidthRem = (contentWidthRem * 3) / 2 + 0.5; // note: this is also hard-coded in LAYOUT_CONTENT_WIDE_WIDTH_ATOM
 
   const sidebarWidth =
     layout?.sidebarWidth == null
-      ? "18rem"
+      ? "18rem" // note: this is also hard-coded in LAYOUT_SIDEBAR_WIDTH_ATOM
       : visitDiscriminatedUnion(layout.sidebarWidth, "type")._visit({
           px: (px) => `${px.value}px`,
           rem: (rem) => `${rem.value}rem`,

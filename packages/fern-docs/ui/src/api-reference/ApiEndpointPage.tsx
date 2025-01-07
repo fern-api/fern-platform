@@ -6,9 +6,11 @@ import { useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
 import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import {
+  BuiltWithFern,
+  HideBuiltWithFernContext,
+} from "../sidebar/BuiltWithFern";
 import {
   ApiPackageContent,
   isApiPackageContentNode,
@@ -50,22 +52,22 @@ export default function ApiEndpointPage({
   }
 
   return (
-    <ApiPageContext.Provider value={true}>
+    <>
       <FernErrorBoundary component="ApiEndpointPage">
-        <ApiPackageContent
-          node={node}
-          apiDefinition={content.apiDefinition}
-          breadcrumb={content.breadcrumb}
-          mdxs={EMPTY_OBJECT}
-          showErrors={content.showErrors}
-        />
+        <HideBuiltWithFernContext.Provider value={true}>
+          <ApiPackageContent
+            node={node}
+            apiDefinition={content.apiDefinition}
+            breadcrumb={content.breadcrumb}
+            mdxs={EMPTY_OBJECT}
+            showErrors={content.showErrors}
+          />
+        </HideBuiltWithFernContext.Provider>
       </FernErrorBoundary>
       <div className="px-4 md:px-6 lg:hidden lg:px-8">
         <BottomNavigationNeighbors />
       </div>
-      <div className="mx-auto my-8 w-fit">
-        <BuiltWithFern />
-      </div>
-    </ApiPageContext.Provider>
+      <BuiltWithFern className="mx-auto my-8 w-fit" />
+    </>
   );
 }
