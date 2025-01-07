@@ -142,11 +142,11 @@ export const Image = forwardRef<HTMLImageElement, ImgProps>((props, ref) => {
       src={src}
       width={toPixelValue(width)}
       height={toPixelValue(height)}
-      maxWidth={maxWidth}
       style={{
         // since the `toPixelValue` will return undefined for non-pixel values, we need to preserve the original values using the `style` prop
         width,
         height,
+        maxWidth,
         ...style,
       }}
       {...rest}

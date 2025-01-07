@@ -15,18 +15,8 @@ export const FernImage = forwardRef<
      * @default ""
      */
     alt?: string;
-    /**
-     * The maximum width of the image.
-     * We will use this to scale down the image if it is larger than the max width, using a "contains" strategy.
-     */
-    maxWidth?: number;
-    /**
-     * The maximum height of the image.
-     * We will use this to scale down the image if it is larger than the max height, using a "contains" strategy.
-     */
-    maxHeight?: number;
   }
->(({ src, maxWidth, maxHeight, ...props }, ref) => {
+>(({ src, ...props }, ref) => {
   if (src == null) {
     return null;
   }
@@ -51,6 +41,7 @@ export const FernImage = forwardRef<
       ref={ref}
       {...props}
       src={src.url}
+      overrideSrc={src.url}
       width={width}
       height={height}
       alt={props.alt ?? (src.type === "image" ? src.alt : undefined) ?? ""}
@@ -58,13 +49,6 @@ export const FernImage = forwardRef<
         props.placeholder ?? (blurDataURL != null ? "blur" : "empty")
       }
       blurDataURL={blurDataURL}
-      overrideSrc={src.url}
-      style={{
-        // if the user has provided a width or height, we don't want to apply the maxWidth/maxHeight
-        maxWidth: props.width || props.height ? undefined : maxWidth,
-        maxHeight: props.height || props.width ? undefined : maxHeight,
-        ...props.style,
-      }}
       unoptimized={
         pathname?.endsWith(".gif") ||
         pathname?.endsWith(".svg") ||
