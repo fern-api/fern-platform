@@ -20,7 +20,7 @@ import {
   LAYOUT_CONTENT_PAGE_WIDTH_ATOM,
   LAYOUT_CONTENT_REFERENCE_COLUMN_WIDTH_ATOM,
   LAYOUT_CONTENT_REFERENCE_WIDTH_ATOM,
-  useFeatureFlags,
+  useEdgeFlags,
 } from "../../../atoms";
 import { FernAnchor } from "../../../components/FernAnchor";
 import { FernImage } from "../../../components/FernImage";
@@ -198,7 +198,7 @@ function useIsImageZoomDisabbled({
   noZoom: boolean;
   enableZoom: boolean;
 }) {
-  const isImageZoomDisabledFeatureFlag = useFeatureFlags().isImageZoomDisabled;
+  const isImageZoomDisabledFeatureFlag = useEdgeFlags().isImageZoomDisabled;
 
   const { "no-image-zoom": isImageZoomDisabledFrontmatter, layout } =
     useFrontmatter();

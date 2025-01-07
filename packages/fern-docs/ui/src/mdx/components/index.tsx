@@ -28,6 +28,7 @@ import { ClientLibraries } from "./client-libraries";
 import { CodeBlock } from "./code/CodeBlock";
 import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
+import { Feature } from "./feature";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
@@ -66,6 +67,7 @@ const FERN_COMPONENTS = {
   ColumnGroup,
   EndpointRequestSnippet,
   EndpointResponseSnippet,
+  Feature,
   Frame,
   Icon: RemoteFontAwesomeIcon,
   If,

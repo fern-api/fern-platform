@@ -1,6 +1,6 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { DEFAULT_FEATURE_FLAGS } from "@fern-docs/utils";
+import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
 import { atomWithReducer, useHydrateAtoms } from "jotai/utils";
 import type { PropsWithChildren, ReactNode } from "react";
 import type { DocsProps } from "./types";
@@ -63,7 +63,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     apis: {},
     endpointIdsToSlugs: {},
   },
-  featureFlags: DEFAULT_FEATURE_FLAGS,
+  edgeFlags: DEFAULT_EDGE_FLAGS,
   apis: [],
   seo: {},
   analytics: undefined,
@@ -73,6 +73,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
   user: undefined,
   defaultLang: "curl",
   stylesheet: "",
+  featureFlags: undefined,
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(

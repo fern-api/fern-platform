@@ -4,7 +4,7 @@ import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { sortBy } from "es-toolkit/array";
 import { camelCase, upperFirst } from "es-toolkit/string";
 import { memo, useEffect, useRef } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
@@ -98,7 +98,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
     };
   }, [selectedError, setSelectedError]);
 
-  const { isAuthEnabledInDocs } = useFeatureFlags();
+  const { isAuthEnabledInDocs } = useEdgeFlags();
 
   let authHeader: ApiDefinition.ObjectProperty | undefined;
   if (auth && isAuthEnabledInDocs) {

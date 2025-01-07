@@ -9,7 +9,7 @@ import {
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { createOpenAI } from "@ai-sdk/openai";
-import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
 import {
   queryTurbopuffer,
@@ -47,12 +47,12 @@ export async function POST(req: NextRequest) {
   }
 
   const start = Date.now();
-  const [authEdgeConfig, featureFlags] = await Promise.all([
+  const [authEdgeConfig, edgeFlags] = await Promise.all([
     getAuthEdgeConfig(domain),
-    getFeatureFlags(domain),
+    getEdgeFlags(domain),
   ]);
 
-  if (!featureFlags.isAskAiEnabled) {
+  if (!edgeFlags.isAskAiEnabled) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 

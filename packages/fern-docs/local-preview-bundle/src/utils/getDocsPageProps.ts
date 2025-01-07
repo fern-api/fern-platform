@@ -11,11 +11,7 @@ import {
   resolveDocsContent,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
-import {
-  DEFAULT_FEATURE_FLAGS,
-  getRedirectForPath,
-  type FeatureFlags,
-} from "@fern-docs/utils";
+import { DEFAULT_EDGE_FLAGS, getRedirectForPath } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
@@ -69,7 +65,7 @@ export async function getDocsPageProps(
   }
 
   // TODO: get feature flags from the API
-  const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
+  const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
   const content = await resolveDocsContent({
     domain: docs.baseUrl.domain,
@@ -83,7 +79,7 @@ export async function getDocsPageProps(
     apis: docs.definition.apis,
     apisV2: docs.definition.apisV2,
     pages: docs.definition.pages,
-    featureFlags,
+    edgeFlags,
     mdxOptions: {
       files: docs.definition.jsFiles,
     },
@@ -218,7 +214,7 @@ export async function getDocsPageProps(
       sidebar: node.sidebar,
       trailingSlash: false,
     },
-    featureFlags,
+    edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FdrAPI.ApiDefinitionId),
     seo: getSeoProps(
       docs.baseUrl.domain,

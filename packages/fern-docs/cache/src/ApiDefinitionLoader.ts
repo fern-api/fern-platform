@@ -11,8 +11,8 @@ import {
   type PruningNodeType,
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import type { FeatureFlags } from "@fern-docs/utils";
-import { DEFAULT_FEATURE_FLAGS } from "@fern-docs/utils";
+import type { EdgeFlags } from "@fern-docs/utils";
+import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
 import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
 import { UnreachableCaseError } from "ts-essentials";
 import { ApiDefinitionKVCache } from "./ApiDefinitionKVCache";
@@ -66,8 +66,8 @@ export class ApiDefinitionLoader {
     this.cache = ApiDefinitionKVCache.getInstance(domain, apiDefinitionId);
   }
 
-  private flags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
-  public withFlags = (flags: Partial<FeatureFlags>): this => {
+  private flags: EdgeFlags = DEFAULT_EDGE_FLAGS;
+  public withFlags = (flags: Partial<EdgeFlags>): this => {
     this.flags = { ...this.flags, ...flags };
     return this;
   };

@@ -21,7 +21,7 @@ import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   store,
   useBasePath,
-  useFeatureFlags,
+  useEdgeFlags,
   usePlaygroundEndpointFormState,
 } from "../../atoms";
 import { useApiRoute } from "../../hooks/useApiRoute";
@@ -77,7 +77,7 @@ export const PlaygroundEndpoint = ({
     usesApplicationJsonInFormDataValue,
     proxyShouldUseAppBuildwithfernCom,
     grpcEndpoints,
-  } = useFeatureFlags();
+  } = useEdgeFlags();
   const [response, setResponse] =
     useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 

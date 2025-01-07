@@ -6,7 +6,7 @@ import type {
 } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ApiDefinitionLoader, MarkdownLoader } from "@fern-docs/cache";
-import type { FeatureFlags } from "@fern-docs/utils";
+import type { EdgeFlags } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
@@ -34,7 +34,7 @@ interface ResolveDocsContentArgs {
   apisV2: Record<string, FdrAPI.api.latest.ApiDefinition>;
   pages: Record<string, DocsV1Read.PageContent>;
   mdxOptions?: FernSerializeMdxOptions;
-  featureFlags: FeatureFlags;
+  edgeFlags: EdgeFlags;
   serializeMdx: MDX_SERIALIZER;
   engine: string;
 }
@@ -52,7 +52,7 @@ export async function resolveDocsContent({
   apisV2,
   pages,
   mdxOptions,
-  featureFlags,
+  edgeFlags,
   serializeMdx,
   engine,
 }: ResolveDocsContentArgs): Promise<DocsContent | undefined> {
@@ -74,9 +74,9 @@ export async function resolveDocsContent({
     ...mapValues(apis, (api) => {
       return ApiDefinitionLoader.create(domain, api.id)
         .withMdxBundler(serializeMdx, engine)
-        .withFlags(featureFlags)
+        .withFlags(edgeFlags)
         .withApiDefinition(
-          ApiDefinitionV1ToLatest.from(api, featureFlags).migrate()
+          ApiDefinitionV1ToLatest.from(api, edgeFlags).migrate()
         )
         .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
         .withResolveDescriptions();
@@ -84,7 +84,7 @@ export async function resolveDocsContent({
     ...mapValues(apisV2 ?? {}, (api) => {
       return ApiDefinitionLoader.create(domain, api.id)
         .withMdxBundler(serializeMdx, engine)
-        .withFlags(featureFlags)
+        .withFlags(edgeFlags)
         .withApiDefinition(api)
         .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
         .withResolveDescriptions();

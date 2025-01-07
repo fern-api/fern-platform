@@ -4,7 +4,7 @@ import { DesktopSearchButton } from "@fern-docs/search-ui";
 import clsx from "clsx";
 import { Search } from "iconoir-react";
 import dynamic from "next/dynamic";
-import { useFeatureFlag, useOpenSearchDialog } from "../atoms";
+import { useEdgeFlag, useOpenSearchDialog } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
 
 const SearchV2 = dynamic(
@@ -24,7 +24,7 @@ export declare namespace SidebarSearchBar {
 
 export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = memo(
   function UnmemoizedSidebarSearchBar({ className, hideKeyboardShortcutHint }) {
-    const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
+    const isSearchV2Enabled = useEdgeFlag("isSearchV2Enabled");
     if (!isSearchV2Enabled) {
       return (
         <SidebarSearchBarV1

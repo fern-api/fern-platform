@@ -13,7 +13,7 @@ import {
   FernTextarea,
 } from "@fern-docs/components";
 import { ReactElement, memo, useCallback } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { WithLabel } from "../WithLabel";
 import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
 import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
@@ -42,7 +42,7 @@ interface PlaygroundTypeReferenceFormProps {
 
 export const PlaygroundTypeReferenceForm =
   memo<PlaygroundTypeReferenceFormProps>((props) => {
-    const { hasVoiceIdPlaygroundForm } = useFeatureFlags();
+    const { hasVoiceIdPlaygroundForm } = useEdgeFlags();
     const {
       id,
       property,

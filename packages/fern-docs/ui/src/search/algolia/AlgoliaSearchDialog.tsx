@@ -16,7 +16,7 @@ import {
   POSITION_SEARCH_DIALOG_OVER_HEADER_ATOM,
   SEARCH_DIALOG_OPEN_ATOM,
   useDomain,
-  useFeatureFlags,
+  useEdgeFlags,
   useIsSearchDialogOpen,
   useSidebarNodes,
 } from "../../atoms";
@@ -112,7 +112,7 @@ function FernInstantSearch({
     () => createSearchPlaceholderWithVersion(activeVersion?.id, sidebar),
     [activeVersion, sidebar]
   );
-  const { isNewSearchExperienceEnabled } = useFeatureFlags();
+  const { isNewSearchExperienceEnabled } = useEdgeFlags();
   return (
     <InstantSearch searchClient={searchClient} indexName={indexName}>
       <Configure

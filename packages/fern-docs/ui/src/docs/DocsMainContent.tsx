@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
 import { Fragment, ReactElement, memo } from "react";
 import { UnreachableCaseError } from "ts-essentials";
-import { useFeatureFlag, useIsReady } from "../atoms";
+import { useEdgeFlag, useIsReady } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import type { DocsContent } from "../resolver/DocsContent";
 
@@ -67,7 +67,7 @@ export const DocsMainContent = memo(function DocsMainContent({
 }: {
   content: DocsContent;
 }): ReactElement {
-  const isInlineFeedbackEnabled = useFeatureFlag("isInlineFeedbackEnabled");
+  const isInlineFeedbackEnabled = useEdgeFlag("isInlineFeedbackEnabled");
   const searchParams = useSearchParams();
 
   const FeedbackPopoverProvider = isInlineFeedbackEnabled

@@ -4,7 +4,8 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import {
   getAuthEdgeConfig,
   getCustomerAnalytics,
-  getFeatureFlags,
+  getEdgeFlags,
+  getLaunchDarklySettings,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 import {
@@ -75,8 +76,8 @@ export async function withInitialProps({
   }
 
   // load from edge config
-  const [featureFlags, authConfig] = await Promise.all([
-    getFeatureFlags(domain),
+  const [edgeFlags, authConfig] = await Promise.all([
+    getEdgeFlags(domain),
     getAuthEdgeConfig(domain),
   ]);
   const authState = await getAuthState(
@@ -89,7 +90,7 @@ export async function withInitialProps({
 
   // create loader (this will load all nodes)
   const loader = DocsLoader.for(domain, host)
-    .withFeatureFlags(featureFlags)
+    .withEdgeFlags(edgeFlags)
     .withAuth(authConfig, authState)
     .withLoadDocsForUrlResponse(docs);
 
@@ -127,7 +128,7 @@ export async function withInitialProps({
     // this is better than following redirects, since it will signal a proper 404 status code.
     // however, we should consider rendering a custom 404 page in the future using the customer's branding.
     // see: https://nextjs.org/docs/app/api-reference/file-conventions/not-found
-    if (featureFlags.is404PageHidden && found.redirect != null) {
+    if (edgeFlags.is404PageHidden && found.redirect != null) {
       return withRedirect(found.redirect);
     }
 
@@ -158,7 +159,7 @@ export async function withInitialProps({
     found,
     authState,
     definition: docs.definition,
-    featureFlags,
+    edgeFlags,
   });
 
   if (content == null) {
@@ -264,7 +265,7 @@ export async function withInitialProps({
     // when true, all unauthed pages are visible, but rendered with a LOCK button
     // so they're not actually "pruned" from the sidebar
     // TODO: move this out of a feature flag and into the navigation node metadata
-    discoverable: featureFlags.isAuthenticatedPagesDiscoverable
+    discoverable: edgeFlags.isAuthenticatedPagesDiscoverable
       ? (true as const)
       : undefined,
   };
@@ -324,8 +325,15 @@ export async function withInitialProps({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
-  const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
   const serializeMdx = await getMdxBundler(engine);
+
+  const launchDarklyConfig = await getLaunchDarklySettings(docs.baseUrl.domain);
+  const launchDarklyInfo = launchDarklyConfig?.["client-side-id"]
+    ? {
+        clientSideId: launchDarklyConfig?.["client-side-id"],
+      }
+    : undefined;
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
@@ -354,7 +362,7 @@ export async function withInitialProps({
       sidebar,
       trailingSlash: isTrailingSlashEnabled(),
     },
-    featureFlags,
+    edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FernNavigation.ApiDefinitionId),
     seo: getSeoProps(
       docs.baseUrl.domain,
@@ -373,7 +381,7 @@ export async function withInitialProps({
       docs.baseUrl.domain,
       docs.baseUrl.basePath
     ),
-    theme: featureFlags.isCohereTheme ? "cohere" : "default",
+    theme: edgeFlags.isCohereTheme ? "cohere" : "default",
     analyticsConfig: docs.definition.config.analyticsConfig,
     defaultLang: docs.definition.config.defaultLanguage ?? "curl",
     stylesheet: renderThemeStylesheet(
@@ -384,6 +392,9 @@ export async function withInitialProps({
       docs.definition.filesV2,
       found.tabs.length > 0
     ),
+    featureFlags: {
+      launchDarkly: launchDarklyInfo,
+    },
   };
 
   // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

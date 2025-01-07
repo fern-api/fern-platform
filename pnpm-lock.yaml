@@ -2082,6 +2082,9 @@ importers:
       bezier-easing:
         specifier: ^2.1.0
         version: 2.1.0
+      camelcase:
+        specifier: ^8.0.0
+        version: 8.0.0
       clsx:
         specifier: ^2.1.0
         version: 2.1.1
@@ -2130,6 +2133,9 @@ importers:
       launchdarkly-js-client-sdk:
         specifier: ^3.4.0
         version: 3.4.0
+      launchdarkly-react-client-sdk:
+        specifier: ^3.6.0
+        version: 3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       mdx-bundler:
         specifier: ^10.0.2
         version: 10.0.2(esbuild@0.20.2)
@@ -8640,6 +8646,10 @@ packages:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
 
+  camelcase@8.0.0:
+    resolution: {integrity: sha512-8WB3Jcas3swSvjIeA2yvCJ+Miyz5l1ZmB6HFb9R1317dt9LCQoswg/BGrmAmkWVEszSrrg4RwmO46qIm2OEnSA==}
+    engines: {node: '>=16'}
+
   camera-controls@2.9.0:
     resolution: {integrity: sha512-TpCujnP0vqPppTXXJRYpvIy0xq9Tro6jQf2iYUxlDpPCNxkvE/XGaTuwIxnhINOkVP/ob2CRYXtY3iVYXeMEzA==}
     peerDependencies:
@@ -11869,8 +11879,20 @@ packages:
   launchdarkly-js-client-sdk@3.4.0:
     resolution: {integrity: sha512-3v1jKy1RECT0SG/3SGlyRO32vweoNxvWiJuIChRh/Zhk98cHpANuwameXVhwJ4WEDNZJTur73baaKAyatSP46A==}
 
+  launchdarkly-js-client-sdk@3.5.0:
+    resolution: {integrity: sha512-3dgxC9S8K2ix6qjdArjZGOJPtAytgfQTuE+vWgjWJK7725rpYbuqbHghIFr5B0+WyWyVBYANldjWd1JdtYLwsw==}
+
   launchdarkly-js-sdk-common@5.3.0:
     resolution: {integrity: sha512-NI5wFF8qhjtpRb4KelGdnwNIOf/boLlbLiseV7uf1jxSeoM/L30DAz87RT8VhYCSGCo4LedGILQFednI/MKFkA==}
+
+  launchdarkly-js-sdk-common@5.4.0:
+    resolution: {integrity: sha512-Kb3SDcB6S0HUpFNBZgtEt0YUV/fVkyg+gODfaOCJQ0Y0ApxLKNmmJBZOrPE2qIdzw536u4BqEjtaJdqJWCEElg==}
+
+  launchdarkly-react-client-sdk@3.6.0:
+    resolution: {integrity: sha512-tGXc7CNngfwElsoLmvpt81NO+v5gH9xuCdIjYSi9BHlL4wk6mpJpuEJn0Kx8Q3D1mnNzAhX3YdJNXc1pk3fXbg==}
+    peerDependencies:
+      react: 18.3.1
+      react-dom: 18.3.1
 
   layout-base@1.0.2:
     resolution: {integrity: sha512-8h2oVEZNktL4BH2JCOI90iD1yXwL6iNW7KcCKT2QZgQJR2vbqDsldCTPRU9NifTCqHZci57XvQQ15YTu+sTYPg==}
@@ -24387,6 +24409,8 @@ snapshots:
 
   camelcase@6.3.0: {}
 
+  camelcase@8.0.0: {}
+
   camera-controls@2.9.0(three@0.171.0):
     dependencies:
       three: 0.171.0
@@ -28466,11 +28490,30 @@ snapshots:
       escape-string-regexp: 4.0.0
       launchdarkly-js-sdk-common: 5.3.0
 
+  launchdarkly-js-client-sdk@3.5.0:
+    dependencies:
+      escape-string-regexp: 4.0.0
+      launchdarkly-js-sdk-common: 5.4.0
+
   launchdarkly-js-sdk-common@5.3.0:
     dependencies:
       base64-js: 1.5.1
       fast-deep-equal: 2.0.1
       uuid: 8.3.2
+
+  launchdarkly-js-sdk-common@5.4.0:
+    dependencies:
+      base64-js: 1.5.1
+      fast-deep-equal: 2.0.1
+      uuid: 8.3.2
+
+  launchdarkly-react-client-sdk@3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      launchdarkly-js-client-sdk: 3.5.0
+      lodash.camelcase: 4.3.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   layout-base@1.0.2: {}
 
