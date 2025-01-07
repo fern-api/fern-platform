@@ -1,4 +1,4 @@
-import camelcase from "camelcase";
+import { camelCase } from "es-toolkit/string";
 import { LDFlagSet, useFlags } from "launchdarkly-react-client-sdk";
 import { Feature } from "./Feature";
 
@@ -7,7 +7,7 @@ const ldFlagPredicate = <T,>(
   defaultValue: T
 ): ((flags: LDFlagSet) => T) => {
   return (flags: LDFlagSet) => {
-    const camelKey = camelcase(flagKey);
+    const camelKey = camelCase(flagKey);
     const flagValue = flags[camelKey];
 
     if (typeof flagValue === "undefined") {

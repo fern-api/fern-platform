@@ -42,8 +42,9 @@ import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
 
-const LaunchDarkly = dynamic(() =>
-  import("./launchdarkly/LaunchDarkly").then((mod) => mod.LaunchDarkly)
+const LaunchDarkly = dynamic(
+  () => import("./launchdarkly/LaunchDarkly").then((mod) => mod.LaunchDarkly),
+  { ssr: true }
 );
 
 const ElevenLabsWaveform = dynamic(() =>

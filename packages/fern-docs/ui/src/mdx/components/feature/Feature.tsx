@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 
-const LDFeature = dynamic(() =>
-  import("./LDFeature").then((mod) => mod.LDFeature)
+const LDFeature = dynamic(
+  () => import("./LDFeature").then((mod) => mod.LDFeature),
+  { ssr: true }
 );
 
 export declare namespace Feature {
