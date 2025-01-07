@@ -42,7 +42,7 @@ export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
             {...props}
             href={String(url)}
             className={clsx(
-              "inline-flex items-baseline gap-1",
+              "flex items-baseline mx-auto gap-1",
               props.className
             )}
             onMouseOver={composeEventHandlers(props.onMouseOver, onMouseOver)}
