@@ -30,4 +30,5 @@ types:
 
   ExampleWebhookPayload:
     properties:
+      name: optional<string>
       payload: unknown

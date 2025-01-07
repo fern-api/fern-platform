@@ -3,5 +3,6 @@
  */
 
 export interface ExampleWebhookPayload {
+    name: string | undefined;
     payload: unknown;
 }
