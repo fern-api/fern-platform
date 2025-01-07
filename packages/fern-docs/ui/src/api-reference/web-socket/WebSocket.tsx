@@ -16,6 +16,7 @@ import {
 } from "react";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
+import { WithAside } from "../../contexts/api-page";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
 import { PlaygroundButton } from "../../playground/PlaygroundButton";
@@ -49,11 +50,13 @@ export const WebSocket: FC<WebSocketProps> = (props) => {
   }
 
   return (
-    <WebhookContent
-      context={context}
-      breadcrumb={props.breadcrumb}
-      last={props.last}
-    />
+    <WithAside.Provider value={true}>
+      <WebhookContent
+        context={context}
+        breadcrumb={props.breadcrumb}
+        last={props.last}
+      />
+    </WithAside.Provider>
   );
 };
 

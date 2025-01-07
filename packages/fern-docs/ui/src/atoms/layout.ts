@@ -5,7 +5,11 @@ import { selectAtom } from "jotai/utils";
 import { ANNOUNCEMENT_HEIGHT_ATOM } from "./announcement";
 import { DOCS_ATOM } from "./docs";
 import { TABS_ATOM } from "./navigation";
-import { MOBILE_SIDEBAR_ENABLED_ATOM, VIEWPORT_HEIGHT_ATOM } from "./viewport";
+import {
+  BREAKPOINT_ATOM,
+  MOBILE_SIDEBAR_ENABLED_ATOM,
+  VIEWPORT_HEIGHT_ATOM,
+} from "./viewport";
 
 export const DOCS_LAYOUT_ATOM = selectAtom(
   DOCS_ATOM,
@@ -153,3 +157,80 @@ export const SEARCHBAR_PLACEMENT_ATOM = atom<DocsV1Read.SearchbarPlacement>(
   }
 );
 SEARCHBAR_PLACEMENT_ATOM.debugLabel = "SEARCHBAR_PLACEMENT_ATOM";
+
+// guides are by default 44rem wide (long-form content)
+export const LAYOUT_CONTENT_GUIDE_WIDTH_ATOM = atom<number>((get) => {
+  const layout = get(DOCS_LAYOUT_ATOM)?.contentWidth;
+  if (layout == null) {
+    return 44 * 16; // 44rem (default)
+  }
+  return layout.type === "px" ? layout.value : layout.value * 16;
+});
+
+export const LAYOUT_SIDEBAR_WIDTH_ATOM = atom<number>((get) => {
+  const layout = get(DOCS_LAYOUT_ATOM)?.sidebarWidth;
+  if (layout == null) {
+    return 18 * 16; // 18rem (default)
+  }
+  return layout.type === "px" ? layout.value : layout.value * 16;
+});
+
+// pages are by default 88rem wide, but if layout.type === "full" then it's 100% of the viewport width and cannot be constrained
+export const LAYOUT_PAGE_WIDTH_ATOM = atom<number | undefined>((get) => {
+  const layout = get(DOCS_LAYOUT_ATOM)?.pageWidth;
+  if (layout == null) {
+    return 88 * 16; // 88rem (default)
+  }
+  return layout.type === "px"
+    ? layout.value
+    : layout.type === "rem"
+      ? layout.value * 16
+      : undefined;
+});
+
+export const LAYOUT_CONTENT_PAGE_WIDTH_ATOM = atom<number | undefined>(
+  (get) => {
+    const pageWidth = get(LAYOUT_PAGE_WIDTH_ATOM);
+    if (pageWidth == null) {
+      return undefined;
+    }
+    return pageWidth - 32 * 2;
+  }
+);
+
+// overview pages are 50% wider than guide pages, but the table of contents is still visible
+export const LAYOUT_CONTENT_OVERVIEW_WIDTH_ATOM = atom<number>((get) => {
+  const contentWidth = get(LAYOUT_CONTENT_GUIDE_WIDTH_ATOM);
+  return (contentWidth * 3) / 2 + 8;
+});
+
+// reference pages fill up the entire page width, minus the sidebar
+export const LAYOUT_CONTENT_REFERENCE_WIDTH_ATOM = atom<number | undefined>(
+  (get) => {
+    const pageWidth = get(LAYOUT_PAGE_WIDTH_ATOM);
+    if (pageWidth == null) {
+      return undefined;
+    }
+    const sidebarWidth = get(LAYOUT_SIDEBAR_WIDTH_ATOM);
+    const margin = 32;
+    return pageWidth - sidebarWidth - margin * 2;
+  }
+);
+
+// api references split into two columns, with a 48px gap between them
+export const LAYOUT_CONTENT_REFERENCE_COLUMN_WIDTH_ATOM = atom<
+  number | undefined
+>((get) => {
+  const breakpoint = get(BREAKPOINT_ATOM);
+
+  // when the viewport is < 768px, the reference page is treated as the same width as the guide page
+  if (breakpoint === "sm" || breakpoint === "mobile") {
+    return get(LAYOUT_CONTENT_GUIDE_WIDTH_ATOM);
+  }
+
+  const contentWidth = get(LAYOUT_CONTENT_REFERENCE_WIDTH_ATOM);
+  if (contentWidth == null) {
+    return undefined;
+  }
+  return contentWidth / 2 - 48; // 48px is the column gap
+});

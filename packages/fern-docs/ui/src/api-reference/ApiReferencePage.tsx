@@ -4,9 +4,11 @@ import {
   useNavigationNodes,
   useWriteApiDefinitionAtom,
 } from "../atoms";
-import { ApiPageContext } from "../contexts/api-page";
 import { DocsContent } from "../resolver/DocsContent";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import {
+  BuiltWithFern,
+  HideBuiltWithFernContext,
+} from "../sidebar/BuiltWithFern";
 import { ApiReferenceContent } from "./ApiReferenceContent";
 
 export default function ApiReferencePage({
@@ -28,22 +30,22 @@ export default function ApiReferencePage({
   }
 
   return (
-    <ApiPageContext.Provider value={true}>
-      <ApiReferenceContent
-        apiDefinition={content.apiDefinition}
-        showErrors={node.showErrors ?? false}
-        node={node}
-        breadcrumb={content.breadcrumb}
-        mdxs={content.mdxs}
-        slug={content.slug}
-      />
+    <>
+      <HideBuiltWithFernContext.Provider value={true}>
+        <ApiReferenceContent
+          apiDefinition={content.apiDefinition}
+          showErrors={node.showErrors ?? false}
+          node={node}
+          breadcrumb={content.breadcrumb}
+          mdxs={content.mdxs}
+          slug={content.slug}
+        />
+      </HideBuiltWithFernContext.Provider>
 
       {/* anchor links should get additional padding to scroll to on initial load */}
       {!hydrated && <div className="h-full" />}
       <div className="pb-36" />
-      <div className="mx-auto my-8 w-fit">
-        <BuiltWithFern />
-      </div>
-    </ApiPageContext.Provider>
+      <BuiltWithFern className="mx-auto my-8 w-fit" />
+    </>
   );
 }

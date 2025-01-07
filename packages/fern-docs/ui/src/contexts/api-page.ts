@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
-export const ApiPageContext = createContext<boolean>(false);
+export const WithAside = createContext<boolean>(false);
 
-export function useApiPageContext(): boolean {
-  return useContext(ApiPageContext);
+export function useWithAside(): boolean {
+  return useContext(WithAside);
 }

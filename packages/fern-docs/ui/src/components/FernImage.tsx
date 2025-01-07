@@ -9,28 +9,32 @@ export declare namespace FernImage {
     // If the file has width/height metadata, we can render it using next/image for optimized loading.
     src: DocsV1Read.File_ | undefined;
     alt?: string;
+    maxWidth?: number;
   }
 }
 
 export function FernImage({
   src,
+  maxWidth,
   ...props
 }: FernImage.Props): ReactElement | null {
   if (src == null) {
     return null;
   }
+
+  const {
+    fill,
+    loader,
+    quality,
+    priority,
+    placeholder,
+    blurDataURL,
+    unoptimized,
+    ...imgProps
+  } = props;
+
   return visitDiscriminatedUnion(src, "type")._visit({
     url: ({ url }) => {
-      const {
-        fill,
-        loader,
-        quality,
-        priority,
-        placeholder,
-        blurDataURL,
-        unoptimized,
-        ...imgProps
-      } = props;
       // eslint-disable-next-line @next/next/no-img-element
       return <img {...imgProps} src={url} alt={props.alt ?? ""} />;
     },
@@ -41,13 +45,23 @@ export function FernImage({
       blurDataUrl,
       alt,
     }) => {
-      const { width: layoutWidth, height: layoutHeight } = props;
+      try {
+        const pathname = new URL(url).pathname.toLowerCase();
+        if (pathname.endsWith(".gif") || pathname.endsWith(".svg")) {
+          // eslint-disable-next-line @next/next/no-img-element
+          return <img {...imgProps} src={url} alt={props.alt ?? ""} />;
+        }
+      } catch (_e) {
+        // Ignore errors
+      }
+
       const { width, height } = getDimensions(
-        layoutWidth,
-        layoutHeight,
+        maxWidth ?? props.width,
+        undefined,
         realWidth,
         realHeight
       );
+
       return (
         <Image
           {...props}
@@ -59,7 +73,6 @@ export function FernImage({
             props.placeholder ?? (blurDataUrl != null ? "blur" : "empty")
           }
           blurDataURL={props.blurDataURL ?? blurDataUrl}
-          unoptimized={props.unoptimized ?? url.includes(".svg")}
           overrideSrc={url}
         />
       );

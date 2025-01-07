@@ -18,7 +18,10 @@ import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";
-import { BuiltWithFern } from "../sidebar/BuiltWithFern";
+import {
+  BuiltWithFern,
+  HideBuiltWithFernContext,
+} from "../sidebar/BuiltWithFern";
 import { ChangelogContentLayout } from "./ChangelogContentLayout";
 
 function flattenChangelogEntries(
@@ -151,63 +154,63 @@ export default function ChangelogPage({
       })}
     >
       <main>
-        <ChangelogContentLayout as="section" className="pb-8">
-          <PageHeader
-            title={content.node.title}
-            breadcrumb={content.breadcrumb}
-            subtitle={
-              typeof overview !== "string"
-                ? overview?.frontmatter.excerpt
-                : undefined
-            }
-          />
-          <Markdown mdx={overview} />
-        </ChangelogContentLayout>
-
-        {entries.map((entry) => {
-          const page = content.pages[entry.pageId];
-          const title =
-            typeof page !== "string" ? page?.frontmatter.title : undefined;
-          return (
-            <Fragment key={entry.id}>
-              <hr />
-              <ChangelogContentLayout
-                as="article"
-                id={entry.date}
-                stickyContent={
-                  <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
-                }
-              >
-                <Markdown
-                  title={
-                    title != null ? (
-                      <h2>
-                        <FernLink
-                          href={toHref(entry.slug)}
-                          className="not-prose"
-                        >
-                          {title}
-                        </FernLink>
-                      </h2>
-                    ) : undefined
-                  }
-                  mdx={page}
-                />
-              </ChangelogContentLayout>
-            </Fragment>
-          );
-        })}
-
-        {(prev != null || next != null) && (
-          <ChangelogContentLayout as="div">
-            <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
+        <HideBuiltWithFernContext.Provider value={true}>
+          <ChangelogContentLayout as="section" className="pb-8">
+            <PageHeader
+              title={content.node.title}
+              breadcrumb={content.breadcrumb}
+              subtitle={
+                typeof overview !== "string"
+                  ? overview?.frontmatter.excerpt
+                  : undefined
+              }
+            />
+            <Markdown mdx={overview} />
           </ChangelogContentLayout>
-        )}
+
+          {entries.map((entry) => {
+            const page = content.pages[entry.pageId];
+            const title =
+              typeof page !== "string" ? page?.frontmatter.title : undefined;
+            return (
+              <Fragment key={entry.id}>
+                <hr />
+                <ChangelogContentLayout
+                  as="article"
+                  id={entry.date}
+                  stickyContent={
+                    <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
+                  }
+                >
+                  <Markdown
+                    title={
+                      title != null ? (
+                        <h2>
+                          <FernLink
+                            href={toHref(entry.slug)}
+                            className="not-prose"
+                          >
+                            {title}
+                          </FernLink>
+                        </h2>
+                      ) : undefined
+                    }
+                    mdx={page}
+                  />
+                </ChangelogContentLayout>
+              </Fragment>
+            );
+          })}
+
+          {(prev != null || next != null) && (
+            <ChangelogContentLayout as="div">
+              <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
+            </ChangelogContentLayout>
+          )}
+        </HideBuiltWithFernContext.Provider>
 
         <div className="h-48" />
-        <div className="mx-auto my-8 w-fit">
-          <BuiltWithFern />
-        </div>
+        <BuiltWithFern className="mx-auto my-8 w-fit" />
       </main>
     </div>
   );
