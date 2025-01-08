@@ -7,6 +7,10 @@ const ldFlagPredicate = <T,>(
   defaultValue: T
 ): ((flags: LDFlagSet) => T) => {
   return (flags: LDFlagSet) => {
+    // Camel case the flag key here to match logic from LaunchDarkly's Gatsby plugin.
+    // They use snake-case keys in their UI but camelCase in their React SDK and do this to ease
+    // the developer experience; we're doing the same thing to be consistent with them.
+    // See https://github.com/launchdarkly/LaunchDarkly-Docs/blob/95cebf9ef4841da96ddfec9dd6e3ed76455025d0/src/flags/flagPredicate.ts#L6
     const camelKey = camelCase(flagKey);
     const flagValue = flags[camelKey];
 
