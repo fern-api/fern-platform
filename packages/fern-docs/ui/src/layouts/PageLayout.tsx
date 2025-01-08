@@ -29,9 +29,9 @@ export function PageLayout({
             <div>{!hideFeedback && <Feedback />}</div>
             <EditThisPageButton editThisPageUrl={editThisPageUrl} />
           </div>
-          <BuiltWithFern className="mx-auto my-8 w-fit" />
         </footer>
       )}
+      <BuiltWithFern className="mx-auto my-8 w-fit" />
     </main>
   );
 }

@@ -1,5 +1,6 @@
 import { APIResponse, APIV1Write, FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import type { DocsV2, IndexSegment } from "@prisma/client";
+import { v4 } from "uuid";
 
 export function getUniqueDocsForUrl(prefix: string): string {
   return `${prefix}_${Math.random()}.fern.com`;
@@ -71,6 +72,8 @@ export function createApiDefinitionLatest({
         id: FdrAPI.EndpointId(endpointId),
         method: endpointMethod,
         path: endpointPath,
+        displayName: undefined,
+        operationId: undefined,
         requestHeaders: undefined,
         responseHeaders: undefined,
         queryParameters: undefined,
@@ -92,7 +95,7 @@ export function createApiDefinitionLatest({
     subpackages: {},
     websockets: {},
     webhooks: {},
-    id: FdrAPI.ApiDefinitionId("api"),
+    id: FdrAPI.ApiDefinitionId(v4()),
     auths: {},
     globalHeaders: undefined,
   };

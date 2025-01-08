@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import Image from "next/image";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
@@ -36,6 +38,19 @@ export const FernImage = forwardRef<
 
   const pathname = safeGetPathname(src.url);
 
+  if (src.type === "url") {
+    return (
+      <img
+        ref={ref}
+        {...props}
+        src={src.url}
+        alt={props.alt}
+        fetchPriority={props.priority ? "high" : undefined}
+        loading={props.priority ? "eager" : undefined}
+      />
+    );
+  }
+
   return (
     <Image
       ref={ref}
@@ -52,8 +67,7 @@ export const FernImage = forwardRef<
       unoptimized={
         pathname?.endsWith(".gif") ||
         pathname?.endsWith(".svg") ||
-        props.unoptimized ||
-        src.type === "url" // if the src is a URL, we don't want to optimize it because it's likely not allowlisted in next.config.js
+        props.unoptimized
       }
     />
   );

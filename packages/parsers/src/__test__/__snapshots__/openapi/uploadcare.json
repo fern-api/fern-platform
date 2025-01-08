@@ -15052,37 +15052,45 @@
     }
   },
   "subpackages": {
-    "File": {
-      "id": "File",
-      "name": "File"
+    "file": {
+      "id": "file",
+      "name": "File",
+      "displayName": "File"
     },
-    "Add-Ons": {
-      "id": "Add-Ons",
-      "name": "Add-Ons"
+    "addOns": {
+      "id": "addOns",
+      "name": "Add-Ons",
+      "displayName": "Add-Ons"
     },
-    "File metadata": {
-      "id": "File metadata",
-      "name": "File metadata"
+    "fileMetadata": {
+      "id": "fileMetadata",
+      "name": "File metadata",
+      "displayName": "File metadata"
     },
-    "Group": {
-      "id": "Group",
-      "name": "Group"
+    "group": {
+      "id": "group",
+      "name": "Group",
+      "displayName": "Group"
     },
-    "Project": {
-      "id": "Project",
-      "name": "Project"
+    "project": {
+      "id": "project",
+      "name": "Project",
+      "displayName": "Project"
     },
-    "Webhook": {
-      "id": "Webhook",
-      "name": "Webhook"
+    "webhook": {
+      "id": "webhook",
+      "name": "Webhook",
+      "displayName": "Webhook"
     },
-    "Webhook Callbacks": {
-      "id": "Webhook Callbacks",
-      "name": "Webhook Callbacks"
+    "webhookCallbacks": {
+      "id": "webhookCallbacks",
+      "name": "Webhook Callbacks",
+      "displayName": "Webhook Callbacks"
     },
-    "Conversion": {
-      "id": "Conversion",
-      "name": "Conversion"
+    "conversion": {
+      "id": "conversion",
+      "name": "Conversion",
+      "displayName": "Conversion"
     }
   },
   "auths": {

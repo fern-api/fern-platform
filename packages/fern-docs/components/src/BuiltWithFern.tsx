@@ -32,11 +32,7 @@ export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
 
     return (
       <FernTooltipProvider>
-        <FernTooltip
-          content={BUILT_WITH_FERN_TOOLTIP_CONTENT}
-          side="top"
-          asChild
-        >
+        <FernTooltip content={BUILT_WITH_FERN_TOOLTIP_CONTENT} side="top">
           <a
             ref={ref}
             {...props}
@@ -61,7 +57,8 @@ export const BuiltWithFern = forwardRef<HTMLAnchorElement, BuiltWithFernProps>(
             </span>
             <FernLogo
               fill={isHovering ? FernLogoFill.Default : FernLogoFill.Muted}
-              className="-mt-0.5 h-3.5 transition"
+              className="transition"
+              style={{ height: 14, marginTop: -2 }}
             />
           </a>
         </FernTooltip>

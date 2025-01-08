@@ -3,6 +3,7 @@ import cn from "clsx";
 import { isValidElement } from "react";
 import { FernLinkCard } from "../../../components/FernLinkCard";
 import { Badge } from "../badge";
+import { NoZoom } from "../html/image";
 
 export declare namespace Card {
   export interface Props {
@@ -68,7 +69,7 @@ export const Card: React.FC<Card.Props> = ({
               height: `${iconSize * 4}px`,
             }}
           >
-            {icon}
+            <NoZoom>{icon}</NoZoom>
           </span>
         ) : null}
         <div className="w-full space-y-1 overflow-hidden">
@@ -82,7 +83,7 @@ export const Card: React.FC<Card.Props> = ({
   if (href != null) {
     return (
       <FernLinkCard className={className} href={href}>
-        {content}
+        <NoZoom>{content}</NoZoom>
       </FernLinkCard>
     );
   }

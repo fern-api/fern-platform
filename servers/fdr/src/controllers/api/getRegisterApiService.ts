@@ -34,13 +34,12 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         orgId: req.body.orgId,
       });
 
-      const apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
+      let apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
       let transformedApiDefinition:
         | APIV1Db.DbApiDefinition
         | FdrAPI.api.latest.ApiDefinition
         | undefined;
 
-      console.log(req.body.definition);
       if (
         req.body.definition != null &&
         Object.keys(req.body.definition).length > 0
@@ -122,6 +121,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         }
         transformedApiDefinition = req.body.definitionV2;
         isLatest = true;
+        apiDefinitionId = transformedApiDefinition.id;
       }
 
       let sources: Record<string, APIV1Write.SourceUpload> | undefined;
@@ -143,7 +143,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
       }
 
       app.logger.debug(
-        `Creating API Definition in database with name=${req.body.apiId} for org ${req.body.orgId}`,
+        `Creating API Definition in database with id=${apiDefinitionId}, name=${req.body.apiId} for org ${req.body.orgId}`,
         REGISTER_API_DEFINITION_META
       );
       await (

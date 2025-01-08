@@ -1,3 +1,4 @@
+import { camelCase } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import { FernRegistry } from "../../client/generated";
@@ -141,11 +142,12 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       Object.values(endpoints).forEach((endpoint) =>
         endpoint.namespace?.forEach((subpackage) => {
           const qualifiedPath: string[] = [];
-          subpackages[subpackage] = {
-            id: subpackage,
-            name: [...qualifiedPath, subpackage].join("/"),
-            displayName: undefined,
-          };
+          subpackages[FernRegistry.api.v1.SubpackageId(camelCase(subpackage))] =
+            {
+              id: FernRegistry.api.v1.SubpackageId(camelCase(subpackage)),
+              name: [...qualifiedPath, subpackage].join("/"),
+              displayName: subpackage,
+            };
           qualifiedPath.push(subpackage);
         })
       );
@@ -154,11 +156,12 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       Object.values(webhookEndpoints).forEach((webhook) =>
         webhook.namespace?.forEach((subpackage) => {
           const qualifiedPath: string[] = [];
-          subpackages[subpackage] = {
-            id: subpackage,
-            name: [...qualifiedPath, subpackage].join("/"),
-            displayName: undefined,
-          };
+          subpackages[FernRegistry.api.v1.SubpackageId(camelCase(subpackage))] =
+            {
+              id: FernRegistry.api.v1.SubpackageId(camelCase(subpackage)),
+              name: [...qualifiedPath, subpackage].join("/"),
+              displayName: subpackage,
+            };
           qualifiedPath.push(subpackage);
         })
       );
