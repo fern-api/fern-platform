@@ -34,7 +34,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         orgId: req.body.orgId,
       });
 
-      const apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
+      let apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
       let transformedApiDefinition:
         | APIV1Db.DbApiDefinition
         | FdrAPI.api.latest.ApiDefinition
@@ -121,6 +121,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         }
         transformedApiDefinition = req.body.definitionV2;
         isLatest = true;
+        apiDefinitionId = transformedApiDefinition.id;
       }
 
       let sources: Record<string, APIV1Write.SourceUpload> | undefined;
@@ -151,9 +152,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           : app.services.db.prisma.apiDefinitionsV2
       ).create({
         data: {
-          apiDefinitionId: isLatest
-            ? transformedApiDefinition.id
-            : apiDefinitionId,
+          apiDefinitionId,
           apiName: req.body.apiId,
           orgId: req.body.orgId,
           definition: writeBuffer(transformedApiDefinition),
@@ -164,9 +163,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         REGISTER_API_DEFINITION_META
       );
       return res.send({
-        apiDefinitionId: isLatest
-          ? transformedApiDefinition.id
-          : apiDefinitionId,
+        apiDefinitionId,
         sources,
       });
     },
