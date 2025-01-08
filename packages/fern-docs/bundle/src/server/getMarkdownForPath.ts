@@ -6,7 +6,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { FeatureFlags } from "@fern-docs/utils";
+import { EdgeFlags } from "@fern-docs/utils";
 import { isString } from "es-toolkit/predicate";
 import { DocsLoader } from "./DocsLoader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
@@ -16,9 +16,9 @@ import { removeLeadingSlash } from "./removeLeadingSlash";
 export async function getMarkdownForPath(
   node: FernNavigation.NavigationNodePage,
   loader: DocsLoader,
-  featureFlags: FeatureFlags
+  edgeFlags: EdgeFlags
 ): Promise<{ content: string; contentType: "markdown" | "mdx" } | undefined> {
-  loader = loader.withFeatureFlags(featureFlags);
+  loader = loader.withEdgeFlags(edgeFlags);
   const pages = await loader.pages();
 
   if (FernNavigation.isApiLeaf(node)) {

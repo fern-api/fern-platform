@@ -1,6 +1,6 @@
 import { CopyToClipboardButton, cn } from "@fern-docs/components";
 import React, { PropsWithChildren } from "react";
-import { useFeatureFlags } from "./SyntaxHighlighterFeatureFlags";
+import { useEdgeFlags } from "./SyntaxHighlighterEdgeFlags";
 
 type CodeBlockWithClipboardButtonProps = {
   code: string;
@@ -9,7 +9,7 @@ type CodeBlockWithClipboardButtonProps = {
 export const CodeBlockWithClipboardButton: React.FC<
   PropsWithChildren<CodeBlockWithClipboardButtonProps>
 > = ({ code, children }) => {
-  const { isDarkCodeEnabled } = useFeatureFlags();
+  const { isDarkCodeEnabled } = useEdgeFlags();
   return (
     <div
       className={cn(

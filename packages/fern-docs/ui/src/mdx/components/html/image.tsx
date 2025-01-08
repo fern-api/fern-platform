@@ -10,7 +10,7 @@ import {
   useContext,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { FILES_ATOM, useFeatureFlags } from "../../../atoms";
+import { FILES_ATOM, useEdgeFlags } from "../../../atoms";
 import { FernImage } from "../../../components/FernImage";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 import { toPixelValue } from "../../../util/to-pixel-value";
@@ -112,7 +112,7 @@ function useIsImageZoomDisabled({
   enableZoom: boolean;
 }) {
   const isImageZoomDisabledContext = useContext(NoZoomContext);
-  const isImageZoomDisabledFeatureFlag = useFeatureFlags().isImageZoomDisabled;
+  const isImageZoomDisabledFeatureFlag = useEdgeFlags().isImageZoomDisabled;
 
   const { "no-image-zoom": isImageZoomDisabledFrontmatter, layout } =
     useFrontmatter();

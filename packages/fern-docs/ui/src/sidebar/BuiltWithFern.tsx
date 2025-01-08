@@ -1,13 +1,13 @@
 import { BuiltWithFern as BuiltWithFernComponent } from "@fern-docs/components";
 import { createContext, useContext, useEffect, useRef } from "react";
 import { trackInternal } from "../analytics";
-import { useDomain, useFeatureFlag } from "../atoms";
+import { useDomain, useEdgeFlag } from "../atoms";
 
 export const BuiltWithFern: React.FC<{ className?: string }> = ({
   className,
 }) => {
   const domain = useDomain();
-  const isWhitelabeled = useFeatureFlag("isWhitelabeled");
+  const isWhitelabeled = useEdgeFlag("isWhitelabeled");
   const hideBuiltWithFern = useContext(HideBuiltWithFernContext);
   const component = useRef<HTMLAnchorElement>(null);
 

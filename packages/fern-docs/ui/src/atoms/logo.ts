@@ -6,10 +6,10 @@ import {
 } from "@fern-api/fdr-sdk/docs";
 import { atom, useAtomValue } from "jotai";
 import { DOCS_ATOM } from "./docs";
-import { FEATURE_FLAGS_ATOM } from "./flags";
+import { EDGE_FLAGS_ATOM } from "./flags";
 
 export const LOGO_TEXT_ATOM = atom<string | undefined>((get) =>
-  get(FEATURE_FLAGS_ATOM).isDocsLogoTextEnabled ? "docs" : undefined
+  get(EDGE_FLAGS_ATOM).isDocsLogoTextEnabled ? "docs" : undefined
 );
 LOGO_TEXT_ATOM.debugLabel = "LOGO_TEXT_ATOM";
 

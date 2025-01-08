@@ -8,7 +8,7 @@ import {
 } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import {
   SEARCH_INDEX,
   algoliaIndexSettingsTask,
@@ -40,9 +40,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const start = Date.now();
-    const [authEdgeConfig, featureFlags] = await Promise.all([
+    const [authEdgeConfig, edgeFlags] = await Promise.all([
       getAuthEdgeConfig(domain),
-      getFeatureFlags(domain),
+      getEdgeFlags(domain),
     ]);
 
     await algoliaIndexSettingsTask({
@@ -70,7 +70,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           ) === Gate.DENY
         );
       },
-      ...featureFlags,
+      ...edgeFlags,
     });
 
     const end = Date.now();

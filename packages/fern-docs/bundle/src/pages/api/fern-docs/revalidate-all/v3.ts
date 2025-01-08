@@ -8,7 +8,7 @@ import {
 import { Revalidator } from "@/server/revalidator";
 import { getDocsDomainNode, getHostNode } from "@/server/xfernhost/node";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
-import { getFeatureFlags } from "@fern-docs/edge-config";
+import { getEdgeFlags } from "@fern-docs/edge-config";
 import { withoutStaging } from "@fern-docs/utils";
 import type { FernDocs } from "@fern-fern/fern-docs-sdk";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -50,8 +50,8 @@ const handler: NextApiHandler = async (
   // never provide a token here because revalidation should only be done on public routes (for now)
   const loader = DocsLoader.for(domain, host);
 
-  const flags = await getFeatureFlags(domain);
-  const root = await loader.withFeatureFlags(flags).root();
+  const flags = await getEdgeFlags(domain);
+  const root = await loader.withEdgeFlags(flags).root();
 
   if (!root) {
     /**

@@ -11,8 +11,8 @@ import {
   type PruningNodeType,
 } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import type { FeatureFlags } from "@fern-docs/utils";
-import { DEFAULT_FEATURE_FLAGS } from "@fern-docs/utils";
+import type { EdgeFlags } from "@fern-docs/utils";
+import { DEFAULT_EDGE_FLAGS } from "@fern-docs/utils";
 import { HTTPSnippet, type TargetId } from "httpsnippet-lite";
 import { UnreachableCaseError } from "ts-essentials";
 import { ApiDefinitionKVCache } from "./ApiDefinitionKVCache";
@@ -37,7 +37,7 @@ const CLIENTS: HTTPSnippetClient[] = [
 export class ApiDefinitionLoader {
   public clone = (): ApiDefinitionLoader => {
     return new ApiDefinitionLoader(this.domain, this.apiDefinitionId)
-      .withFlags(this.flags)
+      .withEdgeFlags(this.edgeFlags)
       .withEnvironment(this.environment)
       .withPrune(...this.prune)
       .withResolveDescriptions(this.resolve)
@@ -66,9 +66,9 @@ export class ApiDefinitionLoader {
     this.cache = ApiDefinitionKVCache.getInstance(domain, apiDefinitionId);
   }
 
-  private flags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
-  public withFlags = (flags: Partial<FeatureFlags>): this => {
-    this.flags = { ...this.flags, ...flags };
+  private edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
+  public withEdgeFlags = (flags: Partial<EdgeFlags>): this => {
+    this.edgeFlags = { ...this.edgeFlags, ...flags };
     return this;
   };
 
@@ -124,7 +124,7 @@ export class ApiDefinitionLoader {
       }
     }
     if (v1.ok) {
-      return ApiDefinitionV1ToLatest.from(v1.body, this.flags).migrate();
+      return ApiDefinitionV1ToLatest.from(v1.body, this.edgeFlags).migrate();
     }
 
     if (!latest.ok) {
@@ -193,7 +193,7 @@ export class ApiDefinitionLoader {
       definition = await this.resolveDescriptions(definition);
     }
 
-    if (this.flags.isHttpSnippetsEnabled) {
+    if (this.edgeFlags.isHttpSnippetsEnabled) {
       definition = await this.resolveHttpCodeSnippets(definition);
     }
 
@@ -266,7 +266,7 @@ export class ApiDefinitionLoader {
       if (
         targetId === "javascript" &&
         snippets[APIV1Read.SupportedLanguage.Typescript]?.length &&
-        !this.flags.alwaysEnableJavaScriptFetch
+        !this.edgeFlags.alwaysEnableJavaScriptFetch
       ) {
         continue;
       }

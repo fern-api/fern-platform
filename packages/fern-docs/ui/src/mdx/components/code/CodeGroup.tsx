@@ -6,7 +6,7 @@ import {
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useState } from "react";
-import { useFeatureFlags } from "../../../atoms";
+import { useEdgeFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
 
 export declare namespace CodeGroup {
@@ -22,7 +22,7 @@ export declare namespace CodeGroup {
 export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   items,
 }) => {
-  const { isDarkCodeEnabled } = useFeatureFlags();
+  const { isDarkCodeEnabled } = useEdgeFlags();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
   const containerClass = clsx(

@@ -35,7 +35,7 @@ import {
   THEME_SWITCH_ENABLED_ATOM,
   atomWithStorageString,
   useClosePlayground,
-  useFeatureFlags,
+  useEdgeFlags,
   useFernUser,
   useIsPlaygroundOpen,
   useSetTheme,
@@ -67,7 +67,7 @@ const askAiAtom = atom(false);
 
 export function SearchV2(): ReactElement | false {
   const version = useAtomValue(CURRENT_VERSION_ATOM);
-  const { isAskAiEnabled } = useFeatureFlags();
+  const { isAskAiEnabled } = useEdgeFlags();
 
   const userToken = useAlgoliaUserToken();
   const user = useFernUser();

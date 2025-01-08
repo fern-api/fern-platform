@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useMemoOne } from "use-memo-one";
 import { useIsLocalPreview } from "../contexts/local-preview";
 import { DOCS_ATOM } from "./docs";
-import { FEATURE_FLAGS_ATOM } from "./flags";
+import { EDGE_FLAGS_ATOM } from "./flags";
 import { RESOLVED_API_DEFINITION_ATOM, RESOLVED_PATH_ATOM } from "./navigation";
 
 const SETTABLE_APIS_ATOM = atom<
@@ -72,7 +72,7 @@ const IS_API_REFERENCE_PAGINATED = atom<boolean>((get) => {
   if (content.type === "api-endpoint-page") {
     return true;
   }
-  return get(FEATURE_FLAGS_ATOM).isApiScrollingDisabled;
+  return get(EDGE_FLAGS_ATOM).isApiScrollingDisabled;
 });
 
 export function useIsApiReferencePaginated(): boolean {
