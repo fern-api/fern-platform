@@ -23,7 +23,6 @@
     "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
-    "@ai-sdk/amazon-bedrock": "^1.0.7",
     "@ai-sdk/anthropic": "^1.0.5",
     "@ai-sdk/openai": "^1.0.8",
     "@algolia/client-search": "^5.15.0",
