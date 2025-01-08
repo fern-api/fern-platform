@@ -36,7 +36,7 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
 
       let apiDefinitionId = FdrAPI.ApiDefinitionId(uuidv4());
       app.logger.debug(
-        `Creating API Definition in database with name=${req.body.apiId} for org ${req.body.orgId}`,
+        `Creating API Definition in database with id=${apiDefinitionId} for org ${req.body.orgId}`,
         REGISTER_API_DEFINITION_META
       );
       let transformedApiDefinition:
