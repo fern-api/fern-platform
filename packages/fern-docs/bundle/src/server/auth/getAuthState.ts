@@ -175,6 +175,10 @@ export async function getAuthState(
 ): Promise<AuthState & DomainAndHost> {
   authConfig ??= await getAuthEdgeConfig(domain);
   const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+  const previewAuthConfig =
+    orgMetadata != null
+      ? await getPreviewUrlAuthConfig(orgMetadata)
+      : undefined;
 
   const authState = await getAuthStateInternal({
     host,
@@ -182,17 +186,19 @@ export async function getAuthState(
     pathname,
     authConfig,
     setFernToken,
-    previewAuthConfig:
-      orgMetadata != null
-        ? await getPreviewUrlAuthConfig(orgMetadata)
-        : undefined,
+    previewAuthConfig,
   });
+
+  const allowedDestinations = getAllowedRedirectUrls(
+    authConfig,
+    previewAuthConfig
+  );
 
   return {
     ...authState,
     domain,
     host,
-    allowedDestinations: getAllowedRedirectUrls(authConfig),
+    allowedDestinations,
   };
 }
 
