@@ -1,6 +1,6 @@
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider, Toaster } from "@fern-docs/components";
-import { SyntaxHighlighterFeatureFlagsProvider } from "@fern-docs/syntax-highlighter";
+import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";
@@ -48,13 +48,13 @@ export function NextApp({
                 className="flex h-screen items-center justify-center"
                 refreshOnError
               >
-                <SyntaxHighlighterFeatureFlagsProvider
+                <SyntaxHighlighterEdgeFlagsProvider
                   isDarkCodeEnabled={
                     pageProps?.edgeFlags?.isDarkCodeEnabled ?? false
                   }
                 >
                   <Component {...pageProps} />
-                </SyntaxHighlighterFeatureFlagsProvider>
+                </SyntaxHighlighterEdgeFlagsProvider>
               </FernErrorBoundary>
             </SWRConfig>
           </FernTooltipProvider>
