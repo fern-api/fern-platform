@@ -77,10 +77,14 @@ function BuiltWithFernWatcher({
         !width ||
         width < 50 ||
         !height ||
-        height < 14
+        height < 10
       ) {
         // send alert to fern that builtwithfern was removed from the DOM
         trackInternal("builtwithfern_removed");
+
+        if (process.env.NODE_ENV === "development") {
+          console.debug("builtwithfern is not visible");
+        }
       }
     };
 
