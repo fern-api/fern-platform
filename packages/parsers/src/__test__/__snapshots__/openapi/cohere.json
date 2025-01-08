@@ -38256,27 +38256,33 @@
   "subpackages": {
     "v2": {
       "id": "v2",
-      "name": "v2"
+      "name": "v2",
+      "displayName": "v2"
     },
-    "embed-jobs": {
-      "id": "embed-jobs",
-      "name": "embed-jobs"
+    "embedJobs": {
+      "id": "embedJobs",
+      "name": "embed-jobs",
+      "displayName": "embed-jobs"
     },
     "datasets": {
       "id": "datasets",
-      "name": "datasets"
+      "name": "datasets",
+      "displayName": "datasets"
     },
     "connectors": {
       "id": "connectors",
-      "name": "connectors"
+      "name": "connectors",
+      "displayName": "connectors"
     },
     "models": {
       "id": "models",
-      "name": "models"
+      "name": "models",
+      "displayName": "models"
     },
     "finetuning": {
       "id": "finetuning",
-      "name": "finetuning"
+      "name": "finetuning",
+      "displayName": "finetuning"
     }
   },
   "auths": {

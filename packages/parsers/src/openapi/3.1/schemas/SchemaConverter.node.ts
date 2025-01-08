@@ -95,7 +95,10 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
           accessPath: this.accessPath,
           pathId: this.pathId,
         });
-      } else if (isNonArraySchema(this.input) && this.input.oneOf != null) {
+      } else if (
+        isNonArraySchema(this.input) &&
+        (this.input.oneOf != null || this.input.anyOf != null)
+      ) {
         this.typeShapeNode = new OneOfConverterNode({
           input: this.input,
           context: this.context,

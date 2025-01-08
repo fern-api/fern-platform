@@ -40,7 +40,6 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         | FdrAPI.api.latest.ApiDefinition
         | undefined;
 
-      console.log(req.body.definition);
       if (
         req.body.definition != null &&
         Object.keys(req.body.definition).length > 0
@@ -152,7 +151,9 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
           : app.services.db.prisma.apiDefinitionsV2
       ).create({
         data: {
-          apiDefinitionId,
+          apiDefinitionId: isLatest
+            ? transformedApiDefinition.id
+            : apiDefinitionId,
           apiName: req.body.apiId,
           orgId: req.body.orgId,
           definition: writeBuffer(transformedApiDefinition),

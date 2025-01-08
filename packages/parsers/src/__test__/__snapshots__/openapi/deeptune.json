@@ -910,13 +910,15 @@
     }
   },
   "subpackages": {
-    "text_to_speech": {
-      "id": "text_to_speech",
-      "name": "text_to_speech"
+    "textToSpeech": {
+      "id": "textToSpeech",
+      "name": "text_to_speech",
+      "displayName": "text_to_speech"
     },
     "voices": {
       "id": "voices",
-      "name": "voices"
+      "name": "voices",
+      "displayName": "voices"
     }
   },
   "auths": {}
