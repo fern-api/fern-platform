@@ -1,4 +1,5 @@
 import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
+import { v4 } from "uuid";
 import { expect, inject, it } from "vitest";
 import {
   createApiDefinition,
@@ -95,7 +96,7 @@ const EMPTY_REGISTER_API_LATEST_DEFINITION: FdrAPI.api.latest.ApiDefinition = {
   subpackages: {},
   websockets: {},
   webhooks: {},
-  id: FdrAPI.ApiDefinitionId("api"),
+  id: FdrAPI.ApiDefinitionId(v4()),
   auths: {},
   globalHeaders: undefined,
 };
