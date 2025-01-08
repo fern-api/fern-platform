@@ -23,6 +23,7 @@ import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
+import { LaunchDarklyInfo } from "../../../ui/src/atoms/types";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
@@ -329,11 +330,14 @@ export async function withInitialProps({
   const serializeMdx = await getMdxBundler(engine);
 
   const launchDarklyConfig = await getLaunchDarklySettings(docs.baseUrl.domain);
-  const launchDarklyInfo = launchDarklyConfig?.["client-side-id"]
-    ? {
-        clientSideId: launchDarklyConfig?.["client-side-id"],
-      }
-    : undefined;
+  const launchDarklyInfo: LaunchDarklyInfo | undefined =
+    !!launchDarklyConfig?.["client-side-id"] &&
+    !!launchDarklyConfig?.["user-context-endpoint"]
+      ? {
+          clientSideId: launchDarklyConfig?.["client-side-id"],
+          userContextEndpoint: launchDarklyConfig?.["user-context-endpoint"],
+        }
+      : undefined;
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,

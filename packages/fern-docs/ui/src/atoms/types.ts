@@ -53,6 +53,7 @@ export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
 
 export interface LaunchDarklyInfo {
   clientSideId: string;
+  userContextEndpoint: string;
 }
 
 export interface FeatureFlags {

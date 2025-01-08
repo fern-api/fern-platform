@@ -15,14 +15,17 @@ export const FeatureFlagProvider: FC<FeatureFlagProviderProps> = ({
   pageProps,
   children,
 }) => {
-  const ldClientSideId = pageProps?.featureFlags?.launchDarkly?.clientSideId;
+  const launchDarklyInfo = pageProps?.featureFlags?.launchDarkly;
 
-  if (!ldClientSideId) {
+  if (!launchDarklyInfo) {
     return <>{children}</>;
   }
 
   return (
-    <LDFeatureFlagProvider clientSideId={ldClientSideId}>
+    <LDFeatureFlagProvider
+      clientSideId={launchDarklyInfo.clientSideId}
+      userContextEndpoint={launchDarklyInfo.userContextEndpoint}
+    >
       {children}
     </LDFeatureFlagProvider>
   );
