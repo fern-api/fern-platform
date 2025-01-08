@@ -7,7 +7,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { FernUser } from "@fern-docs/auth";
 import { NextSeoProps } from "@fern-docs/next-seo";
-import type { FeatureFlags } from "@fern-docs/utils";
+import type { EdgeFlags } from "@fern-docs/utils";
 import {
   ColorsConfig,
   SidebarTab,
@@ -51,6 +51,15 @@ export interface GithubNavbarLink {
 
 export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
 
+export interface LaunchDarklyInfo {
+  clientSideId: string;
+  userContextEndpoint: string;
+}
+
+export interface FeatureFlags {
+  launchDarkly: LaunchDarklyInfo | undefined;
+}
+
 export interface DocsProps {
   baseUrl: DocsV2Read.BaseUrl;
   navigation: NavigationProps;
@@ -65,7 +74,7 @@ export interface DocsProps {
   logoHref: DocsV1Read.Url | undefined;
   files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
   content: DocsContent;
-  featureFlags: FeatureFlags;
+  edgeFlags: EdgeFlags;
   apis: FdrAPI.ApiDefinitionId[];
   seo: NextSeoProps;
   analytics: CustomerAnalytics | undefined; // deprecated
@@ -75,4 +84,5 @@ export interface DocsProps {
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   stylesheet: string;
+  featureFlags: FeatureFlags | undefined;
 }

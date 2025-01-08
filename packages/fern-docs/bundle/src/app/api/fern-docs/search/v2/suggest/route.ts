@@ -3,7 +3,7 @@ import { algoliaAppId, anthropicApiKey } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { searchClient } from "@algolia/client-search";
-import { getFeatureFlags } from "@fern-docs/edge-config";
+import { getEdgeFlags } from "@fern-docs/edge-config";
 import { SuggestionsSchema } from "@fern-docs/search-server";
 import {
   SEARCH_INDEX,
@@ -32,10 +32,10 @@ export async function POST(req: NextRequest): Promise<Response> {
 
   const start = Date.now();
   const domain = getDocsDomainEdge(req);
-  const featureFlags = await getFeatureFlags(domain);
+  const edgeFlags = await getEdgeFlags(domain);
   const cookieJar = cookies();
 
-  if (!featureFlags.isAskAiEnabled) {
+  if (!edgeFlags.isAskAiEnabled) {
     throw new Error(`Ask AI is not enabled for ${domain}`);
   }
 

@@ -12,7 +12,7 @@ import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   PLAYGROUND_REQUEST_TYPE_ATOM,
   store,
-  useFeatureFlags,
+  useEdgeFlags,
 } from "../../atoms";
 import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnvironment";
 import { PlaygroundRequestPreview } from "../PlaygroundRequestPreview";
@@ -29,8 +29,7 @@ export function PlaygroundEndpointRequestCard({
   context,
   formState,
 }: PlaygroundEndpointRequestCardProps): ReactElement | null {
-  const { isSnippetTemplatesEnabled, isFileForgeHackEnabled } =
-    useFeatureFlags();
+  const { isSnippetTemplatesEnabled, isFileForgeHackEnabled } = useEdgeFlags();
   const [requestType, setRequestType] = useAtom(PLAYGROUND_REQUEST_TYPE_ATOM);
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const proxyEnvironment = useStandardProxyEnvironment();

@@ -3,7 +3,7 @@ import { atom, useAtomValue, useSetAtom } from "jotai";
 import { RESET, atomWithDefault, useAtomCallback } from "jotai/utils";
 import { useCallback } from "react";
 import { useCallbackOne, useMemoOne } from "use-memo-one";
-import { FEATURE_FLAGS_ATOM } from "./flags";
+import { EDGE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { DOCS_LAYOUT_ATOM } from "./layout";
 import {
@@ -226,7 +226,7 @@ export const useToggleExpandedSidebarNode = (
             };
           } else {
             const parents = childToParentsMap.get(nodeId) ?? [];
-            const { isApiScrollingDisabled } = get(FEATURE_FLAGS_ATOM);
+            const { isApiScrollingDisabled } = get(EDGE_FLAGS_ATOM);
 
             // if long scrolling is enabled, implicitly "expand" its parent nodes
             if (!isApiScrollingDisabled) {

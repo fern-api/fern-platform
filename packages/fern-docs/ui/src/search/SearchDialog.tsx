@@ -8,8 +8,8 @@ import {
   IS_MOBILE_SCREEN_ATOM,
   SEARCH_DIALOG_OPEN_ATOM,
   useDomain,
-  useFeatureFlag,
-  useFeatureFlags,
+  useEdgeFlag,
+  useEdgeFlags,
   useIsSearchDialogOpen,
   useSidebarNodes,
 } from "../atoms";
@@ -25,7 +25,7 @@ import { InkeepCustomTrigger } from "./inkeep/InkeepCustomTrigger";
 import { useSearchTrigger } from "./useSearchTrigger";
 
 export const SearchDialog = (): ReactNode => {
-  const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
+  const isSearchV2Enabled = useEdgeFlag("isSearchV2Enabled");
   if (isSearchV2Enabled) {
     return false;
   }
@@ -84,7 +84,7 @@ export const SearchSidebar: React.FC<
   const inputRef = useRef<HTMLInputElement>(null);
   const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
-  const { isNewSearchExperienceEnabled } = useFeatureFlags();
+  const { isNewSearchExperienceEnabled } = useEdgeFlags();
 
   if (!searchConfig.isAvailable || !isMobileScreen) {
     return children;

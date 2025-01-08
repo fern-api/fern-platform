@@ -5,7 +5,7 @@ import { FC, useMemo } from "react";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
-  useFeatureFlags,
+  useEdgeFlags,
 } from "../atoms";
 import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
@@ -24,9 +24,9 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
   formState,
   requestType,
 }) => {
-  const { isSnippetTemplatesEnabled } = useFeatureFlags();
+  const { isSnippetTemplatesEnabled } = useEdgeFlags();
   const authState = useAtomValue(PLAYGROUND_AUTH_STATE_ATOM);
-  const { isFileForgeHackEnabled } = useFeatureFlags();
+  const { isFileForgeHackEnabled } = useEdgeFlags();
   const [oAuthValue, setOAuthValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
 

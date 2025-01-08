@@ -1,6 +1,6 @@
 import { FernAudioPlayer } from "@fern-docs/components";
 import { FC } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { TitledExample } from "./TitledExample";
 
@@ -10,7 +10,7 @@ export declare namespace AudioExample {
 }
 
 const AudioExampleInternal: FC<AudioExample.Props> = ({ ...props }) => {
-  const { isAudioExampleInternal } = useFeatureFlags();
+  const { isAudioExampleInternal } = useEdgeFlags();
 
   if (!isAudioExampleInternal) {
     return null;

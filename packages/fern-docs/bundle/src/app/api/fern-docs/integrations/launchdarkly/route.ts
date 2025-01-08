@@ -11,8 +11,7 @@ import { NextRequest, NextResponse, userAgent } from "next/server";
 
 export const runtime = "edge";
 
-interface LaunchDarklyInfo {
-  clientSideId: string;
+interface LaunchDarklyContext {
   kind: "multi";
   user:
     | { anonymous: true }
@@ -29,7 +28,7 @@ interface LaunchDarklyInfo {
 
 export async function GET(
   req: NextRequest
-): Promise<NextResponse<LaunchDarklyInfo | undefined>> {
+): Promise<NextResponse<LaunchDarklyContext | undefined>> {
   const domain = getDocsDomainEdge(req);
 
   const config = await safeGetLaunchDarklySettings(domain);
@@ -40,7 +39,6 @@ export async function GET(
   }
 
   return NextResponse.json({
-    clientSideId,
     kind: "multi" as const,
     user: await getUserContext(req),
     device: await getDeviceContext(req),
@@ -72,7 +70,7 @@ async function hashString(
 
 async function getUserContext(
   req: NextRequest
-): Promise<LaunchDarklyInfo["user"]> {
+): Promise<LaunchDarklyContext["user"]> {
   const jar = cookies();
 
   const fernToken = jar.get(COOKIE_FERN_TOKEN)?.value;
@@ -102,7 +100,7 @@ async function getUserContext(
 
 async function getDeviceContext(
   req: NextRequest
-): Promise<LaunchDarklyInfo["device"]> {
+): Promise<LaunchDarklyContext["device"]> {
   const agent = userAgent(req);
 
   const hash = (await hashString(agent.ua)) ?? crypto.randomUUID();

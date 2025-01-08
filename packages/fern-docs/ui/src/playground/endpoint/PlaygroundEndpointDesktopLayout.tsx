@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { HorizontalSplitPane, VerticalSplitPane } from "../VerticalSplitPane";
 
 interface PlaygroundEndpointDesktopLayoutProps {
@@ -17,7 +17,7 @@ export function PlaygroundEndpointDesktopLayout({
   responseCard,
   endpointId,
 }: PlaygroundEndpointDesktopLayoutProps): ReactElement {
-  const { grpcEndpoints } = useFeatureFlags();
+  const { grpcEndpoints } = useEdgeFlags();
 
   return (
     <HorizontalSplitPane

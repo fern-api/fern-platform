@@ -1,6 +1,6 @@
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernTooltipProvider, Toaster } from "@fern-docs/components";
-import { SyntaxHighlighterFeatureFlagsProvider } from "@fern-docs/syntax-highlighter";
+import { SyntaxHighlighterEdgeFlagsProvider } from "@fern-docs/syntax-highlighter";
 import { Provider as JotaiProvider } from "jotai";
 import type { AppProps } from "next/app";
 import { ReactElement } from "react";
@@ -12,6 +12,7 @@ import { LocalPreviewContextProvider } from "../contexts/local-preview";
 import "../css/globals.scss";
 import { NextNProgress } from "../header/NProgress";
 import { useInterceptNextDataHref } from "../hooks/useInterceptNextDataHref";
+import { FeatureFlagProvider } from "../mdx/components/feature/FeatureFlagProvider";
 import { ThemeScript } from "../themes/ThemeScript";
 
 export function NextApp({
@@ -29,33 +30,35 @@ export function NextApp({
   return (
     <JotaiProvider store={store}>
       <HydrateAtoms pageProps={pageProps}>
-        <ThemeScript colors={pageProps?.colors} />
-        <NextNProgress
-          options={{ showSpinner: false, speed: 400 }}
-          showOnShallow={false}
-        />
-        <CustomerAnalytics />
-        <Toaster />
-        <FernTooltipProvider>
-          <SWRConfig
-            value={{
-              fallback: pageProps?.fallback ?? EMPTY_OBJECT,
-            }}
-          >
-            <FernErrorBoundary
-              className="flex h-screen items-center justify-center"
-              refreshOnError
+        <FeatureFlagProvider pageProps={pageProps}>
+          <ThemeScript colors={pageProps?.colors} />
+          <NextNProgress
+            options={{ showSpinner: false, speed: 400 }}
+            showOnShallow={false}
+          />
+          <CustomerAnalytics />
+          <Toaster />
+          <FernTooltipProvider>
+            <SWRConfig
+              value={{
+                fallback: pageProps?.fallback ?? EMPTY_OBJECT,
+              }}
             >
-              <SyntaxHighlighterFeatureFlagsProvider
-                isDarkCodeEnabled={
-                  pageProps?.featureFlags?.isDarkCodeEnabled ?? false
-                }
+              <FernErrorBoundary
+                className="flex h-screen items-center justify-center"
+                refreshOnError
               >
-                <Component {...pageProps} />
-              </SyntaxHighlighterFeatureFlagsProvider>
-            </FernErrorBoundary>
-          </SWRConfig>
-        </FernTooltipProvider>
+                <SyntaxHighlighterEdgeFlagsProvider
+                  isDarkCodeEnabled={
+                    pageProps?.edgeFlags?.isDarkCodeEnabled ?? false
+                  }
+                >
+                  <Component {...pageProps} />
+                </SyntaxHighlighterEdgeFlagsProvider>
+              </FernErrorBoundary>
+            </SWRConfig>
+          </FernTooltipProvider>
+        </FeatureFlagProvider>
       </HydrateAtoms>
     </JotaiProvider>
   );

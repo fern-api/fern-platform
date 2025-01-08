@@ -5,7 +5,7 @@ import {
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { FC, createRef, useCallback, useEffect, useMemo } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
@@ -38,7 +38,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
   className,
   ...props
 }) => {
-  const { isDarkCodeEnabled } = useFeatureFlags();
+  const { isDarkCodeEnabled } = useEdgeFlags();
   const codeBlockRef = createRef<HTMLPreElement>();
   const viewportRef = createRef<ScrollToHandle>();
 
