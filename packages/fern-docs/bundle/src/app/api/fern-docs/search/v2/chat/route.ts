@@ -20,9 +20,10 @@ import { z } from "zod";
 export async function POST(req: NextRequest) {
   const bedrock = createAmazonBedrock({
     region: "us-east-1",
-    // AWS credentials taken from .env.local
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
-  const model = bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0");
+  const languageModel = bedrock("us.anthropic.claude-3-5-sonnet-20241022-v2:0");
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
@@ -76,11 +77,11 @@ export async function POST(req: NextRequest) {
   });
 
   const result = streamText({
-    model: model,
+    model: languageModel,
     system,
     messages,
-    maxSteps: 10,
-    maxRetries: 3,
+    maxSteps: 100,
+    maxRetries: 10,
     tools: {
       search: tool({
         description:
@@ -110,7 +111,7 @@ export async function POST(req: NextRequest) {
       functionId: "ask_ai_chat",
       metadata: {
         domain,
-        languageModel: model.modelId,
+        languageModel: languageModel.modelId,
         embeddingModel: embeddingModel.modelId,
         db: "turbopuffer",
         namespace,
@@ -119,7 +120,7 @@ export async function POST(req: NextRequest) {
     onFinish: async (e) => {
       const end = Date.now();
       await track("ask_ai", {
-        languageModel: model.modelId,
+        languageModel: languageModel.modelId,
         embeddingModel: embeddingModel.modelId,
         durationMs: end - start,
         domain,
