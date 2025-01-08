@@ -8,6 +8,7 @@ import {
 } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createAnthropic } from "@ai-sdk/anthropic";
+// import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
@@ -23,7 +24,7 @@ import { z } from "zod";
 
 export async function POST(req: NextRequest) {
   const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-  const languageModel = anthropic.languageModel("claude-3-5-sonnet-latest");
+  const languageModel = anthropic("claude-3-5-sonnet-latest");
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");

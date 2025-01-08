@@ -830,11 +830,13 @@
   "subpackages": {
     "pet": {
       "id": "pet",
-      "name": "pet"
+      "name": "pet",
+      "displayName": "pet"
     },
     "pets": {
       "id": "pets",
-      "name": "pets"
+      "name": "pets",
+      "displayName": "pets"
     }
   },
   "auths": {}
