@@ -2127,9 +2127,6 @@ importers:
       jsonpath:
         specifier: ^1.1.1
         version: 1.1.1
-      launchdarkly-js-client-sdk:
-        specifier: ^3.4.0
-        version: 3.4.0
       launchdarkly-react-client-sdk:
         specifier: ^3.6.0
         version: 3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -11872,14 +11869,8 @@ packages:
     resolution: {integrity: sha512-7W0vV3rqv5tokqkBAFV1LbR7HPOWzXQDpDgEuib/aJ1jsZZx6x3c2mBI+TJhJzOhkGeaLbCKEHXEXLfirtG2JA==}
     engines: {node: '>=18'}
 
-  launchdarkly-js-client-sdk@3.4.0:
-    resolution: {integrity: sha512-3v1jKy1RECT0SG/3SGlyRO32vweoNxvWiJuIChRh/Zhk98cHpANuwameXVhwJ4WEDNZJTur73baaKAyatSP46A==}
-
   launchdarkly-js-client-sdk@3.5.0:
     resolution: {integrity: sha512-3dgxC9S8K2ix6qjdArjZGOJPtAytgfQTuE+vWgjWJK7725rpYbuqbHghIFr5B0+WyWyVBYANldjWd1JdtYLwsw==}
-
-  launchdarkly-js-sdk-common@5.3.0:
-    resolution: {integrity: sha512-NI5wFF8qhjtpRb4KelGdnwNIOf/boLlbLiseV7uf1jxSeoM/L30DAz87RT8VhYCSGCo4LedGILQFednI/MKFkA==}
 
   launchdarkly-js-sdk-common@5.4.0:
     resolution: {integrity: sha512-Kb3SDcB6S0HUpFNBZgtEt0YUV/fVkyg+gODfaOCJQ0Y0ApxLKNmmJBZOrPE2qIdzw536u4BqEjtaJdqJWCEElg==}
@@ -28496,21 +28487,10 @@ snapshots:
     dependencies:
       package-json: 10.0.0
 
-  launchdarkly-js-client-sdk@3.4.0:
-    dependencies:
-      escape-string-regexp: 4.0.0
-      launchdarkly-js-sdk-common: 5.3.0
-
   launchdarkly-js-client-sdk@3.5.0:
     dependencies:
       escape-string-regexp: 4.0.0
       launchdarkly-js-sdk-common: 5.4.0
-
-  launchdarkly-js-sdk-common@5.3.0:
-    dependencies:
-      base64-js: 1.5.1
-      fast-deep-equal: 2.0.1
-      uuid: 8.3.2
 
   launchdarkly-js-sdk-common@5.4.0:
     dependencies:
