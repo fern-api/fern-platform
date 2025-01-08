@@ -47,6 +47,8 @@ export const FernImage = forwardRef<
         alt={props.alt}
         fetchPriority={props.priority ? "high" : undefined}
         loading={props.priority ? "eager" : undefined}
+        // on local dev, the preflight css for <img> tags is `max-width: 100%; height: auto;`
+        // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
         style={{
           width,
           height,
@@ -74,6 +76,8 @@ export const FernImage = forwardRef<
         pathname?.endsWith(".svg") ||
         props.unoptimized
       }
+      // on local dev, the preflight css for <img> tags is `max-width: 100%; height: auto;`
+      // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
       style={{
         width,
         height,
