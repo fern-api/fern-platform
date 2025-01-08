@@ -80,8 +80,8 @@ export async function POST(req: NextRequest) {
     model: languageModel,
     system,
     messages,
-    maxSteps: 100,
-    maxRetries: 10,
+    maxSteps: 10,
+    maxRetries: 3,
     tools: {
       search: tool({
         description:
