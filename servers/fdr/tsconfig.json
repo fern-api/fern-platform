@@ -16,7 +16,7 @@
     "moduleResolution": "bundler"
   },
   "include": ["./src/**/*"],
-  "exclude": ["**/generated", "**/__test__"],
+  "exclude": ["**/__test__"],
   "references": [
     {
       "path": "../../packages/commons/github"
