@@ -9,7 +9,7 @@ export declare namespace Feature {
   export interface Props<T> {
     flag: string;
     flagDefaultValue?: T;
-    match: T;
+    match?: T;
     children: React.ReactNode;
   }
 }
