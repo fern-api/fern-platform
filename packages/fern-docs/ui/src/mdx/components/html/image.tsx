@@ -25,9 +25,7 @@ export function NoZoom({ children }: { children: ReactNode }) {
 
 export const Image = forwardRef<
   HTMLImageElement,
-  Omit<ComponentPropsWithoutRef<typeof FernImage>, "src"> & {
-    src: string | undefined;
-
+  ComponentPropsWithoutRef<"img"> & {
     /**
      * @default false
      */
