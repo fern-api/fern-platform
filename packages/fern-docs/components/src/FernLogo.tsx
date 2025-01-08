@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { ComponentPropsWithoutRef, forwardRef } from "react";
 
 export enum FernLogoFill {
   /**
@@ -49,16 +50,21 @@ export declare namespace FernLogo {
   }
 }
 
-export const FernLogo: React.FC<FernLogo.Props> = ({
-  fill = FernLogoFill.Default,
-  className,
-}) => {
+export const FernLogo = forwardRef<
+  SVGSVGElement,
+  ComponentPropsWithoutRef<"svg"> & { fill?: FernLogoFill }
+>(({ fill = FernLogoFill.Default, ...props }, ref) => {
   return (
     <svg
+      ref={ref}
       viewBox="0 0 604 164"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={clsx("aspect-[604/164]", className)}
+      {...props}
+      style={{
+        aspectRatio: "604/164",
+        ...props.style,
+      }}
     >
       <path
         fillRule="evenodd"
@@ -91,4 +97,6 @@ export const FernLogo: React.FC<FernLogo.Props> = ({
       />
     </svg>
   );
-};
+});
+
+FernLogo.displayName = "FernLogo";
