@@ -164,7 +164,9 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         REGISTER_API_DEFINITION_META
       );
       return res.send({
-        apiDefinitionId,
+        apiDefinitionId: isLatest
+          ? transformedApiDefinition.id
+          : apiDefinitionId,
         sources,
       });
     },
