@@ -15,6 +15,12 @@ export const BuiltWithFern: React.FC<{ className?: string }> = ({
     return null;
   }
 
+  /**
+   * if the docs is not whitelabeled, the following ensures that builtwithfern is not removed from the DOM:
+   * - we'll use a inline <style> tag to ensure that the !important rules are applied and cannot be overridden using custom CSS
+   * - then, we'll use a setTimeout to check if builtwithfern is visible 15 seconds after it's mounted
+   * - and if it's not visible, we'll emit an internal event: "builtwithfern_removed"
+   */
   return (
     <>
       <style>
