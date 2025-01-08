@@ -25,6 +25,7 @@ types:
       id: TypeReferenceId
       primitive: PrimitiveType
       optional: OptionalType
+      nullable: NullableType
       list: ListType
       set: SetType
       map: MapType
@@ -135,6 +136,11 @@ types:
       key: rootCommons.PropertyKey
       isOptional: boolean
       contentType: optional<ContentType>
+
+  NullableType:
+    properties:
+      shape: TypeShape
+      default: none
 
   OptionalType:
     properties:
