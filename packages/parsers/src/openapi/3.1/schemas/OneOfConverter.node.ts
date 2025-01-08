@@ -27,10 +27,12 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   }
 
   parse(): void {
-    if (this.input.oneOf != null) {
+    if (this.input.oneOf != null || this.input.anyOf != null) {
       if (this.input.discriminator == null) {
         this.discriminated = false;
-        this.undiscriminatedMapping = this.input.oneOf?.map((schema) => {
+        this.undiscriminatedMapping = (
+          this.input.oneOf ?? this.input.anyOf
+        )?.map((schema) => {
           return new SchemaConverterNode({
             input: schema,
             context: this.context,
