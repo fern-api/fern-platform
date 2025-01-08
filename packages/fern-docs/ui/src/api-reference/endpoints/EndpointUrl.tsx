@@ -4,11 +4,11 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
 import React, {
   PropsWithChildren,
   ReactElement,
-  useImperativeHandle,
   useMemo,
   useRef,
   useState,
@@ -44,12 +44,9 @@ export const EndpointUrl = React.forwardRef<
     showEnvironment,
     options,
   },
-  parentRef
+  forwardedRef
 ) {
   const ref = useRef<HTMLDivElement>(null);
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(parentRef, () => ref.current!);
 
   const [isHovered, setIsHovered] = useState(false);
   const isEditingEnvironment = useBooleanState(false);
@@ -110,7 +107,10 @@ export const EndpointUrl = React.forwardRef<
   }, [options, environmentId, baseUrl]);
 
   return (
-    <div ref={ref} className={cn("flex items-center gap-1 pr-2", className)}>
+    <div
+      ref={composeRefs(forwardedRef, ref)}
+      className={cn("flex items-center gap-1 pr-2", className)}
+    >
       <HttpMethodBadge method={method} />
 
       <div className={cn("flex items-center")}>
@@ -124,41 +124,35 @@ export const EndpointUrl = React.forwardRef<
                 path,
               })
             }
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
           >
-            {(onClick) => (
-              <button
-                onClick={onClick}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-              >
-                <span
-                  className={cn("font-mono", {
-                    "text-xs": !large,
-                    "text-sm": large,
-                  })}
-                >
-                  {showEnvironment && (
-                    <span className="whitespace-nowrap max-sm:hidden">
-                      <MaybeEnvironmentDropdown
-                        baseUrl={baseUrl}
-                        environmentId={environmentId}
-                        options={options}
-                        urlTextStyle="t-muted"
-                        protocolTextStyle="text-faded"
-                        isEditingEnvironment={isEditingEnvironment}
-                        editable
-                      />
-                    </span>
-                  )}
-                  {!showEnvironment &&
-                    environmentBasepath &&
-                    environmentBasepath !== "/" && (
-                      <span className="t-muted">{environmentBasepath}</span>
-                    )}
-                  {pathParts}
+            <span
+              className={cn("font-mono", {
+                "text-xs": !large,
+                "text-sm": large,
+              })}
+            >
+              {showEnvironment && (
+                <span className="whitespace-nowrap max-sm:hidden">
+                  <MaybeEnvironmentDropdown
+                    baseUrl={baseUrl}
+                    environmentId={environmentId}
+                    options={options}
+                    urlTextStyle="t-muted"
+                    protocolTextStyle="text-faded"
+                    isEditingEnvironment={isEditingEnvironment}
+                    editable
+                  />
                 </span>
-              </button>
-            )}
+              )}
+              {!showEnvironment &&
+                environmentBasepath &&
+                environmentBasepath !== "/" && (
+                  <span className="t-muted">{environmentBasepath}</span>
+                )}
+              {pathParts}
+            </span>
           </CopyToClipboardButton>
         </span>
       </div>

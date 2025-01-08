@@ -1,4 +1,4 @@
-import { Slot } from "@radix-ui/react-slot";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import { VariantProps, cva } from "class-variance-authority";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 
@@ -42,6 +42,7 @@ const badgeVariants = cva("fern-docs-badge", {
       solid: "solid",
       outlined: "outlined",
       "outlined-subtle": "outlined-subtle",
+      ghost: "ghost",
     },
     rounded: {
       true: "rounded",
@@ -150,10 +151,10 @@ export const Badge = forwardRef<
     >
       {skeleton ? (
         <span style={{ visibility: "hidden", display: "contents" }}>
-          {children}
+          <Slottable>{children}</Slottable>
         </span>
       ) : (
-        children
+        <Slottable>{children}</Slottable>
       )}
     </Comp>
   );
