@@ -47,6 +47,11 @@ export const FernImage = forwardRef<
         alt={props.alt}
         fetchPriority={props.priority ? "high" : undefined}
         loading={props.priority ? "eager" : undefined}
+        style={{
+          width,
+          height,
+          ...props.style,
+        }}
       />
     );
   }
@@ -69,6 +74,11 @@ export const FernImage = forwardRef<
         pathname?.endsWith(".svg") ||
         props.unoptimized
       }
+      style={{
+        width,
+        height,
+        ...props.style,
+      }}
     />
   );
 });
