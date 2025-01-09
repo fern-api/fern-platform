@@ -71,7 +71,7 @@ export const CommandLink = forwardRef<
     return (
       <Command.Item {...props} value={href} asChild>
         <Comp
-          ref={composeRefs(forwardedRef, ref)}
+          ref={composeRefs(ref, forwardedRef)}
           href={href}
           target={target}
           rel={rel}

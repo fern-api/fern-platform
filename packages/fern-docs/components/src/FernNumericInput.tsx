@@ -1,4 +1,5 @@
 import { useEventCallback } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn from "clsx";
 import { Minus, Plus } from "iconoir-react";
 import {
@@ -7,7 +8,6 @@ import {
   forwardRef,
   useCallback,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -35,11 +35,9 @@ export const FernNumericInput = forwardRef<
     disallowFloat,
     ...props
   },
-  ref
+  forwardedRef
 ) {
   const inputRef = useRef<HTMLInputElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(ref, () => inputRef.current!);
 
   const [internalValue, setInternalValue] = useState<number>();
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -127,7 +125,7 @@ export const FernNumericInput = forwardRef<
         />
       )}
       <input
-        ref={inputRef}
+        ref={composeRefs(inputRef, forwardedRef)}
         type="number"
         className={cn("fern-input", inputClassName)}
         value={internalValue ?? value}

@@ -65,7 +65,7 @@ type SidebarLinkProps = PropsWithChildren<
 >;
 
 const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
-  (props, forwardRef) => {
+  (props, forwardedRef) => {
     const {
       icon,
       className,
@@ -171,7 +171,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
 
     return (
       <div
-        ref={composeRefs(forwardRef, ref)}
+        ref={composeRefs(ref, forwardedRef)}
         className={cn("fern-sidebar-link-container", className)}
         data-state={selected ? "active" : "inactive"}
       >
@@ -221,7 +221,7 @@ export const SidebarLink = memo(SidebarLinkInternal);
 export const SidebarSlugLink = forwardRef<
   HTMLDivElement,
   PropsWithChildren<SidebarSlugLinkProps>
->((props, forwardRef) => {
+>((props, forwardedRef) => {
   const { slug, ...innerProps } = props;
   const ref = useRef<HTMLDivElement>(null);
 
@@ -244,7 +244,7 @@ export const SidebarSlugLink = forwardRef<
   return (
     <SidebarLink
       {...innerProps}
-      ref={composeRefs(forwardRef, ref)}
+      ref={composeRefs(ref, forwardedRef)}
       href={href}
       onClick={composeEventHandlers(innerProps.onClick, () => {
         if (href) {

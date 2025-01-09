@@ -65,7 +65,7 @@ const DesktopCommand = forwardRef<
     <DesktopCommandRoot
       label="Search"
       {...props}
-      ref={composeRefs(forwardedRef, ref)}
+      ref={composeRefs(ref, forwardedRef)}
       onPopState={composeEventHandlers(onPopState, handlePopFilters, {
         checkForDefaultPrevented: false,
       })}

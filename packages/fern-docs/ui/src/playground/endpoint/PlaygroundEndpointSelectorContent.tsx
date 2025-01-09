@@ -8,14 +8,7 @@ import {
 } from "@fern-docs/components";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
-import {
-  Fragment,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 import { ApiGroup } from "../utils/flatten-apis";
 import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";
@@ -48,8 +41,6 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
   PlaygroundEndpointSelectorContentProps
 >(({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(ref, () => scrollRef.current!);
 
   const [filterValue, setFilterValue] = useState<string>("");
 

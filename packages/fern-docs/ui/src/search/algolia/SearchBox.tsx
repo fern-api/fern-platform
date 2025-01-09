@@ -1,6 +1,7 @@
 import { getPlatform } from "@fern-api/ui-core-utils";
 import { FernButton, FernInput } from "@fern-docs/components";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Search, Xmark } from "iconoir-react";
 import { atom, useSetAtom } from "jotai";
 import {
@@ -8,7 +9,6 @@ import {
   forwardRef,
   useCallback,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -26,7 +26,7 @@ export const SEARCH_BOX_MOUNTED = atom(false);
 export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
   function SearchBox(
     { queryHook, className, inputClassName, placeholder },
-    ref
+    forwardedRef
   ): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
@@ -41,9 +41,6 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
         setMounted(false);
       };
     }, [setMounted]);
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(ref, () => inputRef.current!);
 
     const setQuery = useCallback(
       (newQuery: string) => {
@@ -113,7 +110,7 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
           }}
         >
           <input
-            ref={inputRef}
+            ref={composeRefs(inputRef, forwardedRef)}
             className={inputClassName}
             autoComplete="off"
             autoCorrect="off"
@@ -137,14 +134,11 @@ export const SearchBox = forwardRef<HTMLInputElement, SearchBoxProps>(
 export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(
   function SearchBox(
     { queryHook, className, inputClassName, placeholder, onFocus },
-    ref
+    forwardedRef
   ): ReactElement {
     const { query, refine } = useSearchBox({ queryHook });
     const [inputValue, setInputValue] = useState(query);
     const inputRef = useRef<HTMLInputElement>(null);
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(ref, () => inputRef.current!);
 
     const setQuery = useCallback(
       (newQuery: string) => {
@@ -180,7 +174,7 @@ export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(
           }}
         >
           <FernInput
-            ref={inputRef}
+            ref={composeRefs(inputRef, forwardedRef)}
             className={inputClassName}
             autoComplete="off"
             autoCorrect="off"

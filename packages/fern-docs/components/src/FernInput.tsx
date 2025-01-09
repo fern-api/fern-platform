@@ -59,7 +59,7 @@ export const FernInput = forwardRef<HTMLInputElement, FernInputProps>(
       <div className={cn("fern-input-group", className)}>
         {leftIcon && <span className="fern-input-icon">{leftIcon}</span>}
         <input
-          ref={composeRefs(forwardedRef, inputRef)}
+          ref={composeRefs(inputRef, forwardedRef)}
           {...props}
           className={cn("fern-input", inputClassName)}
           onChange={composeEventHandlers(

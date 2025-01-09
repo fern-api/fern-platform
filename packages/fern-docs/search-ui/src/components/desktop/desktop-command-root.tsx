@@ -52,7 +52,7 @@ export const DesktopCommandRoot = forwardRef<
       >
         <Command.Root
           label="Search"
-          ref={composeRefs(forwardedRef, ref)}
+          ref={composeRefs(ref, forwardedRef)}
           {...props}
           id="fern-search-desktop-command"
           onKeyDown={composeEventHandlers(

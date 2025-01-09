@@ -156,7 +156,7 @@ export const DesktopCommandWithAskAI = forwardRef<
       <DesktopCommandRoot
         label={askAI ? "Ask AI" : "Search"}
         {...props}
-        ref={composeRefs(forwardedRef, ref)}
+        ref={composeRefs(ref, forwardedRef)}
         shouldFilter={!askAI}
         disableAutoSelection={askAI}
         onPopState={
@@ -487,7 +487,7 @@ const AskAIComposer = forwardRef<
       >
         <DesktopCommandInput asChild>
           <TextArea
-            ref={composeRefs(forwardedRef, inputRef)}
+            ref={composeRefs(inputRef, forwardedRef)}
             autoFocus
             placeholder="Ask AI a question..."
             minLines={1}
