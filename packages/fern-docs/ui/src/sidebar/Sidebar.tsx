@@ -17,8 +17,6 @@ export const Sidebar = memo(function Sidebar({
     return null;
   }
 
-  // TODO: if the <SearchBar /> component is used in a page, don't render the searchbar in the header
-
   return showDismissableSidebar ? (
     <DismissableSidebar className={className} />
   ) : (

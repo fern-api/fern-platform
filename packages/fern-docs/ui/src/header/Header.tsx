@@ -7,6 +7,7 @@ import { useAtomValue } from "jotai";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import {
   NAVBAR_LINKS_ATOM,
+  PAGE_HAS_SEARCHBAR_ATOM,
   SEARCHBAR_PLACEMENT_ATOM,
   useColors,
   useOpenSearchDialog,
@@ -36,8 +37,10 @@ const UnmemoizedHeader = forwardRef<
   const colors = useColors();
   const openSearchDialog = useOpenSearchDialog();
   const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
+  const pageHasSearchBar = useAtomValue(PAGE_HAS_SEARCHBAR_ATOM);
   const searchService = useSearchConfig();
-  const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
+  const showSearchBar =
+    useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER" && !pageHasSearchBar;
 
   const navbarLinksSection = (
     <div className="lg-menu">
@@ -98,8 +101,6 @@ const UnmemoizedHeader = forwardRef<
 
   const githubLink = navbarLinks.find((link) => link.type === "github");
   const githubRepo = githubLink && getGitHubRepo(githubLink.href);
-
-  // TODO: if the <SearchBar /> component is used in a page, don't render the searchbar in the header
 
   return (
     <nav

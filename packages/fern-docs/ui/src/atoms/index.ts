@@ -11,6 +11,7 @@ export * from "./location";
 export * from "./logo";
 export * from "./navigation";
 export * from "./playground";
+export * from "./search";
 export * from "./seo";
 export * from "./sidebar";
 export * from "./store";

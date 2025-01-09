@@ -3,6 +3,7 @@ import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import {
   DOCS_LAYOUT_ATOM,
+  PAGE_HAS_SEARCHBAR_ATOM,
   SEARCHBAR_PLACEMENT_ATOM,
   THEME_SWITCH_ENABLED_ATOM,
 } from "../atoms";
@@ -21,7 +22,9 @@ export declare namespace SidebarFixedItemsSection {
 export const SidebarFixedItemsSection: React.FC<
   SidebarFixedItemsSection.Props
 > = ({ className, showBorder }) => {
-  const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "SIDEBAR";
+  const pageHasSearchBar = useAtomValue(PAGE_HAS_SEARCHBAR_ATOM);
+  const showSearchBar =
+    useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "SIDEBAR" && !pageHasSearchBar;
   const themeSwitchEnabled = useAtomValue(THEME_SWITCH_ENABLED_ATOM);
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
 
