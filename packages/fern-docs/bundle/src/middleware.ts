@@ -17,22 +17,6 @@ export const middleware: NextMiddleware = async (request) => {
   );
 
   /**
-   * Manually reroute chat and suggest endpoints to ferndocs.com
-   * This proxying allows for streaming text to work on prod
-   */
-  if (process.env.NODE_ENV === "production") {
-    if (pathname === "/docs/api/fern-docs/search/v2/chat") {
-      return NextResponse.rewrite(
-        "https://app.ferndocs.com/api/fern-docs/search/v2/chat"
-      );
-    } else if (pathname === "/docs/api/fern-docs/search/v2/suggest") {
-      return NextResponse.rewrite(
-        "https://app.ferndocs.com/api/fern-docs/search/v2/suggest"
-      );
-    }
-  }
-
-  /**
    * Correctly handle 404 and 500 pages
    * so that nextjs doesn't incorrectly match this request to __next_data_catchall
    */
@@ -158,11 +142,6 @@ export const config = {
      */
     "/api/fern-docs/analytics/posthog/:path*",
     "/:prefix*/api/fern-docs/analytics/posthog/:path*",
-    /**
-     * Match AI chat/suggest endpoints
-     */
-    "/docs/api/fern-docs/search/v2/chat",
-    "/docs/api/fern-docs/search/v2/suggest",
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)

@@ -20,6 +20,15 @@ import { z } from "zod";
 export const maxDuration = 60;
 export const revalidate = 0;
 
+// handle CORS preflight requests
+export async function OPTIONS(_: NextRequest) {
+  const response = new NextResponse();
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  return response;
+}
+
 export async function POST(req: NextRequest) {
   const bedrock = createAmazonBedrock({
     region: "us-west-2",
@@ -138,7 +147,11 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return result.toDataStreamResponse();
+  const response = result.toDataStreamResponse();
+  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  response.headers.set("Access-Control-Allow-Headers", "Content-Type");
+  return response;
 }
 
 async function runQueryTurbopuffer(
