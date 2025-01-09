@@ -89,7 +89,7 @@ export function SearchV2(): ReactElement | false {
   let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
   let suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
 
-  if (process.env.VERCEL_ENV === "production") {
+  if (process.env.NODE_ENV === "production") {
     chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
     suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
   }
