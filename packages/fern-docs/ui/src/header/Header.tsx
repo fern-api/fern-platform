@@ -99,6 +99,8 @@ const UnmemoizedHeader = forwardRef<
   const githubLink = navbarLinks.find((link) => link.type === "github");
   const githubRepo = githubLink && getGitHubRepo(githubLink.href);
 
+  // TODO: if the <SearchBar /> component is used in a page, don't render the searchbar in the header
+
   return (
     <nav
       aria-label="primary"
