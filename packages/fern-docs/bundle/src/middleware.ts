@@ -10,8 +10,6 @@ import { withPathname } from "./server/withPathname";
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 
 export const middleware: NextMiddleware = async (request) => {
-  console.log("middleware called:", request.url);
-
   const headers = new Headers(request.headers);
 
   let pathname = extractNextDataPathname(
@@ -169,7 +167,6 @@ export const config = {
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - _next/data (data pages)
      * - favicon.ico (favicon file)
      */
     "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
