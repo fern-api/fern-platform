@@ -88,7 +88,8 @@
         "VERCEL_ENV",
         "VERCEL_URL",
         "WORKOS_API_KEY",
-        "WORKOS_CLIENT_ID"
+        "WORKOS_CLIENT_ID",
+        "HIGHLIGHT_PROJECT_ID_FERN_APP"
       ]
     }
   },
