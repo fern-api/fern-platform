@@ -43,7 +43,7 @@ export function EndpointExampleSegmentedControl({
               className={
                 exampleKey === selectedExample?.exampleKey
                   ? "text-accent-aa"
-                  : "t-muted"
+                  : "text-faded"
               }
             >
               {(exampleKey === selectedExample?.exampleKey
