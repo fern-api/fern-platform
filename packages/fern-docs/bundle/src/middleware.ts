@@ -10,11 +10,28 @@ import { withPathname } from "./server/withPathname";
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 
 export const middleware: NextMiddleware = async (request) => {
+  console.log("middleware called:", request.url);
+
   const headers = new Headers(request.headers);
 
   let pathname = extractNextDataPathname(
     removeTrailingSlash(request.nextUrl.pathname)
   );
+
+  /**
+   * Manually reroute chat and suggest endpoints to the production ones
+   */
+  if (process.env.NODE_ENV === "production") {
+    if (pathname === "/docs/api/fern-docs/search/v2/chat") {
+      return NextResponse.rewrite(
+        "https://app.ferndocs.com/api/fern-docs/search/v2/chat"
+      );
+    } else if (pathname === "/docs/api/fern-docs/search/v2/suggest") {
+      return NextResponse.rewrite(
+        "https://app.ferndocs.com/api/fern-docs/search/v2/suggest"
+      );
+    }
+  }
 
   /**
    * Correctly handle 404 and 500 pages
@@ -142,11 +159,17 @@ export const config = {
      */
     "/api/fern-docs/analytics/posthog/:path*",
     "/:prefix*/api/fern-docs/analytics/posthog/:path*",
+    /**
+     * Match AI chat/suggest endpoints
+     */
+    "/docs/api/fern-docs/search/v2/chat",
+    "/docs/api/fern-docs/search/v2/suggest",
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
+     * - _next/data (data pages)
      * - favicon.ico (favicon file)
      */
     "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
