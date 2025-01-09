@@ -86,8 +86,13 @@ export function SearchV2(): ReactElement | false {
   });
 
   const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
-  const chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
-  const suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
+  let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
+  let suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
+
+  if (process.env.NODE_ENV === "production") {
+    chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
+    suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
+  }
 
   const router = useRouter();
 
@@ -160,6 +165,7 @@ export function SearchV2(): ReactElement | false {
             askAI={askAi}
             setAskAI={setAskAi}
             api={chatEndpoint}
+            headers={{ "X-Fern-Host": domain }}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
             setInitialInput={setInitialInput}
