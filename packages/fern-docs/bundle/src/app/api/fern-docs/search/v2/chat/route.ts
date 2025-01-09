@@ -1,14 +1,9 @@
 import { track } from "@/server/analytics/posthog";
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import {
-  anthropicApiKey,
-  openaiApiKey,
-  turbopufferApiKey,
-} from "@/server/env-variables";
+import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { createAnthropic } from "@ai-sdk/anthropic";
-// import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
+import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
 import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
@@ -22,9 +17,15 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
+export const maxDuration = 0;
+
 export async function POST(req: NextRequest) {
-  const anthropic = createAnthropic({ apiKey: anthropicApiKey() });
-  const languageModel = anthropic("claude-3-5-sonnet-latest");
+  const bedrock = createAmazonBedrock({
+    region: "us-west-2",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  });
+  const languageModel = bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0");
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
@@ -133,6 +134,10 @@ export async function POST(req: NextRequest) {
       e.warnings?.forEach((warning) => {
         console.warn(warning);
       });
+    },
+    onChunk: (chunk) => {
+      console.log("dd");
+      console.log(chunk);
     },
   });
 
