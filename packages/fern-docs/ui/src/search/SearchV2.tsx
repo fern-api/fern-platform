@@ -86,8 +86,13 @@ export function SearchV2(): ReactElement | false {
   });
 
   const facetApiEndpoint = useApiRoute("/api/fern-docs/search/v2/facet");
-  const chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
-  const suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
+  let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
+  let suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
+
+  if (process.env.VERCEL_ENV === "production") {
+    chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
+    suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
+  }
 
   const router = useRouter();
 
