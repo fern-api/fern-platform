@@ -32,14 +32,13 @@ const AnnouncementInternal = forwardRef<
     }
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(forwardedRef, () => ref.current!);
+  useImperativeHandle(forwardedRef, () => ref.current);
 
   return (
     <motion.div
       ref={ref}
       {...props}
-      className={clsx("overflow-hidden", className)}
+      className={clsx("fern-announcement", className)}
     >
       <motion.div
         className="bg-accent text-accent-contrast flex min-h-8 items-center"
