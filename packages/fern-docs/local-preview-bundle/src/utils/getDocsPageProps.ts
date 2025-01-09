@@ -12,9 +12,9 @@ import {
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
 import {
-  DEFAULT_FEATURE_FLAGS,
+  DEFAULT_EDGE_FLAGS,
+  EdgeFlags,
   getRedirectForPath,
-  type FeatureFlags,
 } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
@@ -69,7 +69,7 @@ export async function getDocsPageProps(
   }
 
   // TODO: get feature flags from the API
-  const featureFlags: FeatureFlags = DEFAULT_FEATURE_FLAGS;
+  const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
   const content = await resolveDocsContent({
     domain: docs.baseUrl.domain,
@@ -83,7 +83,7 @@ export async function getDocsPageProps(
     apis: docs.definition.apis,
     apisV2: docs.definition.apisV2,
     pages: docs.definition.pages,
-    featureFlags,
+    edgeFlags,
     mdxOptions: {
       files: docs.definition.jsFiles,
     },
@@ -218,7 +218,7 @@ export async function getDocsPageProps(
       sidebar: node.sidebar,
       trailingSlash: false,
     },
-    featureFlags,
+    edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FdrAPI.ApiDefinitionId),
     seo: getSeoProps(
       docs.baseUrl.domain,
@@ -244,6 +244,7 @@ export async function getDocsPageProps(
       docs.definition.filesV2,
       node.tabs.length > 0
     ),
+    featureFlags: undefined, // TODO: match loading logic in withInitialProps ?
   };
 
   // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

@@ -32,15 +32,15 @@ export class DocsLoader {
     private fernToken: string | undefined
   ) {}
 
-  private featureFlags: DocsLoaderFlags = {
+  private edgeFlags: DocsLoaderFlags = {
     isBatchStreamToggleDisabled: false,
     isApiScrollingDisabled: false,
     useJavaScriptAsTypeScript: false,
     alwaysEnableJavaScriptFetch: false,
     usesApplicationJsonInFormDataValue: false,
   };
-  public withFeatureFlags(featureFlags: DocsLoaderFlags): this {
-    this.featureFlags = featureFlags;
+  public withEdgeFlags(edgeFlags: DocsLoaderFlags): this {
+    this.edgeFlags = edgeFlags;
     return this;
   }
 
@@ -106,14 +106,14 @@ export class DocsLoader {
     const latest =
       res.definition.apisV2?.[key] ??
       (v1 != null
-        ? ApiDefinitionV1ToLatest.from(v1, this.featureFlags).migrate()
+        ? ApiDefinitionV1ToLatest.from(v1, this.edgeFlags).migrate()
         : undefined);
     if (!latest) {
       return undefined;
     }
     return ApiDefinitionLoader.create(this.domain, key)
       .withApiDefinition(latest)
-      .withFlags(this.featureFlags)
+      .withEdgeFlags(this.edgeFlags)
       .withResolveDescriptions(false)
       .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
       .load();
@@ -143,8 +143,8 @@ export class DocsLoader {
 
     return FernNavigation.utils.toRootNode(
       docs,
-      this.featureFlags.isBatchStreamToggleDisabled,
-      this.featureFlags.isApiScrollingDisabled
+      this.edgeFlags.isBatchStreamToggleDisabled,
+      this.edgeFlags.isApiScrollingDisabled
     );
   }
 
@@ -166,6 +166,8 @@ export class DocsLoader {
         return undefined;
       }
     }
+
+    // TODO: prune with feature flags state
 
     return root;
   }

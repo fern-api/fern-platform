@@ -28,6 +28,7 @@ import { ClientLibraries } from "./client-libraries";
 import { CodeBlock } from "./code/CodeBlock";
 import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
+import { Feature } from "./feature";
 import { Frame } from "./frame";
 import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
@@ -40,10 +41,6 @@ import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Step, StepGroup } from "./steps";
 import { TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
-
-const LaunchDarkly = dynamic(() =>
-  import("./launchdarkly/LaunchDarkly").then((mod) => mod.LaunchDarkly)
-);
 
 const ElevenLabsWaveform = dynamic(() =>
   import("./waveform/WaveformComplex").then((mod) => mod.default)
@@ -66,10 +63,10 @@ const FERN_COMPONENTS = {
   ColumnGroup,
   EndpointRequestSnippet,
   EndpointResponseSnippet,
+  Feature,
   Frame,
   Icon: RemoteFontAwesomeIcon,
   If,
-  LaunchDarkly,
   Mermaid,
   ParamField,
   Step,

@@ -2,7 +2,7 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
 import { getMdxBundler } from "@fern-docs/ui/bundlers";
-import { FeatureFlags } from "@fern-docs/utils";
+import { EdgeFlags } from "@fern-docs/utils";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 
@@ -11,7 +11,7 @@ interface WithResolvedDocsContentOpts {
   found: FernNavigation.utils.Node.Found;
   authState: AuthState;
   definition: DocsV1Read.DocsDefinition;
-  featureFlags: FeatureFlags;
+  edgeFlags: EdgeFlags;
 }
 
 export async function withResolvedDocsContent({
@@ -19,7 +19,7 @@ export async function withResolvedDocsContent({
   found,
   authState,
   definition,
-  featureFlags,
+  edgeFlags,
 }: WithResolvedDocsContentOpts): Promise<DocsContent | undefined> {
   const node = withPrunedNavigation(found.node, {
     visibleNodeIds: [found.node.id],
@@ -36,7 +36,7 @@ export async function withResolvedDocsContent({
     authed: authState.authed,
   });
 
-  const engine = featureFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
   const serializeMdx = await getMdxBundler(engine);
 
   return resolveDocsContent({
@@ -50,12 +50,12 @@ export async function withResolvedDocsContent({
     breadcrumb: found.breadcrumb,
 
     // strip away authed neighbors unless they are explicitly discoverable
-    prev: featureFlags.isAuthenticatedPagesDiscoverable
+    prev: edgeFlags.isAuthenticatedPagesDiscoverable
       ? found.prev
       : found.prev?.authed
         ? undefined
         : found.prev,
-    next: featureFlags.isAuthenticatedPagesDiscoverable
+    next: edgeFlags.isAuthenticatedPagesDiscoverable
       ? found.next
       : found.next?.authed
         ? undefined
@@ -64,7 +64,7 @@ export async function withResolvedDocsContent({
     apis: definition.apis,
     apisV2: definition.apisV2,
     pages: definition.pages,
-    featureFlags,
+    edgeFlags,
     mdxOptions: {
       files: definition.jsFiles,
     },

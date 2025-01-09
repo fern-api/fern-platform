@@ -1,6 +1,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { JsonPropertyPath } from "../examples/JsonPropertyPath";
@@ -30,7 +30,7 @@ export const EndpointResponseSection: React.FC<
   slug,
   types,
 }) => {
-  const { isAudioFileDownloadSpanSummary } = useFeatureFlags();
+  const { isAudioFileDownloadSpanSummary } = useEdgeFlags();
 
   return (
     <div>

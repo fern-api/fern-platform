@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { useFeatureFlags } from "../atoms";
+import { useEdgeFlags } from "../atoms";
 
 let hasBeenCalled = false;
 
 export const useConsoleMessage = (): void => {
-  const { isWhitelabeled } = useFeatureFlags();
+  const { isWhitelabeled } = useEdgeFlags();
 
   useEffect(() => {
     if (hasBeenCalled || isWhitelabeled) {

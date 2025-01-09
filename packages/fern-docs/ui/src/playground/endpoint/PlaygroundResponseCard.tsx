@@ -11,7 +11,7 @@ import clsx from "clsx";
 import { round } from "es-toolkit/math";
 import { Download } from "iconoir-react";
 import { ReactElement } from "react";
-import { useFeatureFlags } from "../../atoms";
+import { useEdgeFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
 import { PlaygroundResponsePreview } from "../PlaygroundResponsePreview";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
@@ -27,7 +27,7 @@ export function PlaygroundResponseCard({
   response,
   sendRequest,
 }: PlaygroundResponseCard): ReactElement {
-  const { isBinaryOctetStreamAudioPlayer } = useFeatureFlags();
+  const { isBinaryOctetStreamAudioPlayer } = useEdgeFlags();
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
       <div className="border-default flex h-10 w-full shrink-0 items-center justify-between border-b px-3 py-2">

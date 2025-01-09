@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import { ReactElement } from "react";
 import {
   HydrateAtoms,
-  useFeatureFlag,
+  useEdgeFlag,
   useMessageHandler,
   useSetJustNavigated,
   type DocsProps,
@@ -59,8 +59,8 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
     }
   );
 
-  const isSearchV2Enabled = useFeatureFlag("isSearchV2Enabled");
-  const isApiPlaygroundEnabled = useFeatureFlag("isApiPlaygroundEnabled");
+  const isSearchV2Enabled = useEdgeFlag("isSearchV2Enabled");
+  const isApiPlaygroundEnabled = useEdgeFlag("isApiPlaygroundEnabled");
 
   return (
     <>

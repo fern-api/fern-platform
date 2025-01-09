@@ -1,5 +1,5 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { getAuthEdgeConfig, getFeatureFlags } from "@fern-docs/edge-config";
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { turbopufferUpsertTask } from "@fern-docs/search-server/turbopuffer";
 import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
 import { embedMany } from "ai";
@@ -48,12 +48,12 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const start = Date.now();
-    const [authEdgeConfig, featureFlags] = await Promise.all([
+    const [authEdgeConfig, edgeFlags] = await Promise.all([
       getAuthEdgeConfig(domain),
-      getFeatureFlags(domain),
+      getEdgeFlags(domain),
     ]);
 
-    if (!featureFlags.isAskAiEnabled) {
+    if (!edgeFlags.isAskAiEnabled) {
       throw new Error(`AI Chat is not enabled for ${domain}`);
     }
 
@@ -64,7 +64,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         environment: fdrEnvironment(),
         fernToken: fernToken(),
         domain: withoutStaging(domain),
-        ...featureFlags,
+        ...edgeFlags,
       },
       vectorizer: async (chunks) => {
         const embeddings = await embedMany({

@@ -1,4 +1,4 @@
-import type { FeatureFlags } from "@fern-docs/utils";
+import type { EdgeFlags } from "@fern-docs/utils";
 import {
   isCustomDomain,
   isDevelopment,
@@ -9,7 +9,7 @@ import { getAll } from "@vercel/edge-config";
 
 export const runtime = "edge";
 
-const FEATURE_FLAGS = [
+const EDGE_FLAGS = [
   "api-playground-enabled" as const,
   "api-scrolling-disabled" as const,
   "whitelabeled" as const,
@@ -43,13 +43,13 @@ const FEATURE_FLAGS = [
   "search-v2" as const,
 ];
 
-type FeatureFlag = (typeof FEATURE_FLAGS)[number];
+type EdgeFlag = (typeof EDGE_FLAGS)[number];
 
-type EdgeConfigResponse = Record<FeatureFlag, string[]>;
+type EdgeConfigResponse = Record<EdgeFlag, string[]>;
 
-export async function getFeatureFlags(domain: string): Promise<FeatureFlags> {
+export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
   try {
-    const config = await getAll<EdgeConfigResponse>(FEATURE_FLAGS);
+    const config = await getAll<EdgeConfigResponse>(EDGE_FLAGS);
 
     const isApiPlaygroundEnabled = checkDomainMatchesCustomers(
       domain,

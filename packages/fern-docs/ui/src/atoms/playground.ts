@@ -38,7 +38,7 @@ import {
 } from "../playground/utils";
 import { pascalCaseHeaderKeys } from "../playground/utils/header-key-case";
 import { FERN_USER_ATOM } from "./auth";
-import { FEATURE_FLAGS_ATOM } from "./flags";
+import { EDGE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
@@ -50,7 +50,7 @@ const PLAYGROUND_IS_OPEN_ATOM = atom(false);
 PLAYGROUND_IS_OPEN_ATOM.debugLabel = "PLAYGROUND_IS_OPEN_ATOM";
 
 export const IS_PLAYGROUND_ENABLED_ATOM = atom(
-  (get) => get(FEATURE_FLAGS_ATOM).isApiPlaygroundEnabled
+  (get) => get(EDGE_FLAGS_ATOM).isApiPlaygroundEnabled
 );
 
 export const MAX_PLAYGROUND_HEIGHT_ATOM = atom((get) => {

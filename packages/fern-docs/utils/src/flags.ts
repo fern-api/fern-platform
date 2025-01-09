@@ -1,4 +1,4 @@
-export interface FeatureFlags {
+export interface EdgeFlags {
   isApiPlaygroundEnabled: boolean;
   isApiScrollingDisabled: boolean;
   isWhitelabeled: boolean;
@@ -33,7 +33,7 @@ export interface FeatureFlags {
   grpcEndpoints: readonly string[];
 }
 
-export const DEFAULT_FEATURE_FLAGS: FeatureFlags = {
+export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isApiPlaygroundEnabled: false,
   isApiScrollingDisabled: false,
   isWhitelabeled: false,
