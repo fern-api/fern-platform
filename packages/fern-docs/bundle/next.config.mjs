@@ -146,14 +146,6 @@ const nextConfig = {
         headers: AccessControlHeaders,
       },
       {
-        source: "/api/fern-docs/search/v2/:path*",
-        headers: AccessControlHeaders,
-      },
-      {
-        source: "/:prefix*/api/fern-docs/search/v2/:path*",
-        headers: AccessControlHeaders,
-      },
-      {
         source: "/:prefix*/api/fern-docs/auth/:path*",
         headers: AccessControlHeaders,
       },
