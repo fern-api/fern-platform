@@ -16,114 +16,149 @@ import { cn } from "../cn";
 import { useDetailContext } from "./tree";
 
 const ParameterDescription = memo(
-  forwardRef<
-    HTMLDivElement,
-    ComponentPropsWithoutRef<"div"> & {
-      parameterName: string;
-      parameterNameDisplay?: ReactNode;
-      typeShorthand?: ReactNode;
-      required?: boolean;
-      onClickCopyAnchorLink?: MouseEventHandler<HTMLButtonElement>;
-    }
-  >(
-    (
-      {
-        parameterName,
-        parameterNameDisplay,
-        typeShorthand,
-        required,
-        onClickCopyAnchorLink,
-        ...props
-      },
-      ref
-    ) => {
-      const { setOpen } = useDetailContext();
-
-      return (
-        <div
-          ref={ref}
-          {...props}
-          className={cn(
-            "group/trigger inline-flex items-baseline justify-start gap-3",
-            props.className
-          )}
-        >
-          <CopyToClipboardButton
-            content={parameterName}
-            asChild
-            hideIcon
-            tooltipContent={
-              onClickCopyAnchorLink
-                ? ({ copyToClipboard, setTooltipOpen }) => (
-                    <Toolbar.Root
-                      className="-my-2 flex items-center"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      <Toolbar.Button onClick={copyToClipboard}>
-                        {"Copy to clipboard"}
-                      </Toolbar.Button>
-                      <Toolbar.Separator className="mx-2 w-px self-stretch bg-[var(--grayscale-a6)]" />
-                      <Toolbar.Button asChild>
-                        <Button
-                          variant="ghost"
-                          size="iconSm"
-                          className="-mx-2 rounded-l-none"
-                          onClick={composeEventHandlers(
-                            onClickCopyAnchorLink,
-                            () => {
-                              setTooltipOpen(false);
-                            }
-                          )}
-                        >
-                          <Link />
-                        </Button>
-                      </Toolbar.Button>
-                    </Toolbar.Root>
-                  )
-                : undefined
-            }
-            delayDuration={0}
-          >
-            <Badge
-              color="accent"
-              variant="ghost"
-              rounded
-              interactive
-              className="-mx-2 font-mono"
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.stopPropagation();
-                setOpen(true);
-              }}
-            >
-              {parameterNameDisplay ?? parameterName}
-            </Badge>
-          </CopyToClipboardButton>
-          {typeShorthand && (
-            <span className="text-xs text-[var(--grayscale-a9)]">
-              {typeShorthand}
-            </span>
-          )}
-          <Separator
-            orientation="horizontal"
-            decorative
-            className="invisible mx-1 inline-block h-0 w-10 flex-1 self-center border-b border-dashed border-[var(--grayscale-a6)] group-hover/trigger:visible"
-          />
-          <span
-            className={cn(
-              "text-xs",
-              required
-                ? "text-[var(--accent-a9)]"
-                : "text-[var(--grayscale-a9)]"
-            )}
-          >
-            {required ? "required" : "optional"}
-          </span>
-        </div>
-      );
-    }
-  )
+  forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>((props, ref) => {
+    return (
+      <div
+        ref={ref}
+        {...props}
+        className={cn(
+          "group/trigger flex items-baseline justify-start gap-3",
+          props.className
+        )}
+      />
+    );
+  })
 );
 
 ParameterDescription.displayName = "ParameterDescription";
 
-export { ParameterDescription };
+const ParameterName = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<"button"> & {
+    parameterName: string;
+    parameterNameDisplay?: ReactNode;
+    onClickCopyAnchorLink?: MouseEventHandler<HTMLButtonElement>;
+    size?: "sm" | "lg";
+  }
+>(
+  (
+    {
+      parameterName,
+      parameterNameDisplay,
+      onClickCopyAnchorLink,
+      size,
+      ...props
+    },
+    ref
+  ) => {
+    const { setOpen } = useDetailContext();
+    return (
+      <CopyToClipboardButton
+        ref={ref}
+        {...props}
+        content={parameterName}
+        asChild
+        tooltipContent={
+          onClickCopyAnchorLink
+            ? ({ copyToClipboard, setTooltipOpen }) => (
+                <Toolbar.Root
+                  className="-my-2 flex items-center"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Toolbar.Button onClick={copyToClipboard}>
+                    {"Copy to clipboard"}
+                  </Toolbar.Button>
+                  <Toolbar.Separator className="mx-2 w-px self-stretch bg-[var(--grayscale-a6)]" />
+                  <Toolbar.Button asChild>
+                    <Button
+                      variant="ghost"
+                      size="iconSm"
+                      className="-mx-2 rounded-l-none"
+                      onClick={composeEventHandlers(
+                        onClickCopyAnchorLink,
+                        () => {
+                          setTooltipOpen(false);
+                        }
+                      )}
+                    >
+                      <Link />
+                    </Button>
+                  </Toolbar.Button>
+                </Toolbar.Root>
+              )
+            : undefined
+        }
+        delayDuration={0}
+        disableTooltipProvider
+      >
+        <Badge
+          color="accent"
+          variant="ghost"
+          rounded
+          interactive
+          className="-mx-2 font-mono"
+          onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            e.stopPropagation();
+            setOpen(true);
+          }}
+          size={size}
+        >
+          {parameterNameDisplay ?? parameterName}
+        </Badge>
+      </CopyToClipboardButton>
+    );
+  }
+);
+
+ParameterName.displayName = "ParameterName";
+
+const ParameterSpacer = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<"div">
+>((props, ref) => {
+  return (
+    <Separator
+      ref={ref}
+      {...props}
+      orientation="horizontal"
+      decorative
+      className={cn(
+        "invisible mx-1 inline-block h-0 w-10 flex-1 self-center border-b border-dashed border-[var(--grayscale-a6)] group-hover/trigger:visible",
+        props.className
+      )}
+    />
+  );
+});
+
+ParameterSpacer.displayName = "ParameterSpacer";
+
+const ParameterStatus = forwardRef<
+  HTMLSpanElement,
+  ComponentPropsWithoutRef<"span"> & {
+    status: "required" | "optional";
+  }
+>(({ status, ...props }, ref) => {
+  return (
+    <span
+      ref={ref}
+      {...props}
+      className={cn(
+        "text-xs",
+        status === "required"
+          ? "text-[var(--accent-a9)]"
+          : "text-[var(--grayscale-a9)]"
+      )}
+    >
+      {status === "required" ? "required" : "optional"}
+    </span>
+  );
+});
+
+ParameterStatus.displayName = "ParameterStatus";
+
+const Root = ParameterDescription;
+const Name = ParameterName;
+const Spacer = ParameterSpacer;
+const Status = ParameterStatus;
+
+export { Name, Root, Spacer, Status };

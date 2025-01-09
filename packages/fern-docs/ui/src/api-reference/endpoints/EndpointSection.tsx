@@ -1,5 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { Separator } from "@radix-ui/react-separator";
 import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { FernAnchor } from "../../components/FernAnchor";
@@ -46,6 +47,10 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
           )}
         </FernAnchor>
         <Markdown className="mb-2 text-base" mdx={description} />
+        <Separator
+          orientation="horizontal"
+          className="bg-border-default mt-4 h-px"
+        />
         {children}
       </div>
     </FernErrorBoundary>

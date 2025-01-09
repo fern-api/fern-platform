@@ -1,5 +1,5 @@
 import { ApiDefinition } from "@fern-api/fdr-sdk";
-import { atom } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 import { DOCS_ATOM } from "./docs";
 
@@ -22,10 +22,25 @@ export const FERN_LANGUAGE_ATOM = atom(
     return ApiDefinition.cleanLanguage(lang);
   },
   (_get, set, update: string) => {
-    set(INTERNAL_FERN_LANGUAGE_ATOM, update);
+    void set(INTERNAL_FERN_LANGUAGE_ATOM, update);
   }
 );
 
 export const DEFAULT_LANGUAGE_ATOM = atom<string>((get) =>
   ApiDefinition.cleanLanguage(get(DOCS_ATOM).defaultLang)
 );
+
+export type SupportedTypedLang = "ts" | "py";
+
+export const useTypeShorthandLang = (): SupportedTypedLang | undefined => {
+  const lang = useAtomValue(FERN_LANGUAGE_ATOM);
+  const defaultLang = useAtomValue(DEFAULT_LANGUAGE_ATOM);
+  switch (lang ?? defaultLang) {
+    case "javascript":
+    case "typescript":
+      return "ts";
+    case "python":
+      return "py";
+  }
+  return undefined;
+};

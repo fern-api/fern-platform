@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { ParameterDescription } from "./parameter-description";
+import * as Parameter from "./parameter-description";
 import * as Tree from "./tree";
 import { UnionVariants } from "./union-variants";
 
@@ -19,12 +19,11 @@ export const Default: Story = {
           <Tree.Summary>
             <Tree.Trigger className="relative flex items-center text-left">
               <Tree.Indicator className="absolute left-[-16px]" />
-              <ParameterDescription
-                className="flex-1"
-                parameterName="customer"
-                typeShorthand="object"
-                required
-              />
+              <Parameter.Root>
+                <Parameter.Name parameterName="customer" />
+                <Parameter.Spacer />
+                <Parameter.Status status="required" />
+              </Parameter.Root>
             </Tree.Trigger>
             <div
               className="text-sm text-[var(--grayscale-a9)]"
@@ -42,12 +41,11 @@ export const Default: Story = {
               <Tree.Summary>
                 <Tree.Trigger className="relative flex items-center text-left">
                   <Tree.Indicator className="absolute left-[-16px]" />
-                  <ParameterDescription
-                    className="flex-1"
-                    parameterName="id"
-                    typeShorthand="string"
-                    required
-                  />
+                  <Parameter.Root>
+                    <Parameter.Name parameterName="id" />
+                    <Parameter.Spacer />
+                    <Parameter.Status status="required" />
+                  </Parameter.Root>
                 </Tree.Trigger>
                 <div
                   className="text-sm text-[var(--grayscale-a9)]"
@@ -62,12 +60,11 @@ export const Default: Story = {
               <Tree.Summary>
                 <Tree.Trigger className="relative flex items-center text-left">
                   <Tree.Indicator className="absolute left-[-16px]" />
-                  <ParameterDescription
-                    className="flex-1"
-                    parameterName="email"
-                    typeShorthand="string"
-                    required
-                  />
+                  <Parameter.Root>
+                    <Parameter.Name parameterName="email" />
+                    <Parameter.Spacer />
+                    <Parameter.Status status="required" />
+                  </Parameter.Root>
                 </Tree.Trigger>
                 <div
                   className="text-sm text-[var(--grayscale-a9)]"
@@ -85,12 +82,14 @@ export const Default: Story = {
               <Tree.Summary>
                 <Tree.Trigger className="relative flex items-center text-left">
                   <Tree.Indicator className="absolute left-[-16px]" />
-                  <ParameterDescription
-                    className="flex-1"
-                    parameterName="first_name"
-                    typeShorthand="string | null"
-                    required
-                  />
+                  <Parameter.Root>
+                    <Parameter.Name parameterName="first_name" />
+                    <span className="text-sm text-[var(--grayscale-a9)]">
+                      {"string | null"}
+                    </span>
+                    <Parameter.Spacer />
+                    <Parameter.Status status="required" />
+                  </Parameter.Root>
                 </Tree.Trigger>
                 <div
                   className="text-sm text-[var(--grayscale-a9)]"
@@ -108,12 +107,11 @@ export const Default: Story = {
               <Tree.Summary>
                 <Tree.Trigger className="relative flex items-center text-left">
                   <Tree.Indicator className="absolute left-[-16px]" />
-                  <ParameterDescription
-                    className="flex-1"
-                    parameterName="last_name"
-                    typeShorthand="string | null"
-                    required
-                  />
+                  <Parameter.Root>
+                    <Parameter.Name parameterName="last_name" />
+                    <Parameter.Spacer />
+                    <Parameter.Status status="required" />
+                  </Parameter.Root>
                 </Tree.Trigger>
                 <div
                   className="text-sm text-[var(--grayscale-a9)]"
@@ -133,11 +131,14 @@ export const Default: Story = {
               <Tree.Summary>
                 <Tree.Trigger className="relative flex items-center text-left">
                   <Tree.Indicator className="absolute left-[-16px]" />
-                  <ParameterDescription
-                    className="flex-1"
-                    parameterName="groups"
-                    typeShorthand="object[]"
-                  />
+                  <Parameter.Root>
+                    <Parameter.Name parameterName="groups" />
+                    <span className="text-sm text-[var(--grayscale-a9)]">
+                      {"object[]"}
+                    </span>
+                    <Parameter.Spacer />
+                    <Parameter.Status status="optional" />
+                  </Parameter.Root>
                 </Tree.Trigger>
                 <div
                   className="text-sm text-[var(--grayscale-a9)]"
@@ -155,12 +156,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="id"
-                        typeShorthand="string"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="id" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -169,12 +169,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="name"
-                        typeShorthand="string"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="name" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -183,12 +182,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="created_at"
-                        typeShorthand="date"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="created_at" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -197,12 +195,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="updated_at"
-                        typeShorthand="date"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="updated_at" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -211,12 +208,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="deleted_at"
-                        typeShorthand="date | null"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="deleted_at" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -227,12 +223,14 @@ export const Default: Story = {
                       <Tree.Summary>
                         <Tree.Trigger className="relative flex items-center text-left">
                           <Tree.Indicator className="absolute left-[-16px]" />
-                          <ParameterDescription
-                            className="flex-1"
-                            parameterName="id"
-                            typeShorthand="string"
-                            required
-                          />
+                          <Parameter.Root>
+                            <Parameter.Name parameterName="id" />
+                            <span className="text-sm text-[var(--grayscale-a9)]">
+                              {"string"}
+                            </span>
+                            <Parameter.Spacer />
+                            <Parameter.Status status="required" />
+                          </Parameter.Root>
                         </Tree.Trigger>
                       </Tree.Summary>
                     </Tree.Item>
@@ -243,12 +241,14 @@ export const Default: Story = {
                       <Tree.Summary>
                         <Tree.Trigger className="relative flex items-center text-left">
                           <Tree.Indicator className="absolute left-[-16px]" />
-                          <ParameterDescription
-                            className="flex-1"
-                            parameterName="id"
-                            typeShorthand="string"
-                            required
-                          />
+                          <Parameter.Root>
+                            <Parameter.Name parameterName="id" />
+                            <span className="text-sm text-[var(--grayscale-a9)]">
+                              {"string"}
+                            </span>
+                            <Parameter.Spacer />
+                            <Parameter.Status status="required" />
+                          </Parameter.Root>
                         </Tree.Trigger>
                       </Tree.Summary>
                     </Tree.Item>
@@ -261,11 +261,14 @@ export const Default: Story = {
               <Tree.Summary>
                 <Tree.Trigger className="relative flex items-center text-left">
                   <Tree.Indicator className="absolute left-[-18px]" />
-                  <ParameterDescription
-                    className="flex-1"
-                    parameterName="groups"
-                    typeShorthand="object[]"
-                  />
+                  <Parameter.Root>
+                    <Parameter.Name parameterName="groups" />
+                    <span className="text-sm text-[var(--grayscale-a9)]">
+                      {"object[]"}
+                    </span>
+                    <Parameter.Spacer />
+                    <Parameter.Status status="optional" />
+                  </Parameter.Root>
                 </Tree.Trigger>
                 <div
                   className="text-sm text-[var(--grayscale-a9)]"
@@ -283,12 +286,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="id"
-                        typeShorthand="string"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="id" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -297,12 +299,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="name"
-                        typeShorthand="string"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="name" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -311,12 +312,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="created_at"
-                        typeShorthand="date"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="created_at" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -325,12 +325,11 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="updated_at"
-                        typeShorthand="date"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="updated_at" />
+                        <Parameter.Spacer />
+                        <Parameter.Status status="required" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>
@@ -339,12 +338,14 @@ export const Default: Story = {
                   <Tree.Summary>
                     <Tree.Trigger className="relative flex items-center text-left">
                       <Tree.Indicator className="absolute left-[-16px]" />
-                      <ParameterDescription
-                        className="flex-1"
-                        parameterName="deleted_at"
-                        typeShorthand="date | null"
-                        required
-                      />
+                      <Parameter.Root>
+                        <Parameter.Name parameterName="deleted_at" />
+                        <span className="text-sm text-[var(--grayscale-a9)]">
+                          {"date | null"}
+                        </span>
+                        <Parameter.Spacer />
+                        <Parameter.Status status="optional" />
+                      </Parameter.Root>
                     </Tree.Trigger>
                   </Tree.Summary>
                 </Tree.Item>

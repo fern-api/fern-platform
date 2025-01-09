@@ -4,6 +4,7 @@ import { Slot } from "@radix-ui/react-slot";
 import { Check, Copy } from "iconoir-react";
 import {
   ComponentPropsWithoutRef,
+  Fragment,
   ReactNode,
   forwardRef,
   useState,
@@ -44,6 +45,7 @@ export const CopyToClipboardButton = forwardRef<
     asChild?: boolean;
     tooltipContentAsChild?: boolean;
     delayDuration?: number;
+    disableTooltipProvider?: boolean;
   }
 >((props, ref) => {
   const {
@@ -53,6 +55,7 @@ export const CopyToClipboardButton = forwardRef<
     asChild,
     tooltipContentAsChild,
     delayDuration,
+    disableTooltipProvider,
     ...otherProps
   } = props;
 
@@ -63,8 +66,9 @@ export const CopyToClipboardButton = forwardRef<
     checkForDefaultPrevented: true,
   });
 
+  const Provider = disableTooltipProvider ? Fragment : FernTooltipProvider;
   return (
-    <FernTooltipProvider>
+    <Provider>
       <FernTooltip
         content={
           wasJustCopied ? (
@@ -84,6 +88,9 @@ export const CopyToClipboardButton = forwardRef<
         asChild
         contentAsChild={tooltipContentAsChild}
         delayDuration={delayDuration}
+        disableHoverableContent={
+          wasJustCopied || typeof tooltipContent !== "function"
+        }
       >
         {!children ? (
           <CopyIconButton
@@ -104,7 +111,7 @@ export const CopyToClipboardButton = forwardRef<
           </Comp>
         )}
       </FernTooltip>
-    </FernTooltipProvider>
+    </Provider>
   );
 });
 

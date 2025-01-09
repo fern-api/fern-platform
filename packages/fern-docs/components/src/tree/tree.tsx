@@ -51,11 +51,13 @@ const IndentContextProvider = ({ children }: PropsWithChildren) => {
 const Tree = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(
   ({ children, ...props }, ref) => {
     return (
-      <IndentContextProvider>
+      <ctx.Provider
+        value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
+      >
         <div {...props} ref={ref}>
           {children}
         </div>
-      </IndentContextProvider>
+      </ctx.Provider>
     );
   }
 );
@@ -167,6 +169,7 @@ const TreeItemsContentAdditional = ({
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }>): ReactNode => {
+  const indent = useIndent();
   const childrenArray = Children.toArray(children);
 
   if (childrenArray.length === 0) {
@@ -182,7 +185,8 @@ const TreeItemsContentAdditional = ({
     >
       <Disclosure.Summary className="list-none">
         {({ open }) =>
-          !open && (
+          !open &&
+          (indent > 0 ? (
             <div className="xs:grid-cols-[32px_1fr] relative grid grid-cols-[24px_1fr]">
               <Disclosure.CloseTrigger asChild>
                 <TreeBranch />
@@ -201,20 +205,38 @@ const TreeItemsContentAdditional = ({
                 </Disclosure.Trigger>
               </div>
             </div>
-          )
+          ) : (
+            <div className="py-2">
+              <Disclosure.Trigger asChild>
+                <Badge
+                  rounded
+                  interactive
+                  className="-ml-2"
+                  variant="outlined-subtle"
+                >
+                  <Plus />
+                  {childrenArray.length} more attributes
+                </Badge>
+              </Disclosure.Trigger>
+            </div>
+          ))
         }
       </Disclosure.Summary>
       <Disclosure.Content>
-        <div className="xs:grid-cols-[32px_1fr] relative grid grid-cols-[24px_1fr]">
-          {childrenArray.map((child, i) => (
-            <Fragment key={i}>
-              <Disclosure.CloseTrigger asChild>
-                <TreeBranch />
-              </Disclosure.CloseTrigger>
-              {child}
-            </Fragment>
-          ))}
-        </div>
+        {indent > 0 ? (
+          <div className="xs:grid-cols-[32px_1fr] relative grid grid-cols-[24px_1fr]">
+            {childrenArray.map((child, i) => (
+              <Fragment key={i}>
+                <Disclosure.CloseTrigger asChild>
+                  <TreeBranch />
+                </Disclosure.CloseTrigger>
+                {child}
+              </Fragment>
+            ))}
+          </div>
+        ) : (
+          <>{childrenArray}</>
+        )}
       </Disclosure.Content>
     </Disclosure.Details>
   );

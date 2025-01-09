@@ -29,6 +29,7 @@ export interface EdgeFlags {
   isNewSearchExperienceEnabled: boolean;
   isAuthenticatedPagesDiscoverable: boolean;
   isSearchV2Enabled: boolean;
+  isApiReferenceTreeEnabled: boolean;
   // TODO: remove this after pinecone demo, this is a temporary flag
   grpcEndpoints: readonly string[];
 }
@@ -64,6 +65,7 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isNewSearchExperienceEnabled: false,
   isAuthenticatedPagesDiscoverable: false,
   isSearchV2Enabled: false,
+  isApiReferenceTreeEnabled: false,
   // TODO: remove this after pinecone demo, this is a temporary flag
   grpcEndpoints: [],
 };
