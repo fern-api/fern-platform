@@ -135,10 +135,6 @@ export async function POST(req: NextRequest) {
         console.warn(warning);
       });
     },
-    onChunk: (chunk) => {
-      console.log("dd");
-      console.log(chunk);
-    },
   });
 
   return result.toDataStreamResponse();
