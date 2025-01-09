@@ -17,7 +17,8 @@ export const middleware: NextMiddleware = async (request) => {
   );
 
   /**
-   * Manually reroute chat and suggest endpoints to the production ones
+   * Manually reroute chat and suggest endpoints to ferndocs.com
+   * This proxying allows for streaming text to work on prod
    */
   if (process.env.NODE_ENV === "production") {
     if (pathname === "/docs/api/fern-docs/search/v2/chat") {
