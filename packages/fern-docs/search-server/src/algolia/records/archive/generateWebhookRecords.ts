@@ -19,7 +19,7 @@ export function generateWebhookRecord({
 }: GenerateWebhookRecordsOptions): Algolia.AlgoliaRecord.WebhookV4 {
   const description = toDescription([
     webhook.description,
-    webhook.payload?.description,
+    webhook.payloads?.[0]?.description,
   ]);
   const webhookRecord: Algolia.AlgoliaRecord.WebhookV4 = {
     type: "webhook-v4",
@@ -91,18 +91,22 @@ export function generateWebhookFieldRecords({
     );
   });
 
-  if (webhook.payload) {
+  if (webhook.payloads?.[0]) {
     push(
-      ApiDefinition.collectTypeDefinitionTree(webhook.payload.shape, types, {
-        path: [
-          {
-            type: "meta",
-            value: "payload",
-            displayName: "Payload",
-          },
-          { type: "meta", value: "body", displayName: undefined },
-        ],
-      })
+      ApiDefinition.collectTypeDefinitionTree(
+        webhook.payloads[0].shape,
+        types,
+        {
+          path: [
+            {
+              type: "meta",
+              value: "payload",
+              displayName: "Payload",
+            },
+            { type: "meta", value: "body", displayName: undefined },
+          ],
+        }
+      )
     );
   }
 
