@@ -973,7 +973,14 @@ function ObjectTypeShape({
                 key: ApiDefinition.PropertyKey("..."),
                 valueShape: {
                   type: "alias",
-                  value: extraProperties,
+                  value: {
+                    type: "optional",
+                    shape: {
+                      type: "alias",
+                      value: extraProperties,
+                    },
+                    default: undefined,
+                  },
                 },
                 description: undefined,
                 availability: undefined,
