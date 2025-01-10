@@ -32,6 +32,7 @@ import { useMemoOne } from "use-memo-one";
 import { Badge } from "../badges";
 import { cn } from "../cn";
 import Disclosure from "../disclosure";
+import { Button } from "../FernButtonV2";
 import { Chevron } from "./chevron";
 
 const rootCtx = createContext<{
@@ -69,12 +70,6 @@ function useIsAllExpanded() {
   const expanded = useAtomValue(expandedAtom);
   const ids = useAtomValue(idsAtom);
   return expanded.length === ids.length;
-}
-
-function useIsAllCollapsed() {
-  const { expandedAtom } = useContext(rootCtx);
-  const expanded = useAtomValue(expandedAtom);
-  return expanded.length === 0;
 }
 
 function useHasNoDisclosures() {
@@ -436,7 +431,7 @@ const TreeItemsContentAdditionalDisclosure = ({
                     rounded
                     interactive
                     variant="outlined-subtle"
-                    className="font-normal max-sm:w-full"
+                    className="font-normal"
                   >
                     <Plus />
                     {childrenArray.length} more attributes
@@ -451,7 +446,7 @@ const TreeItemsContentAdditionalDisclosure = ({
                   rounded
                   interactive
                   variant="outlined-subtle"
-                  className="font-normal max-sm:w-full"
+                  className="font-normal"
                 >
                   <Plus />
                   {childrenArray.length} more attributes
@@ -563,10 +558,7 @@ const TreeItemSummary = forwardRef<
               <Badge
                 rounded
                 interactive
-                className={cn(
-                  "mt-2 font-normal max-sm:w-full",
-                  indent > 0 && "ml-2"
-                )}
+                className={cn("mt-2 font-normal", indent > 0 && "ml-2")}
                 variant="outlined-subtle"
               >
                 <Plus />
@@ -581,7 +573,7 @@ const TreeItemSummary = forwardRef<
                   <Badge
                     rounded
                     interactive
-                    className="mt-2 font-normal max-sm:w-full"
+                    className="mt-2 font-normal"
                     variant="outlined-subtle"
                   >
                     <Plus />
@@ -695,53 +687,29 @@ const HasDisclosures = ({ children }: PropsWithChildren) => {
   return <>{children}</>;
 };
 
-const ExpandAll = forwardRef<
+const ToggleExpandAll = forwardRef<
   HTMLButtonElement,
-  ComponentPropsWithoutRef<"button"> & {
-    asChild?: boolean;
-  }
->(({ children, asChild, ...props }, ref) => {
+  ComponentPropsWithoutRef<"button">
+>(({ children, ...props }, ref) => {
   const isAllExpanded = useIsAllExpanded();
   const setOpen = useSetOpenAll();
-  const Comp = asChild ? Slot : "button";
   return (
-    <Comp
+    <Button
       {...props}
       ref={ref}
       onClick={composeEventHandlers(props.onClick, () => {
-        setOpen(true);
+        setOpen(!isAllExpanded);
       })}
-      disabled={isAllExpanded}
+      variant="ghost"
+      size="xs"
+      color="gray"
     >
-      {children}
-    </Comp>
+      {isAllExpanded ? "Collapse all" : "Expand all"}
+    </Button>
   );
 });
 
-ExpandAll.displayName = "ExpandAll";
-
-const CollapseAll = forwardRef<
-  HTMLButtonElement,
-  ComponentPropsWithoutRef<"button"> & {
-    asChild?: boolean;
-  }
->(({ children, asChild, ...props }, ref) => {
-  const isAllCollapsed = useIsAllCollapsed();
-  const setOpen = useSetOpenAll();
-  const Comp = asChild ? Slot : "button";
-  return (
-    <Comp
-      {...props}
-      ref={ref}
-      onClick={composeEventHandlers(props.onClick, () => setOpen(false))}
-      disabled={isAllCollapsed}
-    >
-      {children}
-    </Comp>
-  );
-});
-
-CollapseAll.displayName = "CollapseAll";
+ToggleExpandAll.displayName = "ToggleExpandAll";
 
 const Root = Tree;
 const Item = TreeItem;
@@ -757,15 +725,14 @@ const Branch = TreeBranch;
 export {
   Branch,
   Card,
-  CollapseAll,
   CollapsedContent,
   Content,
-  ExpandAll,
   HasDisclosures,
   Indicator,
   Item,
   Root,
   Summary,
+  ToggleExpandAll,
   Trigger,
   useDetailContext,
   useIndent,

@@ -77,16 +77,4 @@
       }
     }
   }
-
-  @media (hover: none) and (pointer: coarse) {
-    .fern-docs-badge.interactive {
-      &.small {
-        height: 28px;
-      }
-
-      &.large {
-        height: 32px;
-      }
-    }
-  }
 }

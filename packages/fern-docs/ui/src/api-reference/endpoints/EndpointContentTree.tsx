@@ -3,9 +3,7 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import {
   AvailabilityBadge,
   Badge,
-  Button,
   cn,
-  FernButtonGroup,
   FernInput,
   StatusCodeBadge,
 } from "@fern-docs/components";
@@ -14,7 +12,7 @@ import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { sortBy } from "es-toolkit/array";
 import { capitalize } from "es-toolkit/string";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { ChevronsDownUp, ChevronsUpDown, ListFilter } from "lucide-react";
+import { ListFilter } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   createContext,
@@ -142,18 +140,7 @@ export function EndpointContentTree({
                       slug={node.slug}
                       headerRight={
                         <Tree.HasDisclosures>
-                          <FernButtonGroup>
-                            <Tree.CollapseAll asChild>
-                              <Button size="iconXs" variant="ghost">
-                                <ChevronsDownUp />
-                              </Button>
-                            </Tree.CollapseAll>
-                            <Tree.ExpandAll asChild>
-                              <Button size="iconXs" variant="ghost">
-                                <ChevronsUpDown />
-                              </Button>
-                            </Tree.ExpandAll>
-                          </FernButtonGroup>
+                          <Tree.ToggleExpandAll />
                         </Tree.HasDisclosures>
                       }
                     >
@@ -179,18 +166,7 @@ export function EndpointContentTree({
                         slug={node.slug}
                         headerRight={
                           <Tree.HasDisclosures>
-                            <FernButtonGroup>
-                              <Tree.CollapseAll asChild>
-                                <Button size="iconXs" variant="ghost">
-                                  <ChevronsDownUp />
-                                </Button>
-                              </Tree.CollapseAll>
-                              <Tree.ExpandAll asChild>
-                                <Button size="iconXs" variant="ghost">
-                                  <ChevronsUpDown />
-                                </Button>
-                              </Tree.ExpandAll>
-                            </FernButtonGroup>
+                            <Tree.ToggleExpandAll />
                           </Tree.HasDisclosures>
                         }
                       >
@@ -219,18 +195,7 @@ export function EndpointContentTree({
                         slug={node.slug}
                         headerRight={
                           <Tree.HasDisclosures>
-                            <FernButtonGroup>
-                              <Tree.CollapseAll asChild>
-                                <Button size="iconXs" variant="ghost">
-                                  <ChevronsDownUp />
-                                </Button>
-                              </Tree.CollapseAll>
-                              <Tree.ExpandAll asChild>
-                                <Button size="iconXs" variant="ghost">
-                                  <ChevronsUpDown />
-                                </Button>
-                              </Tree.ExpandAll>
-                            </FernButtonGroup>
+                            <Tree.ToggleExpandAll />
                           </Tree.HasDisclosures>
                         }
                       >
@@ -264,18 +229,7 @@ export function EndpointContentTree({
                           </Badge>
                         )}
                         <Tree.HasDisclosures>
-                          <FernButtonGroup>
-                            <Tree.CollapseAll asChild>
-                              <Button size="iconXs" variant="ghost">
-                                <ChevronsDownUp />
-                              </Button>
-                            </Tree.CollapseAll>
-                            <Tree.ExpandAll asChild>
-                              <Button size="iconXs" variant="ghost">
-                                <ChevronsUpDown />
-                              </Button>
-                            </Tree.ExpandAll>
-                          </FernButtonGroup>
+                          <Tree.ToggleExpandAll />
                         </Tree.HasDisclosures>
                       </div>
                     }
@@ -309,18 +263,7 @@ export function EndpointContentTree({
                           variant="outlined"
                         />
                         <Tree.HasDisclosures>
-                          <FernButtonGroup>
-                            <Tree.CollapseAll asChild>
-                              <Button size="iconXs" variant="ghost">
-                                <ChevronsDownUp />
-                              </Button>
-                            </Tree.CollapseAll>
-                            <Tree.ExpandAll asChild>
-                              <Button size="iconXs" variant="ghost">
-                                <ChevronsUpDown />
-                              </Button>
-                            </Tree.ExpandAll>
-                          </FernButtonGroup>
+                          <Tree.ToggleExpandAll />
                         </Tree.HasDisclosures>
                       </>
                     }
@@ -575,62 +518,59 @@ const ParameterInfo = forwardRef<
 
   const availability = property.availability ?? unwrapped.availability;
 
-  console.log(anchorId);
-
   return (
-    <Parameter.Root
-      {...props}
-      className={cn("flex-1", props.className)}
-      ref={ref}
-      onPointerEnter={() => onHoverProperty(jsonpath, { isHovering: true })}
-      onPointerLeave={() => onHoverProperty(jsonpath, { isHovering: false })}
-      onFocus={() => onHoverProperty(jsonpath, { isHovering: true })}
-      onBlur={() => onHoverProperty(jsonpath, { isHovering: false })}
-    >
-      <Parameter.Name
-        ref={nameRef}
-        parameterName={property.key}
-        className={cn("scroll-m-4", {
-          "-mx-2": indent === 0,
-          "-mr-2": indent > 0,
-          "line-through": property.availability === "Deprecated",
-        })}
-        color={property.availability === "Deprecated" ? "gray" : "accent"}
-        variant={isActive ? "subtle" : "ghost"}
-        onClickCopyAnchorLink={() => {
-          const url = String(
-            new URL(`/${slug}#${anchorId}`, window.location.href)
-          );
-          void navigator.clipboard.writeText(url);
-          setLocation((location) => ({
-            ...location,
-            pathname: `/${slug}`,
-            hash: `#${anchorId}`,
-          }));
-        }}
-      />
-      <span className="text-xs text-[var(--grayscale-a9)]">
-        <TypeShorthand
-          shape={unwrapped.shape}
-          isOptional={unwrapped.isOptional}
-          types={types}
+    <div ref={ref} {...props} className={cn("flex-1", props.className)}>
+      <Parameter.Root
+        onPointerEnter={() => onHoverProperty(jsonpath, { isHovering: true })}
+        onPointerLeave={() => onHoverProperty(jsonpath, { isHovering: false })}
+        onFocus={() => onHoverProperty(jsonpath, { isHovering: true })}
+        onBlur={() => onHoverProperty(jsonpath, { isHovering: false })}
+      >
+        <Parameter.Name
+          ref={nameRef}
+          parameterName={property.key}
+          className={cn("scroll-m-4", {
+            "-mx-2": indent === 0,
+            "-mr-2": indent > 0,
+            "line-through": property.availability === "Deprecated",
+          })}
+          color={property.availability === "Deprecated" ? "gray" : "accent"}
+          variant={isActive ? "subtle" : "ghost"}
+          onClickCopyAnchorLink={() => {
+            const url = String(
+              new URL(`/${slug}#${anchorId}`, window.location.href)
+            );
+            void navigator.clipboard.writeText(url);
+            setLocation((location) => ({
+              ...location,
+              pathname: `/${slug}`,
+              hash: `#${anchorId}`,
+            }));
+          }}
         />
-        {unwrapped.default != null &&
-          unwrapped.shape.type !== "literal" &&
-          typeof unwrapped.default !== "object" && (
-            <span className="ml-2 font-mono">
-              {`= ${JSON.stringify(unwrapped.default)}`}
-            </span>
-          )}
-      </span>
-      <Parameter.Spacer />
+        <span className="text-xs text-[var(--grayscale-a9)]">
+          <TypeShorthand
+            shape={unwrapped.shape}
+            isOptional={unwrapped.isOptional}
+            types={types}
+          />
+          {unwrapped.default != null &&
+            unwrapped.shape.type !== "literal" &&
+            typeof unwrapped.default !== "object" && (
+              <span className="ml-2 font-mono">
+                {`= ${JSON.stringify(unwrapped.default)}`}
+              </span>
+            )}
+        </span>
+        <Parameter.Spacer />
+        {anchorId.startsWith("request") && !unwrapped.isOptional && (
+          <Parameter.Status status="required" />
+        )}
+      </Parameter.Root>
       {availability && (
         <AvailabilityBadge availability={availability} size="sm" />
       )}
-      {anchorId.startsWith("request") &&
-        !unwrapped.isOptional &&
-        !availability && <Parameter.Status status="required" />}
-    </Parameter.Root>
+    </div>
   );
 });
 
