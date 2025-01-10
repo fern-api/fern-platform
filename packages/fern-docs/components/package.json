@@ -114,7 +114,6 @@
     "jsdom": "^24.0.0",
     "postcss-import": "^16.0.1",
     "prettier": "^3.4.2",
-    "react-test-renderer": "^18",
     "sass": "^1.74.1",
     "storybook": "^8.4.4",
     "stylelint": "^16.1.0",
