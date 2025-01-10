@@ -3,6 +3,7 @@
  */
 
 export interface StringType {
+    format: string | undefined;
     regex: string | undefined;
     minLength: number | undefined;
     maxLength: number | undefined;

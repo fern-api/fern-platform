@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { STATUS_CODE_MESSAGES } from "../../../utils/statusCodes";
 import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
 import { convertOperationObjectProperties } from "../parameters/ParameterBaseObjectConverter.node";
@@ -110,21 +111,16 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   convertResponseObjectToErrors(): FernRegistry.api.latest.ErrorResponse[] {
     return Object.entries(this.errorsByStatusCode ?? {})
       .flatMap(([statusCode, response]) => {
-        // TODO: resolve reference here, if not done already
         return response.responses?.flatMap((res) => {
           const schema = res.schema;
-          let maybeShapes = schema?.convert();
+          const maybeShapes = maybeSingleValueToArray(schema?.convert());
 
-          if (maybeShapes == null || schema == null) {
+          if (schema == null) {
             return undefined;
           }
 
-          if (!Array.isArray(maybeShapes)) {
-            maybeShapes = [maybeShapes];
-          }
-
           return maybeShapes
-            .map((shape) => ({
+            ?.map((shape) => ({
               statusCode: parseInt(statusCode),
               shape,
               description: response.description ?? schema.description,

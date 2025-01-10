@@ -6,6 +6,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { resolveRequestReference } from "../../../utils/3.1/resolveRequestReference";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { RequestMediaTypeObjectConverterNode } from "./RequestMediaTypeObjectConverter.node";
 
 export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -64,17 +65,9 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
   convert(): FernRegistry.api.latest.HttpRequest[] {
     return Object.entries(this.requestBodiesByContentType ?? {})
       .flatMap(([contentType, mediaTypeObject]) => {
-        let maybeBodies = mediaTypeObject.convert();
+        const maybeBodies = maybeSingleValueToArray(mediaTypeObject.convert());
 
-        if (maybeBodies == null) {
-          return undefined;
-        }
-
-        if (!Array.isArray(maybeBodies)) {
-          maybeBodies = [maybeBodies];
-        }
-
-        return maybeBodies.map((body) => ({
+        return maybeBodies?.map((body) => ({
           description: this.description,
           contentType,
           body,

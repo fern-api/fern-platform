@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace MixedSchemaConverterNode {
@@ -59,16 +60,9 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithEx
     const concreteTypeNodes: FernRegistry.api.latest.UndiscriminatedUnionVariant[][] =
       this.typeNodes
         .map((typeNode) => {
-          let maybeShapes = typeNode.convert();
-          if (maybeShapes == null) {
-            return undefined;
-          }
+          const maybeShapes = maybeSingleValueToArray(typeNode.convert());
 
-          if (!Array.isArray(maybeShapes)) {
-            maybeShapes = [maybeShapes];
-          }
-
-          return maybeShapes.map((shape) => ({
+          return maybeShapes?.map((shape) => ({
             displayName: typeNode.name,
             shape,
             description: typeNode.description,
@@ -92,12 +86,11 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithEx
       variants,
     }));
 
-    // TODO: right now, this is handled as an optional, but we should handle it as nullable
     return this.nullable
       ? unions.map((union) => ({
           type: "alias" as const,
           value: {
-            type: "optional" as const,
+            type: "nullable" as const,
             default: union.variants[0],
             shape: union,
           },

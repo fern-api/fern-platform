@@ -21,6 +21,7 @@ export * from "./FormDataField";
 export * from "./FormDataProperty";
 export * from "./FormDataFile";
 export * from "./FormDataFiles";
+export * from "./NullableType";
 export * from "./OptionalType";
 export * from "./ListType";
 export * from "./SetType";

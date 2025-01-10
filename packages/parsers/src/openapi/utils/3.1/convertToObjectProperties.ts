@@ -4,6 +4,7 @@ import {
   ParameterBaseObjectConverterNode,
   SchemaConverterNode,
 } from "../../3.1";
+import { maybeSingleValueToArray } from "../maybeSingleValueToArray";
 
 export function convertToObjectProperties(
   properties:
@@ -17,17 +18,10 @@ export function convertToObjectProperties(
 
   const rawProperties = Object.entries(properties)
     .map(([key, node]) => {
-      let maybeValueShapes = node.convert();
-      if (maybeValueShapes == null) {
-        return undefined;
-      }
-
-      if (!Array.isArray(maybeValueShapes)) {
-        maybeValueShapes = [maybeValueShapes];
-      }
+      const maybeValueShapes = maybeSingleValueToArray(node.convert());
 
       return maybeValueShapes
-        .map((valueShape) => {
+        ?.map((valueShape) => {
           if (requiredProperties != null && !requiredProperties.includes(key)) {
             valueShape = {
               type: "alias",

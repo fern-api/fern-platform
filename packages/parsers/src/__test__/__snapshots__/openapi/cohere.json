@@ -3364,9 +3364,9 @@
             "type": "json",
             "value": {
               "id": "string",
-              "finish_reason": "string",
+              "finish_reason": "COMPLETE",
               "message": {
-                "role": "string"
+                "role": "assistant"
               }
             }
           },
@@ -3379,9 +3379,9 @@
             "type": "json",
             "value": {
               "id": "string",
-              "finish_reason": "string",
+              "finish_reason": "COMPLETE",
               "message": {
-                "role": "string"
+                "role": "assistant"
               }
             }
           },
@@ -4404,7 +4404,7 @@
               "text": "string",
               "index": 0,
               "is_finished": false,
-              "event_type": "string"
+              "event_type": "text-generation"
             }
           },
           "snippets": {}
@@ -4435,7 +4435,7 @@
               "text": "string",
               "index": 0,
               "is_finished": false,
-              "event_type": "string"
+              "event_type": "text-generation"
             }
           },
           "snippets": {}
@@ -12649,11 +12649,11 @@
               "embed_jobs": [
                 {
                   "job_id": "string",
-                  "status": "string",
+                  "status": "processing",
                   "created_at": "string",
                   "input_dataset_id": "string",
                   "model": "string",
-                  "truncate": "string"
+                  "truncate": "START"
                 }
               ]
             }
@@ -13730,11 +13730,11 @@
             "type": "json",
             "value": {
               "job_id": "string",
-              "status": "string",
+              "status": "processing",
               "created_at": "string",
               "input_dataset_id": "string",
               "model": "string",
-              "truncate": "string"
+              "truncate": "START"
             }
           },
           "snippets": {}
@@ -16871,7 +16871,7 @@
                     0
                   ],
                   "labels": {},
-                  "classification_type": "string"
+                  "classification_type": "single-label"
                 }
               ]
             }
@@ -17479,8 +17479,8 @@
                   "name": "string",
                   "created_at": "string",
                   "updated_at": "string",
-                  "dataset_type": "string",
-                  "validation_status": "string"
+                  "dataset_type": "embed-input",
+                  "validation_status": "unknown"
                 }
               ]
             }
@@ -19192,8 +19192,8 @@
                 "name": "string",
                 "created_at": "string",
                 "updated_at": "string",
-                "dataset_type": "string",
-                "validation_status": "string"
+                "dataset_type": "embed-input",
+                "validation_status": "unknown"
               }
             }
           },
@@ -25463,13 +25463,13 @@
             "value": {
               "name": "string",
               "endpoints": [
-                "string"
+                "chat"
               ],
               "finetuned": false,
               "context_length": 0,
               "tokenizer_url": "string",
               "default_endpoints": [
-                "string"
+                "chat"
               ]
             }
           },
@@ -26000,13 +26000,13 @@
                 {
                   "name": "string",
                   "endpoints": [
-                    "string"
+                    "chat"
                   ],
                   "finetuned": false,
                   "context_length": 0,
                   "tokenizer_url": "string",
                   "default_endpoints": [
-                    "string"
+                    "chat"
                   ]
                 }
               ]
