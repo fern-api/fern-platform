@@ -24,11 +24,7 @@ export function renderTypeShorthandRoot(
   hideOptional = false
 ): ReactNode {
   const unwrapped = unwrapReference(shape, types);
-  const typeShorthand = renderTypeShorthand(
-    unwrapped.shape,
-    { nullable: isResponse },
-    types
-  );
+  const typeShorthand = renderTypeShorthand(unwrapped.shape, {}, types);
   return (
     <span className="fern-api-property-meta">
       <span>{typeShorthand}</span>
@@ -159,14 +155,9 @@ function toPrimitiveTypeLabelsString({
 
 export function renderTypeShorthand(
   shape: TypeShapeOrReference,
-  {
-    plural = false,
-    withArticle = false,
-    nullable = false,
-  }: TypeShorthandOptions = {
+  { plural = false, withArticle = false }: TypeShorthandOptions = {
     plural: false,
     withArticle: false,
-    nullable: false,
   },
   types: Record<string, TypeDefinition>
 ): string {
@@ -175,11 +166,9 @@ export function renderTypeShorthand(
   const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
-  const isNullable = unwrapped.isNullable || nullable;
-
-  if (isNullable && unwrapped.isOptional) {
-    return `${maybeWithArticle("a", "nullable and optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
-  } else if (isNullable) {
+  if (unwrapped.isNullable && unwrapped.isOptional) {
+    return `${maybeWithArticle("a", "nullable or optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  } else if (unwrapped.isNullable) {
     return `${maybeWithArticle("a", "nullable")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   } else if (unwrapped.isOptional) {
     return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;

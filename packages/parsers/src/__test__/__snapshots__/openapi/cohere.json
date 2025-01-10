@@ -627,30 +627,6 @@
           "description": "OK"
         }
       ],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "NonStreamedChatResponse"
-            }
-          },
-          "description": "OK"
-        },
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "StreamedChatResponse"
-            }
-          },
-          "description": "OK"
-        }
-      ],
       "errors": [
         {
           "statusCode": 400,
