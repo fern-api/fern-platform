@@ -59,16 +59,15 @@ function UnmemoizedDefaultDocs({
 
       <style>
         {`
-                        .fern-sidebar-container {
-                            border-right-width: ${colors.light?.sidebarBackground == null ? 0 : 1}px;
-                            border-left-width: ${colors.light?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
-                        }
+.fern-sidebar-container {
+  border-right-width: ${colors.light?.sidebarBackground == null ? 0 : 1}px;
+  border-left-width: ${colors.light?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
+}
 
-                        :is(.dark) .fern-sidebar-container {
-                            border-right-width: ${colors.dark?.sidebarBackground == null ? 0 : 1}px;
-                            border-left-width: ${colors.dark?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
-                        }
-                    `}
+:is(.dark) .fern-sidebar-container {
+  border-right-width: ${colors.dark?.sidebarBackground == null ? 0 : 1}px;
+  border-left-width: ${colors.dark?.sidebarBackground == null || layout?.pageWidth?.type !== "full" ? 0 : 1}px;
+}`}
       </style>
 
       <div className="fern-body">

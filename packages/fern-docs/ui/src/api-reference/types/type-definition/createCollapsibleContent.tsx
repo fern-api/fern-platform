@@ -13,7 +13,7 @@ import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
 
 interface CollapsibleContent {
-  elements: ReactElement<{ name: string; description?: string }>[];
+  elements: ReactElement<{ children: string; description?: string }>[];
   elementNameSingular: string;
   elementNamePlural: string;
   separatorText?: string;
@@ -49,11 +49,9 @@ export function createCollapsibleContent(
     case "enum": {
       return {
         elements: unwrapped.shape.values.map((enumValue) => (
-          <Chip
-            key={enumValue.value}
-            name={enumValue.value}
-            description={enumValue.description}
-          />
+          <Chip key={enumValue.value} description={enumValue.description}>
+            {enumValue.value}
+          </Chip>
           // <EnumValue key={enumValue.value} enumValue={enumValue} />
         )),
         elementNameSingular: "enum value",

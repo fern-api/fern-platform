@@ -15,7 +15,7 @@ import { EnumDefinitionDetails } from "./EnumDefinitionDetails";
 import { FernCollapseWithButton } from "./FernCollapseWithButton";
 
 type EnumTypeDefinitionProps = {
-  elements: ReactElement<{ name: string; description?: string }>[];
+  elements: ReactElement<{ children: string; description?: string }>[];
   isCollapsed: boolean;
   toggleIsCollapsed: () => void;
   collapsibleContentContextValue: () => TypeDefinitionContextValue;

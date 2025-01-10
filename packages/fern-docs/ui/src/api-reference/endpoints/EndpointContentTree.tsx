@@ -1,17 +1,49 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { AvailabilityBadge, cn } from "@fern-docs/components";
+import {
+  AvailabilityBadge,
+  Badge,
+  Button,
+  cn,
+  FernButtonGroup,
+  FernInput,
+  StatusCodeBadge,
+} from "@fern-docs/components";
 import { Parameter, Tree } from "@fern-docs/components/tree";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
-import { UnreachableCaseError } from "ts-essentials";
-import { useTypeShorthandLang } from "../../atoms";
+import { capitalize } from "es-toolkit/string";
+import { atom, useAtomValue, useSetAtom } from "jotai";
+import { ChevronsDownUp, ChevronsUpDown, ListFilter } from "lucide-react";
+import {
+  ComponentPropsWithoutRef,
+  createContext,
+  forwardRef,
+  PropsWithChildren,
+  RefObject,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useIsomorphicLayoutEffect } from "swr/_internal";
+import { noop, UnreachableCaseError } from "ts-essentials";
+import { useMemoOne } from "use-memo-one";
+import {
+  IS_READY_ATOM,
+  LOCATION_ATOM,
+  useTypeShorthandLang,
+} from "../../atoms";
 import { Chip } from "../../components/Chip";
 import { Markdown } from "../../mdx/Markdown";
 import { renderTypeShorthand } from "../../type-shorthand";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
+import {
+  JsonPropertyPath,
+  JsonPropertyPathPart,
+} from "../examples/JsonPropertyPath";
 import { EnumDefinitionDetails } from "../types/type-definition/EnumDefinitionDetails";
 import { HoveringProps } from "./EndpointContentLeft";
 import { EndpointSection } from "./EndpointSection";
+
 interface EndpointContentTreeProps {
   context: ApiDefinition.EndpointContext;
   showErrors: boolean;
@@ -25,11 +57,64 @@ interface EndpointContentTreeProps {
   ) => void;
 }
 
+const AnchorIdContext = createContext<string | undefined>(undefined);
+const SlugContext = createContext<string>("");
+
+function AnchorIdProvider({
+  children,
+  id,
+}: PropsWithChildren & { id: string }) {
+  const parentId = useContext(AnchorIdContext);
+  return (
+    <AnchorIdContext.Provider value={parentId ? `${parentId}.${id}` : id}>
+      {children}
+    </AnchorIdContext.Provider>
+  );
+}
+
+function useAnchorId() {
+  return useContext(AnchorIdContext);
+}
+
+const HoverPropertyContext =
+  createContext<
+    (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void
+  >(noop);
+
+const JsonPathPartContext = createContext<RefObject<JsonPropertyPath>>({
+  current: [],
+});
+
+function JsonPathPartProvider({
+  children,
+  value,
+}: PropsWithChildren & {
+  value: JsonPropertyPathPart | ((parts: JsonPropertyPath) => JsonPropertyPath);
+}) {
+  const jsonPathParts = useContext(JsonPathPartContext).current ?? [];
+  const ref = useRef(
+    typeof value === "function"
+      ? value(jsonPathParts)
+      : [...jsonPathParts, value]
+  );
+  useIsomorphicLayoutEffect(() => {
+    ref.current =
+      typeof value === "function"
+        ? value(jsonPathParts)
+        : [...jsonPathParts, value];
+  }, [jsonPathParts, value]);
+  return (
+    <JsonPathPartContext.Provider value={ref}>
+      {children}
+    </JsonPathPartContext.Provider>
+  );
+}
+
 export function EndpointContentTree({
   context: { endpoint, node, types, auth, globalHeaders },
   //   showErrors,
-  //   onHoverRequestProperty,
-  //   onHoverResponseProperty,
+  onHoverRequestProperty,
+  onHoverResponseProperty,
 }: EndpointContentTreeProps) {
   const requestHeaders = [
     ...(auth ? [toAuthHeader(auth)] : []),
@@ -38,93 +123,216 @@ export function EndpointContentTree({
   ];
 
   return (
-    <TooltipProvider>
-      <div className="flex max-w-full flex-1 flex-col gap-12">
-        <Markdown className="text-base leading-6" mdx={endpoint.description} />
-        {requestHeaders.length > 0 && (
-          <EndpointSection
-            title="Headers"
-            anchorIdParts={["request", "headers"]}
-            slug={node.slug}
-          >
-            <Tree.Root>
-              {requestHeaders.map((header) => (
-                <ObjectProperty
-                  key={header.key}
-                  property={header}
-                  types={types}
-                />
-              ))}
-            </Tree.Root>
-          </EndpointSection>
-        )}
+    <SlugContext.Provider value={node.slug}>
+      <TooltipProvider>
+        <div className="flex max-w-full flex-1 flex-col gap-12">
+          <Markdown
+            className="text-base leading-6"
+            mdx={endpoint.description}
+          />
+          <AnchorIdProvider id="request">
+            <HoverPropertyContext.Provider value={onHoverRequestProperty}>
+              {requestHeaders.length > 0 && (
+                <Tree.Root>
+                  <AnchorIdProvider id="headers">
+                    <EndpointSection
+                      title="Headers"
+                      anchorIdParts={["request", "headers"]}
+                      slug={node.slug}
+                      headerRight={
+                        <Tree.HasDisclosures>
+                          <FernButtonGroup>
+                            <Tree.CollapseAll asChild>
+                              <Button size="iconXs" variant="ghost">
+                                <ChevronsDownUp />
+                              </Button>
+                            </Tree.CollapseAll>
+                            <Tree.ExpandAll asChild>
+                              <Button size="iconXs" variant="ghost">
+                                <ChevronsUpDown />
+                              </Button>
+                            </Tree.ExpandAll>
+                          </FernButtonGroup>
+                        </Tree.HasDisclosures>
+                      }
+                    >
+                      {requestHeaders.map((header) => (
+                        <ObjectProperty
+                          key={header.key}
+                          property={header}
+                          types={types}
+                        />
+                      ))}
+                    </EndpointSection>
+                  </AnchorIdProvider>
+                </Tree.Root>
+              )}
 
-        {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
-          <EndpointSection
-            title="Path parameters"
-            anchorIdParts={["request", "path"]}
-            slug={node.slug}
-          >
-            <Tree.Root>
-              {endpoint.pathParameters.map((parameter) => (
-                <ObjectProperty
-                  key={parameter.key}
-                  property={parameter}
-                  types={types}
-                />
-              ))}
-            </Tree.Root>
-          </EndpointSection>
-        )}
+              {endpoint.pathParameters &&
+                endpoint.pathParameters.length > 0 && (
+                  <Tree.Root>
+                    <AnchorIdProvider id="path">
+                      <EndpointSection
+                        title="Path parameters"
+                        anchorIdParts={["request", "path"]}
+                        slug={node.slug}
+                        headerRight={
+                          <Tree.HasDisclosures>
+                            <FernButtonGroup>
+                              <Tree.CollapseAll asChild>
+                                <Button size="iconXs" variant="ghost">
+                                  <ChevronsDownUp />
+                                </Button>
+                              </Tree.CollapseAll>
+                              <Tree.ExpandAll asChild>
+                                <Button size="iconXs" variant="ghost">
+                                  <ChevronsUpDown />
+                                </Button>
+                              </Tree.ExpandAll>
+                            </FernButtonGroup>
+                          </Tree.HasDisclosures>
+                        }
+                      >
+                        {endpoint.pathParameters.map((parameter) => (
+                          <ObjectProperty
+                            key={parameter.key}
+                            property={parameter}
+                            types={types}
+                          />
+                        ))}
+                      </EndpointSection>
+                    </AnchorIdProvider>
+                  </Tree.Root>
+                )}
 
-        {endpoint.queryParameters && endpoint.queryParameters.length > 0 && (
-          <EndpointSection
-            title="Query parameters"
-            anchorIdParts={["request", "query"]}
-            slug={node.slug}
-          >
-            <Tree.Root>
-              {endpoint.queryParameters.map((parameter) => (
-                <ObjectProperty
-                  key={parameter.key}
-                  property={parameter}
-                  types={types}
-                />
-              ))}
-            </Tree.Root>
-          </EndpointSection>
-        )}
+              {endpoint.queryParameters &&
+                endpoint.queryParameters.length > 0 && (
+                  <Tree.Root>
+                    <AnchorIdProvider id="query">
+                      <EndpointSection
+                        title="Query parameters"
+                        anchorIdParts={["request", "query"]}
+                        slug={node.slug}
+                        headerRight={
+                          <Tree.HasDisclosures>
+                            <FernButtonGroup>
+                              <Tree.CollapseAll asChild>
+                                <Button size="iconXs" variant="ghost">
+                                  <ChevronsDownUp />
+                                </Button>
+                              </Tree.CollapseAll>
+                              <Tree.ExpandAll asChild>
+                                <Button size="iconXs" variant="ghost">
+                                  <ChevronsUpDown />
+                                </Button>
+                              </Tree.ExpandAll>
+                            </FernButtonGroup>
+                          </Tree.HasDisclosures>
+                        }
+                      >
+                        {endpoint.queryParameters.map((parameter) => (
+                          <ObjectProperty
+                            key={parameter.key}
+                            property={parameter}
+                            types={types}
+                          />
+                        ))}
+                      </EndpointSection>
+                    </AnchorIdProvider>
+                  </Tree.Root>
+                )}
 
-        {endpoint.requests?.[0] && (
-          <EndpointSection
-            title="Request"
-            anchorIdParts={["request"]}
-            slug={node.slug}
-            description={endpoint.requests[0].description}
-          >
-            <Tree.Root>
-              <HttpRequestBody body={endpoint.requests[0].body} types={types} />
-            </Tree.Root>
-          </EndpointSection>
-        )}
+              {endpoint.requests?.[0] && (
+                <Tree.Root>
+                  <EndpointSection
+                    title="Request"
+                    anchorIdParts={["request"]}
+                    slug={node.slug}
+                    description={endpoint.requests[0].description}
+                    headerRight={
+                      <div className="flex items-center gap-2">
+                        {endpoint.requests[0].contentType && (
+                          <Badge size="sm" className="font-mono">
+                            {endpoint.requests[0].contentType}
+                          </Badge>
+                        )}
+                        <Tree.HasDisclosures>
+                          <FernButtonGroup>
+                            <Tree.CollapseAll asChild>
+                              <Button size="iconXs" variant="ghost">
+                                <ChevronsDownUp />
+                              </Button>
+                            </Tree.CollapseAll>
+                            <Tree.ExpandAll asChild>
+                              <Button size="iconXs" variant="ghost">
+                                <ChevronsUpDown />
+                              </Button>
+                            </Tree.ExpandAll>
+                          </FernButtonGroup>
+                        </Tree.HasDisclosures>
+                      </div>
+                    }
+                  >
+                    <AnchorIdProvider id="body">
+                      <HttpRequestBody
+                        body={endpoint.requests[0].body}
+                        types={types}
+                      />
+                    </AnchorIdProvider>
+                  </EndpointSection>
+                </Tree.Root>
+              )}
+            </HoverPropertyContext.Provider>
+          </AnchorIdProvider>
 
-        {endpoint.responses?.[0] && (
-          <EndpointSection
-            title="Response"
-            anchorIdParts={["response"]}
-            slug={node.slug}
-          >
-            <Tree.Root>
-              <HttpResponseBody
-                key={endpoint.responses[0].statusCode}
-                body={endpoint.responses[0].body}
-                types={types}
-              />
-            </Tree.Root>
-          </EndpointSection>
-        )}
-      </div>
-    </TooltipProvider>
+          <AnchorIdProvider id="response">
+            <HoverPropertyContext.Provider value={onHoverResponseProperty}>
+              {endpoint.responses?.[0] && (
+                <Tree.Root>
+                  <EndpointSection
+                    title="Response"
+                    anchorIdParts={["response"]}
+                    slug={node.slug}
+                    description={endpoint.responses[0].description}
+                    headerRight={
+                      <>
+                        <StatusCodeBadge
+                          statusCode={endpoint.responses[0].statusCode}
+                          className="ml-2 mr-auto"
+                          variant="outlined"
+                        />
+                        <Tree.HasDisclosures>
+                          <FernButtonGroup>
+                            <Tree.CollapseAll asChild>
+                              <Button size="iconXs" variant="ghost">
+                                <ChevronsDownUp />
+                              </Button>
+                            </Tree.CollapseAll>
+                            <Tree.ExpandAll asChild>
+                              <Button size="iconXs" variant="ghost">
+                                <ChevronsUpDown />
+                              </Button>
+                            </Tree.ExpandAll>
+                          </FernButtonGroup>
+                        </Tree.HasDisclosures>
+                      </>
+                    }
+                  >
+                    <AnchorIdProvider id="body">
+                      <HttpResponseBody
+                        key={endpoint.responses[0].statusCode}
+                        body={endpoint.responses[0].body}
+                        types={types}
+                      />
+                    </AnchorIdProvider>
+                  </EndpointSection>
+                </Tree.Root>
+              )}
+            </HoverPropertyContext.Provider>
+          </AnchorIdProvider>
+        </div>
+      </TooltipProvider>
+    </SlugContext.Provider>
   );
 }
 
@@ -206,62 +414,46 @@ function ObjectProperty({
   const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
   const indent = Tree.useIndent();
   return (
-    <Tree.Item defaultOpen={isDefaultOpen(property.valueShape, types)}>
-      <Tree.Summary
-        collapseTriggerMessage={showChildAttributesMessage(
-          property.valueShape,
-          types
-        )}
+    <AnchorIdProvider id={property.key}>
+      <JsonPathPartProvider
+        value={{ type: "objectProperty", propertyName: property.key }}
       >
-        <Tree.Trigger className="relative flex items-center text-left">
-          <Tree.Indicator
-            className={cn("absolute", {
-              "-left-4": indent === 0,
-              "-left-2": indent > 0,
-            })}
-          />
-          <Parameter.Root className="flex-1">
-            <Parameter.Name
-              parameterName={property.key}
-              className={cn({
-                "-mx-2": indent === 0,
-                "-mr-2": indent > 0,
-                "line-through": property.availability === "Deprecated",
-              })}
-              color={property.availability === "Deprecated" ? "gray" : "accent"}
-            />
-            <span className="text-xs text-[var(--grayscale-a9)]">
-              <TypeShorthand shape={unwrapped.shape} types={types} />
-              {unwrapped.default != null &&
-                unwrapped.shape.type !== "literal" &&
-                typeof unwrapped.default !== "object" && (
-                  <span className="ml-2 font-mono">
-                    {`= ${JSON.stringify(unwrapped.default)}`}
-                  </span>
-                )}
-            </span>
-            <Parameter.Spacer />
-            {unwrapped.availability && (
-              <AvailabilityBadge
-                availability={unwrapped.availability}
-                size="sm"
-              />
+        <Tree.Item
+          defaultOpen={isDefaultOpen(property.valueShape, types)}
+          unbranched={unwrapped.shape.type === "enum"}
+        >
+          <Tree.Summary
+            collapseTriggerMessage={showChildAttributesMessage(
+              property.valueShape,
+              types
             )}
-            <Parameter.Status
-              status={!unwrapped.isOptional ? "required" : "optional"}
+          >
+            <Tree.Trigger className="relative flex items-center text-left">
+              <Tree.Indicator
+                className={cn("absolute", {
+                  "-left-4": indent === 0,
+                  "-left-2": indent > 0,
+                })}
+              />
+              <ParameterInfo
+                parameterName={property.key}
+                indent={indent}
+                property={property}
+                types={types}
+              />
+            </Tree.Trigger>
+            <Markdown
+              size="sm"
+              className={cn("text-text-muted mt-2 leading-normal", {
+                "pl-2": indent > 0,
+              })}
+              mdx={property.description ?? unwrapped.descriptions[0]}
             />
-          </Parameter.Root>
-        </Tree.Trigger>
-        <Markdown
-          size="sm"
-          className={cn("text-text-muted mt-2 leading-normal", {
-            "pl-2": indent > 0,
-          })}
-          mdx={property.description ?? unwrapped.descriptions[0]}
-        />
-      </Tree.Summary>
-      {renderDereferencedShape(unwrapped.shape, types)}
-    </Tree.Item>
+          </Tree.Summary>
+          {renderDereferencedShape(unwrapped.shape, types)}
+        </Tree.Item>
+      </JsonPathPartProvider>
+    </AnchorIdProvider>
   );
 }
 
@@ -286,6 +478,149 @@ function isDefaultOpen(
   }
 }
 
+type FocusableTarget = HTMLElement | { focus(): void };
+
+function isSelectableInput(
+  element: any
+): element is FocusableTarget & { select: () => void } {
+  return element instanceof HTMLInputElement && "select" in element;
+}
+
+function focus(element?: FocusableTarget | null, { select = false } = {}) {
+  // only focus if that element is focusable
+  if (element?.focus) {
+    const previouslyFocusedElement = document.activeElement;
+    // NOTE: we prevent scrolling on focus, to minimize jarring transitions for users
+    element.focus({ preventScroll: true });
+    // only select if its not the same element, it supports selection and we need to select
+    if (
+      element !== previouslyFocusedElement &&
+      isSelectableInput(element) &&
+      select
+    )
+      element.select();
+  }
+}
+
+const ParameterInfo = forwardRef<
+  HTMLDivElement,
+  Omit<ComponentPropsWithoutRef<typeof Parameter.Root>, "property"> & {
+    parameterName: string;
+    indent: number;
+    property: ApiDefinition.ObjectProperty;
+    types: Record<string, ApiDefinition.TypeDefinition>;
+  }
+>(({ parameterName, indent, property, types, ...props }, ref) => {
+  const jsonpath = useContext(JsonPathPartContext).current ?? [];
+  const onHoverProperty = useContext(HoverPropertyContext);
+  const slug = useContext(SlugContext);
+  const anchorId = useAnchorId() ?? property.key;
+  const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
+  const isActive = useAtomValue(
+    useMemoOne(
+      () =>
+        atom(
+          (get) =>
+            get(IS_READY_ATOM) && get(LOCATION_ATOM).hash === `#${anchorId}`
+        ),
+      [anchorId]
+    )
+  );
+  const setLocation = useSetAtom(LOCATION_ATOM);
+  const nameRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      setTimeout(() => {
+        let parent = nameRef.current?.parentElement;
+        while (parent) {
+          console.log(parent);
+          if (parent instanceof HTMLDetailsElement) {
+            parent.open = true;
+          }
+          parent = parent.parentElement;
+        }
+
+        focus(nameRef.current, { select: true });
+        setTimeout(() => {
+          // don't scroll if the element is already visible
+          if (nameRef.current) {
+            const rect = nameRef.current.getBoundingClientRect();
+            const isVisible =
+              rect.top >= 0 &&
+              rect.left >= 0 &&
+              rect.bottom <=
+                (window.innerHeight || document.documentElement.clientHeight) &&
+              rect.right <=
+                (window.innerWidth || document.documentElement.clientWidth);
+
+            if (!isVisible) {
+              nameRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+              });
+            }
+          }
+        }, 150);
+      }, 150);
+    }
+  }, [isActive]);
+
+  return (
+    <Parameter.Root
+      {...props}
+      className={cn("flex-1", props.className)}
+      ref={ref}
+      onPointerEnter={() => onHoverProperty(jsonpath, { isHovering: true })}
+      onPointerLeave={() => onHoverProperty(jsonpath, { isHovering: false })}
+      onFocus={() => onHoverProperty(jsonpath, { isHovering: true })}
+      onBlur={() => onHoverProperty(jsonpath, { isHovering: false })}
+    >
+      <Parameter.Name
+        ref={nameRef}
+        parameterName={property.key}
+        className={cn("scroll-m-4", {
+          "-mx-2": indent === 0,
+          "-mr-2": indent > 0,
+          "line-through": property.availability === "Deprecated",
+        })}
+        color={property.availability === "Deprecated" ? "gray" : "accent"}
+        variant={isActive ? "subtle" : "ghost"}
+        onClickCopyAnchorLink={() => {
+          const url = String(
+            new URL(`/${slug}#${anchorId}`, window.location.href)
+          );
+          void navigator.clipboard.writeText(url);
+          setLocation((location) => ({
+            ...location,
+            pathname: `/${slug}`,
+            hash: `#${anchorId}`,
+          }));
+        }}
+      />
+      <span className="text-xs text-[var(--grayscale-a9)]">
+        <TypeShorthand shape={unwrapped.shape} types={types} />
+        {unwrapped.default != null &&
+          unwrapped.shape.type !== "literal" &&
+          typeof unwrapped.default !== "object" && (
+            <span className="ml-2 font-mono">
+              {`= ${JSON.stringify(unwrapped.default)}`}
+            </span>
+          )}
+      </span>
+      <Parameter.Spacer />
+      {unwrapped.availability && (
+        <AvailabilityBadge availability={unwrapped.availability} size="sm" />
+      )}
+      <Parameter.Status
+        status={!unwrapped.isOptional ? "required" : "optional"}
+      />
+    </Parameter.Root>
+  );
+});
+
+ParameterInfo.displayName = "ParameterInfo";
+
 function showChildAttributesMessage(
   shape: ApiDefinition.TypeShape,
   types: Record<string, ApiDefinition.TypeDefinition>
@@ -299,9 +634,9 @@ function showChildAttributesMessage(
       return `Show ${unwrapped.shape.variants.length} variants`;
     case "list":
     case "set":
-      return "Show list item attributes";
+      return "Show child attributes";
     case "map":
-      return "Show map value attributes";
+      return "Show child attributes";
     case "enum":
       return `Show ${unwrapped.shape.values.length} enum values`;
     default:
@@ -320,27 +655,20 @@ function renderDereferencedShape(
     case "unknown":
       return false;
     case "list":
-      return renderTypeShape(property.itemShape, types, parentVisitedTypeIds);
     case "set":
-      return renderTypeShape(property.itemShape, types, parentVisitedTypeIds);
-    case "map":
-      return renderTypeShape(property.valueShape, types, parentVisitedTypeIds);
-    case "enum":
       return (
-        <Tree.Content>
-          <Tree.Card className="mb-2">
-            <EnumDefinitionDetails className="p-2">
-              {property.values.map((value) => (
-                <Chip
-                  key={value.value}
-                  name={value.value}
-                  description={value.description}
-                />
-              ))}
-            </EnumDefinitionDetails>
-          </Tree.Card>
-        </Tree.Content>
+        <JsonPathPartProvider value={{ type: "listItem" }}>
+          {renderTypeShape(property.itemShape, types, parentVisitedTypeIds)}
+        </JsonPathPartProvider>
       );
+    case "map":
+      return (
+        <JsonPathPartProvider value={{ type: "objectProperty" }}>
+          {renderTypeShape(property.valueShape, types, parentVisitedTypeIds)}
+        </JsonPathPartProvider>
+      );
+    case "enum":
+      return <EnumCard values={property.values} />;
     case "object": {
       return (
         <ObjectTypeShape
@@ -353,33 +681,51 @@ function renderDereferencedShape(
     case "undiscriminatedUnion":
       return (
         <Tree.Content>
-          <Tree.Card className="mb-2">
+          <Tree.Card>
             <Tree.Variants>
-              {property.variants.map((variant) => (
-                <>
-                  {(variant.displayName || variant.availability) && (
-                    <div className="flex items-center gap-2">
-                      {variant.displayName && <h5>{variant.displayName}</h5>}
-                      {variant.availability && (
-                        <AvailabilityBadge
-                          availability={variant.availability}
-                          size="sm"
-                          className="ml-auto"
-                        />
-                      )}
-                    </div>
-                  )}
-                  <Markdown
-                    className="text-base leading-6"
-                    mdx={variant.description}
-                  />
-                  {renderTypeShape(
-                    variant.shape,
-                    types,
-                    parentVisitedTypeIds
-                  ) || renderTypeShorthand(variant.shape, {}, types)}
-                </>
-              ))}
+              {property.variants.map((variant, idx) => {
+                const description =
+                  variant.description ??
+                  ApiDefinition.unwrapReference(variant.shape, types)
+                    .descriptions[0];
+                return (
+                  <AnchorIdProvider
+                    id={variant.displayName ?? String(idx)}
+                    key={idx}
+                  >
+                    {(variant.displayName ||
+                      variant.availability ||
+                      description) && (
+                      <div className="border-b border-[var(--grayscale-a6)] pb-2 leading-normal">
+                        {(variant.displayName || variant.availability) && (
+                          <div className="flex items-center">
+                            {variant.displayName && (
+                              <h6 className="mb-0">{variant.displayName}</h6>
+                            )}
+                            {variant.availability && (
+                              <AvailabilityBadge
+                                availability={variant.availability}
+                                size="sm"
+                                className="ml-auto"
+                              />
+                            )}
+                          </div>
+                        )}
+                        <Markdown size="sm" mdx={description} />
+                      </div>
+                    )}
+                    {renderTypeShape(
+                      variant.shape,
+                      types,
+                      parentVisitedTypeIds
+                    ) || (
+                      <span className="text-text-muted text-xs">
+                        {renderTypeShorthand(variant.shape, {}, types)}
+                      </span>
+                    )}
+                  </AnchorIdProvider>
+                );
+              })}
             </Tree.Variants>
           </Tree.Card>
         </Tree.Content>
@@ -387,41 +733,76 @@ function renderDereferencedShape(
     case "discriminatedUnion":
       return (
         <Tree.Content>
-          <Tree.Card className="mb-2">
+          <Tree.Card>
             <Tree.Variants>
-              {property.variants.map((variant) => (
-                <>
-                  <ObjectProperty
-                    property={{
-                      key: ApiDefinition.PropertyKey(property.discriminant),
-                      valueShape: {
-                        type: "alias",
-                        value: {
-                          type: "literal",
-                          value: {
-                            type: "stringLiteral",
-                            value: variant.discriminantValue,
+              {property.variants.map((variant) => {
+                const description =
+                  variant.description ??
+                  ApiDefinition.unwrapObjectType(
+                    variant,
+                    types,
+                    parentVisitedTypeIds
+                  ).descriptions[0];
+                return (
+                  <AnchorIdProvider
+                    id={variant.discriminantValue}
+                    key={variant.discriminantValue}
+                  >
+                    <JsonPathPartProvider
+                      value={{
+                        type: "objectFilter",
+                        propertyName: property.discriminant,
+                        requiredStringValue: variant.discriminantValue,
+                      }}
+                    >
+                      {(variant.displayName ||
+                        variant.availability ||
+                        description) && (
+                        <div className="border-b border-[var(--grayscale-a6)] pb-2 leading-normal">
+                          {(variant.displayName || variant.availability) && (
+                            <div className="flex items-center">
+                              {variant.displayName && (
+                                <h6 className="mb-0">{variant.displayName}</h6>
+                              )}
+                              {variant.availability && (
+                                <AvailabilityBadge
+                                  availability={variant.availability}
+                                  size="sm"
+                                  className="ml-auto"
+                                />
+                              )}
+                            </div>
+                          )}
+                          <Markdown size="sm" mdx={description} />
+                        </div>
+                      )}
+                      <ObjectProperty
+                        property={{
+                          key: ApiDefinition.PropertyKey(property.discriminant),
+                          valueShape: {
+                            type: "alias",
+                            value: {
+                              type: "literal",
+                              value: {
+                                type: "stringLiteral",
+                                value: variant.discriminantValue,
+                              },
+                            },
                           },
-                        },
-                      },
-                      description:
-                        variant.description ??
-                        ApiDefinition.unwrapObjectType(
-                          variant,
-                          types,
-                          parentVisitedTypeIds
-                        ).descriptions[0],
-                      availability: undefined,
-                    }}
-                    types={types}
-                  />
-                  <ObjectTypeShape
-                    shape={variant}
-                    types={types}
-                    parentVisitedTypeIds={parentVisitedTypeIds}
-                  />
-                </>
-              ))}
+                          description: undefined,
+                          availability: undefined,
+                        }}
+                        types={types}
+                      />
+                      <ObjectTypeShape
+                        shape={variant}
+                        types={types}
+                        parentVisitedTypeIds={parentVisitedTypeIds}
+                      />
+                    </JsonPathPartProvider>
+                  </AnchorIdProvider>
+                );
+              })}
             </Tree.Variants>
           </Tree.Card>
         </Tree.Content>
@@ -430,6 +811,37 @@ function renderDereferencedShape(
       console.error(new UnreachableCaseError(property));
       return false;
   }
+}
+
+function EnumCard({ values }: { values: ApiDefinition.EnumValue[] }) {
+  const [searchInput, setSearchInput] = useState("");
+  return (
+    <Tree.Content>
+      <Tree.Card>
+        {values.length > 10 && (
+          <div className="p-2 pb-0">
+            <FernInput
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Filter"
+              leftIcon={<ListFilter className="text-text-disabled size-4" />}
+            />
+          </div>
+        )}
+        <EnumDefinitionDetails className="p-4" searchInput={searchInput}>
+          {values.map((value) => (
+            <Chip
+              key={value.value}
+              description={value.description}
+              className="font-mono"
+            >
+              {value.value}
+            </Chip>
+          ))}
+        </EnumDefinitionDetails>
+      </Tree.Card>
+    </Tree.Content>
+  );
 }
 
 function renderTypeShape(
@@ -538,7 +950,7 @@ function ObjectTypeShape({
   if (required.length && optional.length) {
     return (
       <>
-        <Tree.Content>
+        <Tree.Content notLast>
           {required.map((property) => (
             <ObjectProperty
               key={property.key}
@@ -640,9 +1052,7 @@ export function TypeShorthandTypescript({
       case "literal":
         return unwrapped.shape.value.type === "stringLiteral"
           ? `"${unwrapped.shape.value.value}"`
-          : unwrapped.shape.value.value
-            ? "true"
-            : "false";
+          : String(unwrapped.shape.value.value);
       case "list": {
         const str = toString(unwrapped.shape.itemShape);
         return str.includes(" ") ? `Array<${str}>` : `${str}[]`;
@@ -711,10 +1121,8 @@ export function TypeShorthandPython({
         return "dict";
       case "literal":
         return unwrapped.shape.value.type === "stringLiteral"
-          ? `"${unwrapped.shape.value.value}"`
-          : unwrapped.shape.value.value
-            ? "True"
-            : "False";
+          ? `Literal["${unwrapped.shape.value.value}"]`
+          : capitalize(String(unwrapped.shape.value.value));
       case "list":
         return `List[${toString(unwrapped.shape.itemShape)}]`;
       case "set":

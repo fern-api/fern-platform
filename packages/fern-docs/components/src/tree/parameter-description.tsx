@@ -41,6 +41,7 @@ const ParameterName = forwardRef<
     size?: "sm" | "lg";
     children?: never;
     color?: BadgeProps["color"];
+    variant?: BadgeProps["variant"];
   }
 >(
   (
@@ -50,6 +51,7 @@ const ParameterName = forwardRef<
       onClickCopyAnchorLink,
       size,
       color,
+      variant,
       ...props
     },
     ref
@@ -96,7 +98,7 @@ const ParameterName = forwardRef<
       >
         <Badge
           color={color ?? "accent"}
-          variant="ghost"
+          variant={variant ?? "ghost"}
           rounded
           interactive
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {

@@ -27,8 +27,6 @@
     @apply max-sm:right-3 max-sm:w-auto;
     @apply shadow-xl;
 
-    top: calc(var(--spacing-header-height-real) + 1.5rem);
-
     .fern-sidebar-content {
       @apply px-4;
     }

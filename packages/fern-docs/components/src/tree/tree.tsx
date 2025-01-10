@@ -1,28 +1,106 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
+import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Separator } from "@radix-ui/react-separator";
 import { Slot } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
+import { atom, PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
 import { Plus } from "lucide-react";
 import {
   Children,
+  ComponentProps,
   ComponentPropsWithoutRef,
+  createContext,
   Dispatch,
+  forwardRef,
   Fragment,
+  isValidElement,
   PropsWithChildren,
   ReactNode,
+  RefObject,
   SetStateAction,
-  createContext,
-  forwardRef,
-  isValidElement,
+  useCallback,
   useContext,
+  useEffect,
+  useId,
+  useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
+import { useMemoOne } from "use-memo-one";
 import { Badge } from "../badges";
 import { cn } from "../cn";
 import Disclosure from "../disclosure";
 import { Chevron } from "./chevron";
+
+const rootCtx = createContext<{
+  ref: RefObject<HTMLDivElement | null>;
+  rootId: string;
+  idsAtom: PrimitiveAtom<string[]>;
+  expandedAtom: PrimitiveAtom<string[]>;
+}>({
+  ref: { current: null },
+  rootId: "",
+  idsAtom: atom<string[]>([]),
+  expandedAtom: atom<string[]>([]),
+});
+
+const SET_OPEN_ALL_EVENT = "tree-set-open-all-disclosures";
+
+function useSetOpenAll() {
+  const { ref, rootId } = useContext(rootCtx);
+  return useCallback(
+    (open: boolean) => {
+      const current = ref.current;
+      if (!current) {
+        return;
+      }
+      current.dispatchEvent(
+        new CustomEvent(SET_OPEN_ALL_EVENT, { detail: { rootId, open } })
+      );
+    },
+    [rootId, ref]
+  );
+}
+
+function useIsAllExpanded() {
+  const { expandedAtom, idsAtom } = useContext(rootCtx);
+  const expanded = useAtomValue(expandedAtom);
+  const ids = useAtomValue(idsAtom);
+  return expanded.length === ids.length;
+}
+
+function useIsAllCollapsed() {
+  const { expandedAtom } = useContext(rootCtx);
+  const expanded = useAtomValue(expandedAtom);
+  return expanded.length === 0;
+}
+
+function useHasNoDisclosures() {
+  const { idsAtom } = useContext(rootCtx);
+  const ids = useAtomValue(idsAtom);
+  return ids.length === 0;
+}
+
+function useListenSetOpenAll(setOpen: (open: boolean) => void) {
+  const { ref, rootId } = useContext(rootCtx);
+  useEffect(() => {
+    const current = ref.current;
+    if (!current) {
+      return;
+    }
+    const listener: EventListener = (e: Event) => {
+      if (e instanceof CustomEvent && e.detail.rootId === rootId) {
+        setOpen(e.detail.open);
+      }
+    };
+    current.addEventListener(SET_OPEN_ALL_EVENT, listener);
+    return () => {
+      current.removeEventListener(SET_OPEN_ALL_EVENT, listener);
+    };
+  }, [ref, rootId, setOpen]);
+}
 
 const ctx = createContext<{
   indent: number;
@@ -41,6 +119,7 @@ function useIndent() {
 const IndentContextProvider = ({ children }: PropsWithChildren) => {
   const parentIndent = useIndent();
   const [pointerOver, setPointerOver] = useState(false);
+
   return (
     <ctx.Provider
       value={{ indent: parentIndent + 1, pointerOver, setPointerOver }}
@@ -50,16 +129,30 @@ const IndentContextProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-const Tree = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(
-  ({ children, ...props }, ref) => {
+const Tree = forwardRef<HTMLDivElement, PropsWithChildren>(
+  ({ children }, forwardRef) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const rootId = useId();
     return (
-      <ctx.Provider
-        value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
-      >
-        <div {...props} ref={ref}>
-          {children}
-        </div>
-      </ctx.Provider>
+      <div ref={composeRefs(ref, forwardRef)}>
+        <rootCtx.Provider
+          value={useMemoOne(
+            () => ({
+              ref,
+              rootId,
+              idsAtom: atom<string[]>([]),
+              expandedAtom: atom<string[]>([]),
+            }),
+            [rootId, ref]
+          )}
+        >
+          <ctx.Provider
+            value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
+          >
+            {children}
+          </ctx.Provider>
+        </rootCtx.Provider>
+      </div>
     );
   }
 );
@@ -84,65 +177,148 @@ function useDetailContext(): {
   return useContext(openCtx);
 }
 
+const UnbranchedCtx = createContext(false);
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+function useSyncDisclosureWithRoot(defaultOpen?: boolean) {
+  const id = useId();
+  const { idsAtom, expandedAtom } = useContext(rootCtx);
+  const setIds = useSetAtom(idsAtom);
+  const setExpanded = useSetAtom(expandedAtom);
+
+  useIsomorphicLayoutEffect(() => {
+    setIds((ids) => [...ids, id]);
+    if (defaultOpen) {
+      setExpanded((expanded) => [...expanded, id]);
+    }
+    return () => {
+      setIds((ids) => ids.filter((id) => id !== id));
+      setExpanded((expanded) => expanded.filter((id) => id !== id));
+    };
+  }, []);
+
+  return useCallback(
+    (open: boolean) => {
+      setExpanded((expanded) =>
+        open ? [...expanded, id] : expanded.filter((id) => id !== id)
+      );
+    },
+    [id, setExpanded]
+  );
+}
+
 const TreeItem = forwardRef<
   HTMLDetailsElement,
-  ComponentPropsWithoutRef<"details"> & {
-    open?: boolean;
-    defaultOpen?: boolean;
-    onOpenChange?: (open: boolean) => void;
+  ComponentPropsWithoutRef<typeof TreeItemDisclosure> & {
+    unbranched?: boolean;
   }
->(({ children, open: openProp, defaultOpen, onOpenChange, ...props }, ref) => {
-  const [open = false, setOpen] = useControllableState({
-    prop: openProp,
-    defaultProp: defaultOpen,
-    onChange: onOpenChange,
-  });
-
-  const childrenArray = Children.toArray(children);
-
-  const summary = childrenArray.find(
-    (child) => isValidElement(child) && child.type === TreeItemSummary
-  );
-  const other = childrenArray.filter(
+>(({ children, unbranched = false, ...props }, ref) => {
+  const other = Children.toArray(children).filter(
     (child) => isValidElement(child) && child.type !== TreeItemSummary
   );
 
-  const indent = useIndent();
-  const ctxValue = useMemo(
-    () => ({ open, setOpen, expandable: other.length > 0 }),
-    [open, setOpen, other.length]
-  );
-
   return (
-    <openCtx.Provider value={ctxValue}>
-      <Disclosure.Details
-        {...props}
-        ref={ref}
-        open={open}
-        defaultOpen={defaultOpen}
-        onOpenChange={setOpen}
-        data-level={indent}
-      >
-        {summary}
-        {other.length > 0 && (
-          <IndentContextProvider>
-            <Disclosure.Content asChild>
-              <div className="relative grid grid-cols-[16px_1fr]">{other}</div>
-            </Disclosure.Content>
-          </IndentContextProvider>
-        )}
-      </Disclosure.Details>
-    </openCtx.Provider>
+    <UnbranchedCtx.Provider value={unbranched}>
+      {other.length > 0 ? (
+        <TreeItemDisclosure ref={ref} {...props}>
+          {children}
+        </TreeItemDisclosure>
+      ) : (
+        <openCtx.Provider
+          value={{ open: false, expandable: false, setOpen: noop }}
+        >
+          <details ref={ref} {...props}>
+            {children}
+          </details>
+        </openCtx.Provider>
+      )}
+    </UnbranchedCtx.Provider>
   );
 });
 
 TreeItem.displayName = "TreeItem";
 
-const TreeItemContent = ({ children }: PropsWithChildren): ReactNode => {
+const TreeItemDisclosure = forwardRef<
+  HTMLDetailsElement,
+  ComponentPropsWithoutRef<"details"> & {
+    open?: boolean;
+    defaultOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
+    asChild?: boolean;
+  }
+>(
+  (
+    { children, open: openProp, defaultOpen, onOpenChange, asChild, ...props },
+    ref
+  ) => {
+    const setOpenWithRoot = useSyncDisclosureWithRoot(defaultOpen);
+
+    const [open = false, setOpen] = useControllableState({
+      prop: openProp,
+      defaultProp: defaultOpen,
+      onChange: (open) => {
+        setOpenWithRoot(open);
+        onOpenChange?.(open);
+      },
+    });
+
+    useListenSetOpenAll(setOpen);
+
+    const childrenArray = Children.toArray(children);
+
+    const summary = childrenArray.find(
+      (child) => isValidElement(child) && child.type === TreeItemSummary
+    );
+    const other = childrenArray.filter(
+      (child) => isValidElement(child) && child.type !== TreeItemSummary
+    );
+
+    const indent = useIndent();
+    const ctxValue = useMemo(
+      () => ({ open, setOpen, expandable: other.length > 0 }),
+      [open, setOpen, other.length]
+    );
+
+    return (
+      <openCtx.Provider value={ctxValue}>
+        <Disclosure.Details
+          {...props}
+          ref={ref}
+          open={open}
+          onOpenChange={setOpen}
+          data-level={indent}
+        >
+          {summary}
+          {other.length > 0 && (
+            <IndentContextProvider>
+              <Disclosure.Content asChild={asChild}>{other}</Disclosure.Content>
+            </IndentContextProvider>
+          )}
+        </Disclosure.Details>
+      </openCtx.Provider>
+    );
+  }
+);
+
+TreeItemDisclosure.displayName = "TreeItemDisclosure";
+
+const TreeItemContent = ({
+  children,
+  notLast = false,
+}: PropsWithChildren & {
+  notLast?: boolean;
+}): ReactNode => {
   const indent = useIndent();
+  const unbranched = useContext(UnbranchedCtx);
 
   if (indent === 0) {
     return children;
+  }
+
+  if (unbranched) {
+    return <div className={cn(indent > 1 && "pl-2")}>{children}</div>;
   }
 
   const childrenArray = Children.toArray(children);
@@ -151,16 +327,16 @@ const TreeItemContent = ({ children }: PropsWithChildren): ReactNode => {
   }
 
   return (
-    <>
+    <div className="relative grid grid-cols-[16px_1fr]">
       {childrenArray.map((child, i) => (
         <Fragment key={isValidElement(child) ? (child.key ?? i) : i}>
           <Disclosure.CloseTrigger asChild>
-            <TreeBranch />
+            <TreeBranch last={i === childrenArray.length - 1 && !notLast} />
           </Disclosure.CloseTrigger>
           {child}
         </Fragment>
       ))}
-    </>
+    </div>
   );
 };
 
@@ -198,7 +374,22 @@ TreeItemCard.displayName = "TreeItemCard";
 
 const TreeItemsContentAdditional = ({
   children,
-  open,
+  ...props
+}: ComponentProps<typeof TreeItemsContentAdditionalDisclosure>) => {
+  const childrenArray = Children.toArray(children).filter(isValidElement);
+  if (childrenArray.length === 0) {
+    return false;
+  }
+  return (
+    <TreeItemsContentAdditionalDisclosure {...props}>
+      {children}
+    </TreeItemsContentAdditionalDisclosure>
+  );
+};
+
+const TreeItemsContentAdditionalDisclosure = ({
+  children,
+  open: openProp,
   defaultOpen,
   onOpenChange,
 }: PropsWithChildren<{
@@ -206,31 +397,47 @@ const TreeItemsContentAdditional = ({
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 }>): ReactNode => {
-  const indent = useIndent();
-  const childrenArray = Children.toArray(children);
+  const setOpenWithRoot = useSyncDisclosureWithRoot(defaultOpen);
 
-  if (childrenArray.length === 0) {
-    return false;
-  }
+  const [open = false, setOpen] = useControllableState({
+    prop: openProp,
+    defaultProp: defaultOpen,
+    onChange: (open) => {
+      setOpenWithRoot(open);
+      onOpenChange?.(open);
+    },
+  });
+
+  useListenSetOpenAll(setOpen);
+
+  const indent = useIndent();
+  const childrenArray = Children.toArray(children).filter(isValidElement);
+
+  // close the parent when this is clicked
+  const onClose = Disclosure.useClose();
 
   return (
     <Disclosure.Details
       open={open}
-      defaultOpen={defaultOpen}
-      onOpenChange={onOpenChange}
+      onOpenChange={setOpen}
       className="col-span-2"
     >
-      <Disclosure.Summary className="list-none">
+      <Disclosure.Summary className="list-none" tabIndex={-1}>
         {({ open }) =>
           !open &&
           (indent > 0 ? (
             <div className="relative grid grid-cols-[16px_1fr]">
               <Disclosure.CloseTrigger asChild>
-                <TreeBranch />
+                <TreeBranch last />
               </Disclosure.CloseTrigger>
               <div className="py-2">
                 <Disclosure.Trigger asChild>
-                  <Badge rounded interactive variant="outlined-subtle">
+                  <Badge
+                    rounded
+                    interactive
+                    variant="outlined-subtle"
+                    className="font-normal"
+                  >
                     <Plus />
                     {childrenArray.length} more attributes
                   </Badge>
@@ -240,7 +447,12 @@ const TreeItemsContentAdditional = ({
           ) : (
             <div className="py-2">
               <Disclosure.Trigger asChild>
-                <Badge rounded interactive variant="outlined-subtle">
+                <Badge
+                  rounded
+                  interactive
+                  variant="outlined-subtle"
+                  className="font-normal"
+                >
                   <Plus />
                   {childrenArray.length} more attributes
                 </Badge>
@@ -254,9 +466,10 @@ const TreeItemsContentAdditional = ({
           <div className="relative grid grid-cols-[16px_1fr]">
             {childrenArray.map((child, i) => (
               <Fragment key={i}>
-                <Disclosure.CloseTrigger asChild>
-                  <TreeBranch />
-                </Disclosure.CloseTrigger>
+                <TreeBranch
+                  last={i === childrenArray.length - 1}
+                  onClick={onClose}
+                />
                 {child}
               </Fragment>
             ))}
@@ -288,7 +501,15 @@ export const UnionVariants = ({ children }: PropsWithChildren) => {
               <div className="h-px flex-1 bg-[var(--grayscale-a6)]" />
             </Separator>
           )}
-          <div className={cn("py-2", isCard && "px-4")}>{child}</div>
+          <div
+            className={cn(
+              "py-4",
+              isCard && "px-4",
+              !isCard && "first:pt-0 last:pb-0"
+            )}
+          >
+            {child}
+          </div>
         </Fragment>
       ))}
     </>
@@ -307,7 +528,9 @@ const TreeItemSummary = forwardRef<
     { children, collapseTriggerMessage = "Show child attributes", ...props },
     ref
   ) => {
+    const indent = useIndent();
     const { open, expandable } = useDetailContext();
+    const unbranched = useContext(UnbranchedCtx);
     return (
       <Disclosure.Summary
         {...props}
@@ -317,24 +540,38 @@ const TreeItemSummary = forwardRef<
         tabIndex={-1}
       >
         {children}
-        {!open && expandable && (
-          <div className="grid grid-cols-[16px_1fr] pt-2">
-            <TreeBranch />
-            <div>
-              <Disclosure.Trigger asChild>
-                <Badge
-                  rounded
-                  interactive
-                  className="mt-2"
-                  variant="outlined-subtle"
-                >
-                  <Plus />
-                  {collapseTriggerMessage}
-                </Badge>
-              </Disclosure.Trigger>
+        {!open &&
+          expandable &&
+          (unbranched ? (
+            <Disclosure.Trigger asChild>
+              <Badge
+                rounded
+                interactive
+                className={cn("mt-2 font-normal", indent > 0 && "ml-2")}
+                variant="outlined-subtle"
+              >
+                <Plus />
+                {collapseTriggerMessage}
+              </Badge>
+            </Disclosure.Trigger>
+          ) : (
+            <div className="grid grid-cols-[16px_1fr] pt-2">
+              <TreeBranch last />
+              <div>
+                <Disclosure.Trigger asChild>
+                  <Badge
+                    rounded
+                    interactive
+                    className="mt-2 font-normal"
+                    variant="outlined-subtle"
+                  >
+                    <Plus />
+                    {collapseTriggerMessage}
+                  </Badge>
+                </Disclosure.Trigger>
+              </div>
             </div>
-          </div>
-        )}
+          ))}
       </Disclosure.Summary>
     );
   }
@@ -390,15 +627,16 @@ const TreeBranch = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<"div"> & {
     lineOnly?: boolean;
+    last?: boolean;
   }
->(({ lineOnly = false, ...props }, ref) => {
+>(({ lineOnly = false, last = false, ...props }, ref) => {
   const { pointerOver, setPointerOver } = useContext(ctx);
   return (
     <div
       aria-hidden="true"
       ref={ref}
       {...props}
-      className={cn(props.className, "nth-last-2:hidden relative h-full")}
+      className={cn(props.className, "relative h-full", { last })}
       data-branch=""
       onPointerOver={() => setPointerOver(true)}
       onPointerLeave={() => setPointerOver(false)}
@@ -430,6 +668,62 @@ const TreeBranch = forwardRef<
 
 TreeBranch.displayName = "TreeBranch";
 
+const HasDisclosures = ({ children }: PropsWithChildren) => {
+  const hasNoDisclosures = useHasNoDisclosures();
+  if (hasNoDisclosures) {
+    return false;
+  }
+  return <>{children}</>;
+};
+
+const ExpandAll = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<"button"> & {
+    asChild?: boolean;
+  }
+>(({ children, asChild, ...props }, ref) => {
+  const isAllExpanded = useIsAllExpanded();
+  const setOpen = useSetOpenAll();
+  const Comp = asChild ? Slot : "button";
+  return (
+    <Comp
+      {...props}
+      ref={ref}
+      onClick={composeEventHandlers(props.onClick, () => {
+        setOpen(true);
+      })}
+      disabled={isAllExpanded}
+    >
+      {children}
+    </Comp>
+  );
+});
+
+ExpandAll.displayName = "ExpandAll";
+
+const CollapseAll = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<"button"> & {
+    asChild?: boolean;
+  }
+>(({ children, asChild, ...props }, ref) => {
+  const isAllCollapsed = useIsAllCollapsed();
+  const setOpen = useSetOpenAll();
+  const Comp = asChild ? Slot : "button";
+  return (
+    <Comp
+      {...props}
+      ref={ref}
+      onClick={composeEventHandlers(props.onClick, () => setOpen(false))}
+      disabled={isAllCollapsed}
+    >
+      {children}
+    </Comp>
+  );
+});
+
+CollapseAll.displayName = "CollapseAll";
+
 const Root = Tree;
 const Item = TreeItem;
 const Content = TreeItemContent;
@@ -444,14 +738,17 @@ const Branch = TreeBranch;
 export {
   Branch,
   Card,
+  CollapseAll,
   CollapsedContent,
   Content,
+  ExpandAll,
+  HasDisclosures,
   Indicator,
   Item,
   Root,
   Summary,
   Trigger,
-  Variants,
   useDetailContext,
   useIndent,
+  Variants,
 };

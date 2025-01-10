@@ -115,9 +115,9 @@ const DisclosureCloseTrigger = forwardRef<
   HTMLButtonElement,
   ComponentPropsWithoutRef<"button"> & { asChild?: boolean }
 >(({ asChild, ...props }, ref) => {
-  const { handleClick } = useContext(DisclosureItemContext);
+  const { handleClose } = useContext(DisclosureItemContext);
   const Comp = asChild ? Slot : "button";
-  return <Comp ref={ref} {...props} onClick={handleClick} />;
+  return <Comp ref={ref} {...props} onClick={handleClose} />;
 });
 
 DisclosureCloseTrigger.displayName = "DisclosureCloseTrigger";
@@ -414,6 +414,10 @@ Disclosure.Summary = DisclosureSummary;
 Disclosure.Content = DisclosureContent;
 Disclosure.Trigger = DisclosureTrigger;
 Disclosure.CloseTrigger = DisclosureCloseTrigger;
+Disclosure.useClose = () => {
+  const { handleClose } = useContext(DisclosureItemContext);
+  return handleClose;
+};
 
 export default Disclosure;
 export { Disclosure };

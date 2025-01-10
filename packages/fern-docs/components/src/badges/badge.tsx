@@ -94,7 +94,6 @@ const badgeVariants = cva("fern-docs-badge", {
   defaultVariants: {
     size: "lg",
     variant: "subtle",
-    color: "gray",
   },
 });
 
@@ -148,6 +147,7 @@ export const Badge = forwardRef<
         interactive,
         className,
       })}
+      tabIndex={interactive ? 0 : undefined}
     >
       {skeleton ? (
         <span style={{ visibility: "hidden", display: "contents" }}>

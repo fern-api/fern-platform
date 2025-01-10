@@ -1,9 +1,7 @@
 @layer components {
-  [data-branch]:has([data-curve]) {
-    &:nth-last-child(2) {
-      > [data-line] {
-        display: none;
-      }
+  [data-branch] {
+    &.last > [data-line] {
+      display: none;
     }
 
     + * {

@@ -1,35 +1,44 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { Badge, FernTooltip } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-import { ReactElement } from "react";
+import { composeEventHandlers } from "@radix-ui/primitive";
+import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
 
-type ChipProps = {
-  name: string;
-  description?: FernDocs.MarkdownText | undefined;
-  small?: boolean;
-};
+export const Chip = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<typeof Badge> & {
+    description?: FernDocs.MarkdownText | undefined;
+    children: string;
+  }
+>(
+  (
+    { description = undefined, children, ...props },
+    forwardedRef
+  ): ReactElement => {
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(children);
+    return (
+      <FernTooltip
+        open={wasJustCopied ? true : description == null ? false : undefined}
+        content={
+          wasJustCopied ? (
+            "Copied!"
+          ) : description != null ? (
+            <Markdown mdx={description} className="text-xs" />
+          ) : undefined
+        }
+      >
+        <Badge
+          interactive
+          {...props}
+          onClick={composeEventHandlers(props.onClick, copyToClipboard)}
+          ref={forwardedRef}
+        >
+          {children}
+        </Badge>
+      </FernTooltip>
+    );
+  }
+);
 
-export const Chip = ({
-  name,
-  description = undefined,
-  small,
-}: ChipProps): ReactElement => {
-  const { copyToClipboard, wasJustCopied } = useCopyToClipboard(name);
-  return (
-    <FernTooltip
-      open={wasJustCopied ? true : description == null ? false : undefined}
-      content={
-        wasJustCopied ? (
-          "Copied!"
-        ) : description != null ? (
-          <Markdown mdx={description} className="text-xs" />
-        ) : undefined
-      }
-    >
-      <Badge interactive onClick={copyToClipboard} size={small ? "sm" : "lg"}>
-        {name}
-      </Badge>
-    </FernTooltip>
-  );
-};
+Chip.displayName = "Chip";
