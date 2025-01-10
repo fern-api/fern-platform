@@ -15,6 +15,7 @@ import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter
 import { XFernEndpointExampleConverterNode } from "../extensions/XFernEndpointExampleConverter.node";
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
+import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
@@ -84,6 +85,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.context,
       this.accessPath
     );
+
+    this.isWebhook =
+      new XFernWebhookConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: this.pathId,
+      }).isWebhook || this.isWebhook;
 
     this.input.parameters?.map((parameter, index) => {
       if (isReferenceObject(parameter)) {

@@ -9600,33 +9600,17 @@
     "endpoint_webhookCallbacks.fileUploaded": {
       "id": "endpoint_webhookCallbacks.fileUploaded",
       "description": "file.uploaded event payload",
+      "displayName": "file.uploaded",
+      "operationId": "fileUploaded",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "displayName": "file.uploaded",
-      "operationId": "fileUploaded",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": "/"
-        },
-        {
-          "type": "literal",
-          "value": "file-uploaded"
-        }
+        "/",
+        "file-uploaded"
       ],
-      "auth": [
-        "apiKeyAuth"
-      ],
-      "defaultEnvironment": "https://api.uploadcare.com",
-      "environments": [
-        {
-          "id": "https://api.uploadcare.com",
-          "baseUrl": "https://api.uploadcare.com"
-        }
-      ],
-      "requestHeaders": [
+      "headers": [
         {
           "key": "X-Uc-Signature",
           "valueShape": {
@@ -9647,10 +9631,9 @@
           "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
         }
       ],
-      "requests": [
+      "payloads": [
         {
-          "contentType": "application/json",
-          "body": {
+          "shape": {
             "type": "alias",
             "value": {
               "type": "id",
@@ -9658,41 +9641,22 @@
             }
           }
         }
-      ],
-      "responses": [],
-      "errors": [],
-      "examples": []
+      ]
     },
     "endpoint_webhookCallbacks.fileInfected": {
       "id": "endpoint_webhookCallbacks.fileInfected",
       "description": "file.infected event payload",
+      "displayName": "file.infected",
+      "operationId": "fileInfected",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "displayName": "file.infected",
-      "operationId": "fileInfected",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": "/"
-        },
-        {
-          "type": "literal",
-          "value": "file-infected"
-        }
+        "/",
+        "file-infected"
       ],
-      "auth": [
-        "apiKeyAuth"
-      ],
-      "defaultEnvironment": "https://api.uploadcare.com",
-      "environments": [
-        {
-          "id": "https://api.uploadcare.com",
-          "baseUrl": "https://api.uploadcare.com"
-        }
-      ],
-      "requestHeaders": [
+      "headers": [
         {
           "key": "X-Uc-Signature",
           "valueShape": {
@@ -9713,10 +9677,9 @@
           "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
         }
       ],
-      "requests": [
+      "payloads": [
         {
-          "contentType": "application/json",
-          "body": {
+          "shape": {
             "type": "alias",
             "value": {
               "type": "id",
@@ -9724,41 +9687,22 @@
             }
           }
         }
-      ],
-      "responses": [],
-      "errors": [],
-      "examples": []
+      ]
     },
     "endpoint_webhookCallbacks.fileStored": {
       "id": "endpoint_webhookCallbacks.fileStored",
       "description": "file.stored event payload",
+      "displayName": "file.stored",
+      "operationId": "fileStored",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "displayName": "file.stored",
-      "operationId": "fileStored",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": "/"
-        },
-        {
-          "type": "literal",
-          "value": "file-stored"
-        }
+        "/",
+        "file-stored"
       ],
-      "auth": [
-        "apiKeyAuth"
-      ],
-      "defaultEnvironment": "https://api.uploadcare.com",
-      "environments": [
-        {
-          "id": "https://api.uploadcare.com",
-          "baseUrl": "https://api.uploadcare.com"
-        }
-      ],
-      "requestHeaders": [
+      "headers": [
         {
           "key": "X-Uc-Signature",
           "valueShape": {
@@ -9779,10 +9723,9 @@
           "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
         }
       ],
-      "requests": [
+      "payloads": [
         {
-          "contentType": "application/json",
-          "body": {
+          "shape": {
             "type": "alias",
             "value": {
               "type": "id",
@@ -9790,41 +9733,22 @@
             }
           }
         }
-      ],
-      "responses": [],
-      "errors": [],
-      "examples": []
+      ]
     },
     "endpoint_webhookCallbacks.fileDeleted": {
       "id": "endpoint_webhookCallbacks.fileDeleted",
       "description": "file.deleted event payload",
+      "displayName": "file.deleted",
+      "operationId": "fileDeleted",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "displayName": "file.deleted",
-      "operationId": "fileDeleted",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": "/"
-        },
-        {
-          "type": "literal",
-          "value": "file-deleted"
-        }
+        "/",
+        "file-deleted"
       ],
-      "auth": [
-        "apiKeyAuth"
-      ],
-      "defaultEnvironment": "https://api.uploadcare.com",
-      "environments": [
-        {
-          "id": "https://api.uploadcare.com",
-          "baseUrl": "https://api.uploadcare.com"
-        }
-      ],
-      "requestHeaders": [
+      "headers": [
         {
           "key": "X-Uc-Signature",
           "valueShape": {
@@ -9845,10 +9769,9 @@
           "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
         }
       ],
-      "requests": [
+      "payloads": [
         {
-          "contentType": "application/json",
-          "body": {
+          "shape": {
             "type": "alias",
             "value": {
               "type": "id",
@@ -9856,41 +9779,22 @@
             }
           }
         }
-      ],
-      "responses": [],
-      "errors": [],
-      "examples": []
+      ]
     },
     "endpoint_webhookCallbacks.fileInfoUpdated": {
       "id": "endpoint_webhookCallbacks.fileInfoUpdated",
       "description": "file.info_updated event payload",
+      "displayName": "file.info_updated",
+      "operationId": "fileInfoUpdated",
       "namespace": [
         "Webhook Callbacks"
       ],
-      "displayName": "file.info_updated",
-      "operationId": "fileInfoUpdated",
       "method": "POST",
       "path": [
-        {
-          "type": "literal",
-          "value": "/"
-        },
-        {
-          "type": "literal",
-          "value": "file-info-updated"
-        }
+        "/",
+        "file-info-updated"
       ],
-      "auth": [
-        "apiKeyAuth"
-      ],
-      "defaultEnvironment": "https://api.uploadcare.com",
-      "environments": [
-        {
-          "id": "https://api.uploadcare.com",
-          "baseUrl": "https://api.uploadcare.com"
-        }
-      ],
-      "requestHeaders": [
+      "headers": [
         {
           "key": "X-Uc-Signature",
           "valueShape": {
@@ -9911,10 +9815,9 @@
           "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
         }
       ],
-      "requests": [
+      "payloads": [
         {
-          "contentType": "application/json",
-          "body": {
+          "shape": {
             "type": "alias",
             "value": {
               "type": "id",
@@ -9922,10 +9825,7 @@
             }
           }
         }
-      ],
-      "responses": [],
-      "errors": [],
-      "examples": []
+      ]
     },
     "endpoint_webhook.updateWebhook": {
       "id": "endpoint_webhook.updateWebhook",
