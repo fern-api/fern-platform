@@ -27,8 +27,8 @@ import { ResponsesObjectConverterNode } from "./response/ResponsesObjectConverte
 
 export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.OperationObject,
-  | FernRegistry.api.latest.EndpointDefinition[]
-  | FernRegistry.api.latest.WebhookDefinition[]
+  | FernRegistry.api.latest.EndpointDefinition
+  | FernRegistry.api.latest.WebhookDefinition
 > {
   endpointId: string | undefined;
   description: string | undefined;
@@ -313,8 +313,8 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   convert():
-    | FernRegistry.api.latest.EndpointDefinition[]
-    | FernRegistry.api.latest.WebhookDefinition[]
+    | FernRegistry.api.latest.EndpointDefinition
+    | FernRegistry.api.latest.WebhookDefinition
     | undefined {
     if (this.path == null) {
       return undefined;
@@ -328,35 +328,23 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return undefined;
       }
 
-      return (
-        convertOperationObjectProperties(this.requestHeaders) ?? [undefined]
-      )
-        .flatMap((headers, idx) =>
-          this.endpointId != null &&
-          (this.method === "POST" || this.method === "GET")
-            ? {
-                id: FernRegistry.WebhookId(
-                  idx !== 0 ? this.endpointId : `${this.endpointId}-${idx}`
-                ),
-                description: this.description,
-                availability: this.availability?.convert(),
-                displayName: this.displayName,
-                operationId: this.operationId,
-                namespace: this.namespace?.convert(),
-                method: this.method,
-                // This is a little bit weird, consider changing the shape of fdr
-                path:
-                  this.convertPathToPathParts()?.map((part) =>
-                    part.value.toString()
-                  ) ?? [],
-                headers,
-                // TODO: figure out what this looks like to be able to parse
-                payload: undefined,
-                examples: undefined,
-              }
-            : undefined
-        )
-        .filter(isNonNullish);
+      return {
+        id: FernRegistry.WebhookId(this.endpointId),
+        description: this.description,
+        availability: this.availability?.convert(),
+        displayName: this.displayName,
+        operationId: this.operationId,
+        namespace: this.namespace?.convert(),
+        method: this.method,
+        // This is a little bit weird, consider changing the shape of fdr
+        path:
+          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
+          [],
+        headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
+        // TODO: figure out what this looks like to be able to parse
+        payload: undefined,
+        examples: undefined,
+      };
     }
 
     const environments = this.servers
@@ -394,50 +382,34 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    return (
-      convertOperationObjectProperties(this.pathParameters) ?? [undefined]
-    )
-      .flatMap((pathParameters, idx1) =>
-        (
-          convertOperationObjectProperties(this.queryParameters) ?? [undefined]
-        ).flatMap((queryParameters, idx2) =>
-          (
-            convertOperationObjectProperties(this.requestHeaders) ?? [undefined]
-          ).flatMap((requestHeaders, idx3) =>
-            this.endpointId != null
-              ? {
-                  id: FernRegistry.EndpointId(
-                    idx1 !== 0 && idx2 !== 0 && idx3 !== 0
-                      ? `${this.endpointId}-${idx1}-${idx2}-${idx3}`
-                      : this.endpointId
-                  ),
-                  description: this.description,
-                  availability: this.availability?.convert(),
-                  namespace: this.namespace?.convert(),
-                  displayName: this.displayName,
-                  operationId: this.operationId,
-                  method: this.method,
-                  path: pathParts,
-                  auth: authIds?.map((id) =>
-                    FernRegistry.api.latest.AuthSchemeId(id)
-                  ),
-                  defaultEnvironment: environments?.[0]?.id,
-                  environments,
-                  pathParameters,
-                  queryParameters,
-                  requestHeaders,
-                  responseHeaders: responses?.[0]?.headers,
-                  // TODO: revisit fdr shape to suport multiple requests
-                  requests: this.requests?.convert(),
-                  responses: responses?.map((response) => response.response),
-                  errors,
-                  examples,
-                  snippetTemplates: undefined,
-                }
-              : undefined
-          )
-        )
-      )
-      .filter(isNonNullish);
+    return {
+      id: FernRegistry.EndpointId(this.endpointId),
+      description: this.description,
+      availability: this.availability?.convert(),
+      namespace: this.namespace?.convert(),
+      displayName: this.displayName,
+      operationId: this.operationId,
+      method: this.method,
+      path: pathParts,
+      auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
+      defaultEnvironment: environments?.[0]?.id,
+      environments,
+      pathParameters: convertOperationObjectProperties(
+        this.pathParameters
+      )?.flat(),
+      queryParameters: convertOperationObjectProperties(
+        this.queryParameters
+      )?.flat(),
+      requestHeaders: convertOperationObjectProperties(
+        this.requestHeaders
+      )?.flat(),
+      responseHeaders: responses?.[0]?.headers,
+      // TODO: revisit fdr shape to suport multiple requests
+      requests: this.requests?.convert(),
+      responses: responses?.map((response) => response.response),
+      errors,
+      examples,
+      snippetTemplates: undefined,
+    };
   }
 }
