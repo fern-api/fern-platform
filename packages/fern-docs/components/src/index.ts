@@ -28,4 +28,5 @@ export * from "./FernToast";
 export * from "./FernTooltip";
 export * from "./FontAwesomeIcon";
 export * from "./kbd";
+export * from "./touch-screen";
 export * from "./util/shared-component-types";

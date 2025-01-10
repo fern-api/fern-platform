@@ -22,7 +22,7 @@ const ParameterDescription = memo(
         ref={ref}
         {...props}
         className={cn(
-          "group/trigger flex items-baseline justify-start gap-3",
+          "group/trigger flex min-w-0 items-baseline gap-3 *:min-w-0 *:truncate",
           props.className
         )}
       />
@@ -127,7 +127,7 @@ const ParameterSpacer = forwardRef<
       orientation="horizontal"
       decorative
       className={cn(
-        "invisible mx-1 inline-block h-0 w-10 flex-1 self-center border-b border-dashed border-[var(--grayscale-a6)] group-hover/trigger:visible",
+        "invisible mx-1 inline-block h-0 flex-1 self-center border-b border-dashed border-[var(--grayscale-a6)] group-hover/trigger:visible",
         props.className
       )}
     />

@@ -1,0 +1,5 @@
+@media (not (pointer: coarse)) {
+  .ts-only {
+    display: none;
+  }
+}

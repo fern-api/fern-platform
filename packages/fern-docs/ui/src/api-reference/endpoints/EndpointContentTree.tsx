@@ -3,16 +3,19 @@ import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedU
 import {
   AvailabilityBadge,
   Badge,
+  Button,
   cn,
+  CopyToClipboardButton,
   FernInput,
   StatusCodeBadge,
+  TouchScreenOnly,
 } from "@fern-docs/components";
 import { Parameter, Tree } from "@fern-docs/components/tree";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { sortBy } from "es-toolkit/array";
 import { capitalize } from "es-toolkit/string";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { ListFilter } from "lucide-react";
+import { LinkIcon, ListFilter } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   createContext,
@@ -140,7 +143,7 @@ export function EndpointContentTree({
                       slug={node.slug}
                       headerRight={
                         <Tree.HasDisclosures>
-                          <Tree.ToggleExpandAll />
+                          <Tree.ToggleExpandAll className="-mr-2" />
                         </Tree.HasDisclosures>
                       }
                     >
@@ -166,7 +169,7 @@ export function EndpointContentTree({
                         slug={node.slug}
                         headerRight={
                           <Tree.HasDisclosures>
-                            <Tree.ToggleExpandAll />
+                            <Tree.ToggleExpandAll className="-mr-2" />
                           </Tree.HasDisclosures>
                         }
                       >
@@ -195,7 +198,7 @@ export function EndpointContentTree({
                         slug={node.slug}
                         headerRight={
                           <Tree.HasDisclosures>
-                            <Tree.ToggleExpandAll />
+                            <Tree.ToggleExpandAll className="-mr-2" />
                           </Tree.HasDisclosures>
                         }
                       >
@@ -229,7 +232,7 @@ export function EndpointContentTree({
                           </Badge>
                         )}
                         <Tree.HasDisclosures>
-                          <Tree.ToggleExpandAll />
+                          <Tree.ToggleExpandAll className="-mr-2" />
                         </Tree.HasDisclosures>
                       </div>
                     }
@@ -263,7 +266,7 @@ export function EndpointContentTree({
                           variant="outlined"
                         />
                         <Tree.HasDisclosures>
-                          <Tree.ToggleExpandAll />
+                          <Tree.ToggleExpandAll className="-mr-2" />
                         </Tree.HasDisclosures>
                       </>
                     }
@@ -379,12 +382,6 @@ function ObjectProperty({
             )}
           >
             <Tree.Trigger className="relative flex items-center text-left">
-              <Tree.Indicator
-                className={cn("absolute", {
-                  "-left-4": indent === 0,
-                  "-left-2": indent > 0,
-                })}
-              />
               <ParameterInfo
                 parameterName={property.key}
                 indent={indent}
@@ -519,7 +516,17 @@ const ParameterInfo = forwardRef<
   const availability = property.availability ?? unwrapped.availability;
 
   return (
-    <div ref={ref} {...props} className={cn("flex-1", props.className)}>
+    <div
+      ref={ref}
+      {...props}
+      className={cn("relative min-w-0 flex-1", props.className)}
+    >
+      <Tree.Indicator
+        className={cn("absolute top-1", {
+          "-left-4": indent === 0,
+          "-left-2": indent > 0,
+        })}
+      />
       <Parameter.Root
         onPointerEnter={() => onHoverProperty(jsonpath, { isHovering: true })}
         onPointerLeave={() => onHoverProperty(jsonpath, { isHovering: false })}
@@ -529,7 +536,7 @@ const ParameterInfo = forwardRef<
         <Parameter.Name
           ref={nameRef}
           parameterName={property.key}
-          className={cn("scroll-m-4", {
+          className={cn("shrink-0 scroll-m-4", {
             "-mx-2": indent === 0,
             "-mr-2": indent > 0,
             "line-through": property.availability === "Deprecated",
@@ -566,6 +573,25 @@ const ParameterInfo = forwardRef<
         {anchorId.startsWith("request") && !unwrapped.isOptional && (
           <Parameter.Status status="required" />
         )}
+        <TouchScreenOnly asChild>
+          <CopyToClipboardButton
+            asChild
+            content={() => {
+              return String(
+                new URL(`/${slug}#${anchorId}`, window.location.href)
+              );
+            }}
+          >
+            <Button
+              size="iconSm"
+              variant="ghost"
+              color="gray"
+              className="shrink-0 self-center"
+            >
+              <LinkIcon />
+            </Button>
+          </CopyToClipboardButton>
+        </TouchScreenOnly>
       </Parameter.Root>
       {availability && (
         <AvailabilityBadge availability={availability} size="sm" />
@@ -1077,7 +1103,8 @@ export function TypeShorthandTypescript({
       case "discriminatedUnion":
         return "object";
       case "unknown":
-        return "unknown";
+      default:
+        return "any";
     }
   }
 

@@ -322,7 +322,7 @@ const TreeItemContent = ({
   }
 
   return (
-    <div className="relative grid grid-cols-[16px_1fr]">
+    <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
       {childrenArray.map((child, i) => (
         <Fragment key={isValidElement(child) ? (child.key ?? i) : i}>
           <Disclosure.CloseTrigger asChild>
@@ -421,7 +421,7 @@ const TreeItemsContentAdditionalDisclosure = ({
         {({ open }) =>
           !open &&
           (indent > 0 ? (
-            <div className="relative grid grid-cols-[16px_1fr]">
+            <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
               <Disclosure.CloseTrigger asChild>
                 <TreeBranch last />
               </Disclosure.CloseTrigger>
@@ -458,7 +458,7 @@ const TreeItemsContentAdditionalDisclosure = ({
       </Disclosure.Summary>
       <Disclosure.Content>
         {indent > 0 ? (
-          <div className="relative grid grid-cols-[16px_1fr]">
+          <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
             {childrenArray.map((child, i) => (
               <Fragment key={i}>
                 <TreeBranch
@@ -566,7 +566,7 @@ const TreeItemSummary = forwardRef<
               </Badge>
             </Disclosure.Trigger>
           ) : (
-            <div className="grid grid-cols-[16px_1fr] pt-2">
+            <div className="grid grid-cols-[16px_1fr] pt-2 *:min-w-0">
               <TreeBranch last />
               <div>
                 <Disclosure.Trigger asChild>
