@@ -31,6 +31,7 @@ describe("unwrapReference", () => {
         "availability": undefined,
         "default": undefined,
         "descriptions": [],
+        "isNullable": false,
         "isOptional": false,
         "shape": {
           "type": "primitive",
@@ -69,6 +70,7 @@ describe("unwrapReference", () => {
         "availability": undefined,
         "default": undefined,
         "descriptions": [],
+        "isNullable": false,
         "isOptional": false,
         "shape": {
           "type": "primitive",
@@ -96,20 +98,21 @@ describe("unwrapReference", () => {
       default: undefined,
     };
     expect(unwrapReference(shape, {})).toMatchInlineSnapshot(`
-          {
-            "availability": undefined,
-            "default": undefined,
-            "descriptions": [],
-            "isOptional": false,
-            "shape": {
-              "displayName": undefined,
-              "type": "unknown",
-            },
-            "visitedTypeIds": Set {
-              "foo",
-            },
-          }
-        `);
+      {
+        "availability": undefined,
+        "default": undefined,
+        "descriptions": [],
+        "isNullable": false,
+        "isOptional": false,
+        "shape": {
+          "displayName": undefined,
+          "type": "unknown",
+        },
+        "visitedTypeIds": Set {
+          "foo",
+        },
+      }
+    `);
   });
 
   it("should unwrap optionals", () => {
@@ -139,6 +142,7 @@ describe("unwrapReference", () => {
         "availability": undefined,
         "default": undefined,
         "descriptions": [],
+        "isNullable": false,
         "isOptional": true,
         "shape": {
           "type": "primitive",
