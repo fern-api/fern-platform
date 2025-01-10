@@ -225,9 +225,20 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     | undefined {
     switch (this.streamingFormat) {
       case "json": {
+<<<<<<< HEAD
         const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
 
         return maybeShapes?.map((shape) => ({
+=======
+        let maybeShapes = this.schema?.convert();
+        if (maybeShapes == null) {
+          return undefined;
+        }
+        if (!Array.isArray(maybeShapes)) {
+          maybeShapes = [maybeShapes];
+        }
+        return maybeShapes.map((shape) => ({
+>>>>>>> main
           type: "stream",
           // TODO: Parse terminator (probably extension)
           terminator: "[DATA]",
@@ -252,8 +263,15 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       switch (this.contentType) {
         case "application/json":
           if (this.streamingFormat == null) {
+<<<<<<< HEAD
             const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
 
+=======
+            let maybeShapes = this.schema?.convert();
+            if (!Array.isArray(maybeShapes) && maybeShapes != null) {
+              maybeShapes = [maybeShapes];
+            }
+>>>>>>> main
             return maybeShapes
               ?.map((shape) => {
                 if (
