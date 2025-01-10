@@ -173,10 +173,11 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
         ? true
         : checkDomainMatchesCustomers(domain, config["search-v2"]);
 
-    const isApiReferenceTreeEnabled = checkDomainMatchesCustomers(
-      domain,
-      config["api-reference-tree-enabled"]
-    );
+    const isApiReferenceTreeEnabled =
+      checkDomainMatchesCustomers(
+        domain,
+        config["api-reference-tree-enabled"]
+      ) || isDevelopment(domain);
 
     const grpcEndpoints = config["grpc-endpoints"];
 
@@ -248,7 +249,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isNewSearchExperienceEnabled: false,
       isAuthenticatedPagesDiscoverable: false,
       isSearchV2Enabled: domain === "buildwithfern.com",
-      isApiReferenceTreeEnabled: false,
+      isApiReferenceTreeEnabled: isDevelopment(domain),
       grpcEndpoints: [],
     };
   }
