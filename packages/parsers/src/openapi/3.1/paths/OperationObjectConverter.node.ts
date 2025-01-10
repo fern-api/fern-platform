@@ -341,8 +341,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
           [],
         headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
-        // TODO: figure out what this looks like to be able to parse
-        payload: undefined,
+        payloads: this.requests?.convertToWebhookPayload(),
         examples: undefined,
       };
     }
@@ -403,8 +402,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       requestHeaders: convertOperationObjectProperties(
         this.requestHeaders
       )?.flat(),
-      responseHeaders: responses?.[0]?.headers,
-      // TODO: revisit fdr shape to suport multiple requests
+      responseHeaders: responses
+        ?.flatMap((response) => response.headers)
+        .filter(isNonNullish),
       requests: this.requests?.convert(),
       responses: responses?.map((response) => response.response),
       errors,
