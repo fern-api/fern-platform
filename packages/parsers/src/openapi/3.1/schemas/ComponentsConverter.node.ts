@@ -59,10 +59,6 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
             return [key, undefined];
           }
 
-          if (!Array.isArray(maybeShapes)) {
-            maybeShapes = [maybeShapes];
-          }
-
           return [
             FernRegistry.TypeId(key),
             {
