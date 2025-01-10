@@ -63,6 +63,8 @@ function stringifyTypeRef(
     primitive: (value) => value.value.type,
     optional: (value) =>
       `${stringifyTypeShape(value.shape, types, depth + 1)}?`,
+    nullable: (value) =>
+      `${stringifyTypeShape(value.shape, types, depth + 1)} | null`,
     list: (value) =>
       `List<${stringifyTypeShape(value.itemShape, types, depth + 1)}>`,
     set: (value) =>

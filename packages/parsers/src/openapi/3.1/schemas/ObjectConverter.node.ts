@@ -8,6 +8,7 @@ import {
 import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProperties";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
@@ -125,18 +126,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
       ];
     }
 
-    let maybeConvertedShapes = this.extraProperties.convert();
-
-    if (!Array.isArray(maybeConvertedShapes) && maybeConvertedShapes != null) {
-      maybeConvertedShapes = [maybeConvertedShapes];
-    }
-
-    if (maybeConvertedShapes == null) {
-      return undefined;
-    }
+    const maybeConvertedShapes = maybeSingleValueToArray(
+      this.extraProperties.convert()
+    );
 
     return maybeConvertedShapes
-      .map((shape) => (shape.type === "alias" ? shape.value : undefined))
+      ?.map((shape) => (shape.type === "alias" ? shape.value : undefined))
       .filter(isNonNullish);
   }
 

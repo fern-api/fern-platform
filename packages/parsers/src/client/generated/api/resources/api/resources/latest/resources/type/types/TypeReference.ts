@@ -8,6 +8,7 @@ export type TypeReference =
     | FernRegistry.api.latest.TypeReference.Id
     | FernRegistry.api.latest.TypeReference.Primitive
     | FernRegistry.api.latest.TypeReference.Optional
+    | FernRegistry.api.latest.TypeReference.Nullable
     | FernRegistry.api.latest.TypeReference.List
     | FernRegistry.api.latest.TypeReference.Set
     | FernRegistry.api.latest.TypeReference.Map
@@ -26,6 +27,10 @@ export declare namespace TypeReference {
 
     interface Optional extends FernRegistry.api.latest.OptionalType {
         type: "optional";
+    }
+
+    interface Nullable extends FernRegistry.api.latest.NullableType {
+        type: "nullable";
     }
 
     interface List extends FernRegistry.api.latest.ListType {

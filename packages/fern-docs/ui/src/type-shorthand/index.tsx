@@ -24,11 +24,7 @@ export function renderTypeShorthandRoot(
   hideOptional = false
 ): ReactNode {
   const unwrapped = unwrapReference(shape, types);
-  const typeShorthand = renderTypeShorthand(
-    unwrapped.shape,
-    { nullable: isResponse },
-    types
-  );
+  const typeShorthand = renderTypeShorthand(unwrapped.shape, {}, types);
   return (
     <span className="fern-api-property-meta">
       <span>{typeShorthand}</span>
@@ -109,18 +105,20 @@ function toPrimitiveTypeLabelsNumeric(
 }
 
 function toPrimitiveTypeLabelsString({
+  format,
   minLength,
   maxLength,
   regex,
 }: {
+  format: string | undefined;
   minLength: number | undefined;
   maxLength: number | undefined;
   regex: string | undefined;
 }): string[] {
   const labels = [];
 
-  if (regex != null) {
-    labels.push(`format: "${regex}"`);
+  if (format != null || regex != null) {
+    labels.push(`format: "${format ?? regex}"`);
   }
 
   if (minLength != null && maxLength != null && minLength === maxLength) {
@@ -157,14 +155,9 @@ function toPrimitiveTypeLabelsString({
 
 export function renderTypeShorthand(
   shape: TypeShapeOrReference,
-  {
-    plural = false,
-    withArticle = false,
-    nullable = false,
-  }: TypeShorthandOptions = {
+  { plural = false, withArticle = false }: TypeShorthandOptions = {
     plural: false,
     withArticle: false,
-    nullable: false,
   },
   types: Record<string, TypeDefinition>
 ): string {
@@ -173,8 +166,12 @@ export function renderTypeShorthand(
   const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
-  if (unwrapped.isOptional) {
-    return `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  if (unwrapped.isNullable && unwrapped.isOptional) {
+    return `${maybeWithArticle("a", "nullable or optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  } else if (unwrapped.isNullable) {
+    return `${maybeWithArticle("a", "nullable")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  } else if (unwrapped.isOptional) {
+    return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   }
 
   return visitDiscriminatedUnion(unwrapped.shape)._visit({

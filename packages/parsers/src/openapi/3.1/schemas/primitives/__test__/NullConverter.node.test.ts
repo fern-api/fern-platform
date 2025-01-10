@@ -20,8 +20,14 @@ describe("NullConverterNode", () => {
       expect(result).toEqual({
         type: "alias",
         value: {
-          type: "unknown",
-          displayName: undefined,
+          type: "nullable",
+          shape: {
+            type: "alias",
+            value: {
+              type: "unknown",
+              displayName: undefined,
+            },
+          },
         },
       });
     });
@@ -42,8 +48,14 @@ describe("NullConverterNode", () => {
       expect(result).toEqual({
         type: "alias",
         value: {
-          type: "unknown",
-          displayName: "NullType",
+          type: "nullable",
+          shape: {
+            type: "alias",
+            value: {
+              type: "unknown",
+              displayName: "NullType",
+            },
+          },
         },
       });
     });

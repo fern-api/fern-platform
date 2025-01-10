@@ -108,6 +108,7 @@ const UnmemoizedEndpointContentLeft: React.FC<EndpointContentLeft.Props> = ({
         type: "primitive",
         value: {
           type: "string",
+          format: undefined,
           regex: undefined,
           minLength: undefined,
           maxLength: undefined,

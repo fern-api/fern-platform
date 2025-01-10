@@ -149,6 +149,7 @@ export class ApiTypeIdVisitor {
       id: (value) => visit(value.id),
       primitive: noop,
       optional: (value) => ApiTypeIdVisitor.visitTypeShape(value.shape, visit),
+      nullable: (value) => ApiTypeIdVisitor.visitTypeShape(value.shape, visit),
       list: (value) => ApiTypeIdVisitor.visitTypeShape(value.itemShape, visit),
       set: (value) => ApiTypeIdVisitor.visitTypeShape(value.itemShape, visit),
       map: (value) => {

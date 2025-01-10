@@ -6,6 +6,7 @@ import {
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
@@ -112,14 +113,9 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
             discriminant: FernRegistry.PropertyKey(this.discriminant),
             variants: Object.entries(this.discriminatedMapping)
               .flatMap(([key, node]) => {
-                let convertedShape:
-                  | FernRegistry.api.latest.TypeShape
-                  | FernRegistry.api.latest.TypeShape[]
-                  | undefined = node.convert();
-                if (!Array.isArray(convertedShape) && convertedShape != null) {
-                  convertedShape = [convertedShape];
-                }
-                return convertedShape
+                const convertedShapes = maybeSingleValueToArray(node.convert());
+
+                return convertedShapes
                   ?.map((shape) => {
                     if (shape == null || shape.type !== "object") {
                       return undefined;
@@ -143,17 +139,11 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
               type: "undiscriminatedUnion",
               variants: this.undiscriminatedMapping
                 .flatMap((node) => {
-                  let convertedShape:
-                    | FernRegistry.api.latest.TypeShape
-                    | FernRegistry.api.latest.TypeShape[]
-                    | undefined = node.convert();
-                  if (
-                    !Array.isArray(convertedShape) &&
-                    convertedShape != null
-                  ) {
-                    convertedShape = [convertedShape];
-                  }
-                  return convertedShape
+                  const convertedShapes = maybeSingleValueToArray(
+                    node.convert()
+                  );
+
+                  return convertedShapes
                     ?.map((shape) => {
                       if (shape == null || shape.type !== "object") {
                         return undefined;

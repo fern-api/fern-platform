@@ -85,7 +85,7 @@ describe("MixedSchemaConverterNode", () => {
       expect(result?.type).toBe("alias");
       expect(
         (result as FernRegistry.api.latest.TypeShape.Alias)?.value?.type
-      ).toBe("optional");
+      ).toBe("nullable");
     });
 
     it("should return undefined when typeNodes is null", () => {

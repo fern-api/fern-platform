@@ -168,9 +168,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -189,9 +195,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
                     }
                   }
                 },
@@ -202,9 +215,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
                     }
                   }
                 },
@@ -774,9 +794,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -1219,9 +1245,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -1603,9 +1635,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -2131,9 +2169,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -2590,9 +2634,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -3049,9 +3099,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -3072,7 +3128,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "uri"
                     }
                   }
                 },
@@ -3423,9 +3480,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -3446,7 +3509,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "format": "uri"
                     }
                   }
                 },
@@ -3866,9 +3930,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -4221,9 +4291,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -4365,7 +4441,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "status": "string"
+              "status": "in_progress"
             }
           },
           "snippets": {
@@ -4472,9 +4548,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -4827,9 +4909,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -4971,7 +5059,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "status": "string"
+              "status": "in_progress"
             }
           },
           "snippets": {
@@ -5078,9 +5166,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -5470,9 +5564,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -5614,7 +5714,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "status": "string"
+              "status": "in_progress"
             }
           },
           "snippets": {
@@ -5729,9 +5829,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -6254,9 +6360,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -6405,7 +6517,7 @@
               "result": {
                 "file_id": "test-uuid-replacement"
               },
-              "status": "string"
+              "status": "in_progress"
             }
           },
           "snippets": {
@@ -6527,9 +6639,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -6801,9 +6919,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -7075,9 +7199,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -7419,9 +7549,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -7686,12 +7822,18 @@
         {
           "key": "Accept",
           "valueShape": {
-            "type": "enum",
-            "values": [
-              {
-                "value": "application/vnd.uploadcare-v0.7+json"
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "enum",
+                "values": [
+                  {
+                    "value": "application/vnd.uploadcare-v0.7+json"
+                  }
+                ]
               }
-            ]
+            }
           },
           "description": "Version header."
         }
@@ -7708,9 +7850,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
                     }
                   }
                 },
@@ -7721,9 +7870,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "format": "uri"
+                        }
+                      }
                     }
                   }
                 },
@@ -8051,12 +8207,18 @@
         {
           "key": "Accept",
           "valueShape": {
-            "type": "enum",
-            "values": [
-              {
-                "value": "application/vnd.uploadcare-v0.7+json"
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "enum",
+                "values": [
+                  {
+                    "value": "application/vnd.uploadcare-v0.7+json"
+                  }
+                ]
               }
-            ]
+            }
           },
           "description": "Version header."
         }
@@ -8369,12 +8531,18 @@
         {
           "key": "Accept",
           "valueShape": {
-            "type": "enum",
-            "values": [
-              {
-                "value": "application/vnd.uploadcare-v0.7+json"
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "enum",
+                "values": [
+                  {
+                    "value": "application/vnd.uploadcare-v0.7+json"
+                  }
+                ]
               }
-            ]
+            }
           },
           "description": "Version header."
         }
@@ -8641,9 +8809,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -8892,9 +9066,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -9172,9 +9352,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -9807,9 +9993,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -10093,9 +10285,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -10380,9 +10578,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -10401,9 +10605,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 },
@@ -10759,9 +10969,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -11156,9 +11372,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -11201,9 +11423,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 },
@@ -11546,9 +11774,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -11958,9 +12192,15 @@
           "valueShape": {
             "type": "alias",
             "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
               }
             }
           },
@@ -12003,9 +12243,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
                     }
                   }
                 },
@@ -12388,7 +12634,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             },
@@ -12440,7 +12687,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             },
@@ -12490,9 +12738,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
                 }
               }
             },
@@ -12503,9 +12757,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
                 }
               }
             },
@@ -12568,9 +12828,16 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
                 }
               }
             },
@@ -12592,13 +12859,8 @@
           {
             "key": "size",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
-                }
-              }
+              "type": "enum",
+              "values": []
             },
             "description": "File size in bytes."
           },
@@ -12609,7 +12871,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             },
@@ -12666,9 +12929,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
                 }
               }
             },
@@ -12679,9 +12948,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
                 }
               }
             },
@@ -12744,9 +13019,16 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  }
                 }
               }
             },
@@ -12785,7 +13067,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             },
@@ -12823,9 +13106,15 @@
           {
             "key": "variations",
             "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": []
+              "type": "alias",
+              "value": {
+                "type": "nullable",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
             },
             "description": "Dictionary of other files that were created using this file as a source. It's used for video processing and document conversion jobs. E.g., `<conversion_path>: <uuid>`."
           },
@@ -12855,9 +13144,15 @@
     "metadata": {
       "name": "metadata",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": []
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "object",
+            "extends": [],
+            "properties": []
+          }
+        }
       },
       "description": "Arbitrary metadata associated with a file."
     },
@@ -12877,79 +13172,85 @@
     "contentInfo": {
       "name": "contentInfo",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "mime",
-            "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "mime",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "mime",
+                "valueShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "mime",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "Full MIME type."
+                    },
+                    {
+                      "key": "type",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "Type of MIME type."
+                    },
+                    {
+                      "key": "subtype",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "Subtype of MIME type."
                     }
-                  },
-                  "description": "Full MIME type."
+                  ]
                 },
-                {
-                  "key": "type",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "Type of MIME type."
-                },
-                {
-                  "key": "subtype",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "Subtype of MIME type."
+                "description": "MIME type."
+              },
+              {
+                "key": "image",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "imageInfo"
+                  }
                 }
-              ]
-            },
-            "description": "MIME type."
-          },
-          {
-            "key": "image",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "imageInfo"
+              },
+              {
+                "key": "video",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "videoInfo"
+                  }
+                }
               }
-            }
-          },
-          {
-            "key": "video",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "videoInfo"
-              }
-            }
+            ]
           }
-        ]
+        }
       },
       "description": "Information about file content."
     },
@@ -13012,11 +13313,17 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer",
-                  "minimum": 0,
-                  "maximum": 8
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 8
+                    }
+                  }
                 }
               }
             },
@@ -13077,36 +13384,42 @@
           {
             "key": "geo_location",
             "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "latitude",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
+              "type": "alias",
+              "value": {
+                "type": "nullable",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "latitude",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "Location latitude."
+                    },
+                    {
+                      "key": "longitude",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "Location longitude."
                     }
-                  },
-                  "description": "Location latitude."
-                },
-                {
-                  "key": "longitude",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Location longitude."
+                  ]
                 }
-              ]
+              }
             },
             "description": "Geo-location of image from EXIF."
           },
@@ -13115,9 +13428,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
                 }
               }
             },
@@ -13157,9 +13476,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             },
@@ -13183,9 +13508,15 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "integer"
+                "type": "nullable",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
                 }
               }
             },
@@ -13206,9 +13537,15 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
+                          "type": "nullable",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           }
                         }
                       },
@@ -13219,9 +13556,15 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
+                          "type": "nullable",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           }
                         }
                       },
@@ -13232,9 +13575,15 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
+                          "type": "nullable",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           }
                         }
                       },
@@ -13245,9 +13594,15 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
+                          "type": "nullable",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           }
                         }
                       },
@@ -13312,9 +13667,15 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
+                          "type": "nullable",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           }
                         }
                       },
@@ -13325,9 +13686,15 @@
                       "valueShape": {
                         "type": "alias",
                         "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
+                          "type": "nullable",
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           }
                         }
                       },
@@ -13345,186 +13712,222 @@
     "legacyVideoInfo": {
       "name": "legacyVideoInfo",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "duration",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double"
-                }
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "duration",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                },
+                "description": "Video file's duration in milliseconds."
+              },
+              {
+                "key": "format",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Video file's format."
+              },
+              {
+                "key": "bitrate",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                },
+                "description": "Video file's bitrate."
+              },
+              {
+                "key": "audio",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "nullable",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "bitrate",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "nullable",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "double"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "Audio stream's bitrate."
+                        },
+                        {
+                          "key": "codec",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "nullable",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "Audio stream's codec."
+                        },
+                        {
+                          "key": "sample_rate",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "nullable",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "double"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "Audio stream's sample rate."
+                        },
+                        {
+                          "key": "channels",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "nullable",
+                              "shape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "description": "Audio stream's number of channels."
+                        }
+                      ]
+                    }
+                  }
+                },
+                "description": "Audio stream's metadata."
+              },
+              {
+                "key": "video",
+                "valueShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "height",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "Video stream's image height."
+                    },
+                    {
+                      "key": "width",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "Video stream's image width."
+                    },
+                    {
+                      "key": "frame_rate",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "Video stream's frame rate."
+                    },
+                    {
+                      "key": "bitrate",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      },
+                      "description": "Video stream's bitrate."
+                    },
+                    {
+                      "key": "codec",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "Video stream codec."
+                    }
+                  ]
+                },
+                "description": "Video stream's metadata."
               }
-            },
-            "description": "Video file's duration in milliseconds."
-          },
-          {
-            "key": "format",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "description": "Video file's format."
-          },
-          {
-            "key": "bitrate",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double"
-                }
-              }
-            },
-            "description": "Video file's bitrate."
-          },
-          {
-            "key": "audio",
-            "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "bitrate",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Audio stream's bitrate."
-                },
-                {
-                  "key": "codec",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "Audio stream's codec."
-                },
-                {
-                  "key": "sample_rate",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Audio stream's sample rate."
-                },
-                {
-                  "key": "channels",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "Audio stream's number of channels."
-                }
-              ]
-            },
-            "description": "Audio stream's metadata."
-          },
-          {
-            "key": "video",
-            "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
-                {
-                  "key": "height",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Video stream's image height."
-                },
-                {
-                  "key": "width",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Video stream's image width."
-                },
-                {
-                  "key": "frame_rate",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Video stream's frame rate."
-                },
-                {
-                  "key": "bitrate",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double"
-                      }
-                    }
-                  },
-                  "description": "Video stream's bitrate."
-                },
-                {
-                  "key": "codec",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "Video stream codec."
-                }
-              ]
-            },
-            "description": "Video stream's metadata."
+            ]
           }
-        ]
+        }
       },
       "description": "Video metadata."
     },
@@ -13616,7 +14019,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             },
@@ -13629,7 +14033,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uri"
                 }
               }
             },
@@ -13671,7 +14076,8 @@
                         "value": {
                           "type": "primitive",
                           "value": {
-                            "type": "string"
+                            "type": "string",
+                            "format": "email"
                           }
                         }
                       },
@@ -13808,7 +14214,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "format": "uri"
           }
         }
       },
@@ -13859,7 +14266,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "format": "password"
           }
         }
       },
@@ -14146,9 +14554,15 @@
                   "valueShape": {
                     "type": "alias",
                     "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "uuid"
+                      "type": "nullable",
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "uuid"
+                          }
+                        }
                       }
                     }
                   },
@@ -14157,27 +14571,33 @@
                 {
                   "key": "addon_name",
                   "valueShape": {
-                    "type": "enum",
-                    "values": [
-                      {
-                        "value": "aws_rekognition_detect_labels"
-                      },
-                      {
-                        "value": "aws_rekognition_detect_moderation_labels"
-                      },
-                      {
-                        "value": "uc_clamav_virus_scan"
-                      },
-                      {
-                        "value": "remove_bg"
-                      },
-                      {
-                        "value": "zamzar_convert_document"
-                      },
-                      {
-                        "value": "zencoder_convert_video"
+                    "type": "alias",
+                    "value": {
+                      "type": "nullable",
+                      "shape": {
+                        "type": "enum",
+                        "values": [
+                          {
+                            "value": "aws_rekognition_detect_labels"
+                          },
+                          {
+                            "value": "aws_rekognition_detect_moderation_labels"
+                          },
+                          {
+                            "value": "uc_clamav_virus_scan"
+                          },
+                          {
+                            "value": "remove_bg"
+                          },
+                          {
+                            "value": "zamzar_convert_document"
+                          },
+                          {
+                            "value": "zencoder_convert_video"
+                          }
+                        ]
                       }
-                    ]
+                    }
                   },
                   "description": "Add-On name."
                 },
@@ -15024,50 +15444,56 @@
     "applicationDataObject": {
       "name": "applicationDataObject",
       "shape": {
-        "type": "object",
-        "extends": [],
-        "properties": [
-          {
-            "key": "aws_rekognition_detect_labels",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "awsRekognitionDetectLabels_v2016_06_27"
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "aws_rekognition_detect_labels",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "awsRekognitionDetectLabels_v2016_06_27"
+                  }
+                }
+              },
+              {
+                "key": "aws_rekognition_detect_moderation_labels",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "awsRekognitionDetectModerationLabels_v2016_06_27"
+                  }
+                }
+              },
+              {
+                "key": "remove_bg",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "removeBg_v1_0"
+                  }
+                }
+              },
+              {
+                "key": "uc_clamav_virus_scan",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "ucClamavVirusScan"
+                  }
+                }
               }
-            }
-          },
-          {
-            "key": "aws_rekognition_detect_moderation_labels",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "awsRekognitionDetectModerationLabels_v2016_06_27"
-              }
-            }
-          },
-          {
-            "key": "remove_bg",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "removeBg_v1_0"
-              }
-            }
-          },
-          {
-            "key": "uc_clamav_virus_scan",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "ucClamavVirusScan"
-              }
-            }
+            ]
           }
-        ]
+        }
       },
       "description": "Dictionary of application names and data associated with these applications."
     },
