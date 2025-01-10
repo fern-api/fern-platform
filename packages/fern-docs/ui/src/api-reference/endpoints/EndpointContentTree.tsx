@@ -207,7 +207,12 @@ function ObjectProperty({
   const indent = Tree.useIndent();
   return (
     <Tree.Item defaultOpen={isDefaultOpen(property.valueShape, types)}>
-      <Tree.Summary>
+      <Tree.Summary
+        collapseTriggerMessage={showChildAttributesMessage(
+          property.valueShape,
+          types
+        )}
+      >
         <Tree.Trigger className="relative flex items-center text-left">
           <Tree.Indicator
             className={cn("absolute", {
@@ -227,6 +232,13 @@ function ObjectProperty({
             />
             <span className="text-xs text-[var(--grayscale-a9)]">
               <TypeShorthand shape={unwrapped.shape} types={types} />
+              {unwrapped.default != null &&
+                unwrapped.shape.type !== "literal" &&
+                typeof unwrapped.default !== "object" && (
+                  <span className="ml-2 font-mono">
+                    {`= ${JSON.stringify(unwrapped.default)}`}
+                  </span>
+                )}
             </span>
             <Parameter.Spacer />
             {unwrapped.availability && (
@@ -271,6 +283,29 @@ function isDefaultOpen(
       return unwrapped.shape.variants.length === 1;
     default:
       return false;
+  }
+}
+
+function showChildAttributesMessage(
+  shape: ApiDefinition.TypeShape,
+  types: Record<string, ApiDefinition.TypeDefinition>
+) {
+  const unwrapped = ApiDefinition.unwrapReference(shape, types);
+  switch (unwrapped.shape.type) {
+    case "object":
+      return "Show child attributes";
+    case "discriminatedUnion":
+    case "undiscriminatedUnion":
+      return `Show ${unwrapped.shape.variants.length} variants`;
+    case "list":
+    case "set":
+      return "Show list item attributes";
+    case "map":
+      return "Show map value attributes";
+    case "enum":
+      return `Show ${unwrapped.shape.values.length} enum values`;
+    default:
+      return undefined;
   }
 }
 
