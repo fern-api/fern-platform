@@ -1,4 +1,6 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
+import { Separator } from "@radix-ui/react-separator";
+import { Slot } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
 import { Plus } from "lucide-react";
@@ -125,9 +127,7 @@ const TreeItem = forwardRef<
         {other.length > 0 && (
           <IndentContextProvider>
             <Disclosure.Content asChild>
-              <div className="xs:grid-cols-[32px_1fr] relative grid grid-cols-[24px_1fr]">
-                {other}
-              </div>
+              <div className="relative grid grid-cols-[16px_1fr]">{other}</div>
             </Disclosure.Content>
           </IndentContextProvider>
         )}
@@ -139,8 +139,13 @@ const TreeItem = forwardRef<
 TreeItem.displayName = "TreeItem";
 
 const TreeItemContent = ({ children }: PropsWithChildren): ReactNode => {
-  const childrenArray = Children.toArray(children);
+  const indent = useIndent();
 
+  if (indent === 0) {
+    return children;
+  }
+
+  const childrenArray = Children.toArray(children);
   if (childrenArray.length === 0) {
     return false;
   }
@@ -158,6 +163,38 @@ const TreeItemContent = ({ children }: PropsWithChildren): ReactNode => {
     </>
   );
 };
+
+const TreeItemCardCtx = createContext<boolean>(false);
+
+const TreeItemCard = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<"div"> & {
+    asChild?: boolean;
+  }
+>(({ children, asChild, ...props }, ref) => {
+  const Comp = asChild ? Slot : "div";
+  const indent = useIndent();
+  return (
+    <Comp
+      {...props}
+      ref={ref}
+      className={cn(
+        indent > 0 && "rounded-xl border border-[var(--grayscale-a6)]",
+        props.className
+      )}
+    >
+      <ctx.Provider
+        value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
+      >
+        <TreeItemCardCtx.Provider value={indent > 0}>
+          {children}
+        </TreeItemCardCtx.Provider>
+      </ctx.Provider>
+    </Comp>
+  );
+});
+
+TreeItemCard.displayName = "TreeItemCard";
 
 const TreeItemsContentAdditional = ({
   children,
@@ -187,18 +224,13 @@ const TreeItemsContentAdditional = ({
         {({ open }) =>
           !open &&
           (indent > 0 ? (
-            <div className="xs:grid-cols-[32px_1fr] relative grid grid-cols-[24px_1fr]">
+            <div className="relative grid grid-cols-[16px_1fr]">
               <Disclosure.CloseTrigger asChild>
                 <TreeBranch />
               </Disclosure.CloseTrigger>
               <div className="py-2">
                 <Disclosure.Trigger asChild>
-                  <Badge
-                    rounded
-                    interactive
-                    className="-ml-2"
-                    variant="outlined-subtle"
-                  >
+                  <Badge rounded interactive variant="outlined-subtle">
                     <Plus />
                     {childrenArray.length} more attributes
                   </Badge>
@@ -208,12 +240,7 @@ const TreeItemsContentAdditional = ({
           ) : (
             <div className="py-2">
               <Disclosure.Trigger asChild>
-                <Badge
-                  rounded
-                  interactive
-                  className="-ml-2"
-                  variant="outlined-subtle"
-                >
+                <Badge rounded interactive variant="outlined-subtle">
                   <Plus />
                   {childrenArray.length} more attributes
                 </Badge>
@@ -224,7 +251,7 @@ const TreeItemsContentAdditional = ({
       </Disclosure.Summary>
       <Disclosure.Content>
         {indent > 0 ? (
-          <div className="xs:grid-cols-[32px_1fr] relative grid grid-cols-[24px_1fr]">
+          <div className="relative grid grid-cols-[16px_1fr]">
             {childrenArray.map((child, i) => (
               <Fragment key={i}>
                 <Disclosure.CloseTrigger asChild>
@@ -242,31 +269,76 @@ const TreeItemsContentAdditional = ({
   );
 };
 
+export const UnionVariants = ({ children }: PropsWithChildren) => {
+  const childrenArray = Children.toArray(children);
+  const isCard = useContext(TreeItemCardCtx);
+  return (
+    <>
+      {childrenArray.map((child, index) => (
+        <Fragment key={isValidElement(child) ? (child.key ?? index) : index}>
+          {index > 0 && (
+            <Separator
+              orientation="horizontal"
+              className="pointer-events-none flex h-px items-center gap-2"
+            >
+              <div className="h-px flex-1 bg-[var(--grayscale-a6)]" />
+              <span className="text-sm uppercase text-[var(--grayscale-a9)]">
+                {"or"}
+              </span>
+              <div className="h-px flex-1 bg-[var(--grayscale-a6)]" />
+            </Separator>
+          )}
+          <div className={cn("py-2", isCard && "px-4")}>{child}</div>
+        </Fragment>
+      ))}
+    </>
+  );
+};
+
+UnionVariants.displayName = "UnionVariants";
+
 const TreeItemSummary = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<"div">
->(({ children, ...props }, ref) => {
-  const { open, expandable } = useDetailContext();
-  return (
-    <Disclosure.Summary
-      {...props}
-      ref={ref}
-      className={cn("relative list-none items-center py-2", props.className)}
-      onClick={composeEventHandlers(props.onClick, (e) => e.preventDefault())}
-      tabIndex={-1}
-    >
-      {children}
-      {!open && expandable && (
-        <Disclosure.Trigger asChild>
-          <Badge rounded interactive className="mt-2" variant="outlined-subtle">
-            <Plus />
-            Show child attributes
-          </Badge>
-        </Disclosure.Trigger>
-      )}
-    </Disclosure.Summary>
-  );
-});
+  ComponentPropsWithoutRef<"div"> & {
+    collapseTriggerMessage?: string;
+  }
+>(
+  (
+    { children, collapseTriggerMessage = "Show child attributes", ...props },
+    ref
+  ) => {
+    const { open, expandable } = useDetailContext();
+    return (
+      <Disclosure.Summary
+        {...props}
+        ref={ref}
+        className={cn("relative list-none items-center py-2", props.className)}
+        onClick={composeEventHandlers(props.onClick, (e) => e.preventDefault())}
+        tabIndex={-1}
+      >
+        {children}
+        {!open && expandable && (
+          <div className="grid grid-cols-[16px_1fr] pt-2">
+            <TreeBranch />
+            <div>
+              <Disclosure.Trigger asChild>
+                <Badge
+                  rounded
+                  interactive
+                  className="mt-2"
+                  variant="outlined-subtle"
+                >
+                  <Plus />
+                  {collapseTriggerMessage}
+                </Badge>
+              </Disclosure.Trigger>
+            </div>
+          </div>
+        )}
+      </Disclosure.Summary>
+    );
+  }
+);
 
 TreeItemSummary.displayName = "TreeItemSummary";
 
@@ -314,27 +386,32 @@ const TreeItemSummaryTrigger = forwardRef<
 
 TreeItemSummaryTrigger.displayName = "TreeItemSummaryTrigger";
 
-const TreeBranch = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(
-  ({ ...props }, ref) => {
-    const { pointerOver, setPointerOver } = useContext(ctx);
-    return (
+const TreeBranch = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<"div"> & {
+    lineOnly?: boolean;
+  }
+>(({ lineOnly = false, ...props }, ref) => {
+  const { pointerOver, setPointerOver } = useContext(ctx);
+  return (
+    <div
+      aria-hidden="true"
+      ref={ref}
+      {...props}
+      className={cn(props.className, "nth-last-2:hidden relative h-full")}
+      data-branch=""
+      onPointerOver={() => setPointerOver(true)}
+      onPointerLeave={() => setPointerOver(false)}
+    >
       <div
-        aria-hidden="true"
-        ref={ref}
-        {...props}
-        className={cn(props.className, "nth-last-2:hidden relative h-full")}
-        data-branch=""
-        onPointerOver={() => setPointerOver(true)}
-        onPointerLeave={() => setPointerOver(false)}
-      >
-        <div
-          className={cn("absolute inset-0 h-full w-0 border-l", {
-            "border-[var(--grayscale-9)]": pointerOver,
-            "border-[var(--grayscale-6)] transition-colors duration-100":
-              !pointerOver,
-          })}
-          data-line=""
-        />
+        className={cn("absolute inset-0 h-full w-0 border-l", {
+          "border-[var(--grayscale-9)]": pointerOver,
+          "border-[var(--grayscale-6)] transition-colors duration-100":
+            !pointerOver,
+        })}
+        data-line=""
+      />
+      {!lineOnly && (
         <div
           className={cn(
             "h-[19.5px] w-[15px] rounded-bl-[12px] border-b border-l",
@@ -346,10 +423,10 @@ const TreeBranch = forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>(
           )}
           data-curve=""
         />
-      </div>
-    );
-  }
-);
+      )}
+    </div>
+  );
+});
 
 TreeBranch.displayName = "TreeBranch";
 
@@ -360,8 +437,13 @@ const CollapsedContent = TreeItemsContentAdditional;
 const Summary = TreeItemSummary;
 const Trigger = TreeItemSummaryTrigger;
 const Indicator = TreeDetailIndicator;
+const Card = TreeItemCard;
+const Variants = UnionVariants;
+const Branch = TreeBranch;
 
 export {
+  Branch,
+  Card,
   CollapsedContent,
   Content,
   Indicator,
@@ -369,5 +451,7 @@ export {
   Root,
   Summary,
   Trigger,
+  Variants,
   useDetailContext,
+  useIndent,
 };

@@ -30,6 +30,7 @@ export const FernTooltip = forwardRef<
     updatePositionStrategy?: "optimized" | "always";
     asChild?: boolean;
     contentAsChild?: boolean;
+    disablePortal?: boolean;
     forceMount?: true;
   }
 >((props, forwardedRef) => {
@@ -56,6 +57,7 @@ export const FernTooltip = forwardRef<
     contentAsChild,
     forceMount,
     children,
+    disablePortal,
     ...rest
   } = props;
 
@@ -67,6 +69,18 @@ export const FernTooltip = forwardRef<
       </Comp>
     );
   }
+
+  const render = (children: ReactNode) => {
+    if (disablePortal) {
+      return children;
+    }
+    return (
+      <Tooltip.Portal container={container} forceMount={forceMount}>
+        {children}
+      </Tooltip.Portal>
+    );
+  };
+
   return (
     <Tooltip.Root
       open={open}
@@ -78,7 +92,7 @@ export const FernTooltip = forwardRef<
       <Tooltip.Trigger ref={forwardedRef} asChild={asChild}>
         {children}
       </Tooltip.Trigger>
-      <Tooltip.Portal container={container} forceMount={forceMount}>
+      {render(
         <Tooltip.Content
           side={side}
           sideOffset={sideOffset}
@@ -100,7 +114,7 @@ export const FernTooltip = forwardRef<
         >
           {content}
         </Tooltip.Content>
-      </Tooltip.Portal>
+      )}
     </Tooltip.Root>
   );
 });

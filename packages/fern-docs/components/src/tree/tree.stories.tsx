@@ -217,43 +217,45 @@ export const Default: Story = {
                   </Tree.Summary>
                 </Tree.Item>
 
-                <UnionVariants>
-                  <Tree.Root>
-                    <Tree.Item>
-                      <Tree.Summary>
-                        <Tree.Trigger className="relative flex items-center text-left">
-                          <Tree.Indicator className="absolute left-[-16px]" />
-                          <Parameter.Root>
-                            <Parameter.Name parameterName="id" />
-                            <span className="text-sm text-[var(--grayscale-a9)]">
-                              {"string"}
-                            </span>
-                            <Parameter.Spacer />
-                            <Parameter.Status status="required" />
-                          </Parameter.Root>
-                        </Tree.Trigger>
-                      </Tree.Summary>
-                    </Tree.Item>
-                  </Tree.Root>
+                <Tree.Card>
+                  <UnionVariants>
+                    <Tree.Root>
+                      <Tree.Item>
+                        <Tree.Summary>
+                          <Tree.Trigger className="relative flex items-center text-left">
+                            <Tree.Indicator className="absolute left-[-16px]" />
+                            <Parameter.Root>
+                              <Parameter.Name parameterName="id" />
+                              <span className="text-sm text-[var(--grayscale-a9)]">
+                                {"string"}
+                              </span>
+                              <Parameter.Spacer />
+                              <Parameter.Status status="required" />
+                            </Parameter.Root>
+                          </Tree.Trigger>
+                        </Tree.Summary>
+                      </Tree.Item>
+                    </Tree.Root>
 
-                  <Tree.Root>
-                    <Tree.Item>
-                      <Tree.Summary>
-                        <Tree.Trigger className="relative flex items-center text-left">
-                          <Tree.Indicator className="absolute left-[-16px]" />
-                          <Parameter.Root>
-                            <Parameter.Name parameterName="id" />
-                            <span className="text-sm text-[var(--grayscale-a9)]">
-                              {"string"}
-                            </span>
-                            <Parameter.Spacer />
-                            <Parameter.Status status="required" />
-                          </Parameter.Root>
-                        </Tree.Trigger>
-                      </Tree.Summary>
-                    </Tree.Item>
-                  </Tree.Root>
-                </UnionVariants>
+                    <Tree.Root>
+                      <Tree.Item>
+                        <Tree.Summary>
+                          <Tree.Trigger className="relative flex items-center text-left">
+                            <Tree.Indicator className="absolute left-[-16px]" />
+                            <Parameter.Root>
+                              <Parameter.Name parameterName="id" />
+                              <span className="text-sm text-[var(--grayscale-a9)]">
+                                {"string"}
+                              </span>
+                              <Parameter.Spacer />
+                              <Parameter.Status status="required" />
+                            </Parameter.Root>
+                          </Tree.Trigger>
+                        </Tree.Summary>
+                      </Tree.Item>
+                    </Tree.Root>
+                  </UnionVariants>
+                </Tree.Card>
               </Tree.Content>
             </Tree.Item>
 

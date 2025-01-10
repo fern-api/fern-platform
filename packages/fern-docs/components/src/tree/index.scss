@@ -1,5 +1,5 @@
 @layer components {
-  [data-branch] {
+  [data-branch]:has([data-curve]) {
     &:nth-last-child(2) {
       > [data-line] {
         display: none;

@@ -1,7 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { FernTooltip } from "@fern-docs/components";
+import { Badge, FernTooltip } from "@fern-docs/components";
 import { useCopyToClipboard } from "@fern-ui/react-commons";
-import cn from "clsx";
 import { ReactElement } from "react";
 import { Markdown } from "../mdx/Markdown";
 
@@ -28,21 +27,9 @@ export const Chip = ({
         ) : undefined
       }
     >
-      <span
-        className={cn(
-          "t-default bg-tag-default hover:bg-tag-default-hover flex cursor-default items-center font-mono text-xs",
-          {
-            ["h-5 rounded-md px-1.5 py-1"]: small,
-            ["h-6 rounded-lg px-2 py-1"]: !small,
-          }
-        )}
-        style={{
-          fontSize: small ? "10px" : undefined,
-        }}
-        onClick={copyToClipboard}
-      >
-        <span>{name}</span>
-      </span>
+      <Badge interactive onClick={copyToClipboard} size={small ? "sm" : "lg"}>
+        {name}
+      </Badge>
     </FernTooltip>
   );
 };

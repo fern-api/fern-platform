@@ -49,7 +49,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
         <Markdown className="mb-2 text-base" mdx={description} />
         <Separator
           orientation="horizontal"
-          className="bg-border-default mt-4 h-px"
+          className="bg-border-default h-px"
         />
         {children}
       </div>

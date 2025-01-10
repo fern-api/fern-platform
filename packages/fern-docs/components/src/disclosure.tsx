@@ -153,7 +153,7 @@ const DisclosureDetails = forwardRef<
     const summaryRef = useRef<HTMLElement | null>(null);
 
     const animate1 = useRef<Animation>();
-    const animate2 = useRef<Animation>();
+    // const animate2 = useRef<Animation>();
     const [animationState, setAnimationState] = useState<AnimationState>(
       AnimationState.IDLE
     );
@@ -174,7 +174,7 @@ const DisclosureDetails = forwardRef<
       setAnimationState(animationState);
 
       animate1.current?.cancel();
-      animate2.current?.cancel();
+      // animate2.current?.cancel();
 
       // When expanding
       if (startHeight < endHeight) {
@@ -186,12 +186,12 @@ const DisclosureDetails = forwardRef<
           animationOptions
         );
 
-        animate2.current = contentRef.current?.animate(
-          {
-            transform: ["translateY(-20px)", "translateY(0)"],
-          },
-          animationOptions
-        );
+        // animate2.current = contentRef.current?.animate(
+        //   {
+        //     transform: ["translateY(-20px)", "translateY(0)"],
+        //   },
+        //   animationOptions
+        // );
       }
       // When shrinking
       else {
@@ -203,19 +203,19 @@ const DisclosureDetails = forwardRef<
           animationOptions
         );
 
-        animate2.current = contentRef.current?.animate(
-          {
-            transform: ["translateY(0)", "translateY(-20px)"],
-          },
-          animationOptions
-        );
+        // animate2.current = contentRef.current?.animate(
+        //   {
+        //     transform: ["translateY(0)", "translateY(-20px)"],
+        //   },
+        //   animationOptions
+        // );
       }
 
       setOpen(open);
       if (animate1.current) {
         animate1.current.onfinish = () => onAnimationFinish(open);
         animate1.current.oncancel = () => {
-          animate2.current?.cancel();
+          // animate2.current?.cancel();
           setAnimationState(AnimationState.IDLE);
         };
       }
@@ -277,7 +277,7 @@ const DisclosureDetails = forwardRef<
       }
 
       animate1.current = undefined;
-      animate2.current = undefined;
+      // animate2.current = undefined;
       setAnimationState(AnimationState.IDLE);
     };
 

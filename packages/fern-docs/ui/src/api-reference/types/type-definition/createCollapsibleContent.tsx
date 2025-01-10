@@ -13,7 +13,7 @@ import { ObjectProperty } from "../object/ObjectProperty";
 import { UndiscriminatedUnionVariant } from "../undiscriminated-union/UndiscriminatedUnionVariant";
 
 interface CollapsibleContent {
-  elements: ReactElement[];
+  elements: ReactElement<{ name: string; description?: string }>[];
   elementNameSingular: string;
   elementNamePlural: string;
   separatorText?: string;

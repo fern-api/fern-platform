@@ -11,7 +11,7 @@ import {
 } from "react";
 import { CopyToClipboardButton } from "../CopyToClipboardButton";
 import { Button } from "../FernButtonV2";
-import { Badge } from "../badges";
+import { Badge, BadgeProps } from "../badges";
 import { cn } from "../cn";
 import { useDetailContext } from "./tree";
 
@@ -39,6 +39,8 @@ const ParameterName = forwardRef<
     parameterNameDisplay?: ReactNode;
     onClickCopyAnchorLink?: MouseEventHandler<HTMLButtonElement>;
     size?: "sm" | "lg";
+    children?: never;
+    color?: BadgeProps["color"];
   }
 >(
   (
@@ -47,6 +49,7 @@ const ParameterName = forwardRef<
       parameterNameDisplay,
       onClickCopyAnchorLink,
       size,
+      color,
       ...props
     },
     ref
@@ -56,6 +59,7 @@ const ParameterName = forwardRef<
       <CopyToClipboardButton
         ref={ref}
         {...props}
+        className={cn("font-mono", props.className)}
         content={parameterName}
         asChild
         tooltipContent={
@@ -88,15 +92,13 @@ const ParameterName = forwardRef<
               )
             : undefined
         }
-        delayDuration={0}
         disableTooltipProvider
       >
         <Badge
-          color="accent"
+          color={color ?? "accent"}
           variant="ghost"
           rounded
           interactive
-          className="-mx-2 font-mono"
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             e.stopPropagation();
             setOpen(true);

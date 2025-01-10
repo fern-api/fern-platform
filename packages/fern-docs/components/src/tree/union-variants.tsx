@@ -1,27 +1,10 @@
 import * as Separator from "@radix-ui/react-separator";
-import {
-  Children,
-  ComponentPropsWithoutRef,
-  Fragment,
-  forwardRef,
-  isValidElement,
-} from "react";
-import { cn } from "../cn";
+import { Children, Fragment, isValidElement, PropsWithChildren } from "react";
 
-export const UnionVariants = forwardRef<
-  HTMLDivElement,
-  ComponentPropsWithoutRef<"div">
->(({ children, ...props }, ref) => {
+export const UnionVariants = ({ children }: PropsWithChildren) => {
   const childrenArray = Children.toArray(children);
   return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn(
-        "-mx-2 rounded-xl border border-[var(--grayscale-a6)]",
-        props.className
-      )}
-    >
+    <>
       {childrenArray.map((child, index) => (
         <Fragment key={isValidElement(child) ? (child.key ?? index) : index}>
           {index > 0 && (
@@ -39,8 +22,8 @@ export const UnionVariants = forwardRef<
           <div className="px-4 py-2">{child}</div>
         </Fragment>
       ))}
-    </div>
+    </>
   );
-});
+};
 
 UnionVariants.displayName = "UnionVariants";

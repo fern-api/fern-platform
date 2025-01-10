@@ -77,6 +77,7 @@ export function ApiPackageContent(props: ApiPackageContentProps): ReactNode {
     case "endpoint":
       return (
         <Endpoint
+          key={node.id}
           node={node}
           apiDefinition={apiDefinition}
           breadcrumb={breadcrumb}
@@ -87,6 +88,7 @@ export function ApiPackageContent(props: ApiPackageContentProps): ReactNode {
     case "webhook":
       return (
         <Webhook
+          key={node.id}
           node={node}
           apiDefinition={apiDefinition}
           breadcrumb={breadcrumb}
@@ -96,6 +98,7 @@ export function ApiPackageContent(props: ApiPackageContentProps): ReactNode {
     case "webSocket":
       return (
         <WebSocket
+          key={node.id}
           node={node}
           apiDefinition={apiDefinition}
           breadcrumb={breadcrumb}
@@ -103,10 +106,18 @@ export function ApiPackageContent(props: ApiPackageContentProps): ReactNode {
         />
       );
     case "page":
-      return <ApiSectionMarkdownPage node={node} mdxs={mdxs} last={last} />;
+      return (
+        <ApiSectionMarkdownPage
+          key={node.id}
+          node={node}
+          mdxs={mdxs}
+          last={last}
+        />
+      );
     case "endpointPair":
       return (
         <EndpointPair
+          key={node.id}
           node={node}
           apiDefinition={apiDefinition}
           breadcrumb={breadcrumb}

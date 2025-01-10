@@ -293,7 +293,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [initialExampleHeight]);
 
-  const isApiPlaygroundEnabled = useEdgeFlag("isApiPlaygroundEnabled");
+  const isApiReferenceTreeEnabled = useEdgeFlag("isApiReferenceTreeEnabled");
 
   return (
     <section
@@ -322,7 +322,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             //   minHeight: `${minHeight}px`,
             // }}
           >
-            {isApiPlaygroundEnabled ? (
+            {isApiReferenceTreeEnabled ? (
               <EndpointContentTree
                 context={context}
                 showErrors={showErrors}

@@ -46,6 +46,7 @@ export const CopyToClipboardButton = forwardRef<
     tooltipContentAsChild?: boolean;
     delayDuration?: number;
     disableTooltipProvider?: boolean;
+    disablePortal?: boolean;
   }
 >((props, ref) => {
   const {
@@ -56,6 +57,7 @@ export const CopyToClipboardButton = forwardRef<
     tooltipContentAsChild,
     delayDuration,
     disableTooltipProvider,
+    disablePortal,
     ...otherProps
   } = props;
 
@@ -91,6 +93,8 @@ export const CopyToClipboardButton = forwardRef<
         disableHoverableContent={
           wasJustCopied || typeof tooltipContent !== "function"
         }
+        disablePortal={disablePortal}
+        updatePositionStrategy="always"
       >
         {!children ? (
           <CopyIconButton
