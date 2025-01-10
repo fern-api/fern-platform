@@ -62,7 +62,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
         ) : (
           <Separator
             orientation="horizontal"
-            className="bg-border-default h-px"
+            className="h-px bg-[var(--grayscale-a4)]"
           />
         )}
         {children}

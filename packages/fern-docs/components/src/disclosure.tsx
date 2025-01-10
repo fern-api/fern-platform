@@ -152,8 +152,7 @@ const DisclosureDetails = forwardRef<
     const contentRef = useRef<HTMLElement | null>(null);
     const summaryRef = useRef<HTMLElement | null>(null);
 
-    const animate1 = useRef<Animation>();
-    // const animate2 = useRef<Animation>();
+    const animate = useRef<Animation>();
     const [animationState, setAnimationState] = useState<AnimationState>(
       AnimationState.IDLE
     );
@@ -173,49 +172,33 @@ const DisclosureDetails = forwardRef<
     }) => {
       setAnimationState(animationState);
 
-      animate1.current?.cancel();
-      // animate2.current?.cancel();
+      animate.current?.cancel();
 
       // When expanding
       if (startHeight < endHeight) {
-        animate1.current = contentRef.current?.animate(
+        animate.current = contentRef.current?.animate(
           {
             height: [`${startHeight}px`, `${endHeight}px`],
             opacity: [0, 1],
           },
           animationOptions
         );
-
-        // animate2.current = contentRef.current?.animate(
-        //   {
-        //     transform: ["translateY(-20px)", "translateY(0)"],
-        //   },
-        //   animationOptions
-        // );
       }
       // When shrinking
       else {
-        animate1.current = contentRef.current?.animate(
+        animate.current = contentRef.current?.animate(
           {
             height: [`${startHeight}px`, `${endHeight}px`],
             opacity: [1, 0],
           },
           animationOptions
         );
-
-        // animate2.current = contentRef.current?.animate(
-        //   {
-        //     transform: ["translateY(0)", "translateY(-20px)"],
-        //   },
-        //   animationOptions
-        // );
       }
 
       setOpen(open);
-      if (animate1.current) {
-        animate1.current.onfinish = () => onAnimationFinish(open);
-        animate1.current.oncancel = () => {
-          // animate2.current?.cancel();
+      if (animate.current) {
+        animate.current.onfinish = () => onAnimationFinish(open);
+        animate.current.oncancel = () => {
           setAnimationState(AnimationState.IDLE);
         };
       }
@@ -276,8 +259,7 @@ const DisclosureDetails = forwardRef<
         contentRef.current.style.willChange = "";
       }
 
-      animate1.current = undefined;
-      // animate2.current = undefined;
+      animate.current = undefined;
       setAnimationState(AnimationState.IDLE);
     };
 

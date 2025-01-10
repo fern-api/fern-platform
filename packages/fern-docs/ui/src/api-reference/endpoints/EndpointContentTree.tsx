@@ -575,6 +575,8 @@ const ParameterInfo = forwardRef<
 
   const availability = property.availability ?? unwrapped.availability;
 
+  console.log(anchorId);
+
   return (
     <Parameter.Root
       {...props}
@@ -625,7 +627,7 @@ const ParameterInfo = forwardRef<
       {availability && (
         <AvailabilityBadge availability={availability} size="sm" />
       )}
-      {anchorId.startsWith("request.") &&
+      {anchorId.startsWith("request") &&
         !unwrapped.isOptional &&
         !availability && <Parameter.Status status="required" />}
     </Parameter.Root>
@@ -668,18 +670,36 @@ function renderDereferencedShape(
     case "unknown":
       return false;
     case "list":
-    case "set":
+    case "set": {
+      const content = renderTypeShape(
+        property.itemShape,
+        types,
+        parentVisitedTypeIds
+      );
+      if (!content) {
+        return false;
+      }
       return (
         <JsonPathPartProvider value={{ type: "listItem" }}>
-          {renderTypeShape(property.itemShape, types, parentVisitedTypeIds)}
+          {content}
         </JsonPathPartProvider>
       );
-    case "map":
+    }
+    case "map": {
+      const content = renderTypeShape(
+        property.valueShape,
+        types,
+        parentVisitedTypeIds
+      );
+      if (!content) {
+        return false;
+      }
       return (
         <JsonPathPartProvider value={{ type: "objectProperty" }}>
-          {renderTypeShape(property.valueShape, types, parentVisitedTypeIds)}
+          {content}
         </JsonPathPartProvider>
       );
+    }
     case "enum":
       return <EnumCard values={property.values} />;
     case "object": {
@@ -1213,5 +1233,5 @@ export function TypeShorthandDefault({
   types: Record<string, ApiDefinition.TypeDefinition>;
   isOptional?: boolean;
 }) {
-  return renderTypeShorthand(shape, { nullable: isOptional }, types);
+  return renderTypeShorthand(shape, { isOptional }, types);
 }

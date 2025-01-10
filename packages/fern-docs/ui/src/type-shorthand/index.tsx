@@ -15,6 +15,7 @@ export interface TypeShorthandOptions {
   plural?: boolean;
   withArticle?: boolean;
   nullable?: boolean; // determines whether to render "Optional" or "Nullable"
+  isOptional?: boolean;
 }
 
 export function renderTypeShorthandRoot(
@@ -161,10 +162,12 @@ export function renderTypeShorthand(
     plural = false,
     withArticle = false,
     nullable = false,
+    isOptional = false,
   }: TypeShorthandOptions = {
     plural: false,
     withArticle: false,
     nullable: false,
+    isOptional: false,
   },
   types: Record<string, TypeDefinition>
 ): string {
@@ -173,7 +176,7 @@ export function renderTypeShorthand(
   const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
-  if (unwrapped.isOptional) {
+  if (isOptional || unwrapped.isOptional) {
     return `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   }
 

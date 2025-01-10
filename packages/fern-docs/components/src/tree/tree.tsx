@@ -134,7 +134,7 @@ const Tree = forwardRef<HTMLDivElement, PropsWithChildren>(
     const ref = useRef<HTMLDivElement>(null);
     const rootId = useId();
     return (
-      <div ref={composeRefs(ref, forwardRef)}>
+      <div ref={composeRefs(ref, forwardRef)} className="fern-tree">
         <rootCtx.Provider
           value={useMemoOne(
             () => ({
@@ -218,7 +218,7 @@ const TreeItem = forwardRef<
   const other = Children.toArray(children).filter(
     (child) => isValidElement(child) && child.type !== TreeItemSummary
   );
-
+  const indent = useIndent();
   return (
     <UnbranchedCtx.Provider value={unbranched}>
       {other.length > 0 ? (
@@ -229,9 +229,9 @@ const TreeItem = forwardRef<
         <openCtx.Provider
           value={{ open: false, expandable: false, setOpen: noop }}
         >
-          <details ref={ref} {...props}>
+          <div className={props.className} data-level={indent}>
             {children}
-          </details>
+          </div>
         </openCtx.Provider>
       )}
     </UnbranchedCtx.Provider>
@@ -436,7 +436,7 @@ const TreeItemsContentAdditionalDisclosure = ({
                     rounded
                     interactive
                     variant="outlined-subtle"
-                    className="font-normal"
+                    className="font-normal max-sm:w-full"
                   >
                     <Plus />
                     {childrenArray.length} more attributes
@@ -451,7 +451,7 @@ const TreeItemsContentAdditionalDisclosure = ({
                   rounded
                   interactive
                   variant="outlined-subtle"
-                  className="font-normal"
+                  className="font-normal max-sm:w-full"
                 >
                   <Plus />
                   {childrenArray.length} more attributes
@@ -531,6 +531,22 @@ const TreeItemSummary = forwardRef<
     const indent = useIndent();
     const { open, expandable } = useDetailContext();
     const unbranched = useContext(UnbranchedCtx);
+
+    if (!expandable) {
+      return (
+        <div
+          {...props}
+          ref={ref}
+          className={cn(
+            "relative list-none items-center py-2",
+            props.className
+          )}
+        >
+          {children}
+        </div>
+      );
+    }
+
     return (
       <Disclosure.Summary
         {...props}
@@ -547,7 +563,10 @@ const TreeItemSummary = forwardRef<
               <Badge
                 rounded
                 interactive
-                className={cn("mt-2 font-normal", indent > 0 && "ml-2")}
+                className={cn(
+                  "mt-2 font-normal max-sm:w-full",
+                  indent > 0 && "ml-2"
+                )}
                 variant="outlined-subtle"
               >
                 <Plus />
@@ -562,7 +581,7 @@ const TreeItemSummary = forwardRef<
                   <Badge
                     rounded
                     interactive
-                    className="mt-2 font-normal"
+                    className="mt-2 font-normal max-sm:w-full"
                     variant="outlined-subtle"
                   >
                     <Plus />
