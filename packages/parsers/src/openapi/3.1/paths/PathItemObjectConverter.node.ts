@@ -146,8 +146,6 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.put?.convert(),
       this.patch?.convert(),
       this.delete?.convert(),
-    ]
-      .flat()
-      .filter(isNonNullish);
+    ].filter(isNonNullish);
   }
 }
