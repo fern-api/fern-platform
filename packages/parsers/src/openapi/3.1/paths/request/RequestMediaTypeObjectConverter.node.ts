@@ -216,13 +216,15 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
               }
             })
             .filter(isNonNullish);
-        const fieldPermutations = possibleFields.reduce(
+        const fieldPermutations = possibleFields.reduce<
+          FernRegistry.api.latest.FormDataField[][]
+        >(
           (acc, curr) => {
             return acc.flatMap((a) =>
               curr.length > 0 ? curr.map((b) => [...a, b]) : [[...a]]
             );
           },
-          [[]] as FernRegistry.api.latest.FormDataField[][]
+          [[]]
         );
         return fieldPermutations.map((fields) => ({
           type: "formData",
