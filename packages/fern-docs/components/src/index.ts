@@ -3,6 +3,7 @@ export * from "./BuiltWithFern";
 export * from "./cn";
 export * from "./colors";
 export * from "./CopyToClipboardButton";
+export * from "./disclosure";
 export * from "./Empty";
 export * from "./FernAudioPlayer";
 export * from "./FernButton";

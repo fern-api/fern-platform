@@ -56,13 +56,13 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
         {description ? (
           <Markdown
             size="sm"
-            className="rounded-md bg-[var(--grayscale-a3)] p-2 px-3"
+            className="mb-3 rounded-md bg-[var(--grayscale-a3)] p-2 px-3 last:mb-0"
             mdx={description}
           />
         ) : (
           <Separator
             orientation="horizontal"
-            className="h-px bg-[var(--grayscale-a4)]"
+            className="mb-3 h-px bg-[var(--grayscale-a4)] last:hidden"
           />
         )}
         {children}

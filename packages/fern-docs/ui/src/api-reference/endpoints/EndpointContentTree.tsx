@@ -1,4 +1,5 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
+import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import {
   AvailabilityBadge,
@@ -6,26 +7,27 @@ import {
   Button,
   cn,
   CopyToClipboardButton,
-  FernInput,
+  Disclosure,
   StatusCodeBadge,
   TouchScreenOnly,
 } from "@fern-docs/components";
 import { Parameter, Tree } from "@fern-docs/components/tree";
+import { Separator } from "@radix-ui/react-separator";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { sortBy } from "es-toolkit/array";
 import { capitalize } from "es-toolkit/string";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { LinkIcon, ListFilter } from "lucide-react";
+import { LinkIcon } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   createContext,
   forwardRef,
+  Fragment,
   PropsWithChildren,
   RefObject,
   useContext,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
 import { noop, UnreachableCaseError } from "ts-essentials";
@@ -42,7 +44,6 @@ import {
   JsonPropertyPath,
   JsonPropertyPathPart,
 } from "../examples/JsonPropertyPath";
-import { EnumDefinitionDetails } from "../types/type-definition/EnumDefinitionDetails";
 import { HoveringProps } from "./EndpointContentLeft";
 import { EndpointSection } from "./EndpointSection";
 
@@ -118,11 +119,32 @@ export function EndpointContentTree({
   onHoverRequestProperty,
   onHoverResponseProperty,
 }: EndpointContentTreeProps) {
+  const request = endpoint.requests?.[0];
+  const response = endpoint.responses?.[0];
+
   const requestHeaders = [
     ...(auth ? [toAuthHeader(auth)] : []),
     ...globalHeaders,
     ...(endpoint.requestHeaders ?? []),
   ];
+
+  if (request?.contentType) {
+    requestHeaders.push({
+      key: ApiDefinition.PropertyKey("Content-Type"),
+      description: undefined,
+      valueShape: {
+        type: "alias",
+        value: {
+          type: "literal",
+          value: {
+            type: "stringLiteral",
+            value: request.contentType,
+          },
+        },
+      },
+      availability: undefined,
+    });
+  }
 
   return (
     <SlugContext.Provider value={node.slug}>
@@ -217,18 +239,18 @@ export function EndpointContentTree({
                   </Tree.Root>
                 )}
 
-              {endpoint.requests?.[0] && (
+              {request && (
                 <Tree.Root>
                   <EndpointSection
                     title="Request"
                     anchorIdParts={["request"]}
                     slug={node.slug}
-                    description={endpoint.requests[0].description}
+                    description={request.description}
                     headerRight={
                       <div className="flex items-center gap-2">
-                        {endpoint.requests[0].contentType && (
+                        {request.contentType && (
                           <Badge size="sm" className="font-mono">
-                            {endpoint.requests[0].contentType}
+                            {request.contentType}
                           </Badge>
                         )}
                         <Tree.HasDisclosures>
@@ -238,10 +260,7 @@ export function EndpointContentTree({
                     }
                   >
                     <AnchorIdProvider id="body">
-                      <HttpRequestBody
-                        body={endpoint.requests[0].body}
-                        types={types}
-                      />
+                      <HttpRequestBody body={request.body} types={types} />
                     </AnchorIdProvider>
                   </EndpointSection>
                 </Tree.Root>
@@ -251,19 +270,20 @@ export function EndpointContentTree({
 
           <AnchorIdProvider id="response">
             <HoverPropertyContext.Provider value={onHoverResponseProperty}>
-              {endpoint.responses?.[0] && (
+              {response && (
                 <Tree.Root>
                   <EndpointSection
                     title="Response"
                     anchorIdParts={["response"]}
                     slug={node.slug}
-                    description={endpoint.responses[0].description}
+                    description={response.description}
                     headerRight={
                       <>
                         <StatusCodeBadge
-                          statusCode={endpoint.responses[0].statusCode}
-                          className="ml-2 mr-auto"
-                          variant="outlined"
+                          statusCode={response.statusCode}
+                          className="ml-auto"
+                          variant="subtle"
+                          size="sm"
                         />
                         <Tree.HasDisclosures>
                           <Tree.ToggleExpandAll className="-mr-2" />
@@ -273,8 +293,8 @@ export function EndpointContentTree({
                   >
                     <AnchorIdProvider id="body">
                       <HttpResponseBody
-                        key={endpoint.responses[0].statusCode}
-                        body={endpoint.responses[0].body}
+                        key={response.statusCode}
+                        body={response.body}
                         types={types}
                       />
                     </AnchorIdProvider>
@@ -381,7 +401,7 @@ function ObjectProperty({
               types
             )}
           >
-            <Tree.Trigger className="relative flex items-center text-left">
+            <Tree.Trigger asChild>
               <ParameterInfo
                 parameterName={property.key}
                 indent={indent}
@@ -389,13 +409,13 @@ function ObjectProperty({
                 types={types}
               />
             </Tree.Trigger>
-            <Markdown
-              size="sm"
-              className={cn("text-text-muted mt-2 leading-normal", {
-                "pl-2": indent > 0,
-              })}
-              mdx={property.description ?? unwrapped.descriptions[0]}
-            />
+            <Tree.SummaryIndentedContent>
+              <Markdown
+                size="sm"
+                className={cn("text-text-muted py-2 leading-normal")}
+                mdx={property.description ?? unwrapped.descriptions[0]}
+              />
+            </Tree.SummaryIndentedContent>
           </Tree.Summary>
           {renderDereferencedShape(unwrapped.shape, types)}
         </Tree.Item>
@@ -555,7 +575,7 @@ const ParameterInfo = forwardRef<
             }));
           }}
         />
-        <span className="text-xs text-[var(--grayscale-a9)]">
+        <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
           <TypeShorthand
             shape={unwrapped.shape}
             isOptional={unwrapped.isOptional}
@@ -583,10 +603,10 @@ const ParameterInfo = forwardRef<
             }}
           >
             <Button
-              size="iconSm"
+              size="iconXs"
               variant="ghost"
               color="gray"
-              className="shrink-0 self-center"
+              className="-m-1 shrink-0 self-center"
             >
               <LinkIcon />
             </Button>
@@ -695,23 +715,11 @@ function renderDereferencedShape(
                     {(variant.displayName ||
                       variant.availability ||
                       description) && (
-                      <div className="border-b border-[var(--grayscale-a6)] pb-2 leading-normal">
-                        {(variant.displayName || variant.availability) && (
-                          <div className="flex items-center">
-                            {variant.displayName && (
-                              <h6 className="mb-0">{variant.displayName}</h6>
-                            )}
-                            {variant.availability && (
-                              <AvailabilityBadge
-                                availability={variant.availability}
-                                size="sm"
-                                className="ml-auto"
-                              />
-                            )}
-                          </div>
-                        )}
-                        <Markdown size="sm" mdx={description} />
-                      </div>
+                      <VariantDescription
+                        displayName={variant.displayName}
+                        availability={variant.availability}
+                        description={description}
+                      />
                     )}
                     {renderTypeShape(
                       variant.shape,
@@ -757,23 +765,11 @@ function renderDereferencedShape(
                       {(variant.displayName ||
                         variant.availability ||
                         description) && (
-                        <div className="border-b border-[var(--grayscale-a6)] pb-2 leading-normal">
-                          {(variant.displayName || variant.availability) && (
-                            <div className="flex items-center">
-                              {variant.displayName && (
-                                <h6 className="mb-0">{variant.displayName}</h6>
-                              )}
-                              {variant.availability && (
-                                <AvailabilityBadge
-                                  availability={variant.availability}
-                                  size="sm"
-                                  className="ml-auto"
-                                />
-                              )}
-                            </div>
-                          )}
-                          <Markdown size="sm" mdx={description} />
-                        </div>
+                        <VariantDescription
+                          displayName={variant.displayName}
+                          availability={variant.availability}
+                          description={description}
+                        />
                       )}
                       <ObjectProperty
                         property={{
@@ -812,32 +808,135 @@ function renderDereferencedShape(
   }
 }
 
+function VariantDescription({
+  displayName,
+  availability,
+  description,
+}: {
+  displayName?: string;
+  availability?: ApiDefinition.Availability;
+  description?: MarkdownText;
+}) {
+  const indent = Tree.useIndent();
+  return (
+    <div
+      className={cn(
+        indent > 0
+          ? "border-b border-[var(--grayscale-a4)] pb-2 leading-normal"
+          : "rounded-md bg-[var(--grayscale-a3)] px-3 py-2"
+      )}
+    >
+      {(displayName || availability) && (
+        <div className="flex items-center">
+          {displayName && <h6 className="mb-0">{displayName}</h6>}
+          {availability && (
+            <AvailabilityBadge
+              availability={availability}
+              size="sm"
+              className="ml-auto"
+            />
+          )}
+        </div>
+      )}
+      <Markdown size="sm" mdx={description} />
+    </div>
+  );
+}
+
 function EnumCard({ values }: { values: ApiDefinition.EnumValue[] }) {
-  const [searchInput, setSearchInput] = useState("");
+  if (values.length > 10) {
+    return (
+      <Tree.Content>
+        <Tree.Card asChild>
+          <Disclosure.Details>
+            <Disclosure.Summary>
+              {values.slice(0, 10).map((value, idx) => (
+                <Fragment key={value.value}>
+                  {idx > 0 && (
+                    <Separator
+                      orientation="horizontal"
+                      className="h-px bg-[var(--grayscale-a4)]"
+                    />
+                  )}
+                  <div className="p-3">
+                    <Chip className="font-mono" variant="outlined-subtle">
+                      {value.value}
+                    </Chip>
+                    {value.description && (
+                      <Markdown
+                        size="sm"
+                        mdx={value.description}
+                        className="text-text-muted mt-3"
+                      />
+                    )}
+                  </div>
+                </Fragment>
+              ))}
+              <Separator
+                orientation="horizontal"
+                className="h-px bg-[var(--grayscale-a4)]"
+              />
+              <Disclosure.If open={false}>
+                <Disclosure.Trigger>
+                  <Button>Show all {values.length} values</Button>
+                </Disclosure.Trigger>
+              </Disclosure.If>
+            </Disclosure.Summary>
+            <Disclosure.Content>
+              {values.slice(10).map((value, idx) => (
+                <Fragment key={value.value}>
+                  {idx > 0 && (
+                    <Separator
+                      orientation="horizontal"
+                      className="h-px bg-[var(--grayscale-a4)]"
+                    />
+                  )}
+                  <div className="p-3">
+                    <Chip className="font-mono" variant="outlined-subtle">
+                      {value.value}
+                    </Chip>
+                    {value.description && (
+                      <Markdown
+                        size="sm"
+                        mdx={value.description}
+                        className="text-text-muted mt-3"
+                      />
+                    )}
+                  </div>
+                </Fragment>
+              ))}
+            </Disclosure.Content>
+          </Disclosure.Details>
+        </Tree.Card>
+      </Tree.Content>
+    );
+  }
+
   return (
     <Tree.Content>
       <Tree.Card>
-        {values.length > 10 && (
-          <div className="p-2 pb-0">
-            <FernInput
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Filter"
-              leftIcon={<ListFilter className="text-text-disabled size-4" />}
-            />
-          </div>
-        )}
-        <EnumDefinitionDetails className="p-4" searchInput={searchInput}>
-          {values.map((value) => (
-            <Chip
-              key={value.value}
-              description={value.description}
-              className="font-mono"
-            >
-              {value.value}
-            </Chip>
-          ))}
-        </EnumDefinitionDetails>
+        {values.map((value, idx) => (
+          <Fragment key={value.value}>
+            {idx > 0 && (
+              <Separator
+                orientation="horizontal"
+                className="h-px bg-[var(--grayscale-a4)]"
+              />
+            )}
+            <div className="p-3">
+              <Chip className="font-mono" variant="outlined-subtle">
+                {value.value}
+              </Chip>
+              {value.description && (
+                <Markdown
+                  size="sm"
+                  mdx={value.description}
+                  className="text-text-muted mt-3"
+                />
+              )}
+            </div>
+          </Fragment>
+        ))}
       </Tree.Card>
     </Tree.Content>
   );
@@ -1109,7 +1208,7 @@ export function TypeShorthandTypescript({
   }
 
   return (
-    <span className="-ml-3 font-mono">
+    <span className="font-mono">
       {`${isOptional ? "?: " : ": "}${toString(shape)}`}
     </span>
   );
@@ -1186,9 +1285,9 @@ export function TypeShorthandPython({
     }
   }
 
-  return (
-    <span className="-ml-3 font-mono">{`: ${isOptional ? `Optional[${toString(shape)}]` : toString(shape)}`}</span>
-  );
+  const title = isOptional ? `Optional[${toString(shape)}]` : toString(shape);
+
+  return <span className="font-mono" title={title}>{`: ${title}`}</span>;
 }
 
 export function TypeShorthandDefault({
@@ -1200,5 +1299,10 @@ export function TypeShorthandDefault({
   types: Record<string, ApiDefinition.TypeDefinition>;
   isOptional?: boolean;
 }) {
-  return renderTypeShorthand(shape, { isOptional }, types);
+  const title = renderTypeShorthand(shape, { isOptional }, types);
+  return (
+    <span className="ml-3" title={title}>
+      {title}
+    </span>
+  );
 }

@@ -1,7 +1,8 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
+import { Primitive } from "@radix-ui/react-primitive";
 import { Separator } from "@radix-ui/react-separator";
-import { Slot } from "@radix-ui/react-slot";
+import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
 import { atom, PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
@@ -144,7 +145,9 @@ const Tree = forwardRef<HTMLDivElement, PropsWithChildren>(
           <ctx.Provider
             value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
           >
-            {children}
+            <Disclosure.Root animationOptions={{ duration: 0 }}>
+              {children}
+            </Disclosure.Root>
           </ctx.Provider>
         </rootCtx.Provider>
       </div>
@@ -204,6 +207,8 @@ function useSyncDisclosureWithRoot(defaultOpen?: boolean) {
   );
 }
 
+const TreeItemHasChildrenCtx = createContext(false);
+
 const TreeItem = forwardRef<
   HTMLDetailsElement,
   ComponentPropsWithoutRef<typeof TreeItemDisclosure> & {
@@ -216,19 +221,21 @@ const TreeItem = forwardRef<
   const indent = useIndent();
   return (
     <UnbranchedCtx.Provider value={unbranched}>
-      {other.length > 0 ? (
-        <TreeItemDisclosure ref={ref} {...props}>
-          {children}
-        </TreeItemDisclosure>
-      ) : (
-        <openCtx.Provider
-          value={{ open: false, expandable: false, setOpen: noop }}
-        >
-          <div className={props.className} data-level={indent}>
+      <TreeItemHasChildrenCtx.Provider value={other.length > 0}>
+        {other.length > 0 ? (
+          <TreeItemDisclosure ref={ref} {...props}>
             {children}
-          </div>
-        </openCtx.Provider>
-      )}
+          </TreeItemDisclosure>
+        ) : (
+          <openCtx.Provider
+            value={{ open: false, expandable: false, setOpen: noop }}
+          >
+            <div className={props.className} data-level={indent}>
+              {children}
+            </div>
+          </openCtx.Provider>
+        )}
+      </TreeItemHasChildrenCtx.Provider>
     </UnbranchedCtx.Provider>
   );
 });
@@ -350,7 +357,7 @@ const TreeItemCard = forwardRef<
       {...props}
       ref={ref}
       className={cn(
-        indent > 0 && "rounded-xl border border-[var(--grayscale-a6)]",
+        indent > 0 && "rounded-xl border border-[var(--grayscale-a4)]",
         props.className
       )}
     >
@@ -489,18 +496,18 @@ export const UnionVariants = ({ children }: PropsWithChildren) => {
               orientation="horizontal"
               className="pointer-events-none flex h-px items-center gap-2"
             >
-              <div className="h-px flex-1 bg-[var(--grayscale-a6)]" />
+              <div className="h-px flex-1 bg-[var(--grayscale-a4)]" />
               <span className="text-sm uppercase text-[var(--grayscale-a9)]">
                 {"or"}
               </span>
-              <div className="h-px flex-1 bg-[var(--grayscale-a6)]" />
+              <div className="h-px flex-1 bg-[var(--grayscale-a4)]" />
             </Separator>
           )}
           <div
             className={cn(
               "py-4",
-              isCard && "px-4",
-              !isCard && "first:pt-0 last:pb-0"
+              isCard && "px-4"
+              // !isCard && "first:pt-0 last:pb-0"
             )}
           >
             {child}
@@ -524,7 +531,7 @@ const TreeItemSummary = forwardRef<
     ref
   ) => {
     const indent = useIndent();
-    const { open, expandable } = useDetailContext();
+    const { expandable } = useDetailContext();
     const unbranched = useContext(UnbranchedCtx);
 
     if (!expandable) {
@@ -533,7 +540,7 @@ const TreeItemSummary = forwardRef<
           {...props}
           ref={ref}
           className={cn(
-            "relative list-none items-center py-2",
+            "relative mt-2 list-none items-center",
             props.className
           )}
         >
@@ -546,49 +553,85 @@ const TreeItemSummary = forwardRef<
       <Disclosure.Summary
         {...props}
         ref={ref}
-        className={cn("relative list-none items-center py-2", props.className)}
+        className={cn("relative mt-2 list-none items-center", props.className)}
         onClick={composeEventHandlers(props.onClick, (e) => e.preventDefault())}
         tabIndex={-1}
       >
         {children}
-        {!open &&
-          expandable &&
-          (unbranched ? (
-            <Disclosure.Trigger asChild>
-              <Badge
-                rounded
-                interactive
-                className={cn("mt-2 font-normal", indent > 0 && "ml-2")}
-                variant="outlined-subtle"
-              >
-                <Plus />
-                {collapseTriggerMessage}
-              </Badge>
-            </Disclosure.Trigger>
-          ) : (
-            <div className="grid grid-cols-[16px_1fr] pt-2 *:min-w-0">
-              <TreeBranch last />
-              <div>
-                <Disclosure.Trigger asChild>
-                  <Badge
-                    rounded
-                    interactive
-                    className="mt-2 font-normal"
-                    variant="outlined-subtle"
-                  >
-                    <Plus />
-                    {collapseTriggerMessage}
-                  </Badge>
-                </Disclosure.Trigger>
+        {expandable && (
+          <Disclosure.If open={false}>
+            {unbranched ? (
+              <Disclosure.Trigger asChild>
+                <Badge
+                  rounded
+                  interactive
+                  className={cn("mt-2 font-normal", indent > 0 && "ml-2")}
+                  variant="outlined-subtle"
+                >
+                  <Plus />
+                  {collapseTriggerMessage}
+                </Badge>
+              </Disclosure.Trigger>
+            ) : (
+              <div className="grid grid-cols-[16px_1fr] *:min-w-0">
+                <TreeBranch last />
+                <div>
+                  <Disclosure.Trigger asChild>
+                    <Badge
+                      rounded
+                      interactive
+                      className="mt-2 font-normal"
+                      variant="outlined-subtle"
+                    >
+                      <Plus />
+                      {collapseTriggerMessage}
+                    </Badge>
+                  </Disclosure.Trigger>
+                </div>
               </div>
-            </div>
-          ))}
+            )}
+          </Disclosure.If>
+        )}
       </Disclosure.Summary>
     );
   }
 );
 
 TreeItemSummary.displayName = "TreeItemSummary";
+
+const TreeItemSummaryIndentedContent = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<typeof Primitive.div>
+>(({ children, ...props }, ref) => {
+  const indent = useIndent();
+  const unbranched = useContext(UnbranchedCtx);
+  const hasChildren = useContext(TreeItemHasChildrenCtx);
+
+  if (indent === 0 || !hasChildren || unbranched) {
+    return (
+      <Primitive.div
+        ref={ref}
+        {...props}
+        className={cn(props.className, indent > 0 && "pl-2")}
+      >
+        {children}
+      </Primitive.div>
+    );
+  }
+
+  return (
+    <Primitive.div
+      ref={ref}
+      {...props}
+      className={cn("grid grid-cols-[16px_1fr] *:min-w-0", props.className)}
+    >
+      <TreeBranch lineOnly />
+      <Slottable>{children}</Slottable>
+    </Primitive.div>
+  );
+});
+
+TreeItemSummaryIndentedContent.displayName = "TreeItemSummaryIndentedContent";
 
 const TreeDetailIndicator = forwardRef<
   HTMLDivElement,
@@ -617,19 +660,22 @@ TreeDetailIndicator.displayName = "TreeDetailIndicator";
 
 const TreeItemSummaryTrigger = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<"div">
+  ComponentPropsWithoutRef<typeof Primitive.div>
 >(({ children, ...props }, ref) => {
-  return (
-    <Disclosure.Trigger asChild>
-      <div
-        {...props}
-        ref={ref}
-        className={cn(props.className, "cursor-default")}
-      >
-        {children}
-      </div>
-    </Disclosure.Trigger>
+  const hasChildren = useContext(TreeItemHasChildrenCtx);
+  const child = (
+    <Primitive.div
+      {...props}
+      ref={ref}
+      className={cn(props.className, "cursor-default")}
+    >
+      {children}
+    </Primitive.div>
   );
+  if (!hasChildren) {
+    return child;
+  }
+  return <Disclosure.Trigger asChild>{child}</Disclosure.Trigger>;
 });
 
 TreeItemSummaryTrigger.displayName = "TreeItemSummaryTrigger";
@@ -716,6 +762,7 @@ const Item = TreeItem;
 const Content = TreeItemContent;
 const CollapsedContent = TreeItemsContentAdditional;
 const Summary = TreeItemSummary;
+const SummaryIndentedContent = TreeItemSummaryIndentedContent;
 const Trigger = TreeItemSummaryTrigger;
 const Indicator = TreeDetailIndicator;
 const Card = TreeItemCard;
@@ -732,6 +779,7 @@ export {
   Item,
   Root,
   Summary,
+  SummaryIndentedContent,
   ToggleExpandAll,
   Trigger,
   useDetailContext,

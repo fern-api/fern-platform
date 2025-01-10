@@ -388,6 +388,17 @@ const DisclosureContent = forwardRef<
   );
 });
 
+const DisclosureIf = ({
+  children,
+  open,
+}: {
+  children: ReactNode;
+  open: boolean;
+}) => {
+  const { open: openContext } = useContext(DisclosureItemContext);
+  return openContext === open ? children : null;
+};
+
 DisclosureContent.displayName = "DisclosureContent";
 
 Disclosure.Root = Disclosure;
@@ -400,6 +411,7 @@ Disclosure.useClose = () => {
   const { handleClose } = useContext(DisclosureItemContext);
   return handleClose;
 };
+Disclosure.If = DisclosureIf;
 
 export default Disclosure;
 export { Disclosure };
