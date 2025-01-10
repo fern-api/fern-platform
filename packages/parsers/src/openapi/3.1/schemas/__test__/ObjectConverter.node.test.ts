@@ -57,7 +57,7 @@ describe("ObjectConverterNode", () => {
         pathId: "test",
       });
       expect(node.extraProperties).toBeDefined();
-      const converted = node.convert()?.extraProperties;
+      const converted = node.convert()[0]?.extraProperties;
       expect(converted).toEqual({
         type: "unknown",
         displayName: "TestObject",
@@ -108,19 +108,21 @@ describe("ObjectConverterNode", () => {
         pathId: "test",
       });
       const converted = node.convert();
-      expect(converted).toEqual({
-        type: "object",
-        extends: [],
-        properties: [
-          {
-            key: "name",
-            valueShape: expect.any(Object),
-            description: undefined,
-            availability: undefined,
-          },
-        ],
-        extraProperties: undefined,
-      });
+      expect(converted).toEqual([
+        {
+          type: "object",
+          extends: [],
+          properties: [
+            {
+              key: "name",
+              valueShape: expect.any(Object),
+              description: undefined,
+              availability: undefined,
+            },
+          ],
+          extraProperties: undefined,
+        },
+      ]);
     });
 
     it("should convert object schema with extra properties", () => {
@@ -136,15 +138,17 @@ describe("ObjectConverterNode", () => {
         pathId: "test",
       });
       const converted = node.convert();
-      expect(converted).toEqual({
-        type: "object",
-        extends: [],
-        properties: [],
-        extraProperties: {
-          type: "unknown",
-          displayName: "TestObject",
+      expect(converted).toEqual([
+        {
+          type: "object",
+          extends: [],
+          properties: [],
+          extraProperties: {
+            type: "unknown",
+            displayName: "TestObject",
+          },
         },
-      });
+      ]);
     });
   });
 });

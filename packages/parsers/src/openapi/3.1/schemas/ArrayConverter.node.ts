@@ -18,7 +18,7 @@ export declare namespace ArrayConverterNode {
 
 export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   ArrayConverterNode.Input,
-  ArrayConverterNode.Output | undefined
+  ArrayConverterNode.Output[] | undefined
 > {
   item: SchemaConverterNode | undefined;
 
@@ -45,20 +45,24 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     }
   }
 
-  convert(): ArrayConverterNode.Output | undefined {
-    const itemShape = this.item?.convert();
+  convert(): ArrayConverterNode.Output[] | undefined {
+    let maybeItemShapes = this.item?.convert();
 
-    if (itemShape == null) {
+    if (maybeItemShapes == null) {
       return undefined;
     }
 
-    return {
+    if (!Array.isArray(maybeItemShapes)) {
+      maybeItemShapes = [maybeItemShapes];
+    }
+
+    return maybeItemShapes.map((itemShape) => ({
       type: "alias",
       value: {
         type: "list",
         itemShape,
       },
-    };
+    }));
   }
 
   example(): unknown[] | undefined {

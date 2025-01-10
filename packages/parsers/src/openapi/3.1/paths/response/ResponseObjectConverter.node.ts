@@ -82,7 +82,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
   convert(): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
     return this.responses
-      ?.map((response) => response.convert())
+      ?.flatMap((response) => response.convert())
       .filter(isNonNullish);
   }
 }

@@ -59,7 +59,8 @@ describe("MixedSchemaConverterNode", () => {
         pathId: "test",
       });
 
-      const result = node.convert();
+      const result = node.convert()[0];
+      console.log(JSON.stringify(result, null, 2));
       expect(result?.type).toBe("undiscriminatedUnion");
       expect(
         (result as FernRegistry.api.latest.TypeShape.UndiscriminatedUnion)
@@ -80,7 +81,7 @@ describe("MixedSchemaConverterNode", () => {
         pathId: "test",
       });
 
-      const result = node.convert();
+      const result = node.convert()[0];
       expect(result?.type).toBe("alias");
       expect(
         (result as FernRegistry.api.latest.TypeShape.Alias)?.value?.type

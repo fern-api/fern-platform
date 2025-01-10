@@ -35,39 +35,41 @@ describe("OperationObjectConverterNode", () => {
 
       const result = node.convert();
 
-      expect(result).toEqual({
-        description: "Get a pet",
-        id: "endpoint_.petId",
-        method: "GET",
-        path: [
-          { type: "literal", value: "/" },
-          { type: "literal", value: "pets" },
-          { type: "literal", value: "/" },
-          { type: "pathParameter", value: FernRegistry.PropertyKey("petId") },
-        ],
-        environments: [],
-        pathParameters: [
-          {
-            key: FernRegistry.PropertyKey("petId"),
-            valueShape: {
-              type: "alias",
-              value: {
-                type: "optional",
-                shape: {
-                  type: "alias",
-                  value: {
-                    type: "primitive",
+      expect(result).toEqual([
+        {
+          description: "Get a pet",
+          id: "endpoint_.petId",
+          method: "GET",
+          path: [
+            { type: "literal", value: "/" },
+            { type: "literal", value: "pets" },
+            { type: "literal", value: "/" },
+            { type: "pathParameter", value: FernRegistry.PropertyKey("petId") },
+          ],
+          environments: [],
+          pathParameters: [
+            {
+              key: FernRegistry.PropertyKey("petId"),
+              valueShape: {
+                type: "alias",
+                value: {
+                  type: "optional",
+                  shape: {
+                    type: "alias",
                     value: {
-                      type: "string",
+                      type: "primitive",
+                      value: {
+                        type: "string",
+                      },
                     },
                   },
                 },
               },
             },
-          },
-        ],
-        examples: [],
-      });
+          ],
+          examples: [],
+        },
+      ]);
     });
 
     it("should handle undefined path", () => {
