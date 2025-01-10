@@ -330,48 +330,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       return undefined;
     }
 
-    if (this.isWebhook) {
-      if (
-        (this.method !== "POST" && this.method !== "GET") ||
-        this.endpointId == null
-      ) {
-        return undefined;
-      }
-
-      return {
-        id: FernRegistry.WebhookId(this.endpointId),
-        description: this.description,
-        availability: this.availability?.convert(),
-        displayName: this.displayName,
-        operationId: this.operationId,
-        namespace: this.namespace?.convert(),
-        method: this.method,
-        // This is a little bit weird, consider changing the shape of fdr
-        path:
-          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
-          [],
-        headers: dedupPayloads(
-          convertOperationObjectProperties(this.requestHeaders)?.flat()
-        ),
-        payloads: this.requests?.convertToWebhookPayload(),
-        examples: undefined,
-      };
-    }
-
-    const environments = this.servers
-      ?.map((server) => server.convert())
-      .filter(isNonNullish);
-    const pathParts = this.convertPathToPathParts();
-    if (pathParts == null) {
-      return undefined;
-    }
-
-    let authIds: string[] | undefined;
-    const auth = this.auth?.convert();
-    if (auth != null) {
-      authIds = Object.keys(auth);
-    }
-
     if (this.endpointId == null) {
       return undefined;
     }
@@ -391,6 +349,48 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       if (emptyExample != null) {
         examples.push(emptyExample);
       }
+    }
+
+    if (this.isWebhook) {
+      if (this.method !== "POST" && this.method !== "GET") {
+        return undefined;
+      }
+
+      return {
+        id: FernRegistry.WebhookId(this.endpointId),
+        description: this.description,
+        availability: this.availability?.convert(),
+        displayName: this.displayName,
+        operationId: this.operationId,
+        namespace: this.namespace?.convert(),
+        method: this.method,
+        path:
+          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
+          [],
+        headers: dedupPayloads(
+          convertOperationObjectProperties(this.requestHeaders)?.flat()
+        ),
+        payloads: this.requests?.convertToWebhookPayload(),
+        examples: examples.map((example) => {
+          return {
+            payload: example.snippets,
+          };
+        }),
+      };
+    }
+
+    const environments = this.servers
+      ?.map((server) => server.convert())
+      .filter(isNonNullish);
+    const pathParts = this.convertPathToPathParts();
+    if (pathParts == null) {
+      return undefined;
+    }
+
+    let authIds: string[] | undefined;
+    const auth = this.auth?.convert();
+    if (auth != null) {
+      authIds = Object.keys(auth);
     }
 
     return {

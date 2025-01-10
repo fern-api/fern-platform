@@ -9641,7 +9641,8 @@
             }
           }
         }
-      ]
+      ],
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileInfected": {
       "id": "endpoint_webhookCallbacks.fileInfected",
@@ -9687,7 +9688,8 @@
             }
           }
         }
-      ]
+      ],
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileStored": {
       "id": "endpoint_webhookCallbacks.fileStored",
@@ -9733,7 +9735,8 @@
             }
           }
         }
-      ]
+      ],
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileDeleted": {
       "id": "endpoint_webhookCallbacks.fileDeleted",
@@ -9779,7 +9782,8 @@
             }
           }
         }
-      ]
+      ],
+      "examples": []
     },
     "endpoint_webhookCallbacks.fileInfoUpdated": {
       "id": "endpoint_webhookCallbacks.fileInfoUpdated",
@@ -9825,7 +9829,8 @@
             }
           }
         }
-      ]
+      ],
+      "examples": []
     },
     "endpoint_webhook.updateWebhook": {
       "id": "endpoint_webhook.updateWebhook",
