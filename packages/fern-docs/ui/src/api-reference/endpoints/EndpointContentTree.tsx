@@ -393,6 +393,7 @@ function renderDereferencedShape(
       );
     default:
       console.error(new UnreachableCaseError(property));
+      return false;
   }
 }
 
