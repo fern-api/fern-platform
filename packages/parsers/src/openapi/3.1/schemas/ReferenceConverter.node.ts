@@ -53,6 +53,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithExam
     if (schema == null) {
       return undefined;
     }
+
     return new SchemaConverterNode({
       input: schema,
       context: this.context,

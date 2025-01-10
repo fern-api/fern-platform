@@ -10656,6 +10656,28 @@
               }
             }
           ]
+        },
+        {
+          "statusCode": 503,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Conversion service error.",
+          "name": "Service Unavailable",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": "string"
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -11379,6 +11401,28 @@
                 "value": {
                   "detail": "Request was throttled. Expected available in 10 seconds."
                 }
+              }
+            }
+          ]
+        },
+        {
+          "statusCode": 503,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Conversion service error.",
+          "name": "Service Unavailable",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": "string"
               }
             }
           ]
@@ -12172,6 +12216,28 @@
                 "value": {
                   "detail": "Request was throttled. Expected available in 10 seconds."
                 }
+              }
+            }
+          ]
+        },
+        {
+          "statusCode": 503,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Conversion service error.",
+          "name": "Service Unavailable",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": "string"
               }
             }
           ]
