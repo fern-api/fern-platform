@@ -10,36 +10,53 @@ export function convertToObjectProperties(
     | Record<string, SchemaConverterNode | ParameterBaseObjectConverterNode>
     | undefined,
   requiredProperties: string[] | undefined
-): FernRegistry.api.latest.ObjectProperty[] | undefined {
+): FernRegistry.api.latest.ObjectProperty[][] | undefined {
   if (properties == null) {
     return undefined;
   }
 
-  return Object.entries(properties)
+  const rawProperties = Object.entries(properties)
     .map(([key, node]) => {
-      let valueShape = node.convert();
-      if (valueShape == null) {
+      let maybeValueShapes = node.convert();
+      if (maybeValueShapes == null) {
         return undefined;
       }
 
-      if (requiredProperties != null && !requiredProperties.includes(key)) {
-        valueShape = {
-          type: "alias",
-          value: {
-            type: "optional",
-            shape: valueShape,
-            default:
-              valueShape.type === "enum" ? valueShape.default : undefined,
-          },
-        };
+      if (!Array.isArray(maybeValueShapes)) {
+        maybeValueShapes = [maybeValueShapes];
       }
 
-      return {
-        key: FernRegistry.PropertyKey(key),
-        valueShape,
-        description: node.description,
-        availability: node.availability?.convert(),
-      };
+      return maybeValueShapes
+        .map((valueShape) => {
+          if (requiredProperties != null && !requiredProperties.includes(key)) {
+            valueShape = {
+              type: "alias",
+              value: {
+                type: "optional",
+                shape: valueShape,
+                default:
+                  valueShape.type === "enum" ? valueShape.default : undefined,
+              },
+            };
+          }
+
+          return {
+            key: FernRegistry.PropertyKey(key),
+            valueShape,
+            description: node.description,
+            availability: node.availability?.convert(),
+          };
+        })
+        .filter(isNonNullish);
     })
     .filter(isNonNullish);
+
+  return rawProperties.reduce<FernRegistry.api.latest.ObjectProperty[][]>(
+    (acc, curr) => {
+      return acc.flatMap((a) =>
+        curr.length > 0 ? curr.map((b) => [...a, b]) : [[...a]]
+      );
+    },
+    [[]]
+  );
 }

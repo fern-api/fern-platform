@@ -603,7 +603,30 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "NonStreamedChatResponse"
+            }
+          },
+          "description": "OK"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "StreamedChatResponse"
+            }
+          },
+          "description": "OK"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -1623,6 +1646,28 @@
               }
             ]
           }
+        },
+        {
+          "path": "/v1/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v1/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
+          },
+          "snippets": {}
         }
       ]
     },
@@ -1768,8 +1813,354 @@
                       "value": {
                         "type": "list",
                         "itemShape": {
-                          "type": "undiscriminatedUnion",
-                          "variants": []
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "A list of relevant documents that the model can cite to generate a more accurate reply. Each document is either a string or document object with content and metadata.\n"
+              },
+              {
+                "key": "citation_options",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "CitationOptions"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "response_format",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "ResponseFormatV2"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "safety_mode",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "enum",
+                      "values": [
+                        {
+                          "value": "CONTEXTUAL"
+                        },
+                        {
+                          "value": "STRICT"
+                        },
+                        {
+                          "value": "OFF"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "description": "Used to select the [safety instruction](https://docs.cohere.com/v2/docs/safety-modes) inserted into the prompt. Defaults to `CONTEXTUAL`.\nWhen `OFF` is specified, the safety instruction will be omitted.\n\nSafety modes are not yet configurable in combination with `tools`, `tool_results` and `documents` parameters.\n\n**Note**: This parameter is only compatible with models [Command R 08-2024](https://docs.cohere.com/v2/docs/command-r#august-2024-release), [Command R+ 08-2024](https://docs.cohere.com/v2/docs/command-r-plus#august-2024-release) and newer.\n"
+              },
+              {
+                "key": "max_tokens",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The maximum number of tokens the model will generate as part of the response.\n\n**Note**: Setting a low value may result in incomplete generations.\n"
+              },
+              {
+                "key": "stop_sequences",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "A list of up to 5 strings that the model will use to stop generation. If the model generates a string that matches any of the strings in the list, it will stop generating tokens and return the generated text up to that point not including the stop sequence.\n"
+              },
+              {
+                "key": "temperature",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "minimum": 0,
+                          "maximum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Defaults to `0.3`.\n\nA non-negative float that tunes the degree of randomness in generation. Lower temperatures mean less random generations, and higher temperatures mean more random generations.\n\nRandomness can be further maximized by increasing the  value of the `p` parameter.\n"
+              },
+              {
+                "key": "seed",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 18446744073709552000
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "If specified, the backend will make a best effort to sample tokens\ndeterministically, such that repeated requests with the same\nseed and parameters should return the same result. However,\ndeterminism cannot be totally guaranteed.\n"
+              },
+              {
+                "key": "frequency_penalty",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Defaults to `0.0`, min value of `0.0`, max value of `1.0`.\nUsed to reduce repetitiveness of generated tokens. The higher the value, the stronger a penalty is applied to previously present tokens, proportional to how many times they have already appeared in the prompt or prior generation.\n"
+              },
+              {
+                "key": "presence_penalty",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Defaults to `0.0`, min value of `0.0`, max value of `1.0`.\nUsed to reduce repetitiveness of generated tokens. Similar to `frequency_penalty`, except that this penalty is applied equally to all tokens that have already appeared, regardless of their exact frequencies.\n"
+              },
+              {
+                "key": "k",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "minimum": 0,
+                          "maximum": 500,
+                          "default": 0
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Ensures that only the top `k` most likely tokens are considered for generation at each step. When `k` is set to `0`, k-sampling is disabled.\nDefaults to `0`, min value of `0`, max value of `500`.\n"
+              },
+              {
+                "key": "p",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "minimum": 0.01,
+                          "maximum": 0.99,
+                          "default": 0.75
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Ensures that only the most likely tokens, with total probability mass of `p`, are considered for generation at each step. If both `k` and `p` are enabled, `p` acts after `k`.\nDefaults to `0.75`. min value of `0.01`, max value of `0.99`.\n"
+              },
+              {
+                "key": "logprobs",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Defaults to `false`. When set to `true`, the log probabilities of the generated tokens will be included in the response.\n"
+              }
+            ]
+          }
+        },
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "model",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The name of a compatible [Cohere model](https://docs.cohere.com/v2/docs/models) (such as command-r or command-r-plus) or the ID of a [fine-tuned](https://docs.cohere.com/v2/docs/chat-fine-tuning) model."
+              },
+              {
+                "key": "messages",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "ChatMessages"
+                  }
+                }
+              },
+              {
+                "key": "tools",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "ToolV2"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "A list of available tools (functions) that the model may suggest invoking before producing a text response.\n\nWhen `tools` is passed (without `tool_results`), the `text` content in the response will be empty and the `tool_calls` field in the response will be populated with a list of tool calls that need to be made. If no calls need to be made, the `tool_calls` array will be empty.\n"
+              },
+              {
+                "key": "strict_tools",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "When set to `true`, tool calls in the Assistant message will be forced to follow the tool definition strictly. Learn more in the [Strict Tools guide](https://docs.cohere.com/docs/structured-outputs-json#structured-outputs-tools).\n\n**Note**: The first few requests with a new set of tools will take longer to process.\n",
+                "availability": "Beta"
+              },
+              {
+                "key": "documents",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Document"
+                          }
                         }
                       }
                     }
@@ -2024,7 +2415,30 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "ChatResponse"
+            }
+          },
+          "description": "OK"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "StreamedChatResponseV2"
+            }
+          },
+          "description": "OK"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -2942,6 +3356,36 @@
               }
             ]
           }
+        },
+        {
+          "path": "/v2/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "finish_reason": "string",
+              "message": {
+                "role": "string"
+              }
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v2/chat",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "finish_reason": "string",
+              "message": {
+                "role": "string"
+              }
+            }
+          },
+          "snippets": {}
         }
       ]
     },
@@ -3385,6 +3829,17 @@
             "value": {
               "type": "id",
               "id": "Generation"
+            }
+          },
+          "description": "OK"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "GenerateStreamedResponse"
             }
           },
           "description": "OK"
@@ -3936,6 +4391,51 @@
                   "id": "string"
                 }
               ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v1/generate",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string",
+              "index": 0,
+              "is_finished": false,
+              "event_type": "string"
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v1/generate",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "generations": [
+                {
+                  "text": "string",
+                  "id": "string"
+                }
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/v1/generate",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string",
+              "index": 0,
+              "is_finished": false,
+              "event_type": "string"
             }
           },
           "snippets": {}
@@ -13820,8 +14320,156 @@
                   "value": {
                     "type": "list",
                     "itemShape": {
-                      "type": "undiscriminatedUnion",
-                      "variants": []
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "A list of document objects or strings to rerank.\nIf a document is provided the text fields is required and all other fields will be preserved in the response.\n\nThe total max chunks (length of documents * max_chunks_per_doc) must be less than 10000.\n\nWe recommend a maximum of 1,000 documents for optimal endpoint performance."
+              },
+              {
+                "key": "top_n",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer",
+                          "minimum": 1
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The number of most relevant documents or indices to return, defaults to the length of the documents"
+              },
+              {
+                "key": "rank_fields",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "If a JSON object is provided, you can specify which keys you would like to have considered for reranking. The model will rerank based on order of the fields passed in (i.e. rank_fields=['title','author','text'] will rerank using the values in title, author, text  sequentially. If the length of title, author, and text exceeds the context length of the model, the chunking will not re-consider earlier fields). If not provided, the model will use the default text field for ranking."
+              },
+              {
+                "key": "return_documents",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "default": false
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "- If false, returns results without the doc text - the api will return a list of {index, relevance score} where index is inferred from the list passed into the request.\n- If true, returns results with the doc text passed in - the api will return an ordered list of {index, text, relevance score} where index + text refers to the list passed into the request."
+              },
+              {
+                "key": "max_chunks_per_doc",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer",
+                          "default": 10
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The maximum number of chunks to produce internally from a document"
+              }
+            ]
+          }
+        },
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "model",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "The identifier of the model to use, one of : `rerank-english-v3.0`, `rerank-multilingual-v3.0`, `rerank-english-v2.0`, `rerank-multilingual-v2.0`"
+              },
+              {
+                "key": "query",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The search query"
+              },
+              {
+                "key": "documents",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "RerankDocument"
+                      }
                     }
                   }
                 },
@@ -15613,15 +16261,6 @@
                             }
                           },
                           "description": "An array containing the confidence scores of all the predictions in the same order"
-                        },
-                        {
-                          "key": "labels",
-                          "valueShape": {
-                            "type": "object",
-                            "extends": [],
-                            "properties": []
-                          },
-                          "description": "A map containing each label and its confidence score according to the classifier. All the confidence scores add up to 1 for single-label classification. For multi-label classification the label confidences are independent of each other, so they don't have to sum up to 1."
                         },
                         {
                           "key": "classification_type",
@@ -28634,21 +29273,6 @@
               }
             },
             "description": "The description of what the tool does, the model uses the description to choose when and how to call the function.\n"
-          },
-          {
-            "key": "parameter_definitions",
-            "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "optional",
-                "shape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": []
-                }
-              }
-            },
-            "description": "The input parameters of the tool. Accepts a dictionary where the key is the name of the parameter and the value is the parameter spec. Valid parameter names contain only the characters `a-z`, `A-Z`, `0-9`, `_` and must not begin with a digit.\n```\n{\n  \"my_param\": {\n    \"description\": <string>,\n    \"type\": <string>, // any python data type, such as 'str', 'bool'\n    \"required\": <boolean>\n  }\n}\n```\n"
           }
         ]
       }
@@ -28730,6 +29354,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text Response",
             "type": "object",
             "extends": [],
             "properties": [
@@ -28747,6 +29372,7 @@
           },
           {
             "discriminantValue": "json_object",
+            "displayName": "JSON Object Response",
             "type": "object",
             "extends": [],
             "properties": [
@@ -30240,8 +30866,13 @@
           {
             "key": "content",
             "valueShape": {
-              "type": "undiscriminatedUnion",
-              "variants": []
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             },
             "description": "The content of the message. This can be a string or a list of content blocks.\nIf a string is provided, it will be treated as a text content block.\n"
           }
@@ -30384,6 +31015,7 @@
         "variants": [
           {
             "discriminantValue": "tool",
+            "displayName": "Tool Output",
             "type": "object",
             "extends": [],
             "properties": [
@@ -30573,8 +31205,13 @@
               "value": {
                 "type": "optional",
                 "shape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": []
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -30625,8 +31262,13 @@
           {
             "key": "content",
             "valueShape": {
-              "type": "undiscriminatedUnion",
-              "variants": []
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             }
           }
         ]
@@ -30811,8 +31453,13 @@
           {
             "key": "content",
             "valueShape": {
-              "type": "undiscriminatedUnion",
-              "variants": []
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
             },
             "description": "Outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks"
           }
@@ -30828,6 +31475,7 @@
         "variants": [
           {
             "discriminantValue": "user",
+            "displayName": "User Message",
             "description": "A message from the user.",
             "type": "object",
             "extends": [],
@@ -30846,8 +31494,50 @@
               {
                 "key": "content",
                 "valueShape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": []
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The content of the message. This can be a string or a list of content blocks.\nIf a string is provided, it will be treated as a text content block.\n"
+              }
+            ]
+          },
+          {
+            "discriminantValue": "user",
+            "displayName": "User Message",
+            "description": "A message from the user.",
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "user"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "content",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Content"
+                      }
+                    }
+                  }
                 },
                 "description": "The content of the message. This can be a string or a list of content blocks.\nIf a string is provided, it will be treated as a text content block.\n"
               }
@@ -30855,6 +31545,7 @@
           },
           {
             "discriminantValue": "assistant",
+            "displayName": "Assistant Message",
             "description": "A message from the assistant role can contain text and tool call information.",
             "type": "object",
             "extends": [],
@@ -30918,8 +31609,148 @@
                   "value": {
                     "type": "optional",
                     "shape": {
-                      "type": "undiscriminatedUnion",
-                      "variants": []
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "citations",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "Citation"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "discriminantValue": "assistant",
+            "displayName": "Assistant Message",
+            "description": "A message from the assistant role can contain text and tool call information.",
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "assistant"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "tool_calls",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "id",
+                            "id": "ToolCallV2"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "key": "tool_plan",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "A chain-of-thought style reflection and plan that the model generates when working with Tools."
+              },
+              {
+                "key": "content",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "list",
+                        "itemShape": {
+                          "type": "discriminatedUnion",
+                          "discriminant": "type",
+                          "variants": [
+                            {
+                              "discriminantValue": "text",
+                              "description": "Text content of the message.",
+                              "type": "object",
+                              "extends": [],
+                              "properties": [
+                                {
+                                  "key": "type",
+                                  "valueShape": {
+                                    "type": "enum",
+                                    "values": [
+                                      {
+                                        "value": "text"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "key": "text",
+                                  "valueShape": {
+                                    "type": "alias",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      }
                     }
                   }
                 }
@@ -30950,6 +31781,7 @@
           },
           {
             "discriminantValue": "system",
+            "displayName": "System Message",
             "description": "A message from the system.",
             "type": "object",
             "extends": [],
@@ -30968,14 +31800,86 @@
               {
                 "key": "content",
                 "valueShape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": []
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "discriminantValue": "system",
+            "displayName": "System Message",
+            "description": "A message from the system.",
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "system"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "content",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "discriminatedUnion",
+                      "discriminant": "type",
+                      "variants": [
+                        {
+                          "discriminantValue": "text",
+                          "description": "Text content of the message.",
+                          "type": "object",
+                          "extends": [],
+                          "properties": [
+                            {
+                              "key": "type",
+                              "valueShape": {
+                                "type": "enum",
+                                "values": [
+                                  {
+                                    "value": "text"
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "key": "text",
+                              "valueShape": {
+                                "type": "alias",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string"
+                                  }
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
                 }
               }
             ]
           },
           {
             "discriminantValue": "tool",
+            "displayName": "Tool Message",
             "description": "A message with Tool outputs.",
             "type": "object",
             "extends": [],
@@ -31007,8 +31911,63 @@
               {
                 "key": "content",
                 "valueShape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": []
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks"
+              }
+            ]
+          },
+          {
+            "discriminantValue": "tool",
+            "displayName": "Tool Message",
+            "description": "A message with Tool outputs.",
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "role",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "tool"
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "tool_call_id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The id of the associated tool call that has provided the given content"
+              },
+              {
+                "key": "content",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "ToolContent"
+                      }
+                    }
+                  }
                 },
                 "description": "Outputs from a tool. The content should formatted as a JSON object string, or a list of tool content blocks"
               }

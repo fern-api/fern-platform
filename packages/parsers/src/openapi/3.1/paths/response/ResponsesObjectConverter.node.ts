@@ -86,19 +86,23 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (bodies == null) {
           return undefined;
         }
-        return bodies?.map((body) => ({
-          headers: convertOperationObjectProperties(response.headers),
-          response: {
-            statusCode: parseInt(statusCode),
-            body,
-            description: response.description,
-          },
-          examples: (response.responses ?? []).flatMap((response) =>
-            (response.examples ?? [])
-              .map((example) => example.convert())
-              .filter(isNonNullish)
-          ),
-        }));
+        return (
+          convertOperationObjectProperties(response.headers) ?? [undefined]
+        ).flatMap((headers) =>
+          bodies?.map((body) => ({
+            headers,
+            response: {
+              statusCode: parseInt(statusCode),
+              body,
+              description: response.description,
+            },
+            examples: (response.responses ?? []).flatMap((response) =>
+              (response.examples ?? [])
+                .map((example) => example.convert())
+                .filter(isNonNullish)
+            ),
+          }))
+        );
       })
       .filter(isNonNullish);
   }
@@ -107,40 +111,48 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     return Object.entries(this.errorsByStatusCode ?? {})
       .flatMap(([statusCode, response]) => {
         // TODO: resolve reference here, if not done already
-        return response.responses?.map((res) => {
+        return response.responses?.flatMap((res) => {
           const schema = res.schema;
-          const shape = schema?.convert();
+          let maybeShapes = schema?.convert();
 
-          if (shape == null || schema == null) {
+          if (maybeShapes == null || schema == null) {
             return undefined;
           }
 
-          return {
-            statusCode: parseInt(statusCode),
-            shape,
-            description: response.description ?? schema.description,
-            availability: schema.availability?.convert(),
-            name:
-              schema.name ??
-              STATUS_CODE_MESSAGES[parseInt(statusCode)] ??
-              "UNKNOWN ERROR",
-            examples: res.examples
-              ?.map((example) => {
-                const convertedExample = example.convert();
-                if (
-                  convertedExample == null ||
-                  convertedExample.responseBody?.type !== "json"
-                ) {
-                  return undefined;
-                }
-                return {
-                  name: convertedExample.name,
-                  description: convertedExample.description,
-                  responseBody: convertedExample.responseBody,
-                };
-              })
-              .filter(isNonNullish),
-          };
+          if (!Array.isArray(maybeShapes)) {
+            maybeShapes = [maybeShapes];
+          }
+
+          return maybeShapes
+            .map((shape) => ({
+              statusCode: parseInt(statusCode),
+              shape,
+              description: response.description ?? schema.description,
+              availability: schema.availability?.convert(),
+              name:
+                schema.name ??
+                STATUS_CODE_MESSAGES[parseInt(statusCode)] ??
+                "UNKNOWN ERROR",
+              examples: res.examples
+                ?.map((example) => {
+                  const convertedExample = example.convert();
+                  if (convertedExample == null) {
+                    return undefined;
+                  }
+
+                  if (convertedExample.responseBody?.type !== "json") {
+                    return undefined;
+                  }
+
+                  return {
+                    name: convertedExample.name,
+                    description: convertedExample.description,
+                    responseBody: convertedExample.responseBody,
+                  };
+                })
+                .filter(isNonNullish),
+            }))
+            .filter(isNonNullish);
         });
       })
       .filter(isNonNullish);
