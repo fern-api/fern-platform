@@ -89,9 +89,10 @@ export function SearchV2(): ReactElement | false {
   let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
   let suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
 
-  if (process.env.NODE_ENV === "production") {
-    chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
-    suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
+  // TODO: this is just for testing, this should be removed once it's confirmed that CORS is working
+  if (process.env.NODE_ENV === "development") {
+    chatEndpoint = `https://app-staging.buildwithfern.com/api/fern-docs/search/v2/chat`;
+    suggestEndpoint = `https://app-staging.buildwithfern.com/api/fern-docs/search/v2/suggest`;
   }
 
   const router = useRouter();
@@ -165,7 +166,9 @@ export function SearchV2(): ReactElement | false {
             askAI={askAi}
             setAskAI={setAskAi}
             api={chatEndpoint}
-            headers={{ "X-Fern-Host": domain }}
+            headers={{
+              "X-Fern-Host": domain,
+            }}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
             setInitialInput={setInitialInput}
