@@ -59,11 +59,11 @@ describe("OpenAPI snapshot tests", () => {
 
       // Create snapshot
       if (errors.length > 0) {
-        console.error("errors:", errors);
+        // console.error("errors:", errors);
       }
       // expect(errors).toHaveLength(0);
       if (warnings.length > 0) {
-        console.warn("warnings:", warnings);
+        // console.warn("warnings:", warnings);
       }
 
       converted.id = "test-uuid-replacement";
