@@ -340,7 +340,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         path:
           this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
           [],
-        headers: convertOperationObjectProperties(this.requestHeaders),
+        headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
         // TODO: figure out what this looks like to be able to parse
         payload: undefined,
         examples: undefined,
@@ -394,9 +394,15 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
       defaultEnvironment: environments?.[0]?.id,
       environments,
-      pathParameters: convertOperationObjectProperties(this.pathParameters),
-      queryParameters: convertOperationObjectProperties(this.queryParameters),
-      requestHeaders: convertOperationObjectProperties(this.requestHeaders),
+      pathParameters: convertOperationObjectProperties(
+        this.pathParameters
+      )?.flat(),
+      queryParameters: convertOperationObjectProperties(
+        this.queryParameters
+      )?.flat(),
+      requestHeaders: convertOperationObjectProperties(
+        this.requestHeaders
+      )?.flat(),
       responseHeaders: responses?.[0]?.headers,
       // TODO: revisit fdr shape to suport multiple requests
       requests: this.requests?.convert(),

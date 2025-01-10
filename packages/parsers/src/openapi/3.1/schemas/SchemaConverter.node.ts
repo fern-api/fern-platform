@@ -37,12 +37,16 @@ export type PrimitiveType =
 
 export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
-  FernRegistry.api.latest.TypeShape | undefined
+  | FernRegistry.api.latest.TypeShape
+  | FernRegistry.api.latest.TypeShape[]
+  | undefined
 > {
   typeShapeNode:
     | BaseOpenApiV3_1ConverterNodeWithExample<
         unknown,
-        FernRegistry.api.latest.TypeShape | undefined
+        | FernRegistry.api.latest.TypeShape
+        | FernRegistry.api.latest.TypeShape[]
+        | undefined
       >
     | undefined;
 
@@ -218,7 +222,10 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     }
   }
 
-  convert(): FernRegistry.api.latest.TypeShape | undefined {
+  convert():
+    | FernRegistry.api.latest.TypeShape
+    | FernRegistry.api.latest.TypeShape[]
+    | undefined {
     return this.typeShapeNode?.convert();
   }
 

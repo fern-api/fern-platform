@@ -17,8 +17,8 @@ export declare namespace MixedSchemaConverterNode {
 
 export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   MixedSchemaConverterNode.Input,
-  | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
-  | FernRegistry.api.latest.TypeShape.Alias
+  | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion[]
+  | FernRegistry.api.latest.TypeShape.Alias[]
 > {
   typeNodes: SchemaConverterNode[] | undefined;
   nullable: boolean | undefined;
@@ -49,43 +49,60 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithEx
   }
 
   public convert():
-    | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
-    | FernRegistry.api.latest.TypeShape.Alias
+    | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion[]
+    | FernRegistry.api.latest.TypeShape.Alias[]
     | undefined {
     if (this.typeNodes == null) {
       return undefined;
     }
 
-    const union = {
-      type: "undiscriminatedUnion",
-      variants: this.typeNodes
+    const concreteTypeNodes: FernRegistry.api.latest.UndiscriminatedUnionVariant[][] =
+      this.typeNodes
         .map((typeNode) => {
-          const shape = typeNode.convert();
-          if (shape == null) {
+          let maybeShapes = typeNode.convert();
+          if (maybeShapes == null) {
             return undefined;
           }
 
-          return {
+          if (!Array.isArray(maybeShapes)) {
+            maybeShapes = [maybeShapes];
+          }
+
+          return maybeShapes.map((shape) => ({
             displayName: typeNode.name,
             shape,
             description: typeNode.description,
             availability: typeNode.availability?.convert(),
-          };
+          }));
         })
-        .filter(isNonNullish),
-    } as const;
+        .filter(isNonNullish);
+
+    const concreteTypeNodePermutations = concreteTypeNodes.reduce<
+      FernRegistry.api.latest.UndiscriminatedUnionVariant[][]
+    >(
+      (acc, curr) => {
+        return acc.flatMap((acc) =>
+          curr.length > 0 ? curr.map((c) => [...acc, c]) : [[...acc]]
+        );
+      },
+      [[]]
+    );
+    const unions = concreteTypeNodePermutations.map((variants) => ({
+      type: "undiscriminatedUnion" as const,
+      variants,
+    }));
 
     // TODO: right now, this is handled as an optional, but we should handle it as nullable
     return this.nullable
-      ? {
-          type: "alias",
+      ? unions.map((union) => ({
+          type: "alias" as const,
           value: {
-            type: "optional",
+            type: "optional" as const,
             default: union.variants[0],
             shape: union,
           },
-        }
-      : union;
+        }))
+      : unions;
   }
 
   example(): unknown | undefined {
