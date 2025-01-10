@@ -98,7 +98,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
             </div>
           )}
 
-          {webhook.payload && (
+          {webhook.payloads?.[0] && (
             <div className="mt-8 flex">
               <div className="flex max-w-full flex-1 flex-col gap-12">
                 <EndpointSection
@@ -107,7 +107,7 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
                   slug={node.slug}
                 >
                   <WebhookPayloadSection
-                    payload={webhook.payload}
+                    payload={webhook.payloads?.[0]}
                     onHoverProperty={onHoverPayloadProperty}
                     anchorIdParts={["payload", "body"]}
                     slug={node.slug}

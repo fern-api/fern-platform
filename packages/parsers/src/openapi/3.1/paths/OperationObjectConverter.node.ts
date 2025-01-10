@@ -7,6 +7,7 @@ import {
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
+import { dedupPayloads } from "../../utils/dedupPayloads";
 import { getEndpointId } from "../../utils/getEndpointId";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
@@ -340,7 +341,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         path:
           this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
           [],
-        headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
+        headers: dedupPayloads(
+          convertOperationObjectProperties(this.requestHeaders)?.flat()
+        ),
         payloads: this.requests?.convertToWebhookPayload(),
         examples: undefined,
       };
@@ -393,18 +396,18 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
       defaultEnvironment: environments?.[0]?.id,
       environments,
-      pathParameters: convertOperationObjectProperties(
-        this.pathParameters
-      )?.flat(),
-      queryParameters: convertOperationObjectProperties(
-        this.queryParameters
-      )?.flat(),
-      requestHeaders: convertOperationObjectProperties(
-        this.requestHeaders
-      )?.flat(),
-      responseHeaders: responses
-        ?.flatMap((response) => response.headers)
-        .filter(isNonNullish),
+      pathParameters: dedupPayloads(
+        convertOperationObjectProperties(this.pathParameters)?.flat()
+      ),
+      queryParameters: dedupPayloads(
+        convertOperationObjectProperties(this.queryParameters)?.flat()
+      ),
+      requestHeaders: dedupPayloads(
+        convertOperationObjectProperties(this.requestHeaders)?.flat()
+      ),
+      responseHeaders: dedupPayloads(
+        responses?.flatMap((response) => response.headers).filter(isNonNullish)
+      ),
       requests: this.requests?.convert(),
       responses: responses?.map((response) => response.response),
       errors,
