@@ -5,7 +5,6 @@
       --typography-body-font-family,
       var(--body-font-fallback)
     ) !important;
-
     scroll-padding-top: var(--spacing-header-height);
   }
 
@@ -22,6 +21,7 @@
   h5,
   h6 {
     @apply scroll-mt-content-padded;
+
     font-family: var(--typography-heading-font-family);
 
     &:first-child {
