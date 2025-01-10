@@ -56,21 +56,23 @@ describe("ArrayConverterNode", () => {
         pathId: "test",
       });
       const converted = node.convert();
-      expect(converted).toEqual({
-        type: "alias",
-        value: {
-          type: "list",
-          itemShape: {
-            type: "alias",
-            value: {
-              type: "primitive",
+      expect(converted).toEqual([
+        {
+          type: "alias",
+          value: {
+            type: "list",
+            itemShape: {
+              type: "alias",
               value: {
-                type: "string",
+                type: "primitive",
+                value: {
+                  type: "string",
+                },
               },
             },
           },
         },
-      });
+      ]);
     });
 
     it("should return undefined if inner schema conversion fails", () => {

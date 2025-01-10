@@ -81,7 +81,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
       });
-      const result = node.convert();
+      const result = node.convert()[0];
       expect(result?.type).toBe("discriminatedUnion");
       expect(result?.variants.length).toEqual(1);
     });
@@ -100,7 +100,7 @@ describe("OneOfConverterNode", () => {
         accessPath: [],
         pathId: "test",
       });
-      const result = node.convert();
+      const result = node.convert()[0];
       expect(result?.type).toBe("undiscriminatedUnion");
       expect(result).toEqual({
         type: "undiscriminatedUnion",

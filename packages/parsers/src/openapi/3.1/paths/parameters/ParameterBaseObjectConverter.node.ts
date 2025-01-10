@@ -12,7 +12,7 @@ import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 
 export function convertOperationObjectProperties(
   properties: Record<string, ParameterBaseObjectConverterNode> | undefined
-): FernRegistry.api.latest.ObjectProperty[] | undefined {
+): FernRegistry.api.latest.ObjectProperty[][] | undefined {
   if (properties == null) {
     return undefined;
   }
@@ -27,7 +27,7 @@ export function convertOperationObjectProperties(
 
 export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.ParameterBaseObject | OpenAPIV3_1.ReferenceObject,
-  FernRegistry.api.latest.TypeShape
+  FernRegistry.api.latest.TypeShape | FernRegistry.api.latest.TypeShape[]
 > {
   availability: AvailabilityConverterNode | undefined;
   required: boolean | undefined;
@@ -78,7 +78,10 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     });
   }
 
-  convert(): FernRegistry.api.latest.TypeShape | undefined {
+  convert():
+    | FernRegistry.api.latest.TypeShape
+    | FernRegistry.api.latest.TypeShape[]
+    | undefined {
     return this.schema?.convert();
   }
 }

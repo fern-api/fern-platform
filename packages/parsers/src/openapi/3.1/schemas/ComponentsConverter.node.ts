@@ -52,17 +52,21 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
       Object.entries(this.typeSchemas)
         .map(([key, value]) => {
           const name = value.name ?? key;
-          const shape = value.convert();
+          let maybeShapes = value.convert();
 
-          if (name == null || shape == null) {
+          if (maybeShapes == null) {
             return [key, undefined];
+          }
+
+          if (!Array.isArray(maybeShapes)) {
+            maybeShapes = [maybeShapes];
           }
 
           return [
             FernRegistry.TypeId(key),
             {
               name,
-              shape,
+              shape: maybeShapes[0],
               description: value.description,
               availability: undefined,
             },

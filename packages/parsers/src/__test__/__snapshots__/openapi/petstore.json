@@ -61,10 +61,63 @@
             }
           },
           "description": "Successful operation"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
         }
       ],
       "errors": [],
       "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
         {
           "path": "/pet",
           "responseStatusCode": 200,
@@ -141,10 +194,63 @@
             }
           },
           "description": "Successful operation"
+        },
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Successful operation"
         }
       ],
       "errors": [],
       "examples": [
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
         {
           "path": "/pet",
           "responseStatusCode": 200,
@@ -222,9 +328,45 @@
             }
           },
           "description": "The pet"
+        },
+        {
+          "statusCode": null,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "The pet"
         }
       ],
       "errors": [
+        {
+          "statusCode": 400,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Invalid ID supplied",
+          "name": "Bad Request",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
+              }
+            }
+          ]
+        },
         {
           "statusCode": 400,
           "shape": {
@@ -274,9 +416,76 @@
               }
             }
           ]
+        },
+        {
+          "statusCode": 404,
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          },
+          "description": "Pet not found",
+          "name": "Not Found",
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
+        {
+          "path": "/pet/{petId}",
+          "responseStatusCode": null,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/pet/{petId}",
+          "responseStatusCode": null,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
+        {
+          "path": "/pet/{petId}",
+          "responseStatusCode": null,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          },
+          "snippets": {}
+        },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,

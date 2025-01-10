@@ -151,7 +151,11 @@ const nextConfig = {
       },
       {
         key: "Access-Control-Allow-Headers",
+<<<<<<< HEAD
         value: "*",
+=======
+        value: "Content-Type, Authorization",
+>>>>>>> origin/main
       },
     ];
 
