@@ -1,10 +1,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import {
-  EMPTY_ARRAY,
-  EMPTY_OBJECT,
-  visitDiscriminatedUnion,
-} from "@fern-api/ui-core-utils";
+import { EMPTY_OBJECT, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import {
   FernScrollArea,
   StatusCodeBadge,
@@ -29,7 +25,6 @@ import {
   CodeSnippetExample,
   JsonCodeSnippetExample,
 } from "../examples/CodeSnippetExample";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { TitledExample } from "../examples/TitledExample";
 import type { CodeExample } from "../examples/code-example";
 import { lineNumberOf } from "../examples/utils";
@@ -59,8 +54,8 @@ export declare namespace EndpointContentCodeSnippets {
     ) => void;
     requestCodeSnippet: string;
     requestCurlJson: unknown;
-    hoveredRequestPropertyPath: JsonPropertyPath | undefined;
-    hoveredResponsePropertyPath: JsonPropertyPath | undefined;
+    // hoveredRequestPropertyPath: JsonPropertyPath | undefined;
+    // hoveredResponsePropertyPath: JsonPropertyPath | undefined;
     showErrors: boolean;
     errors: ApiDefinition.ErrorResponse[] | undefined;
     selectedError: ApiDefinition.ErrorResponse | undefined;
@@ -81,8 +76,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
   languages,
   requestCodeSnippet,
   requestCurlJson,
-  hoveredRequestPropertyPath = EMPTY_ARRAY,
-  hoveredResponsePropertyPath = EMPTY_ARRAY,
+  // hoveredRequestPropertyPath = EMPTY_ARRAY,
+  // hoveredResponsePropertyPath = EMPTY_ARRAY,
   showErrors,
   measureHeight,
 }) => {
@@ -186,6 +181,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         />
       )}
       <CodeSnippetExample
+        type="request"
+        slug={node.slug}
         title={
           <EndpointUrlWithOverflow
             path={endpoint.path}
@@ -225,9 +222,9 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
           baseUrl
         )}
         language={selectedLanguage}
-        hoveredPropertyPath={
-          selectedLanguage === "curl" ? hoveredRequestPropertyPath : undefined
-        }
+        // hoveredPropertyPath={
+        //   selectedLanguage === "curl" ? hoveredRequestPropertyPath : undefined
+        // }
         json={requestCurlJson}
         jsonStartLine={
           selectedLanguage === "curl"
@@ -238,11 +235,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
       {selectedExample != null &&
         selectedExample.exampleCall.responseStatusCode >= 400 && (
           <JsonCodeSnippetExample
+            type="response"
+            slug={node.slug}
             title={errorSelector}
             onClick={(e) => {
               e.stopPropagation();
             }}
-            hoveredPropertyPath={hoveredResponsePropertyPath}
+            // hoveredPropertyPath={hoveredResponsePropertyPath}
             json={
               selectedExample?.exampleCall.responseBody?.value ?? EMPTY_OBJECT
             }
@@ -259,11 +258,13 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         )._visit<ReactNode>({
           json: (value) => (
             <JsonCodeSnippetExample
+              type="response"
+              slug={node.slug}
               title={errorSelector}
               onClick={(e) => {
                 e.stopPropagation();
               }}
-              hoveredPropertyPath={hoveredResponsePropertyPath}
+              // hoveredPropertyPath={hoveredResponsePropertyPath}
               json={value.value}
             />
           ),

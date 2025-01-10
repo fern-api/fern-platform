@@ -1,10 +1,9 @@
-import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
 import { useInView } from "framer-motion";
 import dynamic from "next/dynamic";
-import { memo, useCallback, useRef, useState } from "react";
+import { memo, useCallback, useRef } from "react";
 import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
 import {
@@ -12,16 +11,11 @@ import {
   CURRENT_NODE_ID_ATOM,
   store,
   useAtomEffect,
-  useEdgeFlag,
 } from "../../atoms";
 import { useHref } from "../../hooks/useHref";
-import { JsonPropertyPath } from "../examples/JsonPropertyPath";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContentHeader } from "./EndpointContentHeader";
-import {
-  EndpointContentLeft,
-  convertNameToAnchorPart,
-} from "./EndpointContentLeft";
+import { convertNameToAnchorPart } from "./EndpointContentLeft";
 import { EndpointContentTree } from "./EndpointContentTree";
 import { useExampleSelection } from "./useExampleSelection";
 
@@ -86,29 +80,29 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
       margin: "100%",
     }) || store.get(CURRENT_NODE_ID_ATOM) === node.id;
 
-  const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<
-    JsonPropertyPath | undefined
-  >();
-  const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] =
-    useState<JsonPropertyPath | undefined>();
-  const onHoverRequestProperty = useCallback(
-    (
-      jsonPropertyPath: JsonPropertyPath,
-      { isHovering }: { isHovering: boolean }
-    ) => {
-      setHoveredRequestPropertyPath(isHovering ? jsonPropertyPath : undefined);
-    },
-    [setHoveredRequestPropertyPath]
-  );
-  const onHoverResponseProperty = useCallback(
-    (
-      jsonPropertyPath: JsonPropertyPath,
-      { isHovering }: { isHovering: boolean }
-    ) => {
-      setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
-    },
-    [setHoveredResponsePropertyPath]
-  );
+  // const [hoveredRequestPropertyPath, setHoveredRequestPropertyPath] = useState<
+  //   JsonPropertyPath | undefined
+  // >();
+  // const [hoveredResponsePropertyPath, setHoveredResponsePropertyPath] =
+  //   useState<JsonPropertyPath | undefined>();
+  // const onHoverRequestProperty = useCallback(
+  //   (
+  //     jsonPropertyPath: JsonPropertyPath,
+  //     { isHovering }: { isHovering: boolean }
+  //   ) => {
+  //     setHoveredRequestPropertyPath(isHovering ? jsonPropertyPath : undefined);
+  //   },
+  //   [setHoveredRequestPropertyPath]
+  // );
+  // const onHoverResponseProperty = useCallback(
+  //   (
+  //     jsonPropertyPath: JsonPropertyPath,
+  //     { isHovering }: { isHovering: boolean }
+  //   ) => {
+  //     setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
+  //   },
+  //   [setHoveredResponsePropertyPath]
+  // );
 
   const {
     selectedExample,
@@ -163,12 +157,12 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
         selectedExampleKey.statusCode)
   );
 
-  const handleSelectError = useCallback(
-    (error: ApiDefinition.ErrorResponse | undefined) => {
-      setStatusCode(error?.statusCode);
-    },
-    [setStatusCode]
-  );
+  // const handleSelectError = useCallback(
+  //   (error: ApiDefinition.ErrorResponse | undefined) => {
+  //     setStatusCode(error?.statusCode);
+  //   },
+  //   [setStatusCode]
+  // );
 
   const requestJson =
     selectedExample?.exampleCall.requestBody?.type === "json"
@@ -293,7 +287,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [initialExampleHeight]);
 
-  const isApiReferenceTreeEnabled = useEdgeFlag("isApiReferenceTreeEnabled");
+  // const isApiReferenceTreeEnabled = useEdgeFlag("isApiReferenceTreeEnabled");
 
   return (
     <section
@@ -322,25 +316,12 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
             //   minHeight: `${minHeight}px`,
             // }}
           >
-            {isApiReferenceTreeEnabled ? (
-              <EndpointContentTree
-                context={context}
-                showErrors={showErrors}
-                onHoverRequestProperty={onHoverRequestProperty}
-                onHoverResponseProperty={onHoverResponseProperty}
-              />
-            ) : (
-              <EndpointContentLeft
-                context={context}
-                // TODO: remove this code call
-                example={selectedExample?.exampleCall}
-                showErrors={showErrors}
-                onHoverRequestProperty={onHoverRequestProperty}
-                onHoverResponseProperty={onHoverResponseProperty}
-                selectedError={selectedError}
-                setSelectedError={handleSelectError}
-              />
-            )}
+            <EndpointContentTree
+              context={context}
+              showErrors={showErrors}
+              // onHoverRequestProperty={onHoverRequestProperty}
+              // onHoverResponseProperty={onHoverResponseProperty}
+            />
           </div>
 
           <aside
@@ -360,8 +341,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
                 selectedExample={selectedExample}
                 requestCodeSnippet={selectedExample?.code ?? ""}
                 requestCurlJson={requestJson}
-                hoveredRequestPropertyPath={hoveredRequestPropertyPath}
-                hoveredResponsePropertyPath={hoveredResponsePropertyPath}
+                // hoveredRequestPropertyPath={hoveredRequestPropertyPath}
+                // hoveredResponsePropertyPath={hoveredResponsePropertyPath}
                 showErrors={showErrors}
                 selectedError={selectedError}
                 errors={endpoint.errors}

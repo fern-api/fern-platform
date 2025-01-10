@@ -4,7 +4,15 @@ import {
 } from "@fern-docs/syntax-highlighter";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { FC, createRef, useCallback, useEffect, useMemo } from "react";
+import { isEqual } from "instantsearch.js/es/lib/utils";
+import {
+  FC,
+  createRef,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useEdgeFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { JsonPropertyPath } from "./JsonPropertyPath";
@@ -18,11 +26,13 @@ export declare namespace CodeSnippetExample {
     id?: string;
     code: string;
     language: string;
-    hoveredPropertyPath?: JsonPropertyPath | undefined;
+    // hoveredPropertyPath?: JsonPropertyPath | undefined;
     json: unknown;
     jsonStartLine?: number;
     scrollAreaStyle?: React.CSSProperties;
     measureHeight?: (height: number) => void;
+    type: "request" | "response";
+    slug: string;
   }
 }
 
@@ -30,12 +40,13 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
   id,
   code,
   language,
-  hoveredPropertyPath,
+  // hoveredPropertyPath,
   json,
   jsonStartLine,
   scrollAreaStyle,
   measureHeight,
   className,
+  type,
   ...props
 }) => {
   const { isDarkCodeEnabled } = useEdgeFlags();
@@ -47,6 +58,29 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
       measureHeight?.(entry.contentRect.height);
     }
   });
+
+  const [hoveredPropertyPath, setHoveredPropertyPath] =
+    useState<JsonPropertyPath>([]);
+
+  useEffect(() => {
+    const handleHoverJsonProperty = (event: Event) => {
+      if (event instanceof CustomEvent && event.detail.type === type) {
+        setHoveredPropertyPath((prev) => {
+          if (event.detail.isHovering) {
+            return event.detail.jsonpath;
+          }
+          return isEqual(prev, event.detail.jsonpath) ? [] : prev;
+        });
+      }
+    };
+    window.addEventListener("hover-json-property", handleHoverJsonProperty);
+    return () => {
+      window.removeEventListener(
+        "hover-json-property",
+        handleHoverJsonProperty
+      );
+    };
+  }, [type]);
 
   const requestHighlightLines = useHighlightJsonLines(
     json,

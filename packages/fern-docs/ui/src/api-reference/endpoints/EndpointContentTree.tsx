@@ -30,7 +30,7 @@ import {
   useRef,
 } from "react";
 import { useIsomorphicLayoutEffect } from "swr/_internal";
-import { noop, UnreachableCaseError } from "ts-essentials";
+import { UnreachableCaseError } from "ts-essentials";
 import { useMemoOne } from "use-memo-one";
 import {
   IS_READY_ATOM,
@@ -44,20 +44,19 @@ import {
   JsonPropertyPath,
   JsonPropertyPathPart,
 } from "../examples/JsonPropertyPath";
-import { HoveringProps } from "./EndpointContentLeft";
 import { EndpointSection } from "./EndpointSection";
 
 interface EndpointContentTreeProps {
   context: ApiDefinition.EndpointContext;
   showErrors: boolean;
-  onHoverRequestProperty: (
-    jsonPropertyPath: JsonPropertyPath,
-    hovering: HoveringProps
-  ) => void;
-  onHoverResponseProperty: (
-    jsonPropertyPath: JsonPropertyPath,
-    hovering: HoveringProps
-  ) => void;
+  // onHoverRequestProperty: (
+  //   jsonPropertyPath: JsonPropertyPath,
+  //   hovering: HoveringProps
+  // ) => void;
+  // onHoverResponseProperty: (
+  //   jsonPropertyPath: JsonPropertyPath,
+  //   hovering: HoveringProps
+  // ) => void;
 }
 
 const AnchorIdContext = createContext<string | undefined>(undefined);
@@ -78,11 +77,6 @@ function AnchorIdProvider({
 function useAnchorId() {
   return useContext(AnchorIdContext);
 }
-
-const HoverPropertyContext =
-  createContext<
-    (jsonPropertyPath: JsonPropertyPath, hovering: HoveringProps) => void
-  >(noop);
 
 const JsonPathPartContext = createContext<RefObject<JsonPropertyPath>>({
   current: [],
@@ -116,8 +110,8 @@ function JsonPathPartProvider({
 export function EndpointContentTree({
   context: { endpoint, node, types, auth, globalHeaders },
   //   showErrors,
-  onHoverRequestProperty,
-  onHoverResponseProperty,
+  // onHoverRequestProperty,
+  // onHoverResponseProperty,
 }: EndpointContentTreeProps) {
   const request = endpoint.requests?.[0];
   const response = endpoint.responses?.[0];
@@ -155,13 +149,65 @@ export function EndpointContentTree({
             mdx={endpoint.description}
           />
           <AnchorIdProvider id="request">
-            <HoverPropertyContext.Provider value={onHoverRequestProperty}>
-              {requestHeaders.length > 0 && (
+            {requestHeaders.length > 0 && (
+              <Tree.Root>
+                <AnchorIdProvider id="headers">
+                  <EndpointSection
+                    title="Headers"
+                    anchorIdParts={["request", "headers"]}
+                    slug={node.slug}
+                    headerRight={
+                      <Tree.HasDisclosures>
+                        <Tree.ToggleExpandAll className="-mr-2" />
+                      </Tree.HasDisclosures>
+                    }
+                  >
+                    {requestHeaders.map((header) => (
+                      <ObjectProperty
+                        key={header.key}
+                        property={header}
+                        types={types}
+                      />
+                    ))}
+                  </EndpointSection>
+                </AnchorIdProvider>
+              </Tree.Root>
+            )}
+
+            {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
+              <Tree.Root>
+                <AnchorIdProvider id="path">
+                  <EndpointSection
+                    title="Path parameters"
+                    anchorIdParts={["request", "path"]}
+                    slug={node.slug}
+                    headerRight={
+                      <Tree.HasDisclosures>
+                        <Tree.ToggleExpandAll className="-mr-2" />
+                      </Tree.HasDisclosures>
+                    }
+                  >
+                    {sortBy(endpoint.pathParameters, [
+                      (parameter) => parameter.availability === "Deprecated",
+                    ]).map((parameter) => (
+                      <ObjectProperty
+                        key={parameter.key}
+                        property={parameter}
+                        types={types}
+                      />
+                    ))}
+                  </EndpointSection>
+                </AnchorIdProvider>
+              </Tree.Root>
+            )}
+
+            {endpoint.queryParameters &&
+              endpoint.queryParameters.length > 0 && (
                 <Tree.Root>
-                  <AnchorIdProvider id="headers">
+                  <AnchorIdProvider id="query">
                     <EndpointSection
-                      title="Headers"
-                      anchorIdParts={["request", "headers"]}
+                      title="Query parameters"
+                      anchorIdParts={["request", "query"]}
                       slug={node.slug}
                       headerRight={
                         <Tree.HasDisclosures>
@@ -169,10 +215,12 @@ export function EndpointContentTree({
                         </Tree.HasDisclosures>
                       }
                     >
-                      {requestHeaders.map((header) => (
+                      {sortBy(endpoint.queryParameters, [
+                        (parameter) => parameter.availability === "Deprecated",
+                      ]).map((parameter) => (
                         <ObjectProperty
-                          key={header.key}
-                          property={header}
+                          key={parameter.key}
+                          property={parameter}
                           types={types}
                         />
                       ))}
@@ -181,127 +229,66 @@ export function EndpointContentTree({
                 </Tree.Root>
               )}
 
-              {endpoint.pathParameters &&
-                endpoint.pathParameters.length > 0 && (
-                  <Tree.Root>
-                    <AnchorIdProvider id="path">
-                      <EndpointSection
-                        title="Path parameters"
-                        anchorIdParts={["request", "path"]}
-                        slug={node.slug}
-                        headerRight={
-                          <Tree.HasDisclosures>
-                            <Tree.ToggleExpandAll className="-mr-2" />
-                          </Tree.HasDisclosures>
-                        }
-                      >
-                        {sortBy(endpoint.pathParameters, [
-                          (parameter) =>
-                            parameter.availability === "Deprecated",
-                        ]).map((parameter) => (
-                          <ObjectProperty
-                            key={parameter.key}
-                            property={parameter}
-                            types={types}
-                          />
-                        ))}
-                      </EndpointSection>
-                    </AnchorIdProvider>
-                  </Tree.Root>
-                )}
-
-              {endpoint.queryParameters &&
-                endpoint.queryParameters.length > 0 && (
-                  <Tree.Root>
-                    <AnchorIdProvider id="query">
-                      <EndpointSection
-                        title="Query parameters"
-                        anchorIdParts={["request", "query"]}
-                        slug={node.slug}
-                        headerRight={
-                          <Tree.HasDisclosures>
-                            <Tree.ToggleExpandAll className="-mr-2" />
-                          </Tree.HasDisclosures>
-                        }
-                      >
-                        {sortBy(endpoint.queryParameters, [
-                          (parameter) =>
-                            parameter.availability === "Deprecated",
-                        ]).map((parameter) => (
-                          <ObjectProperty
-                            key={parameter.key}
-                            property={parameter}
-                            types={types}
-                          />
-                        ))}
-                      </EndpointSection>
-                    </AnchorIdProvider>
-                  </Tree.Root>
-                )}
-
-              {request && (
-                <Tree.Root>
-                  <EndpointSection
-                    title="Request"
-                    anchorIdParts={["request"]}
-                    slug={node.slug}
-                    description={request.description}
-                    headerRight={
-                      <div className="flex items-center gap-2">
-                        {request.contentType && (
-                          <Badge size="sm" className="font-mono">
-                            {request.contentType}
-                          </Badge>
-                        )}
-                        <Tree.HasDisclosures>
-                          <Tree.ToggleExpandAll className="-mr-2" />
-                        </Tree.HasDisclosures>
-                      </div>
-                    }
-                  >
-                    <AnchorIdProvider id="body">
-                      <HttpRequestBody body={request.body} types={types} />
-                    </AnchorIdProvider>
-                  </EndpointSection>
-                </Tree.Root>
-              )}
-            </HoverPropertyContext.Provider>
+            {request && (
+              <Tree.Root>
+                <EndpointSection
+                  title="Request"
+                  anchorIdParts={["request"]}
+                  slug={node.slug}
+                  description={request.description}
+                  headerRight={
+                    <div className="flex items-center gap-2">
+                      {request.contentType && (
+                        <Badge size="sm" className="font-mono">
+                          {request.contentType}
+                        </Badge>
+                      )}
+                      <Tree.HasDisclosures>
+                        <Tree.ToggleExpandAll className="-mr-2" />
+                      </Tree.HasDisclosures>
+                    </div>
+                  }
+                >
+                  <AnchorIdProvider id="body">
+                    <HttpRequestBody body={request.body} types={types} />
+                  </AnchorIdProvider>
+                </EndpointSection>
+              </Tree.Root>
+            )}
           </AnchorIdProvider>
 
           <AnchorIdProvider id="response">
-            <HoverPropertyContext.Provider value={onHoverResponseProperty}>
-              {response && (
-                <Tree.Root>
-                  <EndpointSection
-                    title="Response"
-                    anchorIdParts={["response"]}
-                    slug={node.slug}
-                    description={response.description}
-                    headerRight={
-                      <>
-                        <StatusCodeBadge
-                          statusCode={response.statusCode}
-                          className="ml-auto"
-                          variant="subtle"
-                          size="sm"
-                        />
-                        <Tree.HasDisclosures>
-                          <Tree.ToggleExpandAll className="-mr-2" />
-                        </Tree.HasDisclosures>
-                      </>
-                    }
-                  >
-                    <AnchorIdProvider id="body">
-                      <HttpResponseBody
-                        key={response.statusCode}
-                        body={response.body}
-                        types={types}
+            {response && (
+              <Tree.Root>
+                <EndpointSection
+                  title="Response"
+                  anchorIdParts={["response"]}
+                  slug={node.slug}
+                  description={response.description}
+                  headerRight={
+                    <>
+                      <StatusCodeBadge
+                        statusCode={response.statusCode}
+                        className="ml-auto"
+                        variant="subtle"
+                        size="sm"
                       />
-                    </AnchorIdProvider>
-                  </EndpointSection>
-                </Tree.Root>
-              )}
-            </HoverPropertyContext.Provider>
+                      <Tree.HasDisclosures>
+                        <Tree.ToggleExpandAll className="-mr-2" />
+                      </Tree.HasDisclosures>
+                    </>
+                  }
+                >
+                  <AnchorIdProvider id="body">
+                    <HttpResponseBody
+                      key={response.statusCode}
+                      body={response.body}
+                      types={types}
+                    />
+                  </AnchorIdProvider>
+                </EndpointSection>
+              </Tree.Root>
+            )}
           </AnchorIdProvider>
         </div>
       </TooltipProvider>
@@ -479,7 +466,6 @@ const ParameterInfo = forwardRef<
   }
 >(({ parameterName, indent, property, types, ...props }, ref) => {
   const jsonpath = useContext(JsonPathPartContext).current ?? [];
-  const onHoverProperty = useContext(HoverPropertyContext);
   const slug = useContext(SlugContext);
   const anchorId = useAnchorId() ?? property.key;
   const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
@@ -548,10 +534,54 @@ const ParameterInfo = forwardRef<
         })}
       />
       <Parameter.Root
-        onPointerEnter={() => onHoverProperty(jsonpath, { isHovering: true })}
-        onPointerLeave={() => onHoverProperty(jsonpath, { isHovering: false })}
-        onFocus={() => onHoverProperty(jsonpath, { isHovering: true })}
-        onBlur={() => onHoverProperty(jsonpath, { isHovering: false })}
+        onPointerEnter={() => {
+          window.dispatchEvent(
+            new CustomEvent("hover-json-property", {
+              detail: {
+                slug,
+                jsonpath,
+                isHovering: true,
+                type: anchorId.startsWith("request") ? "request" : "response",
+              },
+            })
+          );
+        }}
+        onPointerLeave={() => {
+          window.dispatchEvent(
+            new CustomEvent("hover-json-property", {
+              detail: {
+                slug,
+                jsonpath,
+                isHovering: false,
+                type: anchorId.startsWith("request") ? "request" : "response",
+              },
+            })
+          );
+        }}
+        onFocus={() => {
+          window.dispatchEvent(
+            new CustomEvent("hover-json-property", {
+              detail: {
+                slug,
+                jsonpath,
+                isHovering: true,
+                type: anchorId.startsWith("request") ? "request" : "response",
+              },
+            })
+          );
+        }}
+        onBlur={() => {
+          window.dispatchEvent(
+            new CustomEvent("hover-json-property", {
+              detail: {
+                slug,
+                jsonpath,
+                isHovering: false,
+                type: anchorId.startsWith("request") ? "request" : "response",
+              },
+            })
+          );
+        }}
       >
         <Parameter.Name
           ref={nameRef}
