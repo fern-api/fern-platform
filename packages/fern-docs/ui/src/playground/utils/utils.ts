@@ -36,7 +36,6 @@ export function isExpandable(
     map: () =>
       isPlainObject(currentValue) && Object.keys(currentValue).length > 0,
     unknown: () => false,
-    nullable: () => false,
     _other: () => false,
     primitive: () => false,
     literal: () => false,
@@ -77,7 +76,6 @@ export function hasRequiredFields(
       list: () => true,
       set: () => true,
       map: () => true,
-      nullable: () => true,
       unknown: () => true,
       _other: () => true,
     });
@@ -111,7 +109,6 @@ export function shouldRenderInline(
     enum: (_enum) => true,
     list: () => false,
     set: () => false,
-    nullable: () => true,
     unknown: () => false,
     _other: () => false,
   });

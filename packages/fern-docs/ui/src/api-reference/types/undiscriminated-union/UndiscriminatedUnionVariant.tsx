@@ -49,7 +49,6 @@ function getIconInfoForTypeReference(
     list: (list) => getIconInfoForTypeReference(list.itemShape, types),
     set: (set) => getIconInfoForTypeReference(set.itemShape, types),
     map: () => ({ content: "{}", size: 9 }),
-    nullable: () => ({ content: "{}", size: 6 }),
     unknown: () => ({ content: "{}", size: 6 }),
     _other: () => null,
   });

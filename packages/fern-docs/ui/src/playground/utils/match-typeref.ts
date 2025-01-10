@@ -111,8 +111,6 @@ export function matchesTypeReference(
           types
         )
       ),
-    nullable: (nullable) =>
-      value == null || matchesTypeReference(nullable.shape, value, types),
     unknown: () => value == null,
     _other: () => value == null,
   });

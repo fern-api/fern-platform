@@ -176,7 +176,7 @@ export function renderTypeShorthand(
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
   if (unwrapped.isOptional) {
-    return `${maybeWithArticle("an", nullable ? "optional" : "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+    return `${maybeWithArticle(nullable ? "a" : "an", nullable ? "nullable" : "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   }
 
   return visitDiscriminatedUnion(unwrapped.shape)._visit({
@@ -248,11 +248,6 @@ export function renderTypeShorthand(
         booleanLiteral: ({ value }) => value.toString(),
         _other: () => "<unknown>",
       }),
-
-    // nullables
-    nullable: (nullable) =>
-      `${renderTypeShorthand(nullable.shape, { nullable: true }, types)} or null`,
-
     // other
     unknown: (value) => value.displayName ?? "any",
     _other: () => "<unknown>",
