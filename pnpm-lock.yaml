@@ -1117,9 +1117,6 @@ importers:
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
-      '@types/react-test-renderer':
-        specifier: ^18.0.7
-        version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^4.2.1
         version: 4.2.1(vite@5.4.10(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0))
@@ -6758,7 +6755,7 @@ packages:
     resolution: {integrity: sha512-GWrNeElMYHO8FVETjW205u2s9IXFs46fmVKY8T1dHgksCm3JV8w4k14gM2eaZbOUOH/tGcOuz5YbqJl8iKkA8w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      next: npm:@fern-api/next@14.2.9-fork.2
+      next: ^13.5.0 || ^14.0.0 || ^15.0.0
       react: 18.3.1
       react-dom: 18.3.1
       storybook: ^8.4.4
@@ -7270,9 +7267,6 @@ packages:
     resolution: {integrity: sha512-HHM3nxyUZ3zAylX8ZEyrDNd2XZOnQ0D5XfunJF5FLQnZbHHYq4UWvW1QfelQNXv1ICNkwYhfxjwfnqivYB6bFg==}
     peerDependencies:
       '@types/react': '*'
-
-  '@types/react-test-renderer@18.3.0':
-    resolution: {integrity: sha512-HW4MuEYxfDbOHQsVlY/XtOvNHftCVEPhJF2pQXXwcUiUF+Oyb0usgp48HSgpK5rt8m9KZb22yqOeZm+rrVG8gw==}
 
   '@types/react@18.3.3':
     resolution: {integrity: sha512-hti/R0pS0q1/xx+TsI73XIqk26eBsISZ2R0wUijXIngRK9R/e7Xw/cXVxQK7R5JjW+SV4zGcn5hXjudkN/pLIw==}
@@ -22193,10 +22187,6 @@ snapshots:
       '@types/react': 18.3.3
 
   '@types/react-reconciler@0.28.9(@types/react@18.3.3)':
-    dependencies:
-      '@types/react': 18.3.3
-
-  '@types/react-test-renderer@18.3.0':
     dependencies:
       '@types/react': 18.3.3
 
