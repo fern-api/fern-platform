@@ -336,7 +336,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           (this.method === "POST" || this.method === "GET")
             ? {
                 id: FernRegistry.WebhookId(
-                  idx != 0 ? this.endpointId : `${this.endpointId}-${idx}`
+                  idx !== 0 ? this.endpointId : `${this.endpointId}-${idx}`
                 ),
                 description: this.description,
                 availability: this.availability?.convert(),

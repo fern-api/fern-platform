@@ -160,7 +160,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           isOptional: this.isOptional ?? false,
           contentType: this.contentType,
         };
-      case "form-data":
+      case "form-data": {
         const possibleFields: FernRegistry.api.latest.FormDataField[][] =
           Object.entries(this.fields ?? {})
             .map(([key, field]) => {
@@ -230,6 +230,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           availability: this.availability?.convert(),
           description: this.description,
         }));
+      }
       case undefined:
         return this.schema?.convert();
       default:

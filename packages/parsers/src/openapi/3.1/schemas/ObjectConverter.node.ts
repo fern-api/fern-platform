@@ -141,12 +141,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   }
 
   convert(): FernRegistry.api.latest.TypeShape.Object_[] | undefined {
-    let maybeMultipleObjectsProperties = this.convertProperties();
+    const maybeMultipleObjectsProperties = this.convertProperties();
     if (maybeMultipleObjectsProperties == null) {
       return undefined;
     }
 
-    let maybeMultipleObjectsExtraProperties = this.convertExtraProperties();
+    const maybeMultipleObjectsExtraProperties = this.convertExtraProperties();
 
     return maybeMultipleObjectsProperties.flatMap((properties) => {
       return (maybeMultipleObjectsExtraProperties ?? [undefined]).map(
