@@ -11,6 +11,7 @@ import {
   SUPPORTED_REQUEST_CONTENT_TYPES,
 } from "../../../types/format.types";
 import { resolveReference } from "../../../utils/3.1/resolveReference";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isObjectSchema } from "../../guards/isObjectSchema";
@@ -188,25 +189,19 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                     },
                   ];
                 case "property": {
-                  let maybeValueShapes = field.convert();
+                  const maybeValueShapes = maybeSingleValueToArray(
+                    field.convert()
+                  );
                   const type = field.multipartType;
 
-                  if (
-                    !Array.isArray(maybeValueShapes) &&
-                    maybeValueShapes != null
-                  ) {
-                    maybeValueShapes = [maybeValueShapes];
-                  }
-                  return maybeValueShapes?.map((valueShape) => {
-                    return {
-                      type,
-                      key: FernRegistry.PropertyKey(key),
-                      contentType: field.contentType,
-                      valueShape,
-                      description: field.description,
-                      availability: field.availability?.convert(),
-                    };
-                  });
+                  return maybeValueShapes?.map((valueShape) => ({
+                    type,
+                    key: FernRegistry.PropertyKey(key),
+                    contentType: field.contentType,
+                    valueShape,
+                    description: field.description,
+                    availability: field.availability?.convert(),
+                  }));
                 }
                 case undefined:
                   return [];

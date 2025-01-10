@@ -152,7 +152,7 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
         type: "primitive",
         value: {
           type,
-          format: this.format,
+          format: type === "string" ? this.format : undefined,
           regex: this.regex,
           minLength: this.minLength,
           maxLength: this.maxLength,

@@ -72,9 +72,6 @@ describe("StringConverterNode", () => {
           type: "primitive",
           value: {
             type: "uuid",
-            regex: undefined,
-            minLength: undefined,
-            maxLength: undefined,
             default: "test-default",
           },
         },

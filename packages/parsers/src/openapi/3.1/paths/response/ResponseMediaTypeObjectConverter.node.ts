@@ -12,6 +12,7 @@ import {
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
 import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
@@ -224,14 +225,9 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     | undefined {
     switch (this.streamingFormat) {
       case "json": {
-        let maybeShapes = this.schema?.convert();
-        if (maybeShapes == null) {
-          return undefined;
-        }
-        if (!Array.isArray(maybeShapes)) {
-          maybeShapes = [maybeShapes];
-        }
-        return maybeShapes.map((shape) => ({
+        const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
+        return maybeShapes?.map((shape) => ({
           type: "stream",
           // TODO: Parse terminator (probably extension)
           terminator: "[DATA]",
@@ -256,10 +252,8 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       switch (this.contentType) {
         case "application/json":
           if (this.streamingFormat == null) {
-            let maybeShapes = this.schema?.convert();
-            if (!Array.isArray(maybeShapes) && maybeShapes != null) {
-              maybeShapes = [maybeShapes];
-            }
+            const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
             return maybeShapes
               ?.map((shape) => {
                 if (
@@ -285,15 +279,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           return undefined;
       }
     } else if (this.unsupportedContentType != null) {
-      let maybeShapes = this.schema?.convert();
-      if (maybeShapes == null) {
-        return undefined;
-      }
-      if (!Array.isArray(maybeShapes)) {
-        maybeShapes = [maybeShapes];
-      }
+      const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
       return maybeShapes
-        .map((shape) => {
+        ?.map((shape) => {
           const type = shape.type;
           switch (type) {
             case "alias":

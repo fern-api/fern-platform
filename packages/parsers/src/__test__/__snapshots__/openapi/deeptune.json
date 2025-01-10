@@ -617,9 +617,15 @@
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
@@ -712,9 +718,15 @@
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
