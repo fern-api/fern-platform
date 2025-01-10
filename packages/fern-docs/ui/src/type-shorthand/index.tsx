@@ -178,7 +178,7 @@ export function renderTypeShorthand(
   const isNullable = unwrapped.isNullable || nullable;
 
   if (isNullable && unwrapped.isOptional) {
-    return `${maybeWithArticle("a", "nullable and optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+    return `${maybeWithArticle("a", "nullable or optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   } else if (isNullable) {
     return `${maybeWithArticle("a", "nullable")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   } else if (unwrapped.isOptional) {
