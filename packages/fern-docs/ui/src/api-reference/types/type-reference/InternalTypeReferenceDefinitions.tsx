@@ -38,6 +38,7 @@ export function hasInlineEnum(
       hasInlineEnum(map.valueShape, types),
     primitive: () => false,
     literal: () => true,
+    nullable: () => false,
     unknown: () => false,
     _other: () => false,
   });
@@ -60,6 +61,7 @@ export function hasInternalTypeReference(
       hasInternalTypeReference(map.valueShape, types),
     primitive: () => false,
     literal: () => true,
+    nullable: () => true,
     unknown: () => false,
     _other: () => false,
   });
@@ -164,6 +166,19 @@ export const InternalTypeReferenceDefinitions: React.FC<
             types={types}
           />
         </MapTypeContextProvider>
+      );
+    }
+    case "nullable": {
+      return (
+        <InternalTypeReferenceDefinitions
+          shape={unwrapped.shape}
+          isCollapsible={isCollapsible}
+          applyErrorStyles={applyErrorStyles}
+          className={className}
+          anchorIdParts={anchorIdParts}
+          slug={slug}
+          types={types}
+        />
       );
     }
     case "literal":

@@ -109,18 +109,20 @@ function toPrimitiveTypeLabelsNumeric(
 }
 
 function toPrimitiveTypeLabelsString({
+  format,
   minLength,
   maxLength,
   regex,
 }: {
+  format: string | undefined;
   minLength: number | undefined;
   maxLength: number | undefined;
   regex: string | undefined;
 }): string[] {
   const labels = [];
 
-  if (regex != null) {
-    labels.push(`format: "${regex}"`);
+  if (format != null || regex != null) {
+    labels.push(`format: "${format ?? regex}"`);
   }
 
   if (minLength != null && maxLength != null && minLength === maxLength) {
@@ -246,6 +248,11 @@ export function renderTypeShorthand(
         booleanLiteral: ({ value }) => value.toString(),
         _other: () => "<unknown>",
       }),
+
+    // nullables
+    nullable: (nullable) =>
+      `${renderTypeShorthand(nullable.shape, { nullable: true }, types)} or null`,
+
     // other
     unknown: (value) => value.displayName ?? "any",
     _other: () => "<unknown>",

@@ -117,6 +117,7 @@ function shouldHideShape(
     list: (value) => shouldHideShape(value.itemShape, types),
     set: (value) => shouldHideShape(value.itemShape, types),
     map: () => false,
+    nullable: () => false,
     unknown: () => true,
     _other: () => true,
   });

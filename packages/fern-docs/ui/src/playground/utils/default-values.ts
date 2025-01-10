@@ -109,6 +109,7 @@ export function getEmptyValueForType(
     list: () => [],
     set: () => [],
     map: () => ({}),
+    nullable: () => null,
     unknown: () => undefined,
   });
 }

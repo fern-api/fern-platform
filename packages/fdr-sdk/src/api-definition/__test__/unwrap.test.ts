@@ -14,6 +14,7 @@ const PRIMITIVE_SHAPE: TypeShape = {
     type: "primitive" as const,
     value: {
       type: "string",
+      format: undefined,
       regex: undefined,
       minLength: undefined,
       maxLength: undefined,
@@ -24,7 +25,7 @@ const PRIMITIVE_SHAPE: TypeShape = {
 
 describe("unwrapReference", () => {
   it("should noop for a non-reference", () => {
-    expect(unwrapReference(PRIMITIVE_SHAPE["value"], {})).toMatchInlineSnapshot(
+    expect(unwrapReference(PRIMITIVE_SHAPE.value, {})).toMatchInlineSnapshot(
       `
           {
             "availability": undefined,
@@ -271,7 +272,7 @@ describe("unwrapReference", () => {
       },
     };
     const unwrapped = unwrapReference(shape, types);
-    expect(unwrapped.shape).toStrictEqual(PRIMITIVE_SHAPE["value"]);
+    expect(unwrapped.shape).toStrictEqual(PRIMITIVE_SHAPE.value);
     expect(unwrapped.availability).toBe("Deprecated");
     expect(unwrapped.descriptions).toStrictEqual(["a", "b", "c"]);
     expect(unwrapped.isOptional).toBe(true);

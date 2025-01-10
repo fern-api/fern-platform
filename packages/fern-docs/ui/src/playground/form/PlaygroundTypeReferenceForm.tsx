@@ -20,6 +20,7 @@ import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdFo
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
+import { PlaygroundNullableForm } from "./PlaygroundNullableForm";
 import { PlaygroundObjectForm } from "./PlaygroundObjectForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
 
@@ -530,6 +531,23 @@ export const PlaygroundTypeReferenceForm =
             onValueChange={onChange}
             disabled={disabled}
             // TODO: add default value
+          />
+        </WithLabel>
+      ),
+      nullable: (nullable) => (
+        <WithLabel
+          property={property}
+          value={value}
+          onRemove={onRemove}
+          types={types}
+          htmlFor={id}
+        >
+          <PlaygroundNullableForm
+            shape={nullable.shape}
+            onChange={onChange}
+            value={value}
+            id={id}
+            types={types}
           />
         </WithLabel>
       ),
