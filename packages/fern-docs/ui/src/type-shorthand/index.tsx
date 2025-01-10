@@ -175,8 +175,14 @@ export function renderTypeShorthand(
   const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
-  if (unwrapped.isOptional) {
-    return `${maybeWithArticle(nullable ? "a" : "an", nullable ? "nullable" : "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  const isNullable = unwrapped.isNullable || nullable;
+
+  if (isNullable && unwrapped.isOptional) {
+    return `${maybeWithArticle("a", "nullable and optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  } else if (isNullable) {
+    return `${maybeWithArticle("a", "nullable")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
+  } else if (unwrapped.isOptional) {
+    return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   }
 
   return visitDiscriminatedUnion(unwrapped.shape)._visit({
