@@ -11,6 +11,7 @@ import {
 } from "@fern-docs/components";
 import { Parameter, Tree } from "@fern-docs/components/tree";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { sortBy } from "es-toolkit/array";
 import { capitalize } from "es-toolkit/string";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { ChevronsDownUp, ChevronsUpDown, ListFilter } from "lucide-react";
@@ -193,7 +194,10 @@ export function EndpointContentTree({
                           </Tree.HasDisclosures>
                         }
                       >
-                        {endpoint.pathParameters.map((parameter) => (
+                        {sortBy(endpoint.pathParameters, [
+                          (parameter) =>
+                            parameter.availability === "Deprecated",
+                        ]).map((parameter) => (
                           <ObjectProperty
                             key={parameter.key}
                             property={parameter}
@@ -230,7 +234,10 @@ export function EndpointContentTree({
                           </Tree.HasDisclosures>
                         }
                       >
-                        {endpoint.queryParameters.map((parameter) => (
+                        {sortBy(endpoint.queryParameters, [
+                          (parameter) =>
+                            parameter.availability === "Deprecated",
+                        ]).map((parameter) => (
                           <ObjectProperty
                             key={parameter.key}
                             property={parameter}
@@ -566,6 +573,8 @@ const ParameterInfo = forwardRef<
     }
   }, [isActive]);
 
+  const availability = property.availability ?? unwrapped.availability;
+
   return (
     <Parameter.Root
       {...props}
@@ -599,7 +608,11 @@ const ParameterInfo = forwardRef<
         }}
       />
       <span className="text-xs text-[var(--grayscale-a9)]">
-        <TypeShorthand shape={unwrapped.shape} types={types} />
+        <TypeShorthand
+          shape={unwrapped.shape}
+          isOptional={unwrapped.isOptional}
+          types={types}
+        />
         {unwrapped.default != null &&
           unwrapped.shape.type !== "literal" &&
           typeof unwrapped.default !== "object" && (
@@ -609,12 +622,12 @@ const ParameterInfo = forwardRef<
           )}
       </span>
       <Parameter.Spacer />
-      {unwrapped.availability && (
-        <AvailabilityBadge availability={unwrapped.availability} size="sm" />
+      {availability && (
+        <AvailabilityBadge availability={availability} size="sm" />
       )}
-      <Parameter.Status
+      {/* <Parameter.Status
         status={!unwrapped.isOptional ? "required" : "optional"}
-      />
+      /> */}
     </Parameter.Root>
   );
 });
@@ -1007,22 +1020,42 @@ function TypeShorthand({
   types,
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
+  isOptional: boolean;
   types: Record<string, ApiDefinition.TypeDefinition>;
 }) {
   const lang = useTypeShorthandLang();
   switch (lang) {
     case "ts":
-      return <TypeShorthandTypescript shape={shape} types={types} />;
+      return (
+        <TypeShorthandTypescript
+          shape={shape}
+          types={types}
+          isOptional={isOptional}
+        />
+      );
     case "py":
-      return <TypeShorthandPython shape={shape} types={types} />;
+      return (
+        <TypeShorthandPython
+          shape={shape}
+          types={types}
+          isOptional={isOptional}
+        />
+      );
     default:
-      return <TypeShorthandDefault shape={shape} types={types} />;
+      return (
+        <TypeShorthandDefault
+          shape={shape}
+          types={types}
+          isOptional={isOptional}
+        />
+      );
   }
 }
 
 export function TypeShorthandTypescript({
   shape,
   types,
+  isOptional,
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
@@ -1086,15 +1119,21 @@ export function TypeShorthandTypescript({
     }
   }
 
-  return <span className="-ml-3 font-mono">: {toString(shape)}</span>;
+  return (
+    <span className="-ml-3 font-mono">
+      {`${isOptional ? "?: " : ": "}${toString(shape)}`}
+    </span>
+  );
 }
 
 export function TypeShorthandPython({
   shape,
   types,
+  isOptional,
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
+  isOptional: boolean;
 }) {
   function toString(shape: ApiDefinition.TypeShapeOrReference): string {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
@@ -1158,15 +1197,19 @@ export function TypeShorthandPython({
     }
   }
 
-  return <span className="-ml-3 font-mono">: {toString(shape)}</span>;
+  return (
+    <span className="-ml-3 font-mono">{`: ${isOptional ? `Optional[${toString(shape)}]` : toString(shape)}`}</span>
+  );
 }
 
 export function TypeShorthandDefault({
   shape,
   types,
+  isOptional,
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
+  isOptional: boolean;
 }) {
-  return renderTypeShorthand(shape, {}, types);
+  return renderTypeShorthand(shape, { nullable: isOptional }, types);
 }
