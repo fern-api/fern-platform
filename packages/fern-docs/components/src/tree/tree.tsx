@@ -102,23 +102,29 @@ const ctx = createContext<{
   indent: number;
   pointerOver: boolean;
   setPointerOver: Dispatch<SetStateAction<boolean>>;
+  card: boolean;
 }>({
   indent: 0,
   pointerOver: false,
   setPointerOver: noop,
+  card: false,
 });
 
 function useIndent() {
   return useContext(ctx).indent;
 }
 
+function useIsCard() {
+  return useContext(ctx).card;
+}
+
 const IndentContextProvider = ({ children }: PropsWithChildren) => {
   const parentIndent = useIndent();
+  const card = useIsCard();
   const [pointerOver, setPointerOver] = useState(false);
-
   return (
     <ctx.Provider
-      value={{ indent: parentIndent + 1, pointerOver, setPointerOver }}
+      value={{ indent: parentIndent + 1, pointerOver, setPointerOver, card }}
     >
       {children}
     </ctx.Provider>
@@ -128,6 +134,7 @@ const IndentContextProvider = ({ children }: PropsWithChildren) => {
 const Tree = forwardRef<HTMLDivElement, PropsWithChildren>(
   ({ children }, forwardRef) => {
     const ref = useRef<HTMLDivElement>(null);
+    const card = useIsCard();
     const rootId = useId();
     return (
       <div ref={composeRefs(ref, forwardRef)} className="fern-tree">
@@ -143,7 +150,12 @@ const Tree = forwardRef<HTMLDivElement, PropsWithChildren>(
           )}
         >
           <ctx.Provider
-            value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
+            value={{
+              indent: 0,
+              pointerOver: false,
+              setPointerOver: noop,
+              card,
+            }}
           >
             <Disclosure.Root animationOptions={{ duration: 0 }}>
               {children}
@@ -362,7 +374,12 @@ const TreeItemCard = forwardRef<
       )}
     >
       <ctx.Provider
-        value={{ indent: 0, pointerOver: false, setPointerOver: noop }}
+        value={{
+          indent: 0,
+          pointerOver: false,
+          setPointerOver: noop,
+          card: true,
+        }}
       >
         <TreeItemCardCtx.Provider value={indent > 0}>
           {children}
@@ -784,5 +801,6 @@ export {
   Trigger,
   useDetailContext,
   useIndent,
+  useIsCard,
   Variants,
 };

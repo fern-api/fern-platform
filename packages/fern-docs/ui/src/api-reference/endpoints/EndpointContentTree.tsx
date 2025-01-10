@@ -817,11 +817,11 @@ function VariantDescription({
   availability?: ApiDefinition.Availability;
   description?: MarkdownText;
 }) {
-  const indent = Tree.useIndent();
+  const card = Tree.useIsCard();
   return (
     <div
       className={cn(
-        indent > 0
+        card
           ? "border-b border-[var(--grayscale-a4)] pb-2 leading-normal"
           : "rounded-md bg-[var(--grayscale-a3)] px-3 py-2"
       )}
