@@ -625,9 +625,9 @@ const ParameterInfo = forwardRef<
       {availability && (
         <AvailabilityBadge availability={availability} size="sm" />
       )}
-      {/* <Parameter.Status
-        status={!unwrapped.isOptional ? "required" : "optional"}
-      /> */}
+      {anchorId.startsWith("request.") &&
+        !unwrapped.isOptional &&
+        !availability && <Parameter.Status status="required" />}
     </Parameter.Root>
   );
 });
@@ -1018,6 +1018,7 @@ function ObjectTypeShape({
 function TypeShorthand({
   shape,
   types,
+  isOptional,
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   isOptional: boolean;
@@ -1059,6 +1060,7 @@ export function TypeShorthandTypescript({
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
+  isOptional?: boolean;
 }) {
   function toString(shape: ApiDefinition.TypeShapeOrReference): string {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
@@ -1133,7 +1135,7 @@ export function TypeShorthandPython({
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
-  isOptional: boolean;
+  isOptional?: boolean;
 }) {
   function toString(shape: ApiDefinition.TypeShapeOrReference): string {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
@@ -1209,7 +1211,7 @@ export function TypeShorthandDefault({
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
-  isOptional: boolean;
+  isOptional?: boolean;
 }) {
   return renderTypeShorthand(shape, { nullable: isOptional }, types);
 }
