@@ -60,7 +60,6 @@ describe("MixedSchemaConverterNode", () => {
       });
 
       const result = node.convert()[0];
-      console.log(JSON.stringify(result, null, 2));
       expect(result?.type).toBe("undiscriminatedUnion");
       expect(
         (result as FernRegistry.api.latest.TypeShape.UndiscriminatedUnion)

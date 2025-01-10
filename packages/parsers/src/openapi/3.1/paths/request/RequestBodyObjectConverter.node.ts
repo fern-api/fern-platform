@@ -75,4 +75,25 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
       })
       .filter(isNonNullish);
   }
+
+  convertToWebhookPayload():
+    | FernRegistry.api.latest.WebhookPayload[]
+    | undefined {
+    return Object.values(this.requestBodiesByContentType ?? {})
+      .flatMap((mediaTypeObject) => {
+        const maybeBodies = maybeSingleValueToArray(mediaTypeObject.convert());
+
+        return maybeBodies?.map((body) => {
+          if (body.type !== "alias" && body.type !== "object") {
+            return undefined;
+          }
+
+          return {
+            description: this.description,
+            shape: body,
+          };
+        });
+      })
+      .filter(isNonNullish);
+  }
 }
