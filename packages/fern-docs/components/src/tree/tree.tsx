@@ -414,7 +414,7 @@ const TreeBranch = forwardRef<
       {!lineOnly && (
         <div
           className={cn(
-            "h-[19.5px] w-[15px] rounded-bl-[12px] border-b border-l",
+            "h-[19.5px] w-[15px] rounded-bl-[8px] border-b border-l",
             {
               "border-[var(--grayscale-9)]": pointerOver,
               "border-[var(--grayscale-6)] transition-colors duration-100":
