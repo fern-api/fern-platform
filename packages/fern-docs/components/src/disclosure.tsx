@@ -379,7 +379,9 @@ const DisclosureDetails = forwardRef<
             detailsRef.current = div;
           })}
           onToggle={(e) => {
-            setOpen(e.currentTarget.open);
+            if (e.currentTarget instanceof HTMLDetailsElement) {
+              setOpen(e.currentTarget.open);
+            }
           }}
         >
           {typeof children === "function" ? children({ open }) : children}
