@@ -1,6 +1,5 @@
 @import "@radix-ui/colors/black-alpha.css";
 @import "@radix-ui/colors/white-alpha.css";
-
 @import "@radix-ui/colors/gray.css";
 @import "@radix-ui/colors/mauve.css";
 @import "@radix-ui/colors/slate.css";
@@ -32,7 +31,6 @@
 @import "@radix-ui/colors/lime.css";
 @import "@radix-ui/colors/mint.css";
 @import "@radix-ui/colors/sky.css";
-
 @import "@radix-ui/colors/gray-alpha.css";
 @import "@radix-ui/colors/mauve-alpha.css";
 @import "@radix-ui/colors/slate-alpha.css";
@@ -64,7 +62,6 @@
 @import "@radix-ui/colors/lime-alpha.css";
 @import "@radix-ui/colors/mint-alpha.css";
 @import "@radix-ui/colors/sky-alpha.css";
-
 @import "@radix-ui/colors/gray-dark.css";
 @import "@radix-ui/colors/mauve-dark.css";
 @import "@radix-ui/colors/slate-dark.css";
@@ -96,7 +93,6 @@
 @import "@radix-ui/colors/lime-dark.css";
 @import "@radix-ui/colors/mint-dark.css";
 @import "@radix-ui/colors/sky-dark.css";
-
 @import "@radix-ui/colors/gray-dark-alpha.css";
 @import "@radix-ui/colors/mauve-dark-alpha.css";
 @import "@radix-ui/colors/slate-dark-alpha.css";
@@ -142,7 +138,6 @@
   --grayscale-10: var(--gray-10);
   --grayscale-11: var(--gray-11);
   --grayscale-12: var(--gray-12);
-
   --grayscale-a1: var(--gray-a1);
   --grayscale-a2: var(--gray-a2);
   --grayscale-a3: var(--gray-a3);

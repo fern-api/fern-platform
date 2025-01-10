@@ -10,7 +10,6 @@
     box-sizing: border-box;
     font-weight: 600;
     white-space: nowrap;
-
     transition: background-color 100ms ease-in-out;
 
     &.interactive:not(:disabled):hover {
