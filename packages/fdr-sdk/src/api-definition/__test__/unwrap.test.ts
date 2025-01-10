@@ -27,24 +27,25 @@ describe("unwrapReference", () => {
   it("should noop for a non-reference", () => {
     expect(unwrapReference(PRIMITIVE_SHAPE.value, {})).toMatchInlineSnapshot(
       `
-          {
-            "availability": undefined,
+      {
+        "availability": undefined,
+        "default": undefined,
+        "descriptions": [],
+        "isOptional": false,
+        "shape": {
+          "type": "primitive",
+          "value": {
             "default": undefined,
-            "descriptions": [],
-            "isOptional": false,
-            "shape": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-            "visitedTypeIds": Set {},
-          }
-        `
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
+        "visitedTypeIds": Set {},
+      }
+    `
     );
   });
 
@@ -64,26 +65,27 @@ describe("unwrapReference", () => {
     };
     expect(unwrapReference(shape, types)).toMatchInlineSnapshot(
       `
-          {
-            "availability": undefined,
+      {
+        "availability": undefined,
+        "default": undefined,
+        "descriptions": [],
+        "isOptional": false,
+        "shape": {
+          "type": "primitive",
+          "value": {
             "default": undefined,
-            "descriptions": [],
-            "isOptional": false,
-            "shape": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-            "visitedTypeIds": Set {
-              "foo",
-            },
-          }
-        `
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
+        "visitedTypeIds": Set {
+          "foo",
+        },
+      }
+    `
     );
   });
 
@@ -133,26 +135,27 @@ describe("unwrapReference", () => {
     };
     expect(unwrapReference(shape, types)).toMatchInlineSnapshot(
       `
-          {
-            "availability": undefined,
+      {
+        "availability": undefined,
+        "default": undefined,
+        "descriptions": [],
+        "isOptional": true,
+        "shape": {
+          "type": "primitive",
+          "value": {
             "default": undefined,
-            "descriptions": [],
-            "isOptional": true,
-            "shape": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-            "visitedTypeIds": Set {
-              "foo",
-            },
-          }
-        `
+            "format": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
+        "visitedTypeIds": Set {
+          "foo",
+        },
+      }
+    `
     );
   });
 
