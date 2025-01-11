@@ -24,17 +24,5 @@ export async function executeProxyStream(
     throw new Error("Response body is null");
   }
 
-  // const stream = new Stream<ResponseChunk>({
-  //   stream: response.body,
-  //   parse: async (i_1) => {
-  //     const d = i_1 as { data: string; time: number };
-  //     return {
-  //       data: d.data,
-  //       time: d.time,
-  //     };
-  //   },
-  //   terminator: "\n",
-  // });
-
   return [response, response.body];
 }
