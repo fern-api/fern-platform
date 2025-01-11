@@ -108,7 +108,11 @@ export default {
       response.headers
         .get("Content-Type")
         ?.toLowerCase()
-        .startsWith("text/event-stream")
+        .startsWith("text/event-stream") ||
+      response.headers
+        .get("Content-Type")
+        ?.toLowerCase()
+        .startsWith("application/octet-stream")
     ) {
       return new Response(response.body, {
         status: response.status,
