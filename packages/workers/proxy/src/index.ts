@@ -4,6 +4,7 @@ import { upgradeToWebsocket } from "./websocket";
 const REQUEST_HEADERS = "X-Fern-Proxy-Request-Headers";
 const RESPONSE_HEADERS = "X-Fern-Proxy-Response-Headers";
 const RESPONSE_TIME = "X-Fern-Proxy-Response-Time";
+const ORIGIN_LATENCY = "X-Fern-Proxy-Origin-Latency";
 
 export default {
   async fetch(request, _env, _ctx): Promise<Response> {
@@ -73,11 +74,16 @@ export default {
 
     // forward the request
     const response = await fetch(newRequest);
+    const latency = performance.now() - startTime;
 
     // copy over the response headers
     const responseHeaders = new Headers([
       ...response.headers,
+
+      // additional proxy headers
       [RESPONSE_HEADERS, [...response.headers.keys()].join(",")],
+      [ORIGIN_LATENCY, `${latency}`],
+      ["Cache-Control", "no-transform"],
     ]);
 
     // set the response headers (and override cors headers from the original request)
@@ -89,6 +95,7 @@ export default {
       [
         RESPONSE_HEADERS.toLowerCase(),
         RESPONSE_TIME.toLowerCase(),
+        ORIGIN_LATENCY.toLowerCase(),
         ...response.headers.keys(),
       ].join(", ")
     );
@@ -107,6 +114,7 @@ export default {
         status: response.status,
         statusText: response.statusText,
         headers: responseHeaders,
+        encodeBody: "manual",
       });
     }
 
@@ -120,6 +128,7 @@ export default {
       status: response.status,
       statusText: response.statusText,
       headers: responseHeaders,
+      encodeBody: "manual",
     });
   },
 } satisfies ExportedHandler<Env>;
