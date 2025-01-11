@@ -81,7 +81,7 @@ export default {
       ...response.headers,
 
       // additional proxy headers
-      [RESPONSE_HEADERS, [...response.headers.keys()].join(",")],
+      [RESPONSE_HEADERS, [...new Set(response.headers.keys())].join(",")],
       [ORIGIN_LATENCY, `${latency}`],
       ["Cache-Control", "no-transform, no-cache"],
     ]);
@@ -96,7 +96,7 @@ export default {
         RESPONSE_HEADERS.toLowerCase(),
         RESPONSE_TIME.toLowerCase(),
         ORIGIN_LATENCY.toLowerCase(),
-        ...response.headers.keys(),
+        ...new Set(response.headers.keys()),
       ].join(", ")
     );
 
