@@ -14,13 +14,9 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({
 }) => {
   const responseJson = useMemo(
     () =>
-      response.type === "stream"
+      typeof response.response.body === "string"
         ? response.response.body
-        : response.type === "file"
-          ? ""
-          : typeof response.response.body === "string"
-            ? response.response.body
-            : JSON.stringify(response.response.body, null, 2),
+        : JSON.stringify(response.response.body, null, 2),
     [response]
   );
   const viewportRef = useRef<ScrollToHandle>(null);
