@@ -1,19 +1,19 @@
 {
-	"name": "proxy",
-	"version": "0.0.0",
-	"private": true,
-	"scripts": {
-		"cf-typegen": "wrangler types",
-		"deploy": "wrangler deploy",
-		"dev": "wrangler dev",
-		"start": "wrangler dev",
-		"test": "vitest"
-	},
-	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.5.2",
-		"@cloudflare/workers-types": "^4.20250109.0",
-		"typescript": "^5",
-		"vitest": "2.1.8",
-		"wrangler": "^3.60.3"
-	}
+  "name": "@fern-platform/proxy",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "cf-typegen": "wrangler types",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.5.2",
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "typescript": "^5",
+    "vitest": "2.1.4",
+    "wrangler": "^3.60.3"
+  }
 }
