@@ -20,18 +20,13 @@ import {
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   store,
-  useBasePath,
   useEdgeFlags,
   usePlaygroundEndpointFormState,
 } from "../../atoms";
-import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
-import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
-import { executeGrpc } from "../fetch-utils/executeGrpc";
-import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
-import type { GrpcProxyRequest, ProxyRequest } from "../types";
+import type { ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import {
   buildAuthHeaders,
@@ -72,32 +67,11 @@ export const PlaygroundEndpoint = ({
     );
   });
 
-  const basePath = useBasePath();
-  const {
-    usesApplicationJsonInFormDataValue,
-    proxyShouldUseAppBuildwithfernCom,
-    grpcEndpoints,
-  } = useEdgeFlags();
+  const { usesApplicationJsonInFormDataValue } = useEdgeFlags();
   const [response, setResponse] =
     useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
-  const proxyBasePath = proxyShouldUseAppBuildwithfernCom
-    ? getAppBuildwithfernCom()
-    : basePath;
-  const proxyEnvironment = useApiRoute("/api/fern-docs/proxy", {
-    basepath: proxyBasePath,
-  });
-  const uploadEnvironment = useApiRoute("/api/fern-docs/upload", {
-    basepath: proxyBasePath,
-  });
   const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
-
-  // TODO: remove potentially
-  // const grpcClient = useMemo(() => {
-  //     return new FernProxyClient({
-  //         environment: "https://kmxxylsbwyu2f4x7rbhreris3i0zfbys.lambda-url.us-east-1.on.aws/",
-  //     });
-  // }, []);
 
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
@@ -122,7 +96,6 @@ export const PlaygroundEndpoint = ({
         {
           formState,
           endpoint,
-          proxyEnvironment,
           baseUrl,
           setValue: setOAuthValue,
         }
@@ -151,35 +124,39 @@ export const PlaygroundEndpoint = ({
         method: endpoint.method,
         headers,
         body: await serializeFormStateBody(
-          uploadEnvironment,
           endpoint.requests?.[0]?.body,
           formState.body,
           usesApplicationJsonInFormDataValue
         ),
       };
       if (endpoint.responses?.[0]?.body.type === "stream") {
-        const [res, stream] = await executeProxyStream(proxyEnvironment, req);
-        for await (const item of stream) {
-          setResponse((lastValue) =>
+        const [res, stream] = await executeProxyStream(req);
+
+        const time = Date.now();
+        const reader = stream.getReader();
+        let result = "";
+        const decoder = new TextDecoder();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          result += decoder.decode(value);
+          console.log(result);
+          setResponse(
             loaded({
               type: "stream",
               response: {
                 status: res.status,
-                body: (lastValue.type === "loaded" &&
-                lastValue.value.type === "stream"
-                  ? lastValue.value.response.body + item.data
-                  : item.data
-                ).replace("\r\n\r\n", "\n"),
+                body: result,
               },
-              time: item.time,
+              time: Date.now() - time,
             })
           );
         }
-      } else if (endpoint.responses?.[0]?.body.type === "fileDownload") {
-        const res = await executeProxyFile(proxyEnvironment, req);
-        setResponse(loaded(res));
       } else {
-        const res = await executeProxyRest(proxyEnvironment, req);
+        const res = await executeProxyRest(req);
         setResponse(loaded(res));
         if (res.type !== "stream") {
           track("api_playground_request_received", {
@@ -211,72 +188,8 @@ export const PlaygroundEndpoint = ({
     node.slug,
     auth,
     formState,
-    proxyEnvironment,
     baseUrl,
     setOAuthValue,
-    uploadEnvironment,
-    usesApplicationJsonInFormDataValue,
-  ]);
-
-  // Figure out if GRPC endpoint
-  const sendGrpcRequest = useCallback(async () => {
-    if (endpoint == null) {
-      return;
-    }
-    setResponse(loading());
-    try {
-      const authHeaders = buildAuthHeaders(
-        auth,
-        store.get(PLAYGROUND_AUTH_STATE_ATOM),
-        {
-          redacted: false,
-        },
-        {
-          formState,
-          endpoint,
-          proxyEnvironment,
-          baseUrl,
-          setValue: setOAuthValue,
-        }
-      );
-      const headers = {
-        ...authHeaders,
-        ...mapValues(formState.headers ?? {}, (value) =>
-          unknownToString(value)
-        ),
-      };
-
-      const req: GrpcProxyRequest = {
-        url: buildEndpointUrl({
-          endpoint,
-          pathParameters: formState.pathParameters,
-          queryParameters: formState.queryParameters,
-          baseUrl,
-        }),
-        endpointId: endpoint.id,
-        headers,
-        body: await serializeFormStateBody(
-          uploadEnvironment,
-          endpoint.requests?.[0]?.body,
-          formState.body,
-          usesApplicationJsonInFormDataValue
-        ),
-      };
-
-      const res = await executeGrpc(proxyEnvironment, req);
-      setResponse(loaded(res));
-    } catch (e) {
-      console.error(e);
-      setResponse(failed(e));
-    }
-  }, [
-    endpoint,
-    auth,
-    formState,
-    proxyEnvironment,
-    baseUrl,
-    setOAuthValue,
-    uploadEnvironment,
     usesApplicationJsonInFormDataValue,
   ]);
 
@@ -289,12 +202,7 @@ export const PlaygroundEndpoint = ({
           <PlaygroundEndpointPath
             method={endpoint.method}
             formState={formState}
-            // TODO: Remove this after pinecone demo, this is a temporary flag
-            sendRequest={
-              grpcEndpoints?.includes(endpoint.id)
-                ? sendGrpcRequest
-                : sendRequest
-            }
+            sendRequest={sendRequest}
             environmentId={environmentId}
             baseUrl={baseUrl}
             // TODO: this is a temporary fix to show all environments in the playground, unless filtered in the settings
@@ -322,12 +230,7 @@ export const PlaygroundEndpoint = ({
             resetWithExample={resetWithExample}
             resetWithoutExample={resetWithoutExample}
             response={response}
-            // TODO: Remove this after pinecone demo, this is a temporary flag
-            sendRequest={
-              grpcEndpoints?.includes(endpoint.id)
-                ? sendGrpcRequest
-                : sendRequest
-            }
+            sendRequest={sendRequest}
           />
         </div>
       </div>

@@ -13,7 +13,6 @@ import {
 } from "../types";
 
 export async function serializeFormStateBody(
-  environment: string,
   shape: HttpRequestBodyShape | undefined,
   body: PlaygroundFormStateBody | undefined,
   usesApplicationJsonInFormDataValue: boolean
@@ -32,7 +31,7 @@ export async function serializeFormStateBody(
           case "file":
             formDataValue[key] = {
               type: "file",
-              value: await serializeFile(environment, value.value),
+              value: await serializeFile(value.value),
             };
             break;
           case "fileArray":
@@ -40,7 +39,7 @@ export async function serializeFormStateBody(
               type: "fileArray",
               value: (
                 await Promise.all(
-                  value.value.map((value) => serializeFile(environment, value))
+                  value.value.map((value) => serializeFile(value))
                 )
               ).filter(isNonNullish),
             };
@@ -80,7 +79,7 @@ export async function serializeFormStateBody(
     case "octet-stream":
       return {
         type: "octet-stream",
-        value: await serializeFile(environment, body.value),
+        value: await serializeFile(body.value),
       };
     default:
       assertNever(body);
@@ -88,7 +87,6 @@ export async function serializeFormStateBody(
 }
 
 async function serializeFile(
-  environment: string,
   file: File | undefined
 ): Promise<SerializableFile | undefined> {
   if (file == null || !isFile(file)) {
@@ -99,7 +97,7 @@ async function serializeFile(
     lastModified: file.lastModified,
     size: file.size,
     type: file.type,
-    dataUrl: await blobToDataURL(environment, file),
+    dataUrl: await blobToDataURL(file),
   };
 }
 
