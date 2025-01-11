@@ -100,7 +100,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
     <div className="flex h-10 w-full justify-between px-4">
       <div className="flex items-center">
         <span className="inline-flex items-center gap-2 text-sm font-semibold">
-          <span className="t-accent">API Playground</span>
+          <span className="t-accent">API Explorer</span>
           {selectedEndpoint != null && <span>{selectedEndpoint.title}</span>}
         </span>
       </div>
@@ -144,7 +144,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
             <motion.div style={{ height, maxHeight }}>
               <VisuallyHidden.Root>
                 <Dialog.Title>
-                  API Playground
+                  API Explorer
                   {selectedEndpoint != null
                     ? ` for ${selectedEndpoint.title}`
                     : ""}
