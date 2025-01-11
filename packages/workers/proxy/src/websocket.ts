@@ -41,8 +41,6 @@ async function handleSession(websocket: WebSocket, url: URL): Promise<void> {
 		// in JavaScript, as opposed to returning it on to a client.
 		forwardedWs.accept();
 
-		websocket.send(JSON.stringify({ type: "handshake", status: "connected" }));
-
 		forwardedWs.addEventListener("message", (msg: MessageEvent) => {
 			websocket.send(msg.data);
 		});
