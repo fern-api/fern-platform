@@ -26,7 +26,10 @@ export default {
 
 		// if the request is a websocket upgrade, we need to handle it specially
 		if (request.headers.get("Upgrade") === "websocket") {
-			if (request.method !== "GET" || forwardedUrl.protocol !== "wss:") {
+			if (
+				request.method !== "GET" ||
+				!["wss:"].includes(forwardedUrl.protocol)
+			) {
 				return new Response(null, { status: 400 });
 			}
 			return upgradeToWebsocket(forwardedUrl);
@@ -83,7 +86,11 @@ export default {
 		responseHeaders.set("Access-Control-Allow-Headers", "*");
 		responseHeaders.set(
 			"Access-Control-Expose-Headers",
-			[RESPONSE_HEADERS, RESPONSE_TIME, ...response.headers.keys()].join(", ")
+			[
+				RESPONSE_HEADERS.toLowerCase(),
+				RESPONSE_TIME.toLowerCase(),
+				...response.headers.keys(),
+			].join(", ")
 		);
 
 		// detect if the response is a stream, and if so, return it as a stream

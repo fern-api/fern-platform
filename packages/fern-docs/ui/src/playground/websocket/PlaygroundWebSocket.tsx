@@ -14,6 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
+import urlJoin from "url-join";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   store,
@@ -104,7 +105,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
       setConnectedState("opening");
 
-      socket.current = new WebSocket(WEBSOCKET_PROXY_URI);
+      socket.current = new WebSocket(urlJoin(WEBSOCKET_PROXY_URI, url));
 
       socket.current.onopen = () => {
         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);

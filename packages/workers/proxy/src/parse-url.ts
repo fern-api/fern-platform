@@ -8,7 +8,7 @@ export function parseUrl(url: string): URL | undefined {
 
 	if (
 		forwardedUrl.host === "n" ||
-		(forwardedUrl.protocol !== "https:" && forwardedUrl.protocol !== "wss:")
+		!["https:", "wss:"].includes(forwardedUrl.protocol)
 	) {
 		return undefined;
 	}

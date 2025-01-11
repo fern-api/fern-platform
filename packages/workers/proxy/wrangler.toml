@@ -2,6 +2,7 @@
 name = "proxy"
 main = "src/index.ts"
 compatibility_date = "2025-01-09"
+compatibility_flags = ["nodejs_compat"]
 routes = [
   { pattern = "proxy.ferndocs.com", custom_domain = true }
 ]
