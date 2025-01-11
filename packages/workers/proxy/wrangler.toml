@@ -2,6 +2,9 @@
 name = "proxy"
 main = "src/index.ts"
 compatibility_date = "2025-01-09"
+routes = [
+  { pattern = "proxy.ferndocs.com", custom_domain = true }
+]
 
 # Workers Logs
 # Docs: https://developers.cloudflare.com/workers/observability/logs/workers-logs/
