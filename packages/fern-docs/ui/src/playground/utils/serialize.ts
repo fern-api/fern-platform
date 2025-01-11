@@ -13,7 +13,6 @@ import {
 } from "../types";
 
 export async function serializeFormStateBody(
-  // environment: string,
   shape: HttpRequestBodyShape | undefined,
   body: PlaygroundFormStateBody | undefined,
   usesApplicationJsonInFormDataValue: boolean

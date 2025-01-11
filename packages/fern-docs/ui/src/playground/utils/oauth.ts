@@ -57,7 +57,6 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     method: endpoint.method,
     headers,
     body: await serializeFormStateBody(
-      "",
       endpoint.requests?.[0]?.body,
       formState.body,
       false
