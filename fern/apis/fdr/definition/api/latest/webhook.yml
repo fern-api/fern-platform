@@ -19,7 +19,7 @@ types:
       method: WebhookHttpMethod
       path: list<string>
       headers: optional<list<type.ObjectProperty>>
-      payload: optional<WebhookPayload>
+      payloads: optional<list<WebhookPayload>>
       examples: optional<list<v1Read.ExampleWebhookPayload>>
 
   WebhookPayload:

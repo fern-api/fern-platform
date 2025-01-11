@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -52,9 +53,9 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
       Object.entries(this.typeSchemas)
         .map(([key, value]) => {
           const name = value.name ?? key;
-          const shape = value.convert();
+          const maybeShapes = maybeSingleValueToArray(value.convert());
 
-          if (name == null || shape == null) {
+          if (maybeShapes == null) {
             return [key, undefined];
           }
 
@@ -62,7 +63,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
             FernRegistry.TypeId(key),
             {
               name,
-              shape,
+              shape: maybeShapes[0],
               description: value.description,
               availability: undefined,
             },

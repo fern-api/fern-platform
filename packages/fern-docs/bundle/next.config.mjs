@@ -140,6 +140,21 @@ const nextConfig = {
       },
     ];
 
+    const searchV2Headers = [
+      {
+        key: "Access-Control-Allow-Origin",
+        value: "*",
+      },
+      {
+        key: "Access-Control-Allow-Methods",
+        value: "POST, OPTIONS",
+      },
+      {
+        key: "Access-Control-Allow-Headers",
+        value: "*",
+      },
+    ];
+
     return [
       {
         source: "/api/fern-docs/auth/:path*",
@@ -148,6 +163,10 @@ const nextConfig = {
       {
         source: "/:prefix*/api/fern-docs/auth/:path*",
         headers: AccessControlHeaders,
+      },
+      {
+        source: "/:prefix*/api/fern-docs/search/v2/:path*",
+        headers: searchV2Headers,
       },
 
       /**

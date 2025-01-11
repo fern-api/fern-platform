@@ -6,13 +6,16 @@ import {
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   OpenAPIV3_1.NonArraySchemaObject,
-  | FernRegistry.api.latest.TypeShape.DiscriminatedUnion
-  | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
+  | [FernRegistry.api.latest.TypeShape.DiscriminatedUnion]
+  | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
+  | FernRegistry.api.latest.TypeShape[]
 > {
+  isUnionOfObjects: boolean | undefined;
   discriminated: boolean | undefined;
   discriminant: string | undefined;
   discriminatedMapping: Record<string, SchemaConverterNode> | undefined;
@@ -28,6 +31,11 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
 
   parse(): void {
     if (this.input.oneOf != null || this.input.anyOf != null) {
+      this.isUnionOfObjects = (this.input.oneOf ?? this.input.anyOf)?.every(
+        (schema) =>
+          resolveSchemaReference(schema, this.context.document)?.type ===
+          "object"
+      );
       if (this.input.discriminator == null) {
         this.discriminated = false;
         this.undiscriminatedMapping = (
@@ -75,9 +83,16 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   }
 
   convert():
-    | FernRegistry.api.latest.TypeShape.DiscriminatedUnion
-    | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion
+    | [FernRegistry.api.latest.TypeShape.DiscriminatedUnion]
+    | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
+    | FernRegistry.api.latest.TypeShape[]
     | undefined {
+    if (!this.isUnionOfObjects && !this.discriminated) {
+      return this.undiscriminatedMapping
+        ?.flatMap((node) => node.convert())
+        .filter(isNonNullish);
+    }
+
     if (
       // If no decision has been made, bail
       this.discriminated == null ||
@@ -92,49 +107,59 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     return this.discriminated &&
       this.discriminant != null &&
       this.discriminatedMapping != null
-      ? {
-          type: "discriminatedUnion",
-          discriminant: FernRegistry.PropertyKey(this.discriminant),
-          variants: Object.entries(this.discriminatedMapping)
-            .map(([key, node]) => {
-              const convertedShape = node.convert();
-              if (convertedShape == null || convertedShape.type !== "object") {
-                return undefined;
-              }
-              return {
-                discriminantValue: key,
-                // TODO x-fern-display-name extension
-                displayName: undefined,
-                // TODO x-fern-availability extension
-                availability: undefined,
-                description: node.description,
-                ...convertedShape,
-              };
-            })
-            .filter(isNonNullish),
-        }
-      : this.undiscriminatedMapping != null
-        ? {
-            type: "undiscriminatedUnion",
-            variants: this.undiscriminatedMapping
-              .map((node) => {
-                const convertedShape = node.convert();
-                if (
-                  convertedShape == null ||
-                  convertedShape.type !== "object"
-                ) {
-                  return undefined;
-                }
-                return {
-                  displayName: node.name,
-                  shape: convertedShape,
-                  description: node.description,
-                  // TODO: handle availability
-                  availability: undefined,
-                };
+      ? [
+          {
+            type: "discriminatedUnion",
+            discriminant: FernRegistry.PropertyKey(this.discriminant),
+            variants: Object.entries(this.discriminatedMapping)
+              .flatMap(([key, node]) => {
+                const convertedShapes = maybeSingleValueToArray(node.convert());
+
+                return convertedShapes
+                  ?.map((shape) => {
+                    if (shape == null || shape.type !== "object") {
+                      return undefined;
+                    }
+                    return {
+                      discriminantValue: key,
+                      displayName: node.name,
+                      availability: node.availability?.convert(),
+                      description: node.description,
+                      ...shape,
+                    };
+                  })
+                  .filter(isNonNullish);
               })
               .filter(isNonNullish),
-          }
+          },
+        ]
+      : this.undiscriminatedMapping != null
+        ? [
+            {
+              type: "undiscriminatedUnion",
+              variants: this.undiscriminatedMapping
+                .flatMap((node) => {
+                  const convertedShapes = maybeSingleValueToArray(
+                    node.convert()
+                  );
+
+                  return convertedShapes
+                    ?.map((shape) => {
+                      if (shape == null || shape.type !== "object") {
+                        return undefined;
+                      }
+                      return {
+                        displayName: node.name,
+                        shape,
+                        description: node.description,
+                        availability: node.availability?.convert(),
+                      };
+                    })
+                    .filter(isNonNullish);
+                })
+                .filter(isNonNullish),
+            },
+          ]
         : undefined;
   }
 

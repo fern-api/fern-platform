@@ -47,9 +47,33 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "TextToSpeechResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
       "errors": [],
-      "examples": []
+      "examples": [
+        {
+          "path": "/v1/text-to-speech",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "file": "string"
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_textToSpeech.generateFromPrompt": {
       "id": "endpoint_textToSpeech.generateFromPrompt",
@@ -105,9 +129,33 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "TextToSpeechFromPromptResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
       "errors": [],
-      "examples": []
+      "examples": [
+        {
+          "path": "/v1/text-to-speech/from-prompt",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "file": "string"
+            }
+          },
+          "snippets": {}
+        }
+      ]
     },
     "endpoint_voices.list": {
       "id": "endpoint_voices.list",
@@ -569,9 +617,15 @@
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }
@@ -664,9 +718,15 @@
                 "shape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "nullable",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 }

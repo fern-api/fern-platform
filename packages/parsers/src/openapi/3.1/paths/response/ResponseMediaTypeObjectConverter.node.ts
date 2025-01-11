@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
@@ -11,6 +12,7 @@ import {
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
 import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
@@ -25,10 +27,12 @@ export type ResponseStreamingFormat = ConstArrayToType<
 
 export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.MediaTypeObject,
-  FernRegistry.api.latest.HttpResponseBodyShape
+  | FernRegistry.api.latest.HttpResponseBodyShape
+  | FernRegistry.api.latest.HttpResponseBodyShape[]
 > {
   schema: SchemaConverterNode | undefined;
   contentType: ResponseContentType | undefined;
+  unsupportedContentType: string | undefined;
   contentSubtype: string | undefined;
   examples: ExampleObjectConverterNode[] | undefined;
 
@@ -70,6 +74,22 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         this.input.schema,
         this.context.document
       )?.contentMediaType;
+    } else {
+      this.unsupportedContentType = contentType;
+      if (this.input.schema == null) {
+        this.context.errors.error({
+          message:
+            "Expected schema for plain text response body. Received null",
+          path: this.accessPath,
+        });
+      } else {
+        this.schema = new SchemaConverterNode({
+          input: this.input.schema,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: this.pathId,
+        });
+      }
     }
 
     // TODO: This can all be moved upstream if there is a way to correlate the requests and responses (probably with ref-based config)
@@ -101,7 +121,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       }
     );
 
-    if (this.contentType != null) {
+    if (this.contentType != null || this.unsupportedContentType != null) {
       const resolvedSchema = resolveSchemaReference(
         this.input.schema,
         this.context.document
@@ -201,19 +221,18 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
   convertStreamingFormat():
     | FernRegistry.api.latest.HttpResponseBodyShape
+    | FernRegistry.api.latest.HttpResponseBodyShape[]
     | undefined {
     switch (this.streamingFormat) {
       case "json": {
-        const shape = this.schema?.convert();
-        if (shape == null) {
-          return undefined;
-        }
-        return {
+        const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
+        return maybeShapes?.map((shape) => ({
           type: "stream",
           // TODO: Parse terminator (probably extension)
           terminator: "[DATA]",
           shape,
-        };
+        }));
       }
       case "sse":
         return { type: "streamingText" };
@@ -225,30 +244,63 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     }
   }
 
-  convert(): FernRegistry.api.latest.HttpResponseBodyShape | undefined {
-    switch (this.contentType) {
-      case "application/json":
-        if (this.streamingFormat == null) {
-          const shape = this.schema?.convert();
-          if (
-            shape == null ||
-            (shape.type !== "object" && shape.type !== "alias")
-          ) {
-            return undefined;
+  convert():
+    | FernRegistry.api.latest.HttpResponseBodyShape
+    | FernRegistry.api.latest.HttpResponseBodyShape[]
+    | undefined {
+    if (this.contentType != null) {
+      switch (this.contentType) {
+        case "application/json":
+          if (this.streamingFormat == null) {
+            const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
+            return maybeShapes
+              ?.map((shape) => {
+                if (
+                  shape == null ||
+                  (shape.type !== "object" && shape.type !== "alias")
+                ) {
+                  return undefined;
+                }
+                return shape;
+              })
+              .filter(isNonNullish);
+          } else {
+            return this.convertStreamingFormat();
           }
-          return shape;
-        } else {
+        case "application/octet-stream":
+          return { type: "fileDownload", contentType: this.contentSubtype };
+        case "text/event-stream":
           return this.convertStreamingFormat();
-        }
-      case "application/octet-stream":
-        return { type: "fileDownload", contentType: this.contentSubtype };
-      case "text/event-stream":
-        return this.convertStreamingFormat();
-      case undefined:
-        return undefined;
-      default:
-        new UnreachableCaseError(this.contentType);
-        return undefined;
+        case undefined:
+          return undefined;
+        default:
+          new UnreachableCaseError(this.contentType);
+          return undefined;
+      }
+    } else if (this.unsupportedContentType != null) {
+      const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
+      return maybeShapes
+        ?.map((shape) => {
+          const type = shape.type;
+          switch (type) {
+            case "alias":
+              return shape;
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+            case "enum":
+              return undefined;
+            case "object":
+              return shape;
+            default:
+              new UnreachableCaseError(type);
+              return undefined;
+          }
+        })
+        .filter(isNonNullish);
+    } else {
+      return undefined;
     }
   }
 }

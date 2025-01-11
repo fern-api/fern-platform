@@ -5,12 +5,14 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { isArraySchema } from "../guards/isArraySchema";
 import { isBooleanSchema } from "../guards/isBooleanSchema";
 import { isIntegerSchema } from "../guards/isIntegerSchema";
 import { isMixedSchema } from "../guards/isMixedSchema";
 import { isNonArraySchema } from "../guards/isNonArraySchema";
+import { isNullableSchema } from "../guards/isNullableSchema";
 import { isNullSchema } from "../guards/isNullSchema";
 import { isNumberSchema } from "../guards/isNumberSchema";
 import { isObjectSchema } from "../guards/isObjectSchema";
@@ -21,13 +23,13 @@ import { ConstConverterNode } from "./ConstConverter.node";
 import { MixedSchemaConverterNode } from "./MixedSchemaConverter.node";
 import { ObjectConverterNode } from "./ObjectConverter.node";
 import { OneOfConverterNode } from "./OneOfConverter.node";
-import { ReferenceConverterNode } from "./ReferenceConverter.node";
 import { BooleanConverterNode } from "./primitives/BooleanConverter.node";
 import { EnumConverterNode } from "./primitives/EnumConverter.node";
 import { IntegerConverterNode } from "./primitives/IntegerConverter.node";
 import { NullConverterNode } from "./primitives/NullConverter.node";
 import { NumberConverterNode } from "./primitives/NumberConverter.node";
 import { StringConverterNode } from "./primitives/StringConverter.node";
+import { ReferenceConverterNode } from "./ReferenceConverter.node";
 
 export type PrimitiveType =
   | NumberConverterNode.Input
@@ -37,15 +39,19 @@ export type PrimitiveType =
 
 export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
-  FernRegistry.api.latest.TypeShape | undefined
+  | FernRegistry.api.latest.TypeShape
+  | FernRegistry.api.latest.TypeShape[]
+  | undefined
 > {
   typeShapeNode:
     | BaseOpenApiV3_1ConverterNodeWithExample<
         unknown,
-        FernRegistry.api.latest.TypeShape | undefined
+        | FernRegistry.api.latest.TypeShape
+        | FernRegistry.api.latest.TypeShape[]
+        | undefined
       >
     | undefined;
-
+  nullable: boolean | undefined;
   description: string | undefined;
   name: string | undefined;
   examples: unknown | undefined;
@@ -68,6 +74,10 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
       accessPath: this.accessPath,
       pathId: "x-fern-availability",
     });
+    this.nullable =
+      isNonArraySchema(this.input) && isNullableSchema(this.input)
+        ? this.input.nullable
+        : undefined;
 
     // Check if the input is a reference object
     if (isReferenceObject(this.input)) {
@@ -122,9 +132,8 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
           pathId: this.pathId,
         });
       }
-
       // We assume that if one of is defined, it is an object node
-      if (typeof this.input.type === "string") {
+      else if (typeof this.input.type === "string") {
         switch (this.input.type) {
           case "object":
             if (isObjectSchema(this.input)) {
@@ -218,8 +227,30 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     }
   }
 
-  convert(): FernRegistry.api.latest.TypeShape | undefined {
-    return this.typeShapeNode?.convert();
+  convert():
+    | FernRegistry.api.latest.TypeShape
+    | FernRegistry.api.latest.TypeShape[]
+    | undefined {
+    const maybeShapes = this.typeShapeNode?.convert();
+    const mappedShapes = maybeSingleValueToArray(maybeShapes)?.map((shape) =>
+      this.nullable
+        ? {
+            type: "alias" as const,
+            value: {
+              type: "nullable" as const,
+              shape,
+            },
+          }
+        : shape
+    );
+
+    if (maybeShapes == null) {
+      return undefined;
+    }
+
+    return Array.isArray(maybeShapes) && maybeShapes.length > 1
+      ? mappedShapes
+      : mappedShapes?.[0];
   }
 
   example(): unknown | undefined {

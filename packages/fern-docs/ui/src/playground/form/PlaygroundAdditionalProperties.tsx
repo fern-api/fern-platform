@@ -11,6 +11,7 @@ const ADDITIONAL_PROPERTIES_KEY_SHAPE = {
   type: "primitive",
   value: {
     type: "string",
+    format: undefined,
     regex: undefined,
     minLength: undefined,
     maxLength: undefined,
@@ -22,6 +23,7 @@ const ADDITIONAL_PROPERTIES_VALUE_SHAPE = {
   type: "primitive",
   value: {
     type: "string",
+    format: undefined,
     regex: undefined,
     minLength: undefined,
     maxLength: undefined,

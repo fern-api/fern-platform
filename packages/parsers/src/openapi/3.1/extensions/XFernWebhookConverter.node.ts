@@ -1,4 +1,7 @@
-import { BaseOpenApiV3_1ConverterNode } from "../../BaseOpenApiV3_1Converter.node";
+import {
+  BaseOpenApiV3_1ConverterNode,
+  BaseOpenApiV3_1ConverterNodeConstructorArgs,
+} from "../../BaseOpenApiV3_1Converter.node";
 import { extendType } from "../../utils/extendType";
 import { X_FERN_WEBHOOK } from "./fernExtension.consts";
 
@@ -14,12 +17,17 @@ export class XFernWebhookConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
   isWebhook?: boolean;
 
+  constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
+    super(args);
+    this.safeParse();
+  }
+
   parse(): void {
     this.isWebhook = extendType<XFernWebhookConverterNode.Input>(this.input)[
       X_FERN_WEBHOOK
     ];
   }
   convert(): boolean | undefined {
-    return this.isWebhook ? undefined : undefined;
+    return this.isWebhook;
   }
 }

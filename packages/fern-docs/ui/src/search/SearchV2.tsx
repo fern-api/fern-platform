@@ -89,6 +89,8 @@ export function SearchV2(): ReactElement | false {
   let chatEndpoint = useApiRoute("/api/fern-docs/search/v2/chat");
   let suggestEndpoint = useApiRoute("/api/fern-docs/search/v2/suggest");
 
+  // Rerouting to ferndocs.com for production environments to ensure streaming works
+  // Also see: next.config.mjs, where we set CORS headers
   if (process.env.NODE_ENV === "production") {
     chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
     suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
@@ -165,7 +167,9 @@ export function SearchV2(): ReactElement | false {
             askAI={askAi}
             setAskAI={setAskAi}
             api={chatEndpoint}
-            headers={{ "X-Fern-Host": domain }}
+            headers={{
+              "X-Fern-Host": domain,
+            }}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
             setInitialInput={setInitialInput}

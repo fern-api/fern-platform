@@ -6,6 +6,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { resolveRequestReference } from "../../../utils/3.1/resolveRequestReference";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { RequestMediaTypeObjectConverterNode } from "./RequestMediaTypeObjectConverter.node";
 
 export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
@@ -63,18 +64,35 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
 
   convert(): FernRegistry.api.latest.HttpRequest[] {
     return Object.entries(this.requestBodiesByContentType ?? {})
-      .map(([contentType, mediaTypeObject]) => {
-        const body = mediaTypeObject.convert();
+      .flatMap(([contentType, mediaTypeObject]) => {
+        const maybeBodies = maybeSingleValueToArray(mediaTypeObject.convert());
 
-        if (body == null) {
-          return undefined;
-        }
-
-        return {
+        return maybeBodies?.map((body) => ({
           description: this.description,
           contentType,
           body,
-        };
+        }));
+      })
+      .filter(isNonNullish);
+  }
+
+  convertToWebhookPayload():
+    | FernRegistry.api.latest.WebhookPayload[]
+    | undefined {
+    return Object.values(this.requestBodiesByContentType ?? {})
+      .flatMap((mediaTypeObject) => {
+        const maybeBodies = maybeSingleValueToArray(mediaTypeObject.convert());
+
+        return maybeBodies?.map((body) => {
+          if (body.type !== "alias" && body.type !== "object") {
+            return undefined;
+          }
+
+          return {
+            description: this.description,
+            shape: body,
+          };
+        });
       })
       .filter(isNonNullish);
   }

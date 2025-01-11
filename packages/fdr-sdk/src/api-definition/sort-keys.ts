@@ -35,6 +35,7 @@ export function sortKeysByShape(
     primitive: () => obj,
     literal: () => obj,
     optional: ({ shape }) => sortKeysByShape(obj, shape, types),
+    nullable: ({ shape }) => sortKeysByShape(obj, shape, types),
     list: ({ itemShape }) =>
       Array.isArray(obj)
         ? obj.map((o) => sortKeysByShape(o, itemShape, types))

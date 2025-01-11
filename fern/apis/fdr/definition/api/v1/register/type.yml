@@ -84,6 +84,7 @@ types:
 
   StringType:
     properties:
+      format: optional<string>
       regex: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>

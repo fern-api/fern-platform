@@ -655,15 +655,9 @@ export class Register {
      *                     headers: [{
      *                             "key": "value"
      *                         }],
-     *                     payload: {
-     *                         shape: {
-     *                             type: "alias",
-     *                             value: {
-     *                                 "key": "value"
-     *                             }
-     *                         },
-     *                         description: "string"
-     *                     },
+     *                     payloads: [{
+     *                             "key": "value"
+     *                         }],
      *                     examples: [{
      *                             "key": "value"
      *                         }],

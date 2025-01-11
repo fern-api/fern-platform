@@ -4,6 +4,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace ArrayConverterNode {
@@ -18,7 +19,7 @@ export declare namespace ArrayConverterNode {
 
 export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   ArrayConverterNode.Input,
-  ArrayConverterNode.Output | undefined
+  ArrayConverterNode.Output[] | undefined
 > {
   item: SchemaConverterNode | undefined;
 
@@ -45,20 +46,16 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
     }
   }
 
-  convert(): ArrayConverterNode.Output | undefined {
-    const itemShape = this.item?.convert();
+  convert(): ArrayConverterNode.Output[] | undefined {
+    const maybeItemShapes = maybeSingleValueToArray(this.item?.convert());
 
-    if (itemShape == null) {
-      return undefined;
-    }
-
-    return {
+    return maybeItemShapes?.map((itemShape) => ({
       type: "alias",
       value: {
         type: "list",
         itemShape,
       },
-    };
+    }));
   }
 
   example(): unknown[] | undefined {

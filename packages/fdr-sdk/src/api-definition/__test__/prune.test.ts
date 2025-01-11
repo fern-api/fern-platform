@@ -6,6 +6,7 @@ const PRIMITIVE_SHAPE: Latest.TypeReference.Primitive = {
   type: "primitive" as const,
   value: {
     type: "string",
+    format: undefined,
     regex: undefined,
     minLength: undefined,
     maxLength: undefined,

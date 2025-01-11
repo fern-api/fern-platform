@@ -22603,15 +22603,17 @@
         "operationId": "sent",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_post:Post"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_post:Post"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22652,15 +22654,17 @@
         "operationId": "created",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22698,15 +22702,17 @@
         "operationId": "confirmed",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22744,15 +22750,17 @@
         "operationId": "deleted",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22790,15 +22798,17 @@
         "operationId": "upgraded",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22836,15 +22846,17 @@
         "operationId": "downgraded",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22882,15 +22894,17 @@
         "operationId": "tier-added",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22926,15 +22940,17 @@
         "operationId": "tier-deleted",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_subscription:Subscription"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_subscription:Subscription"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -22968,15 +22984,17 @@
         "operationId": "submitted",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_survey:SurveyResponse"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_survey:SurveyResponse"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {

@@ -16,6 +16,7 @@ export type UnwrappedReference = {
   descriptions: FernDocs.MarkdownText[];
   visitedTypeIds: Set<Latest.TypeId>;
   isOptional: boolean;
+  isNullable: boolean;
   default?: unknown;
 };
 
@@ -74,6 +75,7 @@ export function unwrapReference(
   }
 
   let isOptional = false;
+  let isNullable = false;
   const defaults: InternalDefaultValue[] = [];
   const descriptions: FernDocs.MarkdownText[] = [];
   const availabilities: Latest.Availability[] = [];
@@ -89,7 +91,10 @@ export function unwrapReference(
       break;
     }
 
-    if (internalTypeRef.type === "optional") {
+    if (internalTypeRef.type === "nullable") {
+      isNullable = true;
+      internalTypeRef = internalTypeRef.shape;
+    } else if (internalTypeRef.type === "optional") {
       isOptional = true;
       if (internalTypeRef.default != null) {
         defaults.push({
@@ -137,12 +142,10 @@ export function unwrapReference(
   if (internalTypeRef == null) {
     // Note: this should be a fatal error, but we're handling it gracefully for now
     if (circularReference) {
-      // eslint-disable-next-line no-console
       console.error(
         `Circular reference detected. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`
       );
     } else {
-      // eslint-disable-next-line no-console
       console.error(
         `Type reference is invalid. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`
       );
@@ -154,6 +157,7 @@ export function unwrapReference(
     availability: coalesceAvailability(availabilities),
     visitedTypeIds,
     isOptional,
+    isNullable,
     default: selectDefaultValue(internalTypeRef, defaults),
     descriptions,
   };
@@ -235,7 +239,6 @@ export function unwrapObjectType(
   const extendedProperties = object.extends.flatMap(
     (typeId): Latest.ObjectProperty[] => {
       if (parentVisitedTypeIds?.has(typeId)) {
-        // eslint-disable-next-line no-console
         console.error(
           `Circular reference detected. Cannot extend type=${typeId}`
         );
@@ -256,7 +259,6 @@ export function unwrapObjectType(
 
       // TODO: should we be able to extend discriminated and undiscriminated unions?
       if (unwrapped?.shape.type !== "object") {
-        // eslint-disable-next-line no-console
         console.error("Object extends non-object", typeId);
         return [];
       }

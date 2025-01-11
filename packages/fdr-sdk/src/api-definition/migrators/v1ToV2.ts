@@ -247,7 +247,7 @@ export class ApiDefinitionV1ToLatest {
       method: v1.method,
       path: v1.path,
       headers: this.migrateParameters(v1.headers),
-      payload,
+      payloads: [payload],
       examples: v1.examples.map((example) => ({
         ...example,
         payload: sortKeysByShape(example.payload, payload.shape, this.types),

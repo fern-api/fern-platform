@@ -61,18 +61,20 @@ describe("convertToObjectProperties", () => {
     const result = convertToObjectProperties(properties, undefined);
 
     expect(result).toEqual([
-      {
-        key: FernRegistry.PropertyKey("name"),
-        valueShape: mockTypeShape,
-        description: "The name",
-        availability: mockAvailabilityShape,
-      },
-      {
-        key: FernRegistry.PropertyKey("age"),
-        valueShape: mockTypeShape,
-        description: undefined,
-        availability: undefined,
-      },
+      [
+        {
+          key: FernRegistry.PropertyKey("name"),
+          valueShape: mockTypeShape,
+          description: "The name",
+          availability: mockAvailabilityShape,
+        },
+        {
+          key: FernRegistry.PropertyKey("age"),
+          valueShape: mockTypeShape,
+          description: undefined,
+          availability: undefined,
+        },
+      ],
     ]);
   });
 
@@ -110,12 +112,14 @@ describe("convertToObjectProperties", () => {
     const result = convertToObjectProperties(properties, undefined);
 
     expect(result).toEqual([
-      {
-        key: FernRegistry.PropertyKey("valid"),
-        valueShape: mockTypeShape,
-        description: undefined,
-        availability: undefined,
-      },
+      [
+        {
+          key: FernRegistry.PropertyKey("valid"),
+          valueShape: mockTypeShape,
+          description: undefined,
+          availability: undefined,
+        },
+      ],
     ]);
   });
 });

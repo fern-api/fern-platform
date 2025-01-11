@@ -14,5 +14,5 @@ export type DereferencedTypeShapeOrReference =
   | DereferencedTypeReference;
 export type DereferencedNonOptionalTypeShapeOrReference = Exclude<
   DereferencedTypeShapeOrReference,
-  Latest.TypeReference.Optional
+  Latest.TypeReference.Optional | Latest.TypeReference.Nullable
 >;

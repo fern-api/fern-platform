@@ -11,6 +11,7 @@ import {
   SUPPORTED_REQUEST_CONTENT_TYPES,
 } from "../../../types/format.types";
 import { resolveReference } from "../../../utils/3.1/resolveReference";
+import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isObjectSchema } from "../../guards/isObjectSchema";
@@ -26,7 +27,8 @@ export type RequestContentType = ConstArrayToType<
 
 export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.MediaTypeObject,
-  FernRegistry.api.latest.HttpRequestBodyShape
+  | FernRegistry.api.latest.HttpRequestBodyShape
+  | FernRegistry.api.latest.HttpRequestBodyShape[]
 > {
   description: string | undefined;
 
@@ -146,7 +148,10 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     }
   }
 
-  convert(): FernRegistry.api.latest.HttpRequestBodyShape | undefined {
+  convert():
+    | FernRegistry.api.latest.HttpRequestBodyShape
+    | FernRegistry.api.latest.HttpRequestBodyShape[]
+    | undefined {
     switch (this.contentType) {
       case "json":
         return this.schema?.convert();
@@ -156,55 +161,73 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           isOptional: this.isOptional ?? false,
           contentType: this.contentType,
         };
-      case "form-data":
-        return {
-          type: "formData",
-          fields: Object.entries(this.fields ?? {})
+      case "form-data": {
+        const possibleFields: FernRegistry.api.latest.FormDataField[][] =
+          Object.entries(this.fields ?? {})
             .map(([key, field]) => {
               switch (field.multipartType) {
                 case "file":
-                  return {
-                    type: field.multipartType,
-                    key: FernRegistry.PropertyKey(key),
-                    isOptional: this.requiredFields?.includes(key) == null,
-                    contentType: field.contentType,
-                    description: field.description,
-                    availability: field.availability?.convert(),
-                  };
+                  return [
+                    {
+                      type: field.multipartType,
+                      key: FernRegistry.PropertyKey(key),
+                      isOptional: this.requiredFields?.includes(key) == null,
+                      contentType: field.contentType,
+                      description: field.description,
+                      availability: field.availability?.convert(),
+                    },
+                  ];
                 case "files":
-                  return {
-                    type: field.multipartType,
-                    key: FernRegistry.PropertyKey(key),
-                    isOptional: this.requiredFields?.includes(key) == null,
-                    contentType: field.contentType,
-                    description: field.description,
-                    availability: field.availability?.convert(),
-                  };
+                  return [
+                    {
+                      type: field.multipartType,
+                      key: FernRegistry.PropertyKey(key),
+                      isOptional: this.requiredFields?.includes(key) == null,
+                      contentType: field.contentType,
+                      description: field.description,
+                      availability: field.availability?.convert(),
+                    },
+                  ];
                 case "property": {
-                  const valueShape = field.convert();
-                  if (valueShape == null) {
-                    return undefined;
-                  }
-                  return {
-                    type: field.multipartType,
+                  const maybeValueShapes = maybeSingleValueToArray(
+                    field.convert()
+                  );
+                  const type = field.multipartType;
+
+                  return maybeValueShapes?.map((valueShape) => ({
+                    type,
                     key: FernRegistry.PropertyKey(key),
                     contentType: field.contentType,
                     valueShape,
                     description: field.description,
                     availability: field.availability?.convert(),
-                  };
+                  }));
                 }
                 case undefined:
-                  return undefined;
+                  return [];
                 default:
                   new UnreachableCaseError(field.multipartType);
-                  return undefined;
+                  return [];
               }
             })
-            .filter(isNonNullish),
+            .filter(isNonNullish);
+        const fieldPermutations = possibleFields.reduce<
+          FernRegistry.api.latest.FormDataField[][]
+        >(
+          (acc, curr) => {
+            return acc.flatMap((a) =>
+              curr.length > 0 ? curr.map((b) => [...a, b]) : [[...a]]
+            );
+          },
+          [[]]
+        );
+        return fieldPermutations.map((fields) => ({
+          type: "formData",
+          fields,
           availability: this.availability?.convert(),
           description: this.description,
-        };
+        }));
+      }
       case undefined:
         return this.schema?.convert();
       default:

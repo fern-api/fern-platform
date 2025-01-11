@@ -199,7 +199,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           break;
         default:
           new UnreachableCaseError(this.responseBody.contentType);
-          return undefined;
+          return;
       }
     }
   }
@@ -347,7 +347,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           break;
         default:
           new UnreachableCaseError(this.requestBody.contentType);
-          return undefined;
+          break;
       }
     }
 
@@ -383,10 +383,15 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           };
           break;
         case undefined:
+          responseBody = {
+            type: "json",
+            value:
+              this.resolvedResponseInput?.value ?? this.resolvedResponseInput,
+          };
           break;
         default:
           new UnreachableCaseError(this.responseBody.contentType);
-          return undefined;
+          break;
       }
     }
 

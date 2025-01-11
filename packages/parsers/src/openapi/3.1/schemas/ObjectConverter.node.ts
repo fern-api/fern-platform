@@ -8,6 +8,7 @@ import {
 import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProperties";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
+import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
@@ -19,7 +20,7 @@ export declare namespace ObjectConverterNode {
 
 export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   ObjectConverterNode.Input,
-  FernRegistry.api.latest.TypeShape.Object_
+  FernRegistry.api.latest.TypeShape.Object_[]
 > {
   description: string | undefined;
   extends: string[] = [];
@@ -101,7 +102,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     this.description = this.input.description;
   }
 
-  convertProperties(): FernRegistry.api.latest.ObjectProperty[] | undefined {
+  convertProperties(): FernRegistry.api.latest.ObjectProperty[][] | undefined {
     if (this.properties == null) {
       return undefined;
     }
@@ -109,39 +110,49 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     return convertToObjectProperties(this.properties, this.requiredProperties);
   }
 
-  convertExtraProperties(): FernRegistry.api.latest.TypeReference | undefined {
+  convertExtraProperties():
+    | FernRegistry.api.latest.TypeReference[]
+    | undefined {
     if (this.extraProperties == null) {
       return undefined;
     }
 
     if (typeof this.extraProperties === "string") {
-      return {
-        type: "unknown",
-        displayName: this.extraProperties,
-      };
+      return [
+        {
+          type: "unknown",
+          displayName: this.extraProperties,
+        },
+      ];
     }
 
-    const convertedShape = this.extraProperties.convert();
+    const maybeConvertedShapes = maybeSingleValueToArray(
+      this.extraProperties.convert()
+    );
 
-    if (convertedShape?.type === "alias") {
-      return convertedShape.value;
-    }
-
-    return undefined;
+    return maybeConvertedShapes
+      ?.map((shape) => (shape.type === "alias" ? shape.value : undefined))
+      .filter(isNonNullish);
   }
 
-  convert(): FernRegistry.api.latest.TypeShape.Object_ | undefined {
-    const properties = this.convertProperties();
-    if (properties == null) {
+  convert(): FernRegistry.api.latest.TypeShape.Object_[] | undefined {
+    const maybeMultipleObjectsProperties = this.convertProperties();
+    if (maybeMultipleObjectsProperties == null) {
       return undefined;
     }
 
-    return {
-      type: "object",
-      extends: this.extends.map((id) => FernRegistry.TypeId(id)),
-      properties,
-      extraProperties: this.convertExtraProperties(),
-    };
+    const maybeMultipleObjectsExtraProperties = this.convertExtraProperties();
+
+    return maybeMultipleObjectsProperties.flatMap((properties) => {
+      return (maybeMultipleObjectsExtraProperties ?? [undefined]).map(
+        (extraProperties) => ({
+          type: "object",
+          extends: this.extends.map((id) => FernRegistry.TypeId(id)),
+          properties,
+          extraProperties,
+        })
+      );
+    });
   }
 
   example(): Record<string, unknown> | undefined {

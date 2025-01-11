@@ -7,6 +7,7 @@ import {
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
+import { dedupPayloads } from "../../utils/dedupPayloads";
 import { getEndpointId } from "../../utils/getEndpointId";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
@@ -14,6 +15,7 @@ import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter
 import { XFernEndpointExampleConverterNode } from "../extensions/XFernEndpointExampleConverter.node";
 import { XFernGroupNameConverterNode } from "../extensions/XFernGroupNameConverter.node";
 import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNameConverter.node";
+import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
@@ -83,6 +85,14 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.context,
       this.accessPath
     );
+
+    this.isWebhook =
+      new XFernWebhookConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: this.pathId,
+      }).isWebhook || this.isWebhook;
 
     this.input.parameters?.map((parameter, index) => {
       if (isReferenceObject(parameter)) {
@@ -320,47 +330,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       return undefined;
     }
 
-    if (this.isWebhook) {
-      if (
-        (this.method !== "POST" && this.method !== "GET") ||
-        this.endpointId == null
-      ) {
-        return undefined;
-      }
-
-      return {
-        id: FernRegistry.WebhookId(this.endpointId),
-        description: this.description,
-        availability: this.availability?.convert(),
-        displayName: this.displayName,
-        operationId: this.operationId,
-        namespace: this.namespace?.convert(),
-        method: this.method,
-        // This is a little bit weird, consider changing the shape of fdr
-        path:
-          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
-          [],
-        headers: convertOperationObjectProperties(this.requestHeaders),
-        // TODO: figure out what this looks like to be able to parse
-        payload: undefined,
-        examples: undefined,
-      };
-    }
-
-    const environments = this.servers
-      ?.map((server) => server.convert())
-      .filter(isNonNullish);
-    const pathParts = this.convertPathToPathParts();
-    if (pathParts == null) {
-      return undefined;
-    }
-
-    let authIds: string[] | undefined;
-    const auth = this.auth?.convert();
-    if (auth != null) {
-      authIds = Object.keys(auth);
-    }
-
     if (this.endpointId == null) {
       return undefined;
     }
@@ -382,6 +351,48 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
+    if (this.isWebhook) {
+      if (this.method !== "POST" && this.method !== "GET") {
+        return undefined;
+      }
+
+      return {
+        id: FernRegistry.WebhookId(this.endpointId),
+        description: this.description,
+        availability: this.availability?.convert(),
+        displayName: this.displayName,
+        operationId: this.operationId,
+        namespace: this.namespace?.convert(),
+        method: this.method,
+        path:
+          this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
+          [],
+        headers: dedupPayloads(
+          convertOperationObjectProperties(this.requestHeaders)?.flat()
+        ),
+        payloads: this.requests?.convertToWebhookPayload(),
+        examples: examples.map((example) => {
+          return {
+            payload: example.snippets,
+          };
+        }),
+      };
+    }
+
+    const environments = this.servers
+      ?.map((server) => server.convert())
+      .filter(isNonNullish);
+    const pathParts = this.convertPathToPathParts();
+    if (pathParts == null) {
+      return undefined;
+    }
+
+    let authIds: string[] | undefined;
+    const auth = this.auth?.convert();
+    if (auth != null) {
+      authIds = Object.keys(auth);
+    }
+
     return {
       id: FernRegistry.EndpointId(this.endpointId),
       description: this.description,
@@ -394,11 +405,18 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
       defaultEnvironment: environments?.[0]?.id,
       environments,
-      pathParameters: convertOperationObjectProperties(this.pathParameters),
-      queryParameters: convertOperationObjectProperties(this.queryParameters),
-      requestHeaders: convertOperationObjectProperties(this.requestHeaders),
-      responseHeaders: responses?.[0]?.headers,
-      // TODO: revisit fdr shape to suport multiple requests
+      pathParameters: dedupPayloads(
+        convertOperationObjectProperties(this.pathParameters)?.flat()
+      ),
+      queryParameters: dedupPayloads(
+        convertOperationObjectProperties(this.queryParameters)?.flat()
+      ),
+      requestHeaders: dedupPayloads(
+        convertOperationObjectProperties(this.requestHeaders)?.flat()
+      ),
+      responseHeaders: dedupPayloads(
+        responses?.flatMap((response) => response.headers).filter(isNonNullish)
+      ),
       requests: this.requests?.convert(),
       responses: responses?.map((response) => response.response),
       errors,
