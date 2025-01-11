@@ -1,7 +1,9 @@
 import { UnreachableCaseError } from "ts-essentials";
 import { ProxyRequest } from "../types/proxy";
 
-export function toBodyInit(body: ProxyRequest["body"]): BodyInit | null {
+export async function toBodyInit(
+  body: ProxyRequest["body"]
+): Promise<BodyInit | null> {
   if (body == null) {
     return null;
   }
@@ -17,11 +19,19 @@ export function toBodyInit(body: ProxyRequest["body"]): BodyInit | null {
             break;
           case "file":
             if (value.value?.dataUrl != null) {
-              formData.append(key, value.value.dataUrl);
+              const response = await fetch(value.value.dataUrl);
+              const blob = await response.blob();
+              formData.append(key, blob, value.value.name);
             }
             break;
           case "fileArray":
-            formData.append(key, value.value.map((f) => f.dataUrl).join(","));
+            for (const file of value.value) {
+              if (file?.dataUrl != null) {
+                const response = await fetch(file.dataUrl);
+                const blob = await response.blob();
+                formData.append(key, blob, file.name);
+              }
+            }
             break;
           default:
             console.error(new UnreachableCaseError(value));

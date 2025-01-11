@@ -4,11 +4,6 @@ import { toBodyInit } from "./requestToBodyInit";
 
 const PROXY_URL = "https://proxy.ferndocs.com/";
 
-// interface ResponseChunk {
-//   data: string;
-//   time: number;
-// }
-
 export async function executeProxyStream(
   req: ProxyRequest
 ): Promise<[Response, ReadableStream<Uint8Array>]> {
@@ -21,7 +16,7 @@ export async function executeProxyStream(
   const response = await fetch(urljoin(PROXY_URL, req.url), {
     method: req.method,
     headers: requestHeaders,
-    body: toBodyInit(req.body),
+    body: await toBodyInit(req.body),
     mode: "cors",
   });
 

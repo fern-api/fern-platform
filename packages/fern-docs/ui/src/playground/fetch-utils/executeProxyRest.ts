@@ -16,7 +16,7 @@ export async function executeProxyRest(
   const res = await fetch(urljoin(PROXY_URL, req.url), {
     method: req.method,
     headers: requestHeaders,
-    body: toBodyInit(req.body),
+    body: await toBodyInit(req.body),
     mode: "cors",
   });
 
