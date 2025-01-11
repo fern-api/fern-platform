@@ -4,6 +4,7 @@ import { upgradeToWebsocket } from "./websocket";
 const REQUEST_HEADERS = "X-Fern-Proxy-Request-Headers";
 const RESPONSE_HEADERS = "X-Fern-Proxy-Response-Headers";
 const RESPONSE_TIME = "X-Fern-Proxy-Response-Time";
+const ORIGIN_LATENCY = "X-Fern-Proxy-Origin-Latency";
 
 export default {
   async fetch(request, _env, _ctx): Promise<Response> {
@@ -73,11 +74,16 @@ export default {
 
     // forward the request
     const response = await fetch(newRequest);
+    const latency = performance.now() - startTime;
 
     // copy over the response headers
     const responseHeaders = new Headers([
       ...response.headers,
-      [RESPONSE_HEADERS, [...response.headers.keys()].join(",")],
+
+      // additional proxy headers
+      [RESPONSE_HEADERS, [...new Set(response.headers.keys())].join(",")],
+      [ORIGIN_LATENCY, `${latency}`],
+      ["Cache-Control", "no-transform, no-cache"],
     ]);
 
     // set the response headers (and override cors headers from the original request)
@@ -89,7 +95,8 @@ export default {
       [
         RESPONSE_HEADERS.toLowerCase(),
         RESPONSE_TIME.toLowerCase(),
-        ...response.headers.keys(),
+        ORIGIN_LATENCY.toLowerCase(),
+        ...new Set(response.headers.keys()),
       ].join(", ")
     );
 
@@ -101,12 +108,17 @@ export default {
       response.headers
         .get("Content-Type")
         ?.toLowerCase()
-        .startsWith("text/event-stream")
+        .startsWith("text/event-stream") ||
+      response.headers
+        .get("Content-Type")
+        ?.toLowerCase()
+        .startsWith("application/octet-stream")
     ) {
       return new Response(response.body, {
         status: response.status,
         statusText: response.statusText,
         headers: responseHeaders,
+        encodeBody: "manual",
       });
     }
 
@@ -120,6 +132,7 @@ export default {
       status: response.status,
       statusText: response.statusText,
       headers: responseHeaders,
+      encodeBody: "manual",
     });
   },
 } satisfies ExportedHandler<Env>;
