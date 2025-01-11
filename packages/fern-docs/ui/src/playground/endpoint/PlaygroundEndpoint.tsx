@@ -28,7 +28,6 @@ import { useApiRoute } from "../../hooks/useApiRoute";
 import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
 import { getAppBuildwithfernCom } from "../../hooks/useStandardProxyEnvironment";
 import { executeGrpc } from "../fetch-utils/executeGrpc";
-import { executeProxyFile } from "../fetch-utils/executeProxyFile";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { GrpcProxyRequest, ProxyRequest } from "../types";
@@ -158,7 +157,7 @@ export const PlaygroundEndpoint = ({
         ),
       };
       if (endpoint.responses?.[0]?.body.type === "stream") {
-        const [res, stream] = await executeProxyStream(proxyEnvironment, req);
+        const [res, stream] = await executeProxyStream(req);
         for await (const item of stream) {
           setResponse((lastValue) =>
             loaded({
@@ -175,11 +174,8 @@ export const PlaygroundEndpoint = ({
             })
           );
         }
-      } else if (endpoint.responses?.[0]?.body.type === "fileDownload") {
-        const res = await executeProxyFile(proxyEnvironment, req);
-        setResponse(loaded(res));
       } else {
-        const res = await executeProxyRest(proxyEnvironment, req);
+        const res = await executeProxyRest(req);
         setResponse(loaded(res));
         if (res.type !== "stream") {
           track("api_playground_request_received", {

@@ -27,7 +27,7 @@ export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
 export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
   formState,
   endpoint,
-  proxyEnvironment,
+  // proxyEnvironment,
   referencedEndpoint,
   baseUrl,
   setValue,
@@ -65,7 +65,7 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
       false
     ),
   };
-  const res = await executeProxyRest(proxyEnvironment, req);
+  const res = await executeProxyRest(req);
 
   await visitDiscriminatedUnion(res, "type")._visit<void | Promise<void>>({
     json: async (jsonRes) => {
