@@ -69,6 +69,8 @@ export function EndpointRequestSnippetInternal({
   return (
     <div className="mb-5 mt-3">
       <CodeSnippetExample
+        type="request"
+        slug={slug ?? ""}
         title={
           <EndpointUrlWithOverflow
             path={endpoint.path}

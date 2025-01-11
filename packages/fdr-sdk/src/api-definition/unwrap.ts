@@ -137,12 +137,10 @@ export function unwrapReference(
   if (internalTypeRef == null) {
     // Note: this should be a fatal error, but we're handling it gracefully for now
     if (circularReference) {
-      // eslint-disable-next-line no-console
       console.error(
         `Circular reference detected. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`
       );
     } else {
-      // eslint-disable-next-line no-console
       console.error(
         `Type reference is invalid. Falling back to unknown type. types=[${[...visitedTypeIds].join(", ")}]`
       );
@@ -235,7 +233,6 @@ export function unwrapObjectType(
   const extendedProperties = object.extends.flatMap(
     (typeId): Latest.ObjectProperty[] => {
       if (parentVisitedTypeIds?.has(typeId)) {
-        // eslint-disable-next-line no-console
         console.error(
           `Circular reference detected. Cannot extend type=${typeId}`
         );
@@ -256,7 +253,6 @@ export function unwrapObjectType(
 
       // TODO: should we be able to extend discriminated and undiscriminated unions?
       if (unwrapped?.shape.type !== "object") {
-        // eslint-disable-next-line no-console
         console.error("Object extends non-object", typeId);
         return [];
       }

@@ -43,7 +43,9 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
 
   const example = webhook.examples?.[0]; // TODO: Need a way to show all the examples
 
-  const webhookExample = example ? <WebhookExample example={example} /> : null;
+  const webhookExample = example ? (
+    <WebhookExample example={example} slug={node.slug} />
+  ) : null;
 
   return (
     <div className="fern-endpoint-content">

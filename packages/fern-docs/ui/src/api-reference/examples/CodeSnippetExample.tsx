@@ -31,7 +31,7 @@ export declare namespace CodeSnippetExample {
     jsonStartLine?: number;
     scrollAreaStyle?: React.CSSProperties;
     measureHeight?: (height: number) => void;
-    type: "request" | "response";
+    type: "request" | "response" | "payload";
     slug: string;
   }
 }
@@ -89,17 +89,19 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
   );
 
   useEffect(() => {
-    if (viewportRef.current != null && requestHighlightLines[0] != null) {
-      const lineNumber = Array.isArray(requestHighlightLines[0])
-        ? requestHighlightLines[0][0]
-        : requestHighlightLines[0];
-      const offsetTop =
-        (lineNumber - 1) * 19.5 - viewportRef.current.clientHeight / 4;
-      viewportRef.current.scrollTo({
-        top: offsetTop,
-        behavior: "smooth",
-      });
-    }
+    requestAnimationFrame(() => {
+      if (viewportRef.current != null && requestHighlightLines[0] != null) {
+        const lineNumber = Array.isArray(requestHighlightLines[0])
+          ? requestHighlightLines[0][0]
+          : requestHighlightLines[0];
+        const offsetTop =
+          (lineNumber - 1) * 19.5 - viewportRef.current.clientHeight / 4;
+        viewportRef.current.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+      }
+    });
   }, [requestHighlightLines, viewportRef]);
 
   // Scroll to top when code changes

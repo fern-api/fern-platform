@@ -22,7 +22,7 @@ const ParameterDescription = memo(
         ref={ref}
         {...props}
         className={cn(
-          "group/trigger flex min-w-0 items-baseline gap-3 *:min-w-0 *:truncate",
+          "group/trigger flex min-w-0 items-baseline gap-3 *:min-w-0",
           props.className
         )}
       />

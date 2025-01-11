@@ -2,8 +2,10 @@ import {
   EndpointDefinition,
   HttpMethod,
 } from "@fern-api/fdr-sdk/api-definition";
+import { useAtomValue } from "jotai";
 import { useExampleSelection } from "../../../api-reference/endpoints/useExampleSelection";
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
+import { ENDPOINT_ID_TO_SLUG_ATOM } from "../../../atoms/apis";
 import { RequestSnippet } from "./types";
 import { useFindEndpoint } from "./useFindEndpoint";
 import { extractEndpointPathAndMethod } from "./utils";
@@ -53,6 +55,7 @@ function EndpointResponseSnippetRenderer({
   endpoint: EndpointDefinition;
   example: string | undefined;
 }) {
+  const slug = useAtomValue(ENDPOINT_ID_TO_SLUG_ATOM)[endpoint.id];
   const { selectedExample } = useExampleSelection(endpoint, example);
 
   const responseJson = selectedExample?.exampleCall.responseBody?.value;
@@ -66,6 +69,8 @@ function EndpointResponseSnippetRenderer({
   return (
     <div className="mb-5 mt-3">
       <CodeSnippetExample
+        type="response"
+        slug={slug ?? ""}
         title="Response"
         // actions={undefined}
         code={responseJsonString}

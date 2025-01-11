@@ -1,6 +1,7 @@
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
+import { Primitive } from "@radix-ui/react-primitive";
 import { Slot } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
@@ -152,6 +153,7 @@ const DisclosureDetails = forwardRef<
     const contentRef = useRef<HTMLElement | null>(null);
     const summaryRef = useRef<HTMLElement | null>(null);
 
+    const animationFrame = useRef<number | null>(null);
     const animate = useRef<Animation>();
     const [animationState, setAnimationState] = useState<AnimationState>(
       AnimationState.IDLE
@@ -273,7 +275,10 @@ const DisclosureDetails = forwardRef<
         contentRef.current.style.willChange = "transform";
       }
 
-      requestAnimationFrame(() => handleShrink());
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+      animationFrame.current = requestAnimationFrame(() => handleShrink());
     };
 
     const handleOpen = () => {
@@ -292,7 +297,10 @@ const DisclosureDetails = forwardRef<
 
       setOpen(true);
 
-      requestAnimationFrame(() => handleExpand());
+      if (animationFrame.current) {
+        cancelAnimationFrame(animationFrame.current);
+      }
+      animationFrame.current = requestAnimationFrame(() => handleExpand());
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
@@ -388,16 +396,48 @@ const DisclosureContent = forwardRef<
   );
 });
 
-const DisclosureIf = ({
-  children,
-  open,
-}: {
-  children: ReactNode;
-  open: boolean;
-}) => {
+const DisclosureIf = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<typeof Primitive.div> & { open?: boolean }
+>(({ asChild, children, open: openProp, ...props }, forwardRef) => {
+  const animationOptions = useContext(DisclosureContext);
+  const ref = useRef<HTMLDivElement>(null);
   const { open: openContext } = useContext(DisclosureItemContext);
-  return openContext === open ? children : null;
-};
+  const open = openProp === openContext;
+  const [isOpen, setIsOpen] = useState(open);
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      if (ref.current) {
+        if (open) {
+          ref.current.style.transition = `max-height ${animationOptions.duration}ms ${animationOptions.easing}`;
+          ref.current.style.maxHeight = `${ref.current.scrollHeight}px`;
+          ref.current.style.overflow = "visible";
+        } else {
+          ref.current.style.transition = `max-height ${animationOptions.duration}ms ${animationOptions.easing}`;
+          ref.current.style.maxHeight = "0px";
+          ref.current.style.overflow = "hidden";
+        }
+      }
+    });
+  }, [openProp, openContext]);
+
+  return (
+    <Primitive.div
+      ref={composeRefs(forwardRef, ref)}
+      {...props}
+      style={{
+        height: isOpen ? "auto" : "0px",
+        overflow: isOpen ? "visible" : "hidden",
+        ...props.style,
+      }}
+    >
+      {children}
+    </Primitive.div>
+  );
+});
+
+DisclosureIf.displayName = "DisclosureIf";
 
 DisclosureContent.displayName = "DisclosureContent";
 

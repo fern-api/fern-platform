@@ -23,6 +23,7 @@ import {
   createContext,
   forwardRef,
   Fragment,
+  memo,
   PropsWithChildren,
   RefObject,
   useContext,
@@ -49,14 +50,6 @@ import { EndpointSection } from "./EndpointSection";
 interface EndpointContentTreeProps {
   context: ApiDefinition.EndpointContext;
   showErrors: boolean;
-  // onHoverRequestProperty: (
-  //   jsonPropertyPath: JsonPropertyPath,
-  //   hovering: HoveringProps
-  // ) => void;
-  // onHoverResponseProperty: (
-  //   jsonPropertyPath: JsonPropertyPath,
-  //   hovering: HoveringProps
-  // ) => void;
 }
 
 const AnchorIdContext = createContext<string | undefined>(undefined);
@@ -110,8 +103,6 @@ function JsonPathPartProvider({
 export function EndpointContentTree({
   context: { endpoint, node, types, auth, globalHeaders },
   //   showErrors,
-  // onHoverRequestProperty,
-  // onHoverResponseProperty,
 }: EndpointContentTreeProps) {
   const request = endpoint.requests?.[0];
   const response = endpoint.responses?.[0];
@@ -237,18 +228,16 @@ export function EndpointContentTree({
                   slug={node.slug}
                   description={request.description}
                   headerRight={
-                    <div className="flex items-center gap-2">
-                      {request.contentType && (
-                        <Badge size="sm" className="font-mono">
-                          {request.contentType}
-                        </Badge>
-                      )}
-                      <Tree.HasDisclosures>
-                        <Tree.ToggleExpandAll className="-mr-2" />
-                      </Tree.HasDisclosures>
-                    </div>
+                    <Tree.HasDisclosures>
+                      <Tree.ToggleExpandAll className="-mr-2" />
+                    </Tree.HasDisclosures>
                   }
                 >
+                  {request.contentType && (
+                    <Badge size="sm" className="mb-3 font-mono">
+                      {request.contentType}
+                    </Badge>
+                  )}
                   <AnchorIdProvider id="body">
                     <HttpRequestBody body={request.body} types={types} />
                   </AnchorIdProvider>
@@ -266,19 +255,23 @@ export function EndpointContentTree({
                   slug={node.slug}
                   description={response.description}
                   headerRight={
-                    <>
-                      <StatusCodeBadge
-                        statusCode={response.statusCode}
-                        className="ml-auto"
-                        variant="subtle"
-                        size="sm"
-                      />
-                      <Tree.HasDisclosures>
-                        <Tree.ToggleExpandAll className="-mr-2" />
-                      </Tree.HasDisclosures>
-                    </>
+                    <Tree.HasDisclosures>
+                      <Tree.ToggleExpandAll className="-mr-2" />
+                    </Tree.HasDisclosures>
                   }
                 >
+                  <div className="mb-3 flex items-center gap-2">
+                    <StatusCodeBadge
+                      statusCode={response.statusCode}
+                      variant="subtle"
+                      size="sm"
+                    />
+                    <HttpResponseContentTypeBadge
+                      body={response.body}
+                      variant="subtle"
+                      size="sm"
+                    />
+                  </div>
                   <AnchorIdProvider id="body">
                     <HttpResponseBody
                       key={response.statusCode}
@@ -364,69 +357,106 @@ function toAuthHeader(
   });
 }
 
-function ObjectProperty({
-  property,
-  types,
-}: {
-  property: ApiDefinition.ObjectProperty;
-  types: Record<string, ApiDefinition.TypeDefinition>;
-}) {
-  const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
-  const indent = Tree.useIndent();
-  return (
-    <AnchorIdProvider id={property.key}>
-      <JsonPathPartProvider
-        value={{ type: "objectProperty", propertyName: property.key }}
-      >
-        <Tree.Item
-          defaultOpen={isDefaultOpen(property.valueShape, types)}
-          unbranched={unwrapped.shape.type === "enum"}
+const ObjectProperty = memo(
+  ({
+    property,
+    types,
+    visitedTypeIds: parentVisitedTypeIds = new Set(),
+  }: {
+    property: ApiDefinition.ObjectProperty;
+    types: Record<string, ApiDefinition.TypeDefinition>;
+    visitedTypeIds?: Set<ApiDefinition.TypeId>;
+  }) => {
+    const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
+    const visitedTypeIds = new Set([
+      ...parentVisitedTypeIds,
+      ...unwrapped.visitedTypeIds,
+    ]);
+    const indent = Tree.useIndent();
+    const open = Tree.useIsOpen();
+    const shouldLazyLoad =
+      [...unwrapped.visitedTypeIds].filter((id) => visitedTypeIds.has(id))
+        .length > 0;
+    console.log(visitedTypeIds, unwrapped.visitedTypeIds);
+    if (shouldLazyLoad && !open) {
+      return null;
+    }
+    return (
+      <AnchorIdProvider id={property.key}>
+        <JsonPathPartProvider
+          value={{ type: "objectProperty", propertyName: property.key }}
         >
-          <Tree.Summary
-            collapseTriggerMessage={showChildAttributesMessage(
+          <Tree.Item
+            defaultOpen={isDefaultOpen(
               property.valueShape,
-              types
+              types,
+              visitedTypeIds
             )}
+            unbranched={unwrapped.shape.type === "enum"}
           >
-            <Tree.Trigger asChild>
-              <ParameterInfo
-                parameterName={property.key}
-                indent={indent}
-                property={property}
-                types={types}
-              />
-            </Tree.Trigger>
-            <Tree.SummaryIndentedContent>
-              <Markdown
-                size="sm"
-                className={cn("text-text-muted py-2 leading-normal")}
-                mdx={property.description ?? unwrapped.descriptions[0]}
-              />
-            </Tree.SummaryIndentedContent>
-          </Tree.Summary>
-          {renderDereferencedShape(unwrapped.shape, types)}
-        </Tree.Item>
-      </JsonPathPartProvider>
-    </AnchorIdProvider>
-  );
-}
+            <Tree.Summary
+              collapseTriggerMessage={showChildAttributesMessage(
+                property.valueShape,
+                types
+              )}
+            >
+              <Tree.Trigger asChild>
+                <ParameterInfo
+                  parameterName={property.key}
+                  indent={indent}
+                  property={property}
+                  types={types}
+                />
+              </Tree.Trigger>
+              <Tree.SummaryIndentedContent>
+                <Markdown
+                  size="sm"
+                  className={cn("text-text-muted py-2 leading-normal")}
+                  mdx={property.description ?? unwrapped.descriptions[0]}
+                />
+              </Tree.SummaryIndentedContent>
+            </Tree.Summary>
+            {renderDereferencedShape(
+              unwrapped.shape,
+              types,
+              unwrapped.visitedTypeIds
+            )}
+          </Tree.Item>
+        </JsonPathPartProvider>
+      </AnchorIdProvider>
+    );
+  }
+);
+
+ObjectProperty.displayName = "ObjectProperty";
 
 function isDefaultOpen(
   shape: ApiDefinition.TypeShape,
-  types: Record<string, ApiDefinition.TypeDefinition>
+  types: Record<string, ApiDefinition.TypeDefinition>,
+  parentVisitedTypeIds = new Set<ApiDefinition.TypeId>()
 ) {
   const unwrapped = ApiDefinition.unwrapReference(shape, types);
+  const visitedTypeIds = new Set([
+    ...parentVisitedTypeIds,
+    ...unwrapped.visitedTypeIds,
+  ]);
+
   switch (unwrapped.shape.type) {
     case "enum":
-      return unwrapped.shape.values.length < 7;
+      return unwrapped.shape.values.length === 1;
     case "list":
     case "set":
-      return isDefaultOpen(unwrapped.shape.itemShape, types);
+      return isDefaultOpen(unwrapped.shape.itemShape, types, visitedTypeIds);
     case "map":
-      return isDefaultOpen(unwrapped.shape.valueShape, types);
+      return isDefaultOpen(unwrapped.shape.valueShape, types, visitedTypeIds);
     case "discriminatedUnion":
     case "undiscriminatedUnion":
       return unwrapped.shape.variants.length === 1;
+    case "object":
+      return (
+        ApiDefinition.unwrapObjectType(unwrapped.shape, types).properties
+          .length === 1
+      );
     default:
       return false;
   }
@@ -456,220 +486,269 @@ function focus(element?: FocusableTarget | null, { select = false } = {}) {
   }
 }
 
-const ParameterInfo = forwardRef<
-  HTMLDivElement,
-  Omit<ComponentPropsWithoutRef<typeof Parameter.Root>, "property"> & {
-    parameterName: string;
-    indent: number;
-    property: ApiDefinition.ObjectProperty;
-    types: Record<string, ApiDefinition.TypeDefinition>;
-  }
->(({ parameterName, indent, property, types, ...props }, ref) => {
-  const jsonpath = useContext(JsonPathPartContext).current ?? [];
-  const slug = useContext(SlugContext);
-  const anchorId = useAnchorId() ?? property.key;
-  const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
-  const isActive = useAtomValue(
-    useMemoOne(
-      () =>
-        atom(
-          (get) =>
-            get(IS_READY_ATOM) && get(LOCATION_ATOM).hash === `#${anchorId}`
-        ),
-      [anchorId]
-    )
-  );
-  const setLocation = useSetAtom(LOCATION_ATOM);
-  const nameRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    if (isActive) {
-      setTimeout(() => {
-        let parent = nameRef.current?.parentElement;
-        while (parent) {
-          console.log(parent);
-          if (parent instanceof HTMLDetailsElement) {
-            parent.open = true;
-          }
-          parent = parent.parentElement;
-        }
-
-        focus(nameRef.current, { select: true });
-        setTimeout(() => {
-          // don't scroll if the element is already visible
-          if (nameRef.current) {
-            const rect = nameRef.current.getBoundingClientRect();
-            const isVisible =
-              rect.top >= 0 &&
-              rect.left >= 0 &&
-              rect.bottom <=
-                (window.innerHeight || document.documentElement.clientHeight) &&
-              rect.right <=
-                (window.innerWidth || document.documentElement.clientWidth);
-
-            if (!isVisible) {
-              nameRef.current.scrollIntoView({
-                behavior: "smooth",
-                block: "center",
-              });
-            }
-          }
-        }, 150);
-      }, 150);
+const ParameterInfo = memo(
+  forwardRef<
+    HTMLDivElement,
+    Omit<ComponentPropsWithoutRef<typeof Parameter.Root>, "property"> & {
+      parameterName: string;
+      indent: number;
+      property: ApiDefinition.ObjectProperty;
+      types: Record<string, ApiDefinition.TypeDefinition>;
+      unwrapped?: ApiDefinition.UnwrappedReference;
     }
-  }, [isActive]);
+  >(
+    (
+      {
+        parameterName,
+        indent,
+        property,
+        types,
+        unwrapped: unwrappedProp,
+        ...props
+      },
+      ref
+    ) => {
+      const jsonpath = useContext(JsonPathPartContext).current ?? [];
+      const slug = useContext(SlugContext);
+      const anchorId = useAnchorId() ?? property.key;
+      const unwrapped =
+        unwrappedProp ??
+        ApiDefinition.unwrapReference(property.valueShape, types);
+      const isActive = useAtomValue(
+        useMemoOne(
+          () =>
+            atom(
+              (get) =>
+                get(IS_READY_ATOM) && get(LOCATION_ATOM).hash === `#${anchorId}`
+            ),
+          [anchorId]
+        )
+      );
+      const setLocation = useSetAtom(LOCATION_ATOM);
+      const nameRef = useRef<HTMLButtonElement>(null);
 
-  const availability = property.availability ?? unwrapped.availability;
+      useEffect(() => {
+        if (isActive) {
+          setTimeout(() => {
+            let parent = nameRef.current?.parentElement;
+            while (parent) {
+              if (parent instanceof HTMLDetailsElement) {
+                parent.open = true;
+              }
+              parent = parent.parentElement;
+            }
 
-  return (
-    <div
-      ref={ref}
-      {...props}
-      className={cn("relative min-w-0 flex-1", props.className)}
-    >
-      <Tree.Indicator
-        className={cn("absolute top-1", {
-          "-left-4": indent === 0,
-          "-left-2": indent > 0,
-        })}
-      />
-      <Parameter.Root
-        onPointerEnter={() => {
-          window.dispatchEvent(
-            new CustomEvent("hover-json-property", {
-              detail: {
-                slug,
-                jsonpath,
-                isHovering: true,
-                type: anchorId.startsWith("request") ? "request" : "response",
-              },
-            })
-          );
-        }}
-        onPointerLeave={() => {
-          window.dispatchEvent(
-            new CustomEvent("hover-json-property", {
-              detail: {
-                slug,
-                jsonpath,
-                isHovering: false,
-                type: anchorId.startsWith("request") ? "request" : "response",
-              },
-            })
-          );
-        }}
-        onFocus={() => {
-          window.dispatchEvent(
-            new CustomEvent("hover-json-property", {
-              detail: {
-                slug,
-                jsonpath,
-                isHovering: true,
-                type: anchorId.startsWith("request") ? "request" : "response",
-              },
-            })
-          );
-        }}
-        onBlur={() => {
-          window.dispatchEvent(
-            new CustomEvent("hover-json-property", {
-              detail: {
-                slug,
-                jsonpath,
-                isHovering: false,
-                type: anchorId.startsWith("request") ? "request" : "response",
-              },
-            })
-          );
-        }}
-      >
-        <Parameter.Name
-          ref={nameRef}
-          parameterName={property.key}
-          className={cn("shrink-0 scroll-m-4", {
-            "-mx-2": indent === 0,
-            "-mr-2": indent > 0,
-            "line-through": property.availability === "Deprecated",
-          })}
-          color={property.availability === "Deprecated" ? "gray" : "accent"}
-          variant={isActive ? "subtle" : "ghost"}
-          onClickCopyAnchorLink={() => {
-            const url = String(
-              new URL(`/${slug}#${anchorId}`, window.location.href)
-            );
-            void navigator.clipboard.writeText(url);
-            setLocation((location) => ({
-              ...location,
-              pathname: `/${slug}`,
-              hash: `#${anchorId}`,
-            }));
-          }}
-        />
-        <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
-          <TypeShorthand
-            shape={unwrapped.shape}
-            isOptional={unwrapped.isOptional}
-            types={types}
+            focus(nameRef.current, { select: true });
+            setTimeout(() => {
+              // don't scroll if the element is already visible
+              if (nameRef.current) {
+                const rect = nameRef.current.getBoundingClientRect();
+                const isVisible =
+                  rect.top >= 0 &&
+                  rect.left >= 0 &&
+                  rect.bottom <=
+                    (window.innerHeight ||
+                      document.documentElement.clientHeight) &&
+                  rect.right <=
+                    (window.innerWidth || document.documentElement.clientWidth);
+
+                if (!isVisible) {
+                  nameRef.current.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                }
+              }
+            }, 150);
+          }, 150);
+        }
+      }, [isActive]);
+
+      const availability = property.availability ?? unwrapped.availability;
+
+      return (
+        <div
+          ref={ref}
+          {...props}
+          className={cn("relative min-w-0 flex-1", props.className)}
+        >
+          <Tree.Indicator
+            className={cn("absolute top-1", {
+              "-left-4": indent === 0,
+              "-left-2": indent > 0,
+            })}
           />
-          {unwrapped.default != null &&
-            unwrapped.shape.type !== "literal" &&
-            typeof unwrapped.default !== "object" && (
-              <span className="ml-2 font-mono">
-                {`= ${JSON.stringify(unwrapped.default)}`}
-              </span>
-            )}
-        </span>
-        <Parameter.Spacer />
-        {anchorId.startsWith("request") && !unwrapped.isOptional && (
-          <Parameter.Status status="required" />
-        )}
-        <TouchScreenOnly asChild>
-          <CopyToClipboardButton
-            asChild
-            content={() => {
-              return String(
-                new URL(`/${slug}#${anchorId}`, window.location.href)
+          <Parameter.Root
+            onPointerEnter={() => {
+              window.dispatchEvent(
+                new CustomEvent("hover-json-property", {
+                  detail: {
+                    slug,
+                    jsonpath,
+                    isHovering: true,
+                    type: anchorId.startsWith("request")
+                      ? "request"
+                      : "response",
+                  },
+                })
+              );
+            }}
+            onPointerLeave={() => {
+              window.dispatchEvent(
+                new CustomEvent("hover-json-property", {
+                  detail: {
+                    slug,
+                    jsonpath,
+                    isHovering: false,
+                    type: anchorId.startsWith("request")
+                      ? "request"
+                      : "response",
+                  },
+                })
+              );
+            }}
+            onFocus={() => {
+              window.dispatchEvent(
+                new CustomEvent("hover-json-property", {
+                  detail: {
+                    slug,
+                    jsonpath,
+                    isHovering: true,
+                    type: anchorId.startsWith("request")
+                      ? "request"
+                      : "response",
+                  },
+                })
+              );
+            }}
+            onBlur={() => {
+              window.dispatchEvent(
+                new CustomEvent("hover-json-property", {
+                  detail: {
+                    slug,
+                    jsonpath,
+                    isHovering: false,
+                    type: anchorId.startsWith("request")
+                      ? "request"
+                      : "response",
+                  },
+                })
               );
             }}
           >
-            <Button
-              size="iconXs"
-              variant="ghost"
-              color="gray"
-              className="-m-1 shrink-0 self-center"
-            >
-              <LinkIcon />
-            </Button>
-          </CopyToClipboardButton>
-        </TouchScreenOnly>
-      </Parameter.Root>
-      {availability && (
-        <AvailabilityBadge availability={availability} size="sm" />
-      )}
-    </div>
-  );
-});
+            <Parameter.Name
+              ref={nameRef}
+              parameterName={property.key}
+              className={cn("shrink-0 scroll-m-4", {
+                "-mx-2": indent === 0,
+                "-mr-2": indent > 0,
+                "line-through": property.availability === "Deprecated",
+              })}
+              color={property.availability === "Deprecated" ? "gray" : "accent"}
+              variant={isActive ? "subtle" : "ghost"}
+              onClickCopyAnchorLink={() => {
+                const url = String(
+                  new URL(`/${slug}#${anchorId}`, window.location.href)
+                );
+                void navigator.clipboard.writeText(url);
+                setLocation((location) => ({
+                  ...location,
+                  pathname: `/${slug}`,
+                  hash: `#${anchorId}`,
+                }));
+              }}
+            />
+            <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
+              <TypeShorthand
+                shape={unwrapped.shape}
+                isOptional={unwrapped.isOptional}
+                types={types}
+              />
+              {unwrapped.default != null &&
+                unwrapped.shape.type !== "literal" &&
+                typeof unwrapped.default !== "object" && (
+                  <span className="ml-2 font-mono">
+                    {`= ${JSON.stringify(unwrapped.default)}`}
+                  </span>
+                )}
+            </span>
+            <Parameter.Spacer />
+            {anchorId.startsWith("request") && !unwrapped.isOptional && (
+              <Parameter.Status status="required" />
+            )}
+            <TouchScreenOnly asChild>
+              <CopyToClipboardButton
+                asChild
+                content={() => {
+                  return String(
+                    new URL(`/${slug}#${anchorId}`, window.location.href)
+                  );
+                }}
+              >
+                <Button
+                  size="iconXs"
+                  variant="ghost"
+                  color="gray"
+                  className="-m-1 shrink-0 self-center"
+                >
+                  <LinkIcon />
+                </Button>
+              </CopyToClipboardButton>
+            </TouchScreenOnly>
+          </Parameter.Root>
+          {availability && (
+            <AvailabilityBadge availability={availability} size="sm" />
+          )}
+        </div>
+      );
+    }
+  )
+);
 
 ParameterInfo.displayName = "ParameterInfo";
 
 function showChildAttributesMessage(
   shape: ApiDefinition.TypeShape,
-  types: Record<string, ApiDefinition.TypeDefinition>
+  types: Record<string, ApiDefinition.TypeDefinition>,
+  parentVisitedTypeIds = new Set<ApiDefinition.TypeId>()
 ) {
   const unwrapped = ApiDefinition.unwrapReference(shape, types);
+  const visitedTypeIds = new Set([
+    ...parentVisitedTypeIds,
+    ...unwrapped.visitedTypeIds,
+  ]);
   switch (unwrapped.shape.type) {
-    case "object":
-      return "Show child attributes";
+    case "object": {
+      const properties = ApiDefinition.unwrapObjectType(
+        unwrapped.shape,
+        types
+      ).properties;
+      return `Show ${properties.length} child attribute${
+        properties.length > 1 ? "s" : ""
+      }`;
+    }
     case "discriminatedUnion":
     case "undiscriminatedUnion":
-      return `Show ${unwrapped.shape.variants.length} variants`;
+      return `Show ${unwrapped.shape.variants.length} variant${
+        unwrapped.shape.variants.length > 1 ? "s" : ""
+      }`;
     case "list":
     case "set":
-      return "Show child attributes";
+      return showChildAttributesMessage(
+        unwrapped.shape.itemShape,
+        types,
+        visitedTypeIds
+      );
     case "map":
-      return "Show child attributes";
+      return showChildAttributesMessage(
+        unwrapped.shape.valueShape,
+        types,
+        visitedTypeIds
+      );
     case "enum":
-      return `Show ${unwrapped.shape.values.length} enum values`;
+      return `Show ${unwrapped.shape.values.length} enum value${
+        unwrapped.shape.values.length > 1 ? "s" : ""
+      }`;
     default:
       return undefined;
   }
@@ -678,7 +757,7 @@ function showChildAttributesMessage(
 function renderDereferencedShape(
   property: ApiDefinition.DereferencedNonOptionalTypeShapeOrReference,
   types: Record<string, ApiDefinition.TypeDefinition>,
-  parentVisitedTypeIds?: Set<ApiDefinition.TypeId>
+  visitedTypeIds?: Set<ApiDefinition.TypeId>
 ) {
   switch (property.type) {
     case "literal":
@@ -690,7 +769,7 @@ function renderDereferencedShape(
       const content = renderTypeShape(
         property.itemShape,
         types,
-        parentVisitedTypeIds
+        visitedTypeIds
       );
       if (!content) {
         return false;
@@ -705,7 +784,7 @@ function renderDereferencedShape(
       const content = renderTypeShape(
         property.valueShape,
         types,
-        parentVisitedTypeIds
+        visitedTypeIds
       );
       if (!content) {
         return false;
@@ -723,7 +802,7 @@ function renderDereferencedShape(
         <ObjectTypeShape
           shape={property}
           types={types}
-          parentVisitedTypeIds={parentVisitedTypeIds}
+          visitedTypeIds={visitedTypeIds}
         />
       );
     }
@@ -751,11 +830,7 @@ function renderDereferencedShape(
                         description={description}
                       />
                     )}
-                    {renderTypeShape(
-                      variant.shape,
-                      types,
-                      parentVisitedTypeIds
-                    ) || (
+                    {renderTypeShape(variant.shape, types, visitedTypeIds) || (
                       <span className="text-text-muted text-xs">
                         {renderTypeShorthand(variant.shape, {}, types)}
                       </span>
@@ -775,11 +850,8 @@ function renderDereferencedShape(
               {property.variants.map((variant) => {
                 const description =
                   variant.description ??
-                  ApiDefinition.unwrapObjectType(
-                    variant,
-                    types,
-                    parentVisitedTypeIds
-                  ).descriptions[0];
+                  ApiDefinition.unwrapObjectType(variant, types)
+                    .descriptions[0];
                 return (
                   <AnchorIdProvider
                     id={variant.discriminantValue}
@@ -818,11 +890,12 @@ function renderDereferencedShape(
                           availability: undefined,
                         }}
                         types={types}
+                        visitedTypeIds={visitedTypeIds}
                       />
                       <ObjectTypeShape
                         shape={variant}
                         types={types}
-                        parentVisitedTypeIds={parentVisitedTypeIds}
+                        visitedTypeIds={visitedTypeIds}
                       />
                     </JsonPathPartProvider>
                   </AnchorIdProvider>
@@ -943,8 +1016,8 @@ function EnumCard({ values }: { values: ApiDefinition.EnumValue[] }) {
   }
 
   return (
-    <Tree.Content>
-      <Tree.Card>
+    <Tree.Card>
+      <Tree.Content>
         {values.map((value, idx) => (
           <Fragment key={value.value}>
             {idx > 0 && (
@@ -967,15 +1040,15 @@ function EnumCard({ values }: { values: ApiDefinition.EnumValue[] }) {
             </div>
           </Fragment>
         ))}
-      </Tree.Card>
-    </Tree.Content>
+      </Tree.Content>
+    </Tree.Card>
   );
 }
 
 function renderTypeShape(
   shape: ApiDefinition.TypeShape,
   types: Record<string, ApiDefinition.TypeDefinition>,
-  parentVisitedTypeIds?: Set<ApiDefinition.TypeId>
+  visitedTypeIds = new Set<ApiDefinition.TypeId>()
 ): React.ReactNode {
   switch (shape.type) {
     case "alias": {
@@ -983,20 +1056,22 @@ function renderTypeShape(
       return renderDereferencedShape(
         unwrapped.shape,
         types,
-        new Set([...(parentVisitedTypeIds ?? []), ...unwrapped.visitedTypeIds])
+        new Set([...visitedTypeIds, ...unwrapped.visitedTypeIds])
       );
     }
     default:
-      return renderDereferencedShape(shape, types, parentVisitedTypeIds);
+      return renderDereferencedShape(shape, types, visitedTypeIds);
   }
 }
 
 function HttpRequestBody({
   body,
   types,
+  visitedTypeIds = new Set(),
 }: {
   body: ApiDefinition.HttpRequestBodyShape;
   types: Record<string, ApiDefinition.TypeDefinition>;
+  visitedTypeIds?: Set<ApiDefinition.TypeId>;
 }) {
   switch (body.type) {
     case "bytes":
@@ -1019,7 +1094,9 @@ function HttpRequestBody({
         <ObjectTypeShape
           shape={unwrapped.shape}
           types={types}
-          parentVisitedTypeIds={unwrapped.visitedTypeIds}
+          visitedTypeIds={
+            new Set([...visitedTypeIds, ...unwrapped.visitedTypeIds])
+          }
         />
       );
     }
@@ -1048,22 +1125,67 @@ function HttpResponseBody({
   }
 }
 
+const HttpResponseContentTypeBadge = forwardRef<
+  HTMLButtonElement,
+  ComponentPropsWithoutRef<typeof Badge> & {
+    body: ApiDefinition.HttpResponseBodyShape;
+  }
+>(({ body, ...props }, ref) => {
+  switch (body.type) {
+    case "object":
+    case "alias":
+      return (
+        <Badge size="sm" className="font-mono" ref={ref} {...props}>
+          application/json
+        </Badge>
+      );
+    case "fileDownload":
+      return (
+        <Badge size="sm" className="font-mono" ref={ref} {...props}>
+          application/octet-stream
+        </Badge>
+      );
+    case "streamingText":
+      return (
+        <Badge size="sm" className="font-mono" ref={ref} {...props}>
+          text/plain
+        </Badge>
+      );
+    case "stream":
+      return (
+        <Badge size="sm" className="font-mono" ref={ref} {...props}>
+          text/event-stream
+        </Badge>
+      );
+    default:
+      console.error(new UnreachableCaseError(body));
+      return false;
+  }
+});
+
+HttpResponseContentTypeBadge.displayName = "HttpResponseContentTypeBadge";
+
 function ObjectTypeShape({
   shape,
   types,
-  parentVisitedTypeIds,
+  visitedTypeIds: parentVisitedTypeIds = new Set(),
 }: {
   shape:
     | ApiDefinition.TypeShape.Object_
     | ApiDefinition.DiscriminatedUnionVariant;
   types: Record<string, ApiDefinition.TypeDefinition>;
-  parentVisitedTypeIds?: Set<ApiDefinition.TypeId>;
+  visitedTypeIds?: Set<ApiDefinition.TypeId>;
 }) {
-  const { properties, extraProperties } = ApiDefinition.unwrapObjectType(
-    shape,
-    types,
-    parentVisitedTypeIds
-  );
+  const {
+    properties,
+    extraProperties,
+    visitedTypeIds: objectVisitedTypeIds,
+  } = ApiDefinition.unwrapObjectType(shape, types);
+
+  const visitedTypeIds = new Set([
+    ...parentVisitedTypeIds,
+    ...objectVisitedTypeIds,
+  ]);
 
   const required = properties.filter(
     (property) =>
@@ -1075,7 +1197,7 @@ function ObjectTypeShape({
       ApiDefinition.unwrapReference(property.valueShape, types).isOptional
   );
 
-  if (required.length && optional.length) {
+  if (required.length && optional.length > 1) {
     return (
       <>
         <Tree.Content notLast>
@@ -1084,6 +1206,7 @@ function ObjectTypeShape({
               key={property.key}
               property={property}
               types={types}
+              visitedTypeIds={visitedTypeIds}
             />
           ))}
         </Tree.Content>
@@ -1093,6 +1216,7 @@ function ObjectTypeShape({
               key={property.key}
               property={property}
               types={types}
+              visitedTypeIds={visitedTypeIds}
             />
           ))}
           {extraProperties && (
@@ -1114,6 +1238,7 @@ function ObjectTypeShape({
                 availability: undefined,
               }}
               types={types}
+              visitedTypeIds={visitedTypeIds}
             />
           )}
         </Tree.CollapsedContent>
@@ -1124,7 +1249,12 @@ function ObjectTypeShape({
   return (
     <Tree.Content>
       {properties.map((property) => (
-        <ObjectProperty key={property.key} property={property} types={types} />
+        <ObjectProperty
+          key={property.key}
+          property={property}
+          types={types}
+          visitedTypeIds={visitedTypeIds}
+        />
       ))}
     </Tree.Content>
   );
@@ -1172,13 +1302,24 @@ export function TypeShorthandTypescript({
   shape,
   types,
   isOptional,
+  visitedTypeIds = new Set(),
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
   isOptional?: boolean;
+  visitedTypeIds?: Set<ApiDefinition.TypeId>;
 }) {
-  function toString(shape: ApiDefinition.TypeShapeOrReference): string {
+  function toString(
+    shape: ApiDefinition.TypeShapeOrReference,
+    parentVisitedTypeIds: Set<ApiDefinition.TypeId>
+  ): string {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
+
+    const visitedTypeIds = new Set([
+      ...parentVisitedTypeIds,
+      ...unwrapped.visitedTypeIds,
+    ]);
+
     switch (unwrapped.shape.type) {
       case "primitive": {
         switch (unwrapped.shape.value.type) {
@@ -1211,13 +1352,13 @@ export function TypeShorthandTypescript({
           ? `"${unwrapped.shape.value.value}"`
           : String(unwrapped.shape.value.value);
       case "list": {
-        const str = toString(unwrapped.shape.itemShape);
+        const str = toString(unwrapped.shape.itemShape, visitedTypeIds);
         return str.includes(" ") ? `Array<${str}>` : `${str}[]`;
       }
       case "set":
-        return `Set<${toString(unwrapped.shape.itemShape)}>`;
+        return `Set<${toString(unwrapped.shape.itemShape, visitedTypeIds)}>`;
       case "map":
-        return `Record<${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}>`;
+        return `Record<${toString(unwrapped.shape.keyShape, visitedTypeIds)}, ${toString(unwrapped.shape.valueShape, visitedTypeIds)}>`;
       case "enum":
         if (unwrapped.shape.values.length > 3) {
           return "enum";
@@ -1227,7 +1368,7 @@ export function TypeShorthandTypescript({
           .join(" | ");
       case "undiscriminatedUnion":
         return unwrapped.shape.variants
-          .map((variant) => toString(variant.shape))
+          .map((variant) => toString(variant.shape, visitedTypeIds))
           .join(" | ");
       case "discriminatedUnion":
         return "object";
@@ -1239,7 +1380,7 @@ export function TypeShorthandTypescript({
 
   return (
     <span className="font-mono">
-      {`${isOptional ? "?: " : ": "}${toString(shape)}`}
+      {`${isOptional ? "?: " : ": "}${toString(shape, visitedTypeIds)}`}
     </span>
   );
 }
@@ -1248,13 +1389,22 @@ export function TypeShorthandPython({
   shape,
   types,
   isOptional,
+  visitedTypeIds = new Set(),
 }: {
   shape: ApiDefinition.TypeShapeOrReference;
   types: Record<string, ApiDefinition.TypeDefinition>;
   isOptional?: boolean;
+  visitedTypeIds?: Set<ApiDefinition.TypeId>;
 }) {
-  function toString(shape: ApiDefinition.TypeShapeOrReference): string {
+  function toString(
+    shape: ApiDefinition.TypeShapeOrReference,
+    parentVisitedTypeIds: Set<ApiDefinition.TypeId>
+  ): string {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    const visitedTypeIds = new Set([
+      ...parentVisitedTypeIds,
+      ...unwrapped.visitedTypeIds,
+    ]);
     switch (unwrapped.shape.type) {
       case "primitive": {
         switch (unwrapped.shape.value.type) {
@@ -1288,11 +1438,11 @@ export function TypeShorthandPython({
           ? `Literal["${unwrapped.shape.value.value}"]`
           : capitalize(String(unwrapped.shape.value.value));
       case "list":
-        return `List[${toString(unwrapped.shape.itemShape)}]`;
+        return `List[${toString(unwrapped.shape.itemShape, visitedTypeIds)}]`;
       case "set":
-        return `Set[${toString(unwrapped.shape.itemShape)}]`;
+        return `Set[${toString(unwrapped.shape.itemShape, visitedTypeIds)}]`;
       case "map":
-        return `Dict[${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}]`;
+        return `Dict[${toString(unwrapped.shape.keyShape, visitedTypeIds)}, ${toString(unwrapped.shape.valueShape, visitedTypeIds)}]`;
       case "enum":
         if (unwrapped.shape.values.length > 3) {
           return "Enum";
@@ -1305,7 +1455,7 @@ export function TypeShorthandPython({
           return "Union";
         }
         return `Union[${unwrapped.shape.variants
-          .map((variant) => toString(variant.shape))
+          .map((variant) => toString(variant.shape, visitedTypeIds))
           .join(", ")}]`;
       case "discriminatedUnion":
         return "Union";
@@ -1315,7 +1465,9 @@ export function TypeShorthandPython({
     }
   }
 
-  const title = isOptional ? `Optional[${toString(shape)}]` : toString(shape);
+  const title = isOptional
+    ? `Optional[${toString(shape, visitedTypeIds)}]`
+    : toString(shape, visitedTypeIds);
 
   return <span className="font-mono" title={title}>{`: ${title}`}</span>;
 }

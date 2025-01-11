@@ -1,8 +1,6 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
-import { useWebhookContext } from "../webhook-context/useWebhookContext";
 
 const CodeSnippetExample = dynamic(
   () =>
@@ -15,11 +13,14 @@ const CodeSnippetExample = dynamic(
 export declare namespace WebhookExample {
   export interface Props {
     example: APIV1Read.ExampleWebhookPayload;
+    slug: string;
   }
 }
 
-export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
-  const { hoveredPayloadPropertyPath = EMPTY_ARRAY } = useWebhookContext();
+export const WebhookExample: React.FC<WebhookExample.Props> = ({
+  example,
+  slug,
+}) => {
   const payloadJsonString = useMemo(
     () => JSON.stringify(example.payload, null, 2),
     [example.payload]
@@ -37,8 +38,9 @@ export const WebhookExample: React.FC<WebhookExample.Props> = ({ example }) => {
             }}
             code={payloadJsonString}
             language="json"
-            hoveredPropertyPath={hoveredPayloadPropertyPath}
             json={example.payload}
+            slug={slug}
+            type="payload"
           />
         )}
       </div>

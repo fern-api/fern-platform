@@ -6,7 +6,7 @@ import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
 import { atom, PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
-import { Plus } from "lucide-react";
+import { ChevronDown, Plus } from "lucide-react";
 import {
   Children,
   ComponentProps,
@@ -118,7 +118,26 @@ function useIsCard() {
   return useContext(ctx).card;
 }
 
-const IndentContextProvider = ({ children }: PropsWithChildren) => {
+const TreeRootProvider = ({ children }: PropsWithChildren) => {
+  const card = useIsCard();
+  return (
+    <ctx.Provider
+      value={useMemoOne(
+        () => ({
+          indent: 0,
+          pointerOver: false,
+          setPointerOver: noop,
+          card,
+        }),
+        [card]
+      )}
+    >
+      {children}
+    </ctx.Provider>
+  );
+};
+
+const SubTreeProvider = ({ children }: PropsWithChildren) => {
   const parentIndent = useIndent();
   const card = useIsCard();
   const [pointerOver, setPointerOver] = useState(false);
@@ -131,41 +150,38 @@ const IndentContextProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-const Tree = forwardRef<HTMLDivElement, PropsWithChildren>(
-  ({ children }, forwardRef) => {
-    const ref = useRef<HTMLDivElement>(null);
-    const card = useIsCard();
-    const rootId = useId();
-    return (
-      <div ref={composeRefs(ref, forwardRef)} className="fern-tree">
-        <rootCtx.Provider
-          value={useMemoOne(
-            () => ({
-              ref,
-              rootId,
-              idsAtom: atom<string[]>([]),
-              expandedAtom: atom<string[]>([]),
-            }),
-            [rootId, ref]
-          )}
-        >
-          <ctx.Provider
-            value={{
-              indent: 0,
-              pointerOver: false,
-              setPointerOver: noop,
-              card,
-            }}
-          >
-            <Disclosure.Root animationOptions={{ duration: 0 }}>
-              {children}
-            </Disclosure.Root>
-          </ctx.Provider>
-        </rootCtx.Provider>
-      </div>
-    );
-  }
-);
+const Tree = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<typeof Primitive.div>
+>(({ children, ...props }, forwardRef) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const rootId = useId();
+  return (
+    <div
+      {...props}
+      ref={composeRefs(ref, forwardRef)}
+      className={cn("fern-tree", props.className)}
+    >
+      <rootCtx.Provider
+        value={useMemoOne(
+          () => ({
+            ref,
+            rootId,
+            idsAtom: atom<string[]>([]),
+            expandedAtom: atom<string[]>([]),
+          }),
+          [rootId, ref]
+        )}
+      >
+        <TreeRootProvider>
+          <Disclosure.Root>
+            <Slottable>{children}</Slottable>
+          </Disclosure.Root>
+        </TreeRootProvider>
+      </rootCtx.Provider>
+    </div>
+  );
+});
 
 Tree.displayName = "Tree";
 
@@ -306,9 +322,9 @@ const TreeItemDisclosure = forwardRef<
         >
           {summary}
           {other.length > 0 && (
-            <IndentContextProvider>
+            <SubTreeProvider>
               <Disclosure.Content asChild={asChild}>{other}</Disclosure.Content>
-            </IndentContextProvider>
+            </SubTreeProvider>
           )}
         </Disclosure.Details>
       </openCtx.Provider>
@@ -318,12 +334,12 @@ const TreeItemDisclosure = forwardRef<
 
 TreeItemDisclosure.displayName = "TreeItemDisclosure";
 
-const TreeItemContent = ({
-  children,
-  notLast = false,
-}: PropsWithChildren & {
-  notLast?: boolean;
-}): ReactNode => {
+const TreeItemContent = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<typeof Primitive.div> & {
+    notLast?: boolean;
+  }
+>(({ children, notLast = false, ...props }, ref) => {
   const indent = useIndent();
   const unbranched = useContext(UnbranchedCtx);
 
@@ -332,7 +348,15 @@ const TreeItemContent = ({
   }
 
   if (unbranched) {
-    return <div className={cn(indent > 1 && "pl-2")}>{children}</div>;
+    return (
+      <Primitive.div
+        {...props}
+        ref={ref}
+        className={cn(indent > 1 && "pl-2", props.className)}
+      >
+        {children}
+      </Primitive.div>
+    );
   }
 
   const childrenArray = Children.toArray(children);
@@ -341,7 +365,15 @@ const TreeItemContent = ({
   }
 
   return (
-    <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
+    <Primitive.div
+      {...props}
+      ref={ref}
+      className={cn(
+        "relative grid grid-cols-[16px_1fr] *:min-w-0",
+        props.className
+      )}
+      asChild={false} // no slotting allowed here
+    >
       {childrenArray.map((child, i) => (
         <Fragment key={isValidElement(child) ? (child.key ?? i) : i}>
           <Disclosure.CloseTrigger asChild>
@@ -350,9 +382,11 @@ const TreeItemContent = ({
           {child}
         </Fragment>
       ))}
-    </div>
+    </Primitive.div>
   );
-};
+});
+
+TreeItemContent.displayName = "TreeItemContent";
 
 const TreeItemCardCtx = createContext<boolean>(false);
 
@@ -365,27 +399,20 @@ const TreeItemCard = forwardRef<
   const Comp = asChild ? Slot : "div";
   const indent = useIndent();
   return (
-    <Comp
-      {...props}
-      ref={ref}
-      className={cn(
-        indent > 0 && "rounded-xl border border-[var(--grayscale-a4)]",
-        props.className
-      )}
-    >
-      <ctx.Provider
-        value={{
-          indent: 0,
-          pointerOver: false,
-          setPointerOver: noop,
-          card: true,
-        }}
+    <TreeRootProvider>
+      <Comp
+        {...props}
+        ref={ref}
+        className={cn(
+          indent > 0 && "rounded-xl border border-[var(--grayscale-a4)]",
+          props.className
+        )}
       >
         <TreeItemCardCtx.Provider value={indent > 0}>
-          {children}
+          <Slottable>{children}</Slottable>
         </TreeItemCardCtx.Provider>
-      </ctx.Provider>
-    </Comp>
+      </Comp>
+    </TreeRootProvider>
   );
 });
 
@@ -454,10 +481,10 @@ const TreeItemsContentAdditionalDisclosure = ({
                   <Badge
                     rounded
                     interactive
-                    variant="outlined-subtle"
+                    variant="subtle"
                     className="font-normal"
                   >
-                    <Plus />
+                    <ChevronDown />
                     {childrenArray.length} more attributes
                   </Badge>
                 </Disclosure.Trigger>
@@ -469,10 +496,10 @@ const TreeItemsContentAdditionalDisclosure = ({
                 <Badge
                   rounded
                   interactive
-                  variant="outlined-subtle"
+                  variant="subtle"
                   className="font-normal"
                 >
-                  <Plus />
+                  <ChevronDown />
                   {childrenArray.length} more attributes
                 </Badge>
               </Disclosure.Trigger>
@@ -624,7 +651,7 @@ const TreeItemSummaryIndentedContent = forwardRef<
   const unbranched = useContext(UnbranchedCtx);
   const hasChildren = useContext(TreeItemHasChildrenCtx);
 
-  if (indent === 0 || !hasChildren || unbranched) {
+  if (!hasChildren || unbranched) {
     return (
       <Primitive.div
         ref={ref}
@@ -652,14 +679,14 @@ TreeItemSummaryIndentedContent.displayName = "TreeItemSummaryIndentedContent";
 
 const TreeDetailIndicator = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<"div">
+  ComponentPropsWithoutRef<typeof Primitive.div>
 >(({ children, ...props }, ref) => {
   const { open, expandable } = useDetailContext();
   if (!expandable) {
     return false;
   }
   return (
-    <div
+    <Primitive.div
       {...props}
       ref={ref}
       className={cn(
@@ -669,7 +696,8 @@ const TreeDetailIndicator = forwardRef<
       )}
     >
       <Chevron className="size-4" />
-    </div>
+      <Slottable>{children}</Slottable>
+    </Primitive.div>
   );
 });
 
@@ -775,6 +803,7 @@ const ToggleExpandAll = forwardRef<
 ToggleExpandAll.displayName = "ToggleExpandAll";
 
 const Root = Tree;
+const RootProvider = TreeRootProvider;
 const Item = TreeItem;
 const Content = TreeItemContent;
 const CollapsedContent = TreeItemsContentAdditional;
@@ -786,6 +815,11 @@ const Card = TreeItemCard;
 const Variants = UnionVariants;
 const Branch = TreeBranch;
 
+const useIsOpen = () => {
+  const { open } = useDetailContext();
+  return open;
+};
+
 export {
   Branch,
   Card,
@@ -795,6 +829,7 @@ export {
   Indicator,
   Item,
   Root,
+  RootProvider,
   Summary,
   SummaryIndentedContent,
   ToggleExpandAll,
@@ -802,5 +837,6 @@ export {
   useDetailContext,
   useIndent,
   useIsCard,
+  useIsOpen,
   Variants,
 };
