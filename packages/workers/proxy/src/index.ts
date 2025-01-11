@@ -83,7 +83,7 @@ export default {
       // additional proxy headers
       [RESPONSE_HEADERS, [...response.headers.keys()].join(",")],
       [ORIGIN_LATENCY, `${latency}`],
-      ["Cache-Control", "no-transform"],
+      ["Cache-Control", "no-transform, no-cache"],
     ]);
 
     // set the response headers (and override cors headers from the original request)
