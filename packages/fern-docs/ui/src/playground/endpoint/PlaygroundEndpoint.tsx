@@ -131,19 +131,27 @@ export const PlaygroundEndpoint = ({
       };
       if (endpoint.responses?.[0]?.body.type === "stream") {
         const [res, stream] = await executeProxyStream(req);
-        for await (const item of stream) {
-          setResponse((lastValue) =>
+
+        const time = Date.now();
+        const reader = stream.getReader();
+        let result = "";
+        const decoder = new TextDecoder();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) {
+            break;
+          }
+          result += decoder.decode(value);
+          console.log(result);
+          setResponse(
             loaded({
               type: "stream",
               response: {
                 status: res.status,
-                body: (lastValue.type === "loaded" &&
-                lastValue.value.type === "stream"
-                  ? lastValue.value.response.body + item.data
-                  : item.data
-                ).replace("\r\n\r\n", "\n"),
+                body: result,
               },
-              time: item.time,
+              time: Date.now() - time,
             })
           );
         }

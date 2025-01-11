@@ -1,18 +1,17 @@
 import urljoin from "url-join";
-import { Stream } from "../Stream";
 import { ProxyRequest } from "../types";
 import { toBodyInit } from "./requestToBodyInit";
 
 const PROXY_URL = "https://proxy.ferndocs.com/";
 
-interface ResponseChunk {
-  data: string;
-  time: number;
-}
+// interface ResponseChunk {
+//   data: string;
+//   time: number;
+// }
 
 export async function executeProxyStream(
   req: ProxyRequest
-): Promise<[Response, Stream<ResponseChunk>]> {
+): Promise<[Response, ReadableStream<Uint8Array>]> {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set(
     "X-Fern-Proxy-Request-Headers",
@@ -30,16 +29,17 @@ export async function executeProxyStream(
     throw new Error("Response body is null");
   }
 
-  const stream = new Stream<ResponseChunk>({
-    stream: response.body,
-    parse: async (i_1) => {
-      const d = i_1 as { data: string; time: number };
-      return {
-        data: d.data,
-        time: d.time,
-      };
-    },
-    terminator: "\n",
-  });
-  return [response, stream];
+  // const stream = new Stream<ResponseChunk>({
+  //   stream: response.body,
+  //   parse: async (i_1) => {
+  //     const d = i_1 as { data: string; time: number };
+  //     return {
+  //       data: d.data,
+  //       time: d.time,
+  //     };
+  //   },
+  //   terminator: "\n",
+  // });
+
+  return [response, response.body];
 }

@@ -32,7 +32,7 @@ export class Stream<T> implements AsyncIterable<T> {
       while ((terminatorIndex = previous.indexOf(this.terminator)) >= 0) {
         const line = previous.slice(0, terminatorIndex).trim();
         if (line.length > 0) {
-          const message = await this.parse(JSON.parse(line));
+          const message = await this.parse(line);
           yield message;
         }
         previous = previous.slice(terminatorIndex + this.terminator.length);
