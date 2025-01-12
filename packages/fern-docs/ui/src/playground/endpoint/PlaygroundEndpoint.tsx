@@ -67,7 +67,8 @@ export const PlaygroundEndpoint = ({
     );
   });
 
-  const { usesApplicationJsonInFormDataValue } = useEdgeFlags();
+  const { usesApplicationJsonInFormDataValue, isProxyDisabled } =
+    useEdgeFlags();
   const [response, setResponse] =
     useState<Loadable<PlaygroundResponse>>(notStartedLoading());
 
@@ -130,7 +131,7 @@ export const PlaygroundEndpoint = ({
         ),
       };
       if (endpoint.responses?.[0]?.body.type === "stream") {
-        const [res, stream] = await executeProxyStream(req);
+        const [res, stream] = await executeProxyStream(req, isProxyDisabled);
 
         const time = Date.now();
         const reader = stream.getReader();
@@ -156,7 +157,7 @@ export const PlaygroundEndpoint = ({
           );
         }
       } else {
-        const res = await executeProxyRest(req);
+        const res = await executeProxyRest(req, isProxyDisabled);
         setResponse(loaded(res));
         if (res.type !== "stream") {
           track("api_playground_request_received", {
@@ -191,6 +192,7 @@ export const PlaygroundEndpoint = ({
     baseUrl,
     setOAuthValue,
     usesApplicationJsonInFormDataValue,
+    isProxyDisabled,
   ]);
 
   const settings = usePlaygroundSettings();

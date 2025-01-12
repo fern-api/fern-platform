@@ -19,7 +19,7 @@ const EDGE_FLAGS = [
   "http-snippets-enabled" as const,
   "inline-feedback-enabled" as const,
   "dark-code-enabled" as const,
-  "proxy-uses-app-buildwithfern" as const,
+  "disable-proxy" as const,
   "image-zoom-disabled" as const,
   "use-javascript-as-typescript" as const,
   "always-enable-javascript-fetch" as const,
@@ -87,9 +87,9 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["dark-code-enabled"]
     );
-    const proxyShouldUseAppBuildwithfernCom = checkDomainMatchesCustomers(
+    const isProxyDisabled = checkDomainMatchesCustomers(
       domain,
-      config["proxy-uses-app-buildwithfern"]
+      config["disable-proxy"]
     );
     const isImageZoomDisabled = checkDomainMatchesCustomers(
       domain,
@@ -184,7 +184,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isHttpSnippetsEnabled,
       isInlineFeedbackEnabled,
       isDarkCodeEnabled,
-      proxyShouldUseAppBuildwithfernCom,
+      isProxyDisabled,
       isImageZoomDisabled,
       useJavaScriptAsTypeScript,
       alwaysEnableJavaScriptFetch,
@@ -219,7 +219,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isHttpSnippetsEnabled: false,
       isInlineFeedbackEnabled: isFern(domain),
       isDarkCodeEnabled: false,
-      proxyShouldUseAppBuildwithfernCom: false,
+      isProxyDisabled: false,
       isImageZoomDisabled: false,
       useJavaScriptAsTypeScript: false,
       alwaysEnableJavaScriptFetch: false,

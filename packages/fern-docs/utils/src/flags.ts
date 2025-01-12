@@ -8,7 +8,7 @@ export interface EdgeFlags {
   isHttpSnippetsEnabled: boolean;
   isInlineFeedbackEnabled: boolean;
   isDarkCodeEnabled: boolean;
-  proxyShouldUseAppBuildwithfernCom: boolean;
+  isProxyDisabled: boolean;
   isImageZoomDisabled: boolean;
   useJavaScriptAsTypeScript: boolean;
   alwaysEnableJavaScriptFetch: boolean;
@@ -43,7 +43,7 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isHttpSnippetsEnabled: false,
   isInlineFeedbackEnabled: false,
   isDarkCodeEnabled: false,
-  proxyShouldUseAppBuildwithfernCom: false,
+  isProxyDisabled: false,
   isImageZoomDisabled: false,
   useJavaScriptAsTypeScript: false,
   alwaysEnableJavaScriptFetch: false,
