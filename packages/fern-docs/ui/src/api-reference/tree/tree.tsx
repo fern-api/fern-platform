@@ -1,10 +1,12 @@
+import { Badge } from "@fern-docs/components/badges";
+import { Button } from "@fern-docs/components/button";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Primitive } from "@radix-ui/react-primitive";
 import { Separator } from "@radix-ui/react-separator";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { noop } from "es-toolkit/function";
+import { debounce, noop } from "es-toolkit/function";
 import { atom, useAtomValue, useSetAtom } from "jotai";
 import { ChevronDown, Plus } from "lucide-react";
 import {
@@ -18,7 +20,6 @@ import {
   isValidElement,
   PropsWithChildren,
   ReactNode,
-  RefObject,
   SetStateAction,
   useCallback,
   useContext,
@@ -27,72 +28,81 @@ import {
   useState,
 } from "react";
 import { useMemoOne } from "use-memo-one";
-import { Badge } from "../badges";
-import { cn } from "../cn";
-import Disclosure from "../disclosure";
-import { Button } from "../FernButtonV2";
+import { cn } from "../../../../components/src/cn";
+import Disclosure from "../../../../components/src/disclosure";
 import { Chevron } from "./chevron";
 
-const rootCtx = createContext<RefObject<HTMLDivElement | null>>({
-  current: null,
-});
+const rootCtx = createContext<() => HTMLDivElement | null>(() => null);
 
-function RootContextProvider({ children }: PropsWithChildren) {
-  const ref = useRef<HTMLDivElement>(null);
-  return <rootCtx.Provider value={ref}>{children}</rootCtx.Provider>;
+function RootContextProvider({
+  children,
+  getRoot,
+}: PropsWithChildren<{ getRoot: () => HTMLDivElement | null }>) {
+  return <rootCtx.Provider value={getRoot}>{children}</rootCtx.Provider>;
 }
 
 function useSetOpenAll() {
-  const ref = useContext(rootCtx);
+  const getRoot = useContext(rootCtx);
   return useCallback(
     (open: boolean) => {
-      Array.from(ref.current?.getElementsByTagName("details") ?? []).forEach(
+      Array.from(getRoot()?.getElementsByTagName("details") ?? []).forEach(
         (details) => {
           details.open = open;
         }
       );
     },
-    [ref]
+    [getRoot]
   );
 }
 
 function useIsAllExpanded() {
-  const ref = useContext(rootCtx);
+  const ref = useRef<Set<HTMLDetailsElement>>(new Set());
+  const getRoot = useContext(rootCtx);
   const [allExpanded, setAllExpanded] = useState(false);
 
   useEffect(() => {
-    const refCurrent = ref.current;
-    if (!refCurrent) return;
+    const root = getRoot();
+    if (!root) return;
 
-    const updateAllExpanded = () => {
+    const reload = debounce(() => {
       requestIdleCallback(() => {
-        const details = Array.from(refCurrent.getElementsByTagName("details"));
-        setAllExpanded(details.every((detail) => detail.open));
+        Array.from(root.getElementsByTagName("details")).forEach((detail) => {
+          ref.current.add(detail);
+        });
+
+        setAllExpanded([...ref.current].every((detail) => detail.open));
       });
-    };
+    }, 100);
 
-    updateAllExpanded();
+    reload();
 
-    refCurrent.addEventListener("toggle", updateAllExpanded, true);
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "childList") {
+          reload();
+        }
+      });
+    });
 
+    observer.observe(root, { childList: true, subtree: true });
     return () => {
-      refCurrent.removeEventListener("toggle", updateAllExpanded, true);
+      observer.disconnect();
     };
-  }, [ref]);
+  }, [getRoot]);
 
   return allExpanded;
 }
 
 function useHasNoDisclosures() {
   const [hasNoDisclosures, setHasNoDisclosures] = useState(true);
-  const ref = useContext(rootCtx);
+  const getRoot = useContext(rootCtx);
 
   useEffect(() => {
     const details = Array.from(
-      ref.current?.getElementsByTagName("details") ?? []
+      getRoot()?.getElementsByTagName("details") ?? []
     );
     setHasNoDisclosures(details.length === 0);
-  }, [ref]);
+  }, [getRoot]);
 
   return hasNoDisclosures;
 }
@@ -149,18 +159,18 @@ const SubTreeProvider = ({ children }: PropsWithChildren) => {
   );
 };
 
-const Tree = forwardRef<
+const TreeRoot = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Primitive.div>
 >(({ children, ...props }, forwardRef) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   return (
     <Primitive.div
       {...props}
       ref={composeRefs(ref, forwardRef)}
       className={cn("fern-tree", props.className)}
     >
-      <RootContextProvider>
+      <RootContextProvider getRoot={() => ref.current}>
         <TreeRootProvider>
           <Disclosure.Root>
             <Slottable>{children}</Slottable>
@@ -171,7 +181,7 @@ const Tree = forwardRef<
   );
 });
 
-Tree.displayName = "Tree";
+TreeRoot.displayName = "Tree.Root";
 
 const UnbranchedCtx = createContext(false);
 
@@ -197,36 +207,56 @@ TreeItem.displayName = "TreeItem";
 
 const TreeDisclosure = forwardRef<
   HTMLDetailsElement,
-  ComponentPropsWithoutRef<"details"> & {
+  Omit<ComponentPropsWithoutRef<"details">, "children"> & {
     open?: boolean;
     defaultOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
+    summary: ReactNode;
+    children?: () => ReactNode;
+    lazy?: boolean;
   }
->(({ children, open: openProp, defaultOpen, onOpenChange, ...props }, ref) => {
-  const [open = false, setOpen] = useControllableState({
-    prop: openProp,
-    defaultProp: defaultOpen,
-    onChange: onOpenChange,
-  });
+>(
+  (
+    {
+      summary,
+      children,
+      open: openProp,
+      defaultOpen,
+      onOpenChange,
+      lazy,
+      ...props
+    },
+    ref
+  ) => {
+    const [open = false, setOpen] = useControllableState({
+      prop: openProp,
+      defaultProp: defaultOpen,
+      onChange: onOpenChange,
+    });
 
-  const childrenArray = Children.toArray(children);
-
-  const summary = childrenArray.find(
-    (child) => isValidElement(child) && child.type === DetailsSummary
-  );
-  const other = childrenArray.filter(
-    (child) => isValidElement(child) && child.type !== DetailsSummary
-  );
-
-  return (
-    <Disclosure.Details {...props} ref={ref} open={open} onOpenChange={setOpen}>
-      <SubTreeProvider>
-        {summary}
-        <Disclosure.Content className="-mx-3 px-3">{other}</Disclosure.Content>
-      </SubTreeProvider>
-    </Disclosure.Details>
-  );
-});
+    return (
+      <Disclosure.Details
+        {...props}
+        ref={ref}
+        open={open}
+        onOpenChange={setOpen}
+      >
+        <SubTreeProvider>
+          {summary}
+          {lazy ? (
+            <Disclosure.LazyContent className="-mx-3 px-3">
+              {children}
+            </Disclosure.LazyContent>
+          ) : (
+            <Disclosure.Content className="-mx-3 px-3">
+              {children?.()}
+            </Disclosure.Content>
+          )}
+        </SubTreeProvider>
+      </Disclosure.Details>
+    );
+  }
+);
 
 TreeDisclosure.displayName = "TreeDisclosure";
 
@@ -238,20 +268,11 @@ const TreeItemContent = forwardRef<
 >(({ children, notLast = false, ...props }, ref) => {
   const indent = useIndent();
   const unbranched = useContext(UnbranchedCtx);
-
-  if (indent === 0) {
+  if (unbranched || indent === 0) {
     return children;
   }
 
-  if (unbranched) {
-    return (
-      <Primitive.div {...props} ref={ref}>
-        {children}
-      </Primitive.div>
-    );
-  }
-
-  const childrenArray = Children.toArray(children);
+  const childrenArray = Children.toArray(children).filter((child) => !!child);
   if (childrenArray.length === 0) {
     return false;
   }
@@ -485,7 +506,7 @@ const DisclosureButton = forwardRef<
             rounded
             interactive
             className={cn("mt-2 font-normal", props.className)}
-            variant="outlined-subtle"
+            variant="ghost"
             style={props.style}
           >
             <Plus />
@@ -504,7 +525,7 @@ const DisclosureButton = forwardRef<
               rounded
               interactive
               className="mt-2 w-fit font-normal"
-              variant="outlined-subtle"
+              variant="ghost"
             >
               <Plus />
               {children || "Show child attributes"}
@@ -674,25 +695,28 @@ const useSetOpen = () => {
 
 const DetailsTrigger = Disclosure.Trigger;
 
-export {
-  TreeBranch as Branch,
-  TreeItemCard as Card,
-  TreeItemsContentAdditional as CollapsedContent,
-  TreeItemContent as Content,
-  TreeDisclosure as Details,
-  TreeDetailIndicator as DetailsIndicator,
-  DetailsSummary as DetailsSummary,
+const Tree = {
+  Branch: TreeBranch,
+  Card: TreeItemCard,
+  CollapsedContent: TreeItemsContentAdditional,
+  Content: TreeItemContent,
+  Details: TreeDisclosure,
+  DetailsIndicator: TreeDetailIndicator,
+  DetailsSummary,
   DetailsTrigger,
-  DisclosureButton as ExpandChildrenButton,
+  ExpandChildrenButton: DisclosureButton,
   HasDisclosures,
-  TreeItem as Item,
-  Tree as Root,
-  TreeRootProvider as RootProvider,
-  TreeItemSummaryIndentedContent as SummaryIndentedContent,
+  Item: TreeItem,
+  Root: TreeRoot,
+  RootProvider: TreeRootProvider,
+  SummaryIndentedContent: TreeItemSummaryIndentedContent,
   ToggleExpandAll,
   useIndent,
   useIsCard,
   useIsOpen,
   useSetOpen,
-  UnionVariants as Variants,
+  Variants: UnionVariants,
 };
+
+export { Tree };
+export default Tree;

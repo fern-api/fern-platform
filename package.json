@@ -26,6 +26,7 @@
     "lint:style:fix": "turbo lint:style:fix",
     "playwright:build": "turbo --filter='playwright-*' --filter='@fern-docs/local-preview-bundle' build",
     "playwright:test": "pnpm exec playwright test",
+    "prepare:env-local": "cp .vercel/.env.development.local packages/fern-docs/bundle/.env.local",
     "publish": "pnpm -r --filter=!private --parallel exec -- npm publish --access public",
     "radix:up": "pnpm up -r \"@radix-ui/*\"",
     "root-package:check": "pnpm tsx packages/scripts/src/cli.ts -- fern-scripts check-root-package",

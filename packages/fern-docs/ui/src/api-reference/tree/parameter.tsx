@@ -1,3 +1,5 @@
+import { Badge, BadgeProps } from "@fern-docs/components/badges";
+import { Button } from "@fern-docs/components/button";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Primitive } from "@radix-ui/react-primitive";
 import { Separator } from "@radix-ui/react-separator";
@@ -11,13 +13,11 @@ import {
   forwardRef,
   memo,
 } from "react";
-import { CopyToClipboardButton } from "../CopyToClipboardButton";
-import { Button } from "../FernButtonV2";
-import { Badge, BadgeProps } from "../badges";
-import { cn } from "../cn";
-import { useSetOpen } from "./tree";
+import { cn } from "../../../../components/src/cn";
+import { CopyToClipboardButton } from "../../../../components/src/CopyToClipboardButton";
+import { Tree } from "./tree";
 
-const ParameterDescription = memo(
+const ParameterRoot = memo(
   forwardRef<HTMLDivElement, ComponentPropsWithoutRef<typeof Primitive.div>>(
     (props, ref) => {
       return (
@@ -36,7 +36,7 @@ const ParameterDescription = memo(
   )
 );
 
-ParameterDescription.displayName = "ParameterDescription";
+ParameterRoot.displayName = "ParameterRoot";
 
 const ParameterName = forwardRef<
   HTMLButtonElement,
@@ -62,7 +62,7 @@ const ParameterName = forwardRef<
     },
     ref
   ) => {
-    const setOpen = useSetOpen();
+    const setOpen = Tree.useSetOpen();
     return (
       <CopyToClipboardButton
         ref={ref}
@@ -166,9 +166,11 @@ const ParameterStatus = forwardRef<
 
 ParameterStatus.displayName = "ParameterStatus";
 
-const Root = ParameterDescription;
-const Name = ParameterName;
-const Spacer = ParameterSpacer;
-const Status = ParameterStatus;
+const Parameter = {
+  Root: ParameterRoot,
+  Name: ParameterName,
+  Spacer: ParameterSpacer,
+  Status: ParameterStatus,
+};
 
-export { Name, Root, Spacer, Status };
+export { Parameter };

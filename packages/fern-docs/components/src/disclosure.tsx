@@ -414,6 +414,33 @@ const DisclosureContent = forwardRef<
   );
 });
 
+const DisclosureLazyContent = forwardRef<
+  HTMLDivElement,
+  Omit<ComponentPropsWithoutRef<"div">, "children"> & {
+    asChild?: boolean;
+    innerClassName?: string;
+    children?: () => ReactNode;
+  }
+>(({ asChild, children, innerClassName, ...props }, forwardRef) => {
+  const isOpen = useAtomValue(
+    useContext(DisclosureStateContext) ?? atom(() => false)
+  );
+  const { setContentEl, setResizerEl } = useContext(DisclosureItemContext);
+  const Comp = asChild ? Slot : "div";
+  if (!isOpen) {
+    return null;
+  }
+  return (
+    <div ref={composeRefs(forwardRef, (div) => setResizerEl(div))} {...props}>
+      <Comp ref={(div) => setContentEl(div)} className={innerClassName}>
+        {children?.()}
+      </Comp>
+    </div>
+  );
+});
+
+DisclosureLazyContent.displayName = "DisclosureLazyContent";
+
 const DisclosureIf = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Primitive.div> & { open?: boolean }
@@ -466,6 +493,7 @@ Disclosure.Summary = DisclosureSummary;
 Disclosure.Content = DisclosureContent;
 Disclosure.Trigger = DisclosureTrigger;
 Disclosure.CloseTrigger = DisclosureCloseTrigger;
+Disclosure.LazyContent = DisclosureLazyContent;
 Disclosure.useClose = () => {
   const { handleClose } = useContext(DisclosureItemContext);
   return handleClose;
