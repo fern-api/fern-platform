@@ -6,7 +6,8 @@ import { toBodyInit } from "./requestToBodyInit";
 const PROXY_URL = "https://proxy.ferndocs.com/";
 
 export async function executeProxyRest(
-  req: ProxyRequest
+  req: ProxyRequest,
+  disableProxy: boolean = false
 ): Promise<PlaygroundResponse> {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set(
@@ -19,12 +20,15 @@ export async function executeProxyRest(
     requestHeaders.delete("Content-Type");
   }
 
-  const res = await fetch(urljoin(PROXY_URL, req.url), {
-    method: req.method,
-    headers: requestHeaders,
-    body: await toBodyInit(req.body),
-    mode: "cors",
-  });
+  const res = await fetch(
+    disableProxy ? req.url : urljoin(PROXY_URL, req.url),
+    {
+      method: req.method,
+      headers: requestHeaders,
+      body: await toBodyInit(req.body),
+      mode: "cors",
+    }
+  );
 
   const responseHeadersList = (
     res.headers.get("X-Fern-Proxy-Response-Headers") ?? ""
