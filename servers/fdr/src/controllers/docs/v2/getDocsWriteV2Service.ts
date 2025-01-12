@@ -517,10 +517,11 @@ async function uploadToAlgolia(
     };
 
     // TODO: consolidate this
-    const apis =
-      Object.entries(loadDocsForUrlResponse.definition.apis).length > 0
-        ? FernNavigation.utils.toApis(loadDocsForUrlResponse)
-        : loadDocsForUrlResponse.definition.apisV2;
+    const apis = await FernNavigation.utils.toApis(
+      loadDocsForUrlResponse,
+      app.services.s3.getPresignedDocsAssetsDownloadUrl.bind(app.services.s3)
+    );
+
     await Promise.all(
       configSegmentTuples.map(async ([_, indexSegment]) => {
         try {

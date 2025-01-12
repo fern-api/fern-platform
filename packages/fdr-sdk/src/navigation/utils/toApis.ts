@@ -2,7 +2,16 @@ import { mapValues } from "es-toolkit/object";
 import { ApiDefinition } from "../..";
 import { DocsV2Read } from "../../client";
 
-export function toApis(docs: DocsV2Read.LoadDocsForUrlResponse) {
+export async function toApis(
+  docs: DocsV2Read.LoadDocsForUrlResponse,
+  getPresignedDocsAssetsDownloadUrl: ({
+    key,
+    isPrivate,
+  }: {
+    key: string;
+    isPrivate: boolean;
+  }) => Promise<string>
+) {
   return {
     ...mapValues(docs.definition.apis, (api) =>
       ApiDefinition.ApiDefinitionV1ToLatest.from(api, {
@@ -11,6 +20,22 @@ export function toApis(docs: DocsV2Read.LoadDocsForUrlResponse) {
         usesApplicationJsonInFormDataValue: false,
       }).migrate()
     ),
-    ...docs.definition.apisV2,
+    ...Object.fromEntries(
+      await Promise.all(
+        Object.entries(docs.definition.apisV2).map(async ([key, def]) => {
+          if (typeof def === "string") {
+            const url = await getPresignedDocsAssetsDownloadUrl({
+              key: def,
+              isPrivate: true,
+            });
+            const response = await fetch(url.toString());
+            const apiDefinition = await response.json();
+            return [key, apiDefinition as ApiDefinition.ApiDefinition];
+          } else {
+            return [key, def];
+          }
+        })
+      )
+    ),
   };
 }

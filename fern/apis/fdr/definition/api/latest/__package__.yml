@@ -36,6 +36,12 @@ types:
       auths: map<auth.AuthSchemeId, auth.AuthScheme>
       globalHeaders: optional<list<type.ObjectProperty>>
 
+  LatestApiDefinition:
+    discriminated: false
+    union:
+      - string
+      - ApiDefinition
+
 errors:
   ApiDoesNotExistError:
     status-code: 404

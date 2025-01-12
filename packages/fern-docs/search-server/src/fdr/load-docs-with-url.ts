@@ -1,4 +1,5 @@
 import { ApiDefinition, FdrClient, FernNavigation } from "@fern-api/fdr-sdk";
+import { S3Loader } from "@fern-api/fdr-sdk/api-definition";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { mapValues } from "es-toolkit/object";
 
@@ -72,6 +73,7 @@ export async function loadDocsWithUrl(
   // migrate pages
   const pages = mapValues(docs.body.definition.pages, (page) => page.markdown);
 
+  const s3Loader = new S3Loader();
   // migrate apis
   const apis = {
     ...mapValues(docs.body.definition.apis, (api) =>
@@ -83,7 +85,16 @@ export async function loadDocsWithUrl(
           payload.usesApplicationJsonInFormDataValue ?? false,
       }).migrate()
     ),
-    ...docs.body.definition.apisV2,
+    ...Object.fromEntries(
+      await Promise.all(
+        Object.entries(docs.body.definition.apisV2).map(
+          async ([apiId, api]) => {
+            const resolvedApi = await s3Loader.loadApiDefinition(api);
+            return [apiId, resolvedApi];
+          }
+        )
+      )
+    ),
   };
 
   return { org_id: org.body, root, pages, apis, domain: domain.host };

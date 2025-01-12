@@ -26,7 +26,8 @@ model ApiDefinitionsLatest {
   apiName         String
   apiDefinitionId String
   createdAt       DateTime @default(now())
-  definition      Bytes
+  definition      Bytes?
+  s3Key           String?
 
   @@id([apiDefinitionId])
 }

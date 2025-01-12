@@ -6,6 +6,7 @@ export * from "./lang";
 export * from "./latest";
 export * from "./migrators/v1ToV2";
 export * from "./prune";
+export * from "./s3Loader";
 export * from "./snippets/curl";
 export * from "./snippets/SnippetHttpRequest";
 export * from "./status-message";

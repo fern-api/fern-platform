@@ -50,8 +50,12 @@ for (const fixtureName of [
   describe(fixtureName, () => {
     it("should work", async () => {
       const fixture = readFixture(fixtureName);
+      const mockGetPresignedDocsAssetsDownloadUrl = vi.fn();
       const root = FernNavigation.utils.toRootNode(fixture);
-      const apis = FernNavigation.utils.toApis(fixture);
+      const apis = await FernNavigation.utils.toApis(
+        fixture,
+        mockGetPresignedDocsAssetsDownloadUrl
+      );
       const pages = FernNavigation.utils.toPages(fixture);
 
       const { records, tooLarge } = createAlgoliaRecords({

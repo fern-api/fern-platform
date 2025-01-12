@@ -1,5 +1,5 @@
 import { mapValues } from "es-toolkit/object";
-import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read } from "../../client";
+import { APIV1Db, APIV1Read, DocsV1Db, DocsV1Read, FdrAPI } from "../../client";
 import { SearchInfo } from "../../client/FdrAPI";
 import { FernRegistry } from "../../client/generated";
 import { convertDbDocsConfigToRead } from "./convertDbDocsConfigToRead";
@@ -19,7 +19,7 @@ export function convertDocsDefinitionToRead({
   apis: Record<DocsV1Db.ApiDefinitionId, APIV1Read.ApiDefinition>;
   apisV2: Record<
     FernRegistry.ApiDefinitionId,
-    FernRegistry.api.latest.ApiDefinition
+    FdrAPI.api.latest.LatestApiDefinition
   >;
   id: APIV1Db.DocsConfigId | undefined;
   search: SearchInfo;

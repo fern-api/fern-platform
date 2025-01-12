@@ -1,6 +1,8 @@
 import { APIV1Db, FdrAPI } from "@fern-api/fdr-sdk";
 import { PrismaClient } from "@prisma/client";
+import { S3Service } from "../../services/s3";
 import { readBuffer } from "../../util";
+import { resolveLatestApiDefinition } from "../../util/resolveLatestApiDefinition";
 
 export interface APIDefinitionDao {
   getOrgIdForApiDefinition(
@@ -21,7 +23,10 @@ export interface APIDefinitionDao {
 }
 
 export class APIDefinitionDaoImpl implements APIDefinitionDao {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(
+    private readonly prisma: PrismaClient,
+    private readonly s3: S3Service
+  ) {}
 
   public async getOrgIdForApiDefinition(
     apiDefinitionId: string
@@ -63,14 +68,13 @@ export class APIDefinitionDaoImpl implements APIDefinitionDao {
       },
       select: {
         definition: true,
+        s3Key: true,
       },
     });
     if (apiDefinition == null) {
       return undefined;
     }
-    return readBuffer(
-      apiDefinition.definition
-    ) as FdrAPI.api.latest.ApiDefinition;
+    return resolveLatestApiDefinition(apiDefinition, this.s3);
   }
 
   public async loadAPIDefinitions(

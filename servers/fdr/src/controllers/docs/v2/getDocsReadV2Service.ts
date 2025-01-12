@@ -107,6 +107,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         const apiDefinitions = await app.dao
           .apis()
           .loadAPIDefinitions(loadDocsConfigResponse.referencedApis);
+
         docsConfig = {
           docsConfig: convertDbDocsConfigToRead({
             dbShape: loadDocsConfigResponse.docsConfig,

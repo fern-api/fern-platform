@@ -1,5 +1,7 @@
 import { APIV1Db, FdrAPI } from "@fern-api/fdr-sdk";
 import { PrismaClient } from "@prisma/client";
+import { FdrApplication } from "../../app/FdrApplication";
+import { resolveLatestApiDefinition } from "../../util/resolveLatestApiDefinition";
 
 export interface DatabaseService {
   readonly prisma: PrismaClient;
@@ -14,7 +16,10 @@ export interface DatabaseService {
 }
 
 export class DatabaseServiceImpl implements DatabaseService {
-  public constructor(public readonly prisma: PrismaClient) {}
+  public constructor(
+    public readonly prisma: PrismaClient,
+    public readonly app: FdrApplication
+  ) {}
 
   public async getApiDefinition(id: string) {
     const record = await this.prisma.apiDefinitionsV2.findFirst({
@@ -43,13 +48,14 @@ export class DatabaseServiceImpl implements DatabaseService {
     if (!record) {
       return null;
     }
-    try {
-      return JSON.parse(
-        record.definition.toString()
-      ) as FdrAPI.api.latest.ApiDefinition;
-    } catch {
+    const apiDefinition = await resolveLatestApiDefinition(
+      record,
+      this.app.services.s3
+    );
+    if (!apiDefinition) {
       return null;
     }
+    return apiDefinition;
   }
 
   public async markIndexForDeletion(indexId: string) {

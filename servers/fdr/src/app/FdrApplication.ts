@@ -77,7 +77,7 @@ export class FdrApplication {
 
     this.services = {
       auth: services?.auth ?? new AuthServiceImpl(this),
-      db: services?.db ?? new DatabaseServiceImpl(prisma),
+      db: services?.db ?? new DatabaseServiceImpl(prisma, this),
       algolia: services?.algolia ?? new AlgoliaServiceImpl(this),
       algoliaIndexSegmentDeleter:
         services?.algoliaIndexSegmentDeleter ??
@@ -90,7 +90,7 @@ export class FdrApplication {
       revalidator: services?.revalidator ?? new RevalidatorServiceImpl(),
     };
 
-    this.dao = new FdrDao(prisma);
+    this.dao = new FdrDao(prisma, this.services.s3);
 
     this.redisDatastore = config.redisEnabled
       ? new RedisDocsDefinitionStore({

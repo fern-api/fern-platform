@@ -164,7 +164,12 @@ export async function getDocsDefinition({
     keyBy(apiV2Definitions, (def) =>
       FernNavigation.ApiDefinitionId(def.apiDefinitionId)
     ),
-    (def) => readBuffer(def.definition) as FdrAPI.api.latest.ApiDefinition
+    (def) =>
+      def.s3Key != null
+        ? def.s3Key
+        : ((def.definition != null
+            ? readBuffer(def.definition)
+            : {}) as FdrAPI.api.latest.ApiDefinition)
   );
 
   return convertDocsDefinitionToRead({

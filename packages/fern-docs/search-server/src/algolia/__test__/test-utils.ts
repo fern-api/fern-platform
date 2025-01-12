@@ -42,7 +42,11 @@ export function readFixtureToRootNode(
         ];
       })
     ),
-    ...fixture.definition.apisV2,
+    ...(Object.fromEntries(
+      Object.entries(fixture.definition.apisV2).filter(
+        ([_, api]) => typeof api !== "string"
+      )
+    ) as Record<string, ApiDefinition.ApiDefinition>),
   };
   const pages = mapValues(fixture.definition.pages, (page) => page.markdown);
   return { root, apis, pages };
