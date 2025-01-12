@@ -4,8 +4,9 @@ import { FdrAPI } from "../client";
 import { LatestApiDefinition } from "./latest";
 
 export class S3Loader {
-  private s3Client: S3Client;
-  private bucketName: string;
+  private s3Client: S3Client | undefined;
+  private bucketName: string | undefined;
+
   constructor() {
     if (
       process.env.AWS_ACCESS_KEY_ID != null &&
@@ -21,14 +22,16 @@ export class S3Loader {
         },
       });
       this.bucketName = process.env.AWS_S3_BUCKET_NAME;
-    } else {
-      throw new Error("Missing S3 API definitions configuration in env vars");
     }
   }
 
   async loadApiDefinition(
     apiDefinitionOrKey: LatestApiDefinition
   ): Promise<FdrAPI.api.latest.ApiDefinition> {
+    if (this.s3Client == null) {
+      throw new Error("S3 client not initialized");
+    }
+
     let resolvedApi: FdrAPI.api.latest.ApiDefinition;
     if (typeof apiDefinitionOrKey === "string") {
       const command = new GetObjectCommand({
