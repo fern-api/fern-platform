@@ -33,8 +33,9 @@ export const Chip = forwardRef<
           {...props}
           onClick={composeEventHandlers(props.onClick, copyToClipboard)}
           ref={forwardedRef}
+          title={children}
         >
-          {children}
+          <span className="truncate">{children}</span>
         </Badge>
       </FernTooltip>
     );

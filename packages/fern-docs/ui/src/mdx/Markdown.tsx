@@ -1,7 +1,7 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
 import { memo, type ReactNode } from "react";
-import { MdxContent } from "./MdxContent";
+import { isMdxEmpty, MdxContent } from "./MdxContent";
 
 export declare namespace Markdown {
   export interface Props {
@@ -16,20 +16,20 @@ export declare namespace Markdown {
      * Fallback content to render if the MDX is empty
      */
     fallback?: ReactNode;
+
+    fallbackAsChild?: boolean;
   }
 }
 
 export const Markdown = memo<Markdown.Props>(
-  ({ title, mdx, className, size, fallback }) => {
+  ({ title, mdx, className, size, fallback, fallbackAsChild }) => {
     // If the MDX is empty, return null
-    if (
-      !fallback &&
-      (mdx == null ||
-        (typeof mdx === "string"
-          ? mdx.trim().length === 0
-          : mdx.code.trim().length === 0))
-    ) {
-      return null;
+    if (!fallback && isMdxEmpty(mdx)) {
+      return false;
+    }
+
+    if (fallbackAsChild) {
+      return fallback;
     }
 
     return (

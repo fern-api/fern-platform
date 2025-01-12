@@ -53,18 +53,18 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({
 
           {headerRight}
         </div>
-        {description ? (
-          <Markdown
-            size="sm"
-            className="mb-3 rounded-md bg-[var(--grayscale-a3)] p-2 px-3 last:mb-0"
-            mdx={description}
-          />
-        ) : (
-          <Separator
-            orientation="horizontal"
-            className="mb-3 h-px bg-[var(--grayscale-a4)] last:hidden"
-          />
-        )}
+        <Markdown
+          size="sm"
+          className="mb-3 rounded-md bg-[var(--grayscale-a3)] p-2 px-3 last:mb-0"
+          mdx={description}
+          fallback={
+            <Separator
+              orientation="horizontal"
+              className="mb-3 h-px bg-[var(--grayscale-5)] last:hidden"
+            />
+          }
+          fallbackAsChild
+        />
         {children}
       </div>
     </FernErrorBoundary>

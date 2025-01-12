@@ -27,7 +27,7 @@ const NextMdxRemoteComponent = dynamic(
   { ssr: true }
 );
 
-function isMdxEmpty(
+export function isMdxEmpty(
   mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undefined
 ): boolean {
   if (!mdx) {

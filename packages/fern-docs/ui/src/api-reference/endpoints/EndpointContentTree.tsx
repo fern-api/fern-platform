@@ -12,17 +12,15 @@ import {
   TouchScreenOnly,
 } from "@fern-docs/components";
 import { Parameter, Tree } from "@fern-docs/components/tree";
-import { Separator } from "@radix-ui/react-separator";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { sortBy } from "es-toolkit/array";
 import { capitalize } from "es-toolkit/string";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { LinkIcon } from "lucide-react";
+import { ChevronDown, LinkIcon } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   createContext,
   forwardRef,
-  Fragment,
   memo,
   PropsWithChildren,
   RefObject,
@@ -141,18 +139,18 @@ export function EndpointContentTree({
           />
           <AnchorIdProvider id="request">
             {requestHeaders.length > 0 && (
-              <Tree.Root>
-                <AnchorIdProvider id="headers">
-                  <EndpointSection
-                    title="Headers"
-                    anchorIdParts={["request", "headers"]}
-                    slug={node.slug}
-                    headerRight={
-                      <Tree.HasDisclosures>
-                        <Tree.ToggleExpandAll className="-mr-2" />
-                      </Tree.HasDisclosures>
-                    }
-                  >
+              <AnchorIdProvider id="headers">
+                <EndpointSection
+                  title="Headers"
+                  anchorIdParts={["request", "headers"]}
+                  slug={node.slug}
+                  headerRight={
+                    <Tree.HasDisclosures>
+                      <Tree.ToggleExpandAll className="-mr-2" />
+                    </Tree.HasDisclosures>
+                  }
+                >
+                  <Tree.Root>
                     {requestHeaders.map((header) => (
                       <ObjectProperty
                         key={header.key}
@@ -160,24 +158,24 @@ export function EndpointContentTree({
                         types={types}
                       />
                     ))}
-                  </EndpointSection>
-                </AnchorIdProvider>
-              </Tree.Root>
+                  </Tree.Root>
+                </EndpointSection>
+              </AnchorIdProvider>
             )}
 
             {endpoint.pathParameters && endpoint.pathParameters.length > 0 && (
-              <Tree.Root>
-                <AnchorIdProvider id="path">
-                  <EndpointSection
-                    title="Path parameters"
-                    anchorIdParts={["request", "path"]}
-                    slug={node.slug}
-                    headerRight={
-                      <Tree.HasDisclosures>
-                        <Tree.ToggleExpandAll className="-mr-2" />
-                      </Tree.HasDisclosures>
-                    }
-                  >
+              <AnchorIdProvider id="path">
+                <EndpointSection
+                  title="Path parameters"
+                  anchorIdParts={["request", "path"]}
+                  slug={node.slug}
+                  headerRight={
+                    <Tree.HasDisclosures>
+                      <Tree.ToggleExpandAll className="-mr-2" />
+                    </Tree.HasDisclosures>
+                  }
+                >
+                  <Tree.Root>
                     {sortBy(endpoint.pathParameters, [
                       (parameter) => parameter.availability === "Deprecated",
                     ]).map((parameter) => (
@@ -187,25 +185,25 @@ export function EndpointContentTree({
                         types={types}
                       />
                     ))}
-                  </EndpointSection>
-                </AnchorIdProvider>
-              </Tree.Root>
+                  </Tree.Root>
+                </EndpointSection>
+              </AnchorIdProvider>
             )}
 
             {endpoint.queryParameters &&
               endpoint.queryParameters.length > 0 && (
-                <Tree.Root>
-                  <AnchorIdProvider id="query">
-                    <EndpointSection
-                      title="Query parameters"
-                      anchorIdParts={["request", "query"]}
-                      slug={node.slug}
-                      headerRight={
-                        <Tree.HasDisclosures>
-                          <Tree.ToggleExpandAll className="-mr-2" />
-                        </Tree.HasDisclosures>
-                      }
-                    >
+                <AnchorIdProvider id="query">
+                  <EndpointSection
+                    title="Query parameters"
+                    anchorIdParts={["request", "query"]}
+                    slug={node.slug}
+                    headerRight={
+                      <Tree.HasDisclosures>
+                        <Tree.ToggleExpandAll className="-mr-2" />
+                      </Tree.HasDisclosures>
+                    }
+                  >
+                    <Tree.Root>
                       {sortBy(endpoint.queryParameters, [
                         (parameter) => parameter.availability === "Deprecated",
                       ]).map((parameter) => (
@@ -215,63 +213,63 @@ export function EndpointContentTree({
                           types={types}
                         />
                       ))}
-                    </EndpointSection>
-                  </AnchorIdProvider>
-                </Tree.Root>
+                    </Tree.Root>
+                  </EndpointSection>
+                </AnchorIdProvider>
               )}
 
             {request && (
-              <Tree.Root>
-                <EndpointSection
-                  title="Request"
-                  anchorIdParts={["request"]}
-                  slug={node.slug}
-                  description={request.description}
-                  headerRight={
-                    <Tree.HasDisclosures>
-                      <Tree.ToggleExpandAll className="-mr-2" />
-                    </Tree.HasDisclosures>
-                  }
-                >
-                  {request.contentType && (
-                    <Badge size="sm" className="mb-3 font-mono">
-                      {request.contentType}
-                    </Badge>
-                  )}
+              <EndpointSection
+                title="Request"
+                anchorIdParts={["request"]}
+                slug={node.slug}
+                description={request.description}
+                headerRight={
+                  <Tree.HasDisclosures>
+                    <Tree.ToggleExpandAll className="-mr-2" />
+                  </Tree.HasDisclosures>
+                }
+              >
+                {request.contentType && (
+                  <Badge size="sm" className="mb-3 font-mono">
+                    {request.contentType}
+                  </Badge>
+                )}
+                <Tree.Root>
                   <AnchorIdProvider id="body">
                     <HttpRequestBody body={request.body} types={types} />
                   </AnchorIdProvider>
-                </EndpointSection>
-              </Tree.Root>
+                </Tree.Root>
+              </EndpointSection>
             )}
           </AnchorIdProvider>
 
           <AnchorIdProvider id="response">
             {response && (
-              <Tree.Root>
-                <EndpointSection
-                  title="Response"
-                  anchorIdParts={["response"]}
-                  slug={node.slug}
-                  description={response.description}
-                  headerRight={
-                    <Tree.HasDisclosures>
-                      <Tree.ToggleExpandAll className="-mr-2" />
-                    </Tree.HasDisclosures>
-                  }
-                >
-                  <div className="mb-3 flex items-center gap-2">
-                    <StatusCodeBadge
-                      statusCode={response.statusCode}
-                      variant="subtle"
-                      size="sm"
-                    />
-                    <HttpResponseContentTypeBadge
-                      body={response.body}
-                      variant="subtle"
-                      size="sm"
-                    />
-                  </div>
+              <EndpointSection
+                title="Response"
+                anchorIdParts={["response"]}
+                slug={node.slug}
+                description={response.description}
+                headerRight={
+                  <Tree.HasDisclosures>
+                    <Tree.ToggleExpandAll className="-mr-2" />
+                  </Tree.HasDisclosures>
+                }
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <StatusCodeBadge
+                    statusCode={response.statusCode}
+                    variant="subtle"
+                    size="sm"
+                  />
+                  <HttpResponseContentTypeBadge
+                    body={response.body}
+                    variant="subtle"
+                    size="sm"
+                  />
+                </div>
+                <Tree.Root>
                   <AnchorIdProvider id="body">
                     <HttpResponseBody
                       key={response.statusCode}
@@ -279,8 +277,8 @@ export function EndpointContentTree({
                       types={types}
                     />
                   </AnchorIdProvider>
-                </EndpointSection>
-              </Tree.Root>
+                </Tree.Root>
+              </EndpointSection>
             )}
           </AnchorIdProvider>
         </div>
@@ -367,61 +365,98 @@ const ObjectProperty = memo(
     types: Record<string, ApiDefinition.TypeDefinition>;
     visitedTypeIds?: Set<ApiDefinition.TypeId>;
   }) => {
+    const indent = Tree.useIndent();
     const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
     const visitedTypeIds = new Set([
       ...parentVisitedTypeIds,
       ...unwrapped.visitedTypeIds,
     ]);
-    const indent = Tree.useIndent();
     const open = Tree.useIsOpen();
     const shouldLazyLoad =
       [...unwrapped.visitedTypeIds].filter((id) => visitedTypeIds.has(id))
         .length > 0;
-    console.log(visitedTypeIds, unwrapped.visitedTypeIds);
+    // console.log(visitedTypeIds, unwrapped.visitedTypeIds);
     if (shouldLazyLoad && !open) {
       return null;
     }
+
+    const availability = property.availability ?? unwrapped.availability;
+
     return (
       <AnchorIdProvider id={property.key}>
         <JsonPathPartProvider
           value={{ type: "objectProperty", propertyName: property.key }}
         >
-          <Tree.Item
-            defaultOpen={isDefaultOpen(
-              property.valueShape,
-              types,
-              visitedTypeIds
-            )}
-            unbranched={unwrapped.shape.type === "enum"}
-          >
-            <Tree.Summary
-              collapseTriggerMessage={showChildAttributesMessage(
-                property.valueShape,
-                types
-              )}
+          {hasChildren(property.valueShape, types, visitedTypeIds) ? (
+            <Tree.Item asChild className={cn(indent === 0 && "-ml-2")}>
+              <Tree.Details
+                defaultOpen={isDefaultOpen(
+                  property.valueShape,
+                  types,
+                  visitedTypeIds
+                )}
+                className={cn("mb-4", indent)}
+              >
+                <Tree.DetailsSummary className="relative">
+                  <Tree.DetailsIndicator className="absolute -left-2 top-1" />
+                  <Tree.DetailsTrigger asChild>
+                    <ParameterInfo
+                      parameterName={property.key}
+                      property={property}
+                      types={types}
+                      className="my-2"
+                    />
+                  </Tree.DetailsTrigger>
+                  <Tree.SummaryIndentedContent>
+                    <div className="space-y-3">
+                      {availability && (
+                        <AvailabilityBadge
+                          availability={availability}
+                          size="sm"
+                        />
+                      )}
+                      <Markdown
+                        size="sm"
+                        className={cn("text-text-muted mb-3 leading-normal")}
+                        mdx={property.description ?? unwrapped.descriptions[0]}
+                      />
+                    </div>
+                  </Tree.SummaryIndentedContent>
+                  <Tree.ExpandChildrenButton>
+                    {showChildAttributesMessage(property.valueShape, types)}
+                  </Tree.ExpandChildrenButton>
+                </Tree.DetailsSummary>
+                {renderDereferencedShape(
+                  unwrapped.shape,
+                  types,
+                  unwrapped.visitedTypeIds
+                )}
+              </Tree.Details>
+            </Tree.Item>
+          ) : (
+            <Tree.Item
+              className={cn("mb-4 space-y-2", indent === 0 && "-ml-2")}
             >
-              <Tree.Trigger asChild>
-                <ParameterInfo
-                  parameterName={property.key}
-                  indent={indent}
-                  property={property}
-                  types={types}
-                />
-              </Tree.Trigger>
-              <Tree.SummaryIndentedContent>
+              <ParameterInfo
+                parameterName={property.key}
+                property={property}
+                types={types}
+                className="my-2"
+              />
+
+              <div className="space-y-2 pl-2">
+                {availability && (
+                  <AvailabilityBadge availability={availability} size="sm" />
+                )}
+
                 <Markdown
                   size="sm"
-                  className={cn("text-text-muted py-2 leading-normal")}
+                  className={cn("text-text-muted leading-normal")}
                   mdx={property.description ?? unwrapped.descriptions[0]}
                 />
-              </Tree.SummaryIndentedContent>
-            </Tree.Summary>
-            {renderDereferencedShape(
-              unwrapped.shape,
-              types,
-              unwrapped.visitedTypeIds
-            )}
-          </Tree.Item>
+              </div>
+            </Tree.Item>
+          )}
         </JsonPathPartProvider>
       </AnchorIdProvider>
     );
@@ -491,21 +526,13 @@ const ParameterInfo = memo(
     HTMLDivElement,
     Omit<ComponentPropsWithoutRef<typeof Parameter.Root>, "property"> & {
       parameterName: string;
-      indent: number;
       property: ApiDefinition.ObjectProperty;
       types: Record<string, ApiDefinition.TypeDefinition>;
       unwrapped?: ApiDefinition.UnwrappedReference;
     }
   >(
     (
-      {
-        parameterName,
-        indent,
-        property,
-        types,
-        unwrapped: unwrappedProp,
-        ...props
-      },
+      { parameterName, property, types, unwrapped: unwrappedProp, ...props },
       ref
     ) => {
       const jsonpath = useContext(JsonPathPartContext).current ?? [];
@@ -564,148 +591,154 @@ const ParameterInfo = memo(
         }
       }, [isActive]);
 
-      const availability = property.availability ?? unwrapped.availability;
-
       return (
-        <div
+        <Parameter.Root
           ref={ref}
           {...props}
-          className={cn("relative min-w-0 flex-1", props.className)}
+          onPointerEnter={() => {
+            window.dispatchEvent(
+              new CustomEvent("hover-json-property", {
+                detail: {
+                  slug,
+                  jsonpath,
+                  isHovering: true,
+                  type: anchorId.startsWith("request") ? "request" : "response",
+                },
+              })
+            );
+          }}
+          onPointerLeave={() => {
+            window.dispatchEvent(
+              new CustomEvent("hover-json-property", {
+                detail: {
+                  slug,
+                  jsonpath,
+                  isHovering: false,
+                  type: anchorId.startsWith("request") ? "request" : "response",
+                },
+              })
+            );
+          }}
+          onFocus={() => {
+            window.dispatchEvent(
+              new CustomEvent("hover-json-property", {
+                detail: {
+                  slug,
+                  jsonpath,
+                  isHovering: true,
+                  type: anchorId.startsWith("request") ? "request" : "response",
+                },
+              })
+            );
+          }}
+          onBlur={() => {
+            window.dispatchEvent(
+              new CustomEvent("hover-json-property", {
+                detail: {
+                  slug,
+                  jsonpath,
+                  isHovering: false,
+                  type: anchorId.startsWith("request") ? "request" : "response",
+                },
+              })
+            );
+          }}
         >
-          <Tree.Indicator
-            className={cn("absolute top-1", {
-              "-left-4": indent === 0,
-              "-left-2": indent > 0,
+          <Parameter.Name
+            ref={nameRef}
+            parameterName={property.key}
+            className={cn("-mr-2 shrink-0 scroll-m-4", {
+              "line-through": property.availability === "Deprecated",
             })}
+            color={property.availability === "Deprecated" ? "gray" : "accent"}
+            variant={isActive ? "subtle" : "ghost"}
+            onClickCopyAnchorLink={() => {
+              const url = String(
+                new URL(`/${slug}#${anchorId}`, window.location.href)
+              );
+              void navigator.clipboard.writeText(url);
+              setLocation((location) => ({
+                ...location,
+                pathname: `/${slug}`,
+                hash: `#${anchorId}`,
+              }));
+            }}
           />
-          <Parameter.Root
-            onPointerEnter={() => {
-              window.dispatchEvent(
-                new CustomEvent("hover-json-property", {
-                  detail: {
-                    slug,
-                    jsonpath,
-                    isHovering: true,
-                    type: anchorId.startsWith("request")
-                      ? "request"
-                      : "response",
-                  },
-                })
-              );
-            }}
-            onPointerLeave={() => {
-              window.dispatchEvent(
-                new CustomEvent("hover-json-property", {
-                  detail: {
-                    slug,
-                    jsonpath,
-                    isHovering: false,
-                    type: anchorId.startsWith("request")
-                      ? "request"
-                      : "response",
-                  },
-                })
-              );
-            }}
-            onFocus={() => {
-              window.dispatchEvent(
-                new CustomEvent("hover-json-property", {
-                  detail: {
-                    slug,
-                    jsonpath,
-                    isHovering: true,
-                    type: anchorId.startsWith("request")
-                      ? "request"
-                      : "response",
-                  },
-                })
-              );
-            }}
-            onBlur={() => {
-              window.dispatchEvent(
-                new CustomEvent("hover-json-property", {
-                  detail: {
-                    slug,
-                    jsonpath,
-                    isHovering: false,
-                    type: anchorId.startsWith("request")
-                      ? "request"
-                      : "response",
-                  },
-                })
-              );
-            }}
-          >
-            <Parameter.Name
-              ref={nameRef}
-              parameterName={property.key}
-              className={cn("shrink-0 scroll-m-4", {
-                "-mx-2": indent === 0,
-                "-mr-2": indent > 0,
-                "line-through": property.availability === "Deprecated",
-              })}
-              color={property.availability === "Deprecated" ? "gray" : "accent"}
-              variant={isActive ? "subtle" : "ghost"}
-              onClickCopyAnchorLink={() => {
-                const url = String(
+          <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
+            <TypeShorthand
+              shape={unwrapped.shape}
+              isOptional={unwrapped.isOptional}
+              types={types}
+            />
+            {unwrapped.default != null &&
+              unwrapped.shape.type !== "literal" &&
+              typeof unwrapped.default !== "object" && (
+                <span className="ml-2 font-mono">
+                  {`= ${JSON.stringify(unwrapped.default)}`}
+                </span>
+              )}
+          </span>
+          <Parameter.Spacer />
+          {anchorId.startsWith("request") && !unwrapped.isOptional && (
+            <Parameter.Status status="required" />
+          )}
+          <TouchScreenOnly asChild>
+            <CopyToClipboardButton
+              asChild
+              content={() => {
+                return String(
                   new URL(`/${slug}#${anchorId}`, window.location.href)
                 );
-                void navigator.clipboard.writeText(url);
-                setLocation((location) => ({
-                  ...location,
-                  pathname: `/${slug}`,
-                  hash: `#${anchorId}`,
-                }));
               }}
-            />
-            <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
-              <TypeShorthand
-                shape={unwrapped.shape}
-                isOptional={unwrapped.isOptional}
-                types={types}
-              />
-              {unwrapped.default != null &&
-                unwrapped.shape.type !== "literal" &&
-                typeof unwrapped.default !== "object" && (
-                  <span className="ml-2 font-mono">
-                    {`= ${JSON.stringify(unwrapped.default)}`}
-                  </span>
-                )}
-            </span>
-            <Parameter.Spacer />
-            {anchorId.startsWith("request") && !unwrapped.isOptional && (
-              <Parameter.Status status="required" />
-            )}
-            <TouchScreenOnly asChild>
-              <CopyToClipboardButton
-                asChild
-                content={() => {
-                  return String(
-                    new URL(`/${slug}#${anchorId}`, window.location.href)
-                  );
-                }}
+            >
+              <Button
+                size="iconXs"
+                variant="ghost"
+                color="gray"
+                className="-m-1 shrink-0 self-center"
               >
-                <Button
-                  size="iconXs"
-                  variant="ghost"
-                  color="gray"
-                  className="-m-1 shrink-0 self-center"
-                >
-                  <LinkIcon />
-                </Button>
-              </CopyToClipboardButton>
-            </TouchScreenOnly>
-          </Parameter.Root>
-          {availability && (
-            <AvailabilityBadge availability={availability} size="sm" />
-          )}
-        </div>
+                <LinkIcon />
+              </Button>
+            </CopyToClipboardButton>
+          </TouchScreenOnly>
+        </Parameter.Root>
       );
     }
   )
 );
 
 ParameterInfo.displayName = "ParameterInfo";
+
+function hasChildren(
+  shape: ApiDefinition.TypeShape,
+  types: Record<string, ApiDefinition.TypeDefinition>,
+  parentVisitedTypeIds = new Set<ApiDefinition.TypeId>()
+) {
+  const unwrapped = ApiDefinition.unwrapReference(shape, types);
+  const visitedTypeIds = new Set([
+    ...parentVisitedTypeIds,
+    ...unwrapped.visitedTypeIds,
+  ]);
+  switch (unwrapped.shape.type) {
+    case "object":
+      return (
+        ApiDefinition.unwrapObjectType(unwrapped.shape, types, visitedTypeIds)
+          .properties.length > 0 || !!unwrapped.shape.extraProperties
+      );
+    case "discriminatedUnion":
+    case "undiscriminatedUnion":
+      return unwrapped.shape.variants.length > 0;
+    case "list":
+    case "set":
+      return hasChildren(unwrapped.shape.itemShape, types, visitedTypeIds);
+    case "map":
+      return hasChildren(unwrapped.shape.valueShape, types, visitedTypeIds);
+    case "enum":
+      return unwrapped.shape.values.length > 0;
+    default:
+      return false;
+  }
+}
 
 function showChildAttributesMessage(
   shape: ApiDefinition.TypeShape,
@@ -721,7 +754,8 @@ function showChildAttributesMessage(
     case "object": {
       const properties = ApiDefinition.unwrapObjectType(
         unwrapped.shape,
-        types
+        types,
+        visitedTypeIds
       ).properties;
       return `Show ${properties.length} child attribute${
         properties.length > 1 ? "s" : ""
@@ -796,7 +830,9 @@ function renderDereferencedShape(
       );
     }
     case "enum":
-      return <EnumCard values={property.values} />;
+      return (
+        <Tree.Content>{<EnumList values={property.values} />}</Tree.Content>
+      );
     case "object": {
       return (
         <ObjectTypeShape
@@ -809,7 +845,7 @@ function renderDereferencedShape(
     case "undiscriminatedUnion":
       return (
         <Tree.Content>
-          <Tree.Card>
+          <Tree.Card className="my-2">
             <Tree.Variants>
               {property.variants.map((variant, idx) => {
                 const description =
@@ -845,7 +881,7 @@ function renderDereferencedShape(
     case "discriminatedUnion":
       return (
         <Tree.Content>
-          <Tree.Card>
+          <Tree.Card className="my-2">
             <Tree.Variants>
               {property.variants.map((variant) => {
                 const description =
@@ -920,15 +956,8 @@ function VariantDescription({
   availability?: ApiDefinition.Availability;
   description?: MarkdownText;
 }) {
-  const card = Tree.useIsCard();
   return (
-    <div
-      className={cn(
-        card
-          ? "border-b border-[var(--grayscale-a4)] pb-2 leading-normal"
-          : "rounded-md bg-[var(--grayscale-a3)] px-3 py-2"
-      )}
-    >
+    <div className={"border-b border-[var(--grayscale-5)] pb-2 leading-normal"}>
       {(displayName || availability) && (
         <div className="flex items-center">
           {displayName && <h6 className="mb-0">{displayName}</h6>}
@@ -946,87 +975,13 @@ function VariantDescription({
   );
 }
 
-function EnumCard({ values }: { values: ApiDefinition.EnumValue[] }) {
+const EnumList = memo(({ values }: { values: ApiDefinition.EnumValue[] }) => {
   if (values.length > 10) {
     return (
-      <Tree.Content>
-        <Tree.Card asChild>
-          <Disclosure.Details>
-            <Disclosure.Summary>
-              {values.slice(0, 10).map((value, idx) => (
-                <Fragment key={value.value}>
-                  {idx > 0 && (
-                    <Separator
-                      orientation="horizontal"
-                      className="h-px bg-[var(--grayscale-a4)]"
-                    />
-                  )}
-                  <div className="p-3">
-                    <Chip className="font-mono" variant="outlined-subtle">
-                      {value.value}
-                    </Chip>
-                    {value.description && (
-                      <Markdown
-                        size="sm"
-                        mdx={value.description}
-                        className="text-text-muted mt-3"
-                      />
-                    )}
-                  </div>
-                </Fragment>
-              ))}
-              <Separator
-                orientation="horizontal"
-                className="h-px bg-[var(--grayscale-a4)]"
-              />
-              <Disclosure.If open={false}>
-                <Disclosure.Trigger>
-                  <Button>Show all {values.length} values</Button>
-                </Disclosure.Trigger>
-              </Disclosure.If>
-            </Disclosure.Summary>
-            <Disclosure.Content>
-              {values.slice(10).map((value, idx) => (
-                <Fragment key={value.value}>
-                  {idx > 0 && (
-                    <Separator
-                      orientation="horizontal"
-                      className="h-px bg-[var(--grayscale-a4)]"
-                    />
-                  )}
-                  <div className="p-3">
-                    <Chip className="font-mono" variant="outlined-subtle">
-                      {value.value}
-                    </Chip>
-                    {value.description && (
-                      <Markdown
-                        size="sm"
-                        mdx={value.description}
-                        className="text-text-muted mt-3"
-                      />
-                    )}
-                  </div>
-                </Fragment>
-              ))}
-            </Disclosure.Content>
-          </Disclosure.Details>
-        </Tree.Card>
-      </Tree.Content>
-    );
-  }
-
-  return (
-    <Tree.Card>
-      <Tree.Content>
-        {values.map((value, idx) => (
-          <Fragment key={value.value}>
-            {idx > 0 && (
-              <Separator
-                orientation="horizontal"
-                className="h-px bg-[var(--grayscale-a4)]"
-              />
-            )}
-            <div className="p-3">
+      <Disclosure.Details>
+        <Disclosure.Summary>
+          {values.slice(0, 10).map((value) => (
+            <div className="mb-3" key={value.value}>
               <Chip className="font-mono" variant="outlined-subtle">
                 {value.value}
               </Chip>
@@ -1038,12 +993,57 @@ function EnumCard({ values }: { values: ApiDefinition.EnumValue[] }) {
                 />
               )}
             </div>
-          </Fragment>
-        ))}
-      </Tree.Content>
-    </Tree.Card>
+          ))}
+          <Disclosure.If open={false}>
+            <Disclosure.Trigger>
+              <Badge variant="subtle">
+                <ChevronDown />
+                Show all {values.length} values
+              </Badge>
+            </Disclosure.Trigger>
+          </Disclosure.If>
+        </Disclosure.Summary>
+        <Disclosure.Content>
+          {values.slice(10).map((value) => (
+            <div className="mb-3" key={value.value}>
+              <Chip className="font-mono" variant="outlined-subtle">
+                {value.value}
+              </Chip>
+              {value.description && (
+                <Markdown
+                  size="sm"
+                  mdx={value.description}
+                  className="text-text-muted mt-3"
+                />
+              )}
+            </div>
+          ))}
+        </Disclosure.Content>
+      </Disclosure.Details>
+    );
+  }
+
+  return (
+    <div className="mt-1.5">
+      {values.map((value) => (
+        <div className="mb-3" key={value.value}>
+          <Chip className="font-mono" variant="outlined-subtle">
+            {value.value}
+          </Chip>
+          {value.description && (
+            <Markdown
+              size="sm"
+              mdx={value.description}
+              className="text-text-muted mt-3"
+            />
+          )}
+        </div>
+      ))}
+    </div>
   );
-}
+});
+
+EnumList.displayName = "EnumList";
 
 function renderTypeShape(
   shape: ApiDefinition.TypeShape,
@@ -1210,7 +1210,10 @@ function ObjectTypeShape({
             />
           ))}
         </Tree.Content>
-        <Tree.CollapsedContent defaultOpen={optional.length === 1}>
+        <Tree.CollapsedContent
+          defaultOpen={optional.length === 1}
+          // className={cn(indent === 0 && "pl-2")}
+        >
           {optional.map((property) => (
             <ObjectProperty
               key={property.key}

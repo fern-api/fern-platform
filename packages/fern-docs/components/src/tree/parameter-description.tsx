@@ -1,6 +1,8 @@
 import { composeEventHandlers } from "@radix-ui/primitive";
+import { Primitive } from "@radix-ui/react-primitive";
 import { Separator } from "@radix-ui/react-separator";
 import * as Toolbar from "@radix-ui/react-toolbar";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Link } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
@@ -13,21 +15,25 @@ import { CopyToClipboardButton } from "../CopyToClipboardButton";
 import { Button } from "../FernButtonV2";
 import { Badge, BadgeProps } from "../badges";
 import { cn } from "../cn";
-import { useDetailContext } from "./tree";
+import { useSetOpen } from "./tree";
 
 const ParameterDescription = memo(
-  forwardRef<HTMLDivElement, ComponentPropsWithoutRef<"div">>((props, ref) => {
-    return (
-      <div
-        ref={ref}
-        {...props}
-        className={cn(
-          "group/trigger flex min-w-0 items-baseline gap-3 *:min-w-0",
-          props.className
-        )}
-      />
-    );
-  })
+  forwardRef<HTMLDivElement, ComponentPropsWithoutRef<typeof Primitive.div>>(
+    (props, ref) => {
+      return (
+        <TooltipProvider>
+          <Primitive.div
+            ref={ref}
+            {...props}
+            className={cn(
+              "group/trigger flex min-w-0 items-baseline gap-3 *:min-w-0",
+              props.className
+            )}
+          />
+        </TooltipProvider>
+      );
+    }
+  )
 );
 
 ParameterDescription.displayName = "ParameterDescription";
@@ -56,7 +62,7 @@ const ParameterName = forwardRef<
     },
     ref
   ) => {
-    const { setOpen } = useDetailContext();
+    const setOpen = useSetOpen();
     return (
       <CopyToClipboardButton
         ref={ref}
