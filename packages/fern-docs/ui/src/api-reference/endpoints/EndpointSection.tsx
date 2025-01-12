@@ -38,7 +38,7 @@ export declare namespace EndpointSection {
 
 export const EndpointSection = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<typeof Primitive.div> & {
+  Omit<ComponentPropsWithoutRef<typeof Primitive.div>, "title"> & {
     headerType?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
     title: ReactNode;
     headerRight?: ReactNode;

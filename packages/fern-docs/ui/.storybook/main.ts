@@ -26,5 +26,36 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
+  core: {
+    builder: {
+      name: "@storybook/builder-webpack5",
+      options: {
+        lazyCompilation: true,
+      },
+    },
+  },
+  webpackFinal: (config) => {
+    config.externals = config.externals ?? [];
+    if (Array.isArray(config.externals)) {
+      config.externals.push("esbuild");
+    }
+    if (config.module) {
+      config.module.rules = config.module.rules ?? [];
+      config.module.rules.push({
+        test: /\.(glsl|vs|fs|vert|frag)$/,
+        exclude: /node_modules/,
+        use: [
+          "raw-loader",
+          {
+            loader: "glslify-loader",
+            options: {
+              transform: ["glslify-import"],
+            },
+          },
+        ],
+      });
+    }
+    return config;
+  },
 };
 export default config;

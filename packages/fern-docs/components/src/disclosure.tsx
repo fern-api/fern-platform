@@ -32,13 +32,14 @@ const DisclosureContext = createContext<OptionalEffectTiming>(
   defaultAnimationOptions
 );
 
-const DisclosureStateContext = createContext<PrimitiveAtom<boolean> | null>(
-  null
+const DisclosureStateContext = createContext<PrimitiveAtom<boolean>>(
+  atom(false)
 );
 
 function DisclosureResetProvider({ children }: { children: React.ReactNode }) {
+  const ref = useRef(atom(false));
   return (
-    <DisclosureStateContext.Provider value={null}>
+    <DisclosureStateContext.Provider value={ref.current}>
       {children}
     </DisclosureStateContext.Provider>
   );
@@ -82,9 +83,7 @@ const DisclosureSummary = forwardRef<
     children?: ReactNode | (({ open }: { open: boolean }) => ReactNode);
   }
 >(({ children, asChild, ...props }, ref) => {
-  const open = useAtomValue(
-    useContext(DisclosureStateContext) ?? atom(() => false)
-  );
+  const open = useAtomValue(useContext(DisclosureStateContext));
   const summaryRef = React.useRef<HTMLElement>(null);
   const Comp = asChild ? Slot : "summary";
 
@@ -422,9 +421,7 @@ const DisclosureLazyContent = forwardRef<
     children?: () => ReactNode;
   }
 >(({ asChild, children, innerClassName, ...props }, forwardRef) => {
-  const isOpen = useAtomValue(
-    useContext(DisclosureStateContext) ?? atom(() => false)
-  );
+  const isOpen = useAtomValue(useContext(DisclosureStateContext));
   const { setContentEl, setResizerEl } = useContext(DisclosureItemContext);
   const Comp = asChild ? Slot : "div";
   if (!isOpen) {
@@ -445,9 +442,7 @@ const DisclosureIf = ({
   children,
   open: openProp,
 }: PropsWithChildren<{ open: boolean }>) => {
-  const isOpen =
-    useAtomValue(useContext(DisclosureStateContext) ?? atom(() => false)) ===
-    openProp;
+  const isOpen = useAtomValue(useContext(DisclosureStateContext)) === openProp;
   if (!isOpen) {
     return null;
   }

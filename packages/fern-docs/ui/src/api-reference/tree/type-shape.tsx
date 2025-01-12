@@ -10,7 +10,7 @@ import {
   TouchScreenOnly,
 } from "@fern-docs/components";
 import { composeEventHandlers } from "@radix-ui/primitive";
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtomValue } from "jotai";
 import { ChevronDown, LinkIcon, Plus } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
@@ -18,6 +18,7 @@ import {
   memo,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import { useMemoOne } from "use-memo-one";
@@ -170,11 +171,9 @@ export function ObjectTypeShape({
   if (required.length && optional.length > 1 && !expanded) {
     return (
       <VisitedTypeIdsProvider value={visitedTypeIds}>
-        <Tree.Content notLast>
-          {required.map((property) => (
-            <ObjectProperty key={property.key} property={property} />
-          ))}
-        </Tree.Content>
+        {required.map((property) => (
+          <ObjectProperty key={property.key} property={property} />
+        ))}
         <Tree.CollapsedContent
           defaultOpen={optional.length === 1}
           // className={cn(indent === 0 && "pl-2")}
@@ -209,120 +208,146 @@ export function ObjectTypeShape({
 
   return (
     <VisitedTypeIdsProvider value={visitedTypeIds}>
-      <Tree.Content>
-        {properties.map((property) => (
-          <ObjectProperty key={property.key} property={property} />
-        ))}
-      </Tree.Content>
+      {properties.map((property) => (
+        <ObjectProperty key={property.key} property={property} />
+      ))}
     </VisitedTypeIdsProvider>
   );
 }
 
+enum ExpandMode {
+  /**
+   * in the initial state, the tree is partially expanded (description is visible, but children are collapsed)
+   */
+  Intial,
+  /**
+   * in the open state, the tree is fully expanded (description and children are visible)
+   */
+  Open,
+  /**
+   * in the closed state, the tree is fully collapsed (description and children are hidden)
+   */
+  Closed,
+}
+
 export const ObjectProperty = memo(
   ({ property }: { property: ApiDefinition.ObjectProperty }) => {
+    const [expandMode, setExpandMode] = useState<ExpandMode>(ExpandMode.Intial);
     const indent = Tree.useIndent();
     const types = useTypeDefinitions();
     const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
     const availability = property.availability ?? unwrapped.availability;
     const description = property.description ?? unwrapped.descriptions[0];
     const hideBranch = typeShapeShouldHideBranch(property.valueShape, types);
+    const hasChildren = typeShapeHasChildren(property.valueShape, types);
 
     return (
       <AnchorIdProvider value={property.key}>
         <JsonPathPartProvider
           value={{ type: "objectProperty", propertyName: property.key }}
         >
-          {typeShapeHasChildren(property.valueShape, types) ? (
-            <Tree.Item asChild className={cn(indent === 0 && "-ml-2")}>
+          <Tree.Item
+            asChild={hasChildren}
+            className={cn(
+              indent === 0 && "-ml-2",
+              hasChildren && "mb-4 space-y-2"
+            )}
+          >
+            {hasChildren ? (
               <Tree.Details
                 defaultOpen={isTypeShapeDetailsOpenByDefault(
                   property.valueShape,
                   types
                 )}
                 className={cn("mb-4", indent)}
-                summary={
-                  <Tree.DetailsSummary className="relative">
-                    <Tree.DetailsIndicator className="absolute -left-2 top-1" />
-                    <Tree.DetailsTrigger asChild>
-                      <ParameterInfo
-                        parameterName={property.key}
-                        property={property}
-                        unwrapped={unwrapped}
-                        className="my-2"
-                      />
-                    </Tree.DetailsTrigger>
-                    <Tree.BranchGrid
-                      hideBranch={hideBranch}
-                      className={cn(hideBranch && "pl-2")}
-                    >
-                      {availability && (
-                        <Tree.Branch lineOnly>
-                          <AvailabilityBadge
-                            availability={availability}
-                            size="sm"
-                          />
-                        </Tree.Branch>
-                      )}
-                      {!isMdxEmpty(description) && (
-                        <Tree.Branch lineOnly>
-                          <Markdown
-                            size="sm"
-                            className={cn(
-                              "text-text-muted mb-3 leading-normal"
-                            )}
-                            mdx={description}
-                          />
-                        </Tree.Branch>
-                      )}
-                      <Disclosure.If open={false}>
-                        <Tree.Branch last>
-                          <Disclosure.Trigger asChild>
-                            <Badge
-                              rounded
-                              interactive
-                              className="mt-2 w-fit font-normal"
-                              variant={hideBranch ? "subtle" : "ghost"}
-                            >
-                              <Plus />
-                              {showChildAttributesMessage(
-                                property.valueShape,
-                                types
-                              )}
-                            </Badge>
-                          </Disclosure.Trigger>
-                        </Tree.Branch>
-                      </Disclosure.If>
-                    </Tree.BranchGrid>
-                  </Tree.DetailsSummary>
-                }
+                onOpenChange={(open) => {
+                  if (open) {
+                    setExpandMode(ExpandMode.Open);
+                  } else {
+                    setExpandMode(ExpandMode.Closed);
+                  }
+                }}
+                open={expandMode === ExpandMode.Open}
               >
-                {() => <TypeShape shape={property.valueShape} />}
+                <Tree.DetailsSummary className="relative">
+                  <Tree.DetailsTrigger asChild>
+                    <ParameterInfo
+                      parameterName={property.key}
+                      property={property}
+                      unwrapped={unwrapped}
+                      className="my-2"
+                      hideIndicator={!hasChildren}
+                    />
+                  </Tree.DetailsTrigger>
+                  <Tree.BranchGrid
+                    hideBranch={hideBranch}
+                    className={cn(hideBranch && "pl-2")}
+                  >
+                    {availability && (
+                      <Tree.Branch lineOnly>
+                        <AvailabilityBadge
+                          availability={availability}
+                          size="sm"
+                        />
+                      </Tree.Branch>
+                    )}
+                    {!isMdxEmpty(description) && (
+                      <Tree.Branch lineOnly>
+                        <Markdown
+                          size="sm"
+                          className={cn("text-text-muted mb-3 leading-normal")}
+                          mdx={description}
+                        />
+                      </Tree.Branch>
+                    )}
+                    <Disclosure.If open={false}>
+                      <Tree.Branch last>
+                        <Disclosure.Trigger asChild>
+                          <Badge
+                            rounded
+                            interactive
+                            className="mt-2 w-fit font-normal"
+                            variant={hideBranch ? "subtle" : "ghost"}
+                          >
+                            <Plus />
+                            {showChildAttributesMessage(
+                              property.valueShape,
+                              types
+                            )}
+                          </Badge>
+                        </Disclosure.Trigger>
+                      </Tree.Branch>
+                    </Disclosure.If>
+                  </Tree.BranchGrid>
+                </Tree.DetailsSummary>
+                <Tree.DetailsContent>
+                  <TypeShape shape={property.valueShape} />
+                </Tree.DetailsContent>
               </Tree.Details>
-            </Tree.Item>
-          ) : (
-            <Tree.Item
-              className={cn("mb-4 space-y-2", indent === 0 && "-ml-2")}
-            >
-              <ParameterInfo
-                parameterName={property.key}
-                property={property}
-                unwrapped={unwrapped}
-                className="my-2"
-              />
-
-              <div className="space-y-2 pl-2">
+            ) : (
+              <>
+                <ParameterInfo
+                  parameterName={property.key}
+                  property={property}
+                  unwrapped={unwrapped}
+                  className="my-2"
+                  hideIndicator={!hasChildren}
+                />
                 {availability && (
-                  <AvailabilityBadge availability={availability} size="sm" />
+                  <AvailabilityBadge
+                    availability={availability}
+                    size="sm"
+                    className="mb-2 ml-2"
+                  />
                 )}
-
                 <Markdown
                   size="sm"
-                  className={cn("text-text-muted leading-normal")}
-                  mdx={property.description ?? unwrapped.descriptions[0]}
+                  mdx={description}
+                  className="text-text-muted mb-3 ml-2 leading-normal"
                 />
-              </div>
-            </Tree.Item>
-          )}
+              </>
+            )}
+          </Tree.Item>
         </JsonPathPartProvider>
       </AnchorIdProvider>
     );
@@ -335,76 +360,74 @@ const DiscriminatedUnionShape = memo(
   ({ shape }: { shape: ApiDefinition.DiscriminatedUnionType }) => {
     const types = useTypeDefinitions();
     return (
-      <Tree.Content>
-        <Tree.Card className="my-2">
-          <Tree.Variants>
-            {shape.variants.map((variant) => {
-              const description =
-                variant.description ??
-                ApiDefinition.unwrapObjectType(variant, types).descriptions[0];
-              return (
-                <AnchorIdProvider
-                  value={variant.discriminantValue}
-                  key={variant.discriminantValue}
+      <Tree.Card className="my-2">
+        <Tree.Variants>
+          {shape.variants.map((variant) => {
+            const description =
+              variant.description ??
+              ApiDefinition.unwrapObjectType(variant, types).descriptions[0];
+            return (
+              <AnchorIdProvider
+                value={variant.discriminantValue}
+                key={variant.discriminantValue}
+              >
+                <JsonPathPartProvider
+                  value={{
+                    type: "objectFilter",
+                    propertyName: shape.discriminant,
+                    requiredStringValue: variant.discriminantValue,
+                  }}
                 >
-                  <JsonPathPartProvider
-                    value={{
-                      type: "objectFilter",
-                      propertyName: shape.discriminant,
-                      requiredStringValue: variant.discriminantValue,
-                    }}
-                  >
-                    {(variant.displayName ||
-                      variant.availability ||
-                      description) && (
-                      <VariantDescription
-                        displayName={variant.displayName}
-                        availability={variant.availability}
-                        description={description}
-                      />
-                    )}
-                    <ObjectProperty
-                      property={{
-                        key: ApiDefinition.PropertyKey(shape.discriminant),
-                        valueShape: {
-                          type: "alias",
+                  {(variant.displayName ||
+                    variant.availability ||
+                    description) && (
+                    <VariantDescription
+                      displayName={variant.displayName}
+                      availability={variant.availability}
+                      description={description}
+                    />
+                  )}
+                  <ObjectProperty
+                    property={{
+                      key: ApiDefinition.PropertyKey(shape.discriminant),
+                      valueShape: {
+                        type: "alias",
+                        value: {
+                          type: "literal",
                           value: {
-                            type: "literal",
-                            value: {
-                              type: "stringLiteral",
-                              value: variant.discriminantValue,
-                            },
+                            type: "stringLiteral",
+                            value: variant.discriminantValue,
                           },
                         },
-                        description: undefined,
-                        availability: undefined,
-                      }}
-                    />
-                    <Disclosure.Details className="list-none">
-                      <Disclosure.Summary>
-                        <Disclosure.If open={false}>
-                          <Disclosure.Trigger asChild>
-                            <Badge variant="subtle" interactive>
-                              <ChevronDown />
-                              {`Show ${
-                                ApiDefinition.unwrapObjectType(variant, types)
-                                  .properties.length
-                              } attributes`}
-                            </Badge>
-                          </Disclosure.Trigger>
-                        </Disclosure.If>
-                      </Disclosure.Summary>
-                      <Disclosure.LazyContent>
-                        {() => <ObjectTypeShape shape={variant} expanded />}
-                      </Disclosure.LazyContent>
-                    </Disclosure.Details>
-                  </JsonPathPartProvider>
-                </AnchorIdProvider>
-              );
-            })}
-          </Tree.Variants>
-        </Tree.Card>
-      </Tree.Content>
+                      },
+                      description: undefined,
+                      availability: undefined,
+                    }}
+                  />
+                  <Disclosure.Details className="list-none">
+                    <Disclosure.Summary>
+                      <Disclosure.If open={false}>
+                        <Disclosure.Trigger asChild>
+                          <Badge variant="subtle" interactive>
+                            <ChevronDown />
+                            {`Show ${
+                              ApiDefinition.unwrapObjectType(variant, types)
+                                .properties.length
+                            } attributes`}
+                          </Badge>
+                        </Disclosure.Trigger>
+                      </Disclosure.If>
+                    </Disclosure.Summary>
+                    <Disclosure.LazyContent>
+                      {() => <ObjectTypeShape shape={variant} expanded />}
+                    </Disclosure.LazyContent>
+                  </Disclosure.Details>
+                </JsonPathPartProvider>
+              </AnchorIdProvider>
+            );
+          })}
+        </Tree.Variants>
+      </Tree.Card>
     );
   }
 );
@@ -416,45 +439,43 @@ const UndiscriminatedUnionShape = memo(
     const { shape } = props;
     const types = useTypeDefinitions();
     return (
-      <Tree.Content>
-        <Tree.Card className="my-2">
-          <Tree.Variants>
-            {shape.variants.map((variant, idx) => {
-              const description =
-                variant.description ??
-                ApiDefinition.unwrapReference(variant.shape, types)
-                  .descriptions[0];
-              return (
-                <AnchorIdProvider
-                  value={variant.displayName ?? String(idx)}
-                  key={idx}
-                >
-                  {(variant.displayName ||
-                    variant.availability ||
-                    description) && (
-                    <VariantDescription
-                      displayName={variant.displayName}
-                      availability={variant.availability}
-                      description={description}
-                    />
-                  )}
-                  <TypeShape
-                    shape={variant.shape}
-                    renderFallback={() => (
-                      <span className="text-text-muted text-xs">
-                        <TypeAnnotation
-                          shape={variant.shape}
-                          isOptional={false}
-                        />
-                      </span>
-                    )}
+      <Tree.Card className="my-2">
+        <Tree.Variants>
+          {shape.variants.map((variant, idx) => {
+            const description =
+              variant.description ??
+              ApiDefinition.unwrapReference(variant.shape, types)
+                .descriptions[0];
+            return (
+              <AnchorIdProvider
+                value={variant.displayName ?? String(idx)}
+                key={idx}
+              >
+                {(variant.displayName ||
+                  variant.availability ||
+                  description) && (
+                  <VariantDescription
+                    displayName={variant.displayName}
+                    availability={variant.availability}
+                    description={description}
                   />
-                </AnchorIdProvider>
-              );
-            })}
-          </Tree.Variants>
-        </Tree.Card>
-      </Tree.Content>
+                )}
+                <TypeShape
+                  shape={variant.shape}
+                  renderFallback={() => (
+                    <span className="text-text-muted text-xs">
+                      <TypeAnnotation
+                        shape={variant.shape}
+                        isOptional={false}
+                      />
+                    </span>
+                  )}
+                />
+              </AnchorIdProvider>
+            );
+          })}
+        </Tree.Variants>
+      </Tree.Card>
     );
   }
 );
@@ -608,11 +629,13 @@ type ParameterInfoProps = Omit<
   parameterName: string;
   property: ApiDefinition.ObjectProperty;
   unwrapped: ApiDefinition.UnwrappedReference;
+  hideIndicator?: boolean;
 };
 
 const ParameterInfo = memo(
   forwardRef<HTMLDivElement, ParameterInfoProps>((props, ref) => {
-    const { parameterName, property, unwrapped, ...rest } = props;
+    const { parameterName, property, unwrapped, hideIndicator, ...rest } =
+      props;
 
     const jsonpath = useJsonPathPart();
     const slug = useSlug();
@@ -628,7 +651,7 @@ const ParameterInfo = memo(
         [anchorId]
       )
     );
-    const setLocation = useSetAtom(LOCATION_ATOM);
+    // const setLocation = useSetAtom(LOCATION_ATOM);
     const nameRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
@@ -697,63 +720,71 @@ const ParameterInfo = memo(
         onBlur={composeEventHandlers(props.onBlur, () => {
           dispatchHoverEvent(false);
         })}
+        asChild
       >
-        <Parameter.Name
-          ref={nameRef}
-          parameterName={property.key}
-          className={cn("-mr-2 shrink-0 scroll-m-4", {
-            "line-through": property.availability === "Deprecated",
-          })}
-          color={property.availability === "Deprecated" ? "gray" : "accent"}
-          variant={isActive ? "subtle" : "ghost"}
-          onClickCopyAnchorLink={() => {
-            const url = String(
-              new URL(`/${slug}#${anchorId}`, window.location.href)
-            );
-            void navigator.clipboard.writeText(url);
-            setLocation((location) => ({
-              ...location,
-              pathname: `/${slug}`,
-              hash: `#${anchorId}`,
-            }));
-          }}
-        />
-        <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
-          <TypeAnnotation
-            shape={unwrapped.shape}
-            isOptional={unwrapped.isOptional}
-          />
-          {unwrapped.default != null &&
-            unwrapped.shape.type !== "literal" &&
-            typeof unwrapped.default !== "object" && (
-              <span className="ml-2 font-mono">
-                {`= ${JSON.stringify(unwrapped.default)}`}
-              </span>
-            )}
-        </span>
-        <Parameter.Spacer />
-        {anchorId.startsWith("request") && !unwrapped.isOptional && (
-          <Parameter.Status status="required" />
-        )}
-        <TouchScreenOnly asChild>
-          <CopyToClipboardButton
-            asChild
-            content={() => {
-              return String(
-                new URL(`/${slug}#${anchorId}`, window.location.href)
-              );
-            }}
+        <Badge
+          className="-mx-3 block w-full"
+          interactive
+          variant={isActive ? "outlined-subtle" : "ghost"}
+        >
+          <Tree.DetailsIndicator hidden={hideIndicator} className="-mr-2" />
+          <span
+            ref={nameRef}
+            className={cn("shrink-0 scroll-m-4", {
+              "line-through": property.availability === "Deprecated",
+            })}
+            color={property.availability === "Deprecated" ? "gray" : "accent"}
+            // onCanPlay={() => {
+            //   const url = String(
+            //     new URL(`/${slug}#${anchorId}`, window.location.href)
+            //   );
+            //   void navigator.clipboard.writeText(url);
+            //   setLocation((location) => ({
+            //     ...location,
+            //     pathname: `/${slug}`,
+            //     hash: `#${anchorId}`,
+            //   }));
+            // }}
           >
-            <Button
-              size="iconXs"
-              variant="ghost"
-              color="gray"
-              className="-m-1 shrink-0 self-center"
+            {property.key}
+          </span>
+          <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
+            <TypeAnnotation
+              shape={unwrapped.shape}
+              isOptional={unwrapped.isOptional}
+            />
+            {unwrapped.default != null &&
+              unwrapped.shape.type !== "literal" &&
+              typeof unwrapped.default !== "object" && (
+                <span className="ml-2 font-mono">
+                  {`= ${JSON.stringify(unwrapped.default)}`}
+                </span>
+              )}
+          </span>
+          <Parameter.Spacer />
+          {anchorId.startsWith("request") && !unwrapped.isOptional && (
+            <Parameter.Status status="required" />
+          )}
+          <TouchScreenOnly asChild>
+            <CopyToClipboardButton
+              asChild
+              content={() => {
+                return String(
+                  new URL(`/${slug}#${anchorId}`, window.location.href)
+                );
+              }}
             >
-              <LinkIcon />
-            </Button>
-          </CopyToClipboardButton>
-        </TouchScreenOnly>
+              <Button
+                size="iconXs"
+                variant="ghost"
+                color="gray"
+                className="-m-1 shrink-0 self-center"
+              >
+                <LinkIcon />
+              </Button>
+            </CopyToClipboardButton>
+          </TouchScreenOnly>
+        </Badge>
       </Parameter.Root>
     );
   })

@@ -32,6 +32,8 @@ import { cn } from "../../../../components/src/cn";
 import Disclosure from "../../../../components/src/disclosure";
 import { Chevron } from "./chevron";
 
+// const falseFallback = false;
+
 const rootCtx = createContext<() => HTMLDivElement | null>(() => null);
 
 function RootContextProvider({
@@ -183,23 +185,17 @@ const TreeRoot = forwardRef<
 
 TreeRoot.displayName = "Tree.Root";
 
-const UnbranchedCtx = createContext(false);
-
 const TreeItem = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<typeof Primitive.div> & {
-    unbranched?: boolean;
-  }
->(({ children, unbranched = false, ...props }, ref) => {
+  ComponentPropsWithoutRef<typeof Primitive.div>
+>(({ children, ...props }, ref) => {
   const indent = useIndent();
   return (
-    <UnbranchedCtx.Provider value={unbranched}>
-      <Disclosure.Reset>
-        <Primitive.div ref={ref} {...props} data-level={indent}>
-          {children}
-        </Primitive.div>
-      </Disclosure.Reset>
-    </UnbranchedCtx.Provider>
+    <Disclosure.Reset>
+      <Primitive.div {...props} ref={ref} data-level={indent}>
+        {children}
+      </Primitive.div>
+    </Disclosure.Reset>
   );
 });
 
@@ -207,92 +203,31 @@ TreeItem.displayName = "TreeItem";
 
 const TreeDisclosure = forwardRef<
   HTMLDetailsElement,
-  Omit<ComponentPropsWithoutRef<"details">, "children"> & {
+  ComponentPropsWithoutRef<"details"> & {
     open?: boolean;
     defaultOpen?: boolean;
     onOpenChange?: (open: boolean) => void;
-    summary: ReactNode;
-    children?: () => ReactNode;
-    lazy?: boolean;
+    asChild?: boolean;
   }
->(
-  (
-    {
-      summary,
-      children,
-      open: openProp,
-      defaultOpen,
-      onOpenChange,
-      lazy,
-      ...props
-    },
-    ref
-  ) => {
-    const [open = false, setOpen] = useControllableState({
-      prop: openProp,
-      defaultProp: defaultOpen,
-      onChange: onOpenChange,
-    });
-
-    return (
-      <Disclosure.Details
-        {...props}
-        ref={ref}
-        open={open}
-        onOpenChange={setOpen}
-      >
-        <SubTreeProvider>
-          {summary}
-          {lazy ? (
-            <Disclosure.LazyContent className="-mx-3 px-3">
-              {children}
-            </Disclosure.LazyContent>
-          ) : (
-            <Disclosure.Content className="-mx-3 px-3">
-              {children?.()}
-            </Disclosure.Content>
-          )}
-        </SubTreeProvider>
-      </Disclosure.Details>
-    );
-  }
-);
-
-TreeDisclosure.displayName = "TreeDisclosure";
-
-const TreeItemContent = forwardRef<
-  HTMLDivElement,
-  ComponentPropsWithoutRef<typeof Primitive.div> & {
-    notLast?: boolean;
-  }
->(({ children, notLast = false, ...props }, ref) => {
-  const indent = useIndent();
-  const unbranched = useContext(UnbranchedCtx);
-  if (unbranched || indent === 0) {
-    return children;
-  }
-
-  const childrenArray = Children.toArray(children).filter((child) => !!child);
-  if (childrenArray.length === 0) {
-    return false;
-  }
+>(({ children, open: openProp, defaultOpen, onOpenChange, ...props }, ref) => {
+  const [open = false, setOpen] = useControllableState({
+    prop: openProp,
+    defaultProp: defaultOpen,
+    onChange: onOpenChange,
+  });
 
   return (
-    <BranchGrid {...props} ref={ref}>
-      {childrenArray.map((child, i) => (
-        <Fragment key={isValidElement(child) ? (child.key ?? i) : i}>
-          <Disclosure.CloseTrigger asChild>
-            <TreeBranch last={i === childrenArray.length - 1 && !notLast}>
-              {child}
-            </TreeBranch>
-          </Disclosure.CloseTrigger>
-        </Fragment>
-      ))}
-    </BranchGrid>
+    <Disclosure.Details {...props} ref={ref} open={open} onOpenChange={setOpen}>
+      <SubTreeProvider>
+        <Slottable>{children}</Slottable>
+      </SubTreeProvider>
+    </Disclosure.Details>
   );
 });
 
-TreeItemContent.displayName = "TreeItemContent";
+TreeDisclosure.displayName = "TreeDisclosure";
+
+const TreeItemDetailsContent = Disclosure.Content;
 
 const TreeItemCardCtx = createContext<boolean>(false);
 
@@ -515,39 +450,23 @@ const DisclosureButton = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<"div">
 >(({ children, ...props }, ref) => {
-  const unbranched = useContext(UnbranchedCtx);
   return (
     <Disclosure.If open={false}>
-      {unbranched ? (
-        <Disclosure.Trigger asChild>
-          <Badge
-            rounded
-            interactive
-            className={cn("mt-2 font-normal", props.className)}
-            variant="ghost"
-            style={props.style}
-          >
-            <Plus />
-            {children || "Show child attributes"}
-          </Badge>
-        </Disclosure.Trigger>
-      ) : (
-        <BranchGrid {...props} ref={ref}>
-          <TreeBranch last>
-            <Disclosure.Trigger asChild>
-              <Badge
-                rounded
-                interactive
-                className="mt-2 w-fit font-normal"
-                variant="ghost"
-              >
-                <Plus />
-                {children || "Show child attributes"}
-              </Badge>
-            </Disclosure.Trigger>
-          </TreeBranch>
-        </BranchGrid>
-      )}
+      <BranchGrid {...props} ref={ref}>
+        <TreeBranch last>
+          <Disclosure.Trigger asChild>
+            <Badge
+              rounded
+              interactive
+              className="mt-2 w-fit font-normal"
+              variant="ghost"
+            >
+              <Plus />
+              {children || "Show child attributes"}
+            </Badge>
+          </Disclosure.Trigger>
+        </TreeBranch>
+      </BranchGrid>
     </Disclosure.If>
   );
 });
@@ -558,16 +477,6 @@ const TreeItemSummaryIndentedContent = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Primitive.div>
 >(({ children, ...props }, ref) => {
-  const unbranched = useContext(UnbranchedCtx);
-
-  if (unbranched) {
-    return (
-      <Primitive.div ref={ref} {...props}>
-        {children}
-      </Primitive.div>
-    );
-  }
-
   return (
     <BranchGrid ref={ref} {...props}>
       <Disclosure.CloseTrigger asChild>
@@ -588,20 +497,18 @@ const TreeDetailIndicator = forwardRef<
   const open = useIsOpen();
 
   return (
-    <DetailsTrigger asChild>
-      <Primitive.div
-        {...props}
-        ref={ref}
-        className={cn(
-          props.className,
-          "rounded-full transition-[transform,background] duration-100 hover:bg-[var(--grayscale-3)] hover:transition-transform",
-          { "rotate-90": open }
-        )}
-      >
-        <Chevron className="size-4" />
-        <Slottable>{children}</Slottable>
-      </Primitive.div>
-    </DetailsTrigger>
+    <Primitive.div
+      {...props}
+      ref={ref}
+      className={cn(
+        props.className,
+        "rounded-full transition-[transform,background] duration-100 hover:bg-[var(--grayscale-3)] hover:transition-transform",
+        { "rotate-90": open }
+      )}
+    >
+      <Chevron className="size-4" />
+      <Slottable>{children}</Slottable>
+    </Primitive.div>
   );
 });
 
@@ -715,7 +622,7 @@ const Tree = {
   Branch: TreeBranch,
   Card: TreeItemCard,
   CollapsedContent: TreeItemsContentAdditional,
-  Content: TreeItemContent,
+  DetailsContent: TreeItemDetailsContent,
   Details: TreeDisclosure,
   DetailsIndicator: TreeDetailIndicator,
   DetailsSummary,
