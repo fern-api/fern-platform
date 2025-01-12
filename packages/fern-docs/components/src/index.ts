@@ -27,6 +27,7 @@ export * from "./FernTabs";
 export * from "./FernTextarea";
 export * from "./FernToast";
 export * from "./FernTooltip";
+export * from "./FernTooltipV2";
 export * from "./FontAwesomeIcon";
 export * from "./kbd";
 export * from "./touch-screen";

@@ -7,7 +7,6 @@ import { Separator } from "@radix-ui/react-separator";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { debounce, noop } from "es-toolkit/function";
-import { atom, useAtomValue, useSetAtom } from "jotai";
 import { ChevronDown, Plus } from "lucide-react";
 import {
   Children,
@@ -287,7 +286,8 @@ const BranchGrid = forwardRef<
       className={cn(
         "relative *:min-w-0",
         !hideBranch && "grid grid-cols-[16px_1fr]",
-        hideBranch && "[&>*:nth-child(odd)]:hidden"
+        hideBranch && "[&>*:nth-child(odd)]:hidden",
+        props.className
       )}
     >
       {children}
@@ -604,17 +604,9 @@ const ToggleExpandAll = forwardRef<
 
 ToggleExpandAll.displayName = "ToggleExpandAll";
 
-const useIsOpen = () => {
-  const openAtom = Disclosure.useState();
-  const open = useAtomValue(openAtom ?? atom(false));
-  return open;
-};
+const useIsOpen = Disclosure.useState;
 
-const useSetOpen = () => {
-  const openAtom = Disclosure.useState();
-  const setOpen = useSetAtom(openAtom ?? atom(false));
-  return setOpen;
-};
+const useSetOpen = Disclosure.useSetState;
 
 const DetailsTrigger = Disclosure.Trigger;
 

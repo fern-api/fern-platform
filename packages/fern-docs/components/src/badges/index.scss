@@ -13,8 +13,15 @@
     transition: background-color 100ms ease-in-out;
 
     &.interactive:not(:disabled):hover {
-      cursor: pointer;
       transition: none;
+    }
+
+    &.interactive:not(a) {
+      cursor: default;
+    }
+
+    &:is(a) {
+      cursor: pointer;
     }
 
     &:disabled {
@@ -38,6 +45,12 @@
       font-size: 0.875rem;
       height: 1.5rem;
       padding: 0.25rem 0.5rem;
+    }
+
+    &[data-badge-type="availability"],
+    &[data-badge-type="http-method"],
+    &[data-badge-type="status-code"] {
+      width: fit-content;
     }
 
     &[data-badge-type="http-method"],

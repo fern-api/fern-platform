@@ -373,7 +373,7 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
-    // require("tailwindcss-animate"),
+    require("tailwindcss-animate"),
     // Defining the classes here to get proper intellisense
     // https://github.com/tailwindlabs/tailwindcss-intellisense/issues/227#issuecomment-1269592872
     plugin(({ addBase, addComponents }) => {

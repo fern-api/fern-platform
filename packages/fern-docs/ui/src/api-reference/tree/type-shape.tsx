@@ -7,6 +7,11 @@ import {
   cn,
   CopyToClipboardButton,
   Disclosure,
+  toast,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
   TouchScreenOnly,
 } from "@fern-docs/components";
 import { composeEventHandlers } from "@radix-ui/primitive";
@@ -154,6 +159,7 @@ export function ObjectTypeShape({
     | ApiDefinition.DiscriminatedUnionVariant;
   expanded?: boolean;
 }) {
+  const indent = Tree.useIndent();
   const types = useTypeDefinitions();
   const { properties, extraProperties, visitedTypeIds } =
     ApiDefinition.unwrapObjectType(shape, types);
@@ -171,9 +177,13 @@ export function ObjectTypeShape({
   if (required.length && optional.length > 1 && !expanded) {
     return (
       <VisitedTypeIdsProvider value={visitedTypeIds}>
-        {required.map((property) => (
-          <ObjectProperty key={property.key} property={property} />
-        ))}
+        <Tree.BranchGrid hideBranch={indent === 0}>
+          {required.map((property) => (
+            <Tree.Branch key={property.key}>
+              <ObjectProperty property={property} />
+            </Tree.Branch>
+          ))}
+        </Tree.BranchGrid>
         <Tree.CollapsedContent
           defaultOpen={optional.length === 1}
           // className={cn(indent === 0 && "pl-2")}
@@ -208,9 +218,13 @@ export function ObjectTypeShape({
 
   return (
     <VisitedTypeIdsProvider value={visitedTypeIds}>
-      {properties.map((property) => (
-        <ObjectProperty key={property.key} property={property} />
-      ))}
+      <Tree.BranchGrid hideBranch={indent === 0}>
+        {properties.map((property, idx) => (
+          <Tree.Branch key={property.key} last={idx === properties.length - 1}>
+            <ObjectProperty property={property} />
+          </Tree.Branch>
+        ))}
+      </Tree.BranchGrid>
     </VisitedTypeIdsProvider>
   );
 }
@@ -236,7 +250,6 @@ export const ObjectProperty = memo(
     const indent = Tree.useIndent();
     const types = useTypeDefinitions();
     const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
-    const availability = property.availability ?? unwrapped.availability;
     const description = property.description ?? unwrapped.descriptions[0];
     const hideBranch = typeShapeShouldHideBranch(property.valueShape, types);
     const hasChildren = typeShapeHasChildren(property.valueShape, types);
@@ -249,104 +262,74 @@ export const ObjectProperty = memo(
           <Tree.Item
             asChild={hasChildren}
             className={cn(
-              indent === 0 && "-ml-2",
+              indent === 0 && "-mx-2",
               hasChildren && "mb-4 space-y-2"
             )}
           >
-            {hasChildren ? (
-              <Tree.Details
-                defaultOpen={isTypeShapeDetailsOpenByDefault(
-                  property.valueShape,
-                  types
-                )}
-                className={cn("mb-4", indent)}
-                onOpenChange={(open) => {
-                  if (open) {
-                    setExpandMode(ExpandMode.Open);
-                  } else {
-                    setExpandMode(ExpandMode.Closed);
-                  }
-                }}
-                open={expandMode === ExpandMode.Open}
-              >
-                <Tree.DetailsSummary className="relative">
-                  <Tree.DetailsTrigger asChild>
-                    <ParameterInfo
-                      parameterName={property.key}
-                      property={property}
-                      unwrapped={unwrapped}
-                      className="my-2"
-                      hideIndicator={!hasChildren}
-                    />
-                  </Tree.DetailsTrigger>
-                  <Tree.BranchGrid
-                    hideBranch={hideBranch}
-                    className={cn(hideBranch && "pl-2")}
-                  >
-                    {availability && (
-                      <Tree.Branch lineOnly>
-                        <AvailabilityBadge
-                          availability={availability}
-                          size="sm"
-                        />
-                      </Tree.Branch>
-                    )}
-                    {!isMdxEmpty(description) && (
-                      <Tree.Branch lineOnly>
-                        <Markdown
-                          size="sm"
-                          className={cn("text-text-muted mb-3 leading-normal")}
-                          mdx={description}
-                        />
-                      </Tree.Branch>
-                    )}
-                    <Disclosure.If open={false}>
-                      <Tree.Branch last>
-                        <Disclosure.Trigger asChild>
-                          <Badge
-                            rounded
-                            interactive
-                            className="mt-2 w-fit font-normal"
-                            variant={hideBranch ? "subtle" : "ghost"}
-                          >
-                            <Plus />
-                            {showChildAttributesMessage(
-                              property.valueShape,
-                              types
-                            )}
-                          </Badge>
-                        </Disclosure.Trigger>
-                      </Tree.Branch>
-                    </Disclosure.If>
-                  </Tree.BranchGrid>
-                </Tree.DetailsSummary>
+            <Tree.Details
+              defaultOpen={isTypeShapeDetailsOpenByDefault(
+                property.valueShape,
+                types
+              )}
+              className={cn("mb-4", indent)}
+              onOpenChange={(open) => {
+                if (open) {
+                  setExpandMode(ExpandMode.Open);
+                } else {
+                  setExpandMode(ExpandMode.Closed);
+                }
+              }}
+              open={expandMode === ExpandMode.Open || !hasChildren}
+            >
+              <Tree.DetailsSummary className="relative">
+                <Tree.DetailsTrigger asChild>
+                  <ParameterInfo
+                    parameterName={property.key}
+                    property={property}
+                    unwrapped={unwrapped}
+                    className="my-2"
+                    hideIndicator={!hasChildren}
+                  />
+                </Tree.DetailsTrigger>
+                <Tree.BranchGrid
+                  hideBranch={hideBranch}
+                  className={cn(hideBranch && "pl-2")}
+                >
+                  {!isMdxEmpty(description) && (
+                    <Tree.Branch lineOnly>
+                      <Markdown
+                        size="sm"
+                        className={cn("text-text-muted mb-3 leading-normal")}
+                        mdx={description}
+                      />
+                    </Tree.Branch>
+                  )}
+                  <Disclosure.If open={false}>
+                    <Tree.Branch last>
+                      <Disclosure.Trigger asChild>
+                        <Badge
+                          rounded
+                          interactive
+                          className="mt-2 w-fit font-normal"
+                          variant={hideBranch ? "subtle" : "ghost"}
+                        >
+                          <Plus />
+                          {showChildAttributesMessage(
+                            property.valueShape,
+                            types
+                          ) ?? "Show child attributes"}
+                        </Badge>
+                      </Disclosure.Trigger>
+                    </Tree.Branch>
+                  </Disclosure.If>
+                </Tree.BranchGrid>
+              </Tree.DetailsSummary>
+              {hasChildren && (
                 <Tree.DetailsContent>
                   <TypeShape shape={property.valueShape} />
                 </Tree.DetailsContent>
-              </Tree.Details>
-            ) : (
-              <>
-                <ParameterInfo
-                  parameterName={property.key}
-                  property={property}
-                  unwrapped={unwrapped}
-                  className="my-2"
-                  hideIndicator={!hasChildren}
-                />
-                {availability && (
-                  <AvailabilityBadge
-                    availability={availability}
-                    size="sm"
-                    className="mb-2 ml-2"
-                  />
-                )}
-                <Markdown
-                  size="sm"
-                  mdx={description}
-                  className="text-text-muted mb-3 ml-2 leading-normal"
-                />
-              </>
-            )}
+              )}
+            </Tree.Details>
           </Tree.Item>
         </JsonPathPartProvider>
       </AnchorIdProvider>
@@ -669,22 +652,21 @@ const ParameterInfo = memo(
           setTimeout(() => {
             // don't scroll if the element is already visible
             if (nameRef.current) {
-              const rect = nameRef.current.getBoundingClientRect();
-              const isVisible =
-                rect.top >= 0 &&
-                rect.left >= 0 &&
-                rect.bottom <=
-                  (window.innerHeight ||
-                    document.documentElement.clientHeight) &&
-                rect.right <=
-                  (window.innerWidth || document.documentElement.clientWidth);
-
-              if (!isVisible) {
-                nameRef.current.scrollIntoView({
-                  behavior: "smooth",
-                  block: "center",
-                });
-              }
+              // const rect = nameRef.current.getBoundingClientRect();
+              // const isVisible =
+              //   rect.top >= 0 &&
+              //   rect.left >= 0 &&
+              //   rect.bottom <=
+              //     (window.innerHeight ||
+              //       document.documentElement.clientHeight) &&
+              //   rect.right <=
+              //     (window.innerWidth || document.documentElement.clientWidth);
+              // if (!isVisible) {
+              //   nameRef.current.scrollIntoView({
+              //     behavior: "smooth",
+              //     block: "center",
+              //   });
+              // }
             }
           }, 150);
         }, 150);
@@ -703,6 +685,8 @@ const ParameterInfo = memo(
         })
       );
     };
+
+    const availability = property.availability ?? unwrapped.availability;
 
     return (
       <Parameter.Root
@@ -723,44 +707,71 @@ const ParameterInfo = memo(
         asChild
       >
         <Badge
-          className="-mx-3 block w-full"
-          interactive
-          variant={isActive ? "outlined-subtle" : "ghost"}
+          className="relative w-full"
+          interactive={false}
+          variant={isActive ? "subtle" : "ghost"}
         >
-          <Tree.DetailsIndicator hidden={hideIndicator} className="-mr-2" />
-          <span
-            ref={nameRef}
-            className={cn("shrink-0 scroll-m-4", {
-              "line-through": property.availability === "Deprecated",
-            })}
-            color={property.availability === "Deprecated" ? "gray" : "accent"}
-            // onCanPlay={() => {
-            //   const url = String(
-            //     new URL(`/${slug}#${anchorId}`, window.location.href)
-            //   );
-            //   void navigator.clipboard.writeText(url);
-            //   setLocation((location) => ({
-            //     ...location,
-            //     pathname: `/${slug}`,
-            //     hash: `#${anchorId}`,
-            //   }));
-            // }}
-          >
-            {property.key}
-          </span>
-          <span className="-ml-3 text-xs text-[var(--grayscale-a9)]">
-            <TypeAnnotation
-              shape={unwrapped.shape}
-              isOptional={unwrapped.isOptional}
-            />
-            {unwrapped.default != null &&
-              unwrapped.shape.type !== "literal" &&
-              typeof unwrapped.default !== "object" && (
-                <span className="ml-2 font-mono">
-                  {`= ${JSON.stringify(unwrapped.default)}`}
+          <Tree.DetailsIndicator
+            hidden={hideIndicator}
+            className="absolute -left-2"
+          />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <span
+                  ref={nameRef}
+                  className={cn(
+                    "shrink-0 cursor-default scroll-m-4 font-semibold hover:underline hover:decoration-dashed",
+                    {
+                      "line-through": property.availability === "Deprecated",
+                      "text-[var(--accent-a12)]":
+                        property.availability !== "Deprecated",
+                      "text-[var(--grayscale-a9)]":
+                        property.availability === "Deprecated",
+                    }
+                  )}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    void navigator.clipboard
+                      .writeText(property.key)
+                      .then(() => {
+                        toast.info(`Copied "${property.key}" to clipboard`);
+                      });
+                  }}
+                >
+                  {property.key}
                 </span>
-              )}
-          </span>
+              </TooltipTrigger>
+              <TooltipContent>
+                Copy{" "}
+                <span className="font-mono font-semibold">{property.key}</span>{" "}
+                to clipboard
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TypeAnnotation
+            shape={unwrapped.shape}
+            isOptional={unwrapped.isOptional}
+            className="text-text-muted text-xs font-normal"
+          />
+
+          {unwrapped.default != null &&
+            unwrapped.shape.type !== "literal" &&
+            typeof unwrapped.default !== "object" && (
+              <span className="ml-2 font-mono">
+                {`= ${JSON.stringify(unwrapped.default)}`}
+              </span>
+            )}
+
+          {availability && (
+            <AvailabilityBadge
+              availability={availability}
+              size="sm"
+              className="self-baseline"
+            />
+          )}
+
           <Parameter.Spacer />
           {anchorId.startsWith("request") && !unwrapped.isOptional && (
             <Parameter.Status status="required" />

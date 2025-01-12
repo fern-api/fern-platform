@@ -1,10 +1,10 @@
+import { TooltipProvider } from "@fern-docs/components";
 import { Badge, BadgeProps } from "@fern-docs/components/badges";
 import { Button } from "@fern-docs/components/button";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { Primitive } from "@radix-ui/react-primitive";
 import { Separator } from "@radix-ui/react-separator";
 import * as Toolbar from "@radix-ui/react-toolbar";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Link } from "lucide-react";
 import {
   ComponentPropsWithoutRef,

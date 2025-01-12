@@ -1,4 +1,4 @@
-@layer base {
+@layer utilities {
   code:not(.code-block) {
     @apply bg-card ring-default rounded px-1 py-0.5 font-mono ring-1 ring-inset;
     @apply text-[0.875em];

@@ -1,7 +1,6 @@
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { Badge, StatusCodeBadge } from "@fern-docs/components";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { Badge, StatusCodeBadge, TooltipProvider } from "@fern-docs/components";
 import { sortBy } from "es-toolkit/array";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import { UnreachableCaseError } from "ts-essentials";

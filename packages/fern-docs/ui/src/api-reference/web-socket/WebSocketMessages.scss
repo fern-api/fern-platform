@@ -1,7 +1,12 @@
+:root {
+  --websocket-ease: cubic-bezier(0.87, 0, 0.13, 1);
+}
+
 @layer components {
   .fern-web-socket-trigger {
-    @apply hover:data-[state=closed]:bg-tag-default flex w-full cursor-default items-center gap-2 px-3 py-2 transition-[background,border-radius] duration-75 ease-[cubic-bezier(0.87,_0,_0.13,_1)] data-[state=closed]:rounded-[inherit];
+    @apply hover:data-[state=closed]:bg-tag-default flex w-full cursor-default items-center gap-2 px-3 py-2 transition-[background,border-radius] duration-75 data-[state=closed]:rounded-[inherit];
     @apply sticky top-0 z-10 backdrop-blur;
+    transition-timing-function: var(--websocket-ease);
 
     .fern-web-socket-client,
     .fern-web-socket-server,
@@ -38,7 +43,8 @@
     }
 
     .fern-web-socket-chevron {
-      @apply t-muted size-icon shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.87,_0,_0.13,_1)];
+      @apply t-muted size-icon shrink-0 transition-transform duration-300;
+      transition-timing-function: var(--websocket-ease);
     }
   }
 

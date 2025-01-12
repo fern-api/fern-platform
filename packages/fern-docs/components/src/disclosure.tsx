@@ -2,15 +2,17 @@ import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import { Slot } from "@radix-ui/react-slot";
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
-import { atom, PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import React, {
   ComponentPropsWithoutRef,
   createContext,
+  Dispatch,
   forwardRef,
   memo,
   PropsWithChildren,
   ReactNode,
+  SetStateAction,
   useContext,
   useEffect,
   useRef,
@@ -32,15 +34,17 @@ const DisclosureContext = createContext<OptionalEffectTiming>(
   defaultAnimationOptions
 );
 
-const DisclosureStateContext = createContext<PrimitiveAtom<boolean>>(
-  atom(false)
-);
+const DisclosureStateContext = createContext<boolean | undefined>(undefined);
+const DisclosureSetStateContext =
+  createContext<Dispatch<SetStateAction<boolean | undefined>>>(noop);
 
 function DisclosureResetProvider({ children }: { children: React.ReactNode }) {
-  const ref = useRef(atom(false));
+  const [open, setOpen] = useState<boolean | undefined>(undefined);
   return (
-    <DisclosureStateContext.Provider value={ref.current}>
-      {children}
+    <DisclosureStateContext.Provider value={open}>
+      <DisclosureSetStateContext.Provider value={setOpen}>
+        {children}
+      </DisclosureSetStateContext.Provider>
     </DisclosureStateContext.Provider>
   );
 }
@@ -83,7 +87,7 @@ const DisclosureSummary = forwardRef<
     children?: ReactNode | (({ open }: { open: boolean }) => ReactNode);
   }
 >(({ children, asChild, ...props }, ref) => {
-  const open = useAtomValue(useContext(DisclosureStateContext));
+  const open = useContext(DisclosureStateContext);
   const summaryRef = React.useRef<HTMLElement>(null);
   const Comp = asChild ? Slot : "summary";
 
@@ -95,7 +99,9 @@ const DisclosureSummary = forwardRef<
       })}
       ref={composeRefs(summaryRef, ref)}
     >
-      {typeof children === "function" ? children({ open }) : children}
+      {typeof children === "function"
+        ? children({ open: open ?? false })
+        : children}
     </Comp>
   );
 });
@@ -153,12 +159,11 @@ const DisclosureDetails = forwardRef<
     },
     forwardedRef
   ) => {
-    const openAtom = useRef(atom(defaultOpen ?? false));
-    const [open, setOpen] = useAtom(openAtom.current);
-    useEffect(() => {
-      onOpenChange?.(open);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [open]);
+    const [open, setOpen] = useControllableState<boolean>({
+      prop: openProp,
+      onChange: onOpenChange,
+      defaultProp: defaultOpen,
+    });
 
     const detailsRef = useRef<HTMLDetailsElement | null>(null);
     const resizerRef = useRef<HTMLElement | null>(null);
@@ -350,44 +355,48 @@ const DisclosureDetails = forwardRef<
     );
 
     return (
-      <DisclosureStateContext.Provider value={openAtom.current}>
-        <DisclosureItemContext.Provider
-          value={{
-            setDetailsEl: (el) => {
-              detailsRef.current = el;
-            },
-            setResizerEl: (el) => {
-              resizerRef.current = el;
-            },
-            setContentEl: (el) => {
-              contentRef.current = el;
-            },
-            setSummaryRef: (el) => {
-              summaryRef.current = el;
-            },
-            handleClick,
-            handleClose: open
-              ? (e) => {
-                  e.preventDefault();
-                  handleClose();
-                }
-              : handleCloseParent,
-          }}
-        >
-          <Comp
-            {...props}
-            ref={composeRefs(forwardedRef, (div) => {
-              detailsRef.current = div;
-            })}
-            onToggle={(e) => {
-              if (e.currentTarget instanceof HTMLDetailsElement) {
-                setOpen(e.currentTarget.open);
-              }
+      <DisclosureStateContext.Provider value={open}>
+        <DisclosureSetStateContext.Provider value={setOpen}>
+          <DisclosureItemContext.Provider
+            value={{
+              setDetailsEl: (el) => {
+                detailsRef.current = el;
+              },
+              setResizerEl: (el) => {
+                resizerRef.current = el;
+              },
+              setContentEl: (el) => {
+                contentRef.current = el;
+              },
+              setSummaryRef: (el) => {
+                summaryRef.current = el;
+              },
+              handleClick,
+              handleClose: open
+                ? (e) => {
+                    e.preventDefault();
+                    handleClose();
+                  }
+                : handleCloseParent,
             }}
           >
-            {typeof children === "function" ? children({ open }) : children}
-          </Comp>
-        </DisclosureItemContext.Provider>
+            <Comp
+              {...props}
+              ref={composeRefs(forwardedRef, (div) => {
+                detailsRef.current = div;
+              })}
+              onToggle={(e) => {
+                if (e.currentTarget instanceof HTMLDetailsElement) {
+                  setOpen(e.currentTarget.open);
+                }
+              }}
+            >
+              {typeof children === "function"
+                ? children({ open: open ?? false })
+                : children}
+            </Comp>
+          </DisclosureItemContext.Provider>
+        </DisclosureSetStateContext.Provider>
       </DisclosureStateContext.Provider>
     );
   }
@@ -421,7 +430,7 @@ const DisclosureLazyContent = forwardRef<
     children?: () => ReactNode;
   }
 >(({ asChild, children, innerClassName, ...props }, forwardRef) => {
-  const isOpen = useAtomValue(useContext(DisclosureStateContext));
+  const isOpen = useContext(DisclosureStateContext);
   const { setContentEl, setResizerEl } = useContext(DisclosureItemContext);
   const Comp = asChild ? Slot : "div";
   if (!isOpen) {
@@ -442,7 +451,7 @@ const DisclosureIf = ({
   children,
   open: openProp,
 }: PropsWithChildren<{ open: boolean }>) => {
-  const isOpen = useAtomValue(useContext(DisclosureStateContext)) === openProp;
+  const isOpen = useContext(DisclosureStateContext) === openProp;
   if (!isOpen) {
     return null;
   }
@@ -465,6 +474,7 @@ Disclosure.useClose = () => {
 Disclosure.If = DisclosureIf;
 Disclosure.Reset = DisclosureResetProvider;
 Disclosure.useState = () => useContext(DisclosureStateContext);
+Disclosure.useSetState = () => useContext(DisclosureSetStateContext);
 
 export default Disclosure;
 export { Disclosure };

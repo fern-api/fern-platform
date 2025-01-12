@@ -22,7 +22,7 @@ interface ToasterProps {
 }
 
 export const Toaster: React.FC<ToasterProps> = ({
-  position = "bottom-center",
+  position = "top-center",
 }: ToasterProps) => {
   return (
     <SonnerToaster
