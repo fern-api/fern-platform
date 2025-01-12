@@ -278,24 +278,17 @@ const TreeItemContent = forwardRef<
   }
 
   return (
-    <Primitive.div
-      {...props}
-      ref={ref}
-      className={cn(
-        "relative grid grid-cols-[16px_1fr] *:min-w-0",
-        props.className
-      )}
-      asChild={false} // no slotting allowed here
-    >
+    <BranchGrid {...props} ref={ref}>
       {childrenArray.map((child, i) => (
         <Fragment key={isValidElement(child) ? (child.key ?? i) : i}>
           <Disclosure.CloseTrigger asChild>
-            <TreeBranch last={i === childrenArray.length - 1 && !notLast} />
+            <TreeBranch last={i === childrenArray.length - 1 && !notLast}>
+              {child}
+            </TreeBranch>
           </Disclosure.CloseTrigger>
-          {child}
         </Fragment>
       ))}
-    </Primitive.div>
+    </BranchGrid>
   );
 });
 
@@ -346,6 +339,29 @@ const TreeItemsContentAdditional = ({
   );
 };
 
+const BranchGrid = forwardRef<
+  HTMLDivElement,
+  ComponentPropsWithoutRef<typeof Primitive.div> & {
+    hideBranch?: boolean;
+  }
+>(({ children, hideBranch = false, ...props }, ref) => {
+  return (
+    <Primitive.div
+      ref={ref}
+      {...props}
+      className={cn(
+        "relative *:min-w-0",
+        !hideBranch && "grid grid-cols-[16px_1fr]",
+        hideBranch && "[&>*:nth-child(odd)]:hidden"
+      )}
+    >
+      {children}
+    </Primitive.div>
+  );
+});
+
+BranchGrid.displayName = "BranchGrid";
+
 const TreeItemsContentAdditionalDisclosure = ({
   children,
   open: openProp,
@@ -380,24 +396,25 @@ const TreeItemsContentAdditionalDisclosure = ({
         {({ open }) =>
           !open &&
           (indent > 0 ? (
-            <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
+            <BranchGrid>
               <Disclosure.CloseTrigger asChild>
-                <TreeBranch last />
+                <TreeBranch last>
+                  <div className="py-2">
+                    <Disclosure.Trigger asChild>
+                      <Badge
+                        rounded
+                        interactive
+                        variant="subtle"
+                        className="font-normal"
+                      >
+                        <ChevronDown />
+                        {childrenArray.length} more attributes
+                      </Badge>
+                    </Disclosure.Trigger>
+                  </div>
+                </TreeBranch>
               </Disclosure.CloseTrigger>
-              <div className="py-2">
-                <Disclosure.Trigger asChild>
-                  <Badge
-                    rounded
-                    interactive
-                    variant="subtle"
-                    className="font-normal"
-                  >
-                    <ChevronDown />
-                    {childrenArray.length} more attributes
-                  </Badge>
-                </Disclosure.Trigger>
-              </div>
-            </div>
+            </BranchGrid>
           ) : (
             <div className="py-2">
               <Disclosure.Trigger asChild>
@@ -417,17 +434,18 @@ const TreeItemsContentAdditionalDisclosure = ({
       </Disclosure.Summary>
       <Disclosure.Content className="-mx-3 px-3">
         {indent > 0 ? (
-          <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
+          <BranchGrid>
             {childrenArray.map((child, i) => (
               <Fragment key={i}>
                 <TreeBranch
                   last={i === childrenArray.length - 1}
                   onClick={onClose}
-                />
-                {child}
+                >
+                  {child}
+                </TreeBranch>
               </Fragment>
             ))}
-          </div>
+          </BranchGrid>
         ) : (
           <>{childrenArray}</>
         )}
@@ -514,24 +532,21 @@ const DisclosureButton = forwardRef<
           </Badge>
         </Disclosure.Trigger>
       ) : (
-        <div
-          {...props}
-          className={cn("grid grid-cols-[16px_1fr] *:min-w-0", props.className)}
-          ref={ref}
-        >
-          <TreeBranch last />
-          <Disclosure.Trigger asChild>
-            <Badge
-              rounded
-              interactive
-              className="mt-2 w-fit font-normal"
-              variant="ghost"
-            >
-              <Plus />
-              {children || "Show child attributes"}
-            </Badge>
-          </Disclosure.Trigger>
-        </div>
+        <BranchGrid {...props} ref={ref}>
+          <TreeBranch last>
+            <Disclosure.Trigger asChild>
+              <Badge
+                rounded
+                interactive
+                className="mt-2 w-fit font-normal"
+                variant="ghost"
+              >
+                <Plus />
+                {children || "Show child attributes"}
+              </Badge>
+            </Disclosure.Trigger>
+          </TreeBranch>
+        </BranchGrid>
       )}
     </Disclosure.If>
   );
@@ -554,16 +569,13 @@ const TreeItemSummaryIndentedContent = forwardRef<
   }
 
   return (
-    <Primitive.div
-      ref={ref}
-      {...props}
-      className={cn("grid grid-cols-[16px_1fr] *:min-w-0", props.className)}
-    >
+    <BranchGrid ref={ref} {...props}>
       <Disclosure.CloseTrigger asChild>
-        <TreeBranch lineOnly />
+        <TreeBranch lineOnly>
+          <Slottable>{children}</Slottable>
+        </TreeBranch>
       </Disclosure.CloseTrigger>
-      <Slottable>{children}</Slottable>
-    </Primitive.div>
+    </BranchGrid>
   );
 });
 
@@ -609,41 +621,45 @@ const TreeBranch = forwardRef<
   ComponentPropsWithoutRef<"div"> & {
     lineOnly?: boolean;
     last?: boolean;
+    children: ReactNode;
   }
->(({ lineOnly = false, last = false, ...props }, ref) => {
+>(({ lineOnly = false, last = false, children, ...props }, ref) => {
   const { pointerOver, setPointerOver } = useContext(ctx);
   return (
-    <div
-      aria-hidden="true"
-      ref={ref}
-      {...props}
-      className={cn(props.className, "relative h-full", { last })}
-      data-branch=""
-      onPointerOver={() => setPointerOver(true)}
-      onPointerLeave={() => setPointerOver(false)}
-    >
+    <>
       <div
-        className={cn("absolute inset-0 h-full w-0 border-l", {
-          "border-[var(--grayscale-9)]": pointerOver,
-          "border-[var(--grayscale-5)] transition-colors duration-100":
-            !pointerOver,
-        })}
-        data-line=""
-      />
-      {!lineOnly && (
+        aria-hidden="true"
+        ref={ref}
+        {...props}
+        className={cn(props.className, "relative h-full", { last })}
+        data-branch=""
+        onPointerOver={() => setPointerOver(true)}
+        onPointerLeave={() => setPointerOver(false)}
+      >
         <div
-          className={cn(
-            "h-[19.5px] w-[15px] rounded-bl-[8px] border-b border-l",
-            {
-              "border-[var(--grayscale-9)]": pointerOver,
-              "border-[var(--grayscale-5)] transition-colors duration-100":
-                !pointerOver,
-            }
-          )}
-          data-curve=""
+          className={cn("absolute inset-0 h-full w-0 border-l", {
+            "border-[var(--grayscale-9)]": pointerOver,
+            "border-[var(--grayscale-5)] transition-colors duration-100":
+              !pointerOver,
+          })}
+          data-line=""
         />
-      )}
-    </div>
+        {!lineOnly && (
+          <div
+            className={cn(
+              "h-[19.5px] w-[15px] rounded-bl-[8px] border-b border-l",
+              {
+                "border-[var(--grayscale-9)]": pointerOver,
+                "border-[var(--grayscale-5)] transition-colors duration-100":
+                  !pointerOver,
+              }
+            )}
+            data-curve=""
+          />
+        )}
+      </div>
+      {children}
+    </>
   );
 });
 
@@ -716,6 +732,7 @@ const Tree = {
   useIsOpen,
   useSetOpen,
   Variants: UnionVariants,
+  BranchGrid,
 };
 
 export { Tree };

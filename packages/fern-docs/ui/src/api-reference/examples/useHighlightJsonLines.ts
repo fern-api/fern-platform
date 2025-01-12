@@ -10,7 +10,7 @@ const INDENT_SPACES = 2;
  * number = single line
  * [number, number] = range of lines (inclusive)
  */
-type HighlightLineResult = number | [number, number];
+export type HighlightLineResult = number | [number, number];
 
 /**
  * @internal
@@ -111,27 +111,32 @@ function getQueryPart(path: JsonPropertyPathPart) {
   }
 }
 
+export function highlightJsonLines(
+  json: unknown,
+  path: JsonPropertyPath = [],
+  jsonStartLine = 0
+): HighlightLineResult[] {
+  if (path.length === 0 || jsonStartLine < 0 || typeof window === "undefined") {
+    return [];
+  }
+
+  try {
+    return getJsonLineNumbers(json, path, jsonStartLine + 1);
+  } catch (error) {
+    // TODO: sentry
+
+    console.error("Error thrown while highlighting json lines", error);
+    return [];
+  }
+}
+
 export function useHighlightJsonLines(
   json: unknown,
   hoveredPropertyPath: JsonPropertyPath = [],
   jsonStartLine = 0
 ): HighlightLineResult[] {
-  return useMemo(() => {
-    if (
-      hoveredPropertyPath.length === 0 ||
-      jsonStartLine < 0 ||
-      typeof window === "undefined"
-    ) {
-      return [];
-    }
-
-    try {
-      return getJsonLineNumbers(json, hoveredPropertyPath, jsonStartLine + 1);
-    } catch (error) {
-      // TODO: sentry
-
-      console.error("Error thrown while highlighting json lines", error);
-      return [];
-    }
-  }, [hoveredPropertyPath, json, jsonStartLine]);
+  return useMemo(
+    () => highlightJsonLines(json, hoveredPropertyPath, jsonStartLine),
+    [hoveredPropertyPath, json, jsonStartLine]
+  );
 }

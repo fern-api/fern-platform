@@ -4,10 +4,9 @@ import {
 } from "@fern-docs/syntax-highlighter";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { isEqual } from "instantsearch.js/es/lib/utils";
 import {
-  FC,
   createRef,
+  FC,
   useCallback,
   useEffect,
   useMemo,
@@ -17,7 +16,10 @@ import { useEdgeFlags } from "../../atoms";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { JsonPropertyPath } from "./JsonPropertyPath";
 import { TitledExample } from "./TitledExample";
-import { useHighlightJsonLines } from "./useHighlightJsonLines";
+import {
+  highlightJsonLines,
+  HighlightLineResult,
+} from "./useHighlightJsonLines";
 
 export declare namespace CodeSnippetExample {
   export interface Props
@@ -59,18 +61,43 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
     }
   });
 
-  const [hoveredPropertyPath, setHoveredPropertyPath] =
-    useState<JsonPropertyPath>([]);
+  const [highlightedLines, setHighlightedLines] = useState<
+    HighlightLineResult[]
+  >([]);
 
   useEffect(() => {
+    let request: number | null = null;
     const handleHoverJsonProperty = (event: Event) => {
       if (event instanceof CustomEvent && event.detail.type === type) {
-        setHoveredPropertyPath((prev) => {
-          if (event.detail.isHovering) {
-            return event.detail.jsonpath;
-          }
-          return isEqual(prev, event.detail.jsonpath) ? [] : prev;
-        });
+        if (request != null) {
+          cancelIdleCallback(request);
+        }
+
+        if (event.detail.isHovering) {
+          request = requestIdleCallback(() => {
+            const requestHighlightLines = highlightJsonLines(
+              json,
+              event.detail.jsonpath as JsonPropertyPath,
+              jsonStartLine
+            );
+            setHighlightedLines(requestHighlightLines);
+            if (
+              viewportRef.current != null &&
+              requestHighlightLines[0] != null
+            ) {
+              const lineNumber = Array.isArray(requestHighlightLines[0])
+                ? requestHighlightLines[0][0]
+                : requestHighlightLines[0];
+              const offsetTop = (lineNumber - 3) * 19.5;
+              viewportRef.current.scrollTo({
+                top: offsetTop,
+                behavior: "smooth",
+              });
+            }
+          });
+        } else {
+          setHighlightedLines([]);
+        }
       }
     };
     window.addEventListener("hover-json-property", handleHoverJsonProperty);
@@ -80,29 +107,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
         handleHoverJsonProperty
       );
     };
-  }, [type]);
-
-  const requestHighlightLines = useHighlightJsonLines(
-    json,
-    hoveredPropertyPath,
-    jsonStartLine
-  );
-
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      if (viewportRef.current != null && requestHighlightLines[0] != null) {
-        const lineNumber = Array.isArray(requestHighlightLines[0])
-          ? requestHighlightLines[0][0]
-          : requestHighlightLines[0];
-        const offsetTop =
-          (lineNumber - 1) * 19.5 - viewportRef.current.clientHeight / 4;
-        viewportRef.current.scrollTo({
-          top: offsetTop,
-          behavior: "smooth",
-        });
-      }
-    });
-  }, [requestHighlightLines, viewportRef]);
+  }, [type, json, jsonStartLine, viewportRef]);
 
   // Scroll to top when code changes
   useEffect(() => {
@@ -126,7 +131,7 @@ const CodeSnippetExampleInternal: FC<CodeSnippetExample.Props> = ({
         viewportRef={viewportRef}
         language={language}
         fontSize="sm"
-        highlightLines={requestHighlightLines}
+        highlightLines={highlightedLines}
         code={code}
       />
     </TitledExample>

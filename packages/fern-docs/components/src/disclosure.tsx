@@ -1,7 +1,6 @@
 import { useDeepCompareMemoize } from "@fern-ui/react-commons";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
-import { Primitive } from "@radix-ui/react-primitive";
 import { Slot } from "@radix-ui/react-slot";
 import { noop } from "es-toolkit/function";
 import { atom, PrimitiveAtom, useAtom, useAtomValue } from "jotai";
@@ -10,6 +9,7 @@ import React, {
   createContext,
   forwardRef,
   memo,
+  PropsWithChildren,
   ReactNode,
   useContext,
   useEffect,
@@ -441,49 +441,18 @@ const DisclosureLazyContent = forwardRef<
 
 DisclosureLazyContent.displayName = "DisclosureLazyContent";
 
-const DisclosureIf = forwardRef<
-  HTMLDivElement,
-  ComponentPropsWithoutRef<typeof Primitive.div> & { open?: boolean }
->(({ asChild, children, open: openProp, ...props }, forwardRef) => {
-  const animationOptions = useContext(DisclosureContext);
-  const ref = useRef<HTMLDivElement>(null);
-  const open =
+const DisclosureIf = ({
+  children,
+  open: openProp,
+}: PropsWithChildren<{ open: boolean }>) => {
+  const isOpen =
     useAtomValue(useContext(DisclosureStateContext) ?? atom(() => false)) ===
     openProp;
-  const [isOpen, _setIsOpen] = useState(open);
-
-  useEffect(() => {
-    requestAnimationFrame(() => {
-      if (ref.current) {
-        if (open) {
-          ref.current.style.transition = `max-height ${animationOptions.duration}ms ${animationOptions.easing}`;
-          ref.current.style.maxHeight = `${ref.current.scrollHeight}px`;
-          ref.current.style.overflow = "visible";
-        } else {
-          ref.current.style.transition = `max-height ${animationOptions.duration}ms ${animationOptions.easing}`;
-          ref.current.style.maxHeight = "0px";
-          ref.current.style.overflow = "hidden";
-        }
-      }
-    });
-  }, [openProp, open, animationOptions.duration, animationOptions.easing]);
-
-  return (
-    <Primitive.div
-      ref={composeRefs(forwardRef, ref)}
-      {...props}
-      style={{
-        maxHeight: isOpen ? "auto" : "0px",
-        overflow: isOpen ? "visible" : "hidden",
-        ...props.style,
-      }}
-    >
-      {children}
-    </Primitive.div>
-  );
-});
-
-DisclosureIf.displayName = "DisclosureIf";
+  if (!isOpen) {
+    return null;
+  }
+  return children;
+};
 
 DisclosureContent.displayName = "DisclosureContent";
 

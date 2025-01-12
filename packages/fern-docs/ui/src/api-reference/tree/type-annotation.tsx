@@ -80,16 +80,17 @@ function TypeAnnotationTypescript({ shape, isOptional }: TypeAnnotationProps) {
       case "map":
         return `Record<${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}>`;
       case "enum":
-        if (unwrapped.shape.values.length > 3) {
-          return "enum";
-        }
-        return unwrapped.shape.values
-          .map((value) => `"${value.value}"`)
-          .join(" | ");
+        return (
+          unwrapped.shape.values
+            .slice(0, 3)
+            .map((value) => `"${value.value}"`)
+            .join(" | ") + (unwrapped.shape.values.length > 3 ? " | ..." : "")
+        );
       case "undiscriminatedUnion":
-        return unwrapped.shape.variants
+        return `${unwrapped.shape.variants
+          .slice(0, 3)
           .map((variant) => toString(variant.shape))
-          .join(" | ");
+          .join(" | ")}${unwrapped.shape.variants.length > 3 ? " | ..." : ""}`;
       case "discriminatedUnion":
         return "object";
       case "unknown":
@@ -150,19 +151,12 @@ function TypeAnnotationPython({ shape, isOptional }: TypeAnnotationProps) {
       case "map":
         return `Dict[${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}]`;
       case "enum":
-        if (unwrapped.shape.values.length > 3) {
-          return "Enum";
-        }
-        return unwrapped.shape.values
-          .map((value) => `"${value.value}"`)
-          .join(" | ");
+        return `Enum`;
       case "undiscriminatedUnion":
-        if (unwrapped.shape.variants.length > 3) {
-          return "Union";
-        }
         return `Union[${unwrapped.shape.variants
+          .slice(0, 3)
           .map((variant) => toString(variant.shape))
-          .join(", ")}]`;
+          .join(", ")}${unwrapped.shape.variants.length > 3 ? ", ..." : ""}]`;
       case "discriminatedUnion":
         return "Union";
       case "unknown":
@@ -221,7 +215,7 @@ function TypeAnnotationGo({ shape, isOptional }: TypeAnnotationProps) {
       case "map":
         return `map[${toString(unwrapped.shape.keyShape)}]${toString(unwrapped.shape.valueShape)}`;
       case "enum":
-        return "string";
+        return `enum`;
       case "undiscriminatedUnion":
       case "discriminatedUnion":
         return "interface{}";
@@ -283,10 +277,9 @@ function TypeAnnotationJava({ shape, isOptional }: TypeAnnotationProps) {
       case "map":
         return `Map<${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}>`;
       case "enum":
-        return "String";
+        return "enum";
       case "undiscriminatedUnion":
       case "discriminatedUnion":
-        return "Object";
       case "unknown":
       default:
         return "Object";
@@ -346,10 +339,9 @@ function TypeAnnotationCSharp({ shape, isOptional }: TypeAnnotationProps) {
       case "map":
         return `Dictionary<${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}>`;
       case "enum":
-        return "string";
+        return "enum";
       case "undiscriminatedUnion":
       case "discriminatedUnion":
-        return "object";
       case "unknown":
       default:
         return "object";
@@ -394,25 +386,29 @@ function TypeAnnotationRuby({ shape, isOptional }: TypeAnnotationProps) {
         }
       }
       case "object":
-        return "Hash";
+        return "Struct";
       case "literal":
         return unwrapped.shape.value.type === "stringLiteral"
           ? `"${unwrapped.shape.value.value}"`
           : String(unwrapped.shape.value.value);
       case "list":
-        return `Array<${toString(unwrapped.shape.itemShape)}>`;
+        return `::Array[${toString(unwrapped.shape.itemShape)}]`;
       case "set":
-        return `Set<${toString(unwrapped.shape.itemShape)}>`;
+        return `::Set[${toString(unwrapped.shape.itemShape)}]`;
       case "map":
-        return `Hash<${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}>`;
+        return `::Hash[${toString(unwrapped.shape.keyShape)}, ${toString(unwrapped.shape.valueShape)}]`;
       case "enum":
-        return "String";
+        return "::Enum";
       case "undiscriminatedUnion":
+        return `${unwrapped.shape.variants
+          .slice(0, 3)
+          .map((variant) => toString(variant.shape))
+          .join(" | ")}${unwrapped.shape.variants.length > 3 ? " | ..." : ""}`;
       case "discriminatedUnion":
-        return "Object";
+        return "::Object";
       case "unknown":
       default:
-        return "Object";
+        return "::Object";
     }
   }
 

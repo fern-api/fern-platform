@@ -2,40 +2,48 @@ import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 
 export function typeShapeHasChildren(
   shape: ApiDefinition.TypeShape,
-  types: Record<string, ApiDefinition.TypeDefinition>,
-  parentVisitedTypeIds = new Set<ApiDefinition.TypeId>()
+  types: Record<string, ApiDefinition.TypeDefinition>
 ): boolean {
   const unwrapped = ApiDefinition.unwrapReference(shape, types);
-  const visitedTypeIds = new Set([
-    ...parentVisitedTypeIds,
-    ...unwrapped.visitedTypeIds,
-  ]);
   switch (unwrapped.shape.type) {
     case "object":
       return (
-        ApiDefinition.unwrapObjectType(unwrapped.shape, types, visitedTypeIds)
-          .properties.length > 0 || !!unwrapped.shape.extraProperties
+        ApiDefinition.unwrapObjectType(unwrapped.shape, types).properties
+          .length > 0 || !!unwrapped.shape.extraProperties
       );
     case "discriminatedUnion":
     case "undiscriminatedUnion":
       return unwrapped.shape.variants.length > 0;
     case "list":
     case "set":
-      return typeShapeHasChildren(
-        unwrapped.shape.itemShape,
-        types,
-        visitedTypeIds
-      );
+      return typeShapeHasChildren(unwrapped.shape.itemShape, types);
     case "map":
-      return typeShapeHasChildren(
-        unwrapped.shape.valueShape,
-        types,
-        visitedTypeIds
-      );
+      return typeShapeHasChildren(unwrapped.shape.valueShape, types);
     case "enum":
       return unwrapped.shape.values.length > 0;
     default:
       return false;
+  }
+}
+
+export function typeShapeShouldHideBranch(
+  shape: ApiDefinition.TypeShape,
+  types: Record<string, ApiDefinition.TypeDefinition>
+): boolean {
+  const unwrapped = ApiDefinition.unwrapReference(shape, types);
+  switch (unwrapped.shape.type) {
+    case "object":
+      return (
+        ApiDefinition.unwrapObjectType(unwrapped.shape, types).properties
+          .length === 0 && !unwrapped.shape.extraProperties
+      );
+    case "list":
+    case "set":
+      return typeShapeHasChildren(unwrapped.shape.itemShape, types);
+    case "map":
+      return typeShapeHasChildren(unwrapped.shape.valueShape, types);
+    default:
+      return true;
   }
 }
 

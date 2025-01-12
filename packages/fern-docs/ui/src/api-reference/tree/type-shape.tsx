@@ -11,7 +11,7 @@ import {
 } from "@fern-docs/components";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { atom, useAtomValue, useSetAtom } from "jotai";
-import { ChevronDown, LinkIcon } from "lucide-react";
+import { ChevronDown, LinkIcon, Plus } from "lucide-react";
 import {
   ComponentPropsWithoutRef,
   forwardRef,
@@ -24,6 +24,7 @@ import { useMemoOne } from "use-memo-one";
 import { IS_READY_ATOM, LOCATION_ATOM } from "../../atoms";
 import { Chip } from "../../components/Chip";
 import { Markdown } from "../../mdx/Markdown";
+import { isMdxEmpty } from "../../mdx/MdxContent";
 import {
   AnchorIdProvider,
   JsonPathPartProvider,
@@ -38,11 +39,18 @@ import { Parameter } from "./parameter";
 import { Tree } from "./tree";
 import { TypeAnnotation } from "./type-annotation";
 import {
-  collectExpectedTypeIds,
   isTypeShapeDetailsOpenByDefault,
   showChildAttributesMessage,
   typeShapeHasChildren,
+  typeShapeShouldHideBranch,
 } from "./utils";
+
+function shouldLazyLoad(
+  visitedTypeIds: Set<string>,
+  newVisitedTypeIds: Set<string>
+) {
+  return [...newVisitedTypeIds].some((id) => visitedTypeIds.has(id));
+}
 
 export function TypeShape({
   shape,
@@ -51,9 +59,36 @@ export function TypeShape({
   shape: ApiDefinition.TypeShape;
   renderFallback?: () => React.ReactNode;
 }) {
+  const visitedTypeIds = useVisitedTypeIds();
   const types = useTypeDefinitions();
   if (shape.type === "alias") {
     const unwrapped = ApiDefinition.unwrapReference(shape, types);
+    if (shouldLazyLoad(visitedTypeIds, unwrapped.visitedTypeIds)) {
+      return (
+        <VisitedTypeIdsProvider value={unwrapped.visitedTypeIds}>
+          <Disclosure.Details className="list-none">
+            <Disclosure.Summary>
+              <Disclosure.If open={false}>
+                <Disclosure.Trigger asChild>
+                  <Badge variant="subtle" interactive>
+                    <ChevronDown />
+                    {`Show ${unwrapped.shape.type}`}
+                  </Badge>
+                </Disclosure.Trigger>
+              </Disclosure.If>
+            </Disclosure.Summary>
+            <Disclosure.LazyContent>
+              {() => (
+                <DereferencedShape
+                  shape={unwrapped.shape}
+                  renderFallback={renderFallback}
+                />
+              )}
+            </Disclosure.LazyContent>
+          </Disclosure.Details>
+        </VisitedTypeIdsProvider>
+      );
+    }
     return (
       <VisitedTypeIdsProvider value={unwrapped.visitedTypeIds}>
         <DereferencedShape
@@ -187,19 +222,17 @@ export const ObjectProperty = memo(
   ({ property }: { property: ApiDefinition.ObjectProperty }) => {
     const indent = Tree.useIndent();
     const types = useTypeDefinitions();
-    const visitedTypeIds = useVisitedTypeIds();
-    const expectedTypeIds = collectExpectedTypeIds(property.valueShape, types);
     const unwrapped = ApiDefinition.unwrapReference(property.valueShape, types);
     const availability = property.availability ?? unwrapped.availability;
-
-    const lazy = [...expectedTypeIds].some((id) => visitedTypeIds.has(id));
+    const description = property.description ?? unwrapped.descriptions[0];
+    const hideBranch = typeShapeShouldHideBranch(property.valueShape, types);
 
     return (
       <AnchorIdProvider value={property.key}>
         <JsonPathPartProvider
           value={{ type: "objectProperty", propertyName: property.key }}
         >
-          {typeShapeHasChildren(property.valueShape, types, visitedTypeIds) ? (
+          {typeShapeHasChildren(property.valueShape, types) ? (
             <Tree.Item asChild className={cn(indent === 0 && "-ml-2")}>
               <Tree.Details
                 defaultOpen={isTypeShapeDetailsOpenByDefault(
@@ -218,29 +251,50 @@ export const ObjectProperty = memo(
                         className="my-2"
                       />
                     </Tree.DetailsTrigger>
-                    <Tree.SummaryIndentedContent>
-                      <div className="space-y-3">
-                        {availability && (
+                    <Tree.BranchGrid
+                      hideBranch={hideBranch}
+                      className={cn(hideBranch && "pl-2")}
+                    >
+                      {availability && (
+                        <Tree.Branch lineOnly>
                           <AvailabilityBadge
                             availability={availability}
                             size="sm"
                           />
-                        )}
-                        <Markdown
-                          size="sm"
-                          className={cn("text-text-muted mb-3 leading-normal")}
-                          mdx={
-                            property.description ?? unwrapped.descriptions[0]
-                          }
-                        />
-                      </div>
-                    </Tree.SummaryIndentedContent>
-                    <Tree.ExpandChildrenButton>
-                      {showChildAttributesMessage(property.valueShape, types)}
-                    </Tree.ExpandChildrenButton>
+                        </Tree.Branch>
+                      )}
+                      {!isMdxEmpty(description) && (
+                        <Tree.Branch lineOnly>
+                          <Markdown
+                            size="sm"
+                            className={cn(
+                              "text-text-muted mb-3 leading-normal"
+                            )}
+                            mdx={description}
+                          />
+                        </Tree.Branch>
+                      )}
+                      <Disclosure.If open={false}>
+                        <Tree.Branch last>
+                          <Disclosure.Trigger asChild>
+                            <Badge
+                              rounded
+                              interactive
+                              className="mt-2 w-fit font-normal"
+                              variant={hideBranch ? "subtle" : "ghost"}
+                            >
+                              <Plus />
+                              {showChildAttributesMessage(
+                                property.valueShape,
+                                types
+                              )}
+                            </Badge>
+                          </Disclosure.Trigger>
+                        </Tree.Branch>
+                      </Disclosure.If>
+                    </Tree.BranchGrid>
                   </Tree.DetailsSummary>
                 }
-                lazy={true}
               >
                 {() => <TypeShape shape={property.valueShape} />}
               </Tree.Details>
@@ -443,10 +497,10 @@ const EnumList = memo(({ values }: { values: ApiDefinition.EnumValue[] }) => {
           <Disclosure.Summary>
             <Disclosure.If
               open={false}
-              className={cn(
-                "flex flex-wrap gap-3",
-                !values.slice(0, 10).every((v) => !v.description) && "flex-col"
-              )}
+              // className={cn(
+              //   "flex flex-wrap gap-3",
+              //   !values.slice(0, 10).every((v) => !v.description) && "flex-col"
+              // )}
             >
               {values.slice(0, 10).map((value) =>
                 value.description ? (
