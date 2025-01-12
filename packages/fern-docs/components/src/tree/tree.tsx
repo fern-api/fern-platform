@@ -5,7 +5,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { Slot, Slottable } from "@radix-ui/react-slot";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { noop } from "es-toolkit/function";
-import { atom, PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { ChevronDown, Plus } from "lucide-react";
 import {
   Children,
@@ -23,8 +23,6 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useId,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -35,83 +33,68 @@ import Disclosure from "../disclosure";
 import { Button } from "../FernButtonV2";
 import { Chevron } from "./chevron";
 
-const rootCtx = createContext<{
-  ref: RefObject<HTMLDivElement | null>;
-  rootId: string;
-  idsAtom: PrimitiveAtom<string[]>;
-  expandedAtom: PrimitiveAtom<string[]>;
-}>({
-  ref: { current: null },
-  rootId: "",
-  idsAtom: atom<string[]>([]),
-  expandedAtom: atom<string[]>([]),
+const rootCtx = createContext<RefObject<HTMLDivElement | null>>({
+  current: null,
 });
 
 function RootContextProvider({ children }: PropsWithChildren) {
   const ref = useRef<HTMLDivElement>(null);
-  const rootId = useId();
-  return (
-    <rootCtx.Provider
-      value={{
-        ref,
-        rootId,
-        idsAtom: atom<string[]>([]),
-        expandedAtom: atom<string[]>([]),
-      }}
-    >
-      {children}
-    </rootCtx.Provider>
-  );
+  return <rootCtx.Provider value={ref}>{children}</rootCtx.Provider>;
 }
 
-const SET_OPEN_ALL_EVENT = "tree-set-open-all-disclosures";
-
 function useSetOpenAll() {
-  const { ref, rootId } = useContext(rootCtx);
+  const ref = useContext(rootCtx);
   return useCallback(
     (open: boolean) => {
-      const current = ref.current;
-      if (!current) {
-        return;
-      }
-      current.dispatchEvent(
-        new CustomEvent(SET_OPEN_ALL_EVENT, { detail: { rootId, open } })
+      Array.from(ref.current?.getElementsByTagName("details") ?? []).forEach(
+        (details) => {
+          details.open = open;
+        }
       );
     },
-    [rootId, ref]
+    [ref]
   );
 }
 
 function useIsAllExpanded() {
-  const { expandedAtom, idsAtom } = useContext(rootCtx);
-  const expanded = useAtomValue(expandedAtom);
-  const ids = useAtomValue(idsAtom);
-  return expanded.length === ids.length;
+  const ref = useContext(rootCtx);
+  const [allExpanded, setAllExpanded] = useState(false);
+
+  useEffect(() => {
+    const refCurrent = ref.current;
+    if (!refCurrent) return;
+
+    const updateAllExpanded = () => {
+      requestIdleCallback(() => {
+        const details = Array.from(refCurrent.getElementsByTagName("details"));
+        setAllExpanded(details.every((detail) => detail.open));
+      });
+    };
+
+    updateAllExpanded();
+
+    refCurrent.addEventListener("toggle", updateAllExpanded, true);
+
+    return () => {
+      refCurrent.removeEventListener("toggle", updateAllExpanded, true);
+    };
+  }, [ref]);
+
+  return allExpanded;
 }
 
 function useHasNoDisclosures() {
-  const { idsAtom } = useContext(rootCtx);
-  const ids = useAtomValue(idsAtom);
-  return ids.length === 0;
-}
+  const [hasNoDisclosures, setHasNoDisclosures] = useState(true);
+  const ref = useContext(rootCtx);
 
-function useListenSetOpenAll(setOpen: (open: boolean) => void) {
-  const { ref, rootId } = useContext(rootCtx);
   useEffect(() => {
-    const current = ref.current;
-    if (!current) {
-      return;
-    }
-    const listener: EventListener = (e: Event) => {
-      if (e instanceof CustomEvent && e.detail.rootId === rootId) {
-        setOpen(e.detail.open);
-      }
-    };
-    current.addEventListener(SET_OPEN_ALL_EVENT, listener);
-    return () => {
-      current.removeEventListener(SET_OPEN_ALL_EVENT, listener);
-    };
-  }, [ref, rootId, setOpen]);
+    const details = Array.from(
+      ref.current?.getElementsByTagName("details") ?? []
+    );
+    setHasNoDisclosures(details.length === 0);
+  }, [ref]);
+
+  return hasNoDisclosures;
 }
 
 const ctx = createContext<{
@@ -190,54 +173,7 @@ const Tree = forwardRef<
 
 Tree.displayName = "Tree";
 
-// const detailCtx = createContext<{
-//   open: boolean;
-//   setOpen: Dispatch<React.SetStateAction<boolean | undefined>>;
-// }>({
-//   open: false,
-//   setOpen: noop,
-// });
-
-// function useDetailContext(): {
-//   open: boolean;
-//   setOpen: Dispatch<React.SetStateAction<boolean | undefined>>;
-// } {
-//   return useContext(detailCtx);
-// }
-
 const UnbranchedCtx = createContext(false);
-
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-function useSyncDisclosureWithRoot(defaultOpen?: boolean) {
-  const id = useId();
-  const { idsAtom, expandedAtom } = useContext(rootCtx);
-  const setIds = useSetAtom(idsAtom);
-  const setExpanded = useSetAtom(expandedAtom);
-
-  useIsomorphicLayoutEffect(() => {
-    setIds((ids) => [...ids, id]);
-    if (defaultOpen) {
-      setExpanded((expanded) => [...expanded, id]);
-    }
-    return () => {
-      setIds((ids) => ids.filter((id) => id !== id));
-      setExpanded((expanded) => expanded.filter((id) => id !== id));
-    };
-  }, []);
-
-  return useCallback(
-    (open: boolean) => {
-      setExpanded((expanded) =>
-        open ? [...expanded, id] : expanded.filter((id) => id !== id)
-      );
-    },
-    [id, setExpanded]
-  );
-}
-
-// const TreeItemHasChildrenCtx = createContext(false);
 
 const TreeItem = forwardRef<
   HTMLDivElement,
@@ -267,18 +203,11 @@ const TreeDisclosure = forwardRef<
     onOpenChange?: (open: boolean) => void;
   }
 >(({ children, open: openProp, defaultOpen, onOpenChange, ...props }, ref) => {
-  const setOpenWithRoot = useSyncDisclosureWithRoot(defaultOpen);
-
   const [open = false, setOpen] = useControllableState({
     prop: openProp,
     defaultProp: defaultOpen,
-    onChange: (open) => {
-      setOpenWithRoot(open);
-      onOpenChange?.(open);
-    },
+    onChange: onOpenChange,
   });
-
-  useListenSetOpenAll(setOpen);
 
   const childrenArray = Children.toArray(children);
 
@@ -293,7 +222,7 @@ const TreeDisclosure = forwardRef<
     <Disclosure.Details {...props} ref={ref} open={open} onOpenChange={setOpen}>
       <SubTreeProvider>
         {summary}
-        <Disclosure.Content>{other}</Disclosure.Content>
+        <Disclosure.Content className="-mx-3 px-3">{other}</Disclosure.Content>
       </SubTreeProvider>
     </Disclosure.Details>
   );
@@ -408,18 +337,11 @@ const TreeItemsContentAdditionalDisclosure = ({
   onOpenChange?: (open: boolean) => void;
   className?: string;
 }>): ReactNode => {
-  const setOpenWithRoot = useSyncDisclosureWithRoot(defaultOpen);
-
   const [open = false, setOpen] = useControllableState({
     prop: openProp,
     defaultProp: defaultOpen,
-    onChange: (open) => {
-      setOpenWithRoot(open);
-      onOpenChange?.(open);
-    },
+    onChange: onOpenChange,
   });
-
-  useListenSetOpenAll(setOpen);
 
   const indent = useIndent();
   const childrenArray = Children.toArray(children).filter(isValidElement);
@@ -431,7 +353,7 @@ const TreeItemsContentAdditionalDisclosure = ({
     <Disclosure.Details
       open={open}
       onOpenChange={setOpen}
-      className={cn("col-span-2 -my-3 py-3", className)}
+      className={cn("col-span-2", className)}
     >
       <Disclosure.Summary className="list-none" tabIndex={-1}>
         {({ open }) =>
@@ -472,7 +394,7 @@ const TreeItemsContentAdditionalDisclosure = ({
           ))
         }
       </Disclosure.Summary>
-      <Disclosure.Content>
+      <Disclosure.Content className="-mx-3 px-3">
         {indent > 0 ? (
           <div className="relative grid grid-cols-[16px_1fr] *:min-w-0">
             {childrenArray.map((child, i) => (
@@ -616,7 +538,9 @@ const TreeItemSummaryIndentedContent = forwardRef<
       {...props}
       className={cn("grid grid-cols-[16px_1fr] *:min-w-0", props.className)}
     >
-      <TreeBranch lineOnly />
+      <Disclosure.CloseTrigger asChild>
+        <TreeBranch lineOnly />
+      </Disclosure.CloseTrigger>
       <Slottable>{children}</Slottable>
     </Primitive.div>
   );

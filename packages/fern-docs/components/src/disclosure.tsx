@@ -398,13 +398,18 @@ DisclosureDetails.displayName = "DisclosureDetails";
 
 const DisclosureContent = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<"div"> & { asChild?: boolean }
->(({ asChild, children, ...props }, forwardRef) => {
+  ComponentPropsWithoutRef<"div"> & {
+    asChild?: boolean;
+    innerClassName?: string;
+  }
+>(({ asChild, children, innerClassName, ...props }, forwardRef) => {
   const { setContentEl, setResizerEl } = useContext(DisclosureItemContext);
   const Comp = asChild ? Slot : "div";
   return (
     <div ref={composeRefs(forwardRef, (div) => setResizerEl(div))} {...props}>
-      <Comp ref={(div) => setContentEl(div)}>{children}</Comp>
+      <Comp ref={(div) => setContentEl(div)} className={innerClassName}>
+        {children}
+      </Comp>
     </div>
   );
 });

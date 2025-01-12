@@ -978,67 +978,109 @@ function VariantDescription({
 const EnumList = memo(({ values }: { values: ApiDefinition.EnumValue[] }) => {
   if (values.length > 10) {
     return (
-      <Disclosure.Details>
-        <Disclosure.Summary>
-          {values.slice(0, 10).map((value) => (
-            <div className="mb-3" key={value.value}>
-              <Chip className="font-mono" variant="outlined-subtle">
-                {value.value}
-              </Chip>
-              {value.description && (
-                <Markdown
-                  size="sm"
-                  mdx={value.description}
-                  className="text-text-muted mt-3"
-                />
+      <Disclosure.Root animationOptions={{ duration: 0 }}>
+        <Disclosure.Details className="mt-1.5">
+          <Disclosure.Summary>
+            <Disclosure.If
+              open={false}
+              className={cn(
+                "flex flex-wrap gap-3",
+                !values.slice(0, 10).every((v) => !v.description) && "flex-col"
               )}
-            </div>
-          ))}
-          <Disclosure.If open={false}>
-            <Disclosure.Trigger>
-              <Badge variant="subtle">
-                <ChevronDown />
-                Show all {values.length} values
-              </Badge>
-            </Disclosure.Trigger>
-          </Disclosure.If>
-        </Disclosure.Summary>
-        <Disclosure.Content>
-          {values.slice(10).map((value) => (
-            <div className="mb-3" key={value.value}>
-              <Chip className="font-mono" variant="outlined-subtle">
-                {value.value}
-              </Chip>
-              {value.description && (
-                <Markdown
-                  size="sm"
-                  mdx={value.description}
-                  className="text-text-muted mt-3"
-                />
+            >
+              {values.slice(0, 10).map((value) =>
+                value.description ? (
+                  <div key={value.value}>
+                    <Chip className="font-mono" variant="outlined-subtle">
+                      {value.value}
+                    </Chip>
+                    <Markdown
+                      size="sm"
+                      mdx={value.description}
+                      className="text-text-muted mt-3"
+                    />
+                  </div>
+                ) : (
+                  <Chip
+                    className="font-mono"
+                    variant="outlined-subtle"
+                    key={value.value}
+                  >
+                    {value.value}
+                  </Chip>
+                )
               )}
-            </div>
-          ))}
-        </Disclosure.Content>
-      </Disclosure.Details>
+              <Disclosure.Trigger>
+                <Badge variant="subtle">
+                  <ChevronDown />
+                  Show all {values.length} values
+                </Badge>
+              </Disclosure.Trigger>
+            </Disclosure.If>
+          </Disclosure.Summary>
+          <Disclosure.Content
+            innerClassName={cn(
+              "flex flex-wrap gap-3",
+              !values.every((v) => !v.description) && "flex-col"
+            )}
+          >
+            {values.map((value) =>
+              value.description ? (
+                <div key={value.value}>
+                  <Chip className="font-mono" variant="outlined-subtle">
+                    {value.value}
+                  </Chip>
+                  <Markdown
+                    size="sm"
+                    mdx={value.description}
+                    className="text-text-muted mt-3"
+                  />
+                </div>
+              ) : (
+                <Chip
+                  className="font-mono"
+                  variant="outlined-subtle"
+                  key={value.value}
+                >
+                  {value.value}
+                </Chip>
+              )
+            )}
+          </Disclosure.Content>
+        </Disclosure.Details>
+      </Disclosure.Root>
     );
   }
 
   return (
-    <div className="mt-1.5">
-      {values.map((value) => (
-        <div className="mb-3" key={value.value}>
-          <Chip className="font-mono" variant="outlined-subtle">
-            {value.value}
-          </Chip>
-          {value.description && (
+    <div
+      className={cn(
+        "mt-1.5 flex flex-wrap gap-3",
+        !values.every((v) => !v.description) && "flex-col"
+      )}
+    >
+      {values.map((value) =>
+        value.description ? (
+          <div key={value.value}>
+            <Chip className="font-mono" variant="outlined-subtle">
+              {value.value}
+            </Chip>
             <Markdown
               size="sm"
               mdx={value.description}
               className="text-text-muted mt-3"
             />
-          )}
-        </div>
-      ))}
+          </div>
+        ) : (
+          <Chip
+            className="font-mono"
+            variant="outlined-subtle"
+            key={value.value}
+          >
+            {value.value}
+          </Chip>
+        )
+      )}
     </div>
   );
 });
