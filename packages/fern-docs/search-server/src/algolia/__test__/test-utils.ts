@@ -43,7 +43,7 @@ export function readFixtureToRootNode(
       })
     ),
     ...(Object.fromEntries(
-      Object.entries(fixture.definition.apisV2).filter(
+      Object.entries(fixture.definition.apisV2 ?? {}).filter(
         ([_, api]) => typeof api !== "string"
       )
     ) as Record<string, ApiDefinition.ApiDefinition>),

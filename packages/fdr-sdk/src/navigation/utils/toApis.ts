@@ -22,7 +22,7 @@ export async function toApis(
     ),
     ...Object.fromEntries(
       await Promise.all(
-        Object.entries(docs.definition.apisV2).map(async ([key, def]) => {
+        Object.entries(docs.definition.apisV2 ?? {}).map(async ([key, def]) => {
           if (typeof def === "string") {
             const url = await getPresignedDocsAssetsDownloadUrl({
               key: def,

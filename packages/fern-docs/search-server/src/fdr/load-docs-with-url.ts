@@ -87,7 +87,7 @@ export async function loadDocsWithUrl(
     ),
     ...Object.fromEntries(
       await Promise.all(
-        Object.entries(docs.body.definition.apisV2).map(
+        Object.entries(docs.body.definition.apisV2 ?? {}).map(
           async ([apiId, api]) => {
             const resolvedApi = await s3Loader.loadApiDefinition(api);
             return [apiId, resolvedApi];
