@@ -18,27 +18,27 @@ import urlJoin from "url-join";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   store,
-  usePlaygroundWebsocketFormState,
+  useExplorerWebsocketFormState,
 } from "../../atoms";
-import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
-import { PlaygroundEndpointPath } from "../endpoint/PlaygroundEndpointPath";
+import { useExplorerSettings } from "../../hooks/useExplorerSettings";
+import { ExplorerEndpointPath } from "../endpoint/ExplorerEndpointPath";
 import { useWebsocketMessages } from "../hooks/useWebsocketMessages";
 import { buildAuthHeaders } from "../utils";
-import { usePlaygroundBaseUrl } from "../utils/select-environment";
-import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
+import { useExplorerBaseUrl } from "../utils/select-environment";
+import { ExplorerWebSocketContent } from "./ExplorerWebSocketContent";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
 const WEBSOCKET_PROXY_URI = "wss://proxy.ferndocs.com/";
 
-interface PlaygroundWebSocketProps {
+interface ExplorerWebSocketProps {
   context: WebSocketContext;
 }
 
-export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
+export const ExplorerWebSocket: FC<ExplorerWebSocketProps> = ({
   context,
 }): ReactElement => {
-  const [formState, setFormState] = usePlaygroundWebsocketFormState(context);
-  const websocketMessageLimit = usePlaygroundSettings(context.node.id)?.[
+  const [formState, setFormState] = useExplorerWebsocketFormState(context);
+  const websocketMessageLimit = useExplorerSettings(context.node.id)?.[
     "limit-websocket-messages-per-connection"
   ];
 
@@ -80,9 +80,9 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     }
   }, [activeSessionMessageCount, pushMessage, websocketMessageLimit]);
 
-  const settings = usePlaygroundSettings();
+  const settings = useExplorerSettings();
 
-  const [baseUrl, environmentId] = usePlaygroundBaseUrl(context.channel);
+  const [baseUrl, environmentId] = useExplorerBaseUrl(context.channel);
 
   const startSession = useCallback(async () => {
     return new Promise<boolean>((resolve) => {
@@ -199,7 +199,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
     <FernTooltipProvider>
       <div className="flex h-full min-h-0 flex-1 shrink flex-col">
         <div className="flex-0">
-          <PlaygroundEndpointPath
+          <ExplorerEndpointPath
             method={undefined}
             formState={formState}
             sendRequest={() =>
@@ -241,7 +241,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
           />
         </div>
         <div className="flex min-h-0 flex-1 shrink">
-          <PlaygroundWebSocketContent
+          <ExplorerWebSocketContent
             context={context}
             formState={formState}
             setFormState={setFormState}

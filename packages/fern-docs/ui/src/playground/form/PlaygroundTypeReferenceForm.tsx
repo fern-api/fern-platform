@@ -15,15 +15,15 @@ import {
 import { ReactElement, memo, useCallback } from "react";
 import { useEdgeFlags } from "../../atoms";
 import { WithLabel } from "../WithLabel";
-import { PlaygroundDiscriminatedUnionForm } from "./PlaygroundDescriminatedUnionForm";
-import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdForm";
-import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
-import { PlaygroundListForm } from "./PlaygroundListForm";
-import { PlaygroundMapForm } from "./PlaygroundMapForm";
-import { PlaygroundObjectForm } from "./PlaygroundObjectForm";
-import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
+import { ExplorerDiscriminatedUnionForm } from "./ExplorerDescriminatedUnionForm";
+import { ExplorerElevenLabsVoiceIdForm } from "./ExplorerElevenLabsVoiceIdForm";
+import { ExplorerEnumForm } from "./ExplorerEnumForm";
+import { ExplorerListForm } from "./ExplorerListForm";
+import { ExplorerMapForm } from "./ExplorerMapForm";
+import { ExplorerObjectForm } from "./ExplorerObjectForm";
+import { ExplorerUniscriminatedUnionForm } from "./ExplorerUniscriminatedUnionForm";
 
-interface PlaygroundTypeReferenceFormProps {
+interface ExplorerTypeReferenceFormProps {
   id: string;
   property?: ObjectProperty;
   shape: TypeShapeOrReference;
@@ -40,9 +40,9 @@ interface PlaygroundTypeReferenceFormProps {
   indent?: boolean;
 }
 
-export const PlaygroundTypeReferenceForm =
-  memo<PlaygroundTypeReferenceFormProps>((props) => {
-    const { hasVoiceIdPlaygroundForm } = useEdgeFlags();
+export const ExplorerTypeReferenceForm =
+  memo<ExplorerTypeReferenceFormProps>((props) => {
+    const { hasVoiceIdExplorerForm } = useEdgeFlags();
     const {
       id,
       property,
@@ -67,7 +67,7 @@ export const PlaygroundTypeReferenceForm =
           onRemove={onRemove}
           types={types}
         >
-          <PlaygroundObjectForm
+          <ExplorerObjectForm
             shape={object}
             onChange={onChange}
             value={value}
@@ -86,7 +86,7 @@ export const PlaygroundTypeReferenceForm =
           onRemove={onRemove}
           types={types}
         >
-          <PlaygroundEnumForm
+          <ExplorerEnumForm
             enumValues={values}
             onChange={onChange}
             value={value}
@@ -102,7 +102,7 @@ export const PlaygroundTypeReferenceForm =
           onRemove={onRemove}
           types={types}
         >
-          <PlaygroundUniscriminatedUnionForm
+          <ExplorerUniscriminatedUnionForm
             undiscriminatedUnion={undiscriminatedUnion}
             onChange={onChange}
             value={value}
@@ -120,7 +120,7 @@ export const PlaygroundTypeReferenceForm =
           onRemove={onRemove}
           types={types}
         >
-          <PlaygroundDiscriminatedUnionForm
+          <ExplorerDiscriminatedUnionForm
             discriminatedUnion={discriminatedUnion}
             onChange={onChange}
             value={value}
@@ -144,9 +144,9 @@ export const PlaygroundTypeReferenceForm =
               types={types}
               htmlFor={id}
             >
-              {hasVoiceIdPlaygroundForm && property?.key === "voice_id" ? (
+              {hasVoiceIdExplorerForm && property?.key === "voice_id" ? (
                 // TODO: delete this:
-                <PlaygroundElevenLabsVoiceIdForm
+                <ExplorerElevenLabsVoiceIdForm
                   id={id}
                   className="w-full"
                   value={typeof value === "string" ? value : ""}
@@ -442,7 +442,7 @@ export const PlaygroundTypeReferenceForm =
           types={types}
           htmlFor={id}
         >
-          <PlaygroundListForm
+          <ExplorerListForm
             itemShape={list.itemShape}
             onChange={onChange}
             value={value}
@@ -461,7 +461,7 @@ export const PlaygroundTypeReferenceForm =
           htmlFor={id}
         >
           {/* TODO: add default value */}
-          <PlaygroundListForm
+          <ExplorerListForm
             itemShape={set.itemShape}
             onChange={onChange}
             value={value}
@@ -478,7 +478,7 @@ export const PlaygroundTypeReferenceForm =
           types={types}
           htmlFor={id}
         >
-          <PlaygroundMapForm
+          <ExplorerMapForm
             id={id}
             keyShape={map.keyShape}
             valueShape={map.valueShape}
@@ -537,4 +537,4 @@ export const PlaygroundTypeReferenceForm =
     });
   });
 
-PlaygroundTypeReferenceForm.displayName = "PlaygroundTypeReferenceForm";
+ExplorerTypeReferenceForm.displayName = "ExplorerTypeReferenceForm";

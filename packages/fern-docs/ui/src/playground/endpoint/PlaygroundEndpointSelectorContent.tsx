@@ -18,9 +18,9 @@ import {
 } from "react";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
 import { ApiGroup } from "../utils/flatten-apis";
-import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";
+import { ExplorerEndpointSelectorLeafNode } from "./ExplorerEndpointSelectorLeafNode";
 
-export interface PlaygroundEndpointSelectorContentProps {
+export interface ExplorerEndpointSelectorContentProps {
   apiGroups: ApiGroup[];
   closeDropdown?: () => void;
   selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
@@ -43,9 +43,9 @@ function matchesEndpoint(
   );
 }
 
-export const PlaygroundEndpointSelectorContent = forwardRef<
+export const ExplorerEndpointSelectorContent = forwardRef<
   HTMLDivElement,
-  PlaygroundEndpointSelectorContentProps
+  ExplorerEndpointSelectorContentProps
 >(({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -91,7 +91,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
           {apiLeafNodes.map((node) => {
             const active = node.id === selectedEndpoint?.id;
             return (
-              <PlaygroundEndpointSelectorLeafNode
+              <ExplorerEndpointSelectorLeafNode
                 key={node.id}
                 node={node}
                 active={active}
@@ -154,5 +154,5 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
   );
 });
 
-PlaygroundEndpointSelectorContent.displayName =
-  "PlaygroundEndpointSelectorContent";
+ExplorerEndpointSelectorContent.displayName =
+  "ExplorerEndpointSelectorContent";

@@ -52,7 +52,7 @@ navigation:
           - page: Uploading Documents
             path: ./docs/content/help/documents/uploading-documents.mdx
             slug: uploading-documents
-          - page: Running Searches in Playground
+          - page: Running Searches in Explorer
             path: ./docs/content/help/documents/running-searches.mdx
             slug: running-searches
           - page: Integrating w/ Search API

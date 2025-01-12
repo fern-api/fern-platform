@@ -56,7 +56,7 @@ function isHeaderResettableAtom(headerName: string) {
   });
 }
 
-export function PlaygroundHeaderAuthForm({
+export function ExplorerHeaderAuthForm({
   header,
   disabled,
 }: {

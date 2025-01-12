@@ -6,27 +6,27 @@ import {
   SetStateAction,
   useDeferredValue,
 } from "react";
-import { PlaygroundAuthorizationFormCard } from "../auth";
-import { PlaygroundEndpointRequestFormState } from "../types";
-import { PlaygroundResponse } from "../types/playgroundResponse";
+import { ExplorerAuthorizationFormCard } from "../auth";
+import { ExplorerEndpointRequestFormState } from "../types";
+import { ExplorerResponse } from "../types/playgroundResponse";
 import { shouldRenderAuth } from "../utils/should-render-auth";
-import { PlaygroundEndpointContentLayout } from "./PlaygroundEndpointContentLayout";
-import { PlaygroundEndpointForm } from "./PlaygroundEndpointForm";
-import { PlaygroundEndpointFormButtons } from "./PlaygroundEndpointFormButtons";
-import { PlaygroundEndpointRequestCard } from "./PlaygroundEndpointRequestCard";
-import { PlaygroundResponseCard } from "./PlaygroundResponseCard";
+import { ExplorerEndpointContentLayout } from "./ExplorerEndpointContentLayout";
+import { ExplorerEndpointForm } from "./ExplorerEndpointForm";
+import { ExplorerEndpointFormButtons } from "./ExplorerEndpointFormButtons";
+import { ExplorerEndpointRequestCard } from "./ExplorerEndpointRequestCard";
+import { ExplorerResponseCard } from "./ExplorerResponseCard";
 
-interface PlaygroundEndpointContentProps {
+interface ExplorerEndpointContentProps {
   context: EndpointContext;
-  formState: PlaygroundEndpointRequestFormState;
-  setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
+  formState: ExplorerEndpointRequestFormState;
+  setFormState: Dispatch<SetStateAction<ExplorerEndpointRequestFormState>>;
   resetWithExample: () => void;
   resetWithoutExample: () => void;
-  response: Loadable<PlaygroundResponse>;
+  response: Loadable<ExplorerResponse>;
   sendRequest: () => void;
 }
 
-export function PlaygroundEndpointContent({
+export function ExplorerEndpointContent({
   context,
   formState,
   setFormState,
@@ -34,28 +34,28 @@ export function PlaygroundEndpointContent({
   resetWithoutExample,
   response,
   sendRequest,
-}: PlaygroundEndpointContentProps): ReactElement {
+}: ExplorerEndpointContentProps): ReactElement {
   const deferredFormState = useDeferredValue(formState);
 
   const form = (
     <div className="mx-auto w-full max-w-5xl space-y-6 pt-6 max-sm:pt-0 sm:pb-20">
       {context.auth != null &&
         shouldRenderAuth(context.endpoint, context.auth) && (
-          <PlaygroundAuthorizationFormCard
+          <ExplorerAuthorizationFormCard
             auth={context.auth}
             disabled={false}
           />
         )}
 
       <div className="col-span-2 space-y-8">
-        <PlaygroundEndpointForm
+        <ExplorerEndpointForm
           context={context}
           formState={formState}
           setFormState={setFormState}
         />
       </div>
 
-      <PlaygroundEndpointFormButtons
+      <ExplorerEndpointFormButtons
         node={context.node}
         resetWithExample={resetWithExample}
         resetWithoutExample={resetWithoutExample}
@@ -64,17 +64,17 @@ export function PlaygroundEndpointContent({
   );
 
   const requestCard = (
-    <PlaygroundEndpointRequestCard
+    <ExplorerEndpointRequestCard
       context={context}
       formState={deferredFormState}
     />
   );
   const responseCard = (
-    <PlaygroundResponseCard response={response} sendRequest={sendRequest} />
+    <ExplorerResponseCard response={response} sendRequest={sendRequest} />
   );
 
   return (
-    <PlaygroundEndpointContentLayout
+    <ExplorerEndpointContentLayout
       endpointId={context.endpoint.id}
       sendRequest={sendRequest}
       form={form}

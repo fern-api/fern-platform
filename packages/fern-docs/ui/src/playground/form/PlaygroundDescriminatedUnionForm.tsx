@@ -13,13 +13,13 @@ import { NavArrowDown } from "iconoir-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
 import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
-import { PlaygroundObjectPropertiesForm } from "./PlaygroundObjectPropertyForm";
+import { ExplorerObjectPropertiesForm } from "./ExplorerObjectPropertyForm";
 
 const Markdown = dynamic(() =>
   import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
 );
 
-interface PlaygroundDiscriminatedUnionFormProps {
+interface ExplorerDiscriminatedUnionFormProps {
   discriminatedUnion: DiscriminatedUnionType;
   types: Record<string, TypeDefinition>;
   onChange: (value: unknown) => void;
@@ -28,8 +28,8 @@ interface PlaygroundDiscriminatedUnionFormProps {
   disabled?: boolean;
 }
 
-export const PlaygroundDiscriminatedUnionForm =
-  memo<PlaygroundDiscriminatedUnionFormProps>((props) => {
+export const ExplorerDiscriminatedUnionForm =
+  memo<ExplorerDiscriminatedUnionFormProps>((props) => {
     const { discriminatedUnion, types, onChange, value, id, disabled } = props;
     const selectedVariantKey =
       value != null
@@ -140,7 +140,7 @@ export const PlaygroundDiscriminatedUnionForm =
         )}
         {activeVariant != null && (
           <div className="border-border-default-soft border-l pl-4">
-            <PlaygroundObjectPropertiesForm
+            <ExplorerObjectPropertiesForm
               properties={properties}
               extraProperties={undefined}
               value={value}
@@ -155,5 +155,5 @@ export const PlaygroundDiscriminatedUnionForm =
     );
   });
 
-PlaygroundDiscriminatedUnionForm.displayName =
-  "PlaygroundDiscriminatedUnionForm";
+ExplorerDiscriminatedUnionForm.displayName =
+  "ExplorerDiscriminatedUnionForm";

@@ -6,29 +6,29 @@ import { EMPTY_ARRAY, visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { useAtomValue } from "jotai";
 import { Dispatch, FC, SetStateAction, useCallback, useMemo } from "react";
 import { FERN_USER_ATOM } from "../../atoms";
-import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
-import { PlaygroundObjectForm } from "../form/PlaygroundObjectForm";
-import { PlaygroundObjectPropertiesForm } from "../form/PlaygroundObjectPropertyForm";
+import { ExplorerFileUploadForm } from "../form/ExplorerFileUploadForm";
+import { ExplorerObjectForm } from "../form/ExplorerObjectForm";
+import { ExplorerObjectPropertiesForm } from "../form/ExplorerObjectPropertyForm";
 import {
-  PlaygroundEndpointRequestFormState,
-  PlaygroundFormStateBody,
+  ExplorerEndpointRequestFormState,
+  ExplorerFormStateBody,
 } from "../types";
 import {
   pascalCaseHeaderKey,
   pascalCaseHeaderKeys,
 } from "../utils/header-key-case";
-import { PlaygroundEndpointAliasForm } from "./PlaygroundEndpointAliasForm";
-import { PlaygroundEndpointFormSection } from "./PlaygroundEndpointFormSection";
-import { PlaygroundEndpointMultipartForm } from "./PlaygroundEndpointMultipartForm";
+import { ExplorerEndpointAliasForm } from "./ExplorerEndpointAliasForm";
+import { ExplorerEndpointFormSection } from "./ExplorerEndpointFormSection";
+import { ExplorerEndpointMultipartForm } from "./ExplorerEndpointMultipartForm";
 
-interface PlaygroundEndpointFormProps {
+interface ExplorerEndpointFormProps {
   context: EndpointContext;
-  formState: PlaygroundEndpointRequestFormState | undefined;
-  setFormState: Dispatch<SetStateAction<PlaygroundEndpointRequestFormState>>;
+  formState: ExplorerEndpointRequestFormState | undefined;
+  setFormState: Dispatch<SetStateAction<ExplorerEndpointRequestFormState>>;
   ignoreHeaders?: boolean;
 }
 
-export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
+export const ExplorerEndpointForm: FC<ExplorerEndpointFormProps> = ({
   context: { endpoint, types, globalHeaders },
   formState,
   setFormState,
@@ -76,9 +76,9 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
     (
       value:
         | ((
-            old: PlaygroundFormStateBody | undefined
-          ) => PlaygroundFormStateBody | undefined)
-        | PlaygroundFormStateBody
+            old: ExplorerFormStateBody | undefined
+          ) => ExplorerFormStateBody | undefined)
+        | ExplorerFormStateBody
         | undefined
     ) => {
       setFormState((state) => ({
@@ -128,11 +128,11 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
   return (
     <>
       {headers != null && headers.length > 0 && (
-        <PlaygroundEndpointFormSection
+        <ExplorerEndpointFormSection
           ignoreHeaders={ignoreHeaders}
           title="Headers"
         >
-          <PlaygroundObjectPropertiesForm
+          <ExplorerObjectPropertiesForm
             id="header"
             properties={headers.map((header) => ({
               ...header,
@@ -144,16 +144,16 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
             defaultValue={pascalCaseHeaderKeys(initialHeaders)}
             types={types}
           />
-        </PlaygroundEndpointFormSection>
+        </ExplorerEndpointFormSection>
       )}
 
       {endpoint.pathParameters != null &&
         endpoint.pathParameters.length > 0 && (
-          <PlaygroundEndpointFormSection
+          <ExplorerEndpointFormSection
             ignoreHeaders={ignoreHeaders}
             title="Path Parameters"
           >
-            <PlaygroundObjectPropertiesForm
+            <ExplorerObjectPropertiesForm
               id="path"
               properties={endpoint.pathParameters ?? EMPTY_ARRAY}
               extraProperties={undefined}
@@ -162,16 +162,16 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
               defaultValue={initialPathParameters}
               types={types}
             />
-          </PlaygroundEndpointFormSection>
+          </ExplorerEndpointFormSection>
         )}
 
       {endpoint.queryParameters != null &&
         endpoint.queryParameters.length > 0 && (
-          <PlaygroundEndpointFormSection
+          <ExplorerEndpointFormSection
             ignoreHeaders={ignoreHeaders}
             title="Query Parameters"
           >
-            <PlaygroundObjectPropertiesForm
+            <ExplorerObjectPropertiesForm
               id="query"
               properties={endpoint.queryParameters ?? EMPTY_ARRAY}
               extraProperties={undefined}
@@ -180,31 +180,31 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
               defaultValue={initialQueryParameters}
               types={types}
             />
-          </PlaygroundEndpointFormSection>
+          </ExplorerEndpointFormSection>
         )}
 
       {endpoint.requests?.[0]?.body != null &&
         visitDiscriminatedUnion(endpoint.requests[0]?.body)._visit({
           formData: (formData) => (
-            <PlaygroundEndpointFormSection
+            <ExplorerEndpointFormSection
               ignoreHeaders={ignoreHeaders}
               title="Multipart Form"
             >
-              <PlaygroundEndpointMultipartForm
+              <ExplorerEndpointMultipartForm
                 endpoint={endpoint}
                 formState={formState}
                 formData={formData}
                 types={types}
                 setBody={setBody}
               />
-            </PlaygroundEndpointFormSection>
+            </ExplorerEndpointFormSection>
           ),
           bytes: (bytes) => (
-            <PlaygroundEndpointFormSection
+            <ExplorerEndpointFormSection
               ignoreHeaders={ignoreHeaders}
               title="Body"
             >
-              <PlaygroundFileUploadForm
+              <ExplorerFileUploadForm
                 id="body"
                 propertyKey="body"
                 isOptional={bytes.isOptional}
@@ -217,27 +217,27 @@ export const PlaygroundEndpointForm: FC<PlaygroundEndpointFormProps> = ({
                     : undefined
                 }
               />
-            </PlaygroundEndpointFormSection>
+            </ExplorerEndpointFormSection>
           ),
           object: (value) => {
             return (
-              <PlaygroundEndpointFormSection
+              <ExplorerEndpointFormSection
                 ignoreHeaders={ignoreHeaders}
                 title="Body Parameters"
               >
-                <PlaygroundObjectForm
+                <ExplorerObjectForm
                   id="body"
                   shape={value}
                   onChange={setBodyJson}
                   value={formState?.body?.value}
                   types={types}
                 />
-              </PlaygroundEndpointFormSection>
+              </ExplorerEndpointFormSection>
             );
           },
           alias: (alias) => {
             return (
-              <PlaygroundEndpointAliasForm
+              <ExplorerEndpointAliasForm
                 alias={alias}
                 types={types}
                 ignoreHeaders={ignoreHeaders ?? false}

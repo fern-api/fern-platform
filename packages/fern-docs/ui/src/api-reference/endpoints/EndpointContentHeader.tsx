@@ -3,7 +3,7 @@ import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { memo, type ReactNode } from "react";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
-import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
+import { useExplorerBaseUrl } from "../../explorer/utils/select-environment";
 import { EndpointUrlWithOverflow } from "./EndpointUrlWithOverflow";
 
 interface EndpointContentHeaderProps {
@@ -15,7 +15,7 @@ interface EndpointContentHeaderProps {
 export const EndpointContentHeader = memo<EndpointContentHeaderProps>(
   ({ context, breadcrumb, streamToggle }) => {
     const { endpoint, node } = context;
-    const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+    const [baseUrl, environmentId] = useExplorerBaseUrl(endpoint);
     return (
       <header className="space-y-1 pb-2 pt-8">
         <FernBreadcrumbs breadcrumb={breadcrumb} />

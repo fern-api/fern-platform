@@ -17,10 +17,10 @@ import {
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
 import { WithAside } from "../../contexts/api-page";
+import { ExplorerButton } from "../../explorer/ExplorerButton";
+import { useExplorerBaseUrl } from "../../explorer/utils/select-environment";
 import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
 import { getSlugFromChildren } from "../../util/getSlugFromText";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
@@ -125,7 +125,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
     );
   }, [example?.messages, channel.messages]);
 
-  const [baseUrl, envId] = usePlaygroundBaseUrl(channel);
+  const [baseUrl, envId] = useExplorerBaseUrl(channel);
 
   // TODO: combine with auth headers like in Endpoint.tsx
   const headers = useMemo(
@@ -368,7 +368,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
                 <TitledExample
                   title={"Handshake"}
                   actions={
-                    node != null ? <PlaygroundButton state={node} /> : undefined
+                    node != null ? <ExplorerButton state={node} /> : undefined
                   }
                   disableClipboard={true}
                 >

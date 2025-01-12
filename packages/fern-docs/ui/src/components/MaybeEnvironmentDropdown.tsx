@@ -34,7 +34,7 @@ export function MaybeEnvironmentDropdown({
   const [selectedEnvironmentId, setSelectedEnvironmentId] = useAtom(
     SELECTED_ENVIRONMENT_ATOM
   );
-  const [playgroundEnvironment, setPlaygroundEnvironment] = useAtom(
+  const [explorerEnvironment, setExplorerEnvironment] = useAtom(
     PLAYGROUND_ENVIRONMENT_ATOM
   );
   const [inputValue, setInputValue] = useState<string | undefined>(undefined);
@@ -58,7 +58,7 @@ export function MaybeEnvironmentDropdown({
 
   // TODO: revisit the order of precedence for the baseUrl... this is a temporary fix
   const preParsedUrl =
-    playgroundEnvironment ?? selectedEnvironment?.baseUrl ?? baseUrl;
+    explorerEnvironment ?? selectedEnvironment?.baseUrl ?? baseUrl;
   const url = preParsedUrl && parse(preParsedUrl);
 
   // TODO: clean up this component
@@ -73,7 +73,7 @@ export function MaybeEnvironmentDropdown({
       setInputValue(preParsedUrl);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playgroundEnvironment]);
+  }, [explorerEnvironment]);
 
   const isValidInput =
     inputValue != null &&
@@ -105,15 +105,15 @@ export function MaybeEnvironmentDropdown({
             }}
             onBlur={(e) => {
               if (isValidInput) {
-                if (playgroundEnvironment) {
-                  setInputValue(playgroundEnvironment);
+                if (explorerEnvironment) {
+                  setInputValue(explorerEnvironment);
                 }
                 isEditingEnvironment.setFalse();
               } else {
                 e.preventDefault();
                 e.stopPropagation();
                 setInputValue(initialState);
-                setPlaygroundEnvironment(initialState);
+                setExplorerEnvironment(initialState);
                 isEditingEnvironment.setFalse();
               }
             }}
@@ -127,20 +127,20 @@ export function MaybeEnvironmentDropdown({
                 setInputValue(value);
               } else {
                 setInputValue(value);
-                setPlaygroundEnvironment(value);
+                setExplorerEnvironment(value);
               }
             }}
             onKeyDownCapture={(e) => {
               if (e.key === "Enter" && isValidInput) {
-                if (playgroundEnvironment) {
-                  setInputValue(playgroundEnvironment);
+                if (explorerEnvironment) {
+                  setInputValue(explorerEnvironment);
                 }
                 isEditingEnvironment.setFalse();
               } else if (e.key === "Escape") {
                 e.preventDefault();
                 e.stopPropagation();
                 setInputValue(initialState);
-                setPlaygroundEnvironment(initialState);
+                setExplorerEnvironment(initialState);
                 isEditingEnvironment.setFalse();
               }
             }}
@@ -171,7 +171,7 @@ export function MaybeEnvironmentDropdown({
                   type: "value",
                 }))}
                 onValueChange={(value) => {
-                  setPlaygroundEnvironment(undefined);
+                  setExplorerEnvironment(undefined);
                   setSelectedEnvironmentId(value);
                 }}
                 value={selectedEnvironment?.id ?? environmentId}

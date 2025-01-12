@@ -21,7 +21,7 @@ function formatInputDate(date: string) {
 }
 
 /**
- * Converts a date string to a UTC date string for use with downstream elements, like the playground.
+ * Converts a date string to a UTC date string for use with downstream elements, like the explorer.
  *
  * @param date - The date string to convert.
  * @returns The UTC date string.

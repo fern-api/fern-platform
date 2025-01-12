@@ -3,29 +3,29 @@ import { Play } from "lucide-react";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
 import * as Command from "../cmdk";
 
-export const CommandGroupPlayground = forwardRef<
+export const CommandGroupExplorer = forwardRef<
   HTMLDivElement,
   ComponentPropsWithoutRef<typeof Command.Group> & {
-    togglePlayground?: () => void;
-    playgroundOpen?: boolean;
+    toggleExplorer?: () => void;
+    explorerOpen?: boolean;
   }
->(({ togglePlayground, playgroundOpen, ...props }, ref) => {
-  if (togglePlayground == null) {
+>(({ toggleExplorer, explorerOpen, ...props }, ref) => {
+  if (toggleExplorer == null) {
     return false;
   }
 
   return (
     <Command.Group heading="API Explorer" ref={ref} {...props}>
       <Command.Item
-        value={playgroundOpen ? "close api explorer" : "open api explorer"}
-        onSelect={() => togglePlayground()}
+        value={explorerOpen ? "close api explorer" : "open api explorer"}
+        onSelect={() => toggleExplorer()}
       >
         <Play />
-        {playgroundOpen ? "Close API Explorer" : "Open API Explorer"}
+        {explorerOpen ? "Close API Explorer" : "Open API Explorer"}
         <Kbd className="ml-auto">ctrl+&#96;</Kbd>
       </Command.Item>
     </Command.Group>
   );
 });
 
-CommandGroupPlayground.displayName = "CommandGroupPlayground";
+CommandGroupExplorer.displayName = "CommandGroupExplorer";

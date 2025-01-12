@@ -13,20 +13,20 @@ import { Download } from "iconoir-react";
 import { ReactElement } from "react";
 import { useEdgeFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { PlaygroundResponsePreview } from "../PlaygroundResponsePreview";
-import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
-import { PlaygroundResponse } from "../types/playgroundResponse";
+import { ExplorerResponsePreview } from "../ExplorerResponsePreview";
+import { ExplorerSendRequestButton } from "../ExplorerSendRequestButton";
+import { ExplorerResponse } from "../types/playgroundResponse";
 import { ProxyResponse } from "../types/proxy";
 
-interface PlaygroundResponseCard {
-  response: Loadable<PlaygroundResponse>;
+interface ExplorerResponseCard {
+  response: Loadable<ExplorerResponse>;
   sendRequest: () => void;
 }
 
-export function PlaygroundResponseCard({
+export function ExplorerResponseCard({
   response,
   sendRequest,
-}: PlaygroundResponseCard): ReactElement {
+}: ExplorerResponseCard): ReactElement {
   const { isBinaryOctetStreamAudioPlayer } = useEdgeFlags();
   return (
     <FernCard className="flex min-w-0 flex-1 shrink flex-col overflow-hidden rounded-xl shadow-sm">
@@ -115,7 +115,7 @@ export function PlaygroundResponseCard({
         loading: () =>
           response.type === "notStartedLoading" ? (
             <div className="flex flex-1 items-center justify-center">
-              <PlaygroundSendRequestButton sendRequest={sendRequest} />
+              <ExplorerSendRequestButton sendRequest={sendRequest} />
             </div>
           ) : (
             <div className="flex flex-1 items-center justify-center">
@@ -126,7 +126,7 @@ export function PlaygroundResponseCard({
           response.type !== "file" ||
           response.contentType.startsWith("text") ||
           response.contentType.startsWith("application/xml") ? (
-            <PlaygroundResponsePreview response={response} />
+            <ExplorerResponsePreview response={response} />
           ) : response.contentType.startsWith("audio/") ||
             (isBinaryOctetStreamAudioPlayer &&
               response.contentType === "binary/octet-stream") ? (
@@ -143,7 +143,7 @@ export function PlaygroundResponseCard({
             />
           ) : (
             <FernErrorTag
-              component="PlaygroundEndpointContent"
+              component="ExplorerEndpointContent"
               error={`File preview not supported for ${response.contentType}`}
               className="flex h-full items-center justify-center"
               showError
@@ -151,7 +151,7 @@ export function PlaygroundResponseCard({
           ),
         failed: (e) => (
           <FernErrorTag
-            component="PlaygroundEndpointContent"
+            component="ExplorerEndpointContent"
             error={e}
             className="flex h-full items-center justify-center"
             showError={true}

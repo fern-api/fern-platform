@@ -8,7 +8,7 @@ import { useExampleSelection } from "../../../api-reference/endpoints/useExample
 import { CodeSnippetExample } from "../../../api-reference/examples/CodeSnippetExample";
 import { ENDPOINT_ID_TO_SLUG_ATOM } from "../../../atoms";
 import { ApiReferenceButton } from "../../../components/ApiReferenceButton";
-import { usePlaygroundBaseUrl } from "../../../playground/utils/select-environment";
+import { useExplorerBaseUrl } from "../../../explorer/utils/select-environment";
 import { RequestSnippet } from "./types";
 import { useFindEndpoint } from "./useFindEndpoint";
 import { extractEndpointPathAndMethod } from "./utils";
@@ -60,7 +60,7 @@ export function EndpointRequestSnippetInternal({
     setSelectedExampleKey,
   } = useExampleSelection(endpoint, example);
 
-  const [baseUrl, selectedEnvironmentId] = usePlaygroundBaseUrl(endpoint);
+  const [baseUrl, selectedEnvironmentId] = useExplorerBaseUrl(endpoint);
 
   if (selectedExample == null) {
     return null;

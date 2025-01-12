@@ -1,37 +1,37 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { FC, ReactElement } from "react";
-import { PlaygroundBasicAuthForm } from "./PlaygroundBasicAuthForm";
-import { PlaygroundBearerAuthForm } from "./PlaygroundBearerAuthForm";
-import { PlaygroundHeaderAuthForm } from "./PlaygroundHeaderAuthForm";
-import { PlaygroundOAuthForm } from "./PlaygroundOAuthForm";
+import { ExplorerBasicAuthForm } from "./ExplorerBasicAuthForm";
+import { ExplorerBearerAuthForm } from "./ExplorerBearerAuthForm";
+import { ExplorerHeaderAuthForm } from "./ExplorerHeaderAuthForm";
+import { ExplorerOAuthForm } from "./ExplorerOAuthForm";
 
-interface PlaygroundAuthorizationFormProps {
+interface ExplorerAuthorizationFormProps {
   auth: APIV1Read.ApiAuth;
   closeContainer: () => void;
   disabled: boolean;
 }
 
-export const PlaygroundAuthorizationForm: FC<
-  PlaygroundAuthorizationFormProps
+export const ExplorerAuthorizationForm: FC<
+  ExplorerAuthorizationFormProps
 > = ({ auth, closeContainer, disabled }) => {
   return (
     <ul className="list-none px-4">
       {visitDiscriminatedUnion(auth, "type")._visit<ReactElement | false>({
         bearerAuth: (bearerAuth) => (
-          <PlaygroundBearerAuthForm
+          <ExplorerBearerAuthForm
             bearerAuth={bearerAuth}
             disabled={disabled}
           />
         ),
         basicAuth: (basicAuth) => (
-          <PlaygroundBasicAuthForm basicAuth={basicAuth} disabled={disabled} />
+          <ExplorerBasicAuthForm basicAuth={basicAuth} disabled={disabled} />
         ),
         header: (header) => (
-          <PlaygroundHeaderAuthForm header={header} disabled={disabled} />
+          <ExplorerHeaderAuthForm header={header} disabled={disabled} />
         ),
         oAuth: (oAuth) => (
-          <PlaygroundOAuthForm
+          <ExplorerOAuthForm
             oAuth={oAuth}
             closeContainer={closeContainer}
             disabled={disabled}

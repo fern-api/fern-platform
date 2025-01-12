@@ -12,13 +12,13 @@ import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo, useState } from "react";
 import { renderTypeShorthand } from "../../type-shorthand";
 import { getEmptyValueForType, matchesTypeReference } from "../utils";
-import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
+import { ExplorerTypeReferenceForm } from "./ExplorerTypeReferenceForm";
 
 const Markdown = dynamic(() =>
   import("../../mdx/Markdown").then(({ Markdown }) => Markdown)
 );
 
-interface PlaygroundUniscriminatedUnionFormProps {
+interface ExplorerUniscriminatedUnionFormProps {
   undiscriminatedUnion: UndiscriminatedUnionType;
   onChange: (value: unknown) => void;
   value: unknown;
@@ -27,8 +27,8 @@ interface PlaygroundUniscriminatedUnionFormProps {
   disabled?: boolean;
 }
 
-export const PlaygroundUniscriminatedUnionForm =
-  memo<PlaygroundUniscriminatedUnionFormProps>((props) => {
+export const ExplorerUniscriminatedUnionForm =
+  memo<ExplorerUniscriminatedUnionFormProps>((props) => {
     const { undiscriminatedUnion, onChange, value, id, types, disabled } =
       props;
     const [internalSelectedVariant, setInternalSelectedVariant] =
@@ -119,7 +119,7 @@ export const PlaygroundUniscriminatedUnionForm =
         )}
         {selectedVariant != null && (
           <div className="border-border-default-soft border-l pl-4">
-            <PlaygroundTypeReferenceForm
+            <ExplorerTypeReferenceForm
               id={`${id}[${internalSelectedVariant}]`}
               shape={selectedVariant.shape}
               onChange={onChange}
@@ -134,5 +134,5 @@ export const PlaygroundUniscriminatedUnionForm =
     );
   });
 
-PlaygroundUniscriminatedUnionForm.displayName =
-  "PlaygroundUniscriminatedUnionForm";
+ExplorerUniscriminatedUnionForm.displayName =
+  "ExplorerUniscriminatedUnionForm";

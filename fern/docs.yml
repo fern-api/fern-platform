@@ -7,8 +7,8 @@ navigation:
     path: ./docs/pages/welcome.mdx
   - section: How To Guides
     contents:
-      - page: Enable API Playground
-        path: ./docs/pages/enable-api-playground.mdx
+      - page: Enable API Explorer
+        path: ./docs/pages/enable-api-explorer.mdx
       - page: Configure Custom Domain
         path: ./docs/pages/configure-custom-domain.mdx
       - page: Configure Segment for a new Customer

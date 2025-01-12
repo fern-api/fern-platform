@@ -22,8 +22,8 @@ import {
   useRef,
 } from "react";
 import { FernErrorTag } from "../../components/FernErrorBoundary";
-import { PlaygroundButton } from "../../playground/PlaygroundButton";
-import { usePlaygroundBaseUrl } from "../../playground/utils/select-environment";
+import { ExplorerButton } from "../../explorer/ExplorerButton";
+import { useExplorerBaseUrl } from "../../explorer/utils/select-environment";
 import { AudioExample } from "../examples/AudioExample";
 import {
   CodeSnippetExample,
@@ -147,7 +147,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
       </span>
     );
 
-  const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+  const [baseUrl, environmentId] = useExplorerBaseUrl(endpoint);
 
   const segmentedControlExamples = useMemo(() => {
     return Object.entries(examplesByKeyAndStatusCode)
@@ -200,7 +200,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
         actions={
           <>
             {node != null && (
-              <PlaygroundButton
+              <ExplorerButton
                 state={node}
                 // example={selectedExample?.exampleCall}
               />

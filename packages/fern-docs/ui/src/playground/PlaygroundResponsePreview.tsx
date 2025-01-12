@@ -3,13 +3,13 @@ import {
   type ScrollToHandle,
 } from "@fern-docs/syntax-highlighter";
 import { FC, useEffect, useMemo, useRef } from "react";
-import { PlaygroundResponse } from "./types/playgroundResponse";
+import { ExplorerResponse } from "./types/playgroundResponse";
 
-interface PlaygroundResponsePreviewProps {
-  response: PlaygroundResponse;
+interface ExplorerResponsePreviewProps {
+  response: ExplorerResponse;
 }
 
-export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({
+export const ExplorerResponsePreview: FC<ExplorerResponsePreviewProps> = ({
   response,
 }) => {
   const responseJson = useMemo(
@@ -42,7 +42,7 @@ export const PlaygroundResponsePreview: FC<PlaygroundResponsePreviewProps> = ({
   );
 };
 
-function getLanguage(response: PlaygroundResponse): string {
+function getLanguage(response: ExplorerResponse): string {
   if (response.type === "file") {
     return "text";
   }

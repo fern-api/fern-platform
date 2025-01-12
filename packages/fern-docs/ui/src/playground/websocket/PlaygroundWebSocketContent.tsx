@@ -8,13 +8,13 @@ import {
   useRef,
   useState,
 } from "react";
-import { PlaygroundWebSocketRequestFormState } from "../types";
-import { PlaygroundWebSocketSessionForm } from "./PlaygroundWebSocketSessionForm";
+import { ExplorerWebSocketRequestFormState } from "../types";
+import { ExplorerWebSocketSessionForm } from "./ExplorerWebSocketSessionForm";
 
-interface PlaygroundWebSocketContentProps {
+interface ExplorerWebSocketContentProps {
   context: WebSocketContext;
-  formState: PlaygroundWebSocketRequestFormState;
-  setFormState: Dispatch<SetStateAction<PlaygroundWebSocketRequestFormState>>;
+  formState: ExplorerWebSocketRequestFormState;
+  setFormState: Dispatch<SetStateAction<ExplorerWebSocketRequestFormState>>;
   startSesssion: () => void;
   clearMessages: () => void;
   sendMessage: (message: ApiDefinition.WebSocketMessage, data: unknown) => void;
@@ -22,8 +22,8 @@ interface PlaygroundWebSocketContentProps {
   error: string | null;
 }
 
-export const PlaygroundWebSocketContent: FC<
-  PlaygroundWebSocketContentProps
+export const ExplorerWebSocketContent: FC<
+  ExplorerWebSocketContentProps
 > = ({
   context,
   formState,
@@ -58,7 +58,7 @@ export const PlaygroundWebSocketContent: FC<
         ref={scrollAreaRef}
         className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
       >
-        <PlaygroundWebSocketSessionForm
+        <ExplorerWebSocketSessionForm
           context={context}
           formState={formState}
           scrollAreaHeight={scrollAreaHeight}

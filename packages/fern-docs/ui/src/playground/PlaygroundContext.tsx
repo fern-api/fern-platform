@@ -3,19 +3,19 @@ import dynamic from "next/dynamic";
 import { FC } from "react";
 import {
   IS_PLAYGROUND_ENABLED_ATOM,
-  useInitPlaygroundRouter,
+  useInitExplorerRouter,
 } from "../atoms/playground";
 
-const PlaygroundDrawer = dynamic(
-  () => import("./PlaygroundDrawer").then((m) => m.PlaygroundDrawer),
+const ExplorerDrawer = dynamic(
+  () => import("./ExplorerDrawer").then((m) => m.ExplorerDrawer),
   {
     ssr: false,
   }
 );
 
-export const PlaygroundContextProvider: FC = () => {
-  useInitPlaygroundRouter();
+export const ExplorerContextProvider: FC = () => {
+  useInitExplorerRouter();
 
-  const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
-  return isPlaygroundEnabled ? <PlaygroundDrawer /> : null;
+  const isExplorerEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
+  return isExplorerEnabled ? <ExplorerDrawer /> : null;
 };

@@ -16,20 +16,20 @@ import {
   PLAYGROUND_NODE_ID,
   VIEWPORT_HEIGHT_ATOM,
   useAtomEffect,
-  useIsPlaygroundOpen,
-  usePlaygroundFormStateAtom,
-  usePlaygroundNode,
-  useTogglePlayground,
+  useIsExplorerOpen,
+  useExplorerFormStateAtom,
+  useExplorerNode,
+  useToggleExplorer,
 } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { PlaygroundContent } from "./PlaygroundContent";
+import { ExplorerContent } from "./ExplorerContent";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
-import { PlaygroundEndpointSelectorContent } from "./endpoint";
+import { ExplorerEndpointSelectorContent } from "./endpoint";
 import { useResizeY } from "./useSplitPlane";
 import { PLAYGROUND_API_GROUPS_ATOM } from "./utils/flatten-apis";
 
-export const PlaygroundDrawer = memo((): ReactElement | null => {
-  const selectionState = usePlaygroundNode();
+export const ExplorerDrawer = memo((): ReactElement | null => {
+  const selectionState = useExplorerNode();
 
   const apiGroups = useAtomValue(PLAYGROUND_API_GROUPS_ATOM);
 
@@ -67,21 +67,21 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
   const resizeY = useResizeY(setOffset);
 
-  const isPlaygroundOpen = useIsPlaygroundOpen();
-  const togglePlayground = useTogglePlayground();
+  const isExplorerOpen = useIsExplorerOpen();
+  const toggleExplorer = useToggleExplorer();
 
   useEffect(() => {
     // if keyboard press "ctrl + `", open playground
-    const togglePlaygroundHandler = (e: KeyboardEvent) => {
+    const toggleExplorerHandler = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === "`") {
-        togglePlayground();
+        toggleExplorer();
       }
     };
-    document.addEventListener("keydown", togglePlaygroundHandler, false);
+    document.addEventListener("keydown", toggleExplorerHandler, false);
     return () => {
-      document.removeEventListener("keydown", togglePlaygroundHandler, false);
+      document.removeEventListener("keydown", toggleExplorerHandler, false);
     };
-  }, [togglePlayground]);
+  }, [toggleExplorer]);
 
   const { endpoint: selectedEndpoint } = apiGroups
     .flatMap((group) => [
@@ -93,7 +93,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
   };
 
   const setFormState = useSetAtom(
-    usePlaygroundFormStateAtom(selectionState?.id ?? NodeId(""))
+    useExplorerFormStateAtom(selectionState?.id ?? NodeId(""))
   );
 
   const renderMobileHeader = () => (
@@ -120,17 +120,17 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
 
   return (
     <FernErrorBoundary
-      component="PlaygroundDrawer"
+      component="ExplorerDrawer"
       className="flex h-full items-center justify-center"
       showError={true}
       reset={() => {
         setFormState(undefined);
       }}
     >
-      {isPlaygroundOpen && <motion.div style={{ height, maxHeight }} />}
+      {isExplorerOpen && <motion.div style={{ height, maxHeight }} />}
       <Dialog.Root
-        open={isPlaygroundOpen}
-        onOpenChange={togglePlayground}
+        open={isExplorerOpen}
+        onOpenChange={toggleExplorer}
         modal={false}
       >
         <Dialog.Portal>
@@ -172,21 +172,21 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
                 renderMobileHeader()
               )}
               {isMobileSidebarEnabled ? (
-                <PlaygroundContent />
+                <ExplorerContent />
               ) : (
                 <HorizontalSplitPane
                   mode="pixel"
                   className="size-full"
                   leftClassName="border-default border-r"
                 >
-                  <PlaygroundEndpointSelectorContent
+                  <ExplorerEndpointSelectorContent
                     apiGroups={apiGroups}
                     selectedEndpoint={selectedEndpoint}
                     className="h-full"
                     // nodeIdToApiDefinition={nodeIdToApiDefinition}
                   />
 
-                  <PlaygroundContent />
+                  <ExplorerContent />
                 </HorizontalSplitPane>
               )}
             </motion.div>
@@ -197,4 +197,4 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
   );
 });
 
-PlaygroundDrawer.displayName = "PlaygroundDrawer";
+ExplorerDrawer.displayName = "ExplorerDrawer";

@@ -24,15 +24,15 @@ import { Xmark } from "iconoir-react";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
-import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
-import { PlaygroundRequestFormState } from "../types";
+import { ExplorerSendRequestButton } from "../ExplorerSendRequestButton";
+import { ExplorerRequestFormState } from "../types";
 
-interface PlaygroundEndpointPathProps {
+interface ExplorerEndpointPathProps {
   method: HttpMethod | undefined;
   environmentId: EnvironmentId | undefined;
   baseUrl: string | undefined;
   options: Environment[] | undefined;
-  formState: PlaygroundRequestFormState;
+  formState: ExplorerRequestFormState;
   path: PathPart[];
   queryParameters: ObjectProperty[] | undefined;
   sendRequest: () => void;
@@ -41,7 +41,7 @@ interface PlaygroundEndpointPathProps {
   types: Record<TypeId, TypeDefinition>;
 }
 
-export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
+export const ExplorerEndpointPath: FC<ExplorerEndpointPathProps> = ({
   environmentId,
   baseUrl,
   options,
@@ -160,7 +160,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
       </div>
 
       <div className="max-sm:hidden">
-        <PlaygroundSendRequestButton
+        <ExplorerSendRequestButton
           sendRequest={sendRequest}
           sendRequestButtonLabel={sendRequestButtonLabel}
           sendRequestIcon={sendRequestIcon}

@@ -21,23 +21,23 @@ import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   store,
   useEdgeFlags,
-  usePlaygroundEndpointFormState,
+  useExplorerEndpointFormState,
 } from "../../atoms";
-import { usePlaygroundSettings } from "../../hooks/usePlaygroundSettings";
+import { useExplorerSettings } from "../../hooks/useExplorerSettings";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { executeProxyStream } from "../fetch-utils/executeProxyStream";
 import type { ProxyRequest } from "../types";
-import { PlaygroundResponse } from "../types/playgroundResponse";
+import { ExplorerResponse } from "../types/playgroundResponse";
 import {
   buildAuthHeaders,
   getInitialEndpointRequestFormStateWithExample,
   serializeFormStateBody,
 } from "../utils";
-import { usePlaygroundBaseUrl } from "../utils/select-environment";
-import { PlaygroundEndpointContent } from "./PlaygroundEndpointContent";
-import { PlaygroundEndpointPath } from "./PlaygroundEndpointPath";
+import { useExplorerBaseUrl } from "../utils/select-environment";
+import { ExplorerEndpointContent } from "./ExplorerEndpointContent";
+import { ExplorerEndpointPath } from "./ExplorerEndpointPath";
 
-export const PlaygroundEndpoint = ({
+export const ExplorerEndpoint = ({
   context,
 }: {
   context: EndpointContext;
@@ -45,7 +45,7 @@ export const PlaygroundEndpoint = ({
   const user = useAtomValue(FERN_USER_ATOM);
   const { node, endpoint, auth } = context;
 
-  const [formState, setFormState] = usePlaygroundEndpointFormState(context);
+  const [formState, setFormState] = useExplorerEndpointFormState(context);
 
   const resetWithExample = useEventCallback(() => {
     setFormState(
@@ -69,9 +69,9 @@ export const PlaygroundEndpoint = ({
 
   const { usesApplicationJsonInFormDataValue } = useEdgeFlags();
   const [response, setResponse] =
-    useState<Loadable<PlaygroundResponse>>(notStartedLoading());
+    useState<Loadable<ExplorerResponse>>(notStartedLoading());
 
-  const [baseUrl, environmentId] = usePlaygroundBaseUrl(endpoint);
+  const [baseUrl, environmentId] = useExplorerBaseUrl(endpoint);
 
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
@@ -193,13 +193,13 @@ export const PlaygroundEndpoint = ({
     usesApplicationJsonInFormDataValue,
   ]);
 
-  const settings = usePlaygroundSettings();
+  const settings = useExplorerSettings();
 
   return (
     <FernTooltipProvider>
       <div className="flex size-full min-h-0 flex-1 shrink flex-col">
         <div className="flex-0">
-          <PlaygroundEndpointPath
+          <ExplorerEndpointPath
             method={endpoint.method}
             formState={formState}
             sendRequest={sendRequest}
@@ -223,7 +223,7 @@ export const PlaygroundEndpoint = ({
           />
         </div>
         <div className="flex min-h-0 flex-1 shrink">
-          <PlaygroundEndpointContent
+          <ExplorerEndpointContent
             context={context}
             formState={formState}
             setFormState={setFormState}

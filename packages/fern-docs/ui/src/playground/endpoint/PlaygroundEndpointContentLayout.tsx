@@ -2,11 +2,11 @@ import { useResizeObserver } from "@fern-ui/react-commons";
 import { useAtomValue } from "jotai";
 import { ReactElement, ReactNode, useRef, useState } from "react";
 import { IS_MOBILE_SCREEN_ATOM } from "../../atoms";
-import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
-import { PlaygroundEndpointDesktopLayout } from "./PlaygroundEndpointDesktopLayout";
-import { PlaygroundEndpointMobileLayout } from "./PlaygroundEndpointMobileLayout";
+import { ExplorerSendRequestButton } from "../ExplorerSendRequestButton";
+import { ExplorerEndpointDesktopLayout } from "./ExplorerEndpointDesktopLayout";
+import { ExplorerEndpointMobileLayout } from "./ExplorerEndpointMobileLayout";
 
-interface PlaygroundEndpointContentLayoutProps {
+interface ExplorerEndpointContentLayoutProps {
   sendRequest: () => void;
   form: ReactNode;
   requestCard: ReactNode;
@@ -14,13 +14,13 @@ interface PlaygroundEndpointContentLayoutProps {
   endpointId?: string;
 }
 
-export function PlaygroundEndpointContentLayout({
+export function ExplorerEndpointContentLayout({
   sendRequest,
   form,
   requestCard,
   responseCard,
   endpointId,
-}: PlaygroundEndpointContentLayoutProps): ReactElement {
+}: ExplorerEndpointContentLayoutProps): ReactElement {
   const isMobileScreen = useAtomValue(IS_MOBILE_SCREEN_ATOM);
 
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -39,7 +39,7 @@ export function PlaygroundEndpointContentLayout({
         className="mask-grad-top-6 w-full overflow-x-hidden overflow-y-scroll overscroll-contain"
       >
         {!isMobileScreen ? (
-          <PlaygroundEndpointDesktopLayout
+          <ExplorerEndpointDesktopLayout
             scrollAreaHeight={scrollAreaHeight}
             form={form}
             requestCard={requestCard}
@@ -47,12 +47,12 @@ export function PlaygroundEndpointContentLayout({
             endpointId={endpointId}
           />
         ) : (
-          <PlaygroundEndpointMobileLayout
+          <ExplorerEndpointMobileLayout
             form={form}
             requestCard={requestCard}
             responseCard={responseCard}
             sendButton={
-              <PlaygroundSendRequestButton sendRequest={sendRequest} />
+              <ExplorerSendRequestButton sendRequest={sendRequest} />
             }
             endpointId={endpointId}
           />

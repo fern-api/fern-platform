@@ -243,21 +243,26 @@ types:
       children: list<ApiPackageChild>
       changelog: optional<ChangelogNode>
       playground:
+        # deprecated naming
         # enabled: optional<boolean> (this is currently controlled in feature flags, global boolean)
-        type: optional<PlaygroundSettings>
+        type: optional<ExplorerSettings>
         docs: Settings for the api playground that affects all endpoints.
+      explorer:
+        # enabled: optional<boolean> (this is currently controlled in feature flags, global boolean)
+        type: optional<ExplorerSettings>
+        docs: Settings for the api explorer that affects all endpoints.
 
-  PlaygroundSettings:
+  ExplorerSettings:
     properties:
       environments:
         type: optional<list<commons.EnvironmentId>>
         docs: |
-          A list of environment IDs that are allowed to be used in the playground.
-          If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
-      button: optional<PlaygroundButtonSettings>
+          A list of environment IDs that are allowed to be used in the explorer.
+          If not provided, all environments are allowed. And if the provided list is empty, the explorer should be disabled.
+      button: optional<ExplorerButtonSettings>
       limit-websocket-messages-per-connection: optional<integer>
 
-  PlaygroundButtonSettings:
+  ExplorerButtonSettings:
     properties:
       href: optional<commons.Url>
 
@@ -271,8 +276,11 @@ types:
       endpointId: commons.EndpointId
       isResponseStream: optional<boolean>
       playground:
-        type: optional<PlaygroundSettings>
-        docs: Settings for the api playground that affect this endpoint specifically.
+        type: optional<ExplorerSettings>
+        docs: Settings for the api explorer that affect this endpoint specifically.
+      explorer:
+        type: optional<ExplorerSettings>
+        docs: Settings for the api explorer that affect this endpoint specifically.
 
   WebSocketNode:
     extends:
@@ -282,8 +290,11 @@ types:
       type: literal<"webSocket">
       webSocketId: commons.WebSocketId
       playground:
-        type: optional<PlaygroundSettings>
+        type: optional<ExplorerSettings>
         docs: Settings for the api playground that affect this endpoint specifically.
+      explorer:
+        type: optional<ExplorerSettings>
+        docs: Settings for the api explorer that affect this endpoint specifically.
 
   WebhookNode:
     extends:
@@ -293,7 +304,7 @@ types:
       type: literal<"webhook">
       method: commons.HttpMethod
       webhookId: commons.WebhookId
-      # note: webhooks do not have a playground
+      # note: webhooks do not have a explorer
 
   ApiPackageNode:
     extends:
@@ -305,8 +316,11 @@ types:
       type: literal<"apiPackage">
       children: list<ApiPackageChild>
       playground:
-        type: optional<PlaygroundSettings>
+        type: optional<ExplorerSettings>
         docs: Settings for the api playground that is applied only to descendants of this api package.
+      explorer:
+        type: optional<ExplorerSettings>
+        docs: Settings for the api explorer that is applied only to descendants of this api package.
 
   # utilities
 

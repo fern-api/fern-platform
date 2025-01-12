@@ -2,15 +2,15 @@ import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
 import { FC, ReactNode } from "react";
 
-interface PlaygroundSendRequestButtonProps {
+interface ExplorerSendRequestButtonProps {
   sendRequest?: () => void;
 
   sendRequestButtonLabel?: string;
   sendRequestIcon?: ReactNode;
 }
 
-export const PlaygroundSendRequestButton: FC<
-  PlaygroundSendRequestButtonProps
+export const ExplorerSendRequestButton: FC<
+  ExplorerSendRequestButtonProps
 > = ({ sendRequest, sendRequestButtonLabel, sendRequestIcon }) => {
   return (
     <FernButton

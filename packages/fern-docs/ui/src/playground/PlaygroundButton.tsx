@@ -7,17 +7,17 @@ import {
 import { PlaySolid } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { FC } from "react";
-import { IS_PLAYGROUND_ENABLED_ATOM, useOpenPlayground } from "../atoms";
-import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
+import { IS_PLAYGROUND_ENABLED_ATOM, useOpenExplorer } from "../atoms";
+import { useExplorerSettings } from "../hooks/useExplorerSettings";
 
-export const PlaygroundButton: FC<{
+export const ExplorerButton: FC<{
   state: FernNavigation.NavigationNodeApiLeaf;
 }> = ({ state }) => {
-  const openPlayground = useOpenPlayground();
-  const isPlaygroundEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
-  const settings = usePlaygroundSettings(state.id);
+  const openExplorer = useOpenExplorer();
+  const isExplorerEnabled = useAtomValue(IS_PLAYGROUND_ENABLED_ATOM);
+  const settings = useExplorerSettings(state.id);
 
-  if (!isPlaygroundEnabled) {
+  if (!isExplorerEnabled) {
     return null;
   }
 
@@ -44,7 +44,7 @@ export const PlaygroundButton: FC<{
               // to the current `window` through their `window.opener`.
               window.open(settings.button.href, "_blank");
             } else {
-              void openPlayground(state);
+              void openExplorer(state);
             }
           }}
           rightIcon={<PlaySolid />}

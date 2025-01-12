@@ -1,8 +1,8 @@
 import {
   CommandActions,
   CommandEmpty,
+  CommandGroupExplorer,
   CommandGroupFilters,
-  CommandGroupPlayground,
   CommandGroupTheme,
   CommandSearchHits,
   DefaultDesktopBackButton,
@@ -34,12 +34,12 @@ import {
   HAS_API_PLAYGROUND,
   THEME_SWITCH_ENABLED_ATOM,
   atomWithStorageString,
-  useClosePlayground,
+  useCloseExplorer,
   useEdgeFlags,
   useFernUser,
-  useIsPlaygroundOpen,
+  useIsExplorerOpen,
   useSetTheme,
-  useTogglePlayground,
+  useToggleExplorer,
 } from "../atoms";
 import { Feedback } from "../feedback/Feedback";
 import { useApiRoute } from "../hooks/useApiRoute";
@@ -73,7 +73,7 @@ export function SearchV2(): ReactElement | false {
   const user = useFernUser();
 
   const [open, setOpen] = useCommandTrigger();
-  const setCloseApiPlayground = useClosePlayground();
+  const setCloseApiExplorer = useCloseExplorer();
   const [askAi, setAskAi] = useAtom(askAiAtom);
   const [initialInput, setInitialInput] = useState("");
   const domain = useAtomValue(DOMAIN_ATOM);
@@ -101,7 +101,7 @@ export function SearchV2(): ReactElement | false {
   const handleNavigate = useEventCallback((path: string) => {
     void router.push(path).then(() => {
       setOpen(false);
-      setCloseApiPlayground();
+      setCloseApiExplorer();
     });
   });
 
@@ -139,7 +139,7 @@ export function SearchV2(): ReactElement | false {
         domain={domain}
       />
       <CommandActions>
-        <CommandPlayground onClose={() => setOpen(false)} />
+        <CommandExplorer onClose={() => setOpen(false)} />
         <CommandTheme onClose={() => setOpen(false)} />
       </CommandActions>
     </>
@@ -204,21 +204,21 @@ export function SearchV2(): ReactElement | false {
   );
 }
 
-function CommandPlayground({ onClose }: { onClose: () => void }) {
-  const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
-  const togglePlayground = useTogglePlayground();
-  const playgroundOpen = useIsPlaygroundOpen();
+function CommandExplorer({ onClose }: { onClose: () => void }) {
+  const hasApiExplorer = useAtomValue(HAS_API_PLAYGROUND);
+  const toggleExplorer = useToggleExplorer();
+  const explorerOpen = useIsExplorerOpen();
 
-  if (!hasApiPlayground) {
+  if (!hasApiExplorer) {
     return null;
   }
   return (
-    <CommandGroupPlayground
-      togglePlayground={() => {
-        togglePlayground();
+    <CommandGroupExplorer
+      toggleExplorer={() => {
+        toggleExplorer();
         onClose();
       }}
-      playgroundOpen={playgroundOpen}
+      explorerOpen={explorerOpen}
     />
   );
 }

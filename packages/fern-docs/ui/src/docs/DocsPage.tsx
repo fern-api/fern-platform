@@ -16,7 +16,7 @@ import {
   useRouteChangeComplete,
   useRouteChangeStart,
 } from "../hooks/useRouteChanged";
-import { PlaygroundContextProvider } from "../playground/PlaygroundContext";
+import { ExplorerContextProvider } from "../playground/ExplorerContext";
 import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
 import { ThemeScript } from "../themes/ThemeScript";
@@ -60,7 +60,7 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
   );
 
   const isSearchV2Enabled = useEdgeFlag("isSearchV2Enabled");
-  const isApiPlaygroundEnabled = useEdgeFlag("isApiPlaygroundEnabled");
+  const isApiExplorerEnabled = useEdgeFlag("isApiExplorerEnabled");
 
   return (
     <>
@@ -71,7 +71,7 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
             : "/api/fern-docs/search/v1/key"
         }
       />
-      {isApiPlaygroundEnabled && (
+      {isApiExplorerEnabled && (
         <LinkPreloadApiRoute href="/api/fern-docs/auth/api-key-injection" />
       )}
       <NextSeo />
@@ -79,7 +79,7 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
       <SearchDialog />
       <BgImageGradient />
       <ThemedDocs theme={pageProps.theme} content={pageProps.content} />
-      <PlaygroundContextProvider />
+      <ExplorerContextProvider />
       <JavascriptProvider />
     </>
   );

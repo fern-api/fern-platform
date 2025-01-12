@@ -11,6 +11,7 @@ export const runtime = "edge";
 
 const EDGE_FLAGS = [
   "api-playground-enabled" as const,
+  "api-explorer-enabled" as const,
   "api-scrolling-disabled" as const,
   "whitelabeled" as const,
   "seo-disabled" as const,
@@ -54,6 +55,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
     const isApiPlaygroundEnabled = checkDomainMatchesCustomers(
       domain,
       config["api-playground-enabled"]
+    );
+    const isApiExporerEnabled = checkDomainMatchesCustomers(
+      domain,
+      config["api-explorer-enabled"]
     );
     const isApiScrollingDisabled = checkDomainMatchesCustomers(
       domain,
@@ -175,6 +180,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
 
     return {
       isApiPlaygroundEnabled: isDevelopment(domain) || isApiPlaygroundEnabled,
+      isApiExporerEnabled,
       isApiScrollingDisabled,
       isWhitelabeled,
       isSeoDisabled: !isCustomDomain(domain) || isSeoDisabled,
@@ -211,6 +217,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
     console.error(e);
     return {
       isApiPlaygroundEnabled: isDevelopment(domain),
+      isApiExporerEnabled: isDevelopment(domain),
       isApiScrollingDisabled: false,
       isWhitelabeled: false,
       isSeoDisabled: !isCustomDomain(domain),
