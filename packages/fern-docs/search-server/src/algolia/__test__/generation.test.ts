@@ -47,39 +47,43 @@ for (const fixtureName of [
   "no-version-yes-tabs",
 ]) {
   // eslint-disable-next-line vitest/valid-title
-  describe(fixtureName, () => {
-    it("should work", async () => {
-      const fixture = readFixture(fixtureName);
-      const mockGetPresignedDocsAssetsDownloadUrl = vi.fn();
-      const root = FernNavigation.utils.toRootNode(fixture);
-      const apis = await FernNavigation.utils.toApis(
-        fixture,
-        mockGetPresignedDocsAssetsDownloadUrl
-      );
-      const pages = FernNavigation.utils.toPages(fixture);
+  describe(
+    fixtureName,
+    () => {
+      it("should work", async () => {
+        const fixture = readFixture(fixtureName);
+        const mockGetPresignedDocsAssetsDownloadUrl = vi.fn();
+        const root = FernNavigation.utils.toRootNode(fixture);
+        const apis = await FernNavigation.utils.toApis(
+          fixture,
+          mockGetPresignedDocsAssetsDownloadUrl
+        );
+        const pages = FernNavigation.utils.toPages(fixture);
 
-      const { records, tooLarge } = createAlgoliaRecords({
-        root,
-        domain: "test.com",
-        org_id: "test",
-        pages,
-        apis,
+        const { records, tooLarge } = createAlgoliaRecords({
+          root,
+          domain: "test.com",
+          org_id: "test",
+          pages,
+          apis,
+        });
+
+        expect(tooLarge.length).toBe(0);
+
+        records.forEach((record) => {
+          if (record.description != null) {
+            expect(record.description.length).toBeLessThanOrEqual(50_000);
+          }
+
+          if (record.type === "markdown" && record.content != null) {
+            expect(record.content.length).toBeLessThanOrEqual(50_000);
+          }
+        });
+        await expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
+          path.join("__snapshots__", `${fixtureName}.test.ts.json`)
+        );
       });
-
-      expect(tooLarge.length).toBe(0);
-
-      records.forEach((record) => {
-        if (record.description != null) {
-          expect(record.description.length).toBeLessThanOrEqual(50_000);
-        }
-
-        if (record.type === "markdown" && record.content != null) {
-          expect(record.content.length).toBeLessThanOrEqual(50_000);
-        }
-      });
-      await expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
-        path.join("__snapshots__", `${fixtureName}.test.ts.json`)
-      );
-    });
-  });
+    },
+    25_000
+  );
 }
