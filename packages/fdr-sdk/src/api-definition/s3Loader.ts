@@ -5,23 +5,22 @@ import { LatestApiDefinition } from "./latest";
 
 export class S3Loader {
   private s3Client: S3Client;
-
+  private bucketName: string;
   constructor() {
     if (
-      process.env.S3_API_DEFINITIONS_URL != null &&
-      process.env.S3_API_DEFINITIONS_REGION != null &&
-      process.env.S3_API_DEFINITIONS_ACCESS_KEY_ID != null &&
-      process.env.S3_API_DEFINITIONS_SECRET_ACCESS_KEY != null &&
-      process.env.S3_API_DEFINITIONS_BUCKET_NAME != null
+      process.env.AWS_ACCESS_KEY_ID != null &&
+      process.env.AWS_SECRET_ACCESS_KEY != null &&
+      process.env.AWS_REGION != null &&
+      process.env.AWS_S3_BUCKET_NAME != null
     ) {
       this.s3Client = new S3Client({
-        endpoint: process.env.S3_API_DEFINITIONS_URL,
-        region: process.env.S3_API_DEFINITIONS_REGION,
+        region: process.env.AWS_REGION,
         credentials: {
-          accessKeyId: process.env.S3_API_DEFINITIONS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.S3_API_DEFINITIONS_SECRET_ACCESS_KEY,
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         },
       });
+      this.bucketName = process.env.AWS_S3_BUCKET_NAME;
     } else {
       throw new Error("Missing S3 API definitions configuration in env vars");
     }
@@ -33,7 +32,7 @@ export class S3Loader {
     let resolvedApi: FdrAPI.api.latest.ApiDefinition;
     if (typeof apiDefinitionOrKey === "string") {
       const command = new GetObjectCommand({
-        Bucket: process.env.S3_API_DEFINITIONS_BUCKET_NAME,
+        Bucket: this.bucketName,
         Key: apiDefinitionOrKey,
       });
       const url = await getSignedUrl(this.s3Client, command, {
