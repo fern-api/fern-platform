@@ -3,9 +3,7 @@ import { ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { toBodyInit } from "./requestToBodyInit";
 
-// const PROXY_URL = "https://proxy.ferndocs.com/";
-
-const PROXY_URL = "http://localhost:8787/";
+const PROXY_URL = "https://proxy.ferndocs.com/";
 
 export async function executeProxyRest(
   req: ProxyRequest
