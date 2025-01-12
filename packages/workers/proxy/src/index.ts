@@ -53,16 +53,6 @@ export default {
       }
     }
 
-    // multipart/form-data will be handled by the fetch API with a boundary, and should not be forwarded
-    if (
-      requestHeaders
-        .get("Content-Type")
-        ?.toLowerCase()
-        .includes("multipart/form-data")
-    ) {
-      requestHeaders.delete("Content-Type");
-    }
-
     const newRequest = new Request(forwardedUrl, {
       method: request.method,
       headers: requestHeaders,

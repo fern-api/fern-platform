@@ -3,15 +3,23 @@ import { ProxyRequest } from "../types";
 import { PlaygroundResponse } from "../types/playgroundResponse";
 import { toBodyInit } from "./requestToBodyInit";
 
-const PROXY_URL = "https://proxy.ferndocs.com/";
+// const PROXY_URL = "https://proxy.ferndocs.com/";
+
+const PROXY_URL = "http://localhost:8787/";
 
 export async function executeProxyRest(
   req: ProxyRequest
 ): Promise<PlaygroundResponse> {
-  const requestHeaders = { ...req.headers };
-  requestHeaders["X-Fern-Proxy-Request-Headers"] = Object.keys(
-    req.headers
-  ).join(",");
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set(
+    "X-Fern-Proxy-Request-Headers",
+    Object.keys(req.headers).join(",")
+  );
+
+  // multipart/form-data will be handled by the fetch API with a boundary, and should not be forwarded
+  if (req.body?.type === "form-data") {
+    requestHeaders.delete("Content-Type");
+  }
 
   const res = await fetch(urljoin(PROXY_URL, req.url), {
     method: req.method,

@@ -13,6 +13,11 @@ export async function executeProxyStream(
     Object.keys(req.headers).join(",")
   );
 
+  // multipart/form-data will be handled by the fetch API with a boundary, and should not be forwarded
+  if (req.body?.type === "form-data") {
+    requestHeaders.delete("Content-Type");
+  }
+
   const response = await fetch(urljoin(PROXY_URL, req.url), {
     method: req.method,
     headers: requestHeaders,
