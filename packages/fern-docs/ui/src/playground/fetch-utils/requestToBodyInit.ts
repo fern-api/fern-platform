@@ -14,9 +14,17 @@ export async function toBodyInit(
       const formData = new FormData();
       for (const [key, value] of Object.entries(body.value)) {
         switch (value.type) {
-          case "json":
-            formData.append(key, JSON.stringify(value.value));
+          case "json": {
+            formData.append(
+              key,
+              value.contentType
+                ? new Blob([JSON.stringify(value.value)], {
+                    type: value.contentType,
+                  })
+                : JSON.stringify(value.value)
+            );
             break;
+          }
           case "file":
             if (value.value?.dataUrl != null) {
               const response = await fetch(value.value.dataUrl);

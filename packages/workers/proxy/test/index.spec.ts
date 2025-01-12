@@ -150,8 +150,8 @@ describe("rest", () => {
         return methodNotAllowed();
       }
 
-      // content-type should not be set because form-data will be automatically parsed and set as multipart/form-data + boundary
-      expect(headers.get("content-type")).toBeNull();
+      // the content-type must include a boundary
+      expect(headers.get("content-type")).toContain("boundary=");
       const bodyText = await fromReadableStream(body);
       const formData = new FormData();
       const boundary = bodyText.split("\r\n")[0];
