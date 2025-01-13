@@ -1,0 +1,20 @@
+{
+  "name": "getdocs-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function to fetch documents via RDS proxy",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.131",
+    "@types/node": "^20.11.5",
+    "@types/pg": "^8.10.9",
+    "typescript": "^5.3.3"
+  }
+}

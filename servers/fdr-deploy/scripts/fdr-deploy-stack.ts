@@ -6,11 +6,13 @@ import {
   CfnOutput,
   Duration,
   Environment,
+  Fn,
   RemovalPolicy,
   Stack,
   StackProps,
   Token,
 } from "aws-cdk-lib";
+import { LambdaRestApi } from "aws-cdk-lib/aws-apigateway";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
@@ -42,6 +44,7 @@ import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
 import { Construct } from "constructs";
+import { GetDocsLambda } from "../getdocs-lambda/cdk/getLambdaStack";
 
 const CONTAINER_NAME = "fern-definition-registry";
 const SERVICE_NAME = "fdr";
@@ -133,6 +136,23 @@ export class FdrDeployStack extends Stack {
     snsTopic.addSubscription(
       new EmailSubscription("support@buildwithfern.com")
     );
+
+    // GetDocs-Lambda
+    const rdsProxyEndpoint = Fn.importValue("RDSProxyEndpoint");
+    const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
+      vpc,
+      environmentType,
+      databaseName: "temp",
+      rdsProxyEndpoint,
+    });
+
+    const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
+      handler: getDocsLambda.lambdaFunction,
+      proxy: false,
+    });
+
+    const docs = getDocsApi.root.addResource("docs");
+    docs.addMethod("POST");
 
     const privateApiDefinitionSourceBucket = new Bucket(
       this,
