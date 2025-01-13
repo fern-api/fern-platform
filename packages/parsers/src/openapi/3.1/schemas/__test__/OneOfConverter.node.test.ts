@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { OneOfConverterNode } from "../OneOfConverter.node";
 
 describe("OneOfConverterNode", () => {

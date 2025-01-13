@@ -29,6 +29,7 @@ export function convertDbDocsConfigToRead({
     colorsV3: dbShape.colorsV3 ?? getColorsV3(dbShape),
     navbarLinks: dbShape.navbarLinks,
     footerLinks: dbShape.footerLinks,
+    hideNavLinks: dbShape.hideNavLinks,
     title: dbShape.title,
     favicon: dbShape.favicon,
     typographyV2:
