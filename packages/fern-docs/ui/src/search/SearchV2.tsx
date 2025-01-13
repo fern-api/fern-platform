@@ -44,6 +44,7 @@ import {
 import { Feedback } from "../feedback/Feedback";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
+// import { getServerSideProps } from "@fern-docs/bundle";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -91,8 +92,10 @@ export function SearchV2(): ReactElement | false {
 
   // Rerouting to ferndocs.com for production environments to ensure streaming works
   // Also see: next.config.mjs, where we set CORS headers
-  console.log("VERCEL_ENV", process.env);
-  if (process.env.VERCEL_ENV === "production") {
+  // const VERCEL_ENV = getServerSideProps("VERCEL_ENV");
+
+  console.log("NEXT_PUBLIC_VERCEL_ENV", process.env.NEXT_PUBLIC_VERCEL_ENV);
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
     chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
     suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
   }
