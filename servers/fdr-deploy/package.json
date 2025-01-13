@@ -7,7 +7,6 @@
     "deploy:dev": "cdk deploy fdr-dev2 --require-approval never --progress events",
     "deploy:prod": "cdk deploy fdr-prod --require-approval never --progress events",
     "rediscli": "node ./node_modules/redis-cli/index.js",
-    "test": "echo 'test'",
     "watch": "tsc -w"
   },
   "dependencies": {
