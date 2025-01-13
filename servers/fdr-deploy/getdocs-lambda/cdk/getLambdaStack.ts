@@ -51,6 +51,7 @@ export class GetDocsLambda extends Construct {
       vpcSubnets: {
         subnetType: SubnetType.PUBLIC,
       },
+      allowPublicSubnet: true,
     });
 
     // Add permissions for the Lambda to access the RDS Proxy
