@@ -30,7 +30,6 @@
     "@fern-api/logger": "0.4.24-rc1",
     "@fern-api/ui-core-utils": "workspace:*",
     "@open-rpc/meta-schema": "^1.14.9",
-    "@open-rpc/schema-utils-js": "^2.0.5",
     "es-toolkit": "^1.24.0",
     "openapi-types": "^12.1.3",
     "ts-essentials": "^10.0.1",
