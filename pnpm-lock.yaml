@@ -2472,6 +2472,9 @@ importers:
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
+      '@open-rpc/meta-schema':
+        specifier: ^1.14.9
+        version: 1.14.9
       es-toolkit:
         specifier: ^1.24.0
         version: 1.27.0
@@ -5514,6 +5517,9 @@ packages:
   '@octokit/webhooks@12.2.0':
     resolution: {integrity: sha512-CyuLJ0/P7bKZ+kIYw+fnkeVdhUzNuDKgNSI7pU/m7Nod0T7kP+s4s2f0pNmG9HL8/RZN1S0ZWTDll3VTMrFLAw==}
     engines: {node: '>= 18'}
+
+  '@open-rpc/meta-schema@1.14.9':
+    resolution: {integrity: sha512-2/CbDzOVpcaSnMs28TsRv8MKJwJi0TTYFlQ6q6qobAH26oIuhYgcZooKf4l71emgntU6MMcFQCA0h4mJ4dBCdA==}
 
   '@opentelemetry/api-logs@0.57.0':
     resolution: {integrity: sha512-l1aJ30CXeauVYaI+btiynHpw341LthkMTv3omi1VJDX14werY2Wmv9n1yudMsq9HuY0m8PvXEVX4d8zxEb+WRg==}
@@ -20978,6 +20984,8 @@ snapshots:
       '@octokit/webhooks-methods': 4.1.0
       '@octokit/webhooks-types': 7.4.0
       aggregate-error: 3.1.0
+
+  '@open-rpc/meta-schema@1.14.9': {}
 
   '@opentelemetry/api-logs@0.57.0':
     dependencies:
