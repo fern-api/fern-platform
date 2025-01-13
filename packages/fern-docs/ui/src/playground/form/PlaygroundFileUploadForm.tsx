@@ -158,7 +158,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     />
                     {allowAudioRecording && (
                       <FernButton
-                        icon={<Undo />}
+                        icon={<Microphone />}
                         onClick={startRecording}
                         size="small"
                         variant="minimal"

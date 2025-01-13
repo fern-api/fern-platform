@@ -22,20 +22,25 @@ export function useAudioRecorder(
   );
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number>();
+  const chunksRef = useRef<Blob[]>([]);
 
   const startRecording = useCallback(async () => {
     try {
       setElapsedTime(0);
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
+      chunksRef.current = [];
 
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream, {
+        mimeType: "audio/webm;codecs=opus",
+      });
+
+      // for animation only:
       const audioContext = new AudioContext();
       const source = audioContext.createMediaStreamSource(stream);
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 256;
       source.connect(analyser);
       analyserRef.current = analyser;
-
       const updateVolume = () => {
         const dataArray = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(dataArray);
@@ -45,28 +50,32 @@ export function useAudioRecorder(
         setVolume(normalizedVolume);
         animationFrameRef.current = requestAnimationFrame(updateVolume);
       };
-
       updateVolume();
 
       recorder.ondataavailable = (event) => {
-        if (event.data.size > 0) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            const base64Data = (reader.result as string).split(",")[1] ?? "";
-            const file = new File(
-              [event.data],
-              `recording-${Date.now()}.webm`,
-              {
-                type: event.data.type,
-              }
-            );
-            onAudioData?.({ base64: base64Data, file });
-          };
-          reader.readAsDataURL(event.data);
-        }
+        chunksRef.current.push(event.data);
       };
 
-      recorder.start(100);
+      recorder.onstop = async () => {
+        const file = new File(
+          chunksRef.current,
+          `recording-${Date.now()}.webm`,
+          { type: "audio/webm;codecs=opus" }
+        );
+
+        const toBase64 = (file: File) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+          });
+        const base64 = await toBase64(file);
+
+        onAudioData?.({ base64: base64 as string, file });
+      };
+
+      recorder.start();
       setMediaRecorder(recorder);
       setIsRecording(true);
     } catch (err) {
@@ -85,6 +94,7 @@ export function useAudioRecorder(
       }
       analyserRef.current = null;
       setVolume(0.2);
+      chunksRef.current = [];
     }
   }, [mediaRecorder]);
 
