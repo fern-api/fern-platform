@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
 import { RequestMediaTypeObjectConverterNode } from "../request/RequestMediaTypeObjectConverter.node";
 

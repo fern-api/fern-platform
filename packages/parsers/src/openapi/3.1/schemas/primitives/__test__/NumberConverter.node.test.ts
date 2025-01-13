@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { OPENAPI_NUMBER_TYPE_FORMAT } from "../../../../types/format.types";
 import { NumberConverterNode } from "../NumberConverter.node";
 

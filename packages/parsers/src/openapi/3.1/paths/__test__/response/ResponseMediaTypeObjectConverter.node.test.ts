@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { SchemaConverterNode } from "../../../schemas/SchemaConverter.node";
 import { ResponseMediaTypeObjectConverterNode } from "../../response/ResponseMediaTypeObjectConverter.node";
 

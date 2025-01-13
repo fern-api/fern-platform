@@ -1,0 +1,89 @@
+{
+  "id": "test-uuid-replacement",
+  "types": {
+    "PetId": {
+      "name": "PetId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "Pet": {
+      "name": "Pet",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "PetId"
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tag",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Pets": {
+      "name": "Pets",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      }
+    }
+  },
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "subpackages": {},
+  "auths": {},
+  "globalHeaders": []
+}
