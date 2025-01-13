@@ -4,22 +4,22 @@ import {
   BaseApiConverterNodeContext,
 } from "../BaseApiConverter.node";
 
-export abstract class BaseOpenrpc_ConverterNodeContext extends BaseApiConverterNodeContext {
+export abstract class BaseOpenrpcConverterNodeContext extends BaseApiConverterNodeContext {
   public abstract document: OpenrpcDocument;
 }
 
-export type BaseOpenrpc_ConverterNodeConstructorArgs<Input> = {
+export type BaseOpenrpcConverterNodeConstructorArgs<Input> = {
   input: Input;
-  context: BaseOpenrpc_ConverterNodeContext;
+  context: BaseOpenrpcConverterNodeContext;
   readonly accessPath: string[];
   readonly pathId: string;
 };
 
-export abstract class BaseOpenApiV3_1ConverterNode<
+export abstract class BaseOpenrpcConverterNode<
   Input,
   Output,
 > extends BaseApiConverterNode<Input, Output> {
-  protected override readonly context: BaseOpenrpc_ConverterNodeContext;
+  protected override readonly context: BaseOpenrpcConverterNodeContext;
   protected readonly accessPath: string[];
   protected readonly pathId: string;
 
@@ -28,7 +28,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<
     context,
     accessPath,
     pathId,
-  }: BaseOpenrpc_ConverterNodeConstructorArgs<Input>) {
+  }: BaseOpenrpcConverterNodeConstructorArgs<Input>) {
     super(input, context);
 
     this.context = context;
