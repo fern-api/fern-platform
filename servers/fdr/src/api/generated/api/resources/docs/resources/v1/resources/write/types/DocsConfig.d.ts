@@ -10,6 +10,7 @@ export interface DocsConfig {
     root: FernRegistry.navigation.v1.RootNode | undefined;
     navbarLinks: FernRegistry.docs.v1.commons.NavbarLink[] | undefined;
     footerLinks: FernRegistry.docs.v1.commons.FooterLink[] | undefined;
+    hideNavLinks: boolean | undefined;
     logoHeight: FernRegistry.docs.v1.write.Height | undefined;
     logoHref: FernRegistry.Url | undefined;
     favicon: FernRegistry.FileId | undefined;

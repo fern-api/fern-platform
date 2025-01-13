@@ -22,6 +22,7 @@ export class DefinitionObjectFactory {
         },
         navbarLinks: [],
         navigation: { items: [], landingPage: undefined },
+        hideNavLinks: undefined,
         root: undefined,
         title: undefined,
         defaultLanguage: undefined,
