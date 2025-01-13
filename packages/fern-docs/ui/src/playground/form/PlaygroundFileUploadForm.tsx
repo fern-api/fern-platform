@@ -1,17 +1,17 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
-import cn from "clsx";
-import { uniqBy } from "es-toolkit/array";
-import { Page, PagePlusIn, Xmark } from "iconoir-react";
-import numeral from "numeral";
 import {
-  ChangeEvent,
-  DragEventHandler,
-  memo,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { WithLabelInternal } from "../WithLabel";
+  Microphone,
+  MicrophoneSpeaking,
+  Page,
+  PagePlusIn,
+  Undo,
+  Xmark,
+} from "iconoir-react";
+import { motion, AnimatePresence } from "framer-motion";
+import cn from "clsx";
+import numeral from "numeral";
+import { ChangeEvent, DragEventHandler, memo, useRef, useState } from "react";
+import { useAudioRecorder } from "../hooks/useAudioRecorder";
 
 export interface PlaygroundFileUploadFormProps {
   id: string;
@@ -20,95 +20,61 @@ export interface PlaygroundFileUploadFormProps {
   isOptional?: boolean;
   onValueChange: (value: readonly File[] | undefined) => void;
   value: readonly File[] | undefined;
+  allowAudioRecording?: boolean;
 }
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
-  ({ id, propertyKey, type, isOptional, onValueChange, value }) => {
-    // Remove invalid files
-    // TODO: This is a temporary workaround to remove invalid files from the value.
-    // this should be handled in a better way
-    useEffect(() => {
-      if (value != null) {
-        const hasInvalidFiles = value.some((f) => !(f instanceof File));
-        if (hasInvalidFiles) {
-          onValueChange(value.filter((f) => f instanceof File));
-        }
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
+  ({
+    id,
+    propertyKey,
+    type,
+    isOptional,
+    onValueChange,
+    value,
+    allowAudioRecording = true,
+  }) => {
     const [drag, setDrag] = useState(false);
-    const dragOver: DragEventHandler<HTMLElement> = (e) => {
-      e.preventDefault();
-      setDrag(true);
-    };
-
-    const dragEnter: DragEventHandler<HTMLElement> = (e) => {
-      e.preventDefault();
-      setDrag(true);
-    };
-
-    const dragLeave: DragEventHandler<HTMLElement> = (e) => {
-      e.preventDefault();
-      setDrag(false);
-    };
-
-    const handleChangeFiles = (files: FileList | null | undefined) => {
-      const filesArray = files != null ? Array.from(files) : [];
-      if (type === "files") {
-        // append files
-        onValueChange(uniqueFiles([...(value ?? []), ...filesArray]));
-        return;
-      } else {
-        // replace files
-        onValueChange(filesArray.length > 0 ? filesArray : undefined);
-      }
-    };
-
-    const fileDrop: DragEventHandler<HTMLElement> = (e) => {
-      e.preventDefault();
-      setDrag(false);
-
-      const files = e.dataTransfer.files;
-      handleChangeFiles(files);
-    };
-
-    const handleRemove = () => {
-      onValueChange(undefined);
-    };
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      if (files != null) {
-        handleChangeFiles(files);
-      }
-
-      // NOTE: the input is not controlled, so we need to clear it manually...
-      // every time the user selects a file, we record the change in-state, and then clear the input
-      // so that the input can be used again to select the same file
-      if (ref.current != null) {
-        ref.current.value = "";
-      }
-    };
-
     const ref = useRef<HTMLInputElement>(null);
+    const [
+      { isRecording, elapsedTime, volume },
+      { startRecording, stopRecording },
+    ] = useAudioRecorder(({ file }) => onValueChange([file]));
+
+    const dragOver: DragEventHandler = (e) => {
+      e.preventDefault();
+    };
+
+    const dragEnter: DragEventHandler = (e) => {
+      e.preventDefault();
+      setDrag(true);
+    };
+
+    const dragLeave: DragEventHandler = (e) => {
+      e.preventDefault();
+      setDrag(false);
+    };
+
+    const fileDrop: DragEventHandler = (e) => {
+      e.preventDefault();
+      setDrag(false);
+      const files = Array.from(e.dataTransfer.files);
+      onValueChange(files);
+    };
+
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const files = Array.from(e.target.files ?? []);
+      onValueChange(files);
+    };
+
     return (
-      <WithLabelInternal
-        propertyKey={propertyKey}
-        value={value}
-        onRemove={handleRemove}
-        isRequired={!isOptional}
-        typeShorthand={type === "file" ? "file" : "multiple files"}
-        availability={undefined}
-        description={undefined}
-      >
+      <>
         <input
           ref={ref}
           type="file"
-          id={id}
-          onChange={handleChange}
-          className="hidden"
+          accept="audio/*"
           multiple={type === "files"}
+          onChange={handleFileChange}
+          className="hidden"
         />
         <FernCard
           className={cn("w-full rounded-lg", {
@@ -119,16 +85,50 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
           onDragLeave={dragLeave}
           onDrop={fileDrop}
         >
-          {value == null || value.length === 0 || value[0]?.name == null ? (
-            <div className="flex flex-col items-center gap-3 p-6">
-              <h5>Drop files here to upload</h5>
+          {isRecording ? (
+            <div className="flex items-center gap-4 p-4">
+              <MicrophoneSpeaking className="text-primary animate-pulse" />
+              <div className="flex-1 pl-1">
+                <div className="flex items-center gap-3">
+                  <div className="h-3 w-full">
+                    <WaveformAnimation volume={volume} />
+                  </div>
+                  <span className="font-mono text-sm">
+                    {Math.floor(elapsedTime / 60)
+                      .toString()
+                      .padStart(2, "0")}
+                    :{(elapsedTime % 60).toString().padStart(2, "0")}
+                  </span>
+                </div>
+              </div>
               <FernButton
-                onClick={() => ref.current?.click()}
-                text="Browse files"
-                rounded
-                variant="outlined"
-                intent="primary"
+                variant="minimal"
+                intent="danger"
+                onClick={stopRecording}
+                text="Stop"
               />
+            </div>
+          ) : value == null || value.length === 0 ? (
+            <div className="flex flex-col items-center gap-3 p-6">
+              <h5>Drop audio files here to upload</h5>
+              <div className="flex gap-2">
+                <FernButton
+                  onClick={() => ref.current?.click()}
+                  text="Browse files"
+                  rounded
+                  variant="outlined"
+                  intent="primary"
+                />
+                {allowAudioRecording && (
+                  <FernButton
+                    onClick={startRecording}
+                    icon={<Microphone />}
+                    rounded
+                    variant="outlined"
+                    intent="primary"
+                  />
+                )}
+              </div>
             </div>
           ) : (
             <div className="divide-default divide-y">
@@ -145,12 +145,17 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                       </span>
                     </span>
                   </div>
-
                   <FernButtonGroup className="-mr-2">
-                    {type === "file" && (
+                    <FernButton
+                      text="Change"
+                      onClick={() => ref.current?.click()}
+                      size="small"
+                      variant="minimal"
+                    />
+                    {allowAudioRecording && (
                       <FernButton
-                        text="Change"
-                        onClick={() => ref.current?.click()}
+                        icon={<Undo />}
+                        onClick={startRecording}
                         size="small"
                         variant="minimal"
                       />
@@ -160,7 +165,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                       size="small"
                       variant="minimal"
                       onClick={() => {
-                        onValueChange(value.filter((f) => f !== file));
+                        onValueChange([]);
                         if (ref.current != null) {
                           ref.current.value = "";
                         }
@@ -169,28 +174,31 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                   </FernButtonGroup>
                 </div>
               ))}
-              {type === "files" && (
-                <div className="flex justify-end p-4">
-                  <FernButton
-                    onClick={() => ref.current?.click()}
-                    icon={<PagePlusIn />}
-                    text="Add more files"
-                    rounded
-                    variant="outlined"
-                    intent="primary"
-                  />
-                </div>
-              )}
             </div>
           )}
         </FernCard>
-      </WithLabelInternal>
+      </>
     );
   }
 );
 
-PlaygroundFileUploadForm.displayName = "PlaygroundFileUploadForm";
-
-function uniqueFiles(files: File[]): readonly File[] | undefined {
-  return uniqBy(files, (f) => `${f.webkitRelativePath}/${f.name}/${f.size}`);
+function WaveformAnimation({ volume }: { volume: number }) {
+  return (
+    <div className="flex h-full w-full items-center justify-between gap-0.5">
+      {Array.from({ length: 20 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="h-full w-0.5 bg-black"
+          animate={{
+            scaleY: [0.2, Math.max(0.4, Math.min(volume, 1)), 0.2],
+          }}
+          transition={{
+            duration: 1 - volume * 0.5,
+            repeat: Infinity,
+            delay: i * 0.05,
+          }}
+        />
+      ))}
+    </div>
+  );
 }

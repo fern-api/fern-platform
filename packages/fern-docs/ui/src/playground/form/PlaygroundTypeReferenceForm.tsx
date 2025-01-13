@@ -22,6 +22,7 @@ import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
 import { PlaygroundObjectForm } from "./PlaygroundObjectForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
+import { PlaygroundMicrophoneForm } from "./PlaygroundMicrophoneForm";
 
 interface PlaygroundTypeReferenceFormProps {
   id: string;
@@ -145,13 +146,24 @@ export const PlaygroundTypeReferenceForm =
               htmlFor={id}
             >
               {hasVoiceIdPlaygroundForm && property?.key === "voice_id" ? (
-                // TODO: delete this:
                 <PlaygroundElevenLabsVoiceIdForm
                   id={id}
                   className="w-full"
                   value={typeof value === "string" ? value : ""}
                   onValueChange={onChange}
                   disabled={disabled}
+                />
+              ) : property?.key === "data" ||
+                property?.key === "user_audio_chunk" ? (
+                // TODO: change display logic to use either edge config or api property for mic support
+                <PlaygroundMicrophoneForm
+                  id={id}
+                  className="w-full"
+                  value={typeof value === "string" ? value : ""}
+                  onValueChange={onChange}
+                  onAudioData={onChange}
+                  disabled={disabled}
+                  placeholder={string.default}
                 />
               ) : (
                 <FernInput
@@ -169,7 +181,6 @@ export const PlaygroundTypeReferenceForm =
                   resettable={typeof defaultValue === "string"}
                   maxLength={string.maxLength}
                   minLength={string.minLength}
-                  // TODO: add validation UX feedback
                   pattern={string.regex}
                 />
               )}
