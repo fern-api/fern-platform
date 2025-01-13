@@ -80,7 +80,104 @@
       }
     }
   },
-  "endpoints": {},
+  "endpoints": {
+    "list_pets": {
+      "id": "list_pets",
+      "displayName": "list_pets",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": ""
+        }
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pets"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [],
+      "operationId": "list_pets",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": [],
+      "namespace": []
+    },
+    "create_pet": {
+      "id": "create_pet",
+      "displayName": "create_pet",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": ""
+        }
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "PetId"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [],
+      "operationId": "create_pet",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": [],
+      "namespace": []
+    },
+    "get_pet": {
+      "id": "get_pet",
+      "displayName": "get_pet",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": ""
+        }
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [],
+      "operationId": "get_pet",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": [],
+      "namespace": []
+    }
+  },
   "websockets": {},
   "webhooks": {},
   "subpackages": {},
