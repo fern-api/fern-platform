@@ -19,14 +19,14 @@ export function PlaygroundMicrophoneForm({
 
   return (
     <div className={props.className}>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         <div className="relative flex-1">
           <AnimatePresence initial={false}>
             {!isRecording && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                exit={{ opacity: 0, y: 10 }}
                 className="w-full"
               >
                 <FernInput
@@ -43,10 +43,10 @@ export function PlaygroundMicrophoneForm({
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="bg-primary absolute inset-0 flex w-full items-center rounded-lg px-4 py-2 text-black"
+                className="bg-primary absolute inset-0 flex w-full items-center rounded-lg px-2 text-black"
               >
                 <div className="flex-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-4">
                     <div className="h-3 w-full">
                       <WaveformAnimation volume={volume} />
                     </div>
@@ -72,6 +72,7 @@ export function PlaygroundMicrophoneForm({
               <Microphone />
             )
           }
+          variant="minimal"
           intent={isRecording ? "danger" : "primary"}
           onClick={isRecording ? stopRecording : startRecording}
           disabled={props.disabled}

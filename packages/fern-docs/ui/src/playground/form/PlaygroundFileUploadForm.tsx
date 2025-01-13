@@ -87,9 +87,8 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
         >
           {isRecording ? (
             <div className="flex items-center gap-4 p-4">
-              <MicrophoneSpeaking className="text-primary animate-pulse" />
-              <div className="flex-1 pl-1">
-                <div className="flex items-center gap-3">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 p-2">
                   <div className="h-3 w-full">
                     <WaveformAnimation volume={volume} />
                   </div>
@@ -102,10 +101,16 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 </div>
               </div>
               <FernButton
+                icon={
+                  isRecording ? (
+                    <MicrophoneSpeaking className="animate-pulse" />
+                  ) : (
+                    <Microphone />
+                  )
+                }
                 variant="minimal"
-                intent="danger"
-                onClick={stopRecording}
-                text="Stop"
+                intent={isRecording ? "danger" : "primary"}
+                onClick={isRecording ? stopRecording : startRecording}
               />
             </div>
           ) : value == null || value.length === 0 ? (
