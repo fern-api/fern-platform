@@ -15,7 +15,6 @@ import { ItemProps, TableVirtuoso, TableVirtuosoHandle } from "react-virtuoso";
 import {
   FernSyntaxHighlighterTokensProps,
   ScrollToHandle,
-  fernSyntaxHighlighterTokenPropsAreEqual,
 } from "./FernSyntaxHighlighterTokens";
 import { HastToJSX } from "./HastToJsx";
 import { flattenHighlightLines, getLineHeight, getMaxHeight } from "./utils";
@@ -46,25 +45,23 @@ const CodeBlockTable = forwardRef<
         "text-base": fontSize === "lg",
       })}
     >
-      <div className="code-block-inner">
-        <table
-          className={cn("code-block-line-group", {
-            "highlight-focus":
-              highlightStyle === "focus" && highlightedLines.length > 0,
-            "word-wrap": context?.wordWrap,
-          })}
-          {...props}
-          ref={ref}
-        >
-          {!plaintext && (
-            <colgroup>
-              <col className="w-fit" />
-              <col />
-            </colgroup>
-          )}
-          {children}
-        </table>
-      </div>
+      <table
+        className={cn("code-block-line-group", {
+          "highlight-focus":
+            highlightStyle === "focus" && highlightedLines.length > 0,
+          "word-wrap": context?.wordWrap,
+        })}
+        {...props}
+        ref={ref}
+      >
+        {!plaintext && (
+          <colgroup>
+            <col className="w-fit" />
+            <col />
+          </colgroup>
+        )}
+        {children}
+      </table>
     </code>
   );
 });
@@ -227,8 +224,7 @@ export const FernSyntaxHighlighterTokensVirtualized = memo(
         />
       </pre>
     );
-  }),
-  fernSyntaxHighlighterTokenPropsAreEqual
+  })
 );
 
 FernSyntaxHighlighterTokensVirtualized.displayName =

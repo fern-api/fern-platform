@@ -1,9 +1,15 @@
 import { FernScrollArea } from "@fern-docs/components";
 import { parseStringStyle, visit } from "@fern-docs/mdx";
 import cn from "clsx";
-import { isEqual } from "es-toolkit/predicate";
 import type { Element } from "hast";
-import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from "react";
+import {
+  ComponentPropsWithoutRef,
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from "react";
 import { HastToJSX } from "./HastToJsx";
 import { HighlightedTokens } from "./fernShiki";
 import {
@@ -19,40 +25,20 @@ export interface ScrollToHandle {
   scrollHeight: number;
 }
 
-export interface FernSyntaxHighlighterTokensProps {
+export interface FernSyntaxHighlighterTokensProps
+  extends ComponentPropsWithoutRef<"pre"> {
   tokens: HighlightedTokens;
   fontSize?: "sm" | "base" | "lg";
   highlightLines?: HighlightLine[];
   highlightStyle?: "highlight" | "focus";
-
-  className?: string;
-  style?: React.CSSProperties;
   viewportRef?: React.RefObject<ScrollToHandle>;
   maxLines?: number;
   wordWrap?: boolean;
 }
 
-export function fernSyntaxHighlighterTokenPropsAreEqual(
-  prevProps: FernSyntaxHighlighterTokensProps,
-  nextProps: FernSyntaxHighlighterTokensProps
-): boolean {
-  return (
-    isEqual(prevProps.highlightLines, nextProps.highlightLines) &&
-    isEqual(prevProps.style, nextProps.style) &&
-    prevProps.fontSize === nextProps.fontSize &&
-    prevProps.highlightStyle === nextProps.highlightStyle &&
-    prevProps.className === nextProps.className &&
-    prevProps.maxLines === nextProps.maxLines &&
-    prevProps.tokens === nextProps.tokens &&
-    prevProps.wordWrap === nextProps.wordWrap
-  );
-}
-
 export const FernSyntaxHighlighterTokens = memo(
   forwardRef<HTMLPreElement, FernSyntaxHighlighterTokensProps>((props, ref) => {
     const {
-      className,
-      style,
       fontSize = "base",
       highlightLines,
       highlightStyle,
@@ -60,6 +46,7 @@ export const FernSyntaxHighlighterTokens = memo(
       tokens,
       maxLines,
       wordWrap,
+      ...preProps
     } = props;
     const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -130,14 +117,16 @@ export const FernSyntaxHighlighterTokens = memo(
 
     return (
       <pre
-        className={cn("code-block-root not-prose", className)}
-        style={{ ...style, ...preStyle }}
+        tabIndex={-1}
+        {...preProps}
+        className={cn("code-block-root not-prose", preProps.className)}
         ref={ref}
-        tabIndex={0}
+        style={{ ...preProps.style, ...preStyle }}
       >
         <FernScrollArea
           ref={scrollAreaRef}
           style={{ maxHeight: getMaxHeight(fontSize, maxLines) }}
+          asChild
         >
           <code
             className={cn("code-block", {
@@ -146,53 +135,50 @@ export const FernSyntaxHighlighterTokens = memo(
               "text-base": fontSize === "lg",
             })}
           >
-            <div className="code-block-inner">
-              <table
-                className={cn("code-block-line-group", {
-                  "highlight-focus":
-                    highlightStyle === "focus" && highlightedLines.length > 0,
-                  "word-wrap": wordWrap,
-                })}
-              >
-                {!plaintext && (
-                  <colgroup>
-                    <col className="w-fit" />
-                    <col />
-                  </colgroup>
-                )}
-                <tbody>
-                  {lines.map((line, lineNumber) => (
-                    <tr
-                      className={cn("code-block-line", {
-                        highlight: highlightedLines.includes(lineNumber),
-                      })}
-                      key={lineNumber}
-                    >
-                      {!plaintext && (
-                        <td className="code-block-line-gutter">
-                          <span>
-                            {gutterCli
-                              ? lineNumber === 0
-                                ? "$"
-                                : ">"
-                              : lineNumber + 1}
-                          </span>
-                        </td>
-                      )}
-                      <td className="code-block-line-content">
-                        <HastToJSX hast={line} />
+            <table
+              className={cn("code-block-line-group", {
+                "highlight-focus":
+                  highlightStyle === "focus" && highlightedLines.length > 0,
+                "word-wrap": wordWrap,
+              })}
+            >
+              {!plaintext && (
+                <colgroup>
+                  <col className="w-fit" />
+                  <col />
+                </colgroup>
+              )}
+              <tbody>
+                {lines.map((line, lineNumber) => (
+                  <tr
+                    className={cn("code-block-line", {
+                      highlight: highlightedLines.includes(lineNumber),
+                    })}
+                    key={lineNumber}
+                  >
+                    {!plaintext && (
+                      <td className="code-block-line-gutter">
+                        <span>
+                          {gutterCli
+                            ? lineNumber === 0
+                              ? "$"
+                              : ">"
+                            : lineNumber + 1}
+                        </span>
                       </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                    )}
+                    <td className="code-block-line-content">
+                      <HastToJSX hast={line} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </code>
         </FernScrollArea>
       </pre>
     );
-  }),
-  fernSyntaxHighlighterTokenPropsAreEqual
+  })
 );
 
 FernSyntaxHighlighterTokens.displayName = "FernSyntaxHighlighterTokens";

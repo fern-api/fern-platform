@@ -14,18 +14,18 @@
     @apply min-h-0 shrink;
   }
 
+  .code-block {
+    @apply py-3 font-mono;
+  }
+
   .code-block,
   .code-block.text-sm,
   .code-block.text-xs,
   .code-block.text-base {
-    @apply font-mono leading-relaxed;
+    @apply leading-relaxed;
   }
 
-  .code-block-inner {
-    @apply py-3;
-  }
-
-  .code-block.text-xs > .code-block-inner {
+  .code-block.text-xs {
     @apply py-2;
   }
 
