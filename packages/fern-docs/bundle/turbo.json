@@ -2,9 +2,6 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
-    "compile": {
-      "env": ["VERCEL_ENV"]
-    },
     "docs:build": {
       "outputs": [".next/**", "!.next/cache/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"]
