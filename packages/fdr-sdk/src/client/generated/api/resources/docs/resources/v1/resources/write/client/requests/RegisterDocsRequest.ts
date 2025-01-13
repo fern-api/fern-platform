@@ -124,6 +124,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }
  *                     }],
+ *                 hideNavLinks: true,
  *                 logoHeight: 1.1,
  *                 logoHref: FernRegistry.Url("string"),
  *                 favicon: FernRegistry.FileId("string"),
