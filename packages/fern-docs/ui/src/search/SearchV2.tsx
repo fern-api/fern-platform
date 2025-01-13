@@ -91,10 +91,7 @@ export function SearchV2(): ReactElement | false {
 
   // Rerouting to ferndocs.com for production environments to ensure streaming works
   // Also see: next.config.mjs, where we set CORS headers
-  if (
-    process.env.NODE_ENV === "production" &&
-    process.env.NEXT_PUBLIC_VERCEL_ENV !== "preview"
-  ) {
+  if (process.env.NEXT_PUBLIC_VERCEL_ENV === "production") {
     chatEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/chat`;
     suggestEndpoint = `https://app.ferndocs.com/api/fern-docs/search/v2/suggest`;
   }
