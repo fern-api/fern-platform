@@ -21,8 +21,8 @@ export const CodeBlockWithClipboardButton: React.FC<
       <CopyToClipboardButton
         className={cn(
           "absolute z-20",
-          "z-10 opacity-0 transition group-hover/cb-container:opacity-100",
-          "right-1 top-1"
+          "z-10 opacity-0 backdrop-blur transition group-hover/cb-container:opacity-100",
+          "right-3 top-2"
         )}
         content={code}
       />

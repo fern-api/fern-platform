@@ -93,6 +93,7 @@ types:
       root: optional<navigationV1.RootNode>
       navbarLinks: optional<list<commons.NavbarLink>>
       footerLinks: optional<list<commons.FooterLink>>
+      hideNavLinks: optional<boolean>
 
       # logo
       logoHeight: optional<Height>

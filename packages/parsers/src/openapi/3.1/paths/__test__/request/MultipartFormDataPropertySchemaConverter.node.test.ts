@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { MultipartFormDataPropertySchemaConverterNode } from "../../request/MultipartFormDataPropertySchemaConverter.node";
 
 describe("MultipartFormDataPropertySchemaConverterNode", () => {

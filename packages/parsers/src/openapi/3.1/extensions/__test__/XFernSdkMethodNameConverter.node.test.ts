@@ -1,7 +1,7 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { BaseOpenApiV3_1ConverterNodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
-import { XFernSdkMethodNameConverterNode } from "../XFernSdkMethodNameConverter.node";
 import { X_FERN_SDK_METHOD_NAME } from "../fernExtension.consts";
+import { XFernSdkMethodNameConverterNode } from "../XFernSdkMethodNameConverter.node";
 
 describe("XFernSdkMethodNameConverterNode", () => {
   const mockContext = createMockContext();
