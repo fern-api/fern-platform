@@ -16,12 +16,12 @@
       @apply border-primary shadow-card-elevated;
     }
 
-    li {
-      @apply list-outside;
-    }
-
-    ul {
+    ul:not(.list-none) {
       @apply pl-5;
+
+      li {
+        @apply list-outside;
+      }
     }
   }
 }

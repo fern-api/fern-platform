@@ -123,7 +123,9 @@ export function PlaygroundResponseCard({
             </div>
           ),
         loaded: (response) =>
-          response.type !== "file" ? (
+          response.type !== "file" ||
+          response.contentType.startsWith("text") ||
+          response.contentType.startsWith("application/xml") ? (
             <PlaygroundResponsePreview response={response} />
           ) : response.contentType.startsWith("audio/") ||
             (isBinaryOctetStreamAudioPlayer &&

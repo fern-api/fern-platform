@@ -8,7 +8,6 @@ import {
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
-import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { OperationObjectConverterNode } from "./OperationObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 
@@ -39,14 +38,6 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    const isWebhook =
-      new XFernWebhookConverterNode({
-        input: this.input,
-        context: this.context,
-        accessPath: this.accessPath,
-        pathId: this.pathId,
-      }).isWebhook || this.isWebhook;
-
     this.description = this.input.description;
     this.servers = coalesceServers(
       this.servers,
@@ -68,7 +59,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.pathId,
         "GET",
         this.basePath,
-        isWebhook
+        this.isWebhook
       );
     }
     if (this.input.post != null) {
@@ -84,7 +75,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         this.pathId,
         "POST",
         this.basePath,
-        isWebhook
+        this.isWebhook
       );
     }
     if (this.input.put != null) {

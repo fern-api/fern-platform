@@ -61,8 +61,8 @@ export class ApiTypeIdVisitor {
     webhook.headers?.forEach((header) => {
       ApiTypeIdVisitor.visitTypeShape(header.valueShape, visit);
     });
-    if (webhook.payload) {
-      ApiTypeIdVisitor.visitTypeShape(webhook.payload.shape, visit);
+    if (webhook.payloads?.[0] != null) {
+      ApiTypeIdVisitor.visitTypeShape(webhook.payloads[0].shape, visit);
     }
   }
 

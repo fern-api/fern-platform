@@ -7891,15 +7891,17 @@
         "description": "This event is triggered when a user is created.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserCreatedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserCreatedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -7953,15 +7955,17 @@
         "description": "This event is triggered when a user is updated.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserUpdatedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserUpdatedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -8015,15 +8019,17 @@
         "description": "This event is triggered when a user is deleted.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_users:UserDeletedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_users:UserDeletedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -8050,15 +8056,17 @@
         "description": "This event is triggered when a team is created.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_teams:TeamCreatedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_teams:TeamCreatedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -8092,15 +8100,17 @@
         "description": "This event is triggered when a team is updated.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_teams:TeamUpdatedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_teams:TeamUpdatedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -8134,15 +8144,17 @@
         "description": "This event is triggered when a team is deleted.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_teams:TeamDeletedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_teams:TeamDeletedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -8164,15 +8176,17 @@
         "description": "This event is triggered when a user is added to a team.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_teams:TeamMembershipCreatedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_teams:TeamMembershipCreatedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -8195,15 +8209,17 @@
         "description": "This event is triggered when a user is removed from a team.",
         "method": "POST",
         "path": [],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_teams:TeamMembershipDeletedPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_teams:TeamMembershipDeletedPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {

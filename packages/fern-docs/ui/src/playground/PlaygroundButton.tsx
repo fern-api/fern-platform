@@ -27,15 +27,15 @@ export const PlaygroundButton: FC<{
         content={
           <span>
             Customize and run in{" "}
-            <span className="t-accent font-semibold">API Playground</span>
+            <span className="t-accent font-semibold">API Explorer</span>
           </span>
         }
       >
         <FernButton
           aria-description={
             settings?.button?.href
-              ? "Opens an API Playground in a new tab"
-              : "Opens the API Playground"
+              ? "Opens an API Explorer in a new tab"
+              : "Opens the API Explorer"
           }
           onClick={() => {
             if (settings?.button?.href) {

@@ -67,7 +67,6 @@ export function buildAuthHeaders(
                   const {
                     formState,
                     endpoint,
-                    proxyEnvironment,
                     baseUrl,
                     setValue: setOAuthValue,
                   } = oAuthClientCredentialReferencedEndpointLoginFlowProps;
@@ -77,7 +76,6 @@ export function buildAuthHeaders(
                       oAuthClientCredentialReferencedEndpointLoginFlow({
                         formState,
                         endpoint,
-                        proxyEnvironment,
                         referencedEndpoint,
                         baseUrl,
                         setValue: setOAuthValue,

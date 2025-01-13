@@ -347,7 +347,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           break;
         default:
           new UnreachableCaseError(this.requestBody.contentType);
-          return undefined;
+          break;
       }
     }
 
@@ -391,7 +391,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           break;
         default:
           new UnreachableCaseError(this.responseBody.contentType);
-          return undefined;
+          break;
       }
     }
 

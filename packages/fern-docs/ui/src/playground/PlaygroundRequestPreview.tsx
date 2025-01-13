@@ -7,7 +7,6 @@ import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   useEdgeFlags,
 } from "../atoms";
-import { useStandardProxyEnvironment } from "../hooks/useStandardProxyEnvironment";
 import { PlaygroundCodeSnippetResolverBuilder } from "./code-snippets/resolver";
 import { useSnippet } from "./code-snippets/useSnippet";
 import { PlaygroundEndpointRequestFormState } from "./types";
@@ -39,27 +38,12 @@ export const PlaygroundRequestPreview: FC<PlaygroundRequestPreviewProps> = ({
       ),
     [context, isSnippetTemplatesEnabled, isFileForgeHackEnabled]
   );
-  const proxyEnvironment = useStandardProxyEnvironment();
 
   const resolver = useMemo(
     () =>
       oAuthValue &&
-      builder.createRedacted(
-        authState,
-        formState,
-        proxyEnvironment,
-        baseUrl,
-        setOAuthValue
-      ),
-    [
-      authState,
-      builder,
-      formState,
-      proxyEnvironment,
-      oAuthValue,
-      baseUrl,
-      setOAuthValue,
-    ]
+      builder.createRedacted(authState, formState, baseUrl, setOAuthValue),
+    [authState, builder, formState, oAuthValue, baseUrl, setOAuthValue]
   );
   const code = useSnippet(resolver, requestType);
 

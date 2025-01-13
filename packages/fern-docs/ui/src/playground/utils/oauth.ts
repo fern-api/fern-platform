@@ -16,7 +16,6 @@ import { serializeFormStateBody } from "./serialize";
 export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
   formState: PlaygroundEndpointRequestFormState;
   endpoint: EndpointDefinition;
-  proxyEnvironment: string;
   referencedEndpoint: APIV1Read.OAuthClientCredentialsReferencedEndpoint;
   baseUrl: string | undefined;
   setValue: (value: (prev: any) => any) => void;
@@ -27,7 +26,6 @@ export interface OAuthClientCredentialReferencedEndpointLoginFlowProps {
 export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
   formState,
   endpoint,
-  proxyEnvironment,
   referencedEndpoint,
   baseUrl,
   setValue,
@@ -59,13 +57,12 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     method: endpoint.method,
     headers,
     body: await serializeFormStateBody(
-      "",
       endpoint.requests?.[0]?.body,
       formState.body,
       false
     ),
   };
-  const res = await executeProxyRest(proxyEnvironment, req);
+  const res = await executeProxyRest(req);
 
   await visitDiscriminatedUnion(res, "type")._visit<void | Promise<void>>({
     json: async (jsonRes) => {

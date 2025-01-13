@@ -4916,15 +4916,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaymentStatusWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaymentStatusWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -5071,15 +5073,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaymentRefundWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaymentRefundWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -5226,15 +5230,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DisputeOpenWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DisputeOpenWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -5287,15 +5293,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DisputeStatusWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DisputeStatusWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -40580,15 +40588,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaymentStatusWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaymentStatusWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -40735,15 +40745,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:PaymentRefundWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:PaymentRefundWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -40890,15 +40902,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DisputeOpenWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DisputeOpenWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {
@@ -40951,15 +40965,17 @@
             "description": "A secondary signature that is added when you have rotated your secret within the past 24 hours."
           }
         ],
-        "payload": {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "type_:DisputeStatusWebhookPayload"
+        "payloads": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "type_:DisputeStatusWebhookPayload"
+              }
             }
           }
-        },
+        ],
         "examples": [
           {
             "payload": {

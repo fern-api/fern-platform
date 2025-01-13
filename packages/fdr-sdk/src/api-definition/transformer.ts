@@ -478,8 +478,11 @@ export class Transformer {
     parentKey: string
   ): Latest.WebhookDefinition => {
     const payload =
-      webhook.payload != null
-        ? this.visitor.WebhookPayload(webhook.payload, `${parentKey}/payload`)
+      webhook.payloads?.[0] != null
+        ? this.visitor.WebhookPayload(
+            webhook.payloads[0],
+            `${parentKey}/payload`
+          )
         : undefined;
     const headers =
       webhook.headers?.map((header) =>
@@ -487,7 +490,7 @@ export class Transformer {
       ) ?? [];
     return {
       ...webhook,
-      payload,
+      payloads: payload != null ? [payload] : undefined,
       headers: headers.length > 0 ? headers : undefined,
     };
   };
