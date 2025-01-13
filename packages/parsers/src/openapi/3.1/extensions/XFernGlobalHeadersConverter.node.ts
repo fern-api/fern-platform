@@ -25,7 +25,7 @@ export class XFernGlobalHeadersConverterNode extends BaseOpenApiV3_1ConverterNod
   unknown,
   FernRegistry.api.latest.ObjectProperty[]
 > {
-  globalHeaders?: Record<string, SchemaConverterNode> | undefined;
+  globalHeaders?: [string, SchemaConverterNode][] | undefined;
 
   constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
     super(args);
@@ -34,23 +34,25 @@ export class XFernGlobalHeadersConverterNode extends BaseOpenApiV3_1ConverterNod
 
   // This would be used to set a member on the node
   parse(): void {
-    extendType<XFernGlobalHeadersConverterNode.Input>(this.input)[
-      X_FERN_GLOBAL_HEADERS
-    ]?.forEach((header) => {
+    this.globalHeaders = extendType<XFernGlobalHeadersConverterNode.Input>(
+      this.input
+    )[X_FERN_GLOBAL_HEADERS]?.map((header) => {
       const { header: headerName, ...schema } = header;
-      this.globalHeaders ??= {};
-      this.globalHeaders[headerName] = new SchemaConverterNode({
-        input: schema,
-        context: this.context,
-        accessPath: this.accessPath,
-        pathId: this.pathId,
-      });
+      return [
+        headerName,
+        new SchemaConverterNode({
+          input: schema,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: this.pathId,
+        }),
+      ];
     });
   }
 
   convert(): FernRegistry.api.latest.ObjectProperty[] | undefined {
-    return Object.entries(this.globalHeaders ?? {})
-      .flatMap(([headerName, headerSchema]) => {
+    return this.globalHeaders
+      ?.flatMap(([headerName, headerSchema]) => {
         const convertedSchema = maybeSingleValueToArray(headerSchema.convert());
 
         return convertedSchema?.map((schema) => ({
