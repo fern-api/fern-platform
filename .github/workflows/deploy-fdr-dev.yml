@@ -82,7 +82,9 @@ jobs:
           git_version="$(scripts/git-version.sh)"
           pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
           npm install -g aws-cdk
-          cd servers/fdr-deploy
+          cd servers/fdr-deploy/getdocs-lambda
+          pnpm run build
+          cd ../
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
           DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public&connection_limit=6&pool_timeout=30
