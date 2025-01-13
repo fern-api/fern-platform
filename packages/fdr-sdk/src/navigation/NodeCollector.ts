@@ -241,7 +241,7 @@ export class NodeCollector {
 
     [...this.slugToNode.values()]
       .filter(({ node }) => FernNavigation.isPage(node))
-      .filter(({ node }) => !node.hidden && !node.authed)
+      .filter(({ node }) => !node.hidden)
       .filter(({ node }) =>
         FernNavigation.hasMarkdown(node) ? !node.noindex : true
       )
