@@ -34,7 +34,7 @@ export async function createTurbopufferRecords({
 > {
   const collector = NodeCollector.collect(root);
 
-  const pageNodes = collector.indexablePageSlugsWithAuth;
+  const pageNodes = collector.indexablePageNodesWithAuth;
 
   const markdownNodes = pageNodes.filter(hasMarkdown);
   // const apiLeafNodes = pageNodes.filter(isApiLeaf);

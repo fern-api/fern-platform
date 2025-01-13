@@ -236,7 +236,7 @@ export class NodeCollector {
     return this.#getIndexablePageSlugs();
   }
 
-  #getIndexablePageSlugsWithAuth = once((): NavigationNodeWithMetadata[] => {
+  #getIndexablePageNodesWithAuth = once((): NavigationNodeWithMetadata[] => {
     const slugRecord: Record<string, NavigationNodeWithMetadata> = {};
 
     [...this.slugToNode.values()]
@@ -255,8 +255,8 @@ export class NodeCollector {
 
     return Object.values(slugRecord);
   });
-  get indexablePageSlugsWithAuth(): NavigationNodeWithMetadata[] {
-    return this.#getIndexablePageSlugsWithAuth();
+  get indexablePageNodesWithAuth(): NavigationNodeWithMetadata[] {
+    return this.#getIndexablePageNodesWithAuth();
   }
 
   public getVersionNodes = (): FernNavigation.VersionNode[] => {
