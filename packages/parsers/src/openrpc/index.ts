@@ -1,1 +1,1 @@
-export * from "./BaseOpenApiV3_1Converter.node";
+export * from "./BaseOpenrpcConverter.node";

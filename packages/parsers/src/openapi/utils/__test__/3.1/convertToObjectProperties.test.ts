@@ -1,7 +1,7 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { FernRegistry } from "../../../../client/generated";
 import { SchemaConverterNode } from "../../../3.1";
 import { AvailabilityConverterNode } from "../../../3.1/extensions/AvailabilityConverter.node";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { convertToObjectProperties } from "../../3.1/convertToObjectProperties";
 
 describe("convertToObjectProperties", () => {

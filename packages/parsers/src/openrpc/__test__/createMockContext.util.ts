@@ -1,12 +1,21 @@
-import { OpenAPIV3_1 } from "openapi-types";
+import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { vi } from "vitest";
-import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
+import { BaseOpenrpcConverterNodeContext } from "../BaseOpenrpcConverter.node";
 
 export function createMockContext(
-  document?: OpenAPIV3_1.Document
-): BaseOpenApiV3_1ConverterNodeContext {
+  document?: OpenrpcDocument
+): BaseOpenrpcConverterNodeContext {
   return {
-    document: document ?? ({} as OpenAPIV3_1.Document),
+    document: {
+      openapi: "3.1.0",
+      info: {
+        title: "Mock API",
+        version: "1.0.0",
+      },
+      paths: {},
+      components: document.components,
+    },
+    openrpc: document,
     logger: {
       info: vi.fn(),
       warn: vi.fn(),

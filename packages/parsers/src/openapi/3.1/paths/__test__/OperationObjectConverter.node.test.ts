@@ -1,6 +1,6 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { FernRegistry } from "../../../../client/generated";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { OperationObjectConverterNode } from "../OperationObjectConverter.node";
 
 describe("OperationObjectConverterNode", () => {

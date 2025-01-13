@@ -1,11 +1,10 @@
+import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import * as fs from "fs";
 import yaml from "js-yaml";
-import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
-import { ErrorCollector } from "../ErrorCollector";
-import { OpenApiDocumentConverterNode } from "../openapi/3.1/OpenApiDocumentConverter.node";
-import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi/BaseOpenApiV3_1Converter.node";
+import { OpenrpcDocumentConverterNode } from "../1.x/OpenrpcDocumentConverter.node";
+import { createMockContext } from "./createMockContext.util";
 
 function replaceEndpointUUIDs(json: string): string {
   return json.replace(
@@ -14,29 +13,16 @@ function replaceEndpointUUIDs(json: string): string {
   );
 }
 
-describe("OpenAPI snapshot tests", () => {
+describe("OpenRPC converter", () => {
   const fixturesDir = path.join(__dirname, "fixtures");
   const files = fs.readdirSync(fixturesDir);
 
   files.forEach((directory) => {
     it(`generates snapshot for ${directory}`, async () => {
       // Read and parse YAML file
-      const filePath = path.join(fixturesDir, directory, "openapi.yml");
+      const filePath = path.join(fixturesDir, directory, "openrpc.json");
       const fileContents = fs.readFileSync(filePath, "utf8");
-      const parsed = yaml.load(fileContents) as OpenAPIV3_1.Document;
-
-      // Create converter context
-      const context: BaseOpenApiV3_1ConverterNodeContext = {
-        document: parsed,
-        logger: {
-          info: () => undefined,
-          warn: () => undefined,
-          error: () => undefined,
-          debug: () => undefined,
-          log: () => undefined,
-        },
-        errors: new ErrorCollector(),
-      };
+      const parsed = yaml.load(fileContents) as OpenrpcDocument;
 
       // Convert components if they exist
       let converted;
@@ -46,9 +32,9 @@ describe("OpenAPI snapshot tests", () => {
       expect(parsed.components?.schemas).toBeDefined();
 
       if (parsed.components?.schemas) {
-        const converter = new OpenApiDocumentConverterNode({
+        const converter = new OpenrpcDocumentConverterNode({
           input: parsed,
-          context,
+          context: createMockContext(parsed),
           accessPath: [],
           pathId: directory,
         });
@@ -69,7 +55,7 @@ describe("OpenAPI snapshot tests", () => {
       converted.id = "test-uuid-replacement";
       await expect(
         replaceEndpointUUIDs(JSON.stringify(converted, null, 2))
-      ).toMatchFileSnapshot(`./__snapshots__/openapi/${directory}.json`);
+      ).toMatchFileSnapshot(`./__snapshots__/${directory}.json`);
     });
   });
 });

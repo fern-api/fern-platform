@@ -1,4 +1,3 @@
-import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
 import {
   BaseApiConverterNode,
@@ -7,7 +6,7 @@ import {
 import { toOpenApiPath } from "./utils/toOpenApiPath";
 
 export abstract class BaseOpenApiV3_1ConverterNodeContext extends BaseApiConverterNodeContext {
-  public abstract document: OpenAPIV3_1.Document | OpenrpcDocument;
+  public abstract document: OpenAPIV3_1.Document;
 }
 
 export type BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> = {
