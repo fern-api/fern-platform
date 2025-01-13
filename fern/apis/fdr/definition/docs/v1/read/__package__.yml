@@ -68,7 +68,7 @@ types:
       algoliaSearchIndex: optional<algolia.AlgoliaSearchIndex>
       pages: map<rootCommons.PageId, PageContent>
       apis: map<rootCommons.ApiDefinitionId, apiReadV1.ApiDefinition>
-      apisV2: map<rootCommons.ApiDefinitionId, apiReadLatest.ApiDefinition>
+      apisV2: map<rootCommons.ApiDefinitionId, apiReadLatest.LatestApiDefinition>
       files: map<rootCommons.FileId, rootCommons.Url>
       filesV2: map<rootCommons.FileId, File>
       jsFiles:

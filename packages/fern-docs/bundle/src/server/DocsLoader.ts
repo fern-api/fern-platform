@@ -2,6 +2,7 @@ import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import {
   ApiDefinition,
   ApiDefinitionV1ToLatest,
+  S3Loader,
 } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig } from "@fern-docs/auth";
@@ -103,11 +104,13 @@ export class DocsLoader {
       return undefined;
     }
     const v1 = res.definition.apis[key];
+    const s3Loader = new S3Loader();
     const latest =
-      res.definition.apisV2?.[key] ??
-      (v1 != null
-        ? ApiDefinitionV1ToLatest.from(v1, this.edgeFlags).migrate()
-        : undefined);
+      res.definition.apisV2?.[key] != null
+        ? await s3Loader.loadApiDefinition(res.definition.apisV2[key])
+        : v1 != null
+          ? ApiDefinitionV1ToLatest.from(v1, this.edgeFlags).migrate()
+          : undefined;
     if (!latest) {
       return undefined;
     }

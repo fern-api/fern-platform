@@ -8,7 +8,7 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { APIV1WriteService } from "../../api";
 import { SdkRequest } from "../../api/generated/api";
-import type { FdrApplication } from "../../app";
+import { type FdrApplication } from "../../app";
 import { LOGGER } from "../../app/FdrApplication";
 import { SdkIdForPackage } from "../../db/sdk/SdkDao";
 import {
@@ -146,18 +146,53 @@ export function getRegisterApiService(app: FdrApplication): APIV1WriteService {
         `Creating API Definition in database with id=${apiDefinitionId}, name=${req.body.apiId} for org ${req.body.orgId}`,
         REGISTER_API_DEFINITION_META
       );
-      await (
-        isLatest
-          ? app.services.db.prisma.apiDefinitionsLatest
-          : app.services.db.prisma.apiDefinitionsV2
-      ).create({
-        data: {
-          apiDefinitionId,
-          apiName: req.body.apiId,
-          orgId: req.body.orgId,
-          definition: writeBuffer(transformedApiDefinition),
-        },
-      });
+      if (isLatest) {
+        const sourceId = FdrAPI.api.v1.register.SourceId(
+          "api-definition-latest"
+        );
+        const apiDefinitionSourceUploadUrls =
+          await app.services.s3.getPresignedApiDefinitionSourceUploadUrls({
+            orgId: req.body.orgId,
+            apiId: req.body.apiId,
+            sources: {
+              [sourceId]: {
+                type: "openapi",
+              },
+            },
+          });
+
+        if (apiDefinitionSourceUploadUrls[sourceId] == null) {
+          throw new Error(
+            `Failed to get presigned URL for api definition, with source id: ${sourceId}`
+          );
+        }
+
+        await fetch(apiDefinitionSourceUploadUrls[sourceId].presignedUrl, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(transformedApiDefinition),
+        });
+
+        await app.services.db.prisma.apiDefinitionsLatest.create({
+          data: {
+            apiDefinitionId,
+            apiName: req.body.apiId,
+            orgId: req.body.orgId,
+            s3Key: apiDefinitionSourceUploadUrls[sourceId].key,
+          },
+        });
+      } else {
+        await app.services.db.prisma.apiDefinitionsV2.create({
+          data: {
+            apiDefinitionId,
+            apiName: req.body.apiId,
+            orgId: req.body.orgId,
+            definition: writeBuffer(transformedApiDefinition),
+          },
+        });
+      }
       app.logger.debug(
         `Returning API Definition ID id=${apiDefinitionId}`,
         REGISTER_API_DEFINITION_META

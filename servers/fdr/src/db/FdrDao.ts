@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { S3Service } from "../services/s3";
 import { APIDefinitionDao, APIDefinitionDaoImpl } from "./api/APIDefinitionDao";
 import { DocsV2Dao, DocsV2DaoImpl } from "./docs/DocsV2Dao";
 import {
@@ -35,9 +36,9 @@ export class FdrDao {
   private cliVersionsDao;
   private gitDao;
 
-  constructor(prisma: PrismaClient) {
+  constructor(prisma: PrismaClient, s3: S3Service) {
     this.docsV2Dao = new DocsV2DaoImpl(prisma);
-    this.apisDao = new APIDefinitionDaoImpl(prisma);
+    this.apisDao = new APIDefinitionDaoImpl(prisma, s3);
     this.indexSegmentDao = new IndexSegmentDaoImpl(prisma);
     this.snippetsDao = new SnippetsDaoImpl(prisma);
     this.snippetAPIsDao = new SnippetAPIsDaoImpl(prisma);
