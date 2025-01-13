@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { OPENAPI_INTEGER_TYPE_FORMAT } from "../../../../types/format.types";
 import { IntegerConverterNode } from "../IntegerConverter.node";
 

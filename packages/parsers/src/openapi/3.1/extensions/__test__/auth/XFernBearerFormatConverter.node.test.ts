@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { XBearerFormatConverterNode } from "../../auth/XBearerFormatConverter.node";
 
 describe("XBearerFormatConverterNode", () => {

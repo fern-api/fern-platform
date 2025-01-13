@@ -5,7 +5,6 @@ import {
   RootNode,
   getPageId,
   hasMarkdown,
-  isPage,
 } from "@fern-api/fdr-sdk/navigation";
 import { flatten } from "es-toolkit/array";
 import { FernTurbopufferRecordWithoutVector } from "../types";
@@ -35,12 +34,7 @@ export async function createTurbopufferRecords({
 > {
   const collector = NodeCollector.collect(root);
 
-  const pageNodes = Array.from(collector.slugMap.values())
-    .filter(isPage)
-    // exclude hidden pages
-    .filter((node) => node.hidden !== true)
-    // exclude pages that are noindexed
-    .filter((node) => (hasMarkdown(node) ? node.noindex !== true : true));
+  const pageNodes = collector.indexablePageNodesWithAuth;
 
   const markdownNodes = pageNodes.filter(hasMarkdown);
   // const apiLeafNodes = pageNodes.filter(isApiLeaf);

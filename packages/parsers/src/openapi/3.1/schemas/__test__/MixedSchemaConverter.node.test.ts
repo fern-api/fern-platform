@@ -1,5 +1,5 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { FernRegistry } from "../../../../client/generated";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { MixedSchemaConverterNode } from "../MixedSchemaConverter.node";
 
 describe("MixedSchemaConverterNode", () => {

@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { ObjectConverterNode } from "../ObjectConverter.node";
 import { SchemaConverterNode } from "../SchemaConverter.node";
 
