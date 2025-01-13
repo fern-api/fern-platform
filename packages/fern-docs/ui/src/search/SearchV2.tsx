@@ -44,7 +44,6 @@ import {
 import { Feedback } from "../feedback/Feedback";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
-// import { getServerSideProps } from "@fern-docs/bundle";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
