@@ -36,7 +36,7 @@ export class GetDocsLambda extends Construct {
 
     // Create the Lambda function
     this.lambdaFunction = new lambda.Function(this, "get-docs-lambda", {
-      runtime: lambda.Runtime.NODEJS_18_X,
+      runtime: lambda.Runtime.NODEJS_20_X,
       handler: "index.handler",
       code: lambda.Code.fromAsset(path.join(__dirname, "../dist")),
       vpc: props.vpc,
@@ -49,7 +49,7 @@ export class GetDocsLambda extends Construct {
       timeout: Duration.seconds(30),
       memorySize: 256,
       vpcSubnets: {
-        subnetType: SubnetType.PRIVATE_WITH_EGRESS,
+        subnetType: SubnetType.PUBLIC,
       },
     });
 
