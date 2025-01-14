@@ -24,7 +24,11 @@ export function renderTypeShorthandRoot(
   hideOptional = false
 ): ReactNode {
   const unwrapped = unwrapReference(shape, types);
-  const typeShorthand = renderTypeShorthand(unwrapped.shape, {}, types);
+  const typeShorthand = renderTypeShorthand(
+    unwrapped.shape,
+    { nullable: unwrapped.isNullable },
+    types
+  );
   return (
     <span className="fern-api-property-meta">
       <span>{typeShorthand}</span>
@@ -155,14 +159,18 @@ function toPrimitiveTypeLabelsString({
 
 export function renderTypeShorthand(
   shape: TypeShapeOrReference,
-  { plural = false, withArticle = false }: TypeShorthandOptions = {
+  {
+    plural = false,
+    withArticle = false,
+    nullable = false,
+  }: TypeShorthandOptions = {
     plural: false,
     withArticle: false,
+    nullable: false,
   },
   types: Record<string, TypeDefinition>
 ): string {
   const unwrapped = unwrapReference(shape, types);
-
   const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
     withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
@@ -174,7 +182,7 @@ export function renderTypeShorthand(
     return `${maybeWithArticle("an", "optional")} ${renderTypeShorthand(unwrapped.shape, { plural }, types)}`;
   }
 
-  return visitDiscriminatedUnion(unwrapped.shape)._visit({
+  const result = visitDiscriminatedUnion(unwrapped.shape)._visit({
     // primitives
     primitive: (primitive) =>
       visitDiscriminatedUnion(primitive.value, "type")._visit({
@@ -247,4 +255,6 @@ export function renderTypeShorthand(
     unknown: (value) => value.displayName ?? "any",
     _other: () => "<unknown>",
   });
+
+  return nullable ? `${result} or null` : result;
 }
