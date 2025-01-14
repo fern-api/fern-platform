@@ -1,6 +1,6 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import { Duration, Fn, Stack } from "aws-cdk-lib";
-import { IVpc, Port, SecurityGroup, SubnetType } from "aws-cdk-lib/aws-ec2";
+import { IVpc, SecurityGroup, SubnetType } from "aws-cdk-lib/aws-ec2";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
@@ -20,18 +20,11 @@ export class GetDocsLambda extends Construct {
     super(scope, id);
 
     // Get the RDS Proxy security group from the shared resources stack
-    const rdsProxySecurityGroupId = Fn.importValue("MyRDSProxySecurityGroupId");
+    const rdsProxySecurityGroupId = Fn.importValue("RDSProxySecurityGroupId");
     const rdsProxySecurityGroup = SecurityGroup.fromSecurityGroupId(
       this,
       "imported-rds-proxy-sg",
       rdsProxySecurityGroupId
-    );
-
-    // Allow the Lambda to connect to the RDS Proxy
-    rdsProxySecurityGroup.connections.allowFrom(
-      rdsProxySecurityGroup,
-      Port.tcp(5432),
-      "Allow GetDocs Lambda to connect to RDS Proxy"
     );
 
     // Create the Lambda function
