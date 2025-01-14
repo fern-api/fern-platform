@@ -19,7 +19,6 @@ export declare namespace TableOfContents {
     className?: string;
     style?: CSSProperties;
     tableOfContents: TableOfContentsItemType[];
-    hideTableOfContents?: boolean;
   }
 }
 
@@ -29,7 +28,6 @@ let anchorJustSetTimeout: number;
 export const TableOfContents: React.FC<TableOfContents.Props> = ({
   className,
   tableOfContents,
-  hideTableOfContents,
   style,
 }) => {
   const allAnchors = useMemo(() => {
@@ -123,12 +121,12 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({
 
   return (
     <>
-      {!hideTableOfContents && tableOfContents.length > 0 && (
+      {tableOfContents.length > 0 && (
         <div className="text-grayscale-a11 m-0 mb-3 text-sm font-medium">
           On this page
         </div>
       )}
-      {!hideTableOfContents && tableOfContents.length > 0 && (
+      {tableOfContents.length > 0 && (
         <ul
           className={clsx("toc-root not-prose", className)}
           style={

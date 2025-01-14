@@ -14,14 +14,13 @@ export function TableOfContentsLayout({
 }: TableOfContentsLayoutProps): ReactElement {
   return (
     <aside className="fern-layout-toc">
-      {tableOfContents != null && tableOfContents.length > 0 && (
-        <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
-          <TableOfContents
-            tableOfContents={tableOfContents}
-            hideTableOfContents={hideTableOfContents}
-          />
-        </FernScrollArea>
-      )}
+      {tableOfContents != null &&
+        !hideTableOfContents &&
+        tableOfContents.length > 0 && (
+          <FernScrollArea className="px-4 pb-12 pt-8 lg:pr-8">
+            <TableOfContents tableOfContents={tableOfContents} />
+          </FernScrollArea>
+        )}
     </aside>
   );
 }
