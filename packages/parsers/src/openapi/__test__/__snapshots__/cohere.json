@@ -18745,7 +18745,8 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "^(?!usage$).*$"
               }
             }
           }
@@ -19254,7 +19255,8 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "^(?!usage$).*$"
               }
             }
           }
@@ -19780,7 +19782,9 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 250,
+                      "maxLength": 50000
                     }
                   }
                 },
@@ -20560,7 +20564,9 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 65536
                     }
                   }
                 },
@@ -28822,7 +28828,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 }
               }
             },
@@ -28958,7 +28965,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1
                     }
                   }
                 },
@@ -29011,7 +29019,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1
                     }
                   }
                 },
@@ -29064,7 +29073,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1
                     }
                   }
                 },
@@ -29150,7 +29160,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 }
               }
             },
@@ -29447,7 +29458,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 }
               }
             },
@@ -29525,7 +29537,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 }
               }
             },
@@ -29579,7 +29592,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1
                     }
                   }
                 }
@@ -29863,7 +29877,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 }
               }
             },
@@ -30151,7 +30166,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "uuid"
+                  "type": "uuid",
+                  "minLength": 1
                 }
               }
             },
@@ -30248,7 +30264,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "minLength": 1
                 }
               }
             },
@@ -30509,7 +30526,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "uuid"
+                      "type": "uuid",
+                      "minLength": 1
                     }
                   }
                 },
@@ -30600,7 +30618,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "minLength": 1
                     }
                   }
                 },
@@ -31284,13 +31303,26 @@
           {
             "key": "data",
             "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [],
-              "extraProperties": {
-                "type": "primitive",
-                "value": {
-                  "type": "string"
+              "type": "alias",
+              "value": {
+                "type": "map",
+                "keyShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             },
@@ -39155,13 +39187,26 @@
           {
             "key": "metrics",
             "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [],
-              "extraProperties": {
-                "type": "primitive",
-                "value": {
-                  "type": "double"
+              "type": "alias",
+              "value": {
+                "type": "map",
+                "keyShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
                 }
               }
             },
