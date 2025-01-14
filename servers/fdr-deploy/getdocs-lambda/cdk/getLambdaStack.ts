@@ -1,5 +1,5 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
-import { Duration, Fn, Stack } from "aws-cdk-lib";
+import { Duration, Stack } from "aws-cdk-lib";
 import { IVpc, SecurityGroup, SubnetType } from "aws-cdk-lib/aws-ec2";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as lambda from "aws-cdk-lib/aws-lambda";
@@ -10,6 +10,7 @@ interface GetDocsLambdaProps {
   vpc: IVpc;
   environmentType: EnvironmentType;
   rdsProxyEndpoint: string;
+  rdsProxySecurityGroupID: string;
   redisEndpoint: string;
   redisSecurityGroupID: string;
   cacheSecurityGroupID: string;
@@ -23,11 +24,10 @@ export class GetDocsLambda extends Construct {
     super(scope, id);
 
     // Get the RDS Proxy security group from the shared resources stack
-    const rdsProxySecurityGroupId = Fn.importValue("RDSProxySecurityGroupId");
     const rdsProxySecurityGroup = SecurityGroup.fromSecurityGroupId(
       this,
       "imported-rds-proxy-sg",
-      rdsProxySecurityGroupId
+      props.rdsProxySecurityGroupID
     );
     const redisSecurityGroup = SecurityGroup.fromSecurityGroupId(
       this,

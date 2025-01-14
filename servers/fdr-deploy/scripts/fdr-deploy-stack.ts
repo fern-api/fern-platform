@@ -245,11 +245,17 @@ export class FdrDeployStack extends Stack {
       );
 
     // Set up getdocs-lambda, which gets docsDefinition from RDS
-    const rdsProxyEndpoint = Fn.importValue("RDSProxyEndpoint");
+    const rdsProxyEndpoint = Fn.importValue(
+      `fern-${environmentType.toLowerCase()}-rds-proxy-endpoint`
+    );
+    const rdsProxySecurityGroupID = Fn.importValue(
+      `fern-${environmentType.toLowerCase()}-rds-proxy-security-group-id`
+    );
     const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
       vpc,
       environmentType,
       rdsProxyEndpoint,
+      rdsProxySecurityGroupID,
       redisEndpoint: fernDocsCacheEndpoint,
       redisSecurityGroupID: fdrSg.securityGroupId,
       cacheSecurityGroupID: redisSecurityGroupID,
