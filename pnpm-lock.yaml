@@ -2877,6 +2877,9 @@ importers:
 
   servers/fdr-deploy/getdocs-lambda:
     dependencies:
+      '@fern-api/venus-api-sdk':
+        specifier: ^0.10.1-5-ged06d22
+        version: 0.10.1-5-ged06d22
       pg:
         specifier: ^8.11.3
         version: 8.13.1

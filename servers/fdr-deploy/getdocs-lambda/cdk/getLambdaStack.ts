@@ -9,8 +9,11 @@ import * as path from "path";
 interface GetDocsLambdaProps {
   vpc: IVpc;
   environmentType: EnvironmentType;
-  databaseName: string;
-  rdsProxyEndpoint: string; // Add this property
+  rdsProxyEndpoint: string;
+  redisEndpoint: string;
+  redisSecurityGroupID: string;
+  cacheSecurityGroupID: string;
+  venusURL: string;
 }
 
 export class GetDocsLambda extends Construct {
@@ -26,6 +29,16 @@ export class GetDocsLambda extends Construct {
       "imported-rds-proxy-sg",
       rdsProxySecurityGroupId
     );
+    const redisSecurityGroup = SecurityGroup.fromSecurityGroupId(
+      this,
+      "imported-rds-proxy-sg",
+      props.redisSecurityGroupID
+    );
+    const cacheSecurityGroup = SecurityGroup.fromSecurityGroupId(
+      this,
+      "imported-cache-sg",
+      props.cacheSecurityGroupID
+    );
 
     // Create the Lambda function
     this.lambdaFunction = new lambda.Function(this, "get-docs-lambda", {
@@ -33,11 +46,16 @@ export class GetDocsLambda extends Construct {
       handler: "index.handler",
       code: lambda.Code.fromAsset(path.join(__dirname, "../dist")),
       vpc: props.vpc,
-      securityGroups: [rdsProxySecurityGroup],
+      securityGroups: [
+        rdsProxySecurityGroup,
+        redisSecurityGroup,
+        cacheSecurityGroup,
+      ],
       environment: {
         RDS_PROXY_ENDPOINT: props.rdsProxyEndpoint,
-        DATABASE_NAME: props.databaseName,
+        REDIS_ENDPOINT: props.redisEndpoint,
         NODE_ENV: props.environmentType.toLowerCase(),
+        VENUS_URL: props.venusURL,
       },
       timeout: Duration.seconds(30),
       memorySize: 256,

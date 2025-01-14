@@ -1,5 +1,5 @@
 export interface GetDocsEvent {
-  docId: string;
+  url: string;
 }
 
 export interface GetDocsResponse {
@@ -8,9 +8,6 @@ export interface GetDocsResponse {
 }
 
 export interface DocumentData {
-  id: string;
-  content: string;
-  version: string;
-  created_at: Date;
-  updated_at: Date;
+  url: string;
+  docsDefinition: string;
 }

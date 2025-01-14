@@ -137,23 +137,6 @@ export class FdrDeployStack extends Stack {
       new EmailSubscription("support@buildwithfern.com")
     );
 
-    // GetDocs-Lambda
-    const rdsProxyEndpoint = Fn.importValue("RDSProxyEndpoint");
-    const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
-      vpc,
-      environmentType,
-      databaseName: "temp",
-      rdsProxyEndpoint,
-    });
-
-    const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
-      handler: getDocsLambda.lambdaFunction,
-      proxy: false,
-    });
-
-    const docs = getDocsApi.root.addResource("docs");
-    docs.addMethod("POST");
-
     const privateApiDefinitionSourceBucket = new Bucket(
       this,
       "fdr-api-definition-source-files",
@@ -235,17 +218,18 @@ export class FdrDeployStack extends Stack {
       zone: hostedZone,
     });
 
-    const fernDocsCacheEndpoint = this.constructElastiCacheInstance(this, {
-      cacheName: options.cacheName,
-      IVpc: vpc,
-      numCacheShards: 1,
-      numCacheReplicasPerShard: 0,
-      clusterMode: "enabled",
-      cacheNodeType: options.cacheNodeType,
-      envType: environmentType,
-      env: props?.env,
-      ingressSecurityGroup: fdrSg,
-    });
+    const { fernDocsCacheEndpoint, redisSecurityGroupID } =
+      this.constructElastiCacheInstance(this, {
+        cacheName: options.cacheName,
+        IVpc: vpc,
+        numCacheShards: 1,
+        numCacheReplicasPerShard: 0,
+        clusterMode: "enabled",
+        cacheNodeType: options.cacheNodeType,
+        envType: environmentType,
+        env: props?.env,
+        ingressSecurityGroup: fdrSg,
+      });
 
     const cloudmapNamespaceName =
       environmentInfo.cloudMapNamespaceInfo.namespaceName;
@@ -259,6 +243,31 @@ export class FdrDeployStack extends Stack {
           namespaceName: cloudmapNamespaceName,
         }
       );
+
+    // Set up getdocs-lambda, which gets docsDefinition from RDS
+    const rdsProxyEndpoint = Fn.importValue("RDSProxyEndpoint");
+    const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
+      vpc,
+      environmentType,
+      rdsProxyEndpoint,
+      redisEndpoint: fernDocsCacheEndpoint,
+      redisSecurityGroupID: fdrSg.securityGroupId,
+      cacheSecurityGroupID: redisSecurityGroupID,
+      venusURL: `http://venus.${cloudmapNamespaceName}:8080/`,
+    });
+
+    const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
+      handler: getDocsLambda.lambdaFunction,
+      proxy: false,
+    });
+
+    const docs = getDocsApi.root.addResource("docs");
+    docs.addMethod("POST");
+
+    new CfnOutput(this, "GetDocsApiUrl", {
+      value: getDocsApi.url,
+    });
+    // end getdocs-lambda
 
     const fargateService = new ApplicationLoadBalancedFargateService(
       this,
@@ -446,7 +455,7 @@ export class FdrDeployStack extends Stack {
   private constructElastiCacheInstance(
     scope: Construct,
     props: ElastiCacheProps
-  ): string {
+  ): { fernDocsCacheEndpoint: string; redisSecurityGroupID: string } {
     const envPrefix = props.envType + "-";
 
     const cacheSecurityGroupName =
@@ -512,7 +521,10 @@ export class FdrDeployStack extends Stack {
       "Redis Port Ingress rule"
     );
 
-    return `${cacheEndpointAddress}:${cacheEndpointPort}`;
+    return {
+      fernDocsCacheEndpoint: `${cacheEndpointAddress}:${cacheEndpointPort}`,
+      redisSecurityGroupID: cacheSecurityGroup.securityGroupId,
+    };
   }
 }
 
