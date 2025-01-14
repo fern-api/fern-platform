@@ -153,7 +153,7 @@ export const PlaygroundTypeReferenceForm =
                   onValueChange={onChange}
                   disabled={disabled}
                 />
-              ) : property?.key === "user_audio_chunk" || // user_audio_chunk hardcoded for ElevenLabs use case
+              ) : property?.key === "user_audio_chunk" || // TODO(naman): remove hardcoding for ElevenLabs once the backend mimeType is plumbed through
                 (primitive.value.type === "string" &&
                   primitive.value.mimeType?.startsWith("audio/")) ||
                 (primitive.value.type === "base64" &&
