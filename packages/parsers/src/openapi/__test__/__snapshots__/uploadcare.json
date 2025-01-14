@@ -89,7 +89,7 @@
                 "value": {
                   "type": "primitive",
                   "value": {
-                    "type": "double",
+                    "type": "integer",
                     "minimum": 1,
                     "maximum": 1000,
                     "default": 100
@@ -6906,7 +6906,10 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "[\\w\\-\\.\\:]+",
+                "minLength": 1,
+                "maxLength": 64
               }
             }
           },
@@ -7186,7 +7189,10 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "[\\w\\-\\.\\:]+",
+                "minLength": 1,
+                "maxLength": 64
               }
             }
           },
@@ -7536,7 +7542,10 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "[\\w\\-\\.\\:]+",
+                "minLength": 1,
+                "maxLength": 64
               }
             }
           },
@@ -9597,241 +9606,6 @@
         }
       ]
     },
-    "endpoint_webhookCallbacks.fileUploaded": {
-      "id": "endpoint_webhookCallbacks.fileUploaded",
-      "description": "file.uploaded event payload",
-      "displayName": "file.uploaded",
-      "operationId": "fileUploaded",
-      "namespace": [
-        "Webhook Callbacks"
-      ],
-      "method": "POST",
-      "path": [
-        "/",
-        "file-uploaded"
-      ],
-      "headers": [
-        {
-          "key": "X-Uc-Signature",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
-        }
-      ],
-      "payloads": [
-        {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "webhookFilePayload"
-            }
-          }
-        }
-      ],
-      "examples": []
-    },
-    "endpoint_webhookCallbacks.fileInfected": {
-      "id": "endpoint_webhookCallbacks.fileInfected",
-      "description": "file.infected event payload",
-      "displayName": "file.infected",
-      "operationId": "fileInfected",
-      "namespace": [
-        "Webhook Callbacks"
-      ],
-      "method": "POST",
-      "path": [
-        "/",
-        "file-infected"
-      ],
-      "headers": [
-        {
-          "key": "X-Uc-Signature",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
-        }
-      ],
-      "payloads": [
-        {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "webhookFilePayload"
-            }
-          }
-        }
-      ],
-      "examples": []
-    },
-    "endpoint_webhookCallbacks.fileStored": {
-      "id": "endpoint_webhookCallbacks.fileStored",
-      "description": "file.stored event payload",
-      "displayName": "file.stored",
-      "operationId": "fileStored",
-      "namespace": [
-        "Webhook Callbacks"
-      ],
-      "method": "POST",
-      "path": [
-        "/",
-        "file-stored"
-      ],
-      "headers": [
-        {
-          "key": "X-Uc-Signature",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
-        }
-      ],
-      "payloads": [
-        {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "webhookFilePayload"
-            }
-          }
-        }
-      ],
-      "examples": []
-    },
-    "endpoint_webhookCallbacks.fileDeleted": {
-      "id": "endpoint_webhookCallbacks.fileDeleted",
-      "description": "file.deleted event payload",
-      "displayName": "file.deleted",
-      "operationId": "fileDeleted",
-      "namespace": [
-        "Webhook Callbacks"
-      ],
-      "method": "POST",
-      "path": [
-        "/",
-        "file-deleted"
-      ],
-      "headers": [
-        {
-          "key": "X-Uc-Signature",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
-        }
-      ],
-      "payloads": [
-        {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "webhookFilePayload"
-            }
-          }
-        }
-      ],
-      "examples": []
-    },
-    "endpoint_webhookCallbacks.fileInfoUpdated": {
-      "id": "endpoint_webhookCallbacks.fileInfoUpdated",
-      "description": "file.info_updated event payload",
-      "displayName": "file.info_updated",
-      "operationId": "fileInfoUpdated",
-      "namespace": [
-        "Webhook Callbacks"
-      ],
-      "method": "POST",
-      "path": [
-        "/",
-        "file-info-updated"
-      ],
-      "headers": [
-        {
-          "key": "X-Uc-Signature",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          },
-          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
-        }
-      ],
-      "payloads": [
-        {
-          "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "webhookFileInfoUpdatedPayload"
-            }
-          }
-        }
-      ],
-      "examples": []
-    },
     "endpoint_webhook.updateWebhook": {
       "id": "endpoint_webhook.updateWebhook",
       "description": "Update webhook attributes.",
@@ -10911,13 +10685,26 @@
               {
                 "key": "problems",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [],
-                  "extraProperties": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "uuid"
+                  "type": "alias",
+                  "value": {
+                    "type": "map",
+                    "keyShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "uuid"
+                        }
+                      }
                     }
                   }
                 },
@@ -11716,13 +11503,26 @@
               {
                 "key": "problems",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [],
-                  "extraProperties": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "uuid"
+                  "type": "alias",
+                  "value": {
+                    "type": "map",
+                    "keyShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "uuid"
+                        }
+                      }
                     }
                   }
                 },
@@ -12464,7 +12264,243 @@
     }
   },
   "websockets": {},
-  "webhooks": {},
+  "webhooks": {
+    "endpoint_webhookCallbacks.fileUploaded": {
+      "id": "endpoint_webhookCallbacks.fileUploaded",
+      "description": "file.uploaded event payload",
+      "displayName": "file.uploaded",
+      "operationId": "fileUploaded",
+      "namespace": [
+        "Webhook Callbacks"
+      ],
+      "method": "POST",
+      "path": [
+        "/",
+        "file-uploaded"
+      ],
+      "headers": [
+        {
+          "key": "X-Uc-Signature",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
+        }
+      ],
+      "payloads": [
+        {
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "webhookFilePayload"
+            }
+          }
+        }
+      ],
+      "examples": []
+    },
+    "endpoint_webhookCallbacks.fileInfected": {
+      "id": "endpoint_webhookCallbacks.fileInfected",
+      "description": "file.infected event payload",
+      "displayName": "file.infected",
+      "operationId": "fileInfected",
+      "namespace": [
+        "Webhook Callbacks"
+      ],
+      "method": "POST",
+      "path": [
+        "/",
+        "file-infected"
+      ],
+      "headers": [
+        {
+          "key": "X-Uc-Signature",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
+        }
+      ],
+      "payloads": [
+        {
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "webhookFilePayload"
+            }
+          }
+        }
+      ],
+      "examples": []
+    },
+    "endpoint_webhookCallbacks.fileStored": {
+      "id": "endpoint_webhookCallbacks.fileStored",
+      "description": "file.stored event payload",
+      "displayName": "file.stored",
+      "operationId": "fileStored",
+      "namespace": [
+        "Webhook Callbacks"
+      ],
+      "method": "POST",
+      "path": [
+        "/",
+        "file-stored"
+      ],
+      "headers": [
+        {
+          "key": "X-Uc-Signature",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
+        }
+      ],
+      "payloads": [
+        {
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "webhookFilePayload"
+            }
+          }
+        }
+      ],
+      "examples": []
+    },
+    "endpoint_webhookCallbacks.fileDeleted": {
+      "id": "endpoint_webhookCallbacks.fileDeleted",
+      "description": "file.deleted event payload",
+      "displayName": "file.deleted",
+      "operationId": "fileDeleted",
+      "namespace": [
+        "Webhook Callbacks"
+      ],
+      "method": "POST",
+      "path": [
+        "/",
+        "file-deleted"
+      ],
+      "headers": [
+        {
+          "key": "X-Uc-Signature",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
+        }
+      ],
+      "payloads": [
+        {
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "webhookFilePayload"
+            }
+          }
+        }
+      ],
+      "examples": []
+    },
+    "endpoint_webhookCallbacks.fileInfoUpdated": {
+      "id": "endpoint_webhookCallbacks.fileInfoUpdated",
+      "description": "file.info_updated event payload",
+      "displayName": "file.info_updated",
+      "operationId": "fileInfoUpdated",
+      "namespace": [
+        "Webhook Callbacks"
+      ],
+      "method": "POST",
+      "path": [
+        "/",
+        "file-info-updated"
+      ],
+      "headers": [
+        {
+          "key": "X-Uc-Signature",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Optional header with an HMAC-SHA256 signature that is sent to the `target_url`,\nif the webhook has a `signing_secret` associated with it.\n"
+        }
+      ],
+      "payloads": [
+        {
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "webhookFileInfoUpdatedPayload"
+            }
+          }
+        }
+      ],
+      "examples": []
+    }
+  },
   "types": {
     "addonExecutionStatus": {
       "name": "addonExecutionStatus",
@@ -13068,7 +13104,9 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
           }
         }
       },
@@ -14120,7 +14158,8 @@
           "type": "primitive",
           "value": {
             "type": "string",
-            "format": "uri"
+            "format": "uri",
+            "maxLength": 255
           }
         }
       },
@@ -14172,7 +14211,8 @@
           "type": "primitive",
           "value": {
             "type": "string",
-            "format": "password"
+            "format": "password",
+            "maxLength": 32
           }
         }
       },
@@ -15479,15 +15519,15 @@
       "name": "Webhook",
       "displayName": "Webhook"
     },
-    "webhookCallbacks": {
-      "id": "webhookCallbacks",
-      "name": "Webhook Callbacks",
-      "displayName": "Webhook Callbacks"
-    },
     "conversion": {
       "id": "conversion",
       "name": "Conversion",
       "displayName": "Conversion"
+    },
+    "webhookCallbacks": {
+      "id": "webhookCallbacks",
+      "name": "Webhook Callbacks",
+      "displayName": "Webhook Callbacks"
     }
   },
   "auths": {

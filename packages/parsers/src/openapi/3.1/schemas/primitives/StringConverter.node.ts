@@ -104,6 +104,10 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   }
 
   parse(): void {
+    this.regex = this.input.pattern;
+    this.minLength = this.input.minLength;
+    this.maxLength = this.input.maxLength;
+
     if (this.input.default != null && typeof this.input.default !== "string") {
       this.context.errors.warning({
         message: `Expected default value to be a string. Received ${this.input.default}`,

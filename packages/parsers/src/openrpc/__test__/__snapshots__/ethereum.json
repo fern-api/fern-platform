@@ -151,7 +151,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x[a-fA-F\\d]{64}$"
           }
         }
       },
@@ -659,7 +660,8 @@
               "value": {
                 "type": "primitive",
                 "value": {
-                  "type": "string"
+                  "type": "string",
+                  "regex": "^0x[a-fA-F\\d]+$"
                 }
               }
             },
@@ -1115,7 +1117,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x[a-fA-F\\d]{64}$"
           }
         }
       },
@@ -1156,7 +1159,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x[a-fA-F0-9]+$"
           }
         }
       },
@@ -1169,7 +1173,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x[a-fA-F\\d]{40}$"
           }
         }
       }
@@ -1198,7 +1203,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x([a-fA-F0-9]?)+$"
           }
         }
       },
@@ -1211,7 +1217,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x([a-fA-F\\d]{64})?$"
           }
         }
       },
@@ -1224,7 +1231,8 @@
         "value": {
           "type": "primitive",
           "value": {
-            "type": "string"
+            "type": "string",
+            "regex": "^0x([a-fA-F0-9]?)+$"
           }
         }
       },
@@ -1293,7 +1301,8 @@
                   "value": {
                     "type": "primitive",
                     "value": {
-                      "type": "string"
+                      "type": "string",
+                      "regex": "^0x[a-fA-F\\d]+$"
                     }
                   }
                 },
@@ -1454,7 +1463,8 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "^[\\d]+$"
               }
             }
           },
@@ -1582,7 +1592,8 @@
             "value": {
               "type": "primitive",
               "value": {
-                "type": "string"
+                "type": "string",
+                "regex": "^0x[a-fA-F\\d]+$"
               }
             }
           },
