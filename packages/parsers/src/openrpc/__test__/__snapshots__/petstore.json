@@ -83,7 +83,7 @@
   "endpoints": {
     "list_pets": {
       "id": "list_pets",
-      "displayName": "list_pets",
+      "displayName": "List all pets",
       "method": "POST",
       "path": [
         {
@@ -93,6 +93,31 @@
       ],
       "pathParameters": [],
       "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "limit",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                "description": "How many items to return at one time (max 100)"
+              }
+            ]
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -115,7 +140,7 @@
     },
     "create_pet": {
       "id": "create_pet",
-      "displayName": "create_pet",
+      "displayName": "Create a pet",
       "method": "POST",
       "path": [
         {
@@ -125,6 +150,43 @@
       ],
       "pathParameters": [],
       "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "newPetName",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Name of pet to create"
+              },
+              {
+                "key": "newPetTag",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Pet tag to create"
+              }
+            ]
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -147,7 +209,7 @@
     },
     "get_pet": {
       "id": "get_pet",
-      "displayName": "get_pet",
+      "displayName": "Info for a specific pet",
       "method": "POST",
       "path": [
         {
@@ -157,6 +219,28 @@
       ],
       "pathParameters": [],
       "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "petId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "PetId"
+                  }
+                },
+                "description": "The id of the pet to retrieve"
+              }
+            ]
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,

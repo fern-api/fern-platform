@@ -45,17 +45,64 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
           }).convert()
         : undefined;
 
+      const resolvedParams = this.method.params
+        ?.map((param) =>
+          resolveContentDescriptorObject(param, this.context.openrpc)
+        )
+        .filter(isNonNullish);
+
+      const requestParameters: FernRegistry.api.latest.ObjectProperty[] =
+        resolvedParams
+          ?.map((param): FernRegistry.api.latest.ObjectProperty | undefined => {
+            const schema = new SchemaConverterNode({
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              input: param.schema as any,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: `params/${param.name}`,
+            }).convert();
+
+            if (!schema) return undefined;
+
+            const valueShape = Array.isArray(schema) ? schema[0] : schema;
+            if (!valueShape) {
+              return undefined;
+            }
+
+            return {
+              key: FernRegistry.PropertyKey(param.name),
+              valueShape,
+              description: param.description,
+              availability: undefined,
+            };
+          })
+          .filter(isNonNullish);
+
+      const request: FernRegistry.api.latest.HttpRequest | undefined =
+        requestParameters.length > 0
+          ? {
+              contentType: "application/json",
+              body: {
+                type: "object",
+                extends: [],
+                properties: requestParameters,
+                extraProperties: undefined,
+              },
+              description: undefined,
+            }
+          : undefined;
+
       // Convert method to HTTP endpoint
       // This is a basic implementation that needs to be expanded
       return {
         id: FernRegistry.EndpointId(this.input.name),
-        displayName: this.input.name,
+        displayName: this.input.summary ?? this.input.name,
         method: "POST",
         path: [{ type: "literal", value: "" }],
         auth: undefined,
         pathParameters: [],
         queryParameters: [],
-        requests: undefined,
+        requests: request != null ? [request] : undefined,
         responses:
           response != null
             ? [
