@@ -41,7 +41,7 @@ export function PlaygroundAudioControls({
       .toString()
       .padStart(2, "0");
     const secs = (seconds % 60).toString().padStart(2, "0");
-    return `${mins}:${secs}`;
+    return mins === "00" ? `${secs}s` : `${mins}:${secs}`;
   };
 
   const handlePlayPause = () => {
@@ -88,6 +88,7 @@ export function PlaygroundAudioControls({
           onClick={handleDownload}
           size="small"
           variant="minimal"
+          disabled={!isLoaded}
         />
       </FernButtonGroup>
     </div>

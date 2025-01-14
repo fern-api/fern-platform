@@ -21,7 +21,7 @@ export function PlaygroundMicrophoneForm({
 
   return (
     <div className={props.className}>
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 shrink items-center justify-between gap-1">
         {audioUrl && !isRecording && (
           <PlaygroundAudioControls audioUrl={audioUrl} />
         )}

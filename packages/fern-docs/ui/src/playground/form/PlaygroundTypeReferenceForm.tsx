@@ -153,9 +153,11 @@ export const PlaygroundTypeReferenceForm =
                   onValueChange={onChange}
                   disabled={disabled}
                 />
-              ) : property?.key === "data" ||
-                property?.key === "user_audio_chunk" ? (
-                // TODO: change display logic to use either edge config or api property for mic support
+              ) : property?.key === "user_audio_chunk" || // user_audio_chunk hardcoded for ElevenLabs use case
+                (primitive.value.type === "string" &&
+                  primitive.value.mimeType?.startsWith("audio/")) ||
+                (primitive.value.type === "base64" &&
+                  primitive.value.mimeType?.startsWith("audio/")) ? (
                 <PlaygroundMicrophoneForm
                   id={id}
                   className="w-full"
