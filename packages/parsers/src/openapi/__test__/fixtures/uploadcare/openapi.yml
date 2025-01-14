@@ -47,6 +47,20 @@
       },
     ],
   "security": [{ "apiKeyAuth": [] }],
+  "x-fern-global-headers": [
+    {
+      "type": "string",
+      "header": "Authorization",
+      "name": "Uploadcare",
+      "description": "With the `Uploadcare` authentication method:\n* `auth-param` is a `public_key:signature` pair, where your `secret_key` is used to derive `signature` but is _not included in every request_ itself.\n* You MUST also provide the `Date` header in [RFC2822](https://datatracker.ietf.org/doc/html/rfc2822#section-3.3) format with the time zone set to `GMT` (see the example below).\n* The date you provide MUST NOT exceed the 15-minute offset from the server time of the API endpoint.\n\n```http\nAccept: application/vnd.uploadcare-v0.7+json\nDate: Fri, 30 Sep 2016 11:10:54 GMT\nAuthorization: Uploadcare public_key:6ff75027649aadd4dc98c1f784444445d1e6ed82\n```\n\nThe `signature` part of the `Uploadcare` authentication method `auth-param` MUST be constructed from the following components:\n* Request type (`POST`, `GET`, `HEAD`, `OPTIONS`)\n* Hex md5 hash of the request body\n* `Content-Type` header value\n* `Date` header value\n* URI including path and parameters\n\nThe parameters are then concatenated in textual order using LF: every value sits in a separate line. The result is then signed with [HMAC/SHA1](https://en.wikipedia.org/wiki/HMAC) using your project's `secret_key`.\n\nTake a look at the Python example of deriving `signature`; the example request is made to get a list of files:\n\n```py\nimport time\nimport hashlib\nimport hmac\nfrom email import utils\n\n# Specifying the project’s key\nSECRET_KEY = 'YOUR_SECRET_KEY'\n\n# Specifying request type\nverb = 'GET'\n\n# Calculate [md5](https://en.wikipedia.org/wiki/MD5) checksum for the request's HTTP body.\n# Note: Taking into account that in our example, we are sending an HTTP GET request,\n# and the request does not have anything in its HTTP body, we use an empty string as an input to the md5 hash function.\n# If we were to send an HTTP POST request with, for example, JSON in the request's body,\n# we would have to pass the JSON as the input to the md5 hash function.\ncontent_md5 = hashlib.md5(b'').hexdigest()\n\n# Content-Type header\ncontent_type = 'application/json'\n\n# Current time, e.g. 1541423681\ntimestamp = int(time.time())\n# Date header ('Mon, 05 Nov 2018 13:14:41 GMT')\ndate_header = utils.formatdate(timestamp, usegmt=True)\n\n# The request URI\nuri = '/files/?limit=1&stored=true'\n\n# Forming the final string: concatenating\nsign_string = '\\n'.join([verb, content_md5, content_type, date_header, uri])\n\n# Calculating the signature,\n# the result may look like this: \"3cbc4d2cf91f80c1ba162b926f8a975e8bec7995\"\nsignature = hmac.new(SECRET_KEY.encode(), sign_string.encode(), hashlib.sha1).hexdigest()\n```\n\nOnce `signature` is derived, it SHOULD be implemented into the request body:\n\n```bash\ncurl  \\\n    -H 'Content-Type: application/json' \\\n    -H 'Accept: application/vnd.uploadcare-v0.7+json' \\\n    -H 'Date: Mon, 05 Nov 2018 13:14:41 GMT' \\\n    -H 'Authorization: Uploadcare YOUR_PUBLIC_KEY:SIGNATURE' \\\n    'https://api.uploadcare.com/files/?limit=1&stored=true'\n```\n",
+    },
+    {
+      "type": "string",
+      "header": "Authorization",
+      "name": "Uploadcare.Simple",
+      "description": "Note: We DO NOT recommend using this authentication method in production.\n\nWith the `Uploadcare.Simple` authentication method, `auth-param` is your `public_key:secret_key` pair. Note that in this scheme, your Uploadcare project `secret_key` is  _included in every request as plain text_.\n\n```http\nAccept: application/vnd.uploadcare-v0.7+json\nAuthorization: Uploadcare.Simple public_key:secret_key\n```\n",
+    },
+  ],
   "paths":
     {
       "/files/":
@@ -2908,21 +2922,7 @@
               "name": "Authorization",
               "x-fern-header": { "prefix": "Uploadcare" },
               "description": "Every request made to `https://api.uploadcare.com/` MUST be signed. HTTPS SHOULD be used with any authorization scheme.\n\nRequests MUST contain the `Authorization` header defining `auth-scheme` and `auth-param`: `Authorization: auth-scheme auth-param`.\n\nEvery request MUST contain the `Accept` header identifying the REST API version: `Accept: application/vnd.uploadcare-v0.7+json`.\n\nThere are two available authorization schemes:\n* For production: `Uploadcare`, a scheme where a `signature`, not your Secret API Key MUST be specified. Signatures SHOULD be generated on backend.\n* For quick tests: `Uploadcare.Simple`, a simple scheme where your [Secret API Key](https://app.uploadcare.com/projects/-/api-keys/) MUST be specified in every request's `auth-param`.\n",
-            },
-          "Uploadcare":
-            {
-              "type": "apiKey",
-              "in": "header",
-              "name": "Uploadcare",
-              "description": "With the `Uploadcare` authentication method:\n* `auth-param` is a `public_key:signature` pair, where your `secret_key` is used to derive `signature` but is _not included in every request_ itself.\n* You MUST also provide the `Date` header in [RFC2822](https://datatracker.ietf.org/doc/html/rfc2822#section-3.3) format with the time zone set to `GMT` (see the example below).\n* The date you provide MUST NOT exceed the 15-minute offset from the server time of the API endpoint.\n\n```http\nAccept: application/vnd.uploadcare-v0.7+json\nDate: Fri, 30 Sep 2016 11:10:54 GMT\nAuthorization: Uploadcare public_key:6ff75027649aadd4dc98c1f784444445d1e6ed82\n```\n\nThe `signature` part of the `Uploadcare` authentication method `auth-param` MUST be constructed from the following components:\n* Request type (`POST`, `GET`, `HEAD`, `OPTIONS`)\n* Hex md5 hash of the request body\n* `Content-Type` header value\n* `Date` header value\n* URI including path and parameters\n\nThe parameters are then concatenated in textual order using LF: every value sits in a separate line. The result is then signed with [HMAC/SHA1](https://en.wikipedia.org/wiki/HMAC) using your project's `secret_key`.\n\nTake a look at the Python example of deriving `signature`; the example request is made to get a list of files:\n\n```py\nimport time\nimport hashlib\nimport hmac\nfrom email import utils\n\n# Specifying the project’s key\nSECRET_KEY = 'YOUR_SECRET_KEY'\n\n# Specifying request type\nverb = 'GET'\n\n# Calculate [md5](https://en.wikipedia.org/wiki/MD5) checksum for the request's HTTP body.\n# Note: Taking into account that in our example, we are sending an HTTP GET request,\n# and the request does not have anything in its HTTP body, we use an empty string as an input to the md5 hash function.\n# If we were to send an HTTP POST request with, for example, JSON in the request's body,\n# we would have to pass the JSON as the input to the md5 hash function.\ncontent_md5 = hashlib.md5(b'').hexdigest()\n\n# Content-Type header\ncontent_type = 'application/json'\n\n# Current time, e.g. 1541423681\ntimestamp = int(time.time())\n# Date header ('Mon, 05 Nov 2018 13:14:41 GMT')\ndate_header = utils.formatdate(timestamp, usegmt=True)\n\n# The request URI\nuri = '/files/?limit=1&stored=true'\n\n# Forming the final string: concatenating\nsign_string = '\\n'.join([verb, content_md5, content_type, date_header, uri])\n\n# Calculating the signature,\n# the result may look like this: \"3cbc4d2cf91f80c1ba162b926f8a975e8bec7995\"\nsignature = hmac.new(SECRET_KEY.encode(), sign_string.encode(), hashlib.sha1).hexdigest()\n```\n\nOnce `signature` is derived, it SHOULD be implemented into the request body:\n\n```bash\ncurl  \\\n    -H 'Content-Type: application/json' \\\n    -H 'Accept: application/vnd.uploadcare-v0.7+json' \\\n    -H 'Date: Mon, 05 Nov 2018 13:14:41 GMT' \\\n    -H 'Authorization: Uploadcare YOUR_PUBLIC_KEY:SIGNATURE' \\\n    'https://api.uploadcare.com/files/?limit=1&stored=true'\n```\n",
-            },
-          "Uploadcare.Simple":
-            {
-              "type": "apiKey",
-              "in": "header",
-              "name": "Uploadcare.Simple",
-              "description": "Note: We DO NOT recommend using this authentication method in production.\n\nWith the `Uploadcare.Simple` authentication method, `auth-param` is your `public_key:secret_key` pair. Note that in this scheme, your Uploadcare project `secret_key` is  _included in every request as plain text_.\n\n```http\nAccept: application/vnd.uploadcare-v0.7+json\nAuthorization: Uploadcare.Simple public_key:secret_key\n```\n",
-            },
+            }
         },
       "responses":
         {

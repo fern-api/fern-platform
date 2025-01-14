@@ -1,14 +1,9 @@
-import type { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { BaseApiConverterNode } from "../BaseApiConverter.node";
-import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi";
-
-export abstract class BaseOpenrpcConverterNodeContext extends BaseOpenApiV3_1ConverterNodeContext {
-  public abstract openrpc: OpenrpcDocument;
-}
+import { OpenrpcContext } from "./OpenrpcContext";
 
 export type BaseOpenrpcConverterNodeConstructorArgs<Input> = {
   input: Input;
-  context: BaseOpenrpcConverterNodeContext;
+  context: OpenrpcContext;
   readonly accessPath: string[];
   readonly pathId: string;
 };
@@ -17,7 +12,7 @@ export abstract class BaseOpenrpcConverterNode<
   Input,
   Output,
 > extends BaseApiConverterNode<Input, Output> {
-  protected override readonly context: BaseOpenrpcConverterNodeContext;
+  protected override readonly context: OpenrpcContext;
   protected readonly accessPath: string[];
   protected readonly pathId: string;
 

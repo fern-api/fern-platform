@@ -80,7 +80,265 @@
       }
     }
   },
-  "endpoints": {},
+  "endpoints": {
+    "list_pets": {
+      "id": "list_pets",
+      "displayName": "List all pets",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": ""
+        }
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "limit",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer",
+                      "minimum": 1
+                    }
+                  }
+                },
+                "description": "How many items to return at one time (max 100)"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pets"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "listPetExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": [
+              1
+            ]
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "listPetResultExample",
+              "value": [
+                {
+                  "id": 7,
+                  "name": "fluffy",
+                  "tag": "poodle"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "operationId": "list_pets",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": [],
+      "namespace": []
+    },
+    "create_pet": {
+      "id": "create_pet",
+      "displayName": "Create a pet",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": ""
+        }
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "newPetName",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Name of pet to create"
+              },
+              {
+                "key": "newPetTag",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Pet tag to create"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "PetId"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "createPetExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": [
+              "fluffy",
+              "poodle"
+            ]
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "listPetResultExample",
+              "value": 7
+            }
+          }
+        }
+      ],
+      "operationId": "create_pet",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": [],
+      "namespace": []
+    },
+    "get_pet": {
+      "id": "get_pet",
+      "displayName": "Info for a specific pet",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": ""
+        }
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "petId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "PetId"
+                  }
+                },
+                "description": "The id of the pet to retrieve"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Pet"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "getPetExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": [
+              7
+            ]
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "getPetExampleResult",
+              "value": {
+                "name": "fluffy",
+                "tag": "poodle",
+                "id": 7
+              }
+            }
+          }
+        }
+      ],
+      "operationId": "get_pet",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": [],
+      "namespace": []
+    }
+  },
   "websockets": {},
   "webhooks": {},
   "subpackages": {},
