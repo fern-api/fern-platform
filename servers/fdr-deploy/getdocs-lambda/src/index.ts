@@ -43,7 +43,6 @@ async function checkUserBelongsToOrg({
   }
 }
 
-// dummy change
 export const handler: APIGatewayProxyHandler = async (event) => {
   const { url } = JSON.parse(event.body || "") as GetDocsEvent;
 
