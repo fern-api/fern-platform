@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { v4 } from "uuid";
 import { FernRegistry } from "../../client/generated";
@@ -6,11 +7,14 @@ import {
   BaseOpenrpcConverterNode,
   BaseOpenrpcConverterNodeConstructorArgs,
 } from "../BaseOpenrpcConverter.node";
+import { resolveMethodReference } from "../utils/resolveMethodReference";
+import { MethodConverterNode } from "./MethodConverter.node";
 
 export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
   OpenrpcDocument,
   FernRegistry.api.latest.ApiDefinition
 > {
+  methods: MethodConverterNode[] = [];
   components: ComponentsConverterNode | undefined;
 
   constructor(args: BaseOpenrpcConverterNodeConstructorArgs<OpenrpcDocument>) {
@@ -19,9 +23,28 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
   }
 
   parse(): void {
-    if (this.context.document.components != null) {
+    if (this.input.methods != null) {
+      for (const method of this.input.methods) {
+        const resolvedMethod = resolveMethodReference(
+          method,
+          this.context.openrpc
+        );
+        if (resolvedMethod == null) {
+          continue;
+        }
+        this.methods.push(
+          new MethodConverterNode({
+            input: resolvedMethod,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "methods",
+          })
+        );
+      }
+    }
+    if (this.context.openrpc.components != null) {
       this.components = new ComponentsConverterNode({
-        input: this.context.document.components,
+        input: this.context.openrpc.components,
         context: this.context,
         accessPath: this.accessPath,
         pathId: "components",
@@ -33,12 +56,22 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
     const apiDefinitionId = v4();
     const types = this.components?.convert();
 
+    console.log(this.methods?.length);
+
+    const methods = this.methods
+      ?.map((method) => {
+        return method.convert();
+      })
+      .filter(isNonNullish);
+
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),
       types: Object.fromEntries(
         Object.entries(types ?? {}).map(([id, type]) => [id, type])
       ),
-      endpoints: {},
+      endpoints: Object.fromEntries(
+        methods?.map((method) => [method.id, method]) ?? []
+      ),
       websockets: {},
       webhooks: {},
       subpackages: {},
