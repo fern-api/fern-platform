@@ -4,6 +4,7 @@ import { ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
+import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
 
 export interface PlaygroundMicrophoneFormProps extends FernInputProps {
   onAudioData?: (base64Data: string) => void;
@@ -14,13 +15,16 @@ export function PlaygroundMicrophoneForm({
   ...props
 }: PlaygroundMicrophoneFormProps): ReactElement {
   const [
-    { isRecording, elapsedTime, volume },
+    { isRecording, elapsedTime, volume, audioUrl },
     { startRecording, stopRecording },
   ] = useAudioRecorder(({ base64 }) => onAudioData?.(base64));
 
   return (
     <div className={props.className}>
       <div className="flex items-center gap-2">
+        {audioUrl && !isRecording && (
+          <PlaygroundAudioControls audioUrl={audioUrl} />
+        )}
         <div className="relative flex-1">
           <AnimatePresence initial={false}>
             {!isRecording && (
@@ -73,6 +77,7 @@ export function PlaygroundMicrophoneForm({
               <Microphone />
             )
           }
+          size="small"
           variant="minimal"
           intent={isRecording ? "danger" : "primary"}
           onClick={isRecording ? stopRecording : startRecording}

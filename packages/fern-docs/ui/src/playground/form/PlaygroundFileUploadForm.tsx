@@ -11,6 +11,7 @@ import numeral from "numeral";
 import { ChangeEvent, DragEventHandler, memo, useRef, useState } from "react";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
+import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
 
 export interface PlaygroundFileUploadFormProps {
   id: string;
@@ -35,7 +36,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     const [drag, setDrag] = useState(false);
     const ref = useRef<HTMLInputElement>(null);
     const [
-      { isRecording, elapsedTime, volume },
+      { isRecording, elapsedTime, volume, audioUrl },
       { startRecording, stopRecording },
     ] = useAudioRecorder(({ file }) => onValueChange([file]));
 
@@ -150,12 +151,17 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     </span>
                   </div>
                   <FernButtonGroup className="-mr-2">
-                    <FernButton
-                      text="Change"
-                      onClick={() => ref.current?.click()}
-                      size="small"
-                      variant="minimal"
-                    />
+                    {audioUrl && (
+                      <PlaygroundAudioControls audioUrl={audioUrl} />
+                    )}
+                    {!audioUrl && (
+                      <FernButton
+                        text="Change"
+                        onClick={() => ref.current?.click()}
+                        size="small"
+                        variant="minimal"
+                      />
+                    )}
                     {allowAudioRecording && (
                       <FernButton
                         icon={<Microphone />}

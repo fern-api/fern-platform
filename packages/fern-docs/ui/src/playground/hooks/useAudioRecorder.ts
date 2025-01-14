@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import fixWebmDuration from "webm-duration-fix";
 
 interface AudioRecorderState {
   isRecording: boolean;
   elapsedTime: number;
   volume: number;
+  audioUrl: string | null;
 }
 
 interface AudioRecorderControls {
@@ -23,6 +25,8 @@ export function useAudioRecorder(
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number>();
   const chunksRef = useRef<Blob[]>([]);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const mimeType = "audio/webm;codecs=opus";
 
   const startRecording = useCallback(async () => {
     try {
@@ -31,7 +35,7 @@ export function useAudioRecorder(
 
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const recorder = new MediaRecorder(stream, {
-        mimeType: "audio/webm;codecs=opus",
+        mimeType,
       });
 
       // for animation only:
@@ -57,11 +61,17 @@ export function useAudioRecorder(
       };
 
       recorder.onstop = async () => {
-        const file = new File(
-          chunksRef.current,
-          `recording-${Date.now()}.webm`,
-          { type: "audio/webm;codecs=opus" }
+        const fixedBlob = await fixWebmDuration(
+          new Blob([...chunksRef.current], {
+            type: mimeType,
+          })
         );
+        const file = new File([fixedBlob], `recording-${Date.now()}.webm`, {
+          type: mimeType,
+        });
+
+        const url = URL.createObjectURL(file);
+        setAudioUrl(url);
 
         const toBase64 = (file: File) =>
           new Promise((resolve, reject) => {
@@ -113,8 +123,16 @@ export function useAudioRecorder(
     };
   }, [isRecording, mediaRecorder, stopRecording]);
 
+  useEffect(() => {
+    return () => {
+      if (audioUrl) {
+        URL.revokeObjectURL(audioUrl);
+      }
+    };
+  }, [audioUrl]);
+
   return [
-    { isRecording, elapsedTime, volume },
+    { isRecording, elapsedTime, volume, audioUrl },
     { startRecording, stopRecording },
   ];
 }

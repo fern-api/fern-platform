@@ -89,6 +89,7 @@ types:
       minLength: optional<integer>
       maxLength: optional<integer>
       default: optional<string>
+      mimeType: optional<string>
 
   LongType:
     properties:
@@ -111,6 +112,7 @@ types:
   Base64Type:
     properties:
       default: optional<base64>
+      mimeType: optional<string>
 
   DateType:
     properties:
