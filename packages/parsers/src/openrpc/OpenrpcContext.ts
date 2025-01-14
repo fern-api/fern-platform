@@ -6,7 +6,7 @@ import { BaseOpenApiV3_1ConverterNodeContext } from "../openapi";
 export declare namespace OpenrpcContext {
   interface Args {
     openrpc: OpenrpcDocument;
-    logger?: Logger;
+    logger: Logger;
   }
 }
 
@@ -15,10 +15,9 @@ export class OpenrpcContext extends BaseOpenApiV3_1ConverterNodeContext {
   public override logger: Logger;
 
   constructor(args: OpenrpcContext.Args) {
-    const logger = args.logger ?? console;
     super();
     this.openrpc = args.openrpc;
-    this.logger = logger;
+    this.logger = args.logger;
   }
 
   public get document(): OpenAPIV3_1.Document {
