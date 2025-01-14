@@ -90,7 +90,7 @@
                     "in": "query",
                     "name": "limit",
                     "description": "A preferred amount of files in a list for a single response. Defaults to 100, while the maximum is 1000.",
-                    "schema": { "type": "number", "maximum": 1000, "minimum": 1, "example": 100, "default": 100 },
+                    "schema": { "type": "integer", "maximum": 1000, "minimum": 1, "example": 100, "default": 100 },
                   },
                   {
                     "in": "query",
