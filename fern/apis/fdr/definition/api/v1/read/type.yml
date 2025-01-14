@@ -89,7 +89,6 @@ types:
       minLength: optional<integer>
       maxLength: optional<integer>
       default: optional<string>
-      mimeType: optional<string>
 
   LongType:
     properties:

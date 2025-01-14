@@ -7,5 +7,4 @@ export interface StringType {
     minLength: number | undefined;
     maxLength: number | undefined;
     default: string | undefined;
-    mimeType: string | undefined;
 }
