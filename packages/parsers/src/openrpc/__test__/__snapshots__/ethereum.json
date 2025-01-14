@@ -3699,6 +3699,7 @@
       "errors": [],
       "operationId": "eth_submitHashrate",
       "environments": [],
+      "availability": "Deprecated",
       "requestHeaders": [],
       "responseHeaders": [],
       "namespace": []
