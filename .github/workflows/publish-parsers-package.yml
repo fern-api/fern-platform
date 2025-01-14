@@ -1,0 +1,44 @@
+name: Publish Parsers Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/parsers/package.json'
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # This helps turbo resolve changes faster
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Check package.json changes
+        id: check-version
+        run: |
+          CHANGED=$(git diff HEAD^ HEAD -- packages/parsers/package.json | grep '"version":' || true)
+          if [ ! -z "$CHANGED" ]; then
+            echo "version_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "version_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies
+        if: steps.check-version.outputs.version_changed == 'true'
+        run: pnpm install
+
+      - name: Compile package
+        if: steps.check-version.outputs.version_changed == 'true'
+        run: pnpm --filter @fern-api/docs-parsers compile
+
+      - name: Publish to npm
+        if: steps.check-version.outputs.version_changed == 'true'
+        run: pnpm --filter @fern-api/docs-parsers publish --no-git-checks --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
