@@ -1,10 +1,10 @@
 import { track } from "@/server/analytics/posthog";
-import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { openaiApiKey, turbopufferApiKey } from "@/server/env-variables";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { createAmazonBedrock } from "@ai-sdk/amazon-bedrock";
 import { createOpenAI } from "@ai-sdk/openai";
+import { safeVerifyFernJWTConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { createDefaultSystemPrompt } from "@fern-docs/search-server";
 import {

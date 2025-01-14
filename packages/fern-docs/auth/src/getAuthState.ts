@@ -1,18 +1,11 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { AuthEdgeConfig, FernUser } from "@fern-docs/auth";
-import {
-  PreviewUrlAuth,
-  getAuthEdgeConfig,
-  getPreviewUrlAuthConfig,
-} from "@fern-docs/edge-config";
-import { withoutStaging } from "@fern-docs/utils";
-import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
-import { getOrgMetadataForDomain } from "./metadata-for-url";
 import { getOryAuthorizationUrl } from "./ory";
+import { removeTrailingSlash } from "./remove-trailing-slash";
 import { getReturnToQueryParam } from "./return-to";
+import type { AuthEdgeConfig, FernUser, PreviewUrlAuth } from "./types";
 import { getWebflowAuthorizationUrl } from "./webflow";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import { handleWorkosAuth } from "./workos-handler";
@@ -165,20 +158,29 @@ export async function getAuthStateInternal({
  * @param request - the request to check the headers / cookies
  * @param next - the function to call if the user is logged in and the session is valid for the current pathname
  */
-export async function getAuthState(
-  domain: string,
-  host: string,
-  fernToken: string | undefined,
-  pathname?: string,
-  authConfig?: AuthEdgeConfig,
-  setFernToken?: (token: string) => void
-): Promise<AuthState & DomainAndHost> {
-  authConfig ??= await getAuthEdgeConfig(domain);
-  const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
-  const previewAuthConfig =
-    orgMetadata != null
-      ? await getPreviewUrlAuthConfig(orgMetadata)
-      : undefined;
+export async function getAuthState({
+  domain,
+  host,
+  fernToken,
+  pathname,
+  authConfig,
+  previewAuthConfig,
+  setFernToken,
+}: {
+  orgId?: string;
+  domain: string;
+  host: string;
+  fernToken: string | undefined;
+  pathname?: string;
+  authConfig?: AuthEdgeConfig;
+  previewAuthConfig?: PreviewUrlAuth;
+  isPreview?: boolean;
+  setFernToken?: (token: string) => void;
+}): Promise<AuthState & DomainAndHost> {
+  // const previewAuthConfig =
+  //   orgId && isPreview
+  //     ? await getPreviewUrlAuthConfig({ isPreviewUrl: true, orgId })
+  //     : undefined;
 
   const authState = await getAuthStateInternal({
     host,

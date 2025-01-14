@@ -1,15 +1,20 @@
-import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { withSecureCookie } from "@/server/auth/with-secure-cookie";
-import { getWorkOSClientId, workos } from "@/server/auth/workos";
-import { encryptSession } from "@/server/auth/workos-session";
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import {
+  encryptSession,
+  getReturnToQueryParam,
+  withSecureCookie,
+} from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  getWorkOSClientId,
+  workos,
+} from "../../../../../../../../auth/src/workos";
 
 export const runtime = "edge";
 

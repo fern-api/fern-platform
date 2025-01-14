@@ -1,5 +1,5 @@
 import { withoutStaging } from "@fern-docs/utils";
-import { get } from "@vercel/edge-config";
+import { createClient } from "@vercel/edge-config";
 import { z } from "zod";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -14,9 +14,11 @@ export type LaunchDarklyEdgeConfig = z.infer<
 >;
 
 export async function getLaunchDarklySettings(
-  domain: string
+  domain: string,
+  edgeConfigUrl = process.env.EDGE_CONFIG
 ): Promise<LaunchDarklyEdgeConfig | undefined> {
+  const client = createClient(edgeConfigUrl);
   const config =
-    await get<Record<string, LaunchDarklyEdgeConfig>>("launchdarkly");
+    await client.get<Record<string, LaunchDarklyEdgeConfig>>("launchdarkly");
   return config?.[domain] ?? config?.[withoutStaging(domain)];
 }

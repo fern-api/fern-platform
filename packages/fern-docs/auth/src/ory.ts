@@ -1,10 +1,10 @@
+import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
+import urlJoin from "url-join";
 import {
   OAuthTokenResponseSchema,
   type OAuth2Ory,
   type OAuthTokenResponse,
-} from "@fern-docs/auth";
-import { JWTPayload, createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
-import urlJoin from "url-join";
+} from "./types";
 
 interface TokenInfo {
   access_token: string;

@@ -1,4 +1,4 @@
-import { AuthEdgeConfig } from "@fern-docs/auth";
+import { AuthEdgeConfig } from "./types";
 
 // by default, we use "state" as a query parameter for returning the user to the original page after login.
 // this is the most compatible query parameter used by auth providers, but it's not the correct usage of the state query parameter.

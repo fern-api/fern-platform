@@ -2,10 +2,14 @@
  * In order to prevent open-redirection, we need to curate a list of allowed domains where the server can redirect to.
  */
 
-import { AuthEdgeConfig, OAuth2, SSOWorkOS } from "@fern-docs/auth";
-import { PreviewUrlAuth } from "@fern-docs/edge-config";
 import { compact } from "es-toolkit/array";
 import { UnreachableCaseError } from "ts-essentials";
+import type {
+  AuthEdgeConfig,
+  OAuth2,
+  PreviewUrlAuth,
+  SSOWorkOS,
+} from "./types";
 
 const WORKOS_API_URL = "https://api.workos.com";
 const WEBFLOW_API_URL = "https://webflow.com";

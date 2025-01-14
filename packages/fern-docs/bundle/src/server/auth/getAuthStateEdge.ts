@@ -1,7 +1,12 @@
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { getAuthState } from "@fern-docs/auth";
+import {
+  getAuthEdgeConfig,
+  getPreviewUrlAuthConfig,
+} from "@fern-docs/edge-config";
+import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { NextRequest } from "next/server";
 import { getDocsDomainEdge, getHostEdge } from "../xfernhost/edge";
-import { getAuthState } from "./getAuthState";
+import { getOrgMetadataForDomain } from "./metadata-for-url";
 
 /**
  * @param request - the request to check the headers / cookies
@@ -15,12 +20,19 @@ export async function getAuthStateEdge(
   const domain = getDocsDomainEdge(request);
   const host = getHostEdge(request);
   const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
-  return getAuthState(
+  const [authConfig, previewAuthConfig] = await Promise.all([
+    getAuthEdgeConfig(domain),
+    getOrgMetadataForDomain(withoutStaging(domain)).then((metadata) =>
+      metadata ? getPreviewUrlAuthConfig(metadata) : undefined
+    ),
+  ]);
+  return getAuthState({
     domain,
     host,
-    fern_token,
+    fernToken: fern_token,
     pathname,
-    undefined,
-    setFernToken
-  );
+    setFernToken,
+    authConfig,
+    previewAuthConfig,
+  });
 }

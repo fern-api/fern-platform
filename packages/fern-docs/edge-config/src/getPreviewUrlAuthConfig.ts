@@ -1,22 +1,5 @@
-import { get } from "@vercel/edge-config";
-import { z } from "zod";
-
-const WorkosAuthSchema = z.object({
-  type: z.literal("workos"),
-  org: z.string(),
-});
-
-const PreviewUrlAuthSchema = z.discriminatedUnion("type", [
-  WorkosAuthSchema,
-  // Add more auth types here as needed
-]);
-
-export type PreviewUrlAuth = z.infer<typeof PreviewUrlAuthSchema>;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const PreviewUrlAuthConfigSchema = z.record(PreviewUrlAuthSchema);
-
-type PreviewUrlAuthConfig = z.infer<typeof PreviewUrlAuthConfigSchema>;
+import type { PreviewUrlAuth, PreviewUrlAuthConfig } from "@fern-docs/auth";
+import { createClient } from "@vercel/edge-config";
 
 export interface Metadata {
   isPreviewUrl: boolean;
@@ -24,12 +7,14 @@ export interface Metadata {
 }
 
 export async function getPreviewUrlAuthConfig(
-  metadata: Metadata
+  metadata: Metadata,
+  edgeConfigUrl = process.env.EDGE_CONFIG
 ): Promise<PreviewUrlAuth | undefined> {
   if (!metadata.isPreviewUrl) {
     return undefined;
   }
-  const config = await get<PreviewUrlAuthConfig>("authed-previews");
+  const client = createClient(edgeConfigUrl);
+  const config = await client.get<PreviewUrlAuthConfig>("authed-previews");
   return config?.[metadata.orgId];
 }
 

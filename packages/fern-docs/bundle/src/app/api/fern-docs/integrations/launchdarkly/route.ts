@@ -1,5 +1,5 @@
-import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { safeVerifyFernJWTConfig } from "@fern-docs/auth";
 import {
   LaunchDarklyEdgeConfig,
   getAuthEdgeConfig,

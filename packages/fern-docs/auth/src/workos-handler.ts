@@ -1,7 +1,7 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import urlJoin from "url-join";
 import { AuthState, getWorkosRbacRoles } from "./getAuthState";
+import { removeTrailingSlash } from "./remove-trailing-slash";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import {
   encryptSession,
@@ -74,10 +74,7 @@ export async function handleWorkosAuth({
   }
 
   const redirectUri = String(
-    new URL(
-      "/api/fern-docs/auth/sso/callback",
-      withDefaultProtocol(process.env.NEXT_PUBLIC_CDN_URI ?? host)
-    )
+    new URL("/api/fern-docs/auth/sso/callback", withDefaultProtocol(host))
   );
   const authorizationUrlParams = getWorkosSSOAuthorizationUrl({
     redirectUri,

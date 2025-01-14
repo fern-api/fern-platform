@@ -5,7 +5,7 @@ import {
   isFern,
   withoutStaging,
 } from "@fern-docs/utils";
-import { getAll } from "@vercel/edge-config";
+import { createClient } from "@vercel/edge-config";
 
 export const runtime = "edge";
 
@@ -47,9 +47,13 @@ type EdgeFlag = (typeof EDGE_FLAGS)[number];
 
 type EdgeConfigResponse = Record<EdgeFlag, string[]>;
 
-export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
+export async function getEdgeFlags(
+  domain: string,
+  edgeConfigUrl = process.env.EDGE_CONFIG
+): Promise<EdgeFlags> {
   try {
-    const config = await getAll<EdgeConfigResponse>(EDGE_FLAGS);
+    const client = createClient(edgeConfigUrl);
+    const config = await client.getAll<EdgeConfigResponse>(EDGE_FLAGS);
 
     const isApiPlaygroundEnabled = checkDomainMatchesCustomers(
       domain,

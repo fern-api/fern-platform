@@ -52,14 +52,13 @@
     "@upstash/qstash": "^2.7.16",
     "@vercel/kv": "^2.0.0",
     "@vercel/otel": "^1.10.0",
-    "@workos-inc/node": "^7.31.0",
     "ai": "^4.0.18",
     "algoliasearch": "^5.13.0",
     "cssnano": "^6.0.3",
     "es-toolkit": "^1.27.0",
     "esbuild": "0.20.2",
     "feed": "^4.2.2",
-    "iron-session": "^8.0.3",
+    "iron-session": "^8.0.4",
     "jose": "^5.2.3",
     "jsonpath": "^1.1.1",
     "next": "npm:@fern-api/next@14.2.9-fork.2",
@@ -72,7 +71,7 @@
     "ts-essentials": "^10.0.1",
     "url-join": "5.0.0",
     "webflow-api": "^2.4.2",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

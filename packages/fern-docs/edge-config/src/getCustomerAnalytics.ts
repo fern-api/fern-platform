@@ -1,4 +1,4 @@
-import { get } from "@vercel/edge-config";
+import { createClient } from "@vercel/edge-config";
 import urlJoin from "url-join";
 
 interface GTMParams {
@@ -14,8 +14,11 @@ interface CustomerAnalytics {
 // deprecated
 export async function getCustomerAnalytics(
   host: string,
-  basePath?: string
+  basePath?: string,
+  edgeConfigUrl = process.env.EDGE_CONFIG
 ): Promise<CustomerAnalytics | undefined> {
-  const config = await get<Record<string, CustomerAnalytics>>("analytics");
+  const client = createClient(edgeConfigUrl);
+  const config =
+    await client.get<Record<string, CustomerAnalytics>>("analytics");
   return config?.[urlJoin(host, basePath ?? "")];
 }

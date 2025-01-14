@@ -1,13 +1,15 @@
 import { AuthEdgeConfigSchema, type AuthEdgeConfig } from "@fern-docs/auth";
 import { withoutStaging } from "@fern-docs/utils";
-import { get } from "@vercel/edge-config";
+import { createClient } from "@vercel/edge-config";
 
 const KEY = "authentication";
 
 export async function getAuthEdgeConfig(
-  currentDomain: string
+  currentDomain: string,
+  edgeConfigUrl = process.env.EDGE_CONFIG
 ): Promise<AuthEdgeConfig | undefined> {
-  const domainToTokenConfigMap = await get<Record<string, any>>(KEY);
+  const client = createClient(edgeConfigUrl);
+  const domainToTokenConfigMap = await client.get<Record<string, any>>(KEY);
   const toRet =
     domainToTokenConfigMap?.[currentDomain] ??
     domainToTokenConfigMap?.[withoutStaging(currentDomain)];

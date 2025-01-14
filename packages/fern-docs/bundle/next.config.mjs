@@ -83,6 +83,7 @@ const nextConfig = {
     hardNavigate404: true,
     optimizePackageImports: [
       "@fern-api/fdr-sdk",
+      "@fern-docs/auth",
       "@fern-docs/ui",
       "@fern-docs/mdx",
       "@fern-docs/components",

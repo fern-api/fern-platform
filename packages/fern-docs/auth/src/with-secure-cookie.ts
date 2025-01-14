@@ -1,4 +1,4 @@
-import type { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import type { ResponseCookie } from "@edge-runtime/cookies";
 
 /**
  *

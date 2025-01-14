@@ -33,11 +33,23 @@
     "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
-    "zod": "^3.23.8"
+    "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-docs/utils": "workspace:*",
+    "@workos-inc/node": "^7.36.3",
+    "es-toolkit": "^1.31.0",
+    "iron-session": "^8.0.4",
+    "jose": "^5.2.3",
+    "qs": "6.12.0",
+    "ts-essentials": "^10.0.1",
+    "url-join": "^5.0.0",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@edge-runtime/cookies": "^6.0.0",
+    "@edge-runtime/types": "^4.0.0",
     "@fern-platform/configs": "workspace:*",
     "@types/node": "^18.7.18",
+    "@types/qs": "6.9.14",
     "depcheck": "^1.4.3",
     "eslint": "^9",
     "prettier": "^3.4.2",

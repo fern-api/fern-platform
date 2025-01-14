@@ -1,13 +1,13 @@
+import { getJwtSecretKey, getWorkOSClientId, workos } from "@fern-docs/auth";
 import { once } from "es-toolkit/function";
 import { sealData, unsealData } from "iron-session";
 import { createRemoteJWKSet, decodeJwt, jwtVerify } from "jose";
-import type {
+import {
   AccessToken,
   NoWorkOSUserInfo,
   WorkOSSession,
   WorkOSUserInfo,
 } from "./interfaces";
-import { getJwtSecretKey, getWorkOSClientId, workos } from "./workos";
 
 // This is adapted from https://github.com/workos/authkit-nextjs/blob/main/src/session.ts
 

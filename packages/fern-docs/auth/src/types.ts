@@ -215,6 +215,15 @@ export const JwksSchema = z.object({
   keys: z.array(JwkSchema).describe("Array of JWKs"),
 });
 
+export const PreviewUrlWorkosAuthSchema = z.object({
+  type: z.literal("workos"),
+  org: z.string(),
+});
+export const PreviewUrlAuthSchema = z.discriminatedUnion("type", [
+  PreviewUrlWorkosAuthSchema,
+  // Add more auth types here as needed
+]);
+
 export type FernUser = z.infer<typeof FernUserSchema>;
 export type AuthEdgeConfig = z.infer<typeof AuthEdgeConfigSchema>;
 export type SSOWorkOS = z.infer<typeof SSOWorkOSSchema>;
@@ -229,3 +238,7 @@ export type OryAccessToken = z.infer<typeof OryAccessTokenSchema>;
 export type Jwk = z.infer<typeof JwkSchema>;
 export type Jwks = z.infer<typeof JwksSchema>;
 export type PathnameViewerRules = z.infer<typeof PathnameViewerRulesSchema>;
+
+export type PreviewUrlAuth = z.infer<typeof PreviewUrlAuthSchema>;
+export const PreviewUrlAuthConfigSchema = z.record(PreviewUrlAuthSchema);
+export type PreviewUrlAuthConfig = z.infer<typeof PreviewUrlAuthConfigSchema>;

@@ -1,11 +1,13 @@
-import { getAllowedRedirectUrls } from "@/server/auth/allowed-redirects";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { FernNextResponse } from "@/server/FernNextResponse";
 import { redirectWithLoginError } from "@/server/redirectWithLoginError";
 import { safeUrl } from "@/server/safeUrl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import {
+  getAllowedRedirectUrls,
+  getReturnToQueryParam,
+  withSecureCookie,
+} from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";

@@ -61,7 +61,7 @@
     "@fern-docs/mdx": "workspace:*",
     "@fern-docs/utils": "workspace:*",
     "@langchain/textsplitters": "^0.1.0",
-    "@turbopuffer/turbopuffer": "^0.5.11",
+    "@turbopuffer/turbopuffer": "^0.5.14",
     "algoliasearch": "^5.13.0",
     "es-toolkit": "^1.27.0",
     "html-entities": "^2.5.2",
@@ -69,7 +69,7 @@
     "marked": "^5.1.0",
     "pnpm": "^9.15.0",
     "ts-essentials": "^10.0.1",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

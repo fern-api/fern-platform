@@ -1,10 +1,14 @@
 import { isCustomDomain } from "@fern-docs/utils";
-import { get } from "@vercel/edge-config";
+import { createClient } from "@vercel/edge-config";
 
-export async function getSeoDisabled(host: string): Promise<boolean> {
+export async function getSeoDisabled(
+  host: string,
+  edgeConfigUrl = process.env.EDGE_CONFIG
+): Promise<boolean> {
   if (!isCustomDomain(host)) {
     return true;
   }
-  const config = (await get<string[]>("seo-disabled")) ?? [];
+  const client = createClient(edgeConfigUrl);
+  const config = (await client.get<string[]>("seo-disabled")) ?? [];
   return config.includes(host);
 }

@@ -1,8 +1,5 @@
-import {
-  withDeleteCookie,
-  withSecureCookie,
-} from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
+import { withDeleteCookie, withSecureCookie } from "@fern-docs/auth";
 import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";

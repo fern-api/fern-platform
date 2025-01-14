@@ -1,10 +1,14 @@
-import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
-import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";
-import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { withSecureCookie } from "@/server/auth/with-secure-cookie";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-docs/auth";
+import {
+  APIKeyInjectionConfig,
+  OryAccessTokenSchema,
+  OryOAuth2Client,
+  getOryAuthorizationUrl,
+  getReturnToQueryParam,
+  safeVerifyFernJWTConfig,
+  withSecureCookie,
+} from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";

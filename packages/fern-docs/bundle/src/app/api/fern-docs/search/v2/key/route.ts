@@ -1,8 +1,8 @@
-import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
+import { safeVerifyFernJWTConfig } from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import {
   DEFAULT_SEARCH_API_KEY_EXPIRATION_SECONDS,

@@ -35,9 +35,9 @@
   "dependencies": {
     "@fern-docs/auth": "workspace:*",
     "@fern-docs/utils": "workspace:*",
-    "@vercel/edge-config": "^1.1.0",
+    "@vercel/edge-config": "^1.4.0",
     "url-join": "5.0.0",
-    "zod": "^3.23.8"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@fern-docs/search-utils": "workspace:*",
