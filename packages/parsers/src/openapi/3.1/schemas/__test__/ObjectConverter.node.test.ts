@@ -47,6 +47,9 @@ describe("ObjectConverterNode", () => {
     it("should handle additionalProperties as boolean true", () => {
       const input: ObjectConverterNode.Input = {
         type: "object",
+        properties: {
+          name: { type: "string" },
+        },
         additionalProperties: true,
         title: "TestObject",
       };
@@ -138,14 +141,28 @@ describe("ObjectConverterNode", () => {
         pathId: "test",
       });
       const converted = node.convert();
+      console.log(JSON.stringify(converted, null, 2));
       expect(converted).toEqual([
         {
-          type: "object",
-          extends: [],
-          properties: [],
-          extraProperties: {
-            type: "unknown",
-            displayName: "TestObject",
+          type: "alias",
+          value: {
+            type: "map",
+            keyShape: {
+              type: "alias",
+              value: {
+                type: "primitive",
+                value: {
+                  type: "string",
+                },
+              },
+            },
+            valueShape: {
+              type: "alias",
+              value: {
+                type: "unknown",
+                displayName: "TestObject",
+              },
+            },
           },
         },
       ]);
