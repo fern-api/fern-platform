@@ -84,6 +84,7 @@ jobs:
           npm install -g aws-cdk
           cd servers/fdr-deploy/getdocs-lambda
           pnpm run build
+          pnpm install
           cd ../
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:

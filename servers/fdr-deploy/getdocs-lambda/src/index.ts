@@ -62,7 +62,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     try {
       await checkUserBelongsToOrg({ authHeader, orgId: "fern" });
     } catch {
-      throw new Error("User does not belong to fern");
+      return {
+        statusCode: 403,
+        body: JSON.stringify({ error: "User does not belong to fern" }),
+      };
     }
 
     // first - try to get from redis cache
