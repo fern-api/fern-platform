@@ -45,7 +45,7 @@ export class GetDocsLambda extends Construct {
     this.lambdaFunction = new lambda.Function(this, "get-docs-lambda", {
       runtime: lambda.Runtime.NODEJS_20_X,
       handler: "index.handler",
-      code: lambda.Code.fromAsset(path.join(__dirname, "../dist")),
+      code: lambda.Code.fromAsset(path.join(__dirname, "getdocs-lambda/dist")),
       vpc: props.vpc,
       securityGroups: [
         rdsProxySecurityGroup,
