@@ -146,6 +146,7 @@ export const PlaygroundTypeReferenceForm =
               htmlFor={id}
             >
               {hasVoiceIdPlaygroundForm && property?.key === "voice_id" ? (
+                // TODO: delete this:
                 <PlaygroundElevenLabsVoiceIdForm
                   id={id}
                   className="w-full"
@@ -183,6 +184,7 @@ export const PlaygroundTypeReferenceForm =
                   resettable={typeof defaultValue === "string"}
                   maxLength={string.maxLength}
                   minLength={string.minLength}
+                  // TODO: add validation UX feedback
                   pattern={string.regex}
                 />
               )}
