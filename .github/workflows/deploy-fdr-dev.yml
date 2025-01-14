@@ -83,8 +83,8 @@ jobs:
           pnpm --filter=@fern-platform/fdr run docker:dev "${git_version}"
           npm install -g aws-cdk
           cd servers/fdr-deploy/getdocs-lambda
-          pnpm run build
           pnpm install
+          pnpm run build
           cd ../
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:

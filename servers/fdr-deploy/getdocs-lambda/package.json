@@ -4,7 +4,7 @@
   "description": "Lambda function to fetch documents via RDS proxy",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp -r node_modules dist/",
     "test": "echo 'test'",
     "watch": "tsc -w"
   },

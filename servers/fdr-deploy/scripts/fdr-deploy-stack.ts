@@ -6,6 +6,7 @@ import {
   CfnOutput,
   Duration,
   Environment,
+  Fn,
   RemovalPolicy,
   Stack,
   StackProps,
@@ -244,24 +245,21 @@ export class FdrDeployStack extends Stack {
       );
 
     // Set up getdocs-lambda, which gets docsDefinition from RDS
-    // const rdsProxyEndpoint = Fn.importValue(
-    //   `fern-${environmentType.toLowerCase()}-rds-proxy-endpoint`
-    // );
-    // const rdsProxySecurityGroupID = Fn.importValue(
-    //   `fern-${environmentType.toLowerCase()}-rds-proxy-security-group-id`
-    // );
-    // const rdsProxyResourceID = Fn.importValue(
-    //   `fern-${environmentType.toLowerCase()}-rds-proxy-resource-id`
-    // );
+    const rdsProxyEndpoint = Fn.importValue(
+      `fern-${environmentType.toLowerCase()}-docs-rds-proxy-endpoint`
+    );
+    const rdsProxySecurityGroupID = Fn.importValue(
+      `fern-${environmentType.toLowerCase()}-docs-rds-proxy-security-group-id`
+    );
+    const rdsProxyResourceID = Fn.importValue(
+      `fern-${environmentType.toLowerCase()}-docs-rds-proxy-resource-id`
+    );
     const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
       vpc,
       environmentType,
-      // rdsProxyEndpoint,
-      // rdsProxySecurityGroupID,
-      // rdsProxyResourceID,
-      rdsProxyEndpoint: "",
-      rdsProxySecurityGroupID: "",
-      rdsProxyResourceID: "",
+      rdsProxyEndpoint,
+      rdsProxySecurityGroupID,
+      rdsProxyResourceID,
       redisEndpoint: fernDocsCacheEndpoint,
       redisSecurityGroupID: fdrSg.securityGroupId,
       cacheSecurityGroupID: redisSecurityGroupID,
