@@ -31,7 +31,7 @@ export class GetDocsLambda extends Construct {
     );
     const redisSecurityGroup = SecurityGroup.fromSecurityGroupId(
       this,
-      "imported-rds-proxy-sg",
+      "imported-redis-proxy-sg",
       props.redisSecurityGroupID
     );
     const cacheSecurityGroup = SecurityGroup.fromSecurityGroupId(
