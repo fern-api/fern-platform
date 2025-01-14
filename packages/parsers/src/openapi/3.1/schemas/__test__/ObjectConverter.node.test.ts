@@ -141,7 +141,6 @@ describe("ObjectConverterNode", () => {
         pathId: "test",
       });
       const converted = node.convert();
-      console.log(JSON.stringify(converted, null, 2));
       expect(converted).toEqual([
         {
           type: "alias",
