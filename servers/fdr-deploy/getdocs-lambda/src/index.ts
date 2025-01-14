@@ -78,36 +78,36 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     if (cachedResponse != null) {
       console.log(`Cache HIT for ${url}`);
       console.log(cachedResponse);
-      // const filesV2 = Object.fromEntries(
-      //   await Promise.all(
-      //     Object.entries(cachedResponse.dbFiles).map(
-      //       async ([fileId, dbFileInfo]) => {
-      //         const presignedUrl =
-      //           await this.app.services.s3.getPresignedDocsAssetsDownloadUrl({
-      //             key: dbFileInfo.s3Key,
-      //             isPrivate:
-      //               cachedResponse.usesPublicS3 === true ? false : true,
-      //           });
+      const parsedResponse = JSON.parse(cachedResponse);
 
-      //         switch (dbFileInfo.type) {
-      //           case "image": {
-      //             const { s3Key, ...image } = dbFileInfo;
-      //             return [fileId, { ...image, url: presignedUrl }];
-      //           }
-      //           default:
-      //             return [fileId, { type: "url", url: presignedUrl }];
-      //         }
-      //       }
-      //     )
-      //   )
-      // );
-      // return {
-      //   ...cachedResponse.response,
-      //   definition: {
-      //     ...cachedResponse.response.definition,
-      //     filesV2,
-      //   },
-      // };
+      const filesV2 = Object.fromEntries(
+        await Promise.all(
+          Object.entries(parsedResponse.dbFiles).map(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            async ([fileId, dbFileInfo]: [string, any]) => {
+              // porting over code from s3service
+              // going to assume that it uses public s3 instead of private
+              const presignedUrl = `${process.env.PUBLIC_DOCS_CDN_URL}/${dbFileInfo.s3Key}`;
+
+              switch (dbFileInfo.type) {
+                case "image": {
+                  const { s3Key, ...image } = dbFileInfo;
+                  return [fileId, { ...image, url: presignedUrl }];
+                }
+                default:
+                  return [fileId, { type: "url", url: presignedUrl }];
+              }
+            }
+          )
+        )
+      );
+      return {
+        ...parsedResponse.response,
+        definition: {
+          ...parsedResponse.response.definition,
+          filesV2,
+        },
+      };
     } else {
       console.log(`Cache MISS for ${url}`);
       console.log("Connecting to RDS");
@@ -161,10 +161,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         }
       }
     }
-    return {
-      statusCode: 500,
-      body: "Internal server error",
-    };
   } else {
     throw new Error("Authorization header was not specified");
   }

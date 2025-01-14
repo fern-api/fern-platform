@@ -16,6 +16,7 @@ interface GetDocsLambdaProps {
   redisSecurityGroupID: string;
   cacheSecurityGroupID: string;
   venusURL: string;
+  publicDocsCdnUrl: string;
 }
 
 export class GetDocsLambda extends Construct {
@@ -57,6 +58,7 @@ export class GetDocsLambda extends Construct {
         REDIS_ENDPOINT: props.redisEndpoint,
         NODE_ENV: props.environmentType.toLowerCase(),
         VENUS_URL: props.venusURL,
+        PUBLIC_DOCS_CDN_URL: props.publicDocsCdnUrl,
       },
       timeout: Duration.seconds(30),
       memorySize: 256,

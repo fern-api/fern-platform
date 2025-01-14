@@ -254,6 +254,11 @@ export class FdrDeployStack extends Stack {
     const rdsProxyResourceID = Fn.importValue(
       `fern-${environmentType.toLowerCase()}-docs-rds-proxy-resource-id`
     );
+    const PUBLIC_DOCS_CDN_URL =
+      environmentType === "DEV2"
+        ? "https://files-dev2.buildwithfern.com"
+        : "https://files.buildwithfern.com";
+
     const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
       vpc,
       environmentType,
@@ -264,11 +269,12 @@ export class FdrDeployStack extends Stack {
       redisSecurityGroupID: fdrSg.securityGroupId,
       cacheSecurityGroupID: redisSecurityGroupID,
       venusURL: `http://venus.${cloudmapNamespaceName}:8080/`,
+      publicDocsCdnUrl: PUBLIC_DOCS_CDN_URL,
     });
 
     const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
       handler: getDocsLambda.lambdaFunction,
-      proxy: false,
+      proxy: true,
     });
 
     const docs = getDocsApi.root.addResource("docs");
