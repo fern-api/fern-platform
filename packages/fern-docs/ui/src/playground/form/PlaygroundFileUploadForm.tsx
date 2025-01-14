@@ -1,11 +1,5 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
-import {
-  Microphone,
-  MicrophoneSpeaking,
-  Page,
-  Undo,
-  Xmark,
-} from "iconoir-react";
+import { Microphone, MicrophoneSpeaking, Page, Xmark } from "iconoir-react";
 import cn from "clsx";
 import numeral from "numeral";
 import { ChangeEvent, DragEventHandler, memo, useRef, useState } from "react";
@@ -25,10 +19,10 @@ export interface PlaygroundFileUploadFormProps {
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
   ({
-    id,
-    propertyKey,
+    // id,
+    // propertyKey,
     type,
-    isOptional,
+    // isOptional,
     onValueChange,
     value,
     allowAudioRecording = true,
@@ -191,3 +185,5 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     );
   }
 );
+
+PlaygroundFileUploadForm.displayName = "PlaygroundFileUploadForm";

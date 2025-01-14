@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export function WaveformAnimation({ volume }: { volume: number }) {
   return (
-    <div className="flex h-full w-full items-center justify-between gap-0.5">
+    <div className="flex size-full items-center justify-between gap-0.5">
       {Array.from({ length: 20 }).map((_, i) => (
         <motion.div
           key={i}

@@ -44,13 +44,13 @@ export function PlaygroundAudioControls({
     return mins === "00" ? `${secs}s` : `${mins}:${secs}`;
   };
 
-  const handlePlayPause = () => {
+  const handlePlayPause = async () => {
     if (!audioRef.current || !audioUrl) return;
 
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      await audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
   };
