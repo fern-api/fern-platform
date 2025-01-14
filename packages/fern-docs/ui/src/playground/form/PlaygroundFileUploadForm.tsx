@@ -170,7 +170,9 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
             </div>
           ) : value == null || value.length === 0 ? (
             <div className="flex flex-col items-center gap-3 p-6">
-              <h5>Drop audio files here to upload</h5>
+              <h5>
+                {`Drop audio file${type === "files" ? "s" : ""} here to upload`}
+              </h5>
               <div className="flex gap-2">
                 <FernButton
                   onClick={() => ref.current?.click()}
