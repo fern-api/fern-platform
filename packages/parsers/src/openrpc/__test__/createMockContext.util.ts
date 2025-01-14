@@ -1,33 +1,8 @@
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
-import { vi } from "vitest";
-import { BaseOpenrpcConverterNodeContext } from "../BaseOpenrpcConverter.node";
+import { OpenrpcContext } from "../OpenrpcContext";
 
-export function createMockContext(
-  document?: OpenrpcDocument
-): BaseOpenrpcConverterNodeContext {
-  return {
-    document: {
-      openapi: "3.1.0",
-      info: {
-        title: "Mock API",
-        version: "1.0.0",
-      },
-      paths: {},
-      components: document.components,
-    },
+export function createMockContext(document?: OpenrpcDocument): OpenrpcContext {
+  return new OpenrpcContext({
     openrpc: document,
-    logger: {
-      info: vi.fn(),
-      warn: vi.fn(),
-      error: vi.fn(),
-      debug: vi.fn(),
-      log: vi.fn(),
-    },
-    errors: {
-      error: vi.fn(),
-      warning: vi.fn(),
-      warnings: [],
-      errors: [],
-    },
-  };
+  });
 }
