@@ -18,23 +18,49 @@ export function PlaygroundAudioControls({
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.onended = () => setIsPlaying(false);
-      audioRef.current.onloadedmetadata = () => {
-        const audioDuration = audioRef.current?.duration;
-        if (audioDuration && !isNaN(audioDuration) && isFinite(audioDuration)) {
-          setDuration(Math.round(audioDuration));
-          setIsLoaded(true);
-        }
-      };
-      audioRef.current.ontimeupdate = () => {
-        const currentTime = audioRef.current?.currentTime;
-        if (currentTime && !isNaN(currentTime) && isFinite(currentTime)) {
-          setCurrentTime(Math.round(currentTime));
-        }
-      };
-    }
-  }, []);
+    setIsPlaying(false);
+    setCurrentTime(0);
+    setDuration(0);
+    setIsLoaded(false);
+  }, [audioUrl]);
+
+  useEffect(() => {
+    if (!audioUrl) return;
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setCurrentTime(0);
+    };
+
+    const handleLoadedMetadata = () => {
+      const audioDuration = audio.duration;
+      if (!isNaN(audioDuration) && isFinite(audioDuration)) {
+        setDuration(Math.round(audioDuration));
+        setIsLoaded(true);
+      }
+    };
+    const handleTimeUpdate = () => {
+      const currentTime = audio.currentTime;
+      if (!isNaN(currentTime) && isFinite(currentTime)) {
+        setCurrentTime(Math.round(currentTime));
+      }
+    };
+
+    audio.load();
+
+    audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, [audioUrl]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -49,10 +75,15 @@ export function PlaygroundAudioControls({
 
     if (isPlaying) {
       audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      await audioRef.current.play();
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error("Error playing audio:", error);
+      }
     }
-    setIsPlaying(!isPlaying);
   };
 
   const handleDownload = () => {

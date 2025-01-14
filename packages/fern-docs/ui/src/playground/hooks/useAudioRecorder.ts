@@ -14,8 +14,8 @@ interface AudioRecorderControls {
 }
 
 export function useAudioRecorder(
-  onAudioData?: (audioData: { base64: string; file: File }) => void
-): [AudioRecorderState, AudioRecorderControls] {
+  onAudioData?: (audioData: { base64: string; file: File; url: string }) => void
+): [Omit<AudioRecorderState, "audioUrl">, AudioRecorderControls] {
   const [isRecording, setIsRecording] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [volume, setVolume] = useState(0.2);
@@ -25,7 +25,6 @@ export function useAudioRecorder(
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number>();
   const chunksRef = useRef<Blob[]>([]);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const mimeType = "audio/webm;codecs=opus";
 
   const startRecording = useCallback(async () => {
@@ -71,7 +70,6 @@ export function useAudioRecorder(
         });
 
         const url = URL.createObjectURL(file);
-        setAudioUrl(url);
 
         const toBase64 = (file: File) =>
           new Promise((resolve, reject) => {
@@ -82,7 +80,7 @@ export function useAudioRecorder(
           });
         const base64 = await toBase64(file);
 
-        onAudioData?.({ base64: base64 as string, file });
+        onAudioData?.({ base64: base64 as string, file, url });
       };
 
       recorder.start();
@@ -123,16 +121,8 @@ export function useAudioRecorder(
     };
   }, [isRecording, mediaRecorder, stopRecording]);
 
-  useEffect(() => {
-    return () => {
-      if (audioUrl) {
-        URL.revokeObjectURL(audioUrl);
-      }
-    };
-  }, [audioUrl]);
-
   return [
-    { isRecording, elapsedTime, volume, audioUrl },
+    { isRecording, elapsedTime, volume },
     { startRecording, stopRecording },
   ];
 }

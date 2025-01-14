@@ -1,6 +1,6 @@
 import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
 import { Microphone, MicrophoneSpeaking, Undo } from "iconoir-react";
-import { ReactElement } from "react";
+import { ReactElement, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
@@ -14,10 +14,26 @@ export function PlaygroundMicrophoneForm({
   onAudioData,
   ...props
 }: PlaygroundMicrophoneFormProps): ReactElement {
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (audioUrl) {
+        URL.revokeObjectURL(audioUrl);
+      }
+    };
+  }, [audioUrl]);
+
   const [
-    { isRecording, elapsedTime, volume, audioUrl },
+    { isRecording, elapsedTime, volume },
     { startRecording, stopRecording },
-  ] = useAudioRecorder(({ base64 }) => onAudioData?.(base64));
+  ] = useAudioRecorder(({ base64, url }) => {
+    if (audioUrl) {
+      URL.revokeObjectURL(audioUrl);
+    }
+    setAudioUrl(url);
+    onAudioData?.(base64);
+  });
 
   return (
     <div className={props.className}>

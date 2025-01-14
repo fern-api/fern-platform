@@ -57,10 +57,47 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
 
     const [drag, setDrag] = useState(false);
     const ref = useRef<HTMLInputElement>(null);
+    const [audioUrls, setAudioUrls] = useState<Map<string, string>>(new Map());
+    const [fileToReplace, setFileToReplace] = useState<File | null>(null);
+
+    useEffect(() => {
+      return () => {
+        audioUrls.forEach((url) => URL.revokeObjectURL(url));
+      };
+    }, [audioUrls]);
+
     const [
-      { isRecording, elapsedTime, volume, audioUrl },
+      { isRecording, elapsedTime, volume },
       { startRecording, stopRecording },
-    ] = useAudioRecorder(({ file }) => onValueChange([file]));
+    ] = useAudioRecorder(({ file, url }) => {
+      const newUrls = new Map(audioUrls);
+
+      if (type === "files") {
+        if (fileToReplace) {
+          const oldUrl = audioUrls.get(fileToReplace.name);
+          if (oldUrl) {
+            URL.revokeObjectURL(oldUrl);
+          }
+          newUrls.delete(fileToReplace.name);
+
+          newUrls.set(file.name, url);
+          setAudioUrls(newUrls);
+
+          onValueChange(
+            value?.map((f) => (f === fileToReplace ? file : f)) ?? [file]
+          );
+          setFileToReplace(null);
+        } else {
+          newUrls.set(file.name, url);
+          setAudioUrls(newUrls);
+          onValueChange([...(value ?? []), file]);
+        }
+      } else {
+        audioUrls.forEach((existingUrl) => URL.revokeObjectURL(existingUrl));
+        setAudioUrls(new Map([[file.name, url]]));
+        onValueChange([file]);
+      }
+    });
 
     const dragOver: DragEventHandler = (e) => {
       e.preventDefault();
@@ -96,27 +133,44 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
       }
     };
 
-    const handleRemove = () => {
-      onValueChange(undefined);
+    const handleRemoveFile = (fileToRemove: File) => {
+      const url = audioUrls.get(fileToRemove.name);
+      if (url) {
+        URL.revokeObjectURL(url);
+        const newUrls = new Map(audioUrls);
+        newUrls.delete(fileToRemove.name);
+        setAudioUrls(newUrls);
+      }
+      onValueChange(value?.filter((f) => f !== fileToRemove));
     };
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
       if (files != null) {
+        if (type === "file") {
+          audioUrls.forEach((url) => URL.revokeObjectURL(url));
+          setAudioUrls(new Map());
+        }
         handleChangeFiles(files);
       }
 
-      // Clear input value to allow selecting same file again
       if (ref.current != null) {
         ref.current.value = "";
       }
+    };
+
+    const handleStartRecording = (fileToReplace?: File) => {
+      if (fileToReplace) {
+        setFileToReplace(fileToReplace);
+      }
+      startRecording();
     };
 
     return (
       <WithLabelInternal
         propertyKey={propertyKey}
         value={value}
-        onRemove={handleRemove}
+        onRemove={() => handleRemoveFile(value?.[0]!)}
         isRequired={!isOptional}
         typeShorthand={type === "file" ? "file" : "multiple files"}
         availability={undefined}
@@ -183,8 +237,8 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 />
                 {allowAudioRecording && (
                   <FernButton
-                    onClick={startRecording}
                     icon={<Microphone />}
+                    onClick={() => handleStartRecording()}
                     rounded
                     variant="outlined"
                     intent="primary"
@@ -208,10 +262,12 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     </span>
                   </div>
                   <FernButtonGroup className="-mr-2">
-                    {audioUrl && (
-                      <PlaygroundAudioControls audioUrl={audioUrl} />
+                    {audioUrls.get(file.name) && (
+                      <PlaygroundAudioControls
+                        audioUrl={audioUrls.get(file.name)!}
+                      />
                     )}
-                    {!audioUrl && (
+                    {!audioUrls.get(file.name) && (
                       <FernButton
                         text="Change"
                         onClick={() => ref.current?.click()}
@@ -222,7 +278,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     {allowAudioRecording && (
                       <FernButton
                         icon={<Microphone />}
-                        onClick={startRecording}
+                        onClick={() => handleStartRecording(file)}
                         size="small"
                         variant="minimal"
                       />
@@ -231,26 +287,32 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                       icon={<Xmark />}
                       size="small"
                       variant="minimal"
-                      onClick={() => {
-                        onValueChange(value.filter((f) => f !== file));
-                        if (ref.current != null) {
-                          ref.current.value = "";
-                        }
-                      }}
+                      onClick={() => handleRemoveFile(file)}
                     />
                   </FernButtonGroup>
                 </div>
               ))}
               {type === "files" && (
                 <div className="flex justify-end p-4">
-                  <FernButton
-                    onClick={() => ref.current?.click()}
-                    icon={<PagePlusIn />}
-                    text="Add more files"
-                    rounded
-                    variant="outlined"
-                    intent="primary"
-                  />
+                  <div className="flex items-center gap-2">
+                    <FernButton
+                      onClick={() => ref.current?.click()}
+                      icon={<PagePlusIn />}
+                      text="Add more files"
+                      rounded
+                      variant="outlined"
+                      intent="primary"
+                    />
+                    {allowAudioRecording && (
+                      <FernButton
+                        onClick={() => handleStartRecording()}
+                        icon={<Microphone />}
+                        rounded
+                        variant="outlined"
+                        intent="primary"
+                      />
+                    )}
+                  </div>
                 </div>
               )}
             </div>
