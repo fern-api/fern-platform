@@ -1,11 +1,5 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
-import {
-  Microphone,
-  MicrophoneSpeaking,
-  Page,
-  Xmark,
-  PagePlusIn,
-} from "iconoir-react";
+import { Mic, X, FilePlus, FileVolume } from "lucide-react";
 import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
 import numeral from "numeral";
@@ -47,9 +41,9 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     // this should be handled in a better way
     useEffect(() => {
       if (value != null) {
-        const hasInvalidFiles = value.some((f) => !(f instanceof File));
+        const hasInvalidFiles = value.some((f) => !isValidFile(f));
         if (hasInvalidFiles) {
-          onValueChange(value.filter((f) => f instanceof File));
+          onValueChange(value.filter(isValidFile));
         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,13 +150,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 </div>
               </div>
               <FernButton
-                icon={
-                  isRecording ? (
-                    <MicrophoneSpeaking className="animate-pulse" />
-                  ) : (
-                    <Microphone />
-                  )
-                }
+                icon={isRecording ? <Mic className="animate-pulse" /> : <Mic />}
                 variant="minimal"
                 intent={isRecording ? "danger" : "primary"}
                 onClick={isRecording ? stopRecording : startRecording}
@@ -184,7 +172,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 {allowAudioRecording && (
                   <FernButton
                     onClick={startRecording}
-                    icon={<Microphone />}
+                    icon={<Mic />}
                     rounded
                     variant="outlined"
                     intent="primary"
@@ -197,8 +185,8 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
               {value.map((file) => (
                 <div key={file.name} className="flex justify-between px-4 py-2">
                   <div className="flex min-w-0 shrink items-center gap-2">
-                    <div>
-                      <Page />
+                    <div className="p-1">
+                      <FileVolume />
                     </div>
                     <span className="inline-flex min-w-0 shrink items-baseline gap-2">
                       <span className="truncate text-sm">{file.name}</span>
@@ -221,14 +209,14 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                     )}
                     {allowAudioRecording && (
                       <FernButton
-                        icon={<Microphone />}
+                        icon={<Mic />}
                         onClick={startRecording}
                         size="small"
                         variant="minimal"
                       />
                     )}
                     <FernButton
-                      icon={<Xmark />}
+                      icon={<X />}
                       size="small"
                       variant="minimal"
                       onClick={() => {
@@ -245,7 +233,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 <div className="flex justify-end p-4">
                   <FernButton
                     onClick={() => ref.current?.click()}
-                    icon={<PagePlusIn />}
+                    icon={<FilePlus />}
                     text="Add more files"
                     rounded
                     variant="outlined"
@@ -265,4 +253,14 @@ PlaygroundFileUploadForm.displayName = "PlaygroundFileUploadForm";
 
 function uniqueFiles(files: File[]): readonly File[] | undefined {
   return uniqBy(files, (f) => `${f.webkitRelativePath}/${f.name}/${f.size}`);
+}
+
+function isValidFile(file: any): file is File {
+  return (
+    file != null &&
+    typeof file === "object" &&
+    "name" in file &&
+    "size" in file &&
+    "type" in file
+  );
 }

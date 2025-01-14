@@ -1,5 +1,5 @@
 import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
-import { Microphone, MicrophoneSpeaking, Undo } from "iconoir-react";
+import { Mic, RotateCcw } from "lucide-react";
 import { ReactElement } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
@@ -70,11 +70,11 @@ export function PlaygroundMicrophoneForm({
         <FernButton
           icon={
             !isRecording && elapsedTime > 0 ? (
-              <Undo />
+              <RotateCcw />
             ) : isRecording ? (
-              <MicrophoneSpeaking className="animate-pulse" />
+              <Mic className="animate-pulse" />
             ) : (
-              <Microphone />
+              <Mic />
             )
           }
           size="small"
