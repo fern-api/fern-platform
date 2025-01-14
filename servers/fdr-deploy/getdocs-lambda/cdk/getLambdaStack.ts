@@ -1,6 +1,6 @@
 import { EnvironmentType } from "@fern-fern/fern-cloud-sdk/api";
 import { Duration, Stack } from "aws-cdk-lib";
-import { IVpc, SecurityGroup, SubnetType } from "aws-cdk-lib/aws-ec2";
+import { IVpc, SubnetType } from "aws-cdk-lib/aws-ec2";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
@@ -25,21 +25,21 @@ export class GetDocsLambda extends Construct {
     super(scope, id);
 
     // Get the RDS Proxy security group from the shared resources stack
-    const rdsProxySecurityGroup = SecurityGroup.fromSecurityGroupId(
-      this,
-      "imported-rds-proxy-sg",
-      props.rdsProxySecurityGroupID
-    );
-    const redisSecurityGroup = SecurityGroup.fromSecurityGroupId(
-      this,
-      "imported-redis-proxy-sg",
-      props.redisSecurityGroupID
-    );
-    const cacheSecurityGroup = SecurityGroup.fromSecurityGroupId(
-      this,
-      "imported-cache-sg",
-      props.cacheSecurityGroupID
-    );
+    // const rdsProxySecurityGroup = SecurityGroup.fromSecurityGroupId(
+    //   this,
+    //   "imported-rds-proxy-sg",
+    //   props.rdsProxySecurityGroupID
+    // );
+    // const redisSecurityGroup = SecurityGroup.fromSecurityGroupId(
+    //   this,
+    //   "imported-redis-proxy-sg",
+    //   props.redisSecurityGroupID
+    // );
+    // const cacheSecurityGroup = SecurityGroup.fromSecurityGroupId(
+    //   this,
+    //   "imported-cache-sg",
+    //   props.cacheSecurityGroupID
+    // );
 
     // Create the Lambda function
     this.lambdaFunction = new lambda.Function(this, "get-docs-lambda", {
@@ -48,9 +48,9 @@ export class GetDocsLambda extends Construct {
       code: lambda.Code.fromAsset(path.join(__dirname, "../dist")),
       vpc: props.vpc,
       securityGroups: [
-        rdsProxySecurityGroup,
-        redisSecurityGroup,
-        cacheSecurityGroup,
+        // rdsProxySecurityGroup,
+        // redisSecurityGroup,
+        // cacheSecurityGroup,
       ],
       environment: {
         RDS_PROXY_ENDPOINT: props.rdsProxyEndpoint,
