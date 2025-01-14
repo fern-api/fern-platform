@@ -36,9 +36,9 @@ jobs:
       - name: Compile package
         if: steps.check-version.outputs.version_changed == 'true'
         run: pnpm --filter @fern-api/docs-parsers compile
-
+      
       - name: Publish to npm
         if: steps.check-version.outputs.version_changed == 'true'
-        run: pnpm --filter @fern-api/docs-parsers publish --no-git-checks --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.FERN_NPM_TOKEN }}" > ~/.npmrc
+          pnpm --filter @fern-api/docs-parsers publish --no-git-checks --access public
