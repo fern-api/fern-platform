@@ -12,7 +12,7 @@ import {
   StackProps,
   Token,
 } from "aws-cdk-lib";
-import { LambdaRestApi } from "aws-cdk-lib/aws-apigateway";
+import { LambdaIntegration, LambdaRestApi } from "aws-cdk-lib/aws-apigateway";
 import { Certificate } from "aws-cdk-lib/aws-certificatemanager";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
@@ -274,11 +274,16 @@ export class FdrDeployStack extends Stack {
 
     const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
       handler: getDocsLambda.lambdaFunction,
-      proxy: true,
+      proxy: false,
     });
 
     const docs = getDocsApi.root.addResource("docs");
-    docs.addMethod("POST");
+    docs.addMethod(
+      "POST",
+      new LambdaIntegration(getDocsLambda.lambdaFunction, {
+        proxy: true,
+      })
+    );
 
     new CfnOutput(
       this,
