@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { ObjectConverterNode } from "../ObjectConverter.node";
 import { SchemaConverterNode } from "../SchemaConverter.node";
 
@@ -47,6 +47,9 @@ describe("ObjectConverterNode", () => {
     it("should handle additionalProperties as boolean true", () => {
       const input: ObjectConverterNode.Input = {
         type: "object",
+        properties: {
+          name: { type: "string" },
+        },
         additionalProperties: true,
         title: "TestObject",
       };
@@ -140,12 +143,25 @@ describe("ObjectConverterNode", () => {
       const converted = node.convert();
       expect(converted).toEqual([
         {
-          type: "object",
-          extends: [],
-          properties: [],
-          extraProperties: {
-            type: "unknown",
-            displayName: "TestObject",
+          type: "alias",
+          value: {
+            type: "map",
+            keyShape: {
+              type: "alias",
+              value: {
+                type: "primitive",
+                value: {
+                  type: "string",
+                },
+              },
+            },
+            valueShape: {
+              type: "alias",
+              value: {
+                type: "unknown",
+                displayName: "TestObject",
+              },
+            },
           },
         },
       ]);

@@ -1,9 +1,16 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { expect } from "vitest";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { EnumConverterNode } from "../EnumConverter.node";
 
 describe("EnumConverterNode", () => {
-  const mockContext = createMockContext();
+  const mockContext = createMockContext({
+    components: {
+      schemas: {
+        Status: { type: "string", default: "ACTIVE" },
+      },
+    },
+  } as unknown as OpenAPIV3_1.Document);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -68,6 +75,26 @@ describe("EnumConverterNode", () => {
       expect(mockContext.errors.error).toHaveBeenCalledWith({
         message: "Expected enum values to be strings. Received 2",
         path: ["test", "enum[1]"],
+      });
+    });
+
+    it("should handle enum schema with $ref", () => {
+      const input: OpenAPIV3_1.SchemaObject = {
+        enum: [{ $ref: "#/components/schemas/Status" }],
+      };
+      const node = new EnumConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      });
+      expect(node.convert()).toEqual({
+        type: "enum",
+        values: [
+          {
+            value: "ACTIVE",
+          },
+        ],
       });
     });
   });

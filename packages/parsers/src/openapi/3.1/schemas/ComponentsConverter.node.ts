@@ -1,4 +1,5 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { Components } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
@@ -9,13 +10,15 @@ import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
-  OpenAPIV3_1.ComponentsObject,
+  OpenAPIV3_1.ComponentsObject | Components,
   FernRegistry.api.latest.ApiDefinition["types"]
 > {
   typeSchemas: Record<string, SchemaConverterNode> | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ComponentsObject>
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+      OpenAPIV3_1.ComponentsObject | Components
+    >
   ) {
     super(args);
     this.safeParse();

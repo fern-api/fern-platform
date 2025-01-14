@@ -110,6 +110,7 @@ export function convertDocsDefinitionToDb({
           : undefined,
       navbarLinks: writeShape.config.navbarLinks,
       footerLinks: writeShape.config.footerLinks,
+      hideNavLinks: writeShape.config.hideNavLinks,
       title: writeShape.config.title,
       favicon: writeShape.config.favicon,
       backgroundImage: writeShape.config.backgroundImage,
