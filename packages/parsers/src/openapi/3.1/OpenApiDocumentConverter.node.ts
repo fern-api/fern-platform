@@ -10,6 +10,7 @@ import {
 import { coalesceServers } from "../utils/3.1/coalesceServers";
 import { SecurityRequirementObjectConverterNode } from "./auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "./extensions/XFernBasePathConverter.node";
+import { XFernGlobalHeadersConverterNode } from "./extensions/XFernGlobalHeadersConverter.node";
 import { XFernGroupsConverterNode } from "./extensions/XFernGroupsConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
@@ -29,6 +30,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
   basePath: XFernBasePathConverterNode | undefined;
   fernGroups: XFernGroupsConverterNode | undefined;
   tags: TagObjectConverterNode[] | undefined;
+  globalHeaders: XFernGlobalHeadersConverterNode | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>
@@ -128,6 +130,13 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         pathId: "components",
       });
     }
+
+    this.globalHeaders = new XFernGlobalHeadersConverterNode({
+      input: this.input,
+      context: this.context,
+      accessPath: this.accessPath,
+      pathId: "x-fern-global-headers",
+    });
   }
 
   convert(): FernRegistry.api.latest.ApiDefinition | undefined {
@@ -188,8 +197,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       // This is not necessary and will be removed
       subpackages,
       auths: this.auth?.convert() ?? {},
-      // TODO: Implement globalHeaders
-      globalHeaders: undefined,
+      globalHeaders: this.globalHeaders?.convert(),
     };
   }
 }

@@ -20,7 +20,10 @@ export declare namespace ObjectConverterNode {
 
 export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   ObjectConverterNode.Input,
-  FernRegistry.api.latest.TypeShape.Object_[]
+  (
+    | FernRegistry.api.latest.TypeShape.Object_
+    | FernRegistry.api.latest.TypeShape.Alias
+  )[]
 > {
   description: string | undefined;
   extends: string[] = [];
@@ -135,7 +138,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
       .filter(isNonNullish);
   }
 
-  convert(): FernRegistry.api.latest.TypeShape.Object_[] | undefined {
+  convert():
+    | (
+        | FernRegistry.api.latest.TypeShape.Object_
+        | FernRegistry.api.latest.TypeShape.Alias
+      )[]
+    | undefined {
     const maybeMultipleObjectsProperties = this.convertProperties();
     if (maybeMultipleObjectsProperties == null) {
       return undefined;
@@ -145,12 +153,44 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
 
     return maybeMultipleObjectsProperties.flatMap((properties) => {
       return (maybeMultipleObjectsExtraProperties ?? [undefined]).map(
-        (extraProperties) => ({
-          type: "object",
-          extends: this.extends.map((id) => FernRegistry.TypeId(id)),
-          properties,
-          extraProperties,
-        })
+        (extraProperties) => {
+          if (
+            (this.extends == null || this.extends.length === 0) &&
+            properties.length === 0 &&
+            extraProperties != null
+          ) {
+            return {
+              type: "alias",
+              value: {
+                type: "map",
+                keyShape: {
+                  type: "alias",
+                  value: {
+                    type: "primitive",
+                    value: {
+                      type: "string",
+                      format: undefined,
+                      regex: undefined,
+                      minLength: undefined,
+                      maxLength: undefined,
+                      default: undefined,
+                    },
+                  },
+                },
+                valueShape: {
+                  type: "alias",
+                  value: extraProperties,
+                },
+              },
+            };
+          }
+          return {
+            type: "object",
+            extends: this.extends.map((id) => FernRegistry.TypeId(id)),
+            properties,
+            extraProperties,
+          };
+        }
       );
     });
   }
