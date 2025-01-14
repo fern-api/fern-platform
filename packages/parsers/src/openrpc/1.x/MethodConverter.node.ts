@@ -9,6 +9,8 @@ import {
   BaseOpenrpcConverterNodeConstructorArgs,
 } from "../BaseOpenrpcConverter.node";
 import { resolveContentDescriptorObject } from "../utils/resolveContentDescriptorObject";
+import { resolveExample } from "../utils/resolveExample";
+import { resolveExamplePairingOrReference } from "../utils/resolveExamplePairing";
 
 export class MethodConverterNode extends BaseOpenrpcConverterNode<
   MethodObject,
@@ -110,12 +112,51 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
               ].filter(isNonNullish)
             : [],
         errors: [],
-        examples: [],
+        examples: this.method.examples
+          ?.map(
+            (
+              example
+            ): FernRegistry.api.latest.ExampleEndpointCall | undefined => {
+              const resolvedExample = resolveExamplePairingOrReference(
+                example,
+                this.context.openrpc
+              );
+              if (!resolvedExample) return undefined;
+              return {
+                name: resolvedExample.name ?? "Example",
+                path: "",
+                description: undefined,
+                snippets: undefined,
+                pathParameters: {},
+                queryParameters: {},
+                headers: {},
+                requestBody:
+                  resolvedExample.params.length > 0
+                    ? {
+                        type: "json",
+                        value: resolvedExample.params.map((param) => {
+                          const resolvedParam = resolveExample(
+                            param,
+                            this.context.openrpc
+                          );
+                          if (!resolvedParam) return undefined;
+                          return resolvedParam.value;
+                        }),
+                      }
+                    : undefined,
+                responseStatusCode: 200,
+                responseBody: resolvedExample.result
+                  ? { type: "json", value: resolvedExample.result }
+                  : undefined,
+              };
+            }
+          )
+          .filter(isNonNullish),
         description: this.input.description,
         operationId: this.input.name,
         defaultEnvironment: undefined,
         environments: [],
-        availability: undefined,
+        availability: this.method.deprecated ? "Deprecated" : undefined,
         requestHeaders: [],
         responseHeaders: [],
         snippetTemplates: undefined,
