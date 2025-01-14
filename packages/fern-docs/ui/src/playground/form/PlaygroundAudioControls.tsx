@@ -1,5 +1,5 @@
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
-import { Download, Play, Pause } from "iconoir-react";
+import { Octagon, Play, Download } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface PlaygroundAudioControlsProps {
@@ -41,7 +41,7 @@ export function PlaygroundAudioControls({
       .toString()
       .padStart(2, "0");
     const secs = (seconds % 60).toString().padStart(2, "0");
-    return mins === "00" ? `${secs}s` : `${mins}:${secs}`;
+    return `${mins}:${secs}`;
   };
 
   const handlePlayPause = async () => {
@@ -49,6 +49,8 @@ export function PlaygroundAudioControls({
 
     if (isPlaying) {
       audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setCurrentTime(0);
     } else {
       await audioRef.current.play();
     }
@@ -77,7 +79,7 @@ export function PlaygroundAudioControls({
       )}
       <FernButtonGroup>
         <FernButton
-          icon={isPlaying ? <Pause /> : <Play />}
+          icon={isPlaying ? <Octagon /> : <Play />}
           onClick={handlePlayPause}
           size="small"
           variant="minimal"
