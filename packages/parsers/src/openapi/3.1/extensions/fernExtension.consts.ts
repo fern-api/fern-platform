@@ -1,6 +1,7 @@
 export const X_FERN_BASE_PATH = "x-fern-base-path";
 export const X_FERN_AVAILABILITY = "x-fern-availability";
 export const X_FERN_GROUP_NAME = "x-fern-sdk-group-name";
+export const X_FERN_GLOBAL_HEADERS = "x-fern-global-headers";
 export const X_FERN_SDK_METHOD_NAME = "x-fern-sdk-method-name";
 export const X_FERN_GROUPS = "x-fern-groups";
 export const X_FERN_WEBHOOK = "x-fern-webhook";

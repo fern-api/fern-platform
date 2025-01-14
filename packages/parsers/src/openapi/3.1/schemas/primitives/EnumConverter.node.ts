@@ -5,6 +5,8 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
+import { isReferenceObject } from "../../guards/isReferenceObject";
 
 export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   OpenAPIV3_1.NonArraySchemaObject,
@@ -27,6 +29,22 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
         .map((value, index) => {
           if (!continueParsing) {
             return undefined;
+          }
+
+          if (isReferenceObject(value)) {
+            const resolvedReference = resolveSchemaReference(
+              value,
+              this.context.document
+            );
+
+            value =
+              typeof resolvedReference === "string"
+                ? resolvedReference
+                : typeof resolvedReference?.default === "string"
+                  ? resolvedReference?.default
+                  : typeof resolvedReference?.example === "string"
+                    ? resolvedReference.example
+                    : undefined;
           }
 
           // TODO: Support { name?: .., description?: .., casing?: .. } here as well
