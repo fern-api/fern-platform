@@ -81,14 +81,14 @@ export function PlaygroundAudioControls({
           onClick={handlePlayPause}
           size="small"
           variant="minimal"
-          disabled={!isLoaded}
+          disabled={!audioUrl}
         />
         <FernButton
           icon={<Download />}
           onClick={handleDownload}
           size="small"
           variant="minimal"
-          disabled={!isLoaded}
+          disabled={!audioUrl}
         />
       </FernButtonGroup>
     </div>
