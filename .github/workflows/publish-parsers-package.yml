@@ -35,10 +35,10 @@ jobs:
 
       - name: Compile package
         if: steps.check-version.outputs.version_changed == 'true'
-        run: cd packages/parsers && pnpm compile
+        run: pnpm --filter @fern-api/docs-parsers compile
 
       - name: Publish to npm
         if: steps.check-version.outputs.version_changed == 'true'
-        run: cd packages/parsers && pnpm publish --no-git-checks --access public
+        run: pnpm --filter @fern-api/docs-parsers publish --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
