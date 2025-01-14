@@ -11,7 +11,7 @@
   "dependencies": {
     "@fern-api/venus-api-sdk": "^0.10.1-5-ged06d22",
     "pg": "^8.11.3",
-    "redis": "^4.13.0"
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.131",
