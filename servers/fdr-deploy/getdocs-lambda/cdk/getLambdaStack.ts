@@ -11,6 +11,7 @@ interface GetDocsLambdaProps {
   environmentType: EnvironmentType;
   rdsProxyEndpoint: string;
   rdsProxySecurityGroupID: string;
+  rdsProxyResourceID: string;
   redisEndpoint: string;
   redisSecurityGroupID: string;
   cacheSecurityGroupID: string;
@@ -71,7 +72,7 @@ export class GetDocsLambda extends Construct {
         effect: iam.Effect.ALLOW,
         actions: ["rds-db:connect"],
         resources: [
-          `arn:aws:rds-db:${Stack.of(this).region}:${Stack.of(this).account}:dbuser:*/*`,
+          `arn:aws:rds-db:${Stack.of(this).region}:${Stack.of(this).account}:dbuser:${props.rdsProxyResourceID}/*`,
         ],
       })
     );

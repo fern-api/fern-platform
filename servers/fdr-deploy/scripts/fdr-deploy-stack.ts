@@ -251,11 +251,15 @@ export class FdrDeployStack extends Stack {
     const rdsProxySecurityGroupID = Fn.importValue(
       `fern-${environmentType.toLowerCase()}-rds-proxy-security-group-id`
     );
+    const rdsProxyResourceID = Fn.importValue(
+      `fern-${environmentType.toLowerCase()}-rds-proxy-resource-id`
+    );
     const getDocsLambda = new GetDocsLambda(this, "getdocs-lambda", {
       vpc,
       environmentType,
       rdsProxyEndpoint,
       rdsProxySecurityGroupID,
+      rdsProxyResourceID,
       redisEndpoint: fernDocsCacheEndpoint,
       redisSecurityGroupID: fdrSg.securityGroupId,
       cacheSecurityGroupID: redisSecurityGroupID,
@@ -270,9 +274,14 @@ export class FdrDeployStack extends Stack {
     const docs = getDocsApi.root.addResource("docs");
     docs.addMethod("POST");
 
-    new CfnOutput(this, "GetDocsApiUrl", {
-      value: getDocsApi.url,
-    });
+    new CfnOutput(
+      this,
+      `fern-${environmentType.toLowerCase()}-getdocs-api-url`,
+      {
+        value: getDocsApi.url,
+        exportName: `fern-${environmentType.toLowerCase()}-getdocs-api-url`,
+      }
+    );
     // end getdocs-lambda
 
     const fargateService = new ApplicationLoadBalancedFargateService(
