@@ -9,7 +9,7 @@ import { DocumentData, GetDocsEvent } from "./types";
 // copied from https://github.com/fern-api/fern-platform/blob/main/servers/fdr/src/services/auth/AuthService.ts#L96
 function getVenusClient({ token }: { token?: string }): FernVenusApiClient {
   return new FernVenusApiClient({
-    environment: process.env.venusUrl || "",
+    environment: process.env.VENUS_URL || "",
     token,
   });
 }
