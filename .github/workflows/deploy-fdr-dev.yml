@@ -86,6 +86,7 @@ jobs:
           pnpm install
           pnpm run build
           cd ../
+          pnpm install
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
           DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public&connection_limit=6&pool_timeout=30
