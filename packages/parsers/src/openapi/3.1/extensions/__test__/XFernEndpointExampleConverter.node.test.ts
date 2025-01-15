@@ -64,9 +64,6 @@ describe("XFernEndpointExampleConverterNode", () => {
           responseStatusCode: 200,
           name: "Create user",
           description: "Example of creating a user",
-          pathParameters: {},
-          queryParameters: {},
-          headers: {},
           requestBody: {
             type: "json",
             value: {
@@ -136,9 +133,6 @@ describe("XFernEndpointExampleConverterNode", () => {
           path: "/upload",
           responseStatusCode: 200,
           name: "Upload file",
-          pathParameters: {},
-          queryParameters: {},
-          headers: {},
           requestBody: {
             type: "form",
             value: {
@@ -206,9 +200,6 @@ describe("XFernEndpointExampleConverterNode", () => {
           path: "/stream",
           responseStatusCode: 200,
           name: "Stream events",
-          pathParameters: {},
-          queryParameters: {},
-          headers: {},
           requestBody: {
             type: "json",
             value: {},
