@@ -7,6 +7,7 @@ import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withMiddlewareAuth } from "./server/withMiddlewareAuth";
 import { withMiddlewareRewrite } from "./server/withMiddlewareRewrite";
 import { withPathname } from "./server/withPathname";
+import { getDocsDomainEdge } from "./server/xfernhost/edge";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 
@@ -130,12 +131,14 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   // TODO: this adds additional latency to the page load. can we batch this somehow?
-  const launchDarkly = await getLaunchDarklySettings(request.nextUrl.origin);
+  const launchDarkly = await getLaunchDarklySettings(
+    getDocsDomainEdge(request)
+  );
 
   return withMiddlewareAuth(
     request,
     pathname,
-    withMiddlewareRewrite(request, pathname, !!launchDarkly?.["sdk-key"])
+    withMiddlewareRewrite(request, pathname, launchDarkly?.["sdk-key"] != null)
   );
 };
 
