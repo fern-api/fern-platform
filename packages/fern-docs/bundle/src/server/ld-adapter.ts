@@ -47,12 +47,13 @@ interface LaunchDarklyInfo {
   clientSideId: string;
   contextEndpoint: string;
   context: ld.LDContext | undefined;
-  defaultFlags: Record<string, unknown> | undefined;
+  defaultFlags: object | undefined;
   options:
     | {
         baseUrl: string | undefined;
         streamUrl: string | undefined;
         eventsUrl: string | undefined;
+        hash: string | undefined;
       }
     | undefined;
 }
@@ -81,21 +82,21 @@ export async function withLaunchDarkly(
       streamUrl: launchDarklyConfig.options?.["stream-url"],
       eventsUrl: launchDarklyConfig.options?.["events-url"],
     };
-    const defaultFlags = launchDarklyConfig["sdk-key"]
+    const { flags, json, hash } = launchDarklyConfig["sdk-key"]
       ? await fetchInitialFlags(launchDarklyConfig["sdk-key"], context, options)
-      : undefined;
+      : { flags: undefined, json: undefined, hash: undefined };
     return [
       {
         clientSideId: launchDarklyConfig["client-side-id"],
         contextEndpoint: launchDarklyConfig["context-endpoint"],
         context,
-        defaultFlags,
-        options,
+        defaultFlags: json,
+        options: { ...options, hash },
       },
       // Note: if sdk-key is set, then middleware will automatically switch to 100% getServerSideProps
       // because getServerSideProps must determine whether any given page should be rendered or not.
       launchDarklyConfig["sdk-key"]
-        ? await createLdPredicate({ flags: defaultFlags })
+        ? await createLdPredicate({ flags })
         : createDefaultFeatureFlagPredicate(),
     ];
   }
@@ -133,7 +134,7 @@ export const createLdPredicate = async ({
   };
 };
 
-function fetchInitialFlags(
+async function fetchInitialFlags(
   sdkKey: string,
   context: ld.LDContext,
   options?: {
@@ -141,17 +142,36 @@ function fetchInitialFlags(
     streamUrl?: string;
     eventsUrl?: string;
   }
-): Promise<Record<string, unknown>> | undefined {
+): Promise<{
+  flags: Record<string, unknown> | undefined;
+  json: object | undefined;
+  hash: string | undefined;
+}> {
   try {
     const ldClient = ld.init(sdkKey, {
       baseUri: options?.baseUrl,
       streamUri: options?.streamUrl,
       eventsUri: options?.eventsUrl,
       stream: false,
+      sendEvents: false,
+      diagnosticOptOut: true,
     });
-    return ldClient.allFlagsState(context).then((flags) => flags.allValues());
+    const flags = await ldClient.allFlagsState(context, {
+      clientSideOnly: true, // these flags will be passed to the client side
+      detailsOnlyForTrackedFlags: true,
+    });
+
+    return {
+      flags: flags.allValues(),
+      json: flags.toJSON(),
+      hash: ldClient.secureModeHash(context),
+    };
   } catch (error) {
     console.error(error);
-    return undefined;
+    return {
+      flags: undefined,
+      json: undefined,
+      hash: undefined,
+    };
   }
 }
