@@ -2058,9 +2058,6 @@ importers:
       '@radix-ui/primitive':
         specifier: ^1.1.1
         version: 1.1.1
-      '@radix-ui/react-accordion':
-        specifier: ^1.2.2
-        version: 1.2.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-collapsible':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -7254,7 +7251,7 @@ packages:
     resolution: {integrity: sha512-GWrNeElMYHO8FVETjW205u2s9IXFs46fmVKY8T1dHgksCm3JV8w4k14gM2eaZbOUOH/tGcOuz5YbqJl8iKkA8w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      next: npm:@fern-api/next@14.2.9-fork.2
+      next: ^13.5.0 || ^14.0.0 || ^15.0.0
       react: 18.3.1
       react-dom: 18.3.1
       storybook: ^8.4.4
