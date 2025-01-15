@@ -73,7 +73,7 @@ export const EMPTY_DOCS_STATE: DocsProps = {
   user: undefined,
   defaultLang: "curl",
   stylesheet: "",
-  featureFlags: undefined,
+  featureFlagsConfig: undefined,
 };
 
 export const DOCS_ATOM = atomWithReducer<DocsProps, DocsProps>(
