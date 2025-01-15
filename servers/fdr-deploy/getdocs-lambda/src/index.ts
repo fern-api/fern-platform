@@ -74,6 +74,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     });
 
     await redis.connect();
+
+    // TODO: this is just for debugging
+    const keys = await redis.keys("*");
+    console.log("All Redis keys:", keys);
+
     const cachedResponse = await redis.get(parsedUrl.getFullUrl());
     if (cachedResponse != null) {
       console.log(`Cache HIT for ${url}`);
@@ -102,11 +107,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         )
       );
       return {
-        ...parsedResponse.response,
-        definition: {
-          ...parsedResponse.response.definition,
-          filesV2,
-        },
+        statusCode: 200,
+        body: JSON.stringify({
+          ...parsedResponse.response,
+          definition: {
+            ...parsedResponse.response.definition,
+            filesV2,
+          },
+        }),
       };
     } else {
       console.log(`Cache MISS for ${url}`);
@@ -124,6 +132,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         });
 
         await client.connect();
+        console.log("Connected to RDS");
 
         const query = `
         SELECT url, docsDefinition
@@ -132,6 +141,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       `;
 
         const result = await client.query<DocumentData>(query, [parsedUrl]);
+        console.log("result", result);
 
         if (result.rows.length === 0) {
           return {
