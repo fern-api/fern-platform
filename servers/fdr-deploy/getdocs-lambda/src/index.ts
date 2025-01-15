@@ -107,10 +107,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       };
     }
 
-    // const keys = await redisClient.keys("*");
-    // console.log("All Redis keys:", keys);
     try {
       const redis = await getRedisClient();
+
+      const keys = await redis.keys("*");
+      console.log("All Redis keys:", keys);
+
       const cachedResponse = await redis.get(parsedUrl.getFullUrl());
       if (cachedResponse != null) {
         console.log(`Cache HIT for ${url}`);
