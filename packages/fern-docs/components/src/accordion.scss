@@ -5,6 +5,10 @@
     li {
       @apply list-outside;
     }
+
+    summary {
+      @apply list-none;
+    }
   }
 
   .fern-accordion-item {
@@ -12,7 +16,7 @@
   }
 
   .fern-accordion-trigger {
-    @apply hover:bg-tag-default flex w-full cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
+    @apply hover:bg-tag-default flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
 
     .fern-accordion-trigger-arrow {
       @apply t-muted ease-shift size-4 shrink-0 transition-transform duration-[400ms];
@@ -28,6 +32,6 @@
   }
 
   .fern-accordion-content {
-    @apply fern-collapsible overflow-hidden;
+    @apply fern-collapsible;
   }
 }
