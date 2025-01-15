@@ -5,7 +5,7 @@ import { FeatureFlagsConfig } from "../atoms";
 const LDFeatureFlagProvider = dynamic(
   () =>
     import("./LDFeatureFlagProvider").then((mod) => mod.LDFeatureFlagProvider),
-  { ssr: false }
+  { ssr: true } // ssr must be true otherwise the entire tree will not be rendered server-side
 );
 
 interface FeatureFlagProviderProps {
