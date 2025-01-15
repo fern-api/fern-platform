@@ -2,7 +2,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactElement } from "react";
 import { useIsApiReferenceShallowLink, useIsChildSelected } from "../../atoms";
-import { WithFeatureFlags } from "../../feature-flags/NavigationFeature";
+import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarPageNode } from "./SidebarPageNode";
 import { SidebarRootHeading } from "./SidebarRootHeading";

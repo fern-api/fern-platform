@@ -38,6 +38,7 @@ export const LDFeature: React.FC<FeatureProps> = ({
 export const LDFeatures: React.FC<WithFeatureFlagsProps> = ({
   featureFlags,
   children,
+  fallback = false,
 }) => {
   const flags = useFlags();
 
@@ -53,5 +54,5 @@ export const LDFeatures: React.FC<WithFeatureFlagsProps> = ({
     return children;
   }
 
-  return false;
+  return fallback;
 };

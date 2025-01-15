@@ -3,7 +3,7 @@ import { HttpMethodBadge } from "@fern-docs/components/badges";
 import clsx from "clsx";
 import { ReactNode } from "react";
 import { useIsSelectedSidebarNode } from "../../atoms";
-import { WithFeatureFlags } from "../../feature-flags/NavigationFeature";
+import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarApiLeafNodeProps {

@@ -6,7 +6,7 @@ import {
   useIsSelectedSidebarNode,
   useToggleExpandedSidebarNode,
 } from "../../atoms";
-import { WithFeatureFlags } from "../../feature-flags/NavigationFeature";
+import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";

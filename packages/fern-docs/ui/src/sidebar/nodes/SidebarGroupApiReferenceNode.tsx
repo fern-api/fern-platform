@@ -1,7 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ReactNode } from "react";
 import { useIsApiReferenceShallowLink } from "../../atoms";
-import { WithFeatureFlags } from "../../feature-flags/NavigationFeature";
+import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
 interface SidebarGroupApiReferenceNodeProps {
