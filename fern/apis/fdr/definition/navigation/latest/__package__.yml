@@ -378,10 +378,11 @@ types:
     properties:
       featureFlags: optional<list<FeatureFlagOptions>>
 
+  # note: do not change this type because it will cause a breaking change in the <Feature> mdx component
   FeatureFlagOptions:
     properties:
       flag: string
-      default: optional<unknown>
+      fallbackValue: optional<unknown>
       match: optional<unknown>
 
   BreadcrumbItem:
