@@ -1,8 +1,12 @@
-import * as RadixAccordion from "@radix-ui/react-accordion";
-import { NavArrowRight } from "iconoir-react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@fern-docs/components";
 import { useAtom } from "jotai";
 import { NextRouter } from "next/router";
-import { FC, ReactNode, useCallback, useEffect, useState } from "react";
+import { forwardRef, ReactNode, useCallback, useEffect, useState } from "react";
 import { ANCHOR_ATOM } from "../../../atoms";
 
 export interface AccordionItemProps {
@@ -18,55 +22,57 @@ export interface AccordionGroupProps {
   toc?: boolean;
 }
 
-export const AccordionGroup: FC<AccordionGroupProps> = ({ items = [] }) => {
-  const [activeTabs, setActiveTabs] = useState<string[]>([]);
-  const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
-  useEffect(() => {
-    if (anchor != null) {
-      if (items.some((tab) => tab.id === anchor)) {
-        setActiveTabs((prev) =>
-          prev.includes(anchor) ? prev : [...prev, anchor]
-        );
-      }
-    }
-  }, [anchor, items]);
-
-  const handleValueChange = useCallback(
-    (nextActiveTabs: string[]) => {
-      setActiveTabs((prev) => {
-        const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
-        if (added[0] != null) {
-          setAnchor(added[0]);
+export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
+  ({ items = [] }, forwardedRef) => {
+    const [activeTabs, setActiveTabs] = useState<string[]>([]);
+    const [anchor, setAnchor] = useAtom(ANCHOR_ATOM);
+    useEffect(() => {
+      if (anchor != null) {
+        if (items.some((tab) => tab.id === anchor)) {
+          setActiveTabs((prev) =>
+            prev.includes(anchor) ? prev : [...prev, anchor]
+          );
         }
-        return nextActiveTabs;
-      });
-    },
-    [setAnchor]
-  );
+      }
+    }, [anchor, items]);
 
-  return (
-    <RadixAccordion.Root
-      type="multiple"
-      className="fern-accordion"
-      value={activeTabs}
-      onValueChange={handleValueChange}
-    >
-      {items.map(({ title, id, children }) => (
-        <RadixAccordion.Item
-          key={id}
-          value={id}
-          className="fern-accordion-item"
-          id={id}
-        >
-          <RadixAccordion.Trigger className="fern-accordion-trigger">
-            <NavArrowRight className="fern-accordion-trigger-arrow" />
-            <h6 className="fern-accordion-trigger-title">{title}</h6>
-          </RadixAccordion.Trigger>
-          <RadixAccordion.Content className="fern-accordion-content">
-            <div className="m-5">{children}</div>
-          </RadixAccordion.Content>
-        </RadixAccordion.Item>
-      ))}
-    </RadixAccordion.Root>
-  );
-};
+    const handleValueChange = useCallback(
+      (nextActiveTabs: string[]) => {
+        setActiveTabs((prev) => {
+          const added = nextActiveTabs.filter((tab) => !prev.includes(tab));
+          if (added[0] != null) {
+            setAnchor(added[0]);
+          }
+          return nextActiveTabs;
+        });
+      },
+      [setAnchor]
+    );
+
+    return (
+      <Accordion
+        ref={forwardedRef}
+        type="multiple"
+        value={activeTabs}
+        onValueChange={handleValueChange}
+        className="m-mdx"
+      >
+        {items.map(({ title, id, children }) => (
+          <AccordionItem
+            key={id}
+            value={id}
+            id={id}
+            className="scroll-mt-content-padded"
+          >
+            <AccordionTrigger>{title}</AccordionTrigger>
+            <AccordionContent>
+              <div className="m-5">{children}</div>
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    );
+  }
+);
+
+AccordionGroup.displayName = "AccordionGroup";
