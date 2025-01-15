@@ -2,7 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { MethodObject } from "@open-rpc/meta-schema";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../client/generated";
-import { SchemaConverterNode } from "../../openapi";
+import { SchemaConverterNode, ServerObjectConverterNode } from "../../openapi";
 import { maybeSingleValueToArray } from "../../openapi/utils/maybeSingleValueToArray";
 import {
   BaseOpenrpcConverterNode,
@@ -17,10 +17,15 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
   FernRegistry.api.latest.EndpointDefinition
 > {
   private method: MethodObject;
+  private servers: ServerObjectConverterNode[] = [];
 
-  constructor(args: BaseOpenrpcConverterNodeConstructorArgs<MethodObject>) {
+  constructor(
+    args: BaseOpenrpcConverterNodeConstructorArgs<MethodObject>,
+    servers: ServerObjectConverterNode[]
+  ) {
     super(args);
     this.method = args.input;
+    this.servers = servers;
     this.safeParse();
   }
 
@@ -98,7 +103,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
       // This is a basic implementation that needs to be expanded
       return {
         id: FernRegistry.EndpointId(this.input.name),
-        displayName: this.input.summary ?? this.input.name,
+        displayName: this.input.name,
         method: "POST",
         path: [{ type: "literal", value: "" }],
         auth: undefined,
@@ -152,10 +157,12 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
             }
           )
           .filter(isNonNullish),
-        description: this.input.description,
+        description: this.input.description ?? this.input.summary,
         operationId: this.input.name,
         defaultEnvironment: undefined,
-        environments: [],
+        environments: this.servers
+          .map((server) => server.convert())
+          .filter(isNonNullish),
         availability: this.method.deprecated ? "Deprecated" : undefined,
         requestHeaders: [],
         responseHeaders: [],
