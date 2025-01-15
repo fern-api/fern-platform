@@ -1,24 +1,26 @@
 import dynamic from "next/dynamic";
 import { FC, ReactNode } from "react";
-import { DocsProps } from "../../..";
+import { FeatureFlagsConfig } from "../atoms";
 
-const LDFeatureFlagProvider = dynamic(() =>
-  import("./LDFeatureFlagProvider").then((mod) => mod.LDFeatureFlagProvider)
+const LDFeatureFlagProvider = dynamic(
+  () =>
+    import("./LDFeatureFlagProvider").then((mod) => mod.LDFeatureFlagProvider),
+  { ssr: false }
 );
 
 interface FeatureFlagProviderProps {
-  pageProps: DocsProps | undefined;
+  featureFlagsConfig: FeatureFlagsConfig | undefined;
   children: ReactNode;
 }
 
 export const FeatureFlagProvider: FC<FeatureFlagProviderProps> = ({
-  pageProps,
+  featureFlagsConfig,
   children,
 }) => {
-  const launchDarklyInfo = pageProps?.featureFlags?.launchDarkly;
+  const launchDarklyInfo = featureFlagsConfig?.launchDarkly;
 
   if (!launchDarklyInfo) {
-    return <>{children}</>;
+    return children;
   }
 
   return (

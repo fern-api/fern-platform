@@ -1,6 +1,6 @@
 import { camelCase } from "es-toolkit/string";
 import { LDFlagSet, useFlags } from "launchdarkly-react-client-sdk";
-import { Feature } from "./Feature";
+import { FeatureProps } from "./types";
 
 const ldFlagPredicate = <T,>(
   flagKey: string,
@@ -22,22 +22,18 @@ const ldFlagPredicate = <T,>(
   };
 };
 
-export const LDFeature: <T>(props: Feature.Props<T>) => React.ReactNode = ({
+export const LDFeature: <T>(props: FeatureProps<T>) => React.ReactNode = ({
   flag,
-  flagDefaultValue,
-  match,
+  default: defaultValue = false,
+  match = true,
   children,
 }) => {
   const flags = useFlags();
-  const flagPredicate = ldFlagPredicate(flag, flagDefaultValue);
-  const flagValue = flagPredicate(flags);
+  const flagPredicate = ldFlagPredicate(flag, defaultValue);
 
-  // If match is undefined, show content when flag evaluates to true
-  const neededValue = typeof match === "undefined" ? true : match;
-
-  if (typeof flagValue !== "undefined" && flagValue === neededValue) {
-    return <>{children}</>;
+  if (flagPredicate(flags) === match) {
+    return children;
   }
 
-  return null;
+  return false;
 };

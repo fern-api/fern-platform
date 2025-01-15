@@ -1,5 +1,10 @@
-import { LDProvider, useLDClient } from "launchdarkly-react-client-sdk";
+import {
+  LDContext,
+  LDProvider,
+  useLDClient,
+} from "launchdarkly-react-client-sdk";
 import { FC, ReactNode, useEffect } from "react";
+import useSWR from "swr";
 
 interface Props {
   clientSideId: string;
@@ -30,17 +35,24 @@ const IdentifyWrapper = ({
 }) => {
   const ldClient = useLDClient();
 
+  // using SWR to get refresh the LD context
+  const { data } = useSWR<LDContext>(
+    "user-ld-context",
+    () => fetch(userContextEndpoint).then((res) => res.json()),
+    {
+      revalidateOnFocus: true,
+      revalidateOnReconnect: true,
+      revalidateOnMount: true,
+      errorRetryCount: 3,
+      keepPreviousData: true,
+    }
+  );
+
   useEffect(() => {
-    // TODO: have this context be set in page props maybe?
-    const getAndSetLdContext = async () => {
-      // TODO: switch from fetch to useApiRouteSWR
-      const response = await fetch(userContextEndpoint);
-      const data = await response.json();
+    if (data) {
       void ldClient?.identify(data);
-    };
+    }
+  }, [userContextEndpoint, ldClient, data]);
 
-    void getAndSetLdContext();
-  }, [userContextEndpoint, ldClient]);
-
-  return <>{children}</>;
+  return children;
 };

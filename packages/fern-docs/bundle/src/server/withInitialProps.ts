@@ -395,7 +395,7 @@ export async function withInitialProps({
       docs.definition.filesV2,
       found.tabs.length > 0
     ),
-    featureFlags: {
+    featureFlagsConfig: {
       launchDarkly: launchDarklyInfo,
     },
   };

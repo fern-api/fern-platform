@@ -56,7 +56,7 @@ export interface LaunchDarklyInfo {
   userContextEndpoint: string;
 }
 
-export interface FeatureFlags {
+export interface FeatureFlagsConfig {
   launchDarkly: LaunchDarklyInfo | undefined;
 }
 
@@ -84,5 +84,5 @@ export interface DocsProps {
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   stylesheet: string;
-  featureFlags: FeatureFlags | undefined;
+  featureFlagsConfig: FeatureFlagsConfig | undefined;
 }
