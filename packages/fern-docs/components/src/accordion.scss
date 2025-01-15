@@ -1,6 +1,6 @@
 @layer components {
   .fern-accordion {
-    @apply fern-card m-mdx divide-default divide-y rounded-lg;
+    @apply fern-card divide-default divide-y rounded-lg;
 
     li {
       @apply list-outside;

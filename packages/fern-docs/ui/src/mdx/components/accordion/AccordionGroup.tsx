@@ -55,6 +55,7 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
         type="multiple"
         value={activeTabs}
         onValueChange={handleValueChange}
+        className="m-mdx"
       >
         {items.map(({ title, id, children }) => (
           <AccordionItem key={id} value={id} id={id}>
