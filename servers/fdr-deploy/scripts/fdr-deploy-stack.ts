@@ -279,7 +279,7 @@ export class FdrDeployStack extends Stack {
       {
         aliasName: `fern-${environmentType.toLowerCase()}-getdocs-lambda-alias`,
         version: getDocsLambda.lambdaFunction.currentVersion,
-        provisionedConcurrentExecutions: 1000,
+        provisionedConcurrentExecutions: 900,
       }
     );
 
