@@ -463,7 +463,6 @@
         {
           "path": "/files/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "curl": [
               {
@@ -956,7 +955,6 @@
         {
           "path": "/files/{uuid}/storage/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -1418,7 +1416,6 @@
         {
           "path": "/files/{uuid}/storage/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -1960,7 +1957,6 @@
         {
           "path": "/files/{uuid}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -2639,7 +2635,6 @@
         {
           "path": "/files/storage/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -3112,7 +3107,6 @@
         {
           "path": "/files/storage/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -3621,7 +3615,6 @@
         {
           "path": "/files/local_copy/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -4026,7 +4019,6 @@
         {
           "path": "/files/remote_copy/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -4401,7 +4393,6 @@
         {
           "path": "/addons/aws_rekognition_detect_labels/execute/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -4689,7 +4680,6 @@
         {
           "path": "/addons/aws_rekognition_detect_labels/execute/status/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -5038,7 +5028,6 @@
         {
           "path": "/addons/aws_rekognition_detect_moderation_labels/execute/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -5326,7 +5315,6 @@
         {
           "path": "/addons/aws_rekognition_detect_moderation_labels/execute/status/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -5704,7 +5692,6 @@
         {
           "path": "/addons/uc_clamav_virus_scan/execute/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -6000,7 +5987,6 @@
         {
           "path": "/addons/uc_clamav_virus_scan/execute/status/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -6527,7 +6513,6 @@
         {
           "path": "/addons/remove_bg/execute/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -6819,7 +6804,6 @@
         {
           "path": "/addons/remove_bg/execute/status/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -7083,7 +7067,6 @@
         {
           "path": "/files/{uuid}/metadata/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -7380,7 +7363,6 @@
         {
           "path": "/files/{uuid}/metadata/{key}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -7687,7 +7669,6 @@
         {
           "path": "/files/{uuid}/metadata/{key}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -7985,7 +7966,6 @@
         {
           "path": "/files/{uuid}/metadata/{key}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -8385,7 +8365,6 @@
         {
           "path": "/groups/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -8735,7 +8714,6 @@
         {
           "path": "/groups/{uuid}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -9058,7 +9036,6 @@
         {
           "path": "/groups/{uuid}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -9315,7 +9292,6 @@
         {
           "path": "/project/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -9594,7 +9570,6 @@
         {
           "path": "/webhooks/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -9892,7 +9867,6 @@
         {
           "path": "/webhooks/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -10207,7 +10181,6 @@
         {
           "path": "/webhooks/{id}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -10502,7 +10475,6 @@
         {
           "path": "/webhooks/unsubscribe/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -11295,7 +11267,6 @@
         {
           "path": "/convert/document/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -11738,7 +11709,6 @@
         {
           "path": "/convert/document/status/{token}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {
@@ -12145,7 +12115,6 @@
         {
           "path": "/convert/video/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "php": [
               {
@@ -12603,7 +12572,6 @@
         {
           "path": "/convert/video/status/{token}/",
           "responseStatusCode": 200,
-          "name": "redoc-examples",
           "snippets": {
             "javascript": [
               {

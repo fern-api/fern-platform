@@ -166,7 +166,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       Object.keys(this.responses?.responsesByStatusCode ?? {})
         .map(Number)
         .sort()[0] ?? 200,
-      "redoc-examples"
+      undefined
     );
 
     this.requests =
@@ -335,13 +335,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       ...(this.xFernExamplesNode?.convert() ?? []),
       ...(responses?.flatMap((response) => response.examples) ?? []),
     ].filter(isNonNullish);
-
-    if (examples.length === 0) {
-      const emptyExample = this.emptyExample?.convert();
-      if (emptyExample != null) {
-        examples.push(emptyExample);
-      }
-    }
 
     if (this.isWebhook) {
       if (this.method !== "POST" && this.method !== "GET") {

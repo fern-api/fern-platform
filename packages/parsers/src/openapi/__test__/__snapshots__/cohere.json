@@ -1017,9 +1017,6 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -1251,9 +1248,6 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -1455,9 +1449,6 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -1511,9 +1502,6 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -2835,9 +2823,6 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -2921,9 +2906,6 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -3179,9 +3161,6 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -3233,9 +3212,6 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -4245,9 +4221,6 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -4329,9 +4302,6 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -5014,9 +4984,6 @@
         {
           "path": "/v1/embed",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -6130,9 +6097,6 @@
         {
           "path": "/v1/embed",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -8877,9 +8841,6 @@
         {
           "path": "/v2/embed",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -9992,9 +9953,6 @@
         {
           "path": "/v2/embed",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -12663,6 +12621,58 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.EmbedJobs.Get(context.TODO(), \"embed_job_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# list embed jobs\nresponse = co.embed_jobs.list()\n\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.embed_jobs.list()\n\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.types.ListEmbedJobResponse;\n\npublic class EmbedJobsGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListEmbedJobResponse response = cohere.embedJobs().list();\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const embedJobs = await cohere.embedJobs.list();\n\n  console.log(embedJobs);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/embed-jobs \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/embed-jobs",
+          "responseStatusCode": 200,
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
@@ -13178,9 +13188,6 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "snippets": {
             "go": [
               {
@@ -13747,6 +13754,58 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/embed-jobs/{id}",
+          "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.EmbedJobs.List(context.TODO())\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# get embed job\nresponse = co.embed_jobs.get(\"job_id\")\n\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.embed_jobs.get(\"job_id\")\n\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.types.ListEmbedJobResponse;\n\npublic class EmbedJobsGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListEmbedJobResponse response = cohere.embedJobs().list();\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const embedJob = await cohere.embedJobs.get('job_id');\n\n  console.log(embedJob);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/embed-jobs/id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/embed-jobs/{id}",
           "responseStatusCode": 200,
@@ -15100,9 +15159,6 @@
         {
           "path": "/v1/rerank",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -15856,9 +15912,6 @@
         {
           "path": "/v2/rerank",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -16735,9 +16788,6 @@
         {
           "path": "/v1/classify",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -17514,6 +17564,58 @@
         {
           "path": "/v1/datasets",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Datasets.Get(context.TODO(), \"dataset_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# get dataset\nresponse = co.datasets.get(id=\"<<datasetId>>\")\n\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.datasets.get(id=\"<<datasetId>>\")\n\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.datasets.types.DatasetsGetResponse;\n\npublic class DatasetGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    DatasetsGetResponse response = cohere.datasets().get(\"dataset_id\");\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const datasets = await cohere.datasets.get('<<datasetId>>');\n\n  console.log(datasets);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/datasets \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/datasets",
+          "responseStatusCode": 200,
           "queryParameters": {
             "datasetType": "string",
             "before": "string",
@@ -18190,9 +18292,6 @@
         {
           "path": "/v1/datasets",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "snippets": {
             "go": [
               {
@@ -18752,6 +18851,58 @@
         {
           "path": "/v1/datasets/usage",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Datasets.GetUsage(context.TODO())\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# get usage\nresponse = co.datasets.get_usage()\n\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.datasets.get_usage()\n\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.datasets.types.DatasetsGetUsageResponse;\n\npublic class DatasetUsageGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    DatasetsGetUsageResponse response = cohere.datasets().getUsage();\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const usage = await cohere.datasets.getUsage('id');\n\n  console.log(usage);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/datasets/usage \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/datasets/usage",
+          "responseStatusCode": 200,
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
@@ -19257,6 +19408,58 @@
         {
           "path": "/v1/datasets/{id}",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Datasets.Get(context.TODO(), \"dataset_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# get dataset\nresponse = co.datasets.get(id=\"<<datasetId>>\")\n\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.datasets.get(id=\"<<datasetId>>\")\n\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.datasets.types.DatasetsGetResponse;\n\npublic class DatasetGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    DatasetsGetResponse response = cohere.datasets().get(\"dataset_id\");\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const datasets = await cohere.datasets.get('<<datasetId>>');\n\n  console.log(datasets);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/datasets \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/datasets/{id}",
+          "responseStatusCode": 200,
           "pathParameters": {
             "id": "string"
           },
@@ -19758,6 +19961,50 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/datasets/{id}",
+          "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\t_, err := co.Datasets.Delete(context.TODO(), \"dataset_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# delete dataset\nco.datasets.delete(\"id\")\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    await co.delete_dataset(\"id\")\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\n\npublic class DatasetDelete {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    cohere.datasets().delete(\"id\");\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request DELETE \\\n  --url https://api.cohere.com/v1/datasets/id \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/datasets/{id}",
           "responseStatusCode": 200,
@@ -20449,9 +20696,6 @@
         {
           "path": "/v1/summarize",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -21176,9 +21420,6 @@
         {
           "path": "/v1/tokenize",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -21912,9 +22153,6 @@
         {
           "path": "/v1/detokenize",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json",
             "value": {
@@ -22507,6 +22745,58 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tcohere \"github.com/cohere-ai/cohere-go/v2\"\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Connectors.List(\n\t\tcontext.TODO(),\n\t\t&cohere.ConnectorsListRequest{})\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.connectors.list()\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.connectors.list()\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.types.ListConnectorsResponse;\n\npublic class ConnectorsList {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListConnectorsResponse list = cohere.connectors().list();\n\n    System.out.println(list);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const connectors = await cohere.connectors.list();\n\n  console.log(connectors);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/connectors \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/connectors",
+          "responseStatusCode": 200,
           "queryParameters": {
             "limit": 30,
             "offset": 0
@@ -23003,9 +23293,6 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "snippets": {
             "go": [
               {
@@ -23559,6 +23846,58 @@
         {
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Connectors.Get(context.TODO(), \"connector_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.connectors.get(\"test-id\")\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.connectors.get(\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.types.GetConnectorResponse;\n\npublic class ConnectorGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    GetConnectorResponse response = cohere.connectors().get(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const connector = await cohere.connectors.get('connector-id');\n\n  console.log(connector);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/connectors/id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/connectors/{id}",
+          "responseStatusCode": 200,
           "pathParameters": {
             "id": "string"
           },
@@ -24075,9 +24414,6 @@
         {
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "snippets": {
             "go": [
               {
@@ -24634,6 +24970,58 @@
         {
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Connectors.Delete(context.TODO(), \"connector_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  await cohere.connectors.delete('connector-id');\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nco.connectors.delete(\"test-id\")\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    await co.connectors.delete(\"test-id\")\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\n\npublic class ConnectorDelete {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    cohere.connectors().delete(\"test-id\");\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request DELETE \\\n  --url https://api.cohere.com/v1/connectors/id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/connectors/{id}",
+          "responseStatusCode": 200,
           "pathParameters": {
             "id": "string"
           },
@@ -25165,6 +25553,58 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/connectors/{id}/oauth/authorize",
+          "responseStatusCode": 200,
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tcohere \"github.com/cohere-ai/cohere-go/v2\"\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Connectors.OAuthAuthorize(\n\t\tcontext.TODO(),\n\t\t\"connector_id\",\n\t\t&cohere.ConnectorsOAuthAuthorizeRequest{\n\t\t\tAfterTokenRedirect: cohere.String(\"https://test.com\"),\n\t\t},\n\t)\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.connectors.o_auth_authorize(\n    connector_id=\"test-id\", after_token_redirect=\"https://test.com\"\n)\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.connectors.o_auth_authorize(\n        connector_id=\"test-id\", after_token_redirect=\"https://test.com\"\n    )\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.connectors.requests.ConnectorsOAuthAuthorizeRequest;\nimport com.cohere.api.types.OAuthAuthorizeResponse;\n\npublic class ConnectorsIdOauthAuthorizePost {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    OAuthAuthorizeResponse response =\n        cohere\n            .connectors()\n            .oAuthAuthorize(\n                \"test-id\",\n                ConnectorsOAuthAuthorizeRequest.builder()\n                    .afterTokenRedirect(\"https://connector-example.com/search\")\n                    .build());\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const connector = await cohere.connectors.oAuthAuthorize('connector-id', {\n    redirect_uri: 'https://example.com/oauth/callback',\n  });\n\n  console.log(connector);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/connectors/id/oauth/authorize \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/connectors/{id}/oauth/authorize",
           "responseStatusCode": 200,
@@ -26230,6 +26670,58 @@
         {
           "path": "/v1/models",
           "responseStatusCode": 200,
+          "snippets": {
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.models.list()\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.models.list()\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.types.ListModelsResponse;\n\npublic class ModelsListGet {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListModelsResponse response = cohere.models().list();\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/models \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const models = await cohere.models.list();\n\n  console.log(models);\n})();\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tcohere \"github.com/cohere-ai/cohere-go/v2\"\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Models.List(context.TODO(), &cohere.ModelsListRequest{})\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/models",
+          "responseStatusCode": 200,
           "queryParameters": {
             "page_size": 0,
             "page_token": "string",
@@ -27050,6 +27542,58 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListFinetunedModelsResponse;\n\npublic class ListFinetunedModels {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListFinetunedModelsResponse response = cohere.finetuning().listFinetunedModels();\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListFinetunedModels(context.TODO(), nil)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModels)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModels = await cohere.finetuning.listFinetunedModels();\n\n  console.log(finetunedModels);\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.list_finetuned_models()\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_finetuned_models()\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/finetuning/finetuned-models",
+          "responseStatusCode": 200,
           "queryParameters": {
             "page_size": 0,
             "page_token": "string",
@@ -27341,9 +27885,6 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "snippets": {
             "java": [
               {
@@ -27652,6 +28193,58 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/finetuning/finetuned-models/{id}",
+          "responseStatusCode": 200,
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.GetFinetunedModelResponse;\n\npublic class GetFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    GetFinetunedModelResponse response = cohere.finetuning().getFinetunedModel(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.GetFinetunedModel(context.TODO(), \"test-id\")\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.getFinetunedModel('test-id');\n\n  console.log(finetunedModel);\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.get_finetuned_model(\"test-id\")\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.get_finetuned_model(\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
@@ -28100,9 +28693,6 @@
         {
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
-          "pathParameters": {},
-          "queryParameters": {},
-          "headers": {},
           "requestBody": {
             "type": "json"
           },
@@ -28417,6 +29007,58 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/finetuning/finetuned-models/{id}",
+          "responseStatusCode": 200,
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\n\npublic class DeleteFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    cohere.finetuning().deleteFinetunedModel(\"test-id\");\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\t_, err := co.Finetuning.DeleteFinetunedModel(context.TODO(), \"test-id\")\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  await cohere.finetuning.deleteFinetunedModel('test-id');\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nco.finetuning.delete_finetuned_model(\"test-id\")\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    await co.finetuning.delete_finetuned_model(\"test-id\")\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request DELETE \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
@@ -28736,6 +29378,58 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
+          "responseStatusCode": 200,
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListEventsResponse;\n\npublic class ListEvents {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListEventsResponse response = cohere.finetuning().listEvents(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListEvents(\n\t\tcontext.TODO(),\n\t\t\"test-finetuned-model-id\",\n\t\tnil,\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.Events)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const events = await cohere.finetuning.listEvents('test-finetuned-model-id');\n\n  console.log(events);\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.list_events(finetuned_model_id=\"test-id\")\nprint(response)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_events(finetuned_model_id=\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id/events \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
           "responseStatusCode": 200,
@@ -29064,6 +29758,58 @@
         }
       ],
       "examples": [
+        {
+          "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
+          "responseStatusCode": 200,
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListTrainingStepMetricsResponse;\n\npublic class ListTrainingStepMetrics {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListTrainingStepMetricsResponse response =\n        cohere.finetuning().listTrainingStepMetrics(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListTrainingStepMetrics(\n\t\tcontext.TODO(),\n\t\t\"test-finetuned-model-id\",\n\t\tnil,\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.StepMetrics)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const trainingStepMetrics = await cohere.finetuning.listTrainingStepMetrics(\n    'test-finetuned-model-id'\n  );\n\n  console.log(trainingStepMetrics);\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\ntrain_step_metrics = co.finetuning.list_training_step_metrics(\n    finetuned_model_id=\"test-id\"\n)\nprint(train_step_metrics)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_train_step_metrics(finetuned_model_id=\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id/training-step-metrics \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
+                "generated": false
+              }
+            ]
+          }
+        },
         {
           "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
           "responseStatusCode": 200,
