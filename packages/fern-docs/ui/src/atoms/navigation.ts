@@ -8,6 +8,7 @@ import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 import { NavbarLink } from "./types";
+import { mockProducts } from "../mocks/products";
 
 export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
@@ -156,3 +157,15 @@ export function useDomain(): string {
 export function useBasePath(): string | undefined {
   return useAtomValue(BASEPATH_ATOM);
 }
+
+export const PRODUCTS_ATOM = selectAtom(
+  DOCS_ATOM,
+  (docs) => mockProducts,
+  isEqual
+);
+PRODUCTS_ATOM.debugLabel = "PRODUCTS_ATOM";
+
+export const CURRENT_PRODUCT_ID_ATOM = atom<FernNavigation.ProductId>(
+  FernNavigation.ProductId("sdks") // Default to SDKs product
+);
+CURRENT_PRODUCT_ID_ATOM.debugLabel = "CURRENT_PRODUCT_ID_ATOM";
