@@ -10,9 +10,9 @@ import { DocsProps, HydrateAtoms, store } from "../atoms";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { LocalPreviewContextProvider } from "../contexts/local-preview";
 import "../css/globals.scss";
+import { FeatureFlagProvider } from "../feature-flags/FeatureFlagProvider";
 import { NextNProgress } from "../header/NProgress";
 import { useInterceptNextDataHref } from "../hooks/useInterceptNextDataHref";
-import { FeatureFlagProvider } from "../mdx/components/feature/FeatureFlagProvider";
 import { ThemeScript } from "../themes/ThemeScript";
 
 export function NextApp({
@@ -30,7 +30,7 @@ export function NextApp({
   return (
     <JotaiProvider store={store}>
       <HydrateAtoms pageProps={pageProps}>
-        <FeatureFlagProvider pageProps={pageProps}>
+        <FeatureFlagProvider featureFlagsConfig={pageProps?.featureFlagsConfig}>
           <ThemeScript colors={pageProps?.colors} />
           <NextNProgress
             options={{ showSpinner: false, speed: 400 }}
