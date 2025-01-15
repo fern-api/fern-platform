@@ -50,9 +50,9 @@ interface LaunchDarklyInfo {
   defaultFlags: Record<string, unknown> | undefined;
   options:
     | {
-        baseUrl?: string;
-        streamUrl?: string;
-        eventsUrl?: string;
+        baseUrl: string | undefined;
+        streamUrl: string | undefined;
+        eventsUrl: string | undefined;
       }
     | undefined;
 }
