@@ -48,6 +48,7 @@ interface WithInitialProps {
    */
   host: string;
   fern_token: string | undefined;
+  rawCookie: string | undefined;
 }
 
 export async function withInitialProps({
@@ -56,6 +57,7 @@ export async function withInitialProps({
   domain,
   host,
   fern_token,
+  rawCookie,
 }: WithInitialProps): Promise<
   GetServerSidePropsResult<ComponentProps<typeof DocsPage>>
 > {
@@ -337,7 +339,8 @@ export async function withInitialProps({
         context: await withLaunchDarklyContext(
           launchDarklyConfig["context-endpoint"],
           authState,
-          found
+          found,
+          rawCookie
         ),
       }
     : undefined;
@@ -436,7 +439,8 @@ function withRedirect(destination: string): { redirect: Redirect } {
 async function withLaunchDarklyContext(
   endpoint: string,
   authState: AuthState,
-  node: FernNavigation.utils.Node
+  node: FernNavigation.utils.Node,
+  rawCookie: string | undefined
 ) {
   try {
     const url = new URL(endpoint);
@@ -447,7 +451,15 @@ async function withLaunchDarklyContext(
       }
     }
 
-    const context = await fetch(url).then((res) => res.json());
+    const headers = new Headers();
+
+    // TODO: this forwards the cookie to an adapter that should generate a LaunchDarkly context
+    // if we migrate from edge config to docs.yml, we need to maintain an strict allowlist
+    if (rawCookie != null) {
+      headers.set("Cookie", rawCookie);
+    }
+
+    const context = await fetch(url, { headers }).then((res) => res.json());
 
     return context;
   } catch {

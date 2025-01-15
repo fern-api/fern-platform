@@ -20,7 +20,8 @@ export async function getDocsPageProps(
   domain: string | undefined,
   host: string,
   slug: FernNavigation.Slug,
-  fern_token?: string | undefined
+  fern_token?: string | undefined,
+  rawCookie?: string | undefined
 ): Promise<SSGDocsPageProps> {
   if (typeof domain !== "string") {
     return { notFound: true };
@@ -38,7 +39,7 @@ export async function getDocsPageProps(
    * Convert the docs into initial props for the page.
    */
   const initialProps = await performance.trackInitialPropsPromise(
-    withInitialProps({ docs, slug, domain, host, fern_token })
+    withInitialProps({ docs, slug, domain, host, fern_token, rawCookie })
   );
   console.log("Converted docs into initial props");
 
