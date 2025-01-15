@@ -279,9 +279,20 @@ export class FdrDeployStack extends Stack {
       {
         aliasName: `fern-${environmentType.toLowerCase()}-getdocs-lambda-alias`,
         version: getDocsLambda.lambdaFunction.currentVersion,
-        provisionedConcurrentExecutions: 900,
+        provisionedConcurrentExecutions: 1000,
       }
     );
+
+    const scaling = getDocsAlias.addAutoScaling({
+      minCapacity: 500,
+      maxCapacity: 900,
+    });
+
+    scaling.scaleOnUtilization({
+      utilizationTarget: 0.5,
+      scaleInCooldown: Duration.seconds(60),
+      scaleOutCooldown: Duration.seconds(1),
+    });
 
     const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
       handler: getDocsAlias,
