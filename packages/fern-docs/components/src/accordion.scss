@@ -8,7 +8,7 @@
   }
 
   .fern-accordion-item {
-    @apply scroll-mt-content-padded first:rounded-t-[inherit] last:rounded-b-[inherit];
+    @apply first:rounded-t-[inherit] last:rounded-b-[inherit];
   }
 
   .fern-accordion-trigger {

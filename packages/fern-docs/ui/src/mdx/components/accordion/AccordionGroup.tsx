@@ -58,7 +58,12 @@ export const AccordionGroup = forwardRef<HTMLDivElement, AccordionGroupProps>(
         className="m-mdx"
       >
         {items.map(({ title, id, children }) => (
-          <AccordionItem key={id} value={id} id={id}>
+          <AccordionItem
+            key={id}
+            value={id}
+            id={id}
+            className="scroll-mt-content-padded"
+          >
             <AccordionTrigger>{title}</AccordionTrigger>
             <AccordionContent>
               <div className="m-5">{children}</div>
