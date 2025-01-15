@@ -160,13 +160,6 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           "": resolvedSchema?.example,
         }
       ).forEach(([exampleName, exampleObject], i) => {
-        if (typeof exampleObject !== "object" || !("value" in exampleObject)) {
-          this.context.errors.warning({
-            message: "Expected example to be an object with a value property",
-            path: this.accessPath,
-          });
-          // return;
-        }
         this.examples ??= [];
         this.examples = this.examples.concat(
           singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap((request) =>

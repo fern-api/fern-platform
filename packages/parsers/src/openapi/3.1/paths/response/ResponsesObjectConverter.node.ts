@@ -60,7 +60,6 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           },
           this.path,
           parseInt(statusCode),
-          // this.requests,
           [],
           this.shapes
         );
