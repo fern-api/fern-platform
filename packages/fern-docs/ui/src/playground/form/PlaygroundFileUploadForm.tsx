@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
-import { FilePlus, File, Mic, X } from "lucide-react";
+import { File, FilePlus, Mic, X } from "lucide-react";
 import numeral from "numeral";
 import {
   ChangeEvent,
