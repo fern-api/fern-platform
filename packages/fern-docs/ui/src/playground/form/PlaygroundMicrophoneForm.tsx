@@ -1,10 +1,10 @@
 import { FernButton, FernInput, FernInputProps } from "@fern-docs/components";
+import { AnimatePresence, motion } from "framer-motion";
 import { Mic, RotateCcw } from "lucide-react";
 import { ReactElement } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
-import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
 import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
+import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
 
 export interface PlaygroundMicrophoneFormProps extends FernInputProps {
   onAudioData?: (base64Data: string) => void;

@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
-import { Mic, X, FilePlus, FileVolume } from "lucide-react";
 import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
+import { FilePlus, FileVolume, Mic, X } from "lucide-react";
 import numeral from "numeral";
 import {
   ChangeEvent,
@@ -12,9 +12,9 @@ import {
   useState,
 } from "react";
 import { useAudioRecorder } from "../hooks/useAudioRecorder";
-import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
-import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
 import { WithLabelInternal } from "../WithLabel";
+import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
+import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
 
 export interface PlaygroundFileUploadFormProps {
   id: string;

@@ -1,5 +1,5 @@
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
-import { Octagon, Play, Download } from "lucide-react";
+import { Download, Octagon, Play } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 interface PlaygroundAudioControlsProps {

@@ -20,9 +20,9 @@ import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdFo
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
+import { PlaygroundMicrophoneForm } from "./PlaygroundMicrophoneForm";
 import { PlaygroundObjectForm } from "./PlaygroundObjectForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
-import { PlaygroundMicrophoneForm } from "./PlaygroundMicrophoneForm";
 
 interface PlaygroundTypeReferenceFormProps {
   id: string;
