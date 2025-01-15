@@ -18,7 +18,6 @@ import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNam
 import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
-import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import {
   ParameterBaseObjectConverterNode,
@@ -45,7 +44,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   auth: SecurityRequirementObjectConverterNode | undefined;
   namespace: XFernGroupNameConverterNode | undefined;
   xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
-  emptyExample: ExampleObjectConverterNode | undefined;
+  redocExamplesNode: RedocExampleConverterNode | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
@@ -156,12 +155,32 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    const redocExamplesNode = new RedocExampleConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-code-samples",
-    });
+    this.redocExamplesNode = new RedocExampleConverterNode(
+      {
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "x-code-samples",
+      },
+      this.path,
+      Object.keys(this.responses?.responsesByStatusCode ?? {})
+        .map(Number)
+        .sort()[0] ?? 200,
+      undefined
+    );
+
+    this.requests =
+      this.input.requestBody != null
+        ? new RequestBodyObjectConverterNode(
+            {
+              input: this.input.requestBody,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: "requestBody",
+            },
+            this.path
+          )
+        : undefined;
 
     this.responses =
       this.input.responses != null
@@ -173,26 +192,12 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               pathId: "responses",
             },
             this.path,
-            redocExamplesNode
-          )
-        : undefined;
-
-    this.emptyExample =
-      redocExamplesNode.codeSamples != null &&
-      redocExamplesNode.codeSamples.length > 0
-        ? new ExampleObjectConverterNode(
+            Object.values(this.requests?.requestBodiesByContentType ?? {}),
             {
-              input: undefined,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "example",
-            },
-            this.path,
-            200,
-            undefined,
-            undefined,
-            undefined,
-            redocExamplesNode
+              pathParameters: this.pathParameters,
+              queryParameters: this.queryParameters,
+              requestHeaders: this.requestHeaders,
+            }
           )
         : undefined;
 
@@ -205,20 +210,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         )[0]
       );
     }
-
-    this.requests =
-      this.input.requestBody != null
-        ? new RequestBodyObjectConverterNode(
-            {
-              input: this.input.requestBody,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "requestBody",
-            },
-            this.path,
-            responseStatusCode
-          )
-        : undefined;
 
     if (this.globalAuth != null) {
       this.auth = this.globalAuth;
@@ -340,16 +331,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     };
 
     const examples = [
+      this.redocExamplesNode?.convert(),
       ...(this.xFernExamplesNode?.convert() ?? []),
       ...(responses?.flatMap((response) => response.examples) ?? []),
-    ];
-
-    if (examples.length === 0) {
-      const emptyExample = this.emptyExample?.convert();
-      if (emptyExample != null) {
-        examples.push(emptyExample);
-      }
-    }
+    ].filter(isNonNullish);
 
     if (this.isWebhook) {
       if (this.method !== "POST" && this.method !== "GET") {
@@ -371,11 +356,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           convertOperationObjectProperties(this.requestHeaders)?.flat()
         ),
         payloads: this.requests?.convertToWebhookPayload(),
-        examples: examples.map((example) => {
-          return {
-            payload: example.snippets,
-          };
-        }),
+        examples: [this.requests?.webhookExample()].filter(isNonNullish),
       };
     }
 

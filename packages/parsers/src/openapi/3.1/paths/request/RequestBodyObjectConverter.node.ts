@@ -22,8 +22,7 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject
     >,
-    protected path: string,
-    protected responseStatusCode: number
+    protected path: string
   ) {
     super(args);
     this.safeParse();
@@ -55,8 +54,7 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
               pathId: "content",
             },
             contentType,
-            this.path,
-            this.responseStatusCode
+            this.path
           );
       }
     );
@@ -95,5 +93,11 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
         });
       })
       .filter(isNonNullish);
+  }
+
+  webhookExample(): FernRegistry.api.v1.read.ExampleWebhookPayload | undefined {
+    return this.requestBodiesByContentType?.[
+      "application/json"
+    ]?.schema?.example() as FernRegistry.api.v1.read.ExampleWebhookPayload;
   }
 }

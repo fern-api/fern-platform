@@ -47,9 +47,12 @@ describe("ExampleObjectConverterNode", () => {
         mockPath,
         mockResponseStatusCode,
         "test",
-        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+        {
+          requestBody:
+            mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody:
+            mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -64,12 +67,14 @@ describe("ExampleObjectConverterNode", () => {
         mockPath,
         mockResponseStatusCode,
         "test",
-        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
         {
-          ...mockResponseBody,
-          resolvedSchema: undefined,
-        } as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+          requestBody:
+            mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody: {
+            ...mockResponseBody,
+            resolvedSchema: undefined,
+          } as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -92,9 +97,12 @@ describe("ExampleObjectConverterNode", () => {
         mockPath,
         mockResponseStatusCode,
         "test",
-        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+        {
+          requestBody:
+            mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody:
+            mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -122,9 +130,12 @@ describe("ExampleObjectConverterNode", () => {
         mockPath,
         mockResponseStatusCode,
         "Test example",
-        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+        {
+          requestBody:
+            mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody:
+            mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       const result = converter.convert();
@@ -163,29 +174,32 @@ describe("ExampleObjectConverterNode", () => {
         mockPath,
         mockResponseStatusCode,
         "test",
-        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
-        new ResponseMediaTypeObjectConverterNode(
-          {
-            input: {
-              schema: {
-                type: "object",
-                properties: {
-                  id: { type: "string" },
-                  name: { type: "string" },
+        {
+          requestBody:
+            mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody: new ResponseMediaTypeObjectConverterNode(
+            {
+              input: {
+                schema: {
+                  type: "object",
+                  properties: {
+                    id: { type: "string" },
+                    name: { type: "string" },
+                  },
                 },
               },
+              context: mockContext,
+              accessPath: [],
+              pathId: "test",
             },
-            context: mockContext,
-            accessPath: [],
-            pathId: "test",
-          },
-          "application/json",
-          undefined,
-          "testpath",
-          200,
-          undefined
-        ),
-        undefined
+            "application/json",
+            undefined,
+            "testpath",
+            200,
+            [],
+            undefined
+          ),
+        }
       );
 
       const result = converter.convert();
@@ -223,11 +237,13 @@ describe("ExampleObjectConverterNode", () => {
         mockResponseStatusCode,
         "test",
         {
-          ...mockRequestBody,
-          contentType: "bytes" as const,
-        } as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+          requestBody: {
+            ...mockRequestBody,
+            contentType: "bytes" as const,
+          } as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody:
+            mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       const result = converter.convert();
@@ -256,12 +272,14 @@ describe("ExampleObjectConverterNode", () => {
         mockPath,
         mockResponseStatusCode,
         "test",
-        mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
         {
-          ...mockResponseBody,
-          contentType: "application/octet-stream" as const,
-        } as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+          requestBody:
+            mockRequestBody as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody: {
+            ...mockResponseBody,
+            contentType: "application/octet-stream" as const,
+          } as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       const result = converter.convert();
@@ -294,16 +312,18 @@ describe("ExampleObjectConverterNode", () => {
         mockResponseStatusCode,
         "test",
         {
-          ...mockRequestBody,
-          contentType: "form-data" as const,
-          fields: {
-            file: {
-              multipartType: "file",
+          requestBody: {
+            ...mockRequestBody,
+            contentType: "form-data" as const,
+            fields: {
+              file: {
+                multipartType: "file",
+              },
             },
-          },
-        } as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+          } as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody:
+            mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       expect(converter.validateFormDataRequestExample()).toBe(true);
@@ -335,16 +355,18 @@ describe("ExampleObjectConverterNode", () => {
         mockResponseStatusCode,
         "test",
         {
-          ...mockRequestBody,
-          contentType: "form-data" as const,
-          fields: {
-            files: {
-              multipartType: "files",
+          requestBody: {
+            ...mockRequestBody,
+            contentType: "form-data" as const,
+            fields: {
+              files: {
+                multipartType: "files",
+              },
             },
-          },
-        } as unknown as RequestMediaTypeObjectConverterNode,
-        mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
-        undefined
+          } as unknown as RequestMediaTypeObjectConverterNode,
+          responseBody:
+            mockResponseBody as unknown as ResponseMediaTypeObjectConverterNode,
+        }
       );
 
       expect(converter.validateFormDataRequestExample()).toBe(true);

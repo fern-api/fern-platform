@@ -9,6 +9,7 @@ import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProper
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
+import { singleUndefinedArrayIfNullOrEmpty } from "../../utils/singleUndefinedArrayIfNullOrEmpty";
 import { isReferenceObject } from "../guards/isReferenceObject";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
@@ -152,46 +153,46 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     const maybeMultipleObjectsExtraProperties = this.convertExtraProperties();
 
     return maybeMultipleObjectsProperties.flatMap((properties) => {
-      return (maybeMultipleObjectsExtraProperties ?? [undefined]).map(
-        (extraProperties) => {
-          if (
-            (this.extends == null || this.extends.length === 0) &&
-            properties.length === 0 &&
-            extraProperties != null
-          ) {
-            return {
-              type: "alias",
-              value: {
-                type: "map",
-                keyShape: {
-                  type: "alias",
+      return singleUndefinedArrayIfNullOrEmpty(
+        maybeMultipleObjectsExtraProperties
+      ).map((extraProperties) => {
+        if (
+          (this.extends == null || this.extends.length === 0) &&
+          properties.length === 0 &&
+          extraProperties != null
+        ) {
+          return {
+            type: "alias",
+            value: {
+              type: "map",
+              keyShape: {
+                type: "alias",
+                value: {
+                  type: "primitive",
                   value: {
-                    type: "primitive",
-                    value: {
-                      type: "string",
-                      format: undefined,
-                      regex: undefined,
-                      minLength: undefined,
-                      maxLength: undefined,
-                      default: undefined,
-                    },
+                    type: "string",
+                    format: undefined,
+                    regex: undefined,
+                    minLength: undefined,
+                    maxLength: undefined,
+                    default: undefined,
                   },
                 },
-                valueShape: {
-                  type: "alias",
-                  value: extraProperties,
-                },
               },
-            };
-          }
-          return {
-            type: "object",
-            extends: this.extends.map((id) => FernRegistry.TypeId(id)),
-            properties,
-            extraProperties,
+              valueShape: {
+                type: "alias",
+                value: extraProperties,
+              },
+            },
           };
         }
-      );
+        return {
+          type: "object",
+          extends: this.extends.map((id) => FernRegistry.TypeId(id)),
+          properties,
+          extraProperties,
+        };
+      });
     });
   }
 
