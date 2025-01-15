@@ -70,6 +70,8 @@ const IdentifyWrapper = ({
   }>(
     endpoint,
     async () => {
+      // Note: we need to include credentials here to pass the cookie to the server, since the cookie can be used to identify the user
+      // this can be dangerous and should be only enabled for trusted customers
       const res = await fetch(endpoint, { credentials: "include" });
       return {
         context: (await res.json()) as LDContext,
