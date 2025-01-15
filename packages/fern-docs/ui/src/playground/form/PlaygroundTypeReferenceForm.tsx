@@ -20,6 +20,7 @@ import { PlaygroundElevenLabsVoiceIdForm } from "./PlaygroundElevenLabsVoiceIdFo
 import { PlaygroundEnumForm } from "./PlaygroundEnumForm";
 import { PlaygroundListForm } from "./PlaygroundListForm";
 import { PlaygroundMapForm } from "./PlaygroundMapForm";
+import { PlaygroundMicrophoneForm } from "./PlaygroundMicrophoneForm";
 import { PlaygroundObjectForm } from "./PlaygroundObjectForm";
 import { PlaygroundUniscriminatedUnionForm } from "./PlaygroundUniscriminatedUnionForm";
 
@@ -152,6 +153,19 @@ export const PlaygroundTypeReferenceForm =
                   value={typeof value === "string" ? value : ""}
                   onValueChange={onChange}
                   disabled={disabled}
+                />
+              ) : property?.key === "user_audio_chunk" || // TODO(naman): remove hardcoding for ElevenLabs once the backend mimeType is plumbed through
+                (primitive.value.type === "base64" &&
+                  primitive.value.mimeType?.includes("audio/webm") &&
+                  MediaRecorder.isTypeSupported("audio/webm")) ? (
+                <PlaygroundMicrophoneForm
+                  id={id}
+                  className="w-full"
+                  value={typeof value === "string" ? value : ""}
+                  onValueChange={onChange}
+                  onAudioData={onChange}
+                  disabled={disabled}
+                  placeholder={string.default}
                 />
               ) : (
                 <FernInput
