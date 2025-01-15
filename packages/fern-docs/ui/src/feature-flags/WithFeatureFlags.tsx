@@ -13,7 +13,6 @@ const LDFeatures = dynamic(
 export const WithFeatureFlags: React.FC<WithFeatureFlagsProps> = ({
   featureFlags,
   children,
-  fallback,
 }) => {
   // do not import LDFeatures if there are no feature flags
   if (!featureFlags?.length) {
@@ -22,9 +21,7 @@ export const WithFeatureFlags: React.FC<WithFeatureFlagsProps> = ({
 
   return (
     <FernErrorBoundary>
-      <LDFeatures featureFlags={featureFlags} fallback={fallback}>
-        {children}
-      </LDFeatures>
+      <LDFeatures featureFlags={featureFlags}>{children}</LDFeatures>
     </FernErrorBoundary>
   );
 };

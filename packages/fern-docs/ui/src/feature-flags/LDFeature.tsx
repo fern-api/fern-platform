@@ -5,7 +5,7 @@ import { FeatureProps, WithFeatureFlagsProps } from "./types";
 
 const ldFlagPredicate = <T,>(
   flagKey: string,
-  defaultValue: T,
+  fallbackValue: T,
   match: T
 ): ((flags: LDFlagSet) => boolean) => {
   return (flags: LDFlagSet) => {
@@ -14,19 +14,19 @@ const ldFlagPredicate = <T,>(
     // the developer experience; we're doing the same thing to be consistent with them.
     // See https://github.com/launchdarkly/LaunchDarkly-Docs/blob/95cebf9ef4841da96ddfec9dd6e3ed76455025d0/src/flags/flagPredicate.ts#L6
     const camelKey = camelCase(flagKey);
-    const flagValue = flags[camelKey] ?? defaultValue;
+    const flagValue = flags[camelKey] ?? fallbackValue;
     return isEqual(flagValue as T, match);
   };
 };
 
 export const LDFeature: React.FC<FeatureProps> = ({
   flag,
-  default: defaultValue = false,
+  fallbackValue = false,
   match = true,
   children,
 }) => {
   const flags = useFlags();
-  const flagPredicate = ldFlagPredicate(flag, defaultValue, match);
+  const flagPredicate = ldFlagPredicate(flag, fallbackValue, match);
 
   if (flagPredicate(flags)) {
     return children;
@@ -38,7 +38,6 @@ export const LDFeature: React.FC<FeatureProps> = ({
 export const LDFeatures: React.FC<WithFeatureFlagsProps> = ({
   featureFlags,
   children,
-  fallback = false,
 }) => {
   const flags = useFlags();
 
@@ -47,12 +46,16 @@ export const LDFeatures: React.FC<WithFeatureFlagsProps> = ({
   }
 
   const predicates = featureFlags.map((featureFlag) =>
-    ldFlagPredicate(featureFlag.flag, featureFlag.default, featureFlag.match)
+    ldFlagPredicate(
+      featureFlag.flag,
+      featureFlag.fallbackValue,
+      featureFlag.match
+    )
   );
 
   if (predicates.some((predicate) => predicate(flags))) {
     return children;
   }
 
-  return fallback;
+  return false;
 };

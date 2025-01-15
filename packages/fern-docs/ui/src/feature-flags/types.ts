@@ -1,11 +1,6 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 
-export type FeatureProps =
-  PropsWithChildren<FernNavigation.FeatureFlagOptions> & {
-    fallback?: ReactNode;
-  };
+export type FeatureProps = PropsWithChildren<FernNavigation.FeatureFlagOptions>;
 export type WithFeatureFlagsProps =
-  PropsWithChildren<FernNavigation.WithFeatureFlags> & {
-    fallback?: ReactNode;
-  };
+  PropsWithChildren<FernNavigation.WithFeatureFlags>;

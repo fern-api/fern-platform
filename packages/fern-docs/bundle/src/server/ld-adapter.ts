@@ -109,9 +109,9 @@ function createDefaultFeatureFlagPredicate(): (
     node.featureFlags == null ||
     node.featureFlags.length === 0 ||
     node.featureFlags.some((flag) => {
-      const default_ = flag.default ?? false;
+      const fallbackValue = flag.fallbackValue ?? false;
       const match = flag.match ?? true;
-      return isEqual(default_, match);
+      return isEqual(fallbackValue, match);
     });
 }
 
@@ -126,7 +126,7 @@ export const createLdPredicate = async ({
     }
     return node.featureFlags.some((flag) => {
       const key = camelCase(flag.flag);
-      const flagValue = flags[key] ?? flag.default ?? false;
+      const flagValue = flags[key] ?? flag.fallbackValue ?? false;
       const match = flag.match ?? true;
       return isEqual(flagValue, match);
     });
