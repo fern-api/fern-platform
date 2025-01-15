@@ -147,6 +147,7 @@ function fetchInitialFlags(
       baseUri: options?.baseUrl,
       streamUri: options?.streamUrl,
       eventsUri: options?.eventsUrl,
+      stream: false,
     });
     return ldClient.allFlagsState(context).then((flags) => flags.allValues());
   } catch (error) {
