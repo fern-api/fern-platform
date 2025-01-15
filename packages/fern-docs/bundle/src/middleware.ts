@@ -129,6 +129,7 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(String(url));
   }
 
+  // TODO: this adds additional latency to the page load. can we batch this somehow?
   const launchDarkly = await getLaunchDarklySettings(request.nextUrl.origin);
 
   return withMiddlewareAuth(
