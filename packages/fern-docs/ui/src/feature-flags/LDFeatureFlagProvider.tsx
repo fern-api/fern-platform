@@ -70,9 +70,7 @@ const IdentifyWrapper = ({
   }>(
     endpoint,
     async () => {
-      const res = await fetch(endpoint, {
-        credentials: "include",
-      });
+      const res = await fetch(endpoint, { credentials: "include" });
       return {
         context: (await res.json()) as LDContext,
         hash: res.headers.get("x-hash"),

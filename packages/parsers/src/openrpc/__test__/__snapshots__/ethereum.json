@@ -1268,6 +1268,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "web3_clientVersion",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the version of the current client",
       "operationId": "web3_clientVersion",
       "environments": [],
@@ -1335,9 +1358,14 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              "0x68656c6c6f20776f726c64"
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "web3_sha3",
+              "params": [
+                "0x68656c6c6f20776f726c64"
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1391,6 +1419,14 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_listening"
+            }
+          },
           "responseStatusCode": 200,
           "responseBody": {
             "type": "json",
@@ -1436,6 +1472,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_peerCount",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the number of peers currently connected to this client.",
       "operationId": "net_peerCount",
       "environments": [],
@@ -1472,6 +1531,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_version",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the network ID associated with the current network.",
       "operationId": "net_version",
       "environments": [],
@@ -1504,6 +1586,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_blockNumber",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of most recent block.",
       "operationId": "eth_blockNumber",
       "environments": [],
@@ -1567,6 +1671,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_call",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Executes a new message call (locally) immediately without creating a transaction on the block chain.",
       "operationId": "eth_call",
       "environments": [],
@@ -1603,6 +1729,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_chainId",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the currently configured chain id, a value used in replay-protected transaction signing as introduced by [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md).",
       "operationId": "eth_chainId",
       "environments": [],
@@ -1635,6 +1784,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_coinbase",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the client coinbase address.",
       "operationId": "eth_coinbase",
       "environments": [],
@@ -1688,6 +1859,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_estimateGas",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance.",
       "operationId": "eth_estimateGas",
       "environments": [],
@@ -1720,6 +1913,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_gasPrice",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the current price per gas in wei",
       "operationId": "eth_gasPrice",
       "environments": [],
@@ -1785,6 +2000,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBalance",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns Ether balance of a given or account or contract",
       "operationId": "eth_getBalance",
       "environments": [],
@@ -1851,6 +2088,30 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockByHash",
+              "params": {
+                "includeTransactions": false
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Gets a block for a given hash",
       "operationId": "eth_getBlockByHash",
       "environments": [],
@@ -1917,6 +2178,30 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockByNumber",
+              "params": {
+                "includeTransactions": false
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Gets a block for a given number",
       "operationId": "eth_getBlockByNumber",
       "environments": [],
@@ -1970,6 +2255,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockTransactionCountByHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of transactions in a block from a block matching the given block hash.",
       "operationId": "eth_getBlockTransactionCountByHash",
       "environments": [],
@@ -2023,6 +2330,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockTransactionCountByNumber",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of transactions in a block from a block matching the given block number.",
       "operationId": "eth_getBlockTransactionCountByNumber",
       "environments": [],
@@ -2088,6 +2417,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getCode",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns code at a given contract address",
       "operationId": "eth_getCode",
       "environments": [],
@@ -2147,6 +2498,31 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getFilterChanges",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null
+            ]
+          }
+        }
+      ],
       "description": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
       "operationId": "eth_getFilterChanges",
       "environments": [],
@@ -2206,6 +2582,31 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getFilterLogs",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null
+            ]
+          }
+        }
+      ],
       "description": "Returns an array of all logs matching filter with given id.",
       "operationId": "eth_getFilterLogs",
       "environments": [],
@@ -2259,6 +2660,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getRawTransactionByHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns raw transaction data of a transaction with the given hash.",
       "operationId": "eth_getRawTransactionByHash",
       "environments": [],
@@ -2323,6 +2746,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getRawTransactionByBlockHashAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns raw transaction data of a transaction with the block hash and index of which it was mined.",
       "operationId": "eth_getRawTransactionByBlockHashAndIndex",
       "environments": [],
@@ -2387,6 +2832,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getRawTransactionByBlockNumberAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns raw transaction data of a transaction with the block number and index of which it was mined.",
       "operationId": "eth_getRawTransactionByBlockNumberAndIndex",
       "environments": [],
@@ -2485,6 +2952,33 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getLogs",
+              "params": {
+                "filter": {}
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null
+            ]
+          }
+        }
+      ],
       "description": "Returns an array of all logs matching a given filter object.",
       "operationId": "eth_getLogs",
       "environments": [],
@@ -2558,6 +3052,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getStorageAt",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Gets a storage value from a contract address, a position, and an optional blockNumber",
       "operationId": "eth_getStorageAt",
       "environments": [],
@@ -2631,10 +3147,15 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-              "0x0"
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionByBlockHashAndIndex",
+              "params": [
+                "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                "0x0"
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2710,6 +3231,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionByBlockNumberAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the information about a transaction requested by the block number and index of which it was mined.",
       "operationId": "eth_getTransactionByBlockNumberAndIndex",
       "environments": [],
@@ -2763,6 +3306,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionByHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the information about a transaction requested by transaction hash.",
       "operationId": "eth_getTransactionByHash",
       "environments": [],
@@ -2826,6 +3391,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionCount",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of transactions sent from an address",
       "operationId": "eth_getTransactionCount",
       "environments": [],
@@ -2879,6 +3466,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionReceipt",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the receipt information of a transaction by its hash.",
       "operationId": "eth_getTransactionReceipt",
       "environments": [],
@@ -2943,6 +3552,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleByBlockHashAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns information about a uncle of a block by hash and uncle index position.",
       "operationId": "eth_getUncleByBlockHashAndIndex",
       "environments": [],
@@ -3017,10 +3648,15 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              "0x0",
-              "0x0"
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleByBlockNumberAndIndex",
+              "params": [
+                "0x0",
+                "0x0"
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3085,6 +3721,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleCountByBlockHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of uncles in a block from a block matching the given block hash.",
       "operationId": "eth_getUncleCountByBlockHash",
       "environments": [],
@@ -3138,6 +3796,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleCountByBlockNumber",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of uncles in a block from a block matching the given block number.",
       "operationId": "eth_getUncleCountByBlockNumber",
       "environments": [],
@@ -3276,6 +3956,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getProof",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        }
+      ],
       "description": "Returns the account- and storage-values of the specified account including the Merkle-proof.",
       "operationId": "eth_getProof",
       "environments": [],
@@ -3339,6 +4042,33 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getWork",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null,
+              null,
+              null
+            ]
+          }
+        }
+      ],
       "description": "Returns the hash of the current block, the seedHash, and the boundary condition to be met ('target').",
       "operationId": "eth_getWork",
       "environments": [],
@@ -3371,6 +4101,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_hashrate",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the number of hashes per second that the node is mining with.",
       "operationId": "eth_hashrate",
       "environments": [],
@@ -3405,6 +4157,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_mining",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
       "description": "Returns true if client is actively mining new blocks.",
       "operationId": "eth_mining",
       "environments": [],
@@ -3437,6 +4212,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newBlockFilter",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Creates a filter in the node, to notify when a new block arrives. To check if the state has changed, call eth_getFilterChanges.",
       "operationId": "eth_newBlockFilter",
       "environments": [],
@@ -3529,6 +4326,30 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newFilter",
+              "params": {
+                "filter": {}
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has changed, call eth_getFilterChanges.",
       "operationId": "eth_newFilter",
       "environments": [],
@@ -3561,6 +4382,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newPendingTransactionFilter",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Creates a filter in the node, to notify when new pending transactions arrive. To check if the state has changed, call eth_getFilterChanges.",
       "operationId": "eth_newPendingTransactionFilter",
       "environments": [],
@@ -3593,6 +4436,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_pendingTransactions",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the transactions that are pending in the transaction pool and have a from address that is one of the accounts this node manages.",
       "operationId": "eth_pendingTransactions",
       "environments": [],
@@ -3625,6 +4490,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_protocolVersion",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Returns the current ethereum protocol version.",
       "operationId": "eth_protocolVersion",
       "environments": [],
@@ -3679,6 +4566,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_sendRawTransaction",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
       "description": "Creates new message call transaction or a contract creation for signed transactions.",
       "operationId": "eth_sendRawTransaction",
       "environments": [],
@@ -3745,6 +4654,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_submitHashrate",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
       "description": "Used for submitting mining hashrate.",
       "operationId": "eth_submitHashrate",
       "environments": [],
@@ -3830,11 +4762,16 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              "0x0000000000000001",
-              "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
-              "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_submitWork",
+              "params": [
+                "0x0000000000000001",
+                "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+                "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3933,6 +4870,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_syncing",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        }
+      ],
       "description": "Returns an object with data about the sync status or false.",
       "operationId": "eth_syncing",
       "environments": [],
@@ -3988,6 +4948,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_uninstallFilter",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
       "description": "Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additionally Filters timeout when they aren't requested with eth_getFilterChanges for a period of time.",
       "operationId": "eth_uninstallFilter",
       "environments": [],
