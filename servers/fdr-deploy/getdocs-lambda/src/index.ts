@@ -112,6 +112,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
       const keys = await redis.keys("*");
       console.log("All Redis keys:", keys);
+      //dummy commit
 
       const cachedResponse = await redis.get(parsedUrl.getFullUrl());
       if (cachedResponse != null) {
