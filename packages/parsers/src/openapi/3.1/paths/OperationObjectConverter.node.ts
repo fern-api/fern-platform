@@ -45,6 +45,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   auth: SecurityRequirementObjectConverterNode | undefined;
   namespace: XFernGroupNameConverterNode | undefined;
   xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
+  redocExamplesNode: RedocExampleConverterNode | undefined;
   emptyExample: ExampleObjectConverterNode | undefined;
 
   constructor(
@@ -156,12 +157,32 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    const redocExamplesNode = new RedocExampleConverterNode({
-      input: this.input,
-      context: this.context,
-      accessPath: this.accessPath,
-      pathId: "x-code-samples",
-    });
+    this.redocExamplesNode = new RedocExampleConverterNode(
+      {
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "x-code-samples",
+      },
+      this.path,
+      Object.keys(this.responses?.responsesByStatusCode ?? {})
+        .map(Number)
+        .sort()[0] ?? 200,
+      "redoc-examples"
+    );
+
+    this.requests =
+      this.input.requestBody != null
+        ? new RequestBodyObjectConverterNode(
+            {
+              input: this.input.requestBody,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: "requestBody",
+            },
+            this.path
+          )
+        : undefined;
 
     this.responses =
       this.input.responses != null
@@ -173,26 +194,12 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               pathId: "responses",
             },
             this.path,
-            redocExamplesNode
-          )
-        : undefined;
-
-    this.emptyExample =
-      redocExamplesNode.codeSamples != null &&
-      redocExamplesNode.codeSamples.length > 0
-        ? new ExampleObjectConverterNode(
+            Object.values(this.requests?.requestBodiesByContentType ?? {}),
             {
-              input: undefined,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "example",
-            },
-            this.path,
-            200,
-            undefined,
-            undefined,
-            undefined,
-            redocExamplesNode
+              pathParameters: this.pathParameters,
+              queryParameters: this.queryParameters,
+              requestHeaders: this.requestHeaders,
+            }
           )
         : undefined;
 
@@ -205,20 +212,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         )[0]
       );
     }
-
-    this.requests =
-      this.input.requestBody != null
-        ? new RequestBodyObjectConverterNode(
-            {
-              input: this.input.requestBody,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: "requestBody",
-            },
-            this.path,
-            responseStatusCode
-          )
-        : undefined;
 
     if (this.globalAuth != null) {
       this.auth = this.globalAuth;
@@ -340,9 +333,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     };
 
     const examples = [
+      this.redocExamplesNode?.convert(),
       ...(this.xFernExamplesNode?.convert() ?? []),
       ...(responses?.flatMap((response) => response.examples) ?? []),
-    ];
+    ].filter(isNonNullish);
 
     if (examples.length === 0) {
       const emptyExample = this.emptyExample?.convert();

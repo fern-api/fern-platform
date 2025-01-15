@@ -2,10 +2,11 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { convertToObjectProperties } from "../../../utils/3.1/convertToObjectProperties";
+import { resolveParameterBaseReference } from "../../../utils/3.1/resolveParameterBaseReference";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
@@ -25,7 +26,7 @@ export function convertOperationObjectProperties(
   );
 }
 
-export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   OpenAPIV3_1.ParameterBaseObject | OpenAPIV3_1.ReferenceObject,
   FernRegistry.api.latest.TypeShape | FernRegistry.api.latest.TypeShape[]
 > {
@@ -33,6 +34,7 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
   required: boolean | undefined;
   schema: SchemaConverterNode | undefined;
   description: string | undefined;
+  inputExample: unknown | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
@@ -76,6 +78,15 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
       accessPath: this.accessPath,
       pathId: "schema",
     });
+
+    // TODO: support multiple examples
+    const input = resolveParameterBaseReference(
+      this.input,
+      this.context.document
+    );
+
+    this.inputExample =
+      input?.example ?? Object.values(input?.examples ?? {})[0];
   }
 
   convert():
@@ -83,5 +94,9 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     | FernRegistry.api.latest.TypeShape[]
     | undefined {
     return this.schema?.convert();
+  }
+
+  example(): unknown | undefined {
+    return this.inputExample ?? this.schema?.example();
   }
 }

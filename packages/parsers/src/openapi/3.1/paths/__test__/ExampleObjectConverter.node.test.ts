@@ -20,8 +20,6 @@ describe("ExampleObjectConverterNode", () => {
         "/test",
         200,
         undefined,
-        undefined,
-        undefined,
         undefined
       );
 
@@ -48,13 +46,14 @@ describe("ExampleObjectConverterNode", () => {
         200,
         undefined,
         {
-          contentType: "form-data",
-          fields: {
-            file: { multipartType: "file" },
-          },
-        } as RequestMediaTypeObjectConverterNode,
-        undefined,
-        undefined
+          requestBody: {
+            contentType: "form-data",
+            fields: {
+              file: { multipartType: "file" },
+            },
+          } as RequestMediaTypeObjectConverterNode,
+          responseBody: undefined,
+        }
       );
 
       node.resolvedRequestInput = {
@@ -81,9 +80,12 @@ describe("ExampleObjectConverterNode", () => {
         "/test",
         200,
         "test example",
-        { contentType: "json" } as RequestMediaTypeObjectConverterNode,
-        undefined,
-        undefined
+        {
+          requestBody: {
+            contentType: "json",
+          } as RequestMediaTypeObjectConverterNode,
+          responseBody: undefined,
+        }
       );
 
       node.resolvedRequestInput = { value: { foo: "bar" } };
@@ -120,9 +122,12 @@ describe("ExampleObjectConverterNode", () => {
         "/test",
         200,
         undefined,
-        { contentType: "bytes" } as RequestMediaTypeObjectConverterNode,
-        undefined,
-        undefined
+        {
+          requestBody: {
+            contentType: "bytes",
+          } as RequestMediaTypeObjectConverterNode,
+          responseBody: undefined,
+        }
       );
 
       node.resolvedRequestInput = { value: "base64string" };

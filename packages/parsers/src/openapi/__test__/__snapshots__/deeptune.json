@@ -65,13 +65,11 @@
         {
           "path": "/v1/text-to-speech",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "file": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -147,13 +145,11 @@
         {
           "path": "/v1/text-to-speech/from-prompt",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "file": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -209,18 +205,11 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": [
-              {
-                "id": "string",
-                "name": "string",
-                "description": "string",
-                "is_public": false
-              }
-            ]
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -288,17 +277,11 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
-          "description": "string",
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "is_public": false
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -377,17 +360,14 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "description": "string",
+          "name": "",
+          "pathParameters": {
+            "voice_id": "string"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "is_public": false
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -478,17 +458,14 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "description": "string",
+          "name": "",
+          "pathParameters": {
+            "voice_id": "string"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "name": "string",
-              "description": "string",
-              "is_public": false
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },

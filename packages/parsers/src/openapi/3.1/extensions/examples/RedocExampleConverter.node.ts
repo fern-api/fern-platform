@@ -23,11 +23,16 @@ export declare namespace RedocExampleConverterNode {
 
 export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
   unknown,
-  Record<string, FernRegistry.api.latest.CodeSnippet[]>
+  FernRegistry.api.latest.ExampleEndpointCall
 > {
   codeSamples: RedocExampleConverterNode.RedocCodeSample[] | undefined;
 
-  constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
+  constructor(
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>,
+    protected path: string,
+    protected responseStatusCode: number,
+    protected name: string | undefined
+  ) {
     super(args);
     this.safeParse();
   }
@@ -57,7 +62,7 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
     });
   }
 
-  convert(): Record<string, FernRegistry.api.latest.CodeSnippet[]> | undefined {
+  convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
     const convertedCodeSamples: Record<
       string,
       FernRegistry.api.latest.CodeSnippet[]
@@ -73,6 +78,20 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
         description: undefined,
       });
     });
-    return convertedCodeSamples;
+    if (Object.keys(convertedCodeSamples).length === 0) {
+      return undefined;
+    }
+    return {
+      path: this.path,
+      responseStatusCode: this.responseStatusCode,
+      name: this.name,
+      description: undefined,
+      pathParameters: undefined,
+      queryParameters: undefined,
+      headers: undefined,
+      requestBody: undefined,
+      responseBody: undefined,
+      snippets: convertedCodeSamples,
+    };
   }
 }

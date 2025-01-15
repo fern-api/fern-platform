@@ -14,9 +14,10 @@ import {
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
-import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
+import { singleUndefinedArrayIfNullOrEmpty } from "../../../utils/singleUndefinedArrayIfNullOrEmpty";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
+import { RequestMediaTypeObjectConverterNode } from "../request/RequestMediaTypeObjectConverter.node";
 
 export type ResponseContentType = ConstArrayToType<
   typeof SUPPORTED_RESPONSE_CONTENT_TYPES
@@ -42,7 +43,8 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     protected streamingFormat: ResponseStreamingFormat | undefined,
     protected path: string,
     protected statusCode: number,
-    protected redocExamplesNode: RedocExampleConverterNode | undefined
+    protected requests: RequestMediaTypeObjectConverterNode[],
+    protected shapes: ExampleObjectConverterNode.Shapes
   ) {
     super(args);
     this.safeParse(contentType);
@@ -82,6 +84,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             "Expected schema for plain text response body. Received null",
           path: this.accessPath,
         });
+        return;
       } else {
         this.schema = new SchemaConverterNode({
           input: this.input.schema,
@@ -92,34 +95,53 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       }
     }
 
-    // TODO: This can all be moved upstream if there is a way to correlate the requests and responses (probably with ref-based config)
-    Object.entries(this.input.examples ?? {}).forEach(
-      ([exampleName, exampleObject], i) => {
-        this.examples ??= [];
-        this.examples.push(
-          new ExampleObjectConverterNode(
-            {
-              input: {
-                requestExample: undefined,
-                responseExample: exampleObject,
-              },
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: `examples[${i}]`,
-            },
-            this.path,
-            this.statusCode,
-            exampleName,
-            undefined,
-            this,
-            // undefined,
-            // undefined,
-            // undefined,
-            this.redocExamplesNode
-          )
-        );
+    // In this, we match example names on the request and response. If the example is directly on the request or response, we add to everywhere.
+    Object.entries(
+      this.input.examples ?? {
+        "": {
+          value: this.input.example,
+        },
       }
-    );
+    ).forEach(([exampleName, exampleObject], i) => {
+      this.examples ??= [];
+      this.examples = this.examples.concat(
+        singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap((request) =>
+          Object.entries(
+            request?.examples ?? {
+              "": undefined,
+            }
+          )
+            .map(([requestExampleName, requestExample]) =>
+              exampleName === requestExampleName ||
+              requestExampleName === "" ||
+              exampleName === ""
+                ? new ExampleObjectConverterNode(
+                    {
+                      input: {
+                        requestExample,
+                        responseExample: exampleObject,
+                      },
+                      context: this.context,
+                      accessPath: this.accessPath,
+                      pathId: `examples[${i}]`,
+                    },
+                    this.path,
+                    this.statusCode,
+                    exampleName,
+                    {
+                      requestBody: request,
+                      responseBody: this,
+                      pathParameters: this.shapes.pathParameters,
+                      queryParameters: this.shapes.queryParameters,
+                      requestHeaders: this.shapes.requestHeaders,
+                    }
+                  )
+                : undefined
+            )
+            .filter(isNonNullish)
+        )
+      );
+    });
 
     if (this.contentType != null || this.unsupportedContentType != null) {
       const resolvedSchema = resolveSchemaReference(
@@ -127,93 +149,102 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         this.context.document
       );
       this.examples ??= [];
-      resolvedSchema?.examples?.forEach((example, i) => {
-        if (typeof example !== "object" || !("value" in example)) {
+      Object.entries(
+        resolvedSchema?.examples ?? {
+          "": resolvedSchema?.example,
+        }
+      ).forEach(([exampleName, exampleObject], i) => {
+        if (typeof exampleObject !== "object" || !("value" in exampleObject)) {
           this.context.errors.warning({
             message: "Expected example to be an object with a value property",
             path: this.accessPath,
           });
           return;
         }
-        this.examples?.push(
-          new ExampleObjectConverterNode(
-            {
-              input: {
-                requestExample: undefined,
-                responseExample: example,
-              },
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: `examples[${i}]`,
-            },
-            this.path,
-            this.statusCode,
-            undefined,
-            undefined,
-            this,
-            // undefined,
-            // undefined,
-            // undefined,
-            this.redocExamplesNode
+        this.examples ??= [];
+        this.examples = this.examples.concat(
+          singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap((request) =>
+            Object.entries(
+              request?.examples ?? {
+                "": undefined,
+              }
+            )
+              .map(([requestExampleName, requestExample]) =>
+                exampleName === requestExampleName ||
+                requestExampleName === "" ||
+                exampleName === ""
+                  ? new ExampleObjectConverterNode(
+                      {
+                        input: {
+                          requestExample,
+                          responseExample: exampleObject,
+                        },
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: `examples[${i}]`,
+                      },
+                      this.path,
+                      this.statusCode,
+                      this.contentType,
+                      {
+                        requestBody: request,
+                        responseBody: this,
+                        pathParameters: this.shapes.pathParameters,
+                        queryParameters: this.shapes.queryParameters,
+                        requestHeaders: this.shapes.requestHeaders,
+                      }
+                    )
+                  : undefined
+              )
+              .filter(isNonNullish)
           )
         );
       });
 
       if (this.examples.length === 0 && resolvedSchema != null) {
-        if (resolvedSchema.example != null) {
-          this.examples.push(
-            new ExampleObjectConverterNode(
-              {
-                input: {
-                  requestExample: undefined,
-                  responseExample: resolvedSchema.example,
-                },
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: "example",
-              },
-              this.path,
-              this.statusCode,
-              undefined,
-              undefined,
-              this,
-              // undefined,
-              // undefined,
-              // undefined,
-              this.redocExamplesNode
+        const fallbackExample = new SchemaConverterNode({
+          input: resolvedSchema,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: this.pathId,
+        }).example();
+
+        if (fallbackExample != null) {
+          this.examples = this.examples.concat(
+            singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap(
+              (request) =>
+                Object.values(
+                  request?.examples ?? {
+                    "": resolvedSchema?.example,
+                  }
+                ).map(
+                  (requestExample) =>
+                    new ExampleObjectConverterNode(
+                      {
+                        input: {
+                          requestExample,
+                          responseExample: {
+                            value: fallbackExample,
+                          },
+                        },
+                        context: this.context,
+                        accessPath: this.accessPath,
+                        pathId: this.pathId,
+                      },
+                      this.path,
+                      this.statusCode,
+                      this.contentType,
+                      {
+                        requestBody: request,
+                        responseBody: this,
+                        pathParameters: this.shapes.pathParameters,
+                        queryParameters: this.shapes.queryParameters,
+                        requestHeaders: this.shapes.requestHeaders,
+                      }
+                    )
+                )
             )
           );
-        } else {
-          const fallbackExample = new SchemaConverterNode({
-            input: resolvedSchema,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: this.pathId,
-          }).example();
-          if (fallbackExample != null) {
-            this.examples.push(
-              new ExampleObjectConverterNode(
-                {
-                  input: {
-                    requestExample: undefined,
-                    responseExample: fallbackExample,
-                  },
-                  context: this.context,
-                  accessPath: this.accessPath,
-                  pathId: this.pathId,
-                },
-                this.path,
-                this.statusCode,
-                undefined,
-                undefined,
-                this,
-                // undefined,
-                // undefined,
-                // undefined,
-                this.redocExamplesNode
-              )
-            );
-          }
         }
       }
     }

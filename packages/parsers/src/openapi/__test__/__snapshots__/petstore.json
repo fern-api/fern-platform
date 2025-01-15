@@ -79,58 +79,74 @@
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
         }
       ]
     },
@@ -212,58 +228,74 @@
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet",
           "responseStatusCode": 200,
+          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/pet",
+          "responseStatusCode": 200,
+          "name": "",
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
         }
       ]
     },
@@ -355,14 +387,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "name": "doggie",
-                  "photoUrls": [
-                    "string"
-                  ]
-                }
+                "value": {}
               }
             }
           ]
@@ -380,14 +408,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "name": "doggie",
-                  "photoUrls": [
-                    "string"
-                  ]
-                }
+                "value": {}
               }
             }
           ]
@@ -405,14 +429,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "name": "doggie",
-                  "photoUrls": [
-                    "string"
-                  ]
-                }
+                "value": {}
               }
             }
           ]
@@ -430,14 +450,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "name": "doggie",
-                  "photoUrls": [
-                    "string"
-                  ]
-                }
+                "value": {}
               }
             }
           ]
@@ -447,58 +463,50 @@
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
+          "name": "",
+          "pathParameters": {
+            "petId": 0
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
+          "name": "",
+          "pathParameters": {
+            "petId": 0
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
+          "name": "",
+          "pathParameters": {
+            "petId": 0
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
+          "name": "",
+          "pathParameters": {
+            "petId": 0
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "doggie",
-              "photoUrls": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     }

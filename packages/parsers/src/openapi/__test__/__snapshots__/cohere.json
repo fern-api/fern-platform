@@ -651,11 +651,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -683,11 +682,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -715,11 +713,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -747,11 +744,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -779,11 +775,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -811,11 +806,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -843,11 +837,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -875,11 +868,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -907,11 +899,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -939,11 +930,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -971,11 +961,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -1003,11 +992,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -1650,24 +1638,34 @@
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project",
+            "Accepts": "text/event-stream"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "text": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/v1/chat",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project",
+            "Accepts": "text/event-stream"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "text": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -2463,11 +2461,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2495,11 +2492,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2527,11 +2523,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2559,11 +2554,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2591,11 +2585,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2623,11 +2616,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2655,11 +2647,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2687,11 +2678,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2719,11 +2709,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2751,11 +2740,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2783,11 +2771,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -2815,11 +2802,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -3360,32 +3346,32 @@
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "finish_reason": "COMPLETE",
-              "message": {
-                "role": "assistant"
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/v2/chat",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "finish_reason": "COMPLETE",
-              "message": {
-                "role": "assistant"
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -3869,11 +3855,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -3901,11 +3886,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -3933,11 +3917,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -3965,11 +3948,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -3997,11 +3979,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4029,11 +4010,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4061,11 +4041,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4093,11 +4072,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4125,11 +4103,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4157,11 +4134,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4189,11 +4165,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4221,11 +4196,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4381,64 +4355,62 @@
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "generations": [
-                {
-                  "text": "string",
-                  "id": "string"
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "text": "string",
-              "index": 0,
-              "is_finished": false,
-              "event_type": "text-generation"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "generations": [
-                {
-                  "text": "string",
-                  "id": "string"
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         },
         {
           "path": "/v1/generate",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "text": "string",
-              "index": 0,
-              "is_finished": false,
-              "event_type": "text-generation"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -4630,11 +4602,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4662,11 +4633,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4694,11 +4664,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4726,11 +4695,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4758,11 +4726,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4790,11 +4757,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4822,11 +4788,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4854,11 +4819,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4886,11 +4850,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4918,11 +4881,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4950,11 +4912,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -4982,11 +4943,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8493,11 +8453,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8525,11 +8484,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8557,11 +8515,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8589,11 +8546,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8621,11 +8577,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8653,11 +8608,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8685,11 +8639,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8717,11 +8670,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8749,11 +8701,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8781,11 +8732,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8813,11 +8763,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -8845,11 +8794,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12121,43 +12069,17 @@
         {
           "path": "/v2/embed",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "embeddings": {
-                "float": [
-                  [
-                    0
-                  ]
-                ],
-                "int8": [
-                  [
-                    0
-                  ]
-                ],
-                "uint8": [
-                  [
-                    0
-                  ]
-                ],
-                "binary": [
-                  [
-                    0
-                  ]
-                ],
-                "ubinary": [
-                  [
-                    0
-                  ]
-                ]
-              },
-              "texts": [
-                "string"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -12277,11 +12199,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12309,11 +12230,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12341,11 +12261,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12373,11 +12292,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12405,11 +12323,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12437,11 +12354,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12469,11 +12385,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12501,11 +12416,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12533,11 +12447,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12565,11 +12478,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12597,11 +12509,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12629,11 +12540,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12643,22 +12553,14 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "embed_jobs": [
-                {
-                  "job_id": "string",
-                  "status": "processing",
-                  "created_at": "string",
-                  "input_dataset_id": "string",
-                  "model": "string",
-                  "truncate": "START"
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -12790,11 +12692,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12822,11 +12723,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12854,11 +12754,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12886,11 +12785,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12918,11 +12816,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12950,11 +12847,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -12982,11 +12878,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13014,11 +12909,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13046,11 +12940,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13078,11 +12971,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13110,11 +13002,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13142,11 +13033,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13211,13 +13101,14 @@
         {
           "path": "/v1/embed-jobs",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "job_id": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -13360,11 +13251,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13392,11 +13282,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13424,11 +13313,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13456,11 +13344,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13488,11 +13375,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13520,11 +13406,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13552,11 +13437,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13584,11 +13468,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13616,11 +13499,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13648,11 +13530,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13680,11 +13561,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13712,11 +13592,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13726,18 +13605,17 @@
         {
           "path": "/v1/embed-jobs/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "job_id": "string",
-              "status": "processing",
-              "created_at": "string",
-              "input_dataset_id": "string",
-              "model": "string",
-              "truncate": "START"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -13855,11 +13733,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13887,11 +13764,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13919,11 +13795,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13951,11 +13826,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -13983,11 +13857,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14015,11 +13888,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14047,11 +13919,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14079,11 +13950,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14111,11 +13981,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14143,11 +14012,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14175,11 +14043,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14207,11 +14074,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14705,11 +14571,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14737,11 +14602,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14769,11 +14633,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14801,11 +14664,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14833,11 +14695,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14865,11 +14726,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14897,11 +14757,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14929,11 +14788,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14961,11 +14819,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -14993,11 +14850,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15025,11 +14881,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15057,11 +14912,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15179,18 +15033,17 @@
         {
           "path": "/v1/rerank",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "results": [
-                {
-                  "index": 0,
-                  "relevance_score": 0
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -15459,11 +15312,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15491,11 +15343,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15523,11 +15374,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15555,11 +15405,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15587,11 +15436,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15619,11 +15467,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15651,11 +15498,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15683,11 +15529,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15715,11 +15560,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15747,11 +15591,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15779,11 +15622,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15811,11 +15653,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -15916,18 +15757,17 @@
         {
           "path": "/v2/rerank",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "results": [
-                {
-                  "index": 0,
-                  "relevance_score": 0
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -16263,6 +16103,15 @@
                           "description": "An array containing the confidence scores of all the predictions in the same order"
                         },
                         {
+                          "key": "labels",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": []
+                          },
+                          "description": "A map containing each label and its confidence score according to the classifier. All the confidence scores add up to 1 for single-label classification. For multi-label classification the label confidences are independent of each other, so they don't have to sum up to 1."
+                        },
+                        {
                           "key": "classification_type",
                           "valueShape": {
                             "type": "enum",
@@ -16327,11 +16176,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16359,11 +16207,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16391,11 +16238,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16423,11 +16269,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16455,11 +16300,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16487,11 +16331,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16519,11 +16362,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16551,11 +16393,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16583,11 +16424,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16615,11 +16455,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16647,11 +16486,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16679,11 +16517,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -16857,26 +16694,17 @@
         {
           "path": "/v1/classify",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "classifications": [
-                {
-                  "id": "string",
-                  "predictions": [
-                    "string"
-                  ],
-                  "confidences": [
-                    0
-                  ],
-                  "labels": {},
-                  "classification_type": "single-label"
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -17104,11 +16932,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17136,11 +16963,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17168,11 +16994,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17200,11 +17025,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17232,11 +17056,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17264,11 +17087,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17296,11 +17118,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17328,11 +17149,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17360,11 +17180,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17392,11 +17211,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17424,11 +17242,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17456,11 +17273,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17470,22 +17286,22 @@
         {
           "path": "/v1/datasets",
           "responseStatusCode": 200,
+          "name": "",
+          "queryParameters": {
+            "datasetType": "string",
+            "before": "string",
+            "after": "string",
+            "limit": 0,
+            "offset": 0,
+            "validationStatus": "unknown"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "datasets": [
-                {
-                  "id": "string",
-                  "name": "string",
-                  "created_at": "string",
-                  "updated_at": "string",
-                  "dataset_type": "embed-input",
-                  "validation_status": "unknown"
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -17770,11 +17586,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17802,11 +17617,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17834,11 +17648,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17866,11 +17679,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17898,11 +17710,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17930,11 +17741,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17962,11 +17772,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -17994,11 +17803,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18026,11 +17834,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18058,11 +17865,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18090,11 +17896,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18122,11 +17927,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18191,13 +17995,39 @@
         {
           "path": "/v1/datasets",
           "responseStatusCode": 200,
-          "responseBody": {
-            "type": "json",
+          "name": "",
+          "queryParameters": {
+            "name": "string",
+            "type": "embed-input",
+            "keep_original_file": false,
+            "skip_malformed_input": false,
+            "keep_fields": [
+              "string"
+            ],
+            "optional_fields": [
+              "string"
+            ],
+            "text_separator": "string",
+            "csv_delimiter": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "form",
             "value": {
-              "id": "string"
+              "data": {
+                "type": "filename"
+              },
+              "eval_data": {
+                "type": "filename"
+              }
             }
           },
-          "snippets": {}
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
         }
       ]
     },
@@ -18316,11 +18146,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18348,11 +18177,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18380,11 +18208,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18412,11 +18239,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18444,11 +18270,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18476,11 +18301,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18508,11 +18332,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18540,11 +18363,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18572,11 +18394,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18604,11 +18425,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18636,11 +18456,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18668,11 +18487,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18682,13 +18500,14 @@
         {
           "path": "/v1/datasets/usage",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "organization_usage": 0
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -18819,11 +18638,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18851,11 +18669,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18883,11 +18700,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18915,11 +18731,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18947,11 +18762,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -18979,11 +18793,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19011,11 +18824,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19043,11 +18855,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19075,11 +18886,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19107,11 +18917,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19139,11 +18948,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19171,11 +18979,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19185,20 +18992,17 @@
         {
           "path": "/v1/datasets/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "dataset": {
-                "id": "string",
-                "name": "string",
-                "created_at": "string",
-                "updated_at": "string",
-                "dataset_type": "embed-input",
-                "validation_status": "unknown"
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -19318,11 +19122,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19350,11 +19153,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19382,11 +19184,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19414,11 +19215,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19446,11 +19246,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19478,11 +19277,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19510,11 +19308,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19542,11 +19339,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19574,11 +19370,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19606,11 +19401,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19638,11 +19432,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19670,11 +19463,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -19684,11 +19476,17 @@
         {
           "path": "/v1/datasets/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {}
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -20001,11 +19799,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20033,11 +19830,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20065,11 +19861,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20097,11 +19892,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20129,11 +19923,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20161,11 +19954,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20193,11 +19985,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20225,11 +20016,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20257,11 +20047,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20289,11 +20078,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20321,11 +20109,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20353,11 +20140,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -20444,33 +20230,17 @@
         {
           "path": "/v1/summarize",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "id": "string",
-              "summary": "string",
-              "meta": {
-                "api_version": {
-                  "version": "string"
-                },
-                "billed_units": {
-                  "images": 0,
-                  "input_tokens": 0,
-                  "output_tokens": 0,
-                  "search_units": 0,
-                  "classifications": 0
-                },
-                "tokens": {
-                  "input_tokens": 0,
-                  "output_tokens": 0
-                },
-                "warnings": [
-                  "string"
-                ]
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -20678,11 +20448,17 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20710,11 +20486,17 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20742,11 +20524,17 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20774,11 +20562,17 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20806,11 +20600,17 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20838,11 +20638,17 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20870,11 +20676,17 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20902,11 +20714,17 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20934,11 +20752,17 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20966,11 +20790,17 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -20998,11 +20828,17 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -21030,11 +20866,17 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
+              }
+            },
+            {
+              "name": "",
+              "responseBody": {
+                "type": "json",
+                "value": {}
               }
             }
           ]
@@ -21139,6 +20981,12 @@
           "path": "/v1/tokenize",
           "responseStatusCode": 200,
           "name": "Example",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -21164,8 +21012,48 @@
                 }
               }
             }
+          }
+        },
+        {
+          "path": "/v1/tokenize",
+          "responseStatusCode": 200,
+          "name": "Example",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
           },
-          "snippets": {}
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "text": "tokenize me! :D",
+              "model": "command"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "tokens": [
+                34160,
+                974,
+                514,
+                34,
+                1420,
+                69
+              ],
+              "token_strings": [
+                "token",
+                "ize'",
+                " me",
+                "!",
+                " :",
+                "D"
+              ],
+              "meta": {
+                "api_version": {
+                  "version": "1"
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -21353,11 +21241,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21385,11 +21272,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21417,11 +21303,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21449,11 +21334,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21481,11 +21365,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21513,11 +21396,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21545,11 +21427,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21577,11 +21458,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21609,11 +21489,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21641,11 +21520,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21673,11 +21551,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21705,11 +21582,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21799,13 +21675,17 @@
         {
           "path": "/v1/detokenize",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "text": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -21946,11 +21826,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -21978,11 +21857,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22010,11 +21888,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22042,11 +21919,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22074,11 +21950,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22106,11 +21981,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22138,11 +22012,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22170,11 +22043,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22202,11 +22074,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22234,11 +22105,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22266,11 +22136,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22298,11 +22167,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22312,20 +22180,18 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
+          "name": "",
+          "queryParameters": {
+            "limit": 30,
+            "offset": 0
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "connectors": [
-                {
-                  "id": "string",
-                  "name": "string",
-                  "created_at": "string",
-                  "updated_at": "string"
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -22436,11 +22302,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22468,11 +22333,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22500,11 +22364,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22532,11 +22395,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22564,11 +22426,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22596,11 +22457,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22628,11 +22488,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22660,11 +22519,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22692,11 +22550,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22724,11 +22581,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22756,11 +22612,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22788,11 +22643,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -22857,18 +22711,14 @@
         {
           "path": "/v1/connectors",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "connector": {
-                "id": "string",
-                "name": "string",
-                "created_at": "string",
-                "updated_at": "string"
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -22990,11 +22840,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23022,11 +22871,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23054,11 +22902,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23086,11 +22933,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23118,11 +22964,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23150,11 +22995,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23182,11 +23026,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23214,11 +23057,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23246,11 +23088,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23278,11 +23119,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23310,11 +23150,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23342,11 +23181,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23356,18 +23194,17 @@
         {
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "connector": {
-                "id": "string",
-                "name": "string",
-                "created_at": "string",
-                "updated_at": "string"
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -23501,11 +23338,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23533,11 +23369,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23565,11 +23400,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23597,11 +23431,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23629,11 +23462,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23661,11 +23493,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23693,11 +23524,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23725,11 +23555,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23757,11 +23586,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23789,11 +23617,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23821,11 +23648,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23853,11 +23679,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -23922,18 +23747,17 @@
         {
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "connector": {
-                "id": "string",
-                "name": "string",
-                "created_at": "string",
-                "updated_at": "string"
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -24055,11 +23879,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24087,11 +23910,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24119,11 +23941,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24151,11 +23972,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24183,11 +24003,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24215,11 +24034,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24247,11 +24065,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24279,11 +24096,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24311,11 +24127,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24343,11 +24158,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24375,11 +24189,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24407,11 +24220,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24421,11 +24233,17 @@
         {
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {}
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -24584,11 +24402,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24616,11 +24433,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24648,11 +24464,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24680,11 +24495,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24712,11 +24526,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24744,11 +24557,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24776,11 +24588,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24808,11 +24619,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24840,11 +24650,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24872,11 +24681,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24904,11 +24712,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24936,11 +24743,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -24950,13 +24756,20 @@
         {
           "path": "/v1/connectors/{id}/oauth/authorize",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "queryParameters": {
+            "after_token_redirect": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "redirect_url": "string"
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -25098,11 +24911,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25130,11 +24942,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25162,11 +24973,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25194,11 +25004,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25226,11 +25035,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25258,11 +25066,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25290,11 +25097,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25322,11 +25128,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25354,11 +25159,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25386,11 +25190,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25418,11 +25221,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25450,11 +25252,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25464,22 +25265,17 @@
         {
           "path": "/v1/models/{model}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "model": "command-r"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "name": "string",
-              "endpoints": [
-                "chat"
-              ],
-              "finetuned": false,
-              "context_length": 0,
-              "tokenizer_url": "string",
-              "default_endpoints": [
-                "chat"
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -25633,11 +25429,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25665,11 +25460,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25697,11 +25491,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25729,11 +25522,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25761,11 +25553,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25793,11 +25584,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25825,11 +25615,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25857,11 +25646,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25889,11 +25677,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25921,11 +25708,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25953,11 +25739,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25985,11 +25770,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -25999,26 +25783,17 @@
         {
           "path": "/v1/models",
           "responseStatusCode": 200,
+          "name": "",
+          "queryParameters": {
+            "page_size": 0,
+            "page_token": "string",
+            "endpoint": "chat",
+            "default_only": false
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "models": [
-                {
-                  "name": "string",
-                  "endpoints": [
-                    "chat"
-                  ],
-                  "finetuned": false,
-                  "context_length": 0,
-                  "tokenizer_url": "string",
-                  "default_endpoints": [
-                    "chat"
-                  ]
-                }
-              ]
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -26161,11 +25936,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26193,11 +25967,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26225,11 +25998,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26257,11 +26029,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26289,11 +26060,10 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26321,11 +26091,10 @@
           "name": "Too Many Requests",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26353,11 +26122,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26385,11 +26153,10 @@
           "name": "UNKNOWN ERROR",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26417,11 +26184,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26449,11 +26215,10 @@
           "name": "Not Implemented",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26481,11 +26246,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26513,11 +26277,10 @@
           "name": "Gateway Timeout",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "data": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26527,13 +26290,14 @@
         {
           "path": "/v1/check-api-key",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "valid": false
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -26688,11 +26452,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26710,11 +26473,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26732,11 +26494,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26754,11 +26515,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26776,11 +26536,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26798,11 +26557,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26812,25 +26570,67 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
+          "name": "",
+          "queryParameters": {
+            "page_size": 0,
+            "page_token": "string",
+            "order_by": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
               "finetuned_models": [
                 {
-                  "name": "string",
+                  "id": "test-uuid-replacement",
+                  "name": "chat-ft",
+                  "creator_id": "test-uuid-replacement",
+                  "organization_id": "test-uuid-replacement",
                   "settings": {
                     "base_model": {
-                      "base_type": "BASE_TYPE_UNSPECIFIED"
+                      "name": "medium",
+                      "version": "14.2.0",
+                      "base_type": "BASE_TYPE_CHAT",
+                      "strategy": "STRATEGY_TFEW"
                     },
-                    "dataset_id": "string"
-                  }
+                    "dataset_id": "my-dataset-d701tr",
+                    "hyperparameters": {
+                      "early_stopping_patience": 6,
+                      "early_stopping_threshold": 0.01,
+                      "train_batch_size": 16,
+                      "train_epochs": 1,
+                      "learning_rate": 0.01
+                    }
+                  },
+                  "status": "STATUS_READY",
+                  "created_at": "2024-01-17T20:11:42.907Z",
+                  "updated_at": "2024-01-17T20:31:06.464Z",
+                  "completed_at": "2024-01-17T20:31:05.047Z"
+                },
+                {
+                  "id": "test-uuid-replacement",
+                  "name": "rerank-ft",
+                  "creator_id": "test-uuid-replacement",
+                  "organization_id": "test-uuid-replacement",
+                  "settings": {
+                    "base_model": {
+                      "name": "english",
+                      "version": "2.0.0",
+                      "base_type": "BASE_TYPE_RERANK",
+                      "strategy": "STRATEGY_VANILLA"
+                    },
+                    "dataset_id": "rerank-dataset-d820xf"
+                  },
+                  "status": "STATUS_READY",
+                  "created_at": "2024-01-17T20:17:16.997Z",
+                  "updated_at": "2024-01-17T20:50:11.148Z",
+                  "completed_at": "2024-01-17T20:42:55.821Z"
                 }
-              ],
-              "next_page_token": "string",
-              "total_size": 0
+              ]
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -26938,11 +26738,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26960,11 +26759,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -26982,11 +26780,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27004,11 +26801,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27026,11 +26822,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27048,11 +26843,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27117,21 +26911,14 @@
         {
           "path": "/v1/finetuning/finetuned-models",
           "responseStatusCode": 200,
+          "name": "",
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "finetuned_model": {
-                "name": "string",
-                "settings": {
-                  "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
-                  },
-                  "dataset_id": "string"
-                }
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -27250,11 +27037,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27272,11 +27058,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27294,11 +27079,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27316,11 +27100,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27338,11 +27121,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27360,11 +27142,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27374,21 +27155,44 @@
         {
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
               "finetuned_model": {
-                "name": "string",
+                "id": "test-uuid-replacement",
+                "name": "chat-ft",
+                "creator_id": "test-uuid-replacement",
+                "organization_id": "test-uuid-replacement",
                 "settings": {
                   "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
+                    "name": "medium",
+                    "version": "14.2.0",
+                    "base_type": "BASE_TYPE_CHAT",
+                    "strategy": "STRATEGY_TFEW"
                   },
-                  "dataset_id": "string"
-                }
+                  "dataset_id": "my-dataset-d701tr",
+                  "hyperparameters": {
+                    "early_stopping_patience": 6,
+                    "early_stopping_threshold": 0.01,
+                    "train_batch_size": 16,
+                    "train_epochs": 1,
+                    "learning_rate": 0.01
+                  }
+                },
+                "status": "STATUS_READY",
+                "created_at": "2024-01-17T20:11:42.907Z",
+                "updated_at": "2024-01-17T20:31:06.464Z",
+                "completed_at": "2024-01-17T20:31:05.047Z"
               }
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -27673,11 +27477,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27695,11 +27498,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27717,11 +27519,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27739,11 +27540,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27761,11 +27561,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27783,11 +27582,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -27855,21 +27653,20 @@
         {
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json"
+          },
           "responseBody": {
             "type": "json",
-            "value": {
-              "finetuned_model": {
-                "name": "string",
-                "settings": {
-                  "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
-                  },
-                  "dataset_id": "string"
-                }
-              }
-            }
-          },
-          "snippets": {}
+            "value": {}
+          }
         }
       ]
     },
@@ -27988,11 +27785,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28010,11 +27806,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28032,11 +27827,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28054,11 +27848,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28076,11 +27869,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28098,11 +27890,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28112,11 +27903,17 @@
         {
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {}
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -28302,11 +28099,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28324,11 +28120,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28346,11 +28141,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28368,11 +28162,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28390,11 +28183,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28412,11 +28204,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28426,21 +28217,45 @@
         {
           "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "finetuned_model_id": "string"
+          },
+          "queryParameters": {
+            "page_size": 0,
+            "page_token": "string",
+            "order_by": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
               "events": [
                 {
-                  "user_id": "string",
-                  "status": "STATUS_UNSPECIFIED",
-                  "created_at": "string"
+                  "user_id": "test-uuid-replacement",
+                  "status": "STATUS_QUEUED",
+                  "created_at": "2024-01-17T20:11:45.267Z"
+                },
+                {
+                  "user_id": "test-uuid-replacement",
+                  "status": "STATUS_FINETUNING",
+                  "created_at": "2024-01-17T20:11:46.000Z"
+                },
+                {
+                  "user_id": "test-uuid-replacement",
+                  "status": "STATUS_DEPLOYING_API",
+                  "created_at": "2024-01-17T20:31:05.047Z"
+                },
+                {
+                  "status": "STATUS_READY",
+                  "created_at": "2024-01-17T20:31:06.988Z"
                 }
               ],
-              "next_page_token": "string",
-              "total_size": 0
+              "total_size": 5
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -28607,11 +28422,10 @@
           "name": "Bad Request",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28629,11 +28443,10 @@
           "name": "Unauthorized",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28651,11 +28464,10 @@
           "name": "Forbidden",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28673,11 +28485,10 @@
           "name": "Not Found",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28695,11 +28506,10 @@
           "name": "Internal Server Error",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28717,11 +28527,10 @@
           "name": "Service Unavailable",
           "examples": [
             {
+              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {
-                  "message": "string"
-                }
+                "value": {}
               }
             }
           ]
@@ -28731,20 +28540,45 @@
         {
           "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
           "responseStatusCode": 200,
+          "name": "",
+          "pathParameters": {
+            "finetuned_model_id": "string"
+          },
+          "queryParameters": {
+            "page_size": 0,
+            "page_token": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
           "responseBody": {
             "type": "json",
             "value": {
               "step_metrics": [
                 {
-                  "created_at": "string",
-                  "step_number": 0,
-                  "metrics": {}
+                  "created_at": "2024-01-17T20:24:26.952Z",
+                  "metrics": {
+                    "accuracy": 0.4557601809501648,
+                    "cross_entropy": 4.264331340789795,
+                    "generation_accuracy": 0.4557601809501648,
+                    "generation_cross_entropy": 4.264331340789795,
+                    "step": 0
+                  }
+                },
+                {
+                  "created_at": "2024-01-17T20:25:19.331Z",
+                  "step_number": 9,
+                  "metrics": {
+                    "accuracy": 0.7393720149993896,
+                    "cross_entropy": 0.7702581286430359,
+                    "generation_accuracy": 0.7393720149993896,
+                    "generation_cross_entropy": 0.7702581286430359,
+                    "step": 9
+                  }
                 }
-              ],
-              "next_page_token": "string"
+              ]
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     }
@@ -29284,6 +29118,21 @@
               }
             },
             "description": "The description of what the tool does, the model uses the description to choose when and how to call the function.\n"
+          },
+          {
+            "key": "parameter_definitions",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                }
+              }
+            },
+            "description": "The input parameters of the tool. Accepts a dictionary where the key is the name of the parameter and the value is the parameter spec. Valid parameter names contain only the characters `a-z`, `A-Z`, `0-9`, `_` and must not begin with a digit.\n```\n{\n  \"my_param\": {\n    \"description\": <string>,\n    \"type\": <string>, // any python data type, such as 'str', 'bool'\n    \"required\": <boolean>\n  }\n}\n```\n"
           }
         ]
       }
