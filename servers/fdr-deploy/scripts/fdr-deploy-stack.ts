@@ -34,6 +34,7 @@ import {
   ApplicationProtocol,
   HttpCodeElb,
 } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { Alias } from "aws-cdk-lib/aws-lambda";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
@@ -272,8 +273,18 @@ export class FdrDeployStack extends Stack {
       publicDocsCdnUrl: PUBLIC_DOCS_CDN_URL,
     });
 
+    const getDocsAlias = new Alias(
+      this,
+      `fern-${environmentType.toLowerCase()}-getdocs-lambda-alias`,
+      {
+        aliasName: `fern-${environmentType.toLowerCase()}-getdocs-lambda-alias`,
+        version: getDocsLambda.lambdaFunction.currentVersion,
+        provisionedConcurrentExecutions: 900,
+      }
+    );
+
     const getDocsApi = new LambdaRestApi(this, "getdocs-api", {
-      handler: getDocsLambda.lambdaFunction,
+      handler: getDocsAlias,
       proxy: false,
     });
 
