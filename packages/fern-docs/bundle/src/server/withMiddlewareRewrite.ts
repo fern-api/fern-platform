@@ -7,7 +7,8 @@ import { getDocsDomainEdge, getHostEdge } from "./xfernhost/edge";
 
 export function withMiddlewareRewrite(
   request: NextRequest,
-  pathname: string
+  pathname: string,
+  dynamic = false
 ): (isLoggedIn: boolean) => NextResponse {
   const domain = getDocsDomainEdge(request);
   const host = getHostEdge(request);
@@ -22,13 +23,13 @@ export function withMiddlewareRewrite(
    */
   const hasError = request.nextUrl.searchParams.get("error") === "true";
 
-  return (isLoggedIn) => {
+  return (isLoggedIn: boolean) => {
     /**
      * There are two types of pages in the docs bundle:
      * - static = SSG pages
      * - dynamic = SSR pages (because fern_token is present or there is an error)
      */
-    const isDynamic = isLoggedIn || hasError;
+    const isDynamic = dynamic || isLoggedIn || hasError;
 
     if (!isDynamic) {
       search.set("host", host);

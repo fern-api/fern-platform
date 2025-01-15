@@ -21,16 +21,23 @@ interface Props extends PropsWithChildren {
    * @default { kind: "user", key: "anonymous", anonymous: true }
    */
   defaultContext?: LDContext;
+
+  defaultFlags?: Record<string, unknown>;
 }
 
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
   contextEndpoint,
   defaultContext,
+  defaultFlags,
   children,
 }) => {
   return (
-    <LDProvider clientSideID={clientSideId}>
+    <LDProvider
+      clientSideID={clientSideId}
+      context={defaultContext}
+      flags={defaultFlags}
+    >
       <IdentifyWrapper
         contextEndpoint={contextEndpoint}
         defaultContext={defaultContext}

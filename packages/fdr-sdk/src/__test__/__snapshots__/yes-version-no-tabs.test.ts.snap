@@ -69,6 +69,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1/page
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root..version-1.uv.section-3.page-5",
@@ -97,6 +98,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-1/vers
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root..version-1.uv.section-3.page-6",
@@ -125,6 +127,7 @@ exports[`yes-version-no-tabs > gets navigation root for /docs/api/version-2/vers
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root..version-2.uv.section-5.page-9",
