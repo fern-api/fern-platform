@@ -16,6 +16,7 @@ describe("getBreadcrumbList", () => {
       authed: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
     const parents: FernNavigation.NavigationNode[] = [
       {
@@ -34,6 +35,7 @@ describe("getBreadcrumbList", () => {
         authed: undefined,
         viewers: undefined,
         orphaned: undefined,
+        featureFlags: undefined,
       },
     ];
     expect(
