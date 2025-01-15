@@ -231,6 +231,44 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Pubkey": "string",
+              "Configuration": {
+                "commitment": "processed",
+                "encoding": "base58",
+                "dataSlice": {
+                  "length": 0,
+                  "offset": 0
+                },
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "lamports": 0,
+              "owner": "string",
+              "data": [
+                "string"
+              ],
+              "executable": false,
+              "rentEpoch": 0,
+              "size": 0
+            }
+          }
+        }
+      ],
       "description": "Returns all information associated with the account of provided Pubkey.",
       "operationId": "getAccountInfo",
       "environments": [],
@@ -330,6 +368,30 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Pubkey": "string",
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the lamport balance of the account of the provided Pubkey.",
       "operationId": "getBalance",
       "environments": [],
@@ -1391,6 +1453,138 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "slot": 0,
+              "Configuration": {
+                "commitment": "processed",
+                "encoding": "json",
+                "transactionDetails": "full",
+                "maxSupportedTransactionVersion": 0,
+                "rewards": true
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "blockhash": "string",
+              "previousBlockhash": "string",
+              "parentSlot": 0,
+              "transactions": [
+                {
+                  "slot": 0,
+                  "transaction": {
+                    "signatures": [
+                      "string"
+                    ],
+                    "message": {
+                      "accountKeys": [
+                        "string"
+                      ],
+                      "header": {
+                        "numRequiredSignatures": 0,
+                        "numReadonlySignedAccounts": 0,
+                        "numReadonlyUnsignedAccounts": 0
+                      },
+                      "instructions": [
+                        {
+                          "accounts": [
+                            0
+                          ],
+                          "data": "string",
+                          "programIdIndex": 0
+                        }
+                      ],
+                      "recentBlockhash": "string"
+                    }
+                  },
+                  "blockTime": 0,
+                  "meta": {
+                    "err": {},
+                    "fee": 0,
+                    "preBalances": [
+                      0
+                    ],
+                    "postBalances": [
+                      0
+                    ],
+                    "innerInstructions": [
+                      {
+                        "index": 0,
+                        "instructions": [
+                          {
+                            "programId": "string",
+                            "accounts": [
+                              "string"
+                            ],
+                            "data": "string"
+                          }
+                        ]
+                      }
+                    ],
+                    "preTokenBalances": [
+                      {
+                        "amount": "string",
+                        "decimals": 0,
+                        "uiAmount": 0,
+                        "uiAmountString": "string"
+                      }
+                    ],
+                    "postTokenBalances": [
+                      {
+                        "amount": "string",
+                        "decimals": 0,
+                        "uiAmount": 0,
+                        "uiAmountString": "string"
+                      }
+                    ],
+                    "logMessages": [
+                      "string"
+                    ],
+                    "rewards": [
+                      {
+                        "pubkey": "string",
+                        "lamports": 0,
+                        "postBalance": 0,
+                        "rewardType": "fee",
+                        "commission": 0
+                      }
+                    ],
+                    "loadedAddresses": {},
+                    "returnData": {},
+                    "computeUnitsConsumed": 0
+                  },
+                  "version": "string"
+                }
+              ],
+              "signatures": [
+                "string"
+              ],
+              "rewards": [
+                {
+                  "pubkey": "string",
+                  "lamports": 0,
+                  "postBalance": 0,
+                  "rewardType": "fee",
+                  "commission": 0
+                }
+              ],
+              "blockTime": 0,
+              "blockHeight": 0
+            }
+          }
+        }
+      ],
       "description": "Returns identity and transaction information about a confirmed block in the ledger.",
       "operationId": "getBlock",
       "environments": [],
@@ -1478,6 +1672,31 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "block": 0
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "commitment": [
+                0
+              ],
+              "totalStake": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the commitment for a particular block.",
       "operationId": "getBlockCommitment",
       "environments": [],
@@ -1564,6 +1783,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the current block height of the node.",
       "operationId": "getBlockHeight",
       "environments": [],
@@ -1751,6 +1993,39 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "identity": "string",
+                "range": {
+                  "firstSlot": 0,
+                  "lastSlot": 0
+                }
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "byIdentity": {},
+              "range": {
+                "firstSlot": 0,
+                "lastSlot": 0
+              }
+            }
+          }
+        }
+      ],
       "description": "Returns recent block production information from the current or previous epoch.",
       "operationId": "getBlockProduction",
       "environments": [],
@@ -1857,6 +2132,32 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "start_slot": 0,
+              "end_slot": 0,
+              "Configuration": {
+                "commitment": "processed"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              0
+            ]
+          }
+        }
+      ],
       "description": "Returns a list of confirmed blocks between two slots.",
       "operationId": "getBlocks",
       "environments": [],
@@ -1963,6 +2264,32 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "start_slot": 0,
+              "limit": 0,
+              "Configuration": {
+                "commitment": "processed"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              0
+            ]
+          }
+        }
+      ],
       "description": "Returns a list of confirmed blocks starting at the given slot.",
       "operationId": "getBlocksWithLimit",
       "environments": [],
@@ -2031,6 +2358,28 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "block": {
+                "block": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the estimated production time of a block.",
       "operationId": "getBlockTime",
       "environments": [],
@@ -2195,6 +2544,34 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "pubkey": "string",
+                "gossip": "string",
+                "tpu": "string",
+                "rpc": "string",
+                "version": "string",
+                "featureSet": 0,
+                "shredVersion": 0
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns information about all the nodes participating in the cluster.",
       "operationId": "getClusterNodes",
       "environments": [],
@@ -2362,6 +2739,36 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "absoluteSlot": 0,
+              "blockHeight": 0,
+              "epoch": 0,
+              "slotIndex": 0,
+              "slotsInEpoch": 0,
+              "transactionCount": 0
+            }
+          }
+        }
+      ],
       "description": "Returns information about the current epoch.",
       "operationId": "getEpochInfo",
       "environments": [],
@@ -2458,6 +2865,30 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "slotsPerEpoch": 0,
+              "leaderScheduleSlotOffset": 0,
+              "warmup": false,
+              "firstNormalEpoch": 0,
+              "firstNormalSlot": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the epoch schedule information from the cluster's genesis config.",
       "operationId": "getEpochSchedule",
       "environments": [],
@@ -2573,6 +3004,32 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Message": {
+                "Message": "string"
+              },
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Get the fee the network will charge for a particular Message.",
       "operationId": "getFeeForMessage",
       "environments": [],
@@ -2607,6 +3064,24 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the slot of the lowest confirmed block that has not been purged from the ledger.",
       "operationId": "getFirstAvailableBlock",
       "environments": [],
@@ -2641,6 +3116,24 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the genesis hash.",
       "operationId": "getGenesisHash",
       "environments": [],
@@ -2675,6 +3168,24 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the current health of the node.",
       "operationId": "getHealth",
       "environments": [],
@@ -2738,6 +3249,27 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "full": 0,
+              "incremental": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the highest slot information that the node has snapshots for.",
       "operationId": "getHighestSnapshotSlot",
       "environments": [],
@@ -2782,6 +3314,26 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "identity": "string"
+            }
+          }
+        }
+      ],
       "description": "Returns the identity pubkey for the current node.",
       "operationId": "getIdentity",
       "environments": [],
@@ -2930,6 +3482,35 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "initial": 0,
+              "terminal": 0,
+              "taper": 0,
+              "foundation": 0,
+              "foundationTerm": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the current inflation governor.",
       "operationId": "getInflationGovernor",
       "environments": [],
@@ -3013,6 +3594,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "total": 0,
+              "validator": 0,
+              "foundation": 0,
+              "epoch": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the specific inflation values for the current epoch.",
       "operationId": "getInflationRate",
       "environments": [],
@@ -3211,6 +3815,41 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Addresses": {
+                "Addresses": [
+                  "string"
+                ],
+                "commitment": "processed",
+                "epoch": 0,
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "epoch": 0,
+                "effectiveSlot": 0,
+                "amount": 0,
+                "postBalance": 0,
+                "commission": 0
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns the inflation or staking reward for a list of addresses for a specified epoch.",
       "operationId": "getInflationReward",
       "environments": [],
@@ -3328,6 +3967,34 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "filter": "circulating"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "address": "string",
+                "lamports": 0
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns the 20 largest accounts, by lamport balance.",
       "operationId": "getLargestAccounts",
       "environments": [],
@@ -3437,6 +4104,32 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "blockhash": "string",
+              "lastValidBlockHeight": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the latest blockhash.",
       "operationId": "getLatestBlockhash",
       "environments": [],
@@ -3471,6 +4164,24 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Get the max slot seen from the retransmit stage.",
       "operationId": "getMaxRetransmitSlot",
       "environments": [],
@@ -3505,6 +4216,24 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Get the max slot seen from after shred insert.",
       "operationId": "getMaxShredInsertSlot",
       "environments": [],
@@ -3601,6 +4330,31 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Account data length": {
+                "dataLength": 0
+              },
+              "Configuration": {
+                "commitment": "processed"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the minimum balance required to make an account rent exempt.",
       "operationId": "getMinimumBalanceForRentExemption",
       "environments": [],
@@ -3850,6 +4604,48 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Pubkeys": [
+                "string"
+              ],
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0,
+                "dataSlice": {
+                  "length": 0,
+                  "offset": 0
+                },
+                "encoding": "base58"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "lamports": 0,
+                "owner": "string",
+                "data": [
+                  "string"
+                ],
+                "executable": false,
+                "rentEpoch": 0,
+                "size": 0
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns the account information for a list of Pubkeys.",
       "operationId": "getMultipleAccounts",
       "environments": [],
@@ -4128,6 +4924,51 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Pubkey": "string",
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0,
+                "withContext": false,
+                "encoding": "base58",
+                "dataSlice": {
+                  "length": 0,
+                  "offset": 0
+                },
+                "filters": []
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "pubkey": "string",
+                "account": {
+                  "lamports": 0,
+                  "owner": "string",
+                  "data": [
+                    "string"
+                  ],
+                  "executable": false,
+                  "rentEpoch": 0,
+                  "size": 0
+                }
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns all accounts owned by the provided program Pubkey.",
       "operationId": "getProgramAccounts",
       "environments": [],
@@ -4254,6 +5095,34 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "limit": 0
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "slot": 0,
+                "numTransactions": 0,
+                "numSlots": 0,
+                "samplePeriodSecs": 0,
+                "numNonVoteTransactions": 0
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns a list of recent performance samples, in reverse slot order.",
       "operationId": "getRecentPerformanceSamples",
       "environments": [],
@@ -4347,6 +5216,33 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Account addresses": [
+                "string"
+              ]
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "slot": 0,
+                "prioritizationFee": 0
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns a list of prioritization fees from recent blocks.",
       "operationId": "getRecentPrioritizationFees",
       "environments": [],
@@ -4587,6 +5483,42 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Account address": "string",
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0,
+                "limit": 1000,
+                "before": "string",
+                "until": "string"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "signature": "string",
+                "slot": 0,
+                "err": {},
+                "memo": "string",
+                "blockTime": 0,
+                "confirmationStatus": "string"
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns signatures for confirmed transactions that include the given address.",
       "operationId": "getSignaturesForAddress",
       "environments": [],
@@ -4752,6 +5684,39 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Signatures": [
+                "string"
+              ],
+              "Configuration": {
+                "searchTransactionHistory": false
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "slot": 0,
+                "confirmations": 0,
+                "err": {},
+                "confirmationStatus": "string",
+                "status": {}
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns the statuses of a list of transaction signatures.",
       "operationId": "getSignatureStatuses",
       "environments": [],
@@ -4838,6 +5803,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the slot that has reached the given or default commitment level.",
       "operationId": "getSlot",
       "environments": [],
@@ -4924,6 +5912,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Returns the current slot leader.",
       "operationId": "getSlotLeader",
       "environments": [],
@@ -5001,6 +6012,29 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Start slot": 0,
+              "Limit": 0
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              "string"
+            ]
+          }
+        }
+      ],
       "description": "Returns the slot leaders for a given slot range.",
       "operationId": "getSlotLeaders",
       "environments": [],
@@ -5142,6 +6176,36 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "excludeNonCirculatingAccountsList": false
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "total": 0,
+              "circulating": 0,
+              "nonCirculating": 0,
+              "nonCirculatingAccounts": [
+                "string"
+              ]
+            }
+          }
+        }
+      ],
       "description": "Returns information about the current supply of lamports.",
       "operationId": "getSupply",
       "environments": [],
@@ -5283,6 +6347,34 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Token account Pubkey": "string",
+              "Configuration": {
+                "commitment": "processed"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "amount": "string",
+              "decimals": 0,
+              "uiAmount": 0,
+              "uiAmountString": "string"
+            }
+          }
+        }
+      ],
       "description": "Returns the token balance of an SPL Token account.",
       "operationId": "getTokenAccountBalance",
       "environments": [],
@@ -5583,6 +6675,53 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Token owner Pubkey": "string",
+              "Token filter": {
+                "mint": "string",
+                "programId": "string"
+              },
+              "Configuration": {
+                "commitment": "processed",
+                "minContextSlot": 0,
+                "dataSlice": {
+                  "length": 0,
+                  "offset": 0
+                },
+                "encoding": "base58"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              {
+                "pubkey": "string",
+                "account": {
+                  "lamports": 0,
+                  "owner": "string",
+                  "data": [
+                    "string"
+                  ],
+                  "executable": false,
+                  "rentEpoch": 0,
+                  "size": 0
+                }
+              }
+            ]
+          }
+        }
+      ],
       "description": "Returns all SPL Token accounts owned by the specified token owner.",
       "operationId": "getTokenAccountsByOwner",
       "environments": [],
@@ -5724,6 +6863,34 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Token Mint Pubkey": "string",
+              "Configuration": {
+                "commitment": "processed"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "amount": "string",
+              "decimals": 0,
+              "uiAmount": 0,
+              "uiAmountString": "string"
+            }
+          }
+        }
+      ],
       "description": "Returns the total supply of an SPL Token type.",
       "operationId": "getTokenSupply",
       "environments": [],
@@ -5916,6 +7083,37 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Transaction signature": "string",
+              "Configuration": {
+                "commitment": "processed",
+                "maxSupportedTransactionVersion": 0,
+                "encoding": "json"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "slot": 0,
+              "transaction": {},
+              "blockTime": 0,
+              "meta": {},
+              "version": "string"
+            }
+          }
+        }
+      ],
       "description": "Returns transaction details for a confirmed transaction.",
       "operationId": "getTransaction",
       "environments": [],
@@ -5973,6 +7171,27 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "solana-core": "string",
+              "feature-set": 0
+            }
+          }
+        }
+      ],
       "description": "Returns the current Solana version running on the node.",
       "operationId": "getVersion",
       "environments": [],
@@ -6346,6 +7565,64 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Configuration": {
+                "commitment": "processed",
+                "votePubkey": "string",
+                "keepUnstakedDelinquents": false,
+                "delinquentSlotDistance": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "current": [
+                {
+                  "votePubkey": "string",
+                  "nodePubkey": "string",
+                  "activatedStake": 0,
+                  "epochVoteAccount": false,
+                  "commission": 0,
+                  "lastVote": 0,
+                  "epochCredits": [
+                    [
+                      0
+                    ]
+                  ],
+                  "rootSlot": 0
+                }
+              ],
+              "delinquent": [
+                {
+                  "votePubkey": "string",
+                  "nodePubkey": "string",
+                  "activatedStake": 0,
+                  "epochVoteAccount": false,
+                  "commission": 0,
+                  "lastVote": 0,
+                  "epochCredits": [
+                    [
+                      0
+                    ]
+                  ],
+                  "rootSlot": 0
+                }
+              ]
+            }
+          }
+        }
+      ],
       "description": "Returns the account info and associated stake for all voting accounts in the current bank.",
       "operationId": "getVoteAccounts",
       "environments": [],
@@ -6458,6 +7735,31 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "blockhash": "string",
+              "Configuration": {
+                "blockhash": "string",
+                "commitment": "processed",
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
       "description": "Returns whether a blockhash is still valid or not.",
       "operationId": "isBlockhashValid",
       "environments": [],
@@ -6492,6 +7794,24 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {}
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": 0
+          }
+        }
+      ],
       "description": "Returns the lowest slot that the node has information about in its ledger.",
       "operationId": "minimumLedgerSlot",
       "environments": [],
@@ -6591,6 +7911,30 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Pubkey": "string",
+              "Lamports": 0,
+              "Configuration": {
+                "commitment": "processed"
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Requests an airdrop of lamports to a Pubkey.",
       "operationId": "requestAirdrop",
       "environments": [],
@@ -6734,6 +8078,33 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Transaction": "string",
+              "Configuration": {
+                "encoding": "base58",
+                "skipPreflight": false,
+                "preflightCommitment": "processed",
+                "maxRetries": 0,
+                "minContextSlot": 0
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
       "description": "Submits a signed transaction to the cluster for processing.",
       "operationId": "sendTransaction",
       "environments": [],
@@ -7152,6 +8523,65 @@
         }
       ],
       "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "Transaction": "string",
+              "Configuration": {
+                "commitment": "processed",
+                "sigVerify": false,
+                "replaceRecentBlockhash": false,
+                "minContextSlot": 0,
+                "encoding": "base58",
+                "innerInstructions": false,
+                "accounts": {
+                  "addresses": [
+                    "string"
+                  ],
+                  "encoding": "base58"
+                }
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "err": "string",
+              "logs": [
+                "string"
+              ],
+              "accounts": [
+                {
+                  "lamports": 0,
+                  "owner": "string",
+                  "data": [
+                    "string"
+                  ],
+                  "executable": false,
+                  "rentEpoch": 0,
+                  "size": 0
+                }
+              ],
+              "unitsConsumed": 0,
+              "returnData": {
+                "programId": "string",
+                "data": [
+                  "string"
+                ]
+              },
+              "innerInstructions": {}
+            }
+          }
+        }
+      ],
       "description": "Simulates sending a transaction.",
       "operationId": "simulateTransaction",
       "environments": [],
