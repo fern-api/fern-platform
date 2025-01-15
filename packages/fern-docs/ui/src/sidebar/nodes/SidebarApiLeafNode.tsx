@@ -3,6 +3,7 @@ import { HttpMethodBadge } from "@fern-docs/components/badges";
 import clsx from "clsx";
 import { ReactNode } from "react";
 import { useIsSelectedSidebarNode } from "../../atoms";
+import { WithFeatureFlags } from "../../feature-flags/NavigationFeature";
 import { SidebarSlugLink } from "../SidebarLink";
 
 interface SidebarApiLeafNodeProps {
@@ -67,24 +68,26 @@ export function SidebarApiLeafNode({
   // };
 
   return (
-    <SidebarSlugLink
-      nodeId={node.id}
-      slug={node.slug}
-      title={
-        <span
-          className={clsx({
-            "line-through opacity-70": node.availability === "Deprecated",
-          })}
-        >
-          {node.title}
-        </span>
-      }
-      depth={Math.max(0, depth - 1)}
-      hidden={node.hidden}
-      authed={node.authed}
-      icon={renderLeftElement()}
-      selected={selected}
-      shallow={shallow}
-    />
+    <WithFeatureFlags featureFlags={node.featureFlags}>
+      <SidebarSlugLink
+        nodeId={node.id}
+        slug={node.slug}
+        title={
+          <span
+            className={clsx({
+              "line-through opacity-70": node.availability === "Deprecated",
+            })}
+          >
+            {node.title}
+          </span>
+        }
+        depth={Math.max(0, depth - 1)}
+        hidden={node.hidden}
+        authed={node.authed}
+        icon={renderLeftElement()}
+        selected={selected}
+        shallow={shallow}
+      />
+    </WithFeatureFlags>
   );
 }

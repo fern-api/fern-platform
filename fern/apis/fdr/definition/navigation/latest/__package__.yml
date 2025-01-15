@@ -327,6 +327,7 @@ types:
     extends:
       - WithNodeId
       - WithPermissions
+      - WithFeatureFlags
     properties:
       title:
         type: string
@@ -372,6 +373,16 @@ types:
   WithRedirect:
     properties:
       pointsTo: optional<Slug>
+
+  WithFeatureFlags:
+    properties:
+      featureFlags: optional<list<FeatureFlagOptions>>
+
+  FeatureFlagOptions:
+    properties:
+      flag: string
+      default: optional<unknown>
+      match: optional<unknown>
 
   BreadcrumbItem:
     properties:

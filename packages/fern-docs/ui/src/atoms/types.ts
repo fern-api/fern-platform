@@ -56,6 +56,7 @@ export interface LaunchDarklyInfo {
   clientSideId: string;
   contextEndpoint: string;
   context: LDContext | undefined;
+  defaultFlags: Record<string, unknown> | undefined;
 }
 
 export interface FeatureFlagsConfig {

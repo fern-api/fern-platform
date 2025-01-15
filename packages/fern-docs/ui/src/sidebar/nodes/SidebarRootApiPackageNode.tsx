@@ -2,6 +2,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactElement } from "react";
 import { useIsApiReferenceShallowLink, useIsChildSelected } from "../../atoms";
+import { WithFeatureFlags } from "../../feature-flags/NavigationFeature";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 import { SidebarPageNode } from "./SidebarPageNode";
 import { SidebarRootHeading } from "./SidebarRootHeading";
@@ -35,7 +36,7 @@ export function SidebarRootApiPackageNode({
   }
 
   return (
-    <>
+    <WithFeatureFlags featureFlags={node.featureFlags}>
       <SidebarRootHeading node={node} className={className} shallow={shallow} />
 
       <ul className={clsx("fern-sidebar-group")}>
@@ -54,6 +55,6 @@ export function SidebarRootApiPackageNode({
           </li>
         )}
       </ul>
-    </>
+    </WithFeatureFlags>
   );
 }

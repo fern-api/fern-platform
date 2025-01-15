@@ -1,5 +1,6 @@
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
 import { extractNextDataPathname } from "@/server/extractNextDataPathname";
+import { getLaunchDarklySettings } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
@@ -128,10 +129,12 @@ export const middleware: NextMiddleware = async (request) => {
     return NextResponse.rewrite(String(url));
   }
 
+  const launchDarkly = await getLaunchDarklySettings(request.nextUrl.origin);
+
   return withMiddlewareAuth(
     request,
     pathname,
-    withMiddlewareRewrite(request, pathname)
+    withMiddlewareRewrite(request, pathname, !!launchDarkly?.["sdk-key"])
   );
 };
 
