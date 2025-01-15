@@ -1,5 +1,6 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { MethodObject } from "@open-rpc/meta-schema";
+import { camelCase } from "es-toolkit";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../client/generated";
 import { SchemaConverterNode, ServerObjectConverterNode } from "../../openapi";
@@ -103,7 +104,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
       // This is a basic implementation that needs to be expanded
       return {
         id: FernRegistry.EndpointId(this.input.name),
-        displayName: this.input.name,
+        displayName: camelCase(this.input.name),
         method: "POST",
         path: [{ type: "literal", value: "" }],
         auth: undefined,

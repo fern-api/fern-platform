@@ -83,7 +83,7 @@
   "endpoints": {
     "list_pets": {
       "id": "list_pets",
-      "displayName": "list_pets",
+      "displayName": "listPets",
       "method": "POST",
       "path": [
         {
@@ -174,7 +174,7 @@
     },
     "create_pet": {
       "id": "create_pet",
-      "displayName": "create_pet",
+      "displayName": "createPet",
       "method": "POST",
       "path": [
         {
@@ -272,7 +272,7 @@
     },
     "get_pet": {
       "id": "get_pet",
-      "displayName": "get_pet",
+      "displayName": "getPet",
       "method": "POST",
       "path": [
         {

@@ -1242,7 +1242,7 @@
   "endpoints": {
     "web3_clientVersion": {
       "id": "web3_clientVersion",
-      "displayName": "web3_clientVersion",
+      "displayName": "web3ClientVersion",
       "method": "POST",
       "path": [
         {
@@ -1277,7 +1277,7 @@
     },
     "web3_sha3": {
       "id": "web3_sha3",
-      "displayName": "web3_sha3",
+      "displayName": "web3Sha3",
       "method": "POST",
       "path": [
         {
@@ -1358,7 +1358,7 @@
     },
     "net_listening": {
       "id": "net_listening",
-      "displayName": "net_listening",
+      "displayName": "netListening",
       "method": "POST",
       "path": [
         {
@@ -1410,7 +1410,7 @@
     },
     "net_peerCount": {
       "id": "net_peerCount",
-      "displayName": "net_peerCount",
+      "displayName": "netPeerCount",
       "method": "POST",
       "path": [
         {
@@ -1445,7 +1445,7 @@
     },
     "net_version": {
       "id": "net_version",
-      "displayName": "net_version",
+      "displayName": "netVersion",
       "method": "POST",
       "path": [
         {
@@ -1481,7 +1481,7 @@
     },
     "eth_blockNumber": {
       "id": "eth_blockNumber",
-      "displayName": "eth_blockNumber",
+      "displayName": "ethBlockNumber",
       "method": "POST",
       "path": [
         {
@@ -1513,7 +1513,7 @@
     },
     "eth_call": {
       "id": "eth_call",
-      "displayName": "eth_call",
+      "displayName": "ethCall",
       "method": "POST",
       "path": [
         {
@@ -1576,7 +1576,7 @@
     },
     "eth_chainId": {
       "id": "eth_chainId",
-      "displayName": "eth_chainId",
+      "displayName": "ethChainId",
       "method": "POST",
       "path": [
         {
@@ -1612,7 +1612,7 @@
     },
     "eth_coinbase": {
       "id": "eth_coinbase",
-      "displayName": "eth_coinbase",
+      "displayName": "ethCoinbase",
       "method": "POST",
       "path": [
         {
@@ -1644,7 +1644,7 @@
     },
     "eth_estimateGas": {
       "id": "eth_estimateGas",
-      "displayName": "eth_estimateGas",
+      "displayName": "ethEstimateGas",
       "method": "POST",
       "path": [
         {
@@ -1697,7 +1697,7 @@
     },
     "eth_gasPrice": {
       "id": "eth_gasPrice",
-      "displayName": "eth_gasPrice",
+      "displayName": "ethGasPrice",
       "method": "POST",
       "path": [
         {
@@ -1729,7 +1729,7 @@
     },
     "eth_getBalance": {
       "id": "eth_getBalance",
-      "displayName": "eth_getBalance",
+      "displayName": "ethGetBalance",
       "method": "POST",
       "path": [
         {
@@ -1794,7 +1794,7 @@
     },
     "eth_getBlockByHash": {
       "id": "eth_getBlockByHash",
-      "displayName": "eth_getBlockByHash",
+      "displayName": "ethGetBlockByHash",
       "method": "POST",
       "path": [
         {
@@ -1860,7 +1860,7 @@
     },
     "eth_getBlockByNumber": {
       "id": "eth_getBlockByNumber",
-      "displayName": "eth_getBlockByNumber",
+      "displayName": "ethGetBlockByNumber",
       "method": "POST",
       "path": [
         {
@@ -1926,7 +1926,7 @@
     },
     "eth_getBlockTransactionCountByHash": {
       "id": "eth_getBlockTransactionCountByHash",
-      "displayName": "eth_getBlockTransactionCountByHash",
+      "displayName": "ethGetBlockTransactionCountByHash",
       "method": "POST",
       "path": [
         {
@@ -1979,7 +1979,7 @@
     },
     "eth_getBlockTransactionCountByNumber": {
       "id": "eth_getBlockTransactionCountByNumber",
-      "displayName": "eth_getBlockTransactionCountByNumber",
+      "displayName": "ethGetBlockTransactionCountByNumber",
       "method": "POST",
       "path": [
         {
@@ -2032,7 +2032,7 @@
     },
     "eth_getCode": {
       "id": "eth_getCode",
-      "displayName": "eth_getCode",
+      "displayName": "ethGetCode",
       "method": "POST",
       "path": [
         {
@@ -2097,7 +2097,7 @@
     },
     "eth_getFilterChanges": {
       "id": "eth_getFilterChanges",
-      "displayName": "eth_getFilterChanges",
+      "displayName": "ethGetFilterChanges",
       "method": "POST",
       "path": [
         {
@@ -2156,7 +2156,7 @@
     },
     "eth_getFilterLogs": {
       "id": "eth_getFilterLogs",
-      "displayName": "eth_getFilterLogs",
+      "displayName": "ethGetFilterLogs",
       "method": "POST",
       "path": [
         {
@@ -2215,7 +2215,7 @@
     },
     "eth_getRawTransactionByHash": {
       "id": "eth_getRawTransactionByHash",
-      "displayName": "eth_getRawTransactionByHash",
+      "displayName": "ethGetRawTransactionByHash",
       "method": "POST",
       "path": [
         {
@@ -2268,7 +2268,7 @@
     },
     "eth_getRawTransactionByBlockHashAndIndex": {
       "id": "eth_getRawTransactionByBlockHashAndIndex",
-      "displayName": "eth_getRawTransactionByBlockHashAndIndex",
+      "displayName": "ethGetRawTransactionByBlockHashAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2332,7 +2332,7 @@
     },
     "eth_getRawTransactionByBlockNumberAndIndex": {
       "id": "eth_getRawTransactionByBlockNumberAndIndex",
-      "displayName": "eth_getRawTransactionByBlockNumberAndIndex",
+      "displayName": "ethGetRawTransactionByBlockNumberAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2396,7 +2396,7 @@
     },
     "eth_getLogs": {
       "id": "eth_getLogs",
-      "displayName": "eth_getLogs",
+      "displayName": "ethGetLogs",
       "method": "POST",
       "path": [
         {
@@ -2494,7 +2494,7 @@
     },
     "eth_getStorageAt": {
       "id": "eth_getStorageAt",
-      "displayName": "eth_getStorageAt",
+      "displayName": "ethGetStorageAt",
       "method": "POST",
       "path": [
         {
@@ -2567,7 +2567,7 @@
     },
     "eth_getTransactionByBlockHashAndIndex": {
       "id": "eth_getTransactionByBlockHashAndIndex",
-      "displayName": "eth_getTransactionByBlockHashAndIndex",
+      "displayName": "ethGetTransactionByBlockHashAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2655,7 +2655,7 @@
     },
     "eth_getTransactionByBlockNumberAndIndex": {
       "id": "eth_getTransactionByBlockNumberAndIndex",
-      "displayName": "eth_getTransactionByBlockNumberAndIndex",
+      "displayName": "ethGetTransactionByBlockNumberAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2719,7 +2719,7 @@
     },
     "eth_getTransactionByHash": {
       "id": "eth_getTransactionByHash",
-      "displayName": "eth_getTransactionByHash",
+      "displayName": "ethGetTransactionByHash",
       "method": "POST",
       "path": [
         {
@@ -2772,7 +2772,7 @@
     },
     "eth_getTransactionCount": {
       "id": "eth_getTransactionCount",
-      "displayName": "eth_getTransactionCount",
+      "displayName": "ethGetTransactionCount",
       "method": "POST",
       "path": [
         {
@@ -2835,7 +2835,7 @@
     },
     "eth_getTransactionReceipt": {
       "id": "eth_getTransactionReceipt",
-      "displayName": "eth_getTransactionReceipt",
+      "displayName": "ethGetTransactionReceipt",
       "method": "POST",
       "path": [
         {
@@ -2888,7 +2888,7 @@
     },
     "eth_getUncleByBlockHashAndIndex": {
       "id": "eth_getUncleByBlockHashAndIndex",
-      "displayName": "eth_getUncleByBlockHashAndIndex",
+      "displayName": "ethGetUncleByBlockHashAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2952,7 +2952,7 @@
     },
     "eth_getUncleByBlockNumberAndIndex": {
       "id": "eth_getUncleByBlockNumberAndIndex",
-      "displayName": "eth_getUncleByBlockNumberAndIndex",
+      "displayName": "ethGetUncleByBlockNumberAndIndex",
       "method": "POST",
       "path": [
         {
@@ -3041,7 +3041,7 @@
     },
     "eth_getUncleCountByBlockHash": {
       "id": "eth_getUncleCountByBlockHash",
-      "displayName": "eth_getUncleCountByBlockHash",
+      "displayName": "ethGetUncleCountByBlockHash",
       "method": "POST",
       "path": [
         {
@@ -3094,7 +3094,7 @@
     },
     "eth_getUncleCountByBlockNumber": {
       "id": "eth_getUncleCountByBlockNumber",
-      "displayName": "eth_getUncleCountByBlockNumber",
+      "displayName": "ethGetUncleCountByBlockNumber",
       "method": "POST",
       "path": [
         {
@@ -3147,7 +3147,7 @@
     },
     "eth_getProof": {
       "id": "eth_getProof",
-      "displayName": "eth_getProof",
+      "displayName": "ethGetProof",
       "method": "POST",
       "path": [
         {
@@ -3285,7 +3285,7 @@
     },
     "eth_getWork": {
       "id": "eth_getWork",
-      "displayName": "eth_getWork",
+      "displayName": "ethGetWork",
       "method": "POST",
       "path": [
         {
@@ -3348,7 +3348,7 @@
     },
     "eth_hashrate": {
       "id": "eth_hashrate",
-      "displayName": "eth_hashrate",
+      "displayName": "ethHashrate",
       "method": "POST",
       "path": [
         {
@@ -3380,7 +3380,7 @@
     },
     "eth_mining": {
       "id": "eth_mining",
-      "displayName": "eth_mining",
+      "displayName": "ethMining",
       "method": "POST",
       "path": [
         {
@@ -3414,7 +3414,7 @@
     },
     "eth_newBlockFilter": {
       "id": "eth_newBlockFilter",
-      "displayName": "eth_newBlockFilter",
+      "displayName": "ethNewBlockFilter",
       "method": "POST",
       "path": [
         {
@@ -3446,7 +3446,7 @@
     },
     "eth_newFilter": {
       "id": "eth_newFilter",
-      "displayName": "eth_newFilter",
+      "displayName": "ethNewFilter",
       "method": "POST",
       "path": [
         {
@@ -3538,7 +3538,7 @@
     },
     "eth_newPendingTransactionFilter": {
       "id": "eth_newPendingTransactionFilter",
-      "displayName": "eth_newPendingTransactionFilter",
+      "displayName": "ethNewPendingTransactionFilter",
       "method": "POST",
       "path": [
         {
@@ -3570,7 +3570,7 @@
     },
     "eth_pendingTransactions": {
       "id": "eth_pendingTransactions",
-      "displayName": "eth_pendingTransactions",
+      "displayName": "ethPendingTransactions",
       "method": "POST",
       "path": [
         {
@@ -3602,7 +3602,7 @@
     },
     "eth_protocolVersion": {
       "id": "eth_protocolVersion",
-      "displayName": "eth_protocolVersion",
+      "displayName": "ethProtocolVersion",
       "method": "POST",
       "path": [
         {
@@ -3634,7 +3634,7 @@
     },
     "eth_sendRawTransaction": {
       "id": "eth_sendRawTransaction",
-      "displayName": "eth_sendRawTransaction",
+      "displayName": "ethSendRawTransaction",
       "method": "POST",
       "path": [
         {
@@ -3688,7 +3688,7 @@
     },
     "eth_submitHashrate": {
       "id": "eth_submitHashrate",
-      "displayName": "eth_submitHashrate",
+      "displayName": "ethSubmitHashrate",
       "method": "POST",
       "path": [
         {
@@ -3755,7 +3755,7 @@
     },
     "eth_submitWork": {
       "id": "eth_submitWork",
-      "displayName": "eth_submitWork",
+      "displayName": "ethSubmitWork",
       "method": "POST",
       "path": [
         {
@@ -3856,7 +3856,7 @@
     },
     "eth_syncing": {
       "id": "eth_syncing",
-      "displayName": "eth_syncing",
+      "displayName": "ethSyncing",
       "method": "POST",
       "path": [
         {
@@ -3942,7 +3942,7 @@
     },
     "eth_uninstallFilter": {
       "id": "eth_uninstallFilter",
-      "displayName": "eth_uninstallFilter",
+      "displayName": "ethUninstallFilter",
       "method": "POST",
       "path": [
         {
