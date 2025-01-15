@@ -1242,7 +1242,7 @@
   "endpoints": {
     "web3_clientVersion": {
       "id": "web3_clientVersion",
-      "displayName": "current client version",
+      "displayName": "web3ClientVersion",
       "method": "POST",
       "path": [
         {
@@ -1277,7 +1277,7 @@
     },
     "web3_sha3": {
       "id": "web3_sha3",
-      "displayName": "Hashes data",
+      "displayName": "web3Sha3",
       "method": "POST",
       "path": [
         {
@@ -1358,7 +1358,7 @@
     },
     "net_listening": {
       "id": "net_listening",
-      "displayName": "returns listening status",
+      "displayName": "netListening",
       "method": "POST",
       "path": [
         {
@@ -1410,7 +1410,7 @@
     },
     "net_peerCount": {
       "id": "net_peerCount",
-      "displayName": "number of peers",
+      "displayName": "netPeerCount",
       "method": "POST",
       "path": [
         {
@@ -1445,7 +1445,7 @@
     },
     "net_version": {
       "id": "net_version",
-      "displayName": "Network identifier associated with network",
+      "displayName": "netVersion",
       "method": "POST",
       "path": [
         {
@@ -1481,7 +1481,7 @@
     },
     "eth_blockNumber": {
       "id": "eth_blockNumber",
-      "displayName": "Returns the number of most recent block.",
+      "displayName": "ethBlockNumber",
       "method": "POST",
       "path": [
         {
@@ -1504,6 +1504,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of most recent block.",
       "operationId": "eth_blockNumber",
       "environments": [],
       "requestHeaders": [],
@@ -1512,7 +1513,7 @@
     },
     "eth_call": {
       "id": "eth_call",
-      "displayName": "Executes a new message call (locally) immediately without creating a transaction on the block chain.",
+      "displayName": "ethCall",
       "method": "POST",
       "path": [
         {
@@ -1566,6 +1567,7 @@
         }
       ],
       "errors": [],
+      "description": "Executes a new message call (locally) immediately without creating a transaction on the block chain.",
       "operationId": "eth_call",
       "environments": [],
       "requestHeaders": [],
@@ -1574,7 +1576,7 @@
     },
     "eth_chainId": {
       "id": "eth_chainId",
-      "displayName": "Returns the currently configured chain id",
+      "displayName": "ethChainId",
       "method": "POST",
       "path": [
         {
@@ -1610,7 +1612,7 @@
     },
     "eth_coinbase": {
       "id": "eth_coinbase",
-      "displayName": "Returns the client coinbase address.",
+      "displayName": "ethCoinbase",
       "method": "POST",
       "path": [
         {
@@ -1633,6 +1635,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the client coinbase address.",
       "operationId": "eth_coinbase",
       "environments": [],
       "requestHeaders": [],
@@ -1641,7 +1644,7 @@
     },
     "eth_estimateGas": {
       "id": "eth_estimateGas",
-      "displayName": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance.",
+      "displayName": "ethEstimateGas",
       "method": "POST",
       "path": [
         {
@@ -1685,6 +1688,7 @@
         }
       ],
       "errors": [],
+      "description": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance.",
       "operationId": "eth_estimateGas",
       "environments": [],
       "requestHeaders": [],
@@ -1693,7 +1697,7 @@
     },
     "eth_gasPrice": {
       "id": "eth_gasPrice",
-      "displayName": "Returns the current price per gas in wei",
+      "displayName": "ethGasPrice",
       "method": "POST",
       "path": [
         {
@@ -1716,6 +1720,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the current price per gas in wei",
       "operationId": "eth_gasPrice",
       "environments": [],
       "requestHeaders": [],
@@ -1724,7 +1729,7 @@
     },
     "eth_getBalance": {
       "id": "eth_getBalance",
-      "displayName": "Returns Ether balance of a given or account or contract",
+      "displayName": "ethGetBalance",
       "method": "POST",
       "path": [
         {
@@ -1780,6 +1785,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns Ether balance of a given or account or contract",
       "operationId": "eth_getBalance",
       "environments": [],
       "requestHeaders": [],
@@ -1788,7 +1794,7 @@
     },
     "eth_getBlockByHash": {
       "id": "eth_getBlockByHash",
-      "displayName": "Gets a block for a given hash",
+      "displayName": "ethGetBlockByHash",
       "method": "POST",
       "path": [
         {
@@ -1845,6 +1851,7 @@
         }
       ],
       "errors": [],
+      "description": "Gets a block for a given hash",
       "operationId": "eth_getBlockByHash",
       "environments": [],
       "requestHeaders": [],
@@ -1853,7 +1860,7 @@
     },
     "eth_getBlockByNumber": {
       "id": "eth_getBlockByNumber",
-      "displayName": "Gets a block for a given number",
+      "displayName": "ethGetBlockByNumber",
       "method": "POST",
       "path": [
         {
@@ -1910,6 +1917,7 @@
         }
       ],
       "errors": [],
+      "description": "Gets a block for a given number",
       "operationId": "eth_getBlockByNumber",
       "environments": [],
       "requestHeaders": [],
@@ -1918,7 +1926,7 @@
     },
     "eth_getBlockTransactionCountByHash": {
       "id": "eth_getBlockTransactionCountByHash",
-      "displayName": "Returns the number of transactions in a block from a block matching the given block hash.",
+      "displayName": "ethGetBlockTransactionCountByHash",
       "method": "POST",
       "path": [
         {
@@ -1962,6 +1970,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of transactions in a block from a block matching the given block hash.",
       "operationId": "eth_getBlockTransactionCountByHash",
       "environments": [],
       "requestHeaders": [],
@@ -1970,7 +1979,7 @@
     },
     "eth_getBlockTransactionCountByNumber": {
       "id": "eth_getBlockTransactionCountByNumber",
-      "displayName": "Returns the number of transactions in a block from a block matching the given block number.",
+      "displayName": "ethGetBlockTransactionCountByNumber",
       "method": "POST",
       "path": [
         {
@@ -2014,6 +2023,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of transactions in a block from a block matching the given block number.",
       "operationId": "eth_getBlockTransactionCountByNumber",
       "environments": [],
       "requestHeaders": [],
@@ -2022,7 +2032,7 @@
     },
     "eth_getCode": {
       "id": "eth_getCode",
-      "displayName": "Returns code at a given contract address",
+      "displayName": "ethGetCode",
       "method": "POST",
       "path": [
         {
@@ -2078,6 +2088,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns code at a given contract address",
       "operationId": "eth_getCode",
       "environments": [],
       "requestHeaders": [],
@@ -2086,7 +2097,7 @@
     },
     "eth_getFilterChanges": {
       "id": "eth_getFilterChanges",
-      "displayName": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
+      "displayName": "ethGetFilterChanges",
       "method": "POST",
       "path": [
         {
@@ -2136,6 +2147,7 @@
         }
       ],
       "errors": [],
+      "description": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
       "operationId": "eth_getFilterChanges",
       "environments": [],
       "requestHeaders": [],
@@ -2144,7 +2156,7 @@
     },
     "eth_getFilterLogs": {
       "id": "eth_getFilterLogs",
-      "displayName": "Returns an array of all logs matching filter with given id.",
+      "displayName": "ethGetFilterLogs",
       "method": "POST",
       "path": [
         {
@@ -2194,6 +2206,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns an array of all logs matching filter with given id.",
       "operationId": "eth_getFilterLogs",
       "environments": [],
       "requestHeaders": [],
@@ -2202,7 +2215,7 @@
     },
     "eth_getRawTransactionByHash": {
       "id": "eth_getRawTransactionByHash",
-      "displayName": "Returns raw transaction data of a transaction with the given hash.",
+      "displayName": "ethGetRawTransactionByHash",
       "method": "POST",
       "path": [
         {
@@ -2246,6 +2259,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns raw transaction data of a transaction with the given hash.",
       "operationId": "eth_getRawTransactionByHash",
       "environments": [],
       "requestHeaders": [],
@@ -2254,7 +2268,7 @@
     },
     "eth_getRawTransactionByBlockHashAndIndex": {
       "id": "eth_getRawTransactionByBlockHashAndIndex",
-      "displayName": "Returns raw transaction data of a transaction with the block hash and index of which it was mined.",
+      "displayName": "ethGetRawTransactionByBlockHashAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2309,6 +2323,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns raw transaction data of a transaction with the block hash and index of which it was mined.",
       "operationId": "eth_getRawTransactionByBlockHashAndIndex",
       "environments": [],
       "requestHeaders": [],
@@ -2317,7 +2332,7 @@
     },
     "eth_getRawTransactionByBlockNumberAndIndex": {
       "id": "eth_getRawTransactionByBlockNumberAndIndex",
-      "displayName": "Returns raw transaction data of a transaction with the block number and index of which it was mined.",
+      "displayName": "ethGetRawTransactionByBlockNumberAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2372,6 +2387,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns raw transaction data of a transaction with the block number and index of which it was mined.",
       "operationId": "eth_getRawTransactionByBlockNumberAndIndex",
       "environments": [],
       "requestHeaders": [],
@@ -2380,7 +2396,7 @@
     },
     "eth_getLogs": {
       "id": "eth_getLogs",
-      "displayName": "Returns an array of all logs matching a given filter object.",
+      "displayName": "ethGetLogs",
       "method": "POST",
       "path": [
         {
@@ -2469,6 +2485,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns an array of all logs matching a given filter object.",
       "operationId": "eth_getLogs",
       "environments": [],
       "requestHeaders": [],
@@ -2477,7 +2494,7 @@
     },
     "eth_getStorageAt": {
       "id": "eth_getStorageAt",
-      "displayName": "Gets a storage value from a contract address, a position, and an optional blockNumber",
+      "displayName": "ethGetStorageAt",
       "method": "POST",
       "path": [
         {
@@ -2541,6 +2558,7 @@
         }
       ],
       "errors": [],
+      "description": "Gets a storage value from a contract address, a position, and an optional blockNumber",
       "operationId": "eth_getStorageAt",
       "environments": [],
       "requestHeaders": [],
@@ -2549,7 +2567,7 @@
     },
     "eth_getTransactionByBlockHashAndIndex": {
       "id": "eth_getTransactionByBlockHashAndIndex",
-      "displayName": "Returns the information about a transaction requested by the block hash and index of which it was mined.",
+      "displayName": "ethGetTransactionByBlockHashAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2628,6 +2646,7 @@
           }
         }
       ],
+      "description": "Returns the information about a transaction requested by the block hash and index of which it was mined.",
       "operationId": "eth_getTransactionByBlockHashAndIndex",
       "environments": [],
       "requestHeaders": [],
@@ -2636,7 +2655,7 @@
     },
     "eth_getTransactionByBlockNumberAndIndex": {
       "id": "eth_getTransactionByBlockNumberAndIndex",
-      "displayName": "Returns the information about a transaction requested by the block number and index of which it was mined.",
+      "displayName": "ethGetTransactionByBlockNumberAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2691,6 +2710,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the information about a transaction requested by the block number and index of which it was mined.",
       "operationId": "eth_getTransactionByBlockNumberAndIndex",
       "environments": [],
       "requestHeaders": [],
@@ -2699,7 +2719,7 @@
     },
     "eth_getTransactionByHash": {
       "id": "eth_getTransactionByHash",
-      "displayName": "Returns the information about a transaction requested by transaction hash.",
+      "displayName": "ethGetTransactionByHash",
       "method": "POST",
       "path": [
         {
@@ -2743,6 +2763,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the information about a transaction requested by transaction hash.",
       "operationId": "eth_getTransactionByHash",
       "environments": [],
       "requestHeaders": [],
@@ -2751,7 +2772,7 @@
     },
     "eth_getTransactionCount": {
       "id": "eth_getTransactionCount",
-      "displayName": "Returns the number of transactions sent from an address",
+      "displayName": "ethGetTransactionCount",
       "method": "POST",
       "path": [
         {
@@ -2805,6 +2826,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of transactions sent from an address",
       "operationId": "eth_getTransactionCount",
       "environments": [],
       "requestHeaders": [],
@@ -2813,7 +2835,7 @@
     },
     "eth_getTransactionReceipt": {
       "id": "eth_getTransactionReceipt",
-      "displayName": "Returns the receipt information of a transaction by its hash.",
+      "displayName": "ethGetTransactionReceipt",
       "method": "POST",
       "path": [
         {
@@ -2857,6 +2879,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the receipt information of a transaction by its hash.",
       "operationId": "eth_getTransactionReceipt",
       "environments": [],
       "requestHeaders": [],
@@ -2865,7 +2888,7 @@
     },
     "eth_getUncleByBlockHashAndIndex": {
       "id": "eth_getUncleByBlockHashAndIndex",
-      "displayName": "Returns information about a uncle of a block by hash and uncle index position.",
+      "displayName": "ethGetUncleByBlockHashAndIndex",
       "method": "POST",
       "path": [
         {
@@ -2920,6 +2943,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns information about a uncle of a block by hash and uncle index position.",
       "operationId": "eth_getUncleByBlockHashAndIndex",
       "environments": [],
       "requestHeaders": [],
@@ -2928,7 +2952,7 @@
     },
     "eth_getUncleByBlockNumberAndIndex": {
       "id": "eth_getUncleByBlockNumberAndIndex",
-      "displayName": "Returns information about a uncle of a block by hash and uncle index position.",
+      "displayName": "ethGetUncleByBlockNumberAndIndex",
       "method": "POST",
       "path": [
         {
@@ -3008,6 +3032,7 @@
           }
         }
       ],
+      "description": "Returns information about a uncle of a block by hash and uncle index position.",
       "operationId": "eth_getUncleByBlockNumberAndIndex",
       "environments": [],
       "requestHeaders": [],
@@ -3016,7 +3041,7 @@
     },
     "eth_getUncleCountByBlockHash": {
       "id": "eth_getUncleCountByBlockHash",
-      "displayName": "Returns the number of uncles in a block from a block matching the given block hash.",
+      "displayName": "ethGetUncleCountByBlockHash",
       "method": "POST",
       "path": [
         {
@@ -3060,6 +3085,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of uncles in a block from a block matching the given block hash.",
       "operationId": "eth_getUncleCountByBlockHash",
       "environments": [],
       "requestHeaders": [],
@@ -3068,7 +3094,7 @@
     },
     "eth_getUncleCountByBlockNumber": {
       "id": "eth_getUncleCountByBlockNumber",
-      "displayName": "Returns the number of uncles in a block from a block matching the given block number.",
+      "displayName": "ethGetUncleCountByBlockNumber",
       "method": "POST",
       "path": [
         {
@@ -3112,6 +3138,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of uncles in a block from a block matching the given block number.",
       "operationId": "eth_getUncleCountByBlockNumber",
       "environments": [],
       "requestHeaders": [],
@@ -3120,7 +3147,7 @@
     },
     "eth_getProof": {
       "id": "eth_getProof",
-      "displayName": "Returns the account- and storage-values of the specified account including the Merkle-proof.",
+      "displayName": "ethGetProof",
       "method": "POST",
       "path": [
         {
@@ -3249,6 +3276,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the account- and storage-values of the specified account including the Merkle-proof.",
       "operationId": "eth_getProof",
       "environments": [],
       "requestHeaders": [],
@@ -3257,7 +3285,7 @@
     },
     "eth_getWork": {
       "id": "eth_getWork",
-      "displayName": "Returns the hash of the current block, the seedHash, and the boundary condition to be met ('target').",
+      "displayName": "ethGetWork",
       "method": "POST",
       "path": [
         {
@@ -3311,6 +3339,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the hash of the current block, the seedHash, and the boundary condition to be met ('target').",
       "operationId": "eth_getWork",
       "environments": [],
       "requestHeaders": [],
@@ -3319,7 +3348,7 @@
     },
     "eth_hashrate": {
       "id": "eth_hashrate",
-      "displayName": "Returns the number of hashes per second that the node is mining with.",
+      "displayName": "ethHashrate",
       "method": "POST",
       "path": [
         {
@@ -3342,6 +3371,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the number of hashes per second that the node is mining with.",
       "operationId": "eth_hashrate",
       "environments": [],
       "requestHeaders": [],
@@ -3350,7 +3380,7 @@
     },
     "eth_mining": {
       "id": "eth_mining",
-      "displayName": "Returns true if client is actively mining new blocks.",
+      "displayName": "ethMining",
       "method": "POST",
       "path": [
         {
@@ -3375,6 +3405,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns true if client is actively mining new blocks.",
       "operationId": "eth_mining",
       "environments": [],
       "requestHeaders": [],
@@ -3383,7 +3414,7 @@
     },
     "eth_newBlockFilter": {
       "id": "eth_newBlockFilter",
-      "displayName": "Creates a filter in the node, to notify when a new block arrives. To check if the state has changed, call eth_getFilterChanges.",
+      "displayName": "ethNewBlockFilter",
       "method": "POST",
       "path": [
         {
@@ -3406,6 +3437,7 @@
         }
       ],
       "errors": [],
+      "description": "Creates a filter in the node, to notify when a new block arrives. To check if the state has changed, call eth_getFilterChanges.",
       "operationId": "eth_newBlockFilter",
       "environments": [],
       "requestHeaders": [],
@@ -3414,7 +3446,7 @@
     },
     "eth_newFilter": {
       "id": "eth_newFilter",
-      "displayName": "Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has changed, call eth_getFilterChanges.",
+      "displayName": "ethNewFilter",
       "method": "POST",
       "path": [
         {
@@ -3497,6 +3529,7 @@
         }
       ],
       "errors": [],
+      "description": "Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has changed, call eth_getFilterChanges.",
       "operationId": "eth_newFilter",
       "environments": [],
       "requestHeaders": [],
@@ -3505,7 +3538,7 @@
     },
     "eth_newPendingTransactionFilter": {
       "id": "eth_newPendingTransactionFilter",
-      "displayName": "Creates a filter in the node, to notify when new pending transactions arrive. To check if the state has changed, call eth_getFilterChanges.",
+      "displayName": "ethNewPendingTransactionFilter",
       "method": "POST",
       "path": [
         {
@@ -3528,6 +3561,7 @@
         }
       ],
       "errors": [],
+      "description": "Creates a filter in the node, to notify when new pending transactions arrive. To check if the state has changed, call eth_getFilterChanges.",
       "operationId": "eth_newPendingTransactionFilter",
       "environments": [],
       "requestHeaders": [],
@@ -3536,7 +3570,7 @@
     },
     "eth_pendingTransactions": {
       "id": "eth_pendingTransactions",
-      "displayName": "Returns the transactions that are pending in the transaction pool and have a from address that is one of the accounts this node manages.",
+      "displayName": "ethPendingTransactions",
       "method": "POST",
       "path": [
         {
@@ -3559,6 +3593,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the transactions that are pending in the transaction pool and have a from address that is one of the accounts this node manages.",
       "operationId": "eth_pendingTransactions",
       "environments": [],
       "requestHeaders": [],
@@ -3567,7 +3602,7 @@
     },
     "eth_protocolVersion": {
       "id": "eth_protocolVersion",
-      "displayName": "Returns the current ethereum protocol version.",
+      "displayName": "ethProtocolVersion",
       "method": "POST",
       "path": [
         {
@@ -3590,6 +3625,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns the current ethereum protocol version.",
       "operationId": "eth_protocolVersion",
       "environments": [],
       "requestHeaders": [],
@@ -3598,7 +3634,7 @@
     },
     "eth_sendRawTransaction": {
       "id": "eth_sendRawTransaction",
-      "displayName": "Creates new message call transaction or a contract creation for signed transactions.",
+      "displayName": "ethSendRawTransaction",
       "method": "POST",
       "path": [
         {
@@ -3643,6 +3679,7 @@
         }
       ],
       "errors": [],
+      "description": "Creates new message call transaction or a contract creation for signed transactions.",
       "operationId": "eth_sendRawTransaction",
       "environments": [],
       "requestHeaders": [],
@@ -3651,7 +3688,7 @@
     },
     "eth_submitHashrate": {
       "id": "eth_submitHashrate",
-      "displayName": "Used for submitting mining hashrate.",
+      "displayName": "ethSubmitHashrate",
       "method": "POST",
       "path": [
         {
@@ -3708,6 +3745,7 @@
         }
       ],
       "errors": [],
+      "description": "Used for submitting mining hashrate.",
       "operationId": "eth_submitHashrate",
       "environments": [],
       "availability": "Deprecated",
@@ -3717,7 +3755,7 @@
     },
     "eth_submitWork": {
       "id": "eth_submitWork",
-      "displayName": "Used for submitting a proof-of-work solution.",
+      "displayName": "ethSubmitWork",
       "method": "POST",
       "path": [
         {
@@ -3809,6 +3847,7 @@
           }
         }
       ],
+      "description": "Used for submitting a proof-of-work solution.",
       "operationId": "eth_submitWork",
       "environments": [],
       "requestHeaders": [],
@@ -3817,7 +3856,7 @@
     },
     "eth_syncing": {
       "id": "eth_syncing",
-      "displayName": "Returns an object with data about the sync status or false.",
+      "displayName": "ethSyncing",
       "method": "POST",
       "path": [
         {
@@ -3894,6 +3933,7 @@
         }
       ],
       "errors": [],
+      "description": "Returns an object with data about the sync status or false.",
       "operationId": "eth_syncing",
       "environments": [],
       "requestHeaders": [],
@@ -3902,7 +3942,7 @@
     },
     "eth_uninstallFilter": {
       "id": "eth_uninstallFilter",
-      "displayName": "Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additionally Filters timeout when they aren't requested with eth_getFilterChanges for a period of time.",
+      "displayName": "ethUninstallFilter",
       "method": "POST",
       "path": [
         {
@@ -3948,6 +3988,7 @@
         }
       ],
       "errors": [],
+      "description": "Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additionally Filters timeout when they aren't requested with eth_getFilterChanges for a period of time.",
       "operationId": "eth_uninstallFilter",
       "environments": [],
       "requestHeaders": [],

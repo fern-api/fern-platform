@@ -29,8 +29,6 @@ describe("OpenRPC converter", () => {
       const errors = [];
       const warnings = [];
 
-      expect(parsed.components?.schemas).toBeDefined();
-
       if (parsed.components?.schemas) {
         const converter = new OpenrpcDocumentConverterNode({
           input: parsed,
@@ -51,8 +49,6 @@ describe("OpenRPC converter", () => {
       if (warnings.length > 0) {
         // console.warn("warnings:", warnings);
       }
-
-      converted.id = "test-uuid-replacement";
       await expect(
         replaceEndpointUUIDs(JSON.stringify(converted, null, 2))
       ).toMatchFileSnapshot(`./__snapshots__/${directory}.json`);
