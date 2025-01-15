@@ -33,7 +33,7 @@ async function getRedisClient() {
     });
 
     await redisClient.connect();
-    console.log("Connected to Redis");
+    // console.log("Connected to Redis");
     return redisClient;
   } finally {
     isConnecting = false;
@@ -110,14 +110,19 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     try {
       const redis = await getRedisClient();
 
-      const keys = await redis.keys("*");
-      console.log("All Redis keys:", keys);
-      //dummy commit
+      if (!redis) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: "Redis client not found" }),
+        };
+      }
+      // const keys = await redis.keys("*");
+      // console.log("All Redis keys:", keys);
 
       const cachedResponse = await redis.get(parsedUrl.getFullUrl());
       if (cachedResponse != null) {
-        console.log(`Cache HIT for ${url}`);
-        console.log(cachedResponse);
+        // console.log(`Cache HIT for ${url}`);
+        // console.log(cachedResponse);
         const parsedResponse = JSON.parse(cachedResponse);
 
         const filesV2 = Object.fromEntries(
@@ -152,8 +157,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
           }),
         };
       } else {
-        console.log(`Cache MISS for ${url}`);
-        console.log("Connecting to RDS");
+        // console.log(`Cache MISS for ${url}`);
+        // console.log("Connecting to RDS");
 
         // second - try to get from rds db
         try {
@@ -167,7 +172,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
           });
 
           await client.connect();
-          console.log("Connected to RDS");
+          // console.log("Connected to RDS");
 
           const query = `
         SELECT url, docsDefinition
@@ -176,7 +181,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       `;
 
           const result = await client.query<DocumentData>(query, [parsedUrl]);
-          console.log("result", result);
+          // console.log("result", result);
 
           if (result.rows.length === 0) {
             return {
@@ -185,8 +190,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
             };
           }
 
-          console.log("found result");
-          console.log(result.rows[0]);
+          // console.log("found result")
+
           return {
             statusCode: 200,
             body: JSON.stringify(result.rows[0]),
