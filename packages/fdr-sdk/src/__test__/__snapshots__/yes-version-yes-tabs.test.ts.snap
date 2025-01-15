@@ -72,6 +72,7 @@ exports[`yes-version-yes-tabs > gets navigation root for /docs/api/version-1/sec
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root..version-1.uv.tab-1.tab-1.section-2.page-3",

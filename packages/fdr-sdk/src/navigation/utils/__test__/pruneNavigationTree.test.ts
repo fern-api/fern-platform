@@ -442,6 +442,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -452,7 +453,7 @@ describe("pruneNavigationTree", () => {
       noindex: undefined,
       viewers: undefined,
       orphaned: undefined,
-
+      featureFlags: undefined,
       // NOTE: points to is updated!
       pointsTo: "root/page",
     });
