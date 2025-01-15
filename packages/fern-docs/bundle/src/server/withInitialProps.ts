@@ -328,15 +328,16 @@ export async function withInitialProps({
   const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
   const serializeMdx = await getMdxBundler(engine);
 
+  // TODO: parallelize this with the other edge config calls:
   const launchDarklyConfig = await getLaunchDarklySettings(docs.baseUrl.domain);
-  const launchDarklyInfo =
-    !!launchDarklyConfig?.["client-side-id"] &&
-    !!launchDarklyConfig?.["user-context-endpoint"]
-      ? {
-          clientSideId: launchDarklyConfig?.["client-side-id"],
-          userContextEndpoint: launchDarklyConfig?.["user-context-endpoint"],
-        }
-      : undefined;
+  const launchDarkly = launchDarklyConfig
+    ? {
+        clientSideId: launchDarklyConfig["client-side-id"],
+        userContextEndpoint: launchDarklyConfig["user-context-endpoint"],
+        anonymousUserContextEndpoint:
+          launchDarklyConfig["anonymous-user-context-endpoint"],
+      }
+    : undefined;
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
@@ -396,7 +397,7 @@ export async function withInitialProps({
       found.tabs.length > 0
     ),
     featureFlagsConfig: {
-      launchDarkly: launchDarklyInfo,
+      launchDarkly,
     },
   };
 

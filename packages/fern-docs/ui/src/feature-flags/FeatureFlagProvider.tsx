@@ -27,6 +27,9 @@ export const FeatureFlagProvider: FC<FeatureFlagProviderProps> = ({
     <LDFeatureFlagProvider
       clientSideId={launchDarklyInfo.clientSideId}
       userContextEndpoint={launchDarklyInfo.userContextEndpoint}
+      anonymousUserContextEndpoint={
+        launchDarklyInfo.anonymousUserContextEndpoint
+      }
     >
       {children}
     </LDFeatureFlagProvider>

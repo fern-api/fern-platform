@@ -8,18 +8,30 @@ import useSWR from "swr";
 
 interface Props {
   clientSideId: string;
+  /**
+   * The endpoint to fetch the user context from.
+   */
   userContextEndpoint: string;
+  /**
+   * The endpoint to fetch the anonymous user context from.
+   * @default {userContextEndpoint}
+   */
+  anonymousUserContextEndpoint?: string;
   children: ReactNode;
 }
 
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
   userContextEndpoint,
+  anonymousUserContextEndpoint,
   children,
 }) => {
   return (
     <LDProvider clientSideID={clientSideId}>
-      <IdentifyWrapper userContextEndpoint={userContextEndpoint}>
+      <IdentifyWrapper
+        userContextEndpoint={userContextEndpoint}
+        anonymousUserContextEndpoint={anonymousUserContextEndpoint}
+      >
         {children}
       </IdentifyWrapper>
     </LDProvider>
@@ -28,17 +40,28 @@ export const LDFeatureFlagProvider: FC<Props> = ({
 
 const IdentifyWrapper = ({
   children,
-  userContextEndpoint,
+  userContextEndpoint: userContextEndpointProp,
+  anonymousUserContextEndpoint = userContextEndpointProp,
+  anonymous = true,
 }: {
   children: ReactNode;
   userContextEndpoint: string;
+  anonymousUserContextEndpoint?: string;
+  anonymous?: boolean;
 }) => {
   const ldClient = useLDClient();
 
+  const userContextEndpoint = anonymous
+    ? anonymousUserContextEndpoint
+    : userContextEndpointProp;
+
   // using SWR to get refresh the LD context
   const { data } = useSWR<LDContext>(
-    "user-ld-context",
-    () => fetch(userContextEndpoint).then((res) => res.json()),
+    userContextEndpoint,
+    () =>
+      fetch(userContextEndpoint, {
+        credentials: anonymous ? undefined : "include",
+      }).then((res) => res.json()),
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
