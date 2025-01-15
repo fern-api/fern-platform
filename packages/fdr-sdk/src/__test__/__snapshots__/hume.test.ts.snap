@@ -130,6 +130,7 @@ exports[`hume > gets navigation root for /support 1`] = `
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": false,
   "icon": undefined,
   "id": "root.uv.docs.docs.introduction.support",

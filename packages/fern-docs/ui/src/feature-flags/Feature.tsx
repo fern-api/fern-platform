@@ -11,7 +11,7 @@ const LDFeature = dynamic(
 
 // TODO: This becomes an indirection point where we can use different feature flag implementations
 // with different providers depending on config
-export const Feature = <T,>(props: FeatureProps<T>): React.ReactNode => (
+export const Feature = (props: FeatureProps): React.ReactNode => (
   <FernErrorBoundary>
     <LDFeature {...props} />
   </FernErrorBoundary>

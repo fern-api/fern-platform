@@ -1,6 +1,7 @@
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ReactNode } from "react";
 import { useIsApiReferenceShallowLink } from "../../atoms";
+import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 
 interface SidebarGroupApiReferenceNodeProps {
@@ -15,16 +16,18 @@ export function SidebarGroupApiReferenceNode({
   const shallow = useIsApiReferenceShallowLink(node);
 
   return (
-    <ul className="fern-sidebar-group">
-      {node.children.map((child) => (
-        <li key={child.id}>
-          <SidebarApiPackageChild
-            node={child}
-            depth={depth}
-            shallow={shallow}
-          />
-        </li>
-      ))}
-    </ul>
+    <WithFeatureFlags featureFlags={node.featureFlags}>
+      <ul className="fern-sidebar-group">
+        {node.children.map((child) => (
+          <li key={child.id}>
+            <SidebarApiPackageChild
+              node={child}
+              depth={depth}
+              shallow={shallow}
+            />
+          </li>
+        ))}
+      </ul>
+    </WithFeatureFlags>
   );
 }

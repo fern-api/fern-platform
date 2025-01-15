@@ -3,7 +3,9 @@ import {
   ApiDefinitionId,
   ApiDefinitionV1ToLatest,
   Transformer,
+  convertToCurl,
   prune,
+  toSnippetHttpRequest,
   type ApiDefinition,
   type CodeSnippet,
   type EndpointDefinition,
@@ -248,6 +250,29 @@ export class ApiDefinitionLoader {
     const pushSnippet = (snippet: CodeSnippet) => {
       (snippets[snippet.language] ??= []).push(snippet);
     };
+
+    // Check if curl snippet exists
+    if (!snippets[APIV1Read.SupportedLanguage.Curl]?.length) {
+      const endpointAuth = endpoint.auth?.[0];
+      const curlCode = convertToCurl(
+        toSnippetHttpRequest(
+          endpoint,
+          example,
+          endpointAuth != null ? apiDefinition.auths[endpointAuth] : undefined
+        ),
+        {
+          usesApplicationJsonInFormDataValue: false,
+        }
+      );
+      pushSnippet({
+        name: undefined,
+        language: APIV1Read.SupportedLanguage.Curl,
+        install: undefined,
+        code: curlCode,
+        generated: true,
+        description: undefined,
+      });
+    }
 
     const snippet = new HTTPSnippet(
       getHarRequest(endpoint, example, apiDefinition.auths, example.requestBody)
