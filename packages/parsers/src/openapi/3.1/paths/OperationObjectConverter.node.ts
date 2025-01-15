@@ -350,6 +350,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return undefined;
       }
 
+      console.log(examples);
       return {
         id: FernRegistry.WebhookId(this.endpointId),
         description: this.description,
@@ -365,11 +366,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           convertOperationObjectProperties(this.requestHeaders)?.flat()
         ),
         payloads: this.requests?.convertToWebhookPayload(),
-        examples: examples.map((example) => {
-          return {
-            payload: example.snippets,
-          };
-        }),
+        examples: [this.requests?.webhookExample()].filter(isNonNullish),
       };
     }
 

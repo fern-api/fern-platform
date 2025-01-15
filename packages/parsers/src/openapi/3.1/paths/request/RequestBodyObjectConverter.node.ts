@@ -94,4 +94,10 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
       })
       .filter(isNonNullish);
   }
+
+  webhookExample(): FernRegistry.api.v1.read.ExampleWebhookPayload | undefined {
+    return this.requestBodiesByContentType?.[
+      "application/json"
+    ]?.schema?.example() as FernRegistry.api.v1.read.ExampleWebhookPayload;
+  }
 }
