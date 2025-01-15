@@ -1,1 +1,1 @@
-export * from "./Feature";
+export * from "../../../feature-flags/Feature";

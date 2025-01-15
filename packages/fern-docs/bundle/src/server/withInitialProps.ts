@@ -24,7 +24,7 @@ import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import { getAuthState } from "./auth/getAuthState";
+import { AuthState, getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
@@ -48,6 +48,7 @@ interface WithInitialProps {
    */
   host: string;
   fern_token: string | undefined;
+  rawCookie: string | undefined;
 }
 
 export async function withInitialProps({
@@ -56,6 +57,7 @@ export async function withInitialProps({
   domain,
   host,
   fern_token,
+  rawCookie,
 }: WithInitialProps): Promise<
   GetServerSidePropsResult<ComponentProps<typeof DocsPage>>
 > {
@@ -328,15 +330,20 @@ export async function withInitialProps({
   const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
   const serializeMdx = await getMdxBundler(engine);
 
+  // TODO: parallelize this with the other edge config calls:
   const launchDarklyConfig = await getLaunchDarklySettings(docs.baseUrl.domain);
-  const launchDarklyInfo =
-    !!launchDarklyConfig?.["client-side-id"] &&
-    !!launchDarklyConfig?.["user-context-endpoint"]
-      ? {
-          clientSideId: launchDarklyConfig?.["client-side-id"],
-          userContextEndpoint: launchDarklyConfig?.["user-context-endpoint"],
-        }
-      : undefined;
+  const launchDarkly = launchDarklyConfig
+    ? {
+        clientSideId: launchDarklyConfig["client-side-id"],
+        contextEndpoint: launchDarklyConfig["context-endpoint"],
+        context: await withLaunchDarklyContext(
+          launchDarklyConfig["context-endpoint"],
+          authState,
+          found,
+          rawCookie
+        ),
+      }
+    : undefined;
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
@@ -395,8 +402,8 @@ export async function withInitialProps({
       docs.definition.filesV2,
       found.tabs.length > 0
     ),
-    featureFlags: {
-      launchDarkly: launchDarklyInfo,
+    featureFlagsConfig: {
+      launchDarkly,
     },
   };
 
@@ -427,4 +434,35 @@ function withRedirect(destination: string): { redirect: Redirect } {
     destination = encodeURI(addLeadingSlash(destination));
   }
   return { redirect: { destination, permanent: false } };
+}
+
+async function withLaunchDarklyContext(
+  endpoint: string,
+  authState: AuthState,
+  node: FernNavigation.utils.Node,
+  rawCookie: string | undefined
+) {
+  try {
+    const url = new URL(endpoint);
+    url.searchParams.set("anonymous", String(!authState.authed));
+    if (node.type === "found") {
+      if (node.currentVersion) {
+        url.searchParams.set("version", node.currentVersion.versionId);
+      }
+    }
+
+    const headers = new Headers();
+
+    // TODO: this forwards the cookie to an adapter that should generate a LaunchDarkly context
+    // if we migrate from edge config to docs.yml, we need to maintain an strict allowlist
+    if (rawCookie != null) {
+      headers.set("Cookie", rawCookie);
+    }
+
+    const context = await fetch(url, { headers }).then((res) => res.json());
+
+    return context;
+  } catch {
+    return { kind: "user", key: "anonymous", anonymous: true };
+  }
 }

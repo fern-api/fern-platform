@@ -123,7 +123,10 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
     const result = converter.convert();
     expect(result).toEqual({
       type: "alias",
-      value: { type: "primitive", value: { type: "base64" } },
+      value: {
+        type: "primitive",
+        value: { type: "base64", mimeType: "image/jpeg" },
+      },
     });
   });
 });

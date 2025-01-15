@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
-import { Page, PagePlusIn, Xmark } from "iconoir-react";
+import { FilePlus, FileVolume, Mic, X } from "lucide-react";
 import numeral from "numeral";
 import {
   ChangeEvent,
@@ -11,7 +11,10 @@ import {
   useRef,
   useState,
 } from "react";
+import { useAudioRecorder } from "../hooks/useAudioRecorder";
 import { WithLabelInternal } from "../WithLabel";
+import { PlaygroundAudioControls } from "./PlaygroundAudioControls";
+import { WaveformAnimation } from "./PlaygroundWaveformAnimation";
 
 export interface PlaygroundFileUploadFormProps {
   id: string;
@@ -20,37 +23,61 @@ export interface PlaygroundFileUploadFormProps {
   isOptional?: boolean;
   onValueChange: (value: readonly File[] | undefined) => void;
   value: readonly File[] | undefined;
+  allowAudioRecording?: boolean;
 }
 
 export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
-  ({ id, propertyKey, type, isOptional, onValueChange, value }) => {
+  ({
+    id,
+    propertyKey,
+    type,
+    isOptional,
+    onValueChange,
+    value,
+    allowAudioRecording = true,
+  }) => {
     // Remove invalid files
     // TODO: This is a temporary workaround to remove invalid files from the value.
     // this should be handled in a better way
     useEffect(() => {
       if (value != null) {
-        const hasInvalidFiles = value.some((f) => !(f instanceof File));
+        const hasInvalidFiles = value.some((f) => !isValidFile(f));
         if (hasInvalidFiles) {
-          onValueChange(value.filter((f) => f instanceof File));
+          onValueChange(value.filter(isValidFile));
         }
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [drag, setDrag] = useState(false);
-    const dragOver: DragEventHandler<HTMLElement> = (e) => {
+    const ref = useRef<HTMLInputElement>(null);
+    const [
+      { isRecording, elapsedTime, volume, audioUrl, isSupported },
+      { startRecording, stopRecording },
+    ] = useAudioRecorder(({ file }) => onValueChange([file]));
+
+    const canRecordAudio = isSupported && allowAudioRecording;
+
+    const dragOver: DragEventHandler = (e) => {
       e.preventDefault();
       setDrag(true);
     };
 
-    const dragEnter: DragEventHandler<HTMLElement> = (e) => {
+    const dragEnter: DragEventHandler = (e) => {
       e.preventDefault();
       setDrag(true);
     };
 
-    const dragLeave: DragEventHandler<HTMLElement> = (e) => {
+    const dragLeave: DragEventHandler = (e) => {
       e.preventDefault();
       setDrag(false);
+    };
+
+    const fileDrop: DragEventHandler = (e) => {
+      e.preventDefault();
+      setDrag(false);
+      const files = Array.from(e.dataTransfer.files);
+      onValueChange(files);
     };
 
     const handleChangeFiles = (files: FileList | null | undefined) => {
@@ -65,33 +92,22 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
       }
     };
 
-    const fileDrop: DragEventHandler<HTMLElement> = (e) => {
-      e.preventDefault();
-      setDrag(false);
-
-      const files = e.dataTransfer.files;
-      handleChangeFiles(files);
-    };
-
     const handleRemove = () => {
       onValueChange(undefined);
     };
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
       const files = e.target.files;
       if (files != null) {
         handleChangeFiles(files);
       }
 
-      // NOTE: the input is not controlled, so we need to clear it manually...
-      // every time the user selects a file, we record the change in-state, and then clear the input
-      // so that the input can be used again to select the same file
+      // Clear input value to allow selecting same file again
       if (ref.current != null) {
         ref.current.value = "";
       }
     };
 
-    const ref = useRef<HTMLInputElement>(null);
     return (
       <WithLabelInternal
         propertyKey={propertyKey}
@@ -104,11 +120,12 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
       >
         <input
           ref={ref}
-          type="file"
           id={id}
-          onChange={handleChange}
-          className="hidden"
+          type="file"
+          accept={"*"} //
           multiple={type === "files"}
+          onChange={handleFileChange}
+          className="hidden"
         />
         <FernCard
           className={cn("w-full rounded-lg", {
@@ -119,24 +136,59 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
           onDragLeave={dragLeave}
           onDrop={fileDrop}
         >
-          {value == null || value.length === 0 || value[0]?.name == null ? (
-            <div className="flex flex-col items-center gap-3 p-6">
-              <h5>Drop files here to upload</h5>
+          {isRecording ? (
+            <div className="flex items-center gap-4 p-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 p-2">
+                  <div className="h-3 w-full">
+                    <WaveformAnimation volume={volume} />
+                  </div>
+                  <span className="font-mono text-sm">
+                    {Math.floor(elapsedTime / 60)
+                      .toString()
+                      .padStart(2, "0")}
+                    :{(elapsedTime % 60).toString().padStart(2, "0")}
+                  </span>
+                </div>
+              </div>
               <FernButton
-                onClick={() => ref.current?.click()}
-                text="Browse files"
-                rounded
-                variant="outlined"
-                intent="primary"
+                icon={isRecording ? <Mic className="animate-pulse" /> : <Mic />}
+                variant="minimal"
+                intent={isRecording ? "danger" : "primary"}
+                onClick={isRecording ? stopRecording : startRecording}
               />
+            </div>
+          ) : value == null || value.length === 0 ? (
+            <div className="flex flex-col items-center gap-3 p-6">
+              <h5>
+                {`Drop audio file${type === "files" ? "s" : ""} here to upload`}
+              </h5>
+              <div className="flex gap-2">
+                <FernButton
+                  onClick={() => ref.current?.click()}
+                  text="Browse files"
+                  rounded
+                  variant="outlined"
+                  intent="primary"
+                />
+                {canRecordAudio && (
+                  <FernButton
+                    onClick={startRecording}
+                    icon={<Mic />}
+                    rounded
+                    variant="outlined"
+                    intent="primary"
+                  />
+                )}
+              </div>
             </div>
           ) : (
             <div className="divide-default divide-y">
               {value.map((file) => (
                 <div key={file.name} className="flex justify-between px-4 py-2">
                   <div className="flex min-w-0 shrink items-center gap-2">
-                    <div>
-                      <Page />
+                    <div className="p-1">
+                      <FileVolume />
                     </div>
                     <span className="inline-flex min-w-0 shrink items-baseline gap-2">
                       <span className="truncate text-sm">{file.name}</span>
@@ -145,9 +197,11 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                       </span>
                     </span>
                   </div>
-
                   <FernButtonGroup className="-mr-2">
-                    {type === "file" && (
+                    {audioUrl && (
+                      <PlaygroundAudioControls audioUrl={audioUrl} />
+                    )}
+                    {!audioUrl && (
                       <FernButton
                         text="Change"
                         onClick={() => ref.current?.click()}
@@ -155,8 +209,16 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                         variant="minimal"
                       />
                     )}
+                    {canRecordAudio && (
+                      <FernButton
+                        icon={<Mic />}
+                        onClick={startRecording}
+                        size="small"
+                        variant="minimal"
+                      />
+                    )}
                     <FernButton
-                      icon={<Xmark />}
+                      icon={<X />}
                       size="small"
                       variant="minimal"
                       onClick={() => {
@@ -170,10 +232,11 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 </div>
               ))}
               {type === "files" && (
+                // TODO: allow multiple recordings
                 <div className="flex justify-end p-4">
                   <FernButton
                     onClick={() => ref.current?.click()}
-                    icon={<PagePlusIn />}
+                    icon={<FilePlus />}
                     text="Add more files"
                     rounded
                     variant="outlined"
@@ -193,4 +256,14 @@ PlaygroundFileUploadForm.displayName = "PlaygroundFileUploadForm";
 
 function uniqueFiles(files: File[]): readonly File[] | undefined {
   return uniqBy(files, (f) => `${f.webkitRelativePath}/${f.name}/${f.size}`);
+}
+
+function isValidFile(file: any): file is File {
+  return (
+    file != null &&
+    typeof file === "object" &&
+    "name" in file &&
+    "size" in file &&
+    "type" in file
+  );
 }

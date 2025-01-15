@@ -20,5 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   const host = getHostNode(req) ?? domain;
   const slug = FernNavigation.slugjoin(params.slug);
 
-  return getDynamicDocsPageProps(domain, host, slug, req.cookies);
+  const rawCookie = req.headers.cookie;
+
+  return getDynamicDocsPageProps(domain, host, slug, req.cookies, rawCookie);
 };
