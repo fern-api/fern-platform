@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, FernCard } from "@fern-docs/components";
 import cn from "clsx";
 import { uniqBy } from "es-toolkit/array";
-import { FilePlus, FileVolume, Mic, X } from "lucide-react";
+import { FilePlus, File, Mic, X } from "lucide-react";
 import numeral from "numeral";
 import {
   ChangeEvent,
@@ -161,7 +161,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
           ) : value == null || value.length === 0 ? (
             <div className="flex flex-col items-center gap-3 p-6">
               <h5>
-                {`Drop audio file${type === "files" ? "s" : ""} here to upload`}
+                {`Drop file${type === "files" ? "s" : ""} here to upload`}
               </h5>
               <div className="flex gap-2">
                 <FernButton
@@ -188,7 +188,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 <div key={file.name} className="flex justify-between px-4 py-2">
                   <div className="flex min-w-0 shrink items-center gap-2">
                     <div className="p-1">
-                      <FileVolume />
+                      <File />
                     </div>
                     <span className="inline-flex min-w-0 shrink items-baseline gap-2">
                       <span className="truncate text-sm">{file.name}</span>
