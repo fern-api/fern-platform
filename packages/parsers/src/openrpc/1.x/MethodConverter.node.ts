@@ -3,6 +3,7 @@ import { MethodObject } from "@open-rpc/meta-schema";
 import { camelCase } from "es-toolkit";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../client/generated";
+import { generateExampleForJsonSchema } from "../../examples/generateExampleForJsonSchema";
 import { SchemaConverterNode, ServerObjectConverterNode } from "../../openapi";
 import { maybeSingleValueToArray } from "../../openapi/utils/maybeSingleValueToArray";
 import {
@@ -100,25 +101,8 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
             }
           : undefined;
 
-      // Convert method to HTTP endpoint
-      // This is a basic implementation that needs to be expanded
-      return {
-        id: FernRegistry.EndpointId(this.input.name),
-        displayName: camelCase(this.input.name),
-        method: "POST",
-        path: [{ type: "literal", value: "" }],
-        auth: undefined,
-        pathParameters: [],
-        queryParameters: [],
-        requests: request != null ? [request] : undefined,
-        responses:
-          response != null
-            ? [
-                this.convertToHttpResponse(response, this.input.description),
-              ].filter(isNonNullish)
-            : [],
-        errors: [],
-        examples: this.method.examples
+      const examples =
+        this.method.examples
           ?.map(
             (
               example
@@ -157,7 +141,84 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
               };
             }
           )
-          .filter(isNonNullish),
+          .filter(isNonNullish) ?? [];
+
+      if (examples.length <= 0) {
+        const example = {
+          name: "Example",
+          path: "",
+          pathParameters: {},
+          queryParameters: {},
+          headers: {},
+          requestBody: {
+            type: "json" as const,
+            value: generateExampleForJsonSchema({
+              type: "object",
+              properties: Object.fromEntries(
+                this.method.params?.map((param) => {
+                  const resolvedParam = resolveContentDescriptorObject(
+                    param,
+                    this.context.openrpc
+                  );
+                  return [
+                    resolvedParam?.name ?? "",
+                    resolvedParam?.schema ?? {},
+                  ];
+                }) ?? []
+              ),
+            }),
+          },
+          responseStatusCode: 200,
+          responseBody: {
+            type: "json" as const,
+            value: generateExampleForJsonSchema(
+              resolveContentDescriptorObject(
+                this.method.result,
+                this.context.openrpc
+              )?.schema ?? {}
+            ),
+          },
+          snippets: undefined,
+          description: undefined,
+        };
+        examples.push(example);
+      }
+
+      const examplesWithJsonRPCMetadata = examples.map((example) => {
+        const originalRequestBody = example.requestBody?.value;
+        return {
+          ...example,
+          requestBody: {
+            type: "json" as const,
+            value: {
+              id: 1,
+              jsonrpc: "2.0",
+              method: this.method.name,
+              params: originalRequestBody,
+            },
+          },
+        };
+      });
+
+      // Convert method to HTTP endpoint
+      // This is a basic implementation that needs to be expanded
+      return {
+        id: FernRegistry.EndpointId(this.input.name),
+        displayName: camelCase(this.input.name),
+        method: "POST",
+        path: [{ type: "literal", value: "" }],
+        auth: undefined,
+        pathParameters: [],
+        queryParameters: [],
+        requests: request != null ? [request] : undefined,
+        responses:
+          response != null
+            ? [
+                this.convertToHttpResponse(response, this.input.description),
+              ].filter(isNonNullish)
+            : [],
+        errors: [],
+        examples: examplesWithJsonRPCMetadata,
         description: this.input.description ?? this.input.summary,
         operationId: this.input.name,
         defaultEnvironment: undefined,
