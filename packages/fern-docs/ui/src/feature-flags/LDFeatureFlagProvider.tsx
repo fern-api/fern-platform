@@ -6,24 +6,39 @@ import {
 import { FC, ReactNode, useEffect } from "react";
 import useSWR from "swr";
 
-interface Props {
+interface Props extends PropsWithChildren {
   clientSideId: string;
+
   /**
    * The endpoint to fetch the user context from.
    */
   userContextEndpoint: string;
+
   /**
    * The endpoint to fetch the anonymous user context from.
    * @default {userContextEndpoint}
    */
   anonymousUserContextEndpoint?: string;
-  children: ReactNode;
+
+  /**
+   * Default anonymous user context.
+   * @default { kind: "user", key: "anonymous", anonymous: true }
+   */
+  defaultAnonymousUserContext?: LDContext;
+
+  /**
+   * Whether to use anonymous user context.
+   * @default true
+   */
+  anonymous?: boolean;
 }
 
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
   userContextEndpoint,
   anonymousUserContextEndpoint,
+  defaultAnonymousUserContext,
+  anonymous = true,
   children,
 }) => {
   return (
@@ -31,6 +46,8 @@ export const LDFeatureFlagProvider: FC<Props> = ({
       <IdentifyWrapper
         userContextEndpoint={userContextEndpoint}
         anonymousUserContextEndpoint={anonymousUserContextEndpoint}
+        defaultAnonymousUserContext={defaultAnonymousUserContext}
+        anonymous={anonymous}
       >
         {children}
       </IdentifyWrapper>
@@ -42,12 +59,18 @@ const IdentifyWrapper = ({
   children,
   userContextEndpoint: userContextEndpointProp,
   anonymousUserContextEndpoint = userContextEndpointProp,
+  defaultAnonymousUserContext = {
+    kind: "user",
+    key: "anonymous",
+    anonymous: true,
+  },
   anonymous = true,
 }: {
   children: ReactNode;
   userContextEndpoint: string;
   anonymousUserContextEndpoint?: string;
-  anonymous?: boolean;
+  defaultAnonymousUserContext?: LDContext;
+  anonymous: boolean;
 }) => {
   const ldClient = useLDClient();
 
@@ -56,7 +79,7 @@ const IdentifyWrapper = ({
     : userContextEndpointProp;
 
   // using SWR to get refresh the LD context
-  const { data } = useSWR<LDContext>(
+  const { data = defaultAnonymousUserContext } = useSWR<LDContext>(
     userContextEndpoint,
     () =>
       fetch(userContextEndpoint, {
@@ -72,9 +95,7 @@ const IdentifyWrapper = ({
   );
 
   useEffect(() => {
-    if (data) {
-      void ldClient?.identify(data);
-    }
+    void ldClient?.identify(data);
   }, [userContextEndpoint, ldClient, data]);
 
   return children;

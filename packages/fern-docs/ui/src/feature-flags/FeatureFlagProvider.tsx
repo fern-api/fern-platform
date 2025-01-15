@@ -11,10 +11,12 @@ const LDFeatureFlagProvider = dynamic(
 interface FeatureFlagProviderProps {
   featureFlagsConfig: FeatureFlagsConfig | undefined;
   children: ReactNode;
+  anonymous?: boolean;
 }
 
 export const FeatureFlagProvider: FC<FeatureFlagProviderProps> = ({
   featureFlagsConfig,
+  anonymous,
   children,
 }) => {
   const launchDarklyInfo = featureFlagsConfig?.launchDarkly;
@@ -30,6 +32,7 @@ export const FeatureFlagProvider: FC<FeatureFlagProviderProps> = ({
       anonymousUserContextEndpoint={
         launchDarklyInfo.anonymousUserContextEndpoint
       }
+      anonymous={anonymous}
     >
       {children}
     </LDFeatureFlagProvider>
