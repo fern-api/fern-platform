@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 
 export function WaveformAnimation({ volume }: { volume: number }) {
   return (
+    // TODO: make this look more like iOS voice message recording
     <div className="flex size-full items-center justify-between gap-0.5">
       {Array.from({ length: 20 }).map((_, i) => (
         <motion.div

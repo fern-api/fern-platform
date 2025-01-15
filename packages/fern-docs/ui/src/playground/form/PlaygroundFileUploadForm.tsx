@@ -52,9 +52,11 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
     const [drag, setDrag] = useState(false);
     const ref = useRef<HTMLInputElement>(null);
     const [
-      { isRecording, elapsedTime, volume, audioUrl },
+      { isRecording, elapsedTime, volume, audioUrl, isSupported },
       { startRecording, stopRecording },
     ] = useAudioRecorder(({ file }) => onValueChange([file]));
+
+    const canRecordAudio = isSupported && allowAudioRecording;
 
     const dragOver: DragEventHandler = (e) => {
       e.preventDefault();
@@ -120,7 +122,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
           ref={ref}
           id={id}
           type="file"
-          accept="audio/*"
+          accept={"*"} //
           multiple={type === "files"}
           onChange={handleFileChange}
           className="hidden"
@@ -169,7 +171,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                   variant="outlined"
                   intent="primary"
                 />
-                {allowAudioRecording && (
+                {canRecordAudio && (
                   <FernButton
                     onClick={startRecording}
                     icon={<Mic />}
@@ -207,7 +209,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                         variant="minimal"
                       />
                     )}
-                    {allowAudioRecording && (
+                    {canRecordAudio && (
                       <FernButton
                         icon={<Mic />}
                         onClick={startRecording}
@@ -230,6 +232,7 @@ export const PlaygroundFileUploadForm = memo<PlaygroundFileUploadFormProps>(
                 </div>
               ))}
               {type === "files" && (
+                // TODO: allow multiple recordings
                 <div className="flex justify-end p-4">
                   <FernButton
                     onClick={() => ref.current?.click()}

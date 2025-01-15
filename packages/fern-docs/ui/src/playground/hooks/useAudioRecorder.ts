@@ -6,6 +6,7 @@ interface AudioRecorderState {
   elapsedTime: number;
   volume: number;
   audioUrl: string | null;
+  isSupported: boolean;
 }
 
 interface AudioRecorderControls {
@@ -27,9 +28,13 @@ export function useAudioRecorder(
   const chunksRef = useRef<Blob[]>([]);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const mimeType = "audio/webm;codecs=opus";
+  const [isSupported] = useState(() => MediaRecorder.isTypeSupported(mimeType));
 
   const startRecording = useCallback(async () => {
     try {
+      if (!isSupported) {
+        throw new Error(`${mimeType} is not supported on this browser`);
+      }
       setElapsedTime(0);
       chunksRef.current = [];
 
@@ -91,7 +96,7 @@ export function useAudioRecorder(
     } catch (err) {
       console.error("Error accessing microphone:", err);
     }
-  }, [onAudioData]);
+  }, [onAudioData, isSupported]);
 
   const stopRecording = useCallback(() => {
     if (mediaRecorder) {
@@ -132,7 +137,7 @@ export function useAudioRecorder(
   }, [audioUrl]);
 
   return [
-    { isRecording, elapsedTime, volume, audioUrl },
+    { isRecording, elapsedTime, volume, audioUrl, isSupported },
     { startRecording, stopRecording },
   ];
 }
