@@ -71,7 +71,7 @@ const IdentifyWrapper = ({
     endpoint,
     async () => {
       const res = await fetch(endpoint, {
-        credentials: anonymous ? undefined : "include",
+        credentials: "include",
       });
       return {
         context: (await res.json()) as LDContext,
