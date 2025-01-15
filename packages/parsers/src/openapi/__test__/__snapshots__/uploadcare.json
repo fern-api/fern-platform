@@ -3500,7 +3500,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "File is not ready yet."
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -3531,7 +3540,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 406,
@@ -3555,7 +3573,16 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -3578,7 +3605,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -3645,16 +3681,26 @@
           },
           "requestBody": {
             "type": "json"
-          }
-        },
-        {
-          "path": "/files/local_copy/",
-          "responseStatusCode": 201,
-          "headers": {
-            "Accept": "application/vnd.uploadcare-v0.7+json"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "file",
+              "result": {
+                "datetime_removed": "string",
+                "datetime_stored": "string",
+                "datetime_uploaded": "string",
+                "is_image": true,
+                "is_ready": true,
+                "mime_type": "image/jpeg",
+                "original_file_url": "string",
+                "original_filename": "EU_4.jpg",
+                "size": 0,
+                "url": "string",
+                "uuid": "test-uuid-replacement",
+                "metadata": {}
+              }
+            }
           }
         }
       ]
@@ -3899,7 +3945,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 406,
@@ -3923,7 +3978,16 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -3946,7 +4010,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -4013,26 +4086,13 @@
           },
           "requestBody": {
             "type": "json"
-          }
-        },
-        {
-          "path": "/files/remote_copy/",
-          "responseStatusCode": 200,
-          "headers": {
-            "Accept": "application/vnd.uploadcare-v0.7+json"
           },
-          "requestBody": {
-            "type": "json"
-          }
-        },
-        {
-          "path": "/files/remote_copy/",
-          "responseStatusCode": 201,
-          "headers": {
-            "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "url",
+              "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
+            }
           }
         },
         {
@@ -4043,6 +4103,13 @@
           },
           "requestBody": {
             "type": "json"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "url",
+              "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
+            }
           }
         }
       ]

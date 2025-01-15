@@ -285,7 +285,6 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
-          "description": "string",
           "responseBody": {
             "type": "json",
             "value": {
@@ -373,7 +372,6 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "description": "string",
           "pathParameters": {
             "voice_id": "string"
           },
@@ -476,7 +474,6 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "description": "string",
           "pathParameters": {
             "voice_id": "string"
           },

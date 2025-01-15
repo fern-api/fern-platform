@@ -11,6 +11,7 @@ import {
   SUPPORTED_RESPONSE_CONTENT_TYPES,
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
+import { resolveExampleReference } from "../../../utils/3.1/resolveExampleReference";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
@@ -98,7 +99,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     // In this, we match example names on the request and response. If the example is directly on the request or response, we add to everywhere.
     Object.entries(
       this.input.examples ?? {
-        "": this.input.example,
+        "": { value: this.input.example },
       }
     ).forEach(([exampleName, exampleObject], i) => {
       this.examples ??= [];
@@ -113,7 +114,12 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
               (exampleName === requestExampleName ||
                 requestExampleName === "" ||
                 exampleName === "") &&
-              (requestExample != null || exampleObject != null)
+              ((requestExample != null &&
+                resolveExampleReference(requestExample, this.context.document)
+                  ?.value != null) ||
+                (exampleObject != null &&
+                  resolveExampleReference(exampleObject, this.context.document)
+                    ?.value != null))
                 ? new ExampleObjectConverterNode(
                     {
                       input: {
@@ -173,12 +179,17 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                 (exampleName === requestExampleName ||
                   requestExampleName === "" ||
                   exampleName === "") &&
-                (requestExample != null || exampleObject != null)
+                ((requestExample != null &&
+                  resolveExampleReference(requestExample, this.context.document)
+                    ?.value != null) ||
+                  exampleObject != null)
                   ? new ExampleObjectConverterNode(
                       {
                         input: {
                           requestExample,
-                          responseExample: exampleObject,
+                          responseExample: {
+                            value: exampleObject,
+                          },
                         },
                         context: this.context,
                         accessPath: this.accessPath,
@@ -203,14 +214,16 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       });
 
       if (this.examples.length === 0 && resolvedSchema != null) {
-        const fallbackExample =
-          resolvedSchema?.example ??
-          new SchemaConverterNode({
-            input: resolvedSchema,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: this.pathId,
-          }).example();
+        const fallbackExample = {
+          value:
+            resolvedSchema?.example ??
+            new SchemaConverterNode({
+              input: resolvedSchema,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: this.pathId,
+            }).example(),
+        };
 
         if (fallbackExample != null) {
           this.examples = this.examples.concat(

@@ -20760,7 +20760,20 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -20783,7 +20796,20 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -20806,7 +20832,20 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -20829,7 +20868,20 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -20852,7 +20904,20 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -20875,7 +20940,20 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -20898,7 +20976,20 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -20921,7 +21012,20 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -20944,7 +21048,20 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -20967,7 +21084,20 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -20990,7 +21120,20 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -21013,7 +21156,20 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            },
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {}
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -21198,6 +21354,10 @@
               "text": "tokenize me! :D",
               "model": "command"
             }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {}
           }
         }
       ]
@@ -27055,7 +27215,16 @@
           },
           "description": "Bad Request",
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -27068,7 +27237,16 @@
           },
           "description": "Unauthorized",
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -27081,7 +27259,16 @@
           },
           "description": "Forbidden",
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -27094,7 +27281,16 @@
           },
           "description": "Not Found",
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -27107,7 +27303,16 @@
           },
           "description": "Internal Server Error",
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -27120,7 +27325,16 @@
           },
           "description": "Status Service Unavailable",
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -27184,13 +27398,20 @@
           "responseStatusCode": 200,
           "headers": {
             "X-Client-Name": "my-cool-project"
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models",
-          "responseStatusCode": 200,
-          "headers": {
-            "X-Client-Name": "my-cool-project"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "finetuned_model": {
+                "name": "string",
+                "settings": {
+                  "base_model": {
+                    "base_type": "BASE_TYPE_UNSPECIFIED"
+                  },
+                  "dataset_id": "string"
+                }
+              }
+            }
           }
         }
       ]
