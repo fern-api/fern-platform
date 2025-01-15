@@ -134,6 +134,10 @@ export const createLdPredicate = async ({
   };
 };
 
+// this is an in-memory "singleton" of all LD clients
+// TODO: there should be a way to close the clients when the server shuts down
+const ldClientMap = new Map<string, ld.LDClient>();
+
 async function fetchInitialFlags(
   sdkKey: string,
   context: ld.LDContext,
@@ -148,14 +152,17 @@ async function fetchInitialFlags(
   hash: string | undefined;
 }> {
   try {
-    const ldClient = ld.init(sdkKey, {
-      baseUri: options?.baseUrl,
-      streamUri: options?.streamUrl,
-      eventsUri: options?.eventsUrl,
-      stream: false,
-      sendEvents: false,
-      diagnosticOptOut: true,
-    });
+    const ldClient =
+      ldClientMap.get(sdkKey) ??
+      ld.init(sdkKey, {
+        baseUri: options?.baseUrl,
+        streamUri: options?.streamUrl,
+        eventsUri: options?.eventsUrl,
+        stream: false,
+        sendEvents: false,
+        diagnosticOptOut: true,
+      });
+    ldClientMap.set(sdkKey, ldClient);
     const flags = await ldClient.allFlagsState(context, {
       clientSideOnly: true, // these flags will be passed to the client side
       detailsOnlyForTrackedFlags: true,
