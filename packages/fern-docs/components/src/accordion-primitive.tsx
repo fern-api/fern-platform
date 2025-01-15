@@ -443,11 +443,13 @@ const AccordionItem = React.forwardRef<
         <Comp
           open={open}
           onToggle={(e) => {
-            const open = e.currentTarget.open;
-            if (open) {
-              valueContext.onItemOpen(value);
-            } else {
-              valueContext.onItemClose(value);
+            if (e.currentTarget instanceof HTMLDetailsElement) {
+              const open = e.currentTarget.open;
+              if (open) {
+                valueContext.onItemOpen(value);
+              } else {
+                valueContext.onItemClose(value);
+              }
             }
           }}
         >
