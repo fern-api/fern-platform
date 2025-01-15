@@ -344,10 +344,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -383,10 +384,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -415,10 +417,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -446,10 +449,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -800,10 +804,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -839,10 +844,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -871,10 +877,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -903,10 +910,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -934,10 +942,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -1002,7 +1011,6 @@
         {
           "path": "/files/{uuid}/storage/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "uuid": "test-uuid-replacement"
           },
@@ -1011,7 +1019,134 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "datetime_removed": null,
+              "datetime_stored": "2018-11-26T12:49:10.477888Z",
+              "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
+              "variations": null,
+              "is_image": true,
+              "is_ready": true,
+              "mime_type": "image/jpeg",
+              "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
+              "original_filename": "pineapple.jpg",
+              "size": 642,
+              "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
+              "uuid": "test-uuid-replacement",
+              "content_info": {
+                "mime": {
+                  "mime": "image/jpeg",
+                  "type": "image",
+                  "subtype": "jpeg"
+                },
+                "image": {
+                  "format": "JPEG",
+                  "width": 500,
+                  "height": 500,
+                  "sequence": false,
+                  "color_mode": "RGB",
+                  "orientation": 6,
+                  "geo_location": {
+                    "latitude": 55.62013611111111,
+                    "longitude": 37.66299166666666
+                  },
+                  "datetime_original": "2018-08-20T08:59:50",
+                  "dpi": [
+                    72,
+                    72
+                  ]
+                }
+              },
+              "metadata": {
+                "subsystem": "uploader",
+                "pet": "cat"
+              },
+              "appdata": {
+                "aws_rekognition_detect_labels": {
+                  "data": {
+                    "LabelModelVersion": "2.0",
+                    "Labels": [
+                      {
+                        "Confidence": 93.41645812988281,
+                        "Instances": [],
+                        "Name": "Home Decor",
+                        "Parents": []
+                      },
+                      {
+                        "Confidence": 70.75951385498047,
+                        "Instances": [],
+                        "Name": "Linen",
+                        "Parents": [
+                          {
+                            "Name": "Home Decor"
+                          }
+                        ]
+                      },
+                      {
+                        "Confidence": 64.7123794555664,
+                        "Instances": [],
+                        "Name": "Sunlight",
+                        "Parents": []
+                      },
+                      {
+                        "Confidence": 56.264793395996094,
+                        "Instances": [],
+                        "Name": "Flare",
+                        "Parents": [
+                          {
+                            "Name": "Light"
+                          }
+                        ]
+                      },
+                      {
+                        "Confidence": 50.47153854370117,
+                        "Instances": [],
+                        "Name": "Tree",
+                        "Parents": [
+                          {
+                            "Name": "Plant"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "version": "2016-06-27",
+                  "datetime_created": "2021-09-21T11:25:31.259763Z",
+                  "datetime_updated": "2021-09-21T11:27:33.359763Z"
+                },
+                "aws_rekognition_detect_moderation_labels": {
+                  "data": {
+                    "ModerationModelVersion": "6.0",
+                    "ModerationLabels": [
+                      {
+                        "Confidence": 93.41645812988281,
+                        "Name": "Weapons",
+                        "ParentName": "Violence"
+                      }
+                    ]
+                  },
+                  "version": "2016-06-27",
+                  "datetime_created": "2023-02-21T11:25:31.259763Z",
+                  "datetime_updated": "2023-02-21T11:27:33.359763Z"
+                },
+                "remove_bg": {
+                  "data": {
+                    "foreground_type": "person"
+                  },
+                  "version": "1.0",
+                  "datetime_created": "2021-07-25T12:24:33.159663Z",
+                  "datetime_updated": "2021-07-25T12:24:33.159663Z"
+                },
+                "uc_clamav_virus_scan": {
+                  "data": {
+                    "infected": true,
+                    "infected_with": "Win.Test.EICAR_HDB-1"
+                  },
+                  "version": "0.104.2",
+                  "datetime_created": "2021-09-21T11:24:33.159663Z",
+                  "datetime_updated": "2021-09-21T11:24:33.159663Z"
+                }
+              }
+            }
           }
         }
       ]
@@ -1131,10 +1266,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -1170,10 +1306,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -1202,10 +1339,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -1234,10 +1372,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -1265,10 +1404,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -1527,10 +1667,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -1566,10 +1707,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -1598,10 +1740,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -1630,10 +1773,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -1661,10 +1805,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -2088,15 +2233,7 @@
             ]
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -2127,15 +2264,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -2159,15 +2288,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -2190,15 +2311,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -2260,13 +2373,8 @@
         {
           "path": "/files/storage/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -2422,15 +2530,7 @@
             ]
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -2461,15 +2561,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -2493,15 +2585,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -2524,15 +2608,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -2594,13 +2670,8 @@
         {
           "path": "/files/storage/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -2792,15 +2863,7 @@
             ]
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -2831,15 +2894,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -2863,15 +2918,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -2894,15 +2941,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -2964,7 +3003,6 @@
         {
           "path": "/files/local_copy/",
           "responseStatusCode": 201,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
@@ -2978,10 +3016,6 @@
                 "pet": "cat"
               }
             }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -3226,15 +3260,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -3258,15 +3284,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -3289,15 +3307,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -3359,7 +3369,6 @@
         {
           "path": "/files/remote_copy/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
@@ -3369,16 +3378,11 @@
               "source": "test-uuid-replacement",
               "target": "mytarget"
             }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         },
         {
           "path": "/files/remote_copy/",
           "responseStatusCode": 201,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
@@ -3388,10 +3392,6 @@
               "source": "test-uuid-replacement",
               "target": "mytarget"
             }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -3529,15 +3529,7 @@
             }
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -3568,15 +3560,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -3600,15 +3584,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 409,
@@ -3632,15 +3608,7 @@
             ]
           },
           "name": "Conflict",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -3663,15 +3631,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -3725,16 +3685,11 @@
         {
           "path": "/addons/aws_rekognition_detect_labels/execute/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
             "type": "json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -3881,10 +3836,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -3920,10 +3876,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -3952,10 +3909,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -4012,7 +3970,6 @@
         {
           "path": "/addons/aws_rekognition_detect_labels/execute/status/",
           "responseStatusCode": 200,
-          "name": "",
           "queryParameters": {
             "request_id": "string"
           },
@@ -4021,7 +3978,9 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "status": "in_progress"
+            }
           }
         }
       ]
@@ -4159,15 +4118,7 @@
             }
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -4198,15 +4149,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -4230,15 +4173,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 409,
@@ -4262,15 +4197,7 @@
             ]
           },
           "name": "Conflict",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -4293,15 +4220,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -4355,16 +4274,11 @@
         {
           "path": "/addons/aws_rekognition_detect_moderation_labels/execute/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
             "type": "json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -4511,10 +4425,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -4550,10 +4465,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -4582,10 +4498,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -4642,7 +4559,6 @@
         {
           "path": "/addons/aws_rekognition_detect_moderation_labels/execute/status/",
           "responseStatusCode": 200,
-          "name": "",
           "queryParameters": {
             "request_id": "string"
           },
@@ -4651,7 +4567,9 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "status": "in_progress"
+            }
           }
         }
       ]
@@ -4818,15 +4736,7 @@
             }
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -4857,15 +4767,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -4889,15 +4791,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 409,
@@ -4921,15 +4815,7 @@
             ]
           },
           "name": "Conflict",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -4952,15 +4838,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -5022,16 +4900,11 @@
         {
           "path": "/addons/uc_clamav_virus_scan/execute/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
             "type": "json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -5178,10 +5051,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -5217,10 +5091,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -5249,10 +5124,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -5317,7 +5193,6 @@
         {
           "path": "/addons/uc_clamav_virus_scan/execute/status/",
           "responseStatusCode": 200,
-          "name": "",
           "queryParameters": {
             "request_id": "string"
           },
@@ -5326,7 +5201,9 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "status": "in_progress"
+            }
           }
         }
       ]
@@ -5634,15 +5511,7 @@
             }
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -5673,15 +5542,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -5705,15 +5566,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 409,
@@ -5737,15 +5590,7 @@
             ]
           },
           "name": "Conflict",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -5768,15 +5613,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -5830,16 +5667,11 @@
         {
           "path": "/addons/remove_bg/execute/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
             "type": "json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -5990,10 +5822,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -6029,10 +5862,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -6061,10 +5895,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -6121,7 +5956,6 @@
         {
           "path": "/addons/remove_bg/execute/status/",
           "responseStatusCode": 200,
-          "name": "",
           "queryParameters": {
             "request_id": "string"
           },
@@ -6252,10 +6086,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -6291,10 +6126,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -6323,10 +6159,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -6391,7 +6228,6 @@
         {
           "path": "/files/{uuid}/metadata/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "uuid": "test-uuid-replacement"
           },
@@ -6400,7 +6236,10 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "subsystem": "uploader",
+              "pet": "cat"
+            }
           }
         }
       ]
@@ -6544,10 +6383,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -6583,10 +6423,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -6615,10 +6456,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -6683,7 +6525,6 @@
         {
           "path": "/files/{uuid}/metadata/{key}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "uuid": "test-uuid-replacement",
             "key": "subsystem"
@@ -6693,7 +6534,7 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": "uploader"
           }
         }
       ]
@@ -6847,15 +6688,7 @@
             }
           },
           "name": "Bad Request",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 401,
@@ -6886,15 +6719,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -6918,15 +6743,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -6988,33 +6805,23 @@
         {
           "path": "/files/{uuid}/metadata/{key}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "uuid": "test-uuid-replacement",
             "key": "subsystem"
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         },
         {
           "path": "/files/{uuid}/metadata/{key}/",
           "responseStatusCode": 201,
-          "name": "",
           "pathParameters": {
             "uuid": "test-uuid-replacement",
             "key": "subsystem"
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -7146,10 +6953,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -7185,10 +6993,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -7217,10 +7026,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -7511,10 +7321,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -7550,10 +7361,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -7582,10 +7394,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -7613,10 +7426,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -7824,10 +7638,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -7863,10 +7678,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -7895,10 +7711,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -7927,10 +7744,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -7958,10 +7776,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -8026,7 +7845,6 @@
         {
           "path": "/groups/{uuid}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "uuid": "badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12"
           },
@@ -8035,7 +7853,16 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "files": [
+                null
+              ],
+              "id": "string",
+              "datetime_created": "string",
+              "files_count": 0,
+              "cdn_url": "string",
+              "url": "string"
+            }
           }
         }
       ]
@@ -8134,10 +7961,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -8173,10 +8001,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -8205,10 +8034,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -8237,10 +8067,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -8268,10 +8099,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -8419,10 +8251,11 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
+                }
               }
             }
           ]
@@ -8458,10 +8291,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -8490,10 +8324,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -8521,10 +8356,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -8581,13 +8417,17 @@
         {
           "path": "/project/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "collaborators": [],
+              "name": "demo",
+              "pub_key": "YOUR_PUBLIC_KEY",
+              "autostore_enabled": true
+            }
           }
         }
       ]
@@ -8730,10 +8570,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -8762,10 +8603,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -8793,10 +8635,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -8861,13 +8704,24 @@
         {
           "path": "/webhooks/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": [
+              {
+                "id": 1,
+                "project": 13,
+                "created": "2016-04-27T11:49:54.948615Z",
+                "updated": "2016-04-27T12:04:57.819933Z",
+                "event": "file.infected",
+                "target_url": "http://example.com/hooks/receiver",
+                "is_active": true,
+                "signing_secret": "7kMVZivndx0ErgvhRKAr",
+                "version": "0.7"
+              }
+            ]
           }
         }
       ]
@@ -9012,15 +8866,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -9044,15 +8890,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -9075,15 +8913,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -9145,13 +8975,8 @@
         {
           "path": "/webhooks/",
           "responseStatusCode": 201,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -9281,15 +9106,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 404,
@@ -9314,15 +9131,7 @@
           },
           "description": "Webhook with ID {id} not found.",
           "name": "Not Found",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -9346,15 +9155,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -9377,15 +9178,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -9447,16 +9240,11 @@
         {
           "path": "/webhooks/{id}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "id": 143
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -9597,15 +9385,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -9629,15 +9409,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 429,
@@ -9660,15 +9432,7 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -9984,10 +9748,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -10017,10 +9782,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -10049,10 +9815,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -10080,10 +9847,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -10103,10 +9871,9 @@
           "name": "Service Unavailable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": "string"
               }
             }
           ]
@@ -10116,7 +9883,6 @@
         {
           "path": "/convert/document/{uuid}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "uuid": "test-uuid-replacement"
           },
@@ -10125,7 +9891,23 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "error": null,
+              "format": {
+                "name": "txt",
+                "conversion_formats": [
+                  {
+                    "name": "epub"
+                  },
+                  {
+                    "name": "pdf"
+                  }
+                ]
+              },
+              "converted_groups": {
+                "pdf": "49732da8-1530-470c-8743-998c4c634718~5"
+              }
+            }
           }
         }
       ]
@@ -10401,15 +10183,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -10433,15 +10207,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -10495,13 +10261,8 @@
         {
           "path": "/convert/document/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -10741,10 +10502,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -10774,10 +10536,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -10806,10 +10569,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -10837,10 +10601,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -10860,10 +10625,9 @@
           "name": "Service Unavailable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": "string"
               }
             }
           ]
@@ -10928,7 +10692,6 @@
         {
           "path": "/convert/document/status/{token}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "token": 426339926
           },
@@ -10937,7 +10700,13 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "status": "processing",
+              "error": null,
+              "result": {
+                "uuid": "test-uuid-replacement"
+              }
+            }
           }
         }
       ]
@@ -11226,15 +10995,7 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         },
         {
           "statusCode": 406,
@@ -11258,15 +11019,7 @@
             ]
           },
           "name": "Not Acceptable",
-          "examples": [
-            {
-              "name": "",
-              "responseBody": {
-                "type": "json",
-                "value": {}
-              }
-            }
-          ]
+          "examples": []
         }
       ],
       "examples": [
@@ -11320,13 +11073,8 @@
         {
           "path": "/convert/video/",
           "responseStatusCode": 200,
-          "name": "",
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
@@ -11579,10 +11327,11 @@
           "name": "Unauthorized",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect authentication credentials."
+                }
               }
             }
           ]
@@ -11612,10 +11361,11 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Not found."
+                }
               }
             }
           ]
@@ -11644,10 +11394,11 @@
           "name": "Not Acceptable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Incorrect Accept header provided. Make sure to specify API version. Refer to REST API docs for details."
+                }
               }
             }
           ]
@@ -11675,10 +11426,11 @@
           "name": "Too Many Requests",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "detail": "Request was throttled. Expected available in 10 seconds."
+                }
               }
             }
           ]
@@ -11698,10 +11450,9 @@
           "name": "Service Unavailable",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": "string"
               }
             }
           ]
@@ -11766,7 +11517,6 @@
         {
           "path": "/convert/video/status/{token}/",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "token": 426339926
           },
@@ -11775,7 +11525,14 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "status": "processing",
+              "error": null,
+              "result": {
+                "thumbnails_group_uuid": "575ed4e8-f4e8-4c14-a58b-1527b6d9ee46~1",
+                "uuid": "test-uuid-replacement"
+              }
+            }
           }
         }
       ]
@@ -11828,7 +11585,157 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "initiator": {
+            "type": "api",
+            "detail": {
+              "request_id": "test-uuid-replacement",
+              "addon_name": "aws_rekognition_detect_labels"
+            }
+          },
+          "hook": {
+            "id": 1,
+            "project_id": 13,
+            "project_pub_key": "2d199fbf3896699a2639",
+            "created_at": "2016-04-27T11:49:54.948615Z",
+            "updated_at": "2016-04-27T12:04:57.819933Z",
+            "event": "file.uploaded",
+            "target": "http://example.com/hooks/receiver",
+            "is_active": true,
+            "version": "0.7"
+          },
+          "data": {
+            "datetime_removed": null,
+            "datetime_stored": "2018-11-26T12:49:10.477888Z",
+            "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
+            "variations": null,
+            "is_image": true,
+            "is_ready": true,
+            "mime_type": "image/jpeg",
+            "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
+            "original_filename": "pineapple.jpg",
+            "size": 642,
+            "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
+            "uuid": "test-uuid-replacement",
+            "content_info": {
+              "mime": {
+                "mime": "image/jpeg",
+                "type": "image",
+                "subtype": "jpeg"
+              },
+              "image": {
+                "format": "JPEG",
+                "width": 500,
+                "height": 500,
+                "sequence": false,
+                "color_mode": "RGB",
+                "orientation": 6,
+                "geo_location": {
+                  "latitude": 55.62013611111111,
+                  "longitude": 37.66299166666666
+                },
+                "datetime_original": "2018-08-20T08:59:50",
+                "dpi": [
+                  72,
+                  72
+                ]
+              }
+            },
+            "metadata": {
+              "subsystem": "uploader",
+              "pet": "cat"
+            },
+            "appdata": {
+              "aws_rekognition_detect_labels": {
+                "data": {
+                  "LabelModelVersion": "2.0",
+                  "Labels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Instances": [],
+                      "Name": "Home Decor",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 70.75951385498047,
+                      "Instances": [],
+                      "Name": "Linen",
+                      "Parents": [
+                        {
+                          "Name": "Home Decor"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 64.7123794555664,
+                      "Instances": [],
+                      "Name": "Sunlight",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 56.264793395996094,
+                      "Instances": [],
+                      "Name": "Flare",
+                      "Parents": [
+                        {
+                          "Name": "Light"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 50.47153854370117,
+                      "Instances": [],
+                      "Name": "Tree",
+                      "Parents": [
+                        {
+                          "Name": "Plant"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2021-09-21T11:25:31.259763Z",
+                "datetime_updated": "2021-09-21T11:27:33.359763Z"
+              },
+              "aws_rekognition_detect_moderation_labels": {
+                "data": {
+                  "ModerationModelVersion": "6.0",
+                  "ModerationLabels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Name": "Weapons",
+                      "ParentName": "Violence"
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2023-02-21T11:25:31.259763Z",
+                "datetime_updated": "2023-02-21T11:27:33.359763Z"
+              },
+              "remove_bg": {
+                "data": {
+                  "foreground_type": "person"
+                },
+                "version": "1.0",
+                "datetime_created": "2021-07-25T12:24:33.159663Z",
+                "datetime_updated": "2021-07-25T12:24:33.159663Z"
+              },
+              "uc_clamav_virus_scan": {
+                "data": {
+                  "infected": true,
+                  "infected_with": "Win.Test.EICAR_HDB-1"
+                },
+                "version": "0.104.2",
+                "datetime_created": "2021-09-21T11:24:33.159663Z",
+                "datetime_updated": "2021-09-21T11:24:33.159663Z"
+              }
+            }
+          },
+          "file": "string"
+        }
+      ]
     },
     "endpoint_webhookCallbacks.fileInfected": {
       "id": "endpoint_webhookCallbacks.fileInfected",
@@ -11875,7 +11782,157 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "initiator": {
+            "type": "api",
+            "detail": {
+              "request_id": "test-uuid-replacement",
+              "addon_name": "aws_rekognition_detect_labels"
+            }
+          },
+          "hook": {
+            "id": 1,
+            "project_id": 13,
+            "project_pub_key": "2d199fbf3896699a2639",
+            "created_at": "2016-04-27T11:49:54.948615Z",
+            "updated_at": "2016-04-27T12:04:57.819933Z",
+            "event": "file.uploaded",
+            "target": "http://example.com/hooks/receiver",
+            "is_active": true,
+            "version": "0.7"
+          },
+          "data": {
+            "datetime_removed": null,
+            "datetime_stored": "2018-11-26T12:49:10.477888Z",
+            "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
+            "variations": null,
+            "is_image": true,
+            "is_ready": true,
+            "mime_type": "image/jpeg",
+            "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
+            "original_filename": "pineapple.jpg",
+            "size": 642,
+            "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
+            "uuid": "test-uuid-replacement",
+            "content_info": {
+              "mime": {
+                "mime": "image/jpeg",
+                "type": "image",
+                "subtype": "jpeg"
+              },
+              "image": {
+                "format": "JPEG",
+                "width": 500,
+                "height": 500,
+                "sequence": false,
+                "color_mode": "RGB",
+                "orientation": 6,
+                "geo_location": {
+                  "latitude": 55.62013611111111,
+                  "longitude": 37.66299166666666
+                },
+                "datetime_original": "2018-08-20T08:59:50",
+                "dpi": [
+                  72,
+                  72
+                ]
+              }
+            },
+            "metadata": {
+              "subsystem": "uploader",
+              "pet": "cat"
+            },
+            "appdata": {
+              "aws_rekognition_detect_labels": {
+                "data": {
+                  "LabelModelVersion": "2.0",
+                  "Labels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Instances": [],
+                      "Name": "Home Decor",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 70.75951385498047,
+                      "Instances": [],
+                      "Name": "Linen",
+                      "Parents": [
+                        {
+                          "Name": "Home Decor"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 64.7123794555664,
+                      "Instances": [],
+                      "Name": "Sunlight",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 56.264793395996094,
+                      "Instances": [],
+                      "Name": "Flare",
+                      "Parents": [
+                        {
+                          "Name": "Light"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 50.47153854370117,
+                      "Instances": [],
+                      "Name": "Tree",
+                      "Parents": [
+                        {
+                          "Name": "Plant"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2021-09-21T11:25:31.259763Z",
+                "datetime_updated": "2021-09-21T11:27:33.359763Z"
+              },
+              "aws_rekognition_detect_moderation_labels": {
+                "data": {
+                  "ModerationModelVersion": "6.0",
+                  "ModerationLabels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Name": "Weapons",
+                      "ParentName": "Violence"
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2023-02-21T11:25:31.259763Z",
+                "datetime_updated": "2023-02-21T11:27:33.359763Z"
+              },
+              "remove_bg": {
+                "data": {
+                  "foreground_type": "person"
+                },
+                "version": "1.0",
+                "datetime_created": "2021-07-25T12:24:33.159663Z",
+                "datetime_updated": "2021-07-25T12:24:33.159663Z"
+              },
+              "uc_clamav_virus_scan": {
+                "data": {
+                  "infected": true,
+                  "infected_with": "Win.Test.EICAR_HDB-1"
+                },
+                "version": "0.104.2",
+                "datetime_created": "2021-09-21T11:24:33.159663Z",
+                "datetime_updated": "2021-09-21T11:24:33.159663Z"
+              }
+            }
+          },
+          "file": "string"
+        }
+      ]
     },
     "endpoint_webhookCallbacks.fileStored": {
       "id": "endpoint_webhookCallbacks.fileStored",
@@ -11922,7 +11979,157 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "initiator": {
+            "type": "api",
+            "detail": {
+              "request_id": "test-uuid-replacement",
+              "addon_name": "aws_rekognition_detect_labels"
+            }
+          },
+          "hook": {
+            "id": 1,
+            "project_id": 13,
+            "project_pub_key": "2d199fbf3896699a2639",
+            "created_at": "2016-04-27T11:49:54.948615Z",
+            "updated_at": "2016-04-27T12:04:57.819933Z",
+            "event": "file.uploaded",
+            "target": "http://example.com/hooks/receiver",
+            "is_active": true,
+            "version": "0.7"
+          },
+          "data": {
+            "datetime_removed": null,
+            "datetime_stored": "2018-11-26T12:49:10.477888Z",
+            "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
+            "variations": null,
+            "is_image": true,
+            "is_ready": true,
+            "mime_type": "image/jpeg",
+            "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
+            "original_filename": "pineapple.jpg",
+            "size": 642,
+            "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
+            "uuid": "test-uuid-replacement",
+            "content_info": {
+              "mime": {
+                "mime": "image/jpeg",
+                "type": "image",
+                "subtype": "jpeg"
+              },
+              "image": {
+                "format": "JPEG",
+                "width": 500,
+                "height": 500,
+                "sequence": false,
+                "color_mode": "RGB",
+                "orientation": 6,
+                "geo_location": {
+                  "latitude": 55.62013611111111,
+                  "longitude": 37.66299166666666
+                },
+                "datetime_original": "2018-08-20T08:59:50",
+                "dpi": [
+                  72,
+                  72
+                ]
+              }
+            },
+            "metadata": {
+              "subsystem": "uploader",
+              "pet": "cat"
+            },
+            "appdata": {
+              "aws_rekognition_detect_labels": {
+                "data": {
+                  "LabelModelVersion": "2.0",
+                  "Labels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Instances": [],
+                      "Name": "Home Decor",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 70.75951385498047,
+                      "Instances": [],
+                      "Name": "Linen",
+                      "Parents": [
+                        {
+                          "Name": "Home Decor"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 64.7123794555664,
+                      "Instances": [],
+                      "Name": "Sunlight",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 56.264793395996094,
+                      "Instances": [],
+                      "Name": "Flare",
+                      "Parents": [
+                        {
+                          "Name": "Light"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 50.47153854370117,
+                      "Instances": [],
+                      "Name": "Tree",
+                      "Parents": [
+                        {
+                          "Name": "Plant"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2021-09-21T11:25:31.259763Z",
+                "datetime_updated": "2021-09-21T11:27:33.359763Z"
+              },
+              "aws_rekognition_detect_moderation_labels": {
+                "data": {
+                  "ModerationModelVersion": "6.0",
+                  "ModerationLabels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Name": "Weapons",
+                      "ParentName": "Violence"
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2023-02-21T11:25:31.259763Z",
+                "datetime_updated": "2023-02-21T11:27:33.359763Z"
+              },
+              "remove_bg": {
+                "data": {
+                  "foreground_type": "person"
+                },
+                "version": "1.0",
+                "datetime_created": "2021-07-25T12:24:33.159663Z",
+                "datetime_updated": "2021-07-25T12:24:33.159663Z"
+              },
+              "uc_clamav_virus_scan": {
+                "data": {
+                  "infected": true,
+                  "infected_with": "Win.Test.EICAR_HDB-1"
+                },
+                "version": "0.104.2",
+                "datetime_created": "2021-09-21T11:24:33.159663Z",
+                "datetime_updated": "2021-09-21T11:24:33.159663Z"
+              }
+            }
+          },
+          "file": "string"
+        }
+      ]
     },
     "endpoint_webhookCallbacks.fileDeleted": {
       "id": "endpoint_webhookCallbacks.fileDeleted",
@@ -11969,7 +12176,157 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "initiator": {
+            "type": "api",
+            "detail": {
+              "request_id": "test-uuid-replacement",
+              "addon_name": "aws_rekognition_detect_labels"
+            }
+          },
+          "hook": {
+            "id": 1,
+            "project_id": 13,
+            "project_pub_key": "2d199fbf3896699a2639",
+            "created_at": "2016-04-27T11:49:54.948615Z",
+            "updated_at": "2016-04-27T12:04:57.819933Z",
+            "event": "file.uploaded",
+            "target": "http://example.com/hooks/receiver",
+            "is_active": true,
+            "version": "0.7"
+          },
+          "data": {
+            "datetime_removed": null,
+            "datetime_stored": "2018-11-26T12:49:10.477888Z",
+            "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
+            "variations": null,
+            "is_image": true,
+            "is_ready": true,
+            "mime_type": "image/jpeg",
+            "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
+            "original_filename": "pineapple.jpg",
+            "size": 642,
+            "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
+            "uuid": "test-uuid-replacement",
+            "content_info": {
+              "mime": {
+                "mime": "image/jpeg",
+                "type": "image",
+                "subtype": "jpeg"
+              },
+              "image": {
+                "format": "JPEG",
+                "width": 500,
+                "height": 500,
+                "sequence": false,
+                "color_mode": "RGB",
+                "orientation": 6,
+                "geo_location": {
+                  "latitude": 55.62013611111111,
+                  "longitude": 37.66299166666666
+                },
+                "datetime_original": "2018-08-20T08:59:50",
+                "dpi": [
+                  72,
+                  72
+                ]
+              }
+            },
+            "metadata": {
+              "subsystem": "uploader",
+              "pet": "cat"
+            },
+            "appdata": {
+              "aws_rekognition_detect_labels": {
+                "data": {
+                  "LabelModelVersion": "2.0",
+                  "Labels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Instances": [],
+                      "Name": "Home Decor",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 70.75951385498047,
+                      "Instances": [],
+                      "Name": "Linen",
+                      "Parents": [
+                        {
+                          "Name": "Home Decor"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 64.7123794555664,
+                      "Instances": [],
+                      "Name": "Sunlight",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 56.264793395996094,
+                      "Instances": [],
+                      "Name": "Flare",
+                      "Parents": [
+                        {
+                          "Name": "Light"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 50.47153854370117,
+                      "Instances": [],
+                      "Name": "Tree",
+                      "Parents": [
+                        {
+                          "Name": "Plant"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2021-09-21T11:25:31.259763Z",
+                "datetime_updated": "2021-09-21T11:27:33.359763Z"
+              },
+              "aws_rekognition_detect_moderation_labels": {
+                "data": {
+                  "ModerationModelVersion": "6.0",
+                  "ModerationLabels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Name": "Weapons",
+                      "ParentName": "Violence"
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2023-02-21T11:25:31.259763Z",
+                "datetime_updated": "2023-02-21T11:27:33.359763Z"
+              },
+              "remove_bg": {
+                "data": {
+                  "foreground_type": "person"
+                },
+                "version": "1.0",
+                "datetime_created": "2021-07-25T12:24:33.159663Z",
+                "datetime_updated": "2021-07-25T12:24:33.159663Z"
+              },
+              "uc_clamav_virus_scan": {
+                "data": {
+                  "infected": true,
+                  "infected_with": "Win.Test.EICAR_HDB-1"
+                },
+                "version": "0.104.2",
+                "datetime_created": "2021-09-21T11:24:33.159663Z",
+                "datetime_updated": "2021-09-21T11:24:33.159663Z"
+              }
+            }
+          },
+          "file": "string"
+        }
+      ]
     },
     "endpoint_webhookCallbacks.fileInfoUpdated": {
       "id": "endpoint_webhookCallbacks.fileInfoUpdated",
@@ -12016,7 +12373,263 @@
           }
         }
       ],
-      "examples": []
+      "examples": [
+        {
+          "initiator": {
+            "type": "api",
+            "detail": {
+              "request_id": "test-uuid-replacement",
+              "addon_name": "aws_rekognition_detect_labels"
+            }
+          },
+          "hook": {
+            "id": 1,
+            "project_id": 13,
+            "project_pub_key": "2d199fbf3896699a2639",
+            "created_at": "2016-04-27T11:49:54.948615Z",
+            "updated_at": "2016-04-27T12:04:57.819933Z",
+            "event": "file.uploaded",
+            "target": "http://example.com/hooks/receiver",
+            "is_active": true,
+            "version": "0.7"
+          },
+          "data": {
+            "datetime_removed": null,
+            "datetime_stored": "2018-11-26T12:49:10.477888Z",
+            "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
+            "variations": null,
+            "is_image": true,
+            "is_ready": true,
+            "mime_type": "image/jpeg",
+            "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
+            "original_filename": "pineapple.jpg",
+            "size": 642,
+            "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
+            "uuid": "test-uuid-replacement",
+            "content_info": {
+              "mime": {
+                "mime": "image/jpeg",
+                "type": "image",
+                "subtype": "jpeg"
+              },
+              "image": {
+                "format": "JPEG",
+                "width": 500,
+                "height": 500,
+                "sequence": false,
+                "color_mode": "RGB",
+                "orientation": 6,
+                "geo_location": {
+                  "latitude": 55.62013611111111,
+                  "longitude": 37.66299166666666
+                },
+                "datetime_original": "2018-08-20T08:59:50",
+                "dpi": [
+                  72,
+                  72
+                ]
+              }
+            },
+            "metadata": {
+              "subsystem": "uploader",
+              "pet": "cat"
+            },
+            "appdata": {
+              "aws_rekognition_detect_labels": {
+                "data": {
+                  "LabelModelVersion": "2.0",
+                  "Labels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Instances": [],
+                      "Name": "Home Decor",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 70.75951385498047,
+                      "Instances": [],
+                      "Name": "Linen",
+                      "Parents": [
+                        {
+                          "Name": "Home Decor"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 64.7123794555664,
+                      "Instances": [],
+                      "Name": "Sunlight",
+                      "Parents": []
+                    },
+                    {
+                      "Confidence": 56.264793395996094,
+                      "Instances": [],
+                      "Name": "Flare",
+                      "Parents": [
+                        {
+                          "Name": "Light"
+                        }
+                      ]
+                    },
+                    {
+                      "Confidence": 50.47153854370117,
+                      "Instances": [],
+                      "Name": "Tree",
+                      "Parents": [
+                        {
+                          "Name": "Plant"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2021-09-21T11:25:31.259763Z",
+                "datetime_updated": "2021-09-21T11:27:33.359763Z"
+              },
+              "aws_rekognition_detect_moderation_labels": {
+                "data": {
+                  "ModerationModelVersion": "6.0",
+                  "ModerationLabels": [
+                    {
+                      "Confidence": 93.41645812988281,
+                      "Name": "Weapons",
+                      "ParentName": "Violence"
+                    }
+                  ]
+                },
+                "version": "2016-06-27",
+                "datetime_created": "2023-02-21T11:25:31.259763Z",
+                "datetime_updated": "2023-02-21T11:27:33.359763Z"
+              },
+              "remove_bg": {
+                "data": {
+                  "foreground_type": "person"
+                },
+                "version": "1.0",
+                "datetime_created": "2021-07-25T12:24:33.159663Z",
+                "datetime_updated": "2021-07-25T12:24:33.159663Z"
+              },
+              "uc_clamav_virus_scan": {
+                "data": {
+                  "infected": true,
+                  "infected_with": "Win.Test.EICAR_HDB-1"
+                },
+                "version": "0.104.2",
+                "datetime_created": "2021-09-21T11:24:33.159663Z",
+                "datetime_updated": "2021-09-21T11:24:33.159663Z"
+              }
+            }
+          },
+          "file": "string",
+          "previous_values": {
+            "appdata": {
+              "aws_rekognition_detect_labels": {
+                "version": "2016-06-27",
+                "data": {
+                  "value": {
+                    "aws_rekognition_detect_labels": {
+                      "data": {
+                        "LabelModelVersion": "2.0",
+                        "Labels": [
+                          {
+                            "Confidence": 93.41645812988281,
+                            "Instances": [],
+                            "Name": "Home Decor",
+                            "Parents": []
+                          },
+                          {
+                            "Confidence": 70.75951385498047,
+                            "Instances": [],
+                            "Name": "Linen",
+                            "Parents": [
+                              {
+                                "Name": "Home Decor"
+                              }
+                            ]
+                          },
+                          {
+                            "Confidence": 64.7123794555664,
+                            "Instances": [],
+                            "Name": "Sunlight",
+                            "Parents": []
+                          },
+                          {
+                            "Confidence": 56.264793395996094,
+                            "Instances": [],
+                            "Name": "Flare",
+                            "Parents": [
+                              {
+                                "Name": "Light"
+                              }
+                            ]
+                          },
+                          {
+                            "Confidence": 50.47153854370117,
+                            "Instances": [],
+                            "Name": "Tree",
+                            "Parents": [
+                              {
+                                "Name": "Plant"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "version": "2016-06-27",
+                      "datetime_created": "2021-09-21T11:25:31.259763Z",
+                      "datetime_updated": "2021-09-21T11:27:33.359763Z"
+                    }
+                  }
+                },
+                "datetime_created": "string",
+                "datetime_updated": "string"
+              },
+              "aws_rekognition_detect_moderation_labels": {
+                "version": "2016-06-27",
+                "data": {
+                  "value": {
+                    "aws_rekognition_detect_moderation_labels": {
+                      "data": {
+                        "ModerationModelVersion": "6.0",
+                        "ModerationLabels": [
+                          {
+                            "Confidence": 93.41645812988281,
+                            "Name": "Weapons",
+                            "ParentName": "Violence"
+                          }
+                        ]
+                      },
+                      "version": "2016-06-27",
+                      "datetime_created": "2023-02-21T11:25:31.259763Z",
+                      "datetime_updated": "2023-02-21T11:27:33.359763Z"
+                    }
+                  }
+                },
+                "datetime_created": "string",
+                "datetime_updated": "string"
+              },
+              "remove_bg": {
+                "version": "1.0",
+                "data": {
+                  "foreground_type": "string"
+                },
+                "datetime_created": "string",
+                "datetime_updated": "string"
+              },
+              "uc_clamav_virus_scan": {
+                "version": "0.104.2",
+                "data": {
+                  "infected": false
+                },
+                "datetime_created": "string",
+                "datetime_updated": "string"
+              }
+            },
+            "metadata": {}
+          }
+        }
+      ]
     }
   },
   "types": {

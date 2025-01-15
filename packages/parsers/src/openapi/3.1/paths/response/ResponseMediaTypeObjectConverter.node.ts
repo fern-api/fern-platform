@@ -98,9 +98,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     // In this, we match example names on the request and response. If the example is directly on the request or response, we add to everywhere.
     Object.entries(
       this.input.examples ?? {
-        "": {
-          value: this.input.example,
-        },
+        "": this.input.example,
       }
     ).forEach(([exampleName, exampleObject], i) => {
       this.examples ??= [];
@@ -112,9 +110,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             }
           )
             .map(([requestExampleName, requestExample]) =>
-              exampleName === requestExampleName ||
-              requestExampleName === "" ||
-              exampleName === ""
+              (exampleName === requestExampleName ||
+                requestExampleName === "" ||
+                exampleName === "") &&
+              (requestExample != null || exampleObject != null)
                 ? new ExampleObjectConverterNode(
                     {
                       input: {
@@ -127,7 +126,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                     },
                     this.path,
                     this.statusCode,
-                    exampleName,
+                    exampleName === "" ? undefined : exampleName,
                     {
                       requestBody: request,
                       responseBody: this,
@@ -170,9 +169,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
               }
             )
               .map(([requestExampleName, requestExample]) =>
-                exampleName === requestExampleName ||
-                requestExampleName === "" ||
-                exampleName === ""
+                (exampleName === requestExampleName ||
+                  requestExampleName === "" ||
+                  exampleName === "") &&
+                (requestExample != null || exampleObject != null)
                   ? new ExampleObjectConverterNode(
                       {
                         input: {
@@ -185,7 +185,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                       },
                       this.path,
                       this.statusCode,
-                      this.contentType,
+                      exampleName === "" ? undefined : exampleName,
                       {
                         requestBody: request,
                         responseBody: this,
@@ -202,12 +202,14 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       });
 
       if (this.examples.length === 0 && resolvedSchema != null) {
-        const fallbackExample = new SchemaConverterNode({
-          input: resolvedSchema,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: this.pathId,
-        }).example();
+        const fallbackExample =
+          resolvedSchema?.example ??
+          new SchemaConverterNode({
+            input: resolvedSchema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: this.pathId,
+          }).example();
 
         if (fallbackExample != null) {
           this.examples = this.examples.concat(
@@ -215,7 +217,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
               (request) =>
                 Object.values(
                   request?.examples ?? {
-                    "": resolvedSchema?.example,
+                    "": undefined,
                   }
                 ).map(
                   (requestExample) =>
@@ -223,9 +225,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                       {
                         input: {
                           requestExample,
-                          responseExample: {
-                            value: fallbackExample,
-                          },
+                          responseExample: fallbackExample,
                         },
                         context: this.context,
                         accessPath: this.accessPath,
@@ -233,7 +233,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                       },
                       this.path,
                       this.statusCode,
-                      this.contentType,
+                      undefined,
                       {
                         requestBody: request,
                         responseBody: this,

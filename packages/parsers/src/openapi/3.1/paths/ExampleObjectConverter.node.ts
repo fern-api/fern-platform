@@ -329,6 +329,14 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
+    // if (this.responseStatusCode === 429) {
+    //   console.log(
+    //     this.resolvedResponseInput,
+    //     this.shapes.responseBody,
+    //     this.resolvedRequestInput,
+    //     this.shapes.requestBody
+    //   );
+    // }
     let requestBody: FernRegistry.api.latest.ExampleEndpointRequest | undefined;
     if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
       switch (this.shapes.requestBody.contentType) {

@@ -78,75 +78,35 @@
       "examples": [
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         }
       ]
     },
@@ -227,75 +187,35 @@
       "examples": [
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         }
       ]
     },
@@ -387,10 +307,14 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
@@ -408,10 +332,14 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
@@ -429,10 +357,14 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
@@ -450,10 +382,14 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "",
               "responseBody": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "name": "doggie",
+                  "photoUrls": [
+                    "string"
+                  ]
+                }
               }
             }
           ]
@@ -463,49 +399,65 @@
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
-          "name": "",
           "pathParameters": {
             "petId": 0
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
           }
         },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
-          "name": "",
           "pathParameters": {
             "petId": 0
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
           }
         },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
-          "name": "",
           "pathParameters": {
             "petId": 0
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
           }
         },
         {
           "path": "/pet/{petId}",
           "responseStatusCode": null,
-          "name": "",
           "pathParameters": {
             "petId": 0
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
           }
         }
       ]

@@ -350,7 +350,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         return undefined;
       }
 
-      console.log(examples);
       return {
         id: FernRegistry.WebhookId(this.endpointId),
         description: this.description,

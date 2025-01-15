@@ -64,12 +64,7 @@
       "examples": [
         {
           "path": "/v1/text-to-speech",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         }
       ]
     },
@@ -144,12 +139,7 @@
       "examples": [
         {
           "path": "/v1/text-to-speech/from-prompt",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         }
       ]
     },
@@ -205,10 +195,16 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
-          "name": "",
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": [
+              {
+                "id": "string",
+                "name": "string",
+                "description": "string",
+                "is_public": false
+              }
+            ]
           }
         }
       ]
@@ -276,12 +272,7 @@
       "examples": [
         {
           "path": "/v1/voices",
-          "responseStatusCode": 200,
-          "name": "",
-          "responseBody": {
-            "type": "json",
-            "value": {}
-          }
+          "responseStatusCode": 200
         }
       ]
     },
@@ -360,13 +351,18 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "name": "",
+          "description": "string",
           "pathParameters": {
             "voice_id": "string"
           },
           "responseBody": {
             "type": "json",
-            "value": {}
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
           }
         }
       ]
@@ -458,13 +454,8 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "name": "",
           "pathParameters": {
             "voice_id": "string"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {}
           }
         }
       ]
