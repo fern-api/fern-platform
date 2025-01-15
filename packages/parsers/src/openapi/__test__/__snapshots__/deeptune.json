@@ -64,7 +64,13 @@
       "examples": [
         {
           "path": "/v1/text-to-speech",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "file": "string"
+            }
+          }
         }
       ]
     },
@@ -139,7 +145,13 @@
       "examples": [
         {
           "path": "/v1/text-to-speech/from-prompt",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "file": "string"
+            }
+          }
         }
       ]
     },
@@ -272,7 +284,17 @@
       "examples": [
         {
           "path": "/v1/voices",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "description": "string",
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
+          }
         }
       ]
     },
@@ -454,8 +476,18 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
+          "description": "string",
           "pathParameters": {
             "voice_id": "string"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "name": "string",
+              "description": "string",
+              "is_public": false
+            }
           }
         }
       ]

@@ -18,7 +18,6 @@ import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNam
 import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
-import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import {
   ParameterBaseObjectConverterNode,
@@ -46,7 +45,6 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   namespace: XFernGroupNameConverterNode | undefined;
   xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
   redocExamplesNode: RedocExampleConverterNode | undefined;
-  emptyExample: ExampleObjectConverterNode | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,

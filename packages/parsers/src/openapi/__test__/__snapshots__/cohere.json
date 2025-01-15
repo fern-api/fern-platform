@@ -649,7 +649,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -672,7 +681,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -695,7 +713,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -718,7 +745,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -741,7 +777,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -764,7 +809,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -787,7 +841,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -810,7 +873,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -833,7 +905,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -856,7 +937,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -879,7 +969,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -902,7 +1001,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -1546,8 +1654,11 @@
             "X-Client-Name": "my-cool-project",
             "Accepts": "text/event-stream"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
           }
         },
         {
@@ -1557,8 +1668,11 @@
             "X-Client-Name": "my-cool-project",
             "Accepts": "text/event-stream"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
           }
         }
       ]
@@ -2353,7 +2467,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -2376,7 +2499,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -2399,7 +2531,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -2422,7 +2563,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -2445,7 +2595,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -2468,7 +2627,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -2491,7 +2659,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -2514,7 +2691,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -2537,7 +2723,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -2560,7 +2755,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -2583,7 +2787,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -2606,7 +2819,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -3147,8 +3369,15 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "finish_reason": "COMPLETE",
+              "message": {
+                "role": "assistant"
+              }
+            }
           }
         },
         {
@@ -3157,8 +3386,15 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "finish_reason": "COMPLETE",
+              "message": {
+                "role": "assistant"
+              }
+            }
           }
         }
       ]
@@ -3641,7 +3877,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -3664,7 +3909,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -3687,7 +3941,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -3710,7 +3973,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -3733,7 +4005,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -3756,7 +4037,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -3779,7 +4069,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -3802,7 +4101,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -3825,7 +4133,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -3848,7 +4165,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -3871,7 +4197,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -3894,7 +4229,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -4050,8 +4394,17 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "generations": [
+                {
+                  "text": "string",
+                  "id": "string"
+                }
+              ]
+            }
           }
         },
         {
@@ -4060,8 +4413,14 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string",
+              "index": 0,
+              "is_finished": false,
+              "event_type": "text-generation"
+            }
           }
         },
         {
@@ -4070,8 +4429,17 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "generations": [
+                {
+                  "text": "string",
+                  "id": "string"
+                }
+              ]
+            }
           }
         },
         {
@@ -4080,8 +4448,14 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string",
+              "index": 0,
+              "is_finished": false,
+              "event_type": "text-generation"
+            }
           }
         }
       ]
@@ -4272,7 +4646,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -4295,7 +4678,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -4318,7 +4710,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -4341,7 +4742,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -4364,7 +4774,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -4387,7 +4806,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -4410,7 +4838,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -4433,7 +4870,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -4456,7 +4902,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -4479,7 +4934,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -4502,7 +4966,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -4525,7 +4998,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -8027,7 +8509,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -8050,7 +8541,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -8073,7 +8573,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -8096,7 +8605,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -8119,7 +8637,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -8142,7 +8669,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -8165,7 +8701,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -8188,7 +8733,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -8211,7 +8765,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -8234,7 +8797,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -8257,7 +8829,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -8280,7 +8861,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -11552,8 +12142,41 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "embeddings": {
+                "float": [
+                  [
+                    0
+                  ]
+                ],
+                "int8": [
+                  [
+                    0
+                  ]
+                ],
+                "uint8": [
+                  [
+                    0
+                  ]
+                ],
+                "binary": [
+                  [
+                    0
+                  ]
+                ],
+                "ubinary": [
+                  [
+                    0
+                  ]
+                ]
+              },
+              "texts": [
+                "string"
+              ]
+            }
           }
         }
       ]
@@ -12187,7 +12810,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -12210,7 +12842,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -12233,7 +12874,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -12256,7 +12906,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -12279,7 +12938,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -12302,7 +12970,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -12325,7 +13002,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -12348,7 +13034,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -12371,7 +13066,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -12394,7 +13098,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -12417,7 +13130,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -12440,7 +13162,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -12504,6 +13235,12 @@
           "responseStatusCode": 200,
           "headers": {
             "X-Client-Name": "my-cool-project"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "job_id": "string"
+            }
           }
         }
       ]
@@ -13995,7 +14732,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -14018,7 +14764,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -14041,7 +14796,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -14064,7 +14828,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -14087,7 +14860,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -14110,7 +14892,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -14133,7 +14924,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -14156,7 +14956,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -14179,7 +14988,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -14202,7 +15020,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -14225,7 +15052,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -14248,7 +15084,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -14366,8 +15211,16 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "results": [
+                {
+                  "index": 0,
+                  "relevance_score": 0
+                }
+              ]
+            }
           }
         }
       ]
@@ -14635,7 +15488,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -14658,7 +15520,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -14681,7 +15552,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -14704,7 +15584,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -14727,7 +15616,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -14750,7 +15648,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -14773,7 +15680,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -14796,7 +15712,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -14819,7 +15744,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -14842,7 +15776,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -14865,7 +15808,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -14888,7 +15840,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -14989,8 +15950,16 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "results": [
+                {
+                  "index": 0,
+                  "relevance_score": 0
+                }
+              ]
+            }
           }
         }
       ]
@@ -15398,7 +16367,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -15421,7 +16399,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -15444,7 +16431,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -15467,7 +16463,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -15490,7 +16495,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -15513,7 +16527,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -15536,7 +16559,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -15559,7 +16591,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -15582,7 +16623,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -15605,7 +16655,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -15628,7 +16687,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -15651,7 +16719,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -15825,8 +16902,24 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "classifications": [
+                {
+                  "id": "string",
+                  "predictions": [
+                    "string"
+                  ],
+                  "confidences": [
+                    0
+                  ],
+                  "labels": {},
+                  "classification_type": "single-label"
+                }
+              ]
+            }
           }
         }
       ]
@@ -16729,7 +17822,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -16752,7 +17854,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -16775,7 +17886,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -16798,7 +17918,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -16821,7 +17950,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -16844,7 +17982,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -16867,7 +18014,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -16890,7 +18046,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -16913,7 +18078,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -16936,7 +18110,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -16959,7 +18142,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -16982,7 +18174,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -17061,15 +18262,10 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "form",
+          "responseBody": {
+            "type": "json",
             "value": {
-              "data": {
-                "type": "filename"
-              },
-              "eval_data": {
-                "type": "filename"
-              }
+              "id": "string"
             }
           }
         }
@@ -18885,7 +20081,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -18908,7 +20113,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -18931,7 +20145,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -18954,7 +20177,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -18977,7 +20209,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -19000,7 +20241,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -19023,7 +20273,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -19046,7 +20305,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -19069,7 +20337,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -19092,7 +20369,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -19115,7 +20401,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -19138,7 +20433,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -19225,8 +20529,31 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": "string",
+              "summary": "string",
+              "meta": {
+                "api_version": {
+                  "version": "string"
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
+            }
           }
         }
       ]
@@ -19791,9 +21118,6 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
-          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -19859,6 +21183,20 @@
                   "version": "1"
                 }
               }
+            }
+          }
+        },
+        {
+          "path": "/v1/tokenize",
+          "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "text": "tokenize me! :D",
+              "model": "command"
             }
           }
         }
@@ -20046,7 +21384,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -20069,7 +21416,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -20092,7 +21448,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -20115,7 +21480,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -20138,7 +21512,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -20161,7 +21544,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -20184,7 +21576,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -20207,7 +21608,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -20230,7 +21640,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -20253,7 +21672,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -20276,7 +21704,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -20299,7 +21736,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -20389,8 +21835,11 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "text": "string"
+            }
           }
         }
       ]
@@ -21026,7 +22475,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -21049,7 +22507,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -21072,7 +22539,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -21095,7 +22571,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -21118,7 +22603,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -21141,7 +22635,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -21164,7 +22667,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -21187,7 +22699,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -21210,7 +22731,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -21233,7 +22763,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -21256,7 +22795,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -21279,7 +22827,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -21343,6 +22900,17 @@
           "responseStatusCode": 200,
           "headers": {
             "X-Client-Name": "my-cool-project"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "connector": {
+                "id": "string",
+                "name": "string",
+                "created_at": "string",
+                "updated_at": "string"
+              }
+            }
           }
         }
       ]
@@ -21979,7 +23547,16 @@
             ]
           },
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -22002,7 +23579,16 @@
             ]
           },
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -22025,7 +23611,16 @@
             ]
           },
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -22048,7 +23643,16 @@
             ]
           },
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 422,
@@ -22071,7 +23675,16 @@
             ]
           },
           "name": "Unprocessable Entity",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 429,
@@ -22094,7 +23707,16 @@
             ]
           },
           "name": "Too Many Requests",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 498,
@@ -22117,7 +23739,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 499,
@@ -22140,7 +23771,16 @@
             ]
           },
           "name": "UNKNOWN ERROR",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -22163,7 +23803,16 @@
             ]
           },
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 501,
@@ -22186,7 +23835,16 @@
             ]
           },
           "name": "Not Implemented",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -22209,7 +23867,16 @@
             ]
           },
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 504,
@@ -22232,7 +23899,16 @@
             ]
           },
           "name": "Gateway Timeout",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "data": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -22299,6 +23975,17 @@
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "connector": {
+                "id": "string",
+                "name": "string",
+                "created_at": "string",
+                "updated_at": "string"
+              }
+            }
           }
         }
       ]
@@ -25498,6 +27185,13 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           }
+        },
+        {
+          "path": "/v1/finetuning/finetuned-models",
+          "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          }
         }
       ]
     },
@@ -26059,7 +27753,16 @@
           },
           "description": "Bad Request",
           "name": "Bad Request",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 401,
@@ -26072,7 +27775,16 @@
           },
           "description": "Unauthorized",
           "name": "Unauthorized",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 403,
@@ -26085,7 +27797,16 @@
           },
           "description": "Forbidden",
           "name": "Forbidden",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 404,
@@ -26098,7 +27819,16 @@
           },
           "description": "Not Found",
           "name": "Not Found",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 500,
@@ -26111,7 +27841,16 @@
           },
           "description": "Internal Server Error",
           "name": "Internal Server Error",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         },
         {
           "statusCode": 503,
@@ -26124,7 +27863,16 @@
           },
           "description": "Status Service Unavailable",
           "name": "Service Unavailable",
-          "examples": []
+          "examples": [
+            {
+              "responseBody": {
+                "type": "json",
+                "value": {
+                  "message": "string"
+                }
+              }
+            }
+          ]
         }
       ],
       "examples": [
@@ -26195,8 +27943,19 @@
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "requestBody": {
-            "type": "json"
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "finetuned_model": {
+                "name": "string",
+                "settings": {
+                  "base_model": {
+                    "base_type": "BASE_TYPE_UNSPECIFIED"
+                  },
+                  "dataset_id": "string"
+                }
+              }
+            }
           }
         }
       ]

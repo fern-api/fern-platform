@@ -78,35 +78,107 @@
       "examples": [
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         }
       ]
     },
@@ -187,35 +259,107 @@
       "examples": [
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         },
         {
           "path": "/pet",
-          "responseStatusCode": 200
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "doggie",
+              "photoUrls": [
+                "string"
+              ]
+            }
+          }
         }
       ]
     },

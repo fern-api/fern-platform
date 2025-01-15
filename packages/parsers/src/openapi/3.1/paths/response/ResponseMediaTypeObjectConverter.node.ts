@@ -147,6 +147,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         this.input.schema,
         this.context.document
       );
+
       this.examples ??= [];
       Object.entries(
         resolvedSchema?.examples ?? {
@@ -158,7 +159,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             message: "Expected example to be an object with a value property",
             path: this.accessPath,
           });
-          return;
+          // return;
         }
         this.examples ??= [];
         this.examples = this.examples.concat(
