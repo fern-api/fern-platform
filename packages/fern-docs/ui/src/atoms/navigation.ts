@@ -25,11 +25,15 @@ export const TABS_ATOM = selectAtom(
 );
 TABS_ATOM.debugLabel = "TABS_ATOM";
 
-export const VERSIONS_ATOM = selectAtom(
-  DOCS_ATOM,
-  (docs): readonly VersionSwitcherInfo[] => docs.navigation.versions,
-  isEqual
-);
+export const VERSIONS_ATOM = atom((get) => {
+  const products = get(PRODUCTS_ATOM);
+
+  const versions = products.flatMap((product) =>
+    product.child.type === "versioned" ? product.child.children : []
+  );
+
+  return versions;
+});
 VERSIONS_ATOM.debugLabel = "VERSIONS_ATOM";
 
 export const CURRENT_TAB_INDEX_ATOM = atom<number | undefined>(
@@ -37,9 +41,32 @@ export const CURRENT_TAB_INDEX_ATOM = atom<number | undefined>(
 );
 CURRENT_TAB_INDEX_ATOM.debugLabel = "CURRENT_TAB_INDEX_ATOM";
 
+export const CURRENT_PRODUCT_ID_ATOM = atom<FernNavigation.ProductId>((get) => {
+  const products = get(PRODUCTS_ATOM);
+  return products[0]?.id;
+});
+CURRENT_PRODUCT_ID_ATOM.debugLabel = "CURRENT_PRODUCT_ID_ATOM";
+
+export const FILTERED_VERSIONS_ATOM = atom((get) => {
+  const versions = get(VERSIONS_ATOM);
+  const currentProductId = get(CURRENT_PRODUCT_ID_ATOM);
+
+  if (currentProductId == null) {
+    return versions;
+  }
+
+  return versions.filter((version) =>
+    version.slug.startsWith(currentProductId)
+  );
+});
+FILTERED_VERSIONS_ATOM.debugLabel = "FILTERED_VERSIONS_ATOM";
+
 export const CURRENT_VERSION_ID_ATOM = atom<
   FernNavigation.VersionId | undefined
->((get) => get(DOCS_ATOM).navigation.currentVersionId);
+>((get) => {
+  const filteredVersions = get(FILTERED_VERSIONS_ATOM);
+  return filteredVersions[0]?.id;
+});
 CURRENT_VERSION_ID_ATOM.debugLabel = "CURRENT_VERSION_ID_ATOM";
 
 export const TRAILING_SLASH_ATOM = atom<boolean>(
@@ -164,8 +191,3 @@ export const PRODUCTS_ATOM = selectAtom(
   isEqual
 );
 PRODUCTS_ATOM.debugLabel = "PRODUCTS_ATOM";
-
-export const CURRENT_PRODUCT_ID_ATOM = atom<FernNavigation.ProductId>(
-  FernNavigation.ProductId("sdks") // Default to SDKs product
-);
-CURRENT_PRODUCT_ID_ATOM.debugLabel = "CURRENT_PRODUCT_ID_ATOM";

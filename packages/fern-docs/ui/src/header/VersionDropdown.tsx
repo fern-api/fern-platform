@@ -2,24 +2,34 @@ import { FernButton } from "@fern-docs/components";
 import { getVersionAvailabilityLabel } from "@fern-platform/fdr-utils";
 import { Lock, NavArrowDown } from "iconoir-react";
 import { useAtomValue } from "jotai";
-import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms";
+import {
+  CURRENT_VERSION_ID_ATOM,
+  CURRENT_PRODUCT_ID_ATOM,
+  PRODUCTS_ATOM,
+} from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { useToHref } from "../hooks/useHref";
 
-export declare namespace VersionDropdown {
-  export interface Props {}
-}
-
-export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
-  const versions = useAtomValue(VERSIONS_ATOM);
+export const VersionDropdown = () => {
+  const products = useAtomValue(PRODUCTS_ATOM);
   const currentVersionId = useAtomValue(CURRENT_VERSION_ID_ATOM);
+  const currentProductId = useAtomValue(CURRENT_PRODUCT_ID_ATOM);
   const toHref = useToHref();
 
-  const currentVersion = versions.find(({ id }) => id === currentVersionId);
+  const currentProduct = products.find(
+    (product) => product.productId === currentProductId
+  );
+
+  const versions =
+    currentProduct?.child.type === "versioned"
+      ? currentProduct.child.children
+      : [];
 
   if (versions.length <= 1) {
     return null;
   }
+
+  const currentVersion = versions.find(({ id }) => id === currentVersionId);
 
   return (
     <div className="flex max-w-32">

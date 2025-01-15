@@ -22,6 +22,7 @@ import { HeaderLogoSection } from "./HeaderLogoSection";
 import { MobileMenuButton } from "./MobileMenuButton";
 import { ProductDropdown } from "./ProductDropdown";
 import { VersionDropdown } from "./VersionDropdown";
+import { NavigationControls } from "./NavigationControls";
 
 export declare namespace Header {
   export interface Props {
@@ -119,8 +120,7 @@ const UnmemoizedHeader = forwardRef<
         </div>
 
         <div className="flex items-center gap-2">
-          <ProductDropdown />
-          <VersionDropdown />
+          <NavigationControls />
 
           <div className="max-lg-menu">
             {githubRepo && (
