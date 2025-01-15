@@ -140,9 +140,14 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              1
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "list_pets",
+              "params": [
+                1
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -243,10 +248,15 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              "fluffy",
-              "poodle"
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "create_pet",
+              "params": [
+                "fluffy",
+                "poodle"
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -326,9 +336,14 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              7
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "get_pet",
+              "params": [
+                7
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
