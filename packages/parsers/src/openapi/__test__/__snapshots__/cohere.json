@@ -21008,13 +21008,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21044,13 +21040,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21080,13 +21072,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21116,13 +21104,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21152,13 +21136,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21188,13 +21168,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21224,13 +21200,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21260,13 +21232,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21296,13 +21264,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21332,13 +21296,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21368,13 +21328,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -21404,13 +21360,9 @@
             {
               "responseBody": {
                 "type": "json",
-                "value": {}
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {}
+                "value": {
+                  "data": "string"
+                }
               }
             }
           ]
@@ -27942,17 +27894,18 @@
           },
           "responseBody": {
             "type": "json",
-            "value": {
-              "finetuned_model": {
-                "name": "string",
-                "settings": {
-                  "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
-                  },
-                  "dataset_id": "string"
-                }
-              }
-            }
+            "value": {}
+          }
+        },
+        {
+          "path": "/v1/finetuning/finetuned-models",
+          "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {}
           }
         }
       ]

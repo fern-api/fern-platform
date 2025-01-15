@@ -132,7 +132,10 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     }
 
     this.examples = {
-      "": this.input.example,
+      "":
+        this.input.example != null
+          ? { value: this.input.example }
+          : this.input.example,
       ...this.input.examples,
     };
   }

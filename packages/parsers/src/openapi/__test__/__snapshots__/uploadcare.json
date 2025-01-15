@@ -3673,27 +3673,41 @@
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
-            "type": "json"
+            "type": "json",
+            "value": {
+              "source": "test-uuid-replacement",
+              "store": "true",
+              "metadata": {
+                "subsystem": "uploader",
+                "pet": "cat"
+              }
+            }
           },
           "responseBody": {
             "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/files/local_copy/",
+          "responseStatusCode": 201,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "requestBody": {
+            "type": "json",
             "value": {
-              "type": "file",
-              "result": {
-                "datetime_removed": "string",
-                "datetime_stored": "string",
-                "datetime_uploaded": "string",
-                "is_image": true,
-                "is_ready": true,
-                "mime_type": "image/jpeg",
-                "original_file_url": "string",
-                "original_filename": "EU_4.jpg",
-                "size": 0,
-                "url": "string",
-                "uuid": "test-uuid-replacement",
-                "metadata": {}
+              "source": "test-uuid-replacement",
+              "store": "true",
+              "metadata": {
+                "subsystem": "uploader",
+                "pet": "cat"
               }
             }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {}
           }
         }
       ]
@@ -4077,14 +4091,33 @@
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
-            "type": "json"
+            "type": "json",
+            "value": {
+              "source": "test-uuid-replacement",
+              "target": "mytarget"
+            }
           },
           "responseBody": {
             "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/files/remote_copy/",
+          "responseStatusCode": 200,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "requestBody": {
+            "type": "json",
             "value": {
-              "type": "url",
-              "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
+              "source": "test-uuid-replacement",
+              "target": "mytarget"
             }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {}
           }
         },
         {
@@ -4094,14 +4127,33 @@
             "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "requestBody": {
-            "type": "json"
+            "type": "json",
+            "value": {
+              "source": "test-uuid-replacement",
+              "target": "mytarget"
+            }
           },
           "responseBody": {
             "type": "json",
+            "value": {}
+          }
+        },
+        {
+          "path": "/files/remote_copy/",
+          "responseStatusCode": 201,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "requestBody": {
+            "type": "json",
             "value": {
-              "type": "url",
-              "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
+              "source": "test-uuid-replacement",
+              "target": "mytarget"
             }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {}
           }
         }
       ]
