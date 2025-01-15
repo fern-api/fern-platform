@@ -24,7 +24,7 @@ import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
-import { getAuthState } from "./auth/getAuthState";
+import { AuthState, getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
@@ -333,9 +333,12 @@ export async function withInitialProps({
   const launchDarkly = launchDarklyConfig
     ? {
         clientSideId: launchDarklyConfig["client-side-id"],
-        userContextEndpoint: launchDarklyConfig["user-context-endpoint"],
-        anonymousUserContextEndpoint:
-          launchDarklyConfig["anonymous-user-context-endpoint"],
+        contextEndpoint: launchDarklyConfig["context-endpoint"],
+        context: await withLaunchDarklyContext(
+          launchDarklyConfig["context-endpoint"],
+          authState,
+          found
+        ),
       }
     : undefined;
 
@@ -428,4 +431,26 @@ function withRedirect(destination: string): { redirect: Redirect } {
     destination = encodeURI(addLeadingSlash(destination));
   }
   return { redirect: { destination, permanent: false } };
+}
+
+async function withLaunchDarklyContext(
+  endpoint: string,
+  authState: AuthState,
+  node: FernNavigation.utils.Node
+) {
+  try {
+    const url = new URL(endpoint);
+    url.searchParams.set("anonymous", String(!authState.authed));
+    if (node.type === "found") {
+      if (node.currentVersion) {
+        url.searchParams.set("version", node.currentVersion.versionId);
+      }
+    }
+
+    const context = await fetch(url).then((res) => res.json());
+
+    return context;
+  } catch {
+    return { kind: "user", key: "anonymous", anonymous: true };
+  }
 }

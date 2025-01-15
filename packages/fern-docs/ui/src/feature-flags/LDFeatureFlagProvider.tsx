@@ -1,10 +1,12 @@
+import { useAtomValue } from "jotai";
 import {
   LDContext,
   LDProvider,
   useLDClient,
 } from "launchdarkly-react-client-sdk";
-import { FC, ReactNode, useEffect } from "react";
+import { FC, PropsWithChildren, ReactNode, useEffect } from "react";
 import useSWR from "swr";
+import { CURRENT_VERSION_ID_ATOM, useFernUser } from "../atoms";
 
 interface Props extends PropsWithChildren {
   clientSideId: string;
@@ -12,42 +14,26 @@ interface Props extends PropsWithChildren {
   /**
    * The endpoint to fetch the user context from.
    */
-  userContextEndpoint: string;
-
-  /**
-   * The endpoint to fetch the anonymous user context from.
-   * @default {userContextEndpoint}
-   */
-  anonymousUserContextEndpoint?: string;
+  contextEndpoint: string;
 
   /**
    * Default anonymous user context.
    * @default { kind: "user", key: "anonymous", anonymous: true }
    */
-  defaultAnonymousUserContext?: LDContext;
-
-  /**
-   * Whether to use anonymous user context.
-   * @default true
-   */
-  anonymous?: boolean;
+  defaultContext?: LDContext;
 }
 
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
-  userContextEndpoint,
-  anonymousUserContextEndpoint,
-  defaultAnonymousUserContext,
-  anonymous = true,
+  contextEndpoint,
+  defaultContext,
   children,
 }) => {
   return (
     <LDProvider clientSideID={clientSideId}>
       <IdentifyWrapper
-        userContextEndpoint={userContextEndpoint}
-        anonymousUserContextEndpoint={anonymousUserContextEndpoint}
-        defaultAnonymousUserContext={defaultAnonymousUserContext}
-        anonymous={anonymous}
+        contextEndpoint={contextEndpoint}
+        defaultContext={defaultContext}
       >
         {children}
       </IdentifyWrapper>
@@ -57,34 +43,41 @@ export const LDFeatureFlagProvider: FC<Props> = ({
 
 const IdentifyWrapper = ({
   children,
-  userContextEndpoint: userContextEndpointProp,
-  anonymousUserContextEndpoint = userContextEndpointProp,
-  defaultAnonymousUserContext = {
+  contextEndpoint: contextEndpointProp,
+  defaultContext = {
     kind: "user",
     key: "anonymous",
     anonymous: true,
   },
-  anonymous = true,
 }: {
   children: ReactNode;
-  userContextEndpoint: string;
-  anonymousUserContextEndpoint?: string;
-  defaultAnonymousUserContext?: LDContext;
-  anonymous: boolean;
+  contextEndpoint: string;
+  defaultContext?: LDContext;
 }) => {
   const ldClient = useLDClient();
+  const anonymous = useFernUser() == null;
+  const version = useAtomValue(CURRENT_VERSION_ID_ATOM);
 
-  const userContextEndpoint = anonymous
-    ? anonymousUserContextEndpoint
-    : userContextEndpointProp;
+  const endpoint = withParams(contextEndpointProp, {
+    anonymous,
+    version,
+  });
 
   // using SWR to get refresh the LD context
-  const { data = defaultAnonymousUserContext } = useSWR<LDContext>(
-    userContextEndpoint,
-    () =>
-      fetch(userContextEndpoint, {
+  const { data = { context: defaultContext, hash: null } } = useSWR<{
+    context: LDContext;
+    hash: string | null;
+  }>(
+    endpoint,
+    async () => {
+      const res = await fetch(endpoint, {
         credentials: anonymous ? undefined : "include",
-      }).then((res) => res.json()),
+      });
+      return {
+        context: (await res.json()) as LDContext,
+        hash: res.headers.get("x-hash"),
+      };
+    },
     {
       revalidateOnFocus: true,
       revalidateOnReconnect: true,
@@ -95,8 +88,27 @@ const IdentifyWrapper = ({
   );
 
   useEffect(() => {
-    void ldClient?.identify(data);
-  }, [userContextEndpoint, ldClient, data]);
+    void ldClient?.identify(data.context, data.hash ?? undefined);
+  }, [ldClient, data]);
 
   return children;
 };
+
+function withParams(
+  endpoint: string,
+  opts: {
+    anonymous: boolean;
+    version: string | undefined;
+  }
+) {
+  try {
+    const url = new URL(endpoint);
+    url.searchParams.set("anonymous", opts.anonymous.toString());
+    if (opts.version) {
+      url.searchParams.set("version", opts.version);
+    }
+    return String(url);
+  } catch {
+    return endpoint;
+  }
+}

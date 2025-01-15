@@ -30,10 +30,7 @@ export function NextApp({
   return (
     <JotaiProvider store={store}>
       <HydrateAtoms pageProps={pageProps}>
-        <FeatureFlagProvider
-          featureFlagsConfig={pageProps?.featureFlagsConfig}
-          anonymous={pageProps?.user == null}
-        >
+        <FeatureFlagProvider featureFlagsConfig={pageProps?.featureFlagsConfig}>
           <ThemeScript colors={pageProps?.colors} />
           <NextNProgress
             options={{ showSpinner: false, speed: 400 }}
