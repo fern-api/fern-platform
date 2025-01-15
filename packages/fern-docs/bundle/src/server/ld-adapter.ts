@@ -48,6 +48,13 @@ interface LaunchDarklyInfo {
   contextEndpoint: string;
   context: ld.LDContext | undefined;
   defaultFlags: Record<string, unknown> | undefined;
+  options:
+    | {
+        baseUrl: string | undefined;
+        streamUrl: string | undefined;
+        eventsUrl: string | undefined;
+      }
+    | undefined;
 }
 
 export async function withLaunchDarkly(
@@ -69,8 +76,13 @@ export async function withLaunchDarkly(
       node,
       rawCookie
     );
+    const options = {
+      baseUrl: launchDarklyConfig.options?.["base-url"],
+      streamUrl: launchDarklyConfig.options?.["stream-url"],
+      eventsUrl: launchDarklyConfig.options?.["events-url"],
+    };
     const defaultFlags = launchDarklyConfig["sdk-key"]
-      ? await fetchInitialFlags(launchDarklyConfig["sdk-key"], context)
+      ? await fetchInitialFlags(launchDarklyConfig["sdk-key"], context, options)
       : undefined;
     return [
       {
@@ -78,6 +90,7 @@ export async function withLaunchDarkly(
         contextEndpoint: launchDarklyConfig["context-endpoint"],
         context,
         defaultFlags,
+        options,
       },
       // Note: if sdk-key is set, then middleware will automatically switch to 100% getServerSideProps
       // because getServerSideProps must determine whether any given page should be rendered or not.
@@ -122,10 +135,20 @@ export const createLdPredicate = async ({
 
 function fetchInitialFlags(
   sdkKey: string,
-  context: ld.LDContext
+  context: ld.LDContext,
+  options?: {
+    baseUrl?: string;
+    streamUrl?: string;
+    eventsUrl?: string;
+  }
 ): Promise<Record<string, unknown>> | undefined {
   try {
-    const ldClient = ld.init(sdkKey);
+    const ldClient = ld.init(sdkKey, {
+      baseUri: options?.baseUrl,
+      streamUri: options?.streamUrl,
+      eventsUri: options?.eventsUrl,
+      stream: false,
+    });
     return ldClient.allFlagsState(context).then((flags) => flags.allValues());
   } catch (error) {
     console.error(error);
