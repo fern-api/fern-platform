@@ -76,6 +76,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     await redis.connect();
 
     // TODO: this is just for debugging
+    // dummy commit
     const keys = await redis.keys("*");
     console.log("All Redis keys:", keys);
 
