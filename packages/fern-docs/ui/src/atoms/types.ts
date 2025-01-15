@@ -57,6 +57,13 @@ export interface LaunchDarklyInfo {
   contextEndpoint: string;
   context: LDContext | undefined;
   defaultFlags: Record<string, unknown> | undefined;
+  options:
+    | {
+        baseUrl: string | undefined;
+        streamUrl: string | undefined;
+        eventsUrl: string | undefined;
+      }
+    | undefined;
 }
 
 export interface FeatureFlagsConfig {

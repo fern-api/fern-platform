@@ -23,6 +23,12 @@ interface Props extends PropsWithChildren {
   defaultContext?: LDContext;
 
   defaultFlags?: Record<string, unknown>;
+
+  options?: {
+    baseUrl?: string;
+    streamUrl?: string;
+    eventsUrl?: string;
+  };
 }
 
 export const LDFeatureFlagProvider: FC<Props> = ({
@@ -30,6 +36,7 @@ export const LDFeatureFlagProvider: FC<Props> = ({
   contextEndpoint,
   defaultContext,
   defaultFlags,
+  options,
   children,
 }) => {
   return (
@@ -37,6 +44,7 @@ export const LDFeatureFlagProvider: FC<Props> = ({
       clientSideID={clientSideId}
       context={defaultContext}
       flags={defaultFlags}
+      options={options}
     >
       <IdentifyWrapper
         contextEndpoint={contextEndpoint}

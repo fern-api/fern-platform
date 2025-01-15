@@ -11,6 +11,14 @@ const LaunchDarklyEdgeConfigSchema = z.object({
   // we should add a check to make sure the target domain is trusted. Trust should always be granted manually by a fern engineer,
   // so it should be managed in edge config, or FGA.
   "context-endpoint": z.string(),
+
+  options: z
+    .object({
+      "base-url": z.string().optional(),
+      "stream-url": z.string().optional(),
+      "events-url": z.string().optional(),
+    })
+    .optional(),
 });
 
 export type LaunchDarklyEdgeConfig = z.infer<

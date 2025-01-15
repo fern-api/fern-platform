@@ -29,6 +29,7 @@ export const FeatureFlagProvider: FC<FeatureFlagProviderProps> = ({
       contextEndpoint={launchDarklyInfo.contextEndpoint}
       defaultContext={launchDarklyInfo.context}
       defaultFlags={launchDarklyInfo.defaultFlags}
+      options={launchDarklyInfo.options}
     >
       {children}
     </LDFeatureFlagProvider>
