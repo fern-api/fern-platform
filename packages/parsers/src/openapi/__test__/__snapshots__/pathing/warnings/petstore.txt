@@ -1,0 +1,38 @@
+[
+  {
+    "message": "No auth scheme found for petstore_auth. Inline security schemes are not supported.",
+    "path": [
+      "paths",
+      "/pet",
+      "post",
+      "security",
+    ],
+  },
+  {
+    "message": "No auth scheme found for petstore_auth. Inline security schemes are not supported.",
+    "path": [
+      "paths",
+      "/pet",
+      "put",
+      "security",
+    ],
+  },
+  {
+    "message": "No auth scheme found for petstore_auth. Inline security schemes are not supported.",
+    "path": [
+      "paths",
+      "/pet/{petId}",
+      "get",
+      "security",
+    ],
+  },
+  {
+    "message": "No auth scheme found for api_key. Inline security schemes are not supported.",
+    "path": [
+      "paths",
+      "/pet/{petId}",
+      "get",
+      "security",
+    ],
+  },
+]

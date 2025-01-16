@@ -45,9 +45,14 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     this.codeSamples.forEach((codeSample) => {
       if (
-        Object.values(FernRegistry.api.v1.read.SupportedLanguage).includes(
-          codeSample.lang.toLowerCase() as FernRegistry.api.v1.read.SupportedLanguage
-        )
+        ![
+          ...Object.values(FernRegistry.api.v1.read.SupportedLanguage),
+          "Kotlin",
+          "Swift",
+          "PHP",
+        ]
+          .map((l) => l.toLowerCase())
+          .includes(codeSample.lang.toLowerCase())
       ) {
         this.context.errors.warning({
           message: `Unsupported language: ${codeSample.lang}. This may not render correctly.`,

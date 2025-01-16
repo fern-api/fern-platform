@@ -20,6 +20,7 @@ describe("Grouping Functions", () => {
       viewers: undefined,
       orphaned: undefined,
       noindex: undefined,
+      featureFlags: undefined,
     },
     {
       id: FernNavigation.V1.NodeId("entry-2"),
@@ -34,6 +35,7 @@ describe("Grouping Functions", () => {
       viewers: undefined,
       orphaned: undefined,
       noindex: undefined,
+      featureFlags: undefined,
     },
     {
       id: FernNavigation.V1.NodeId("entry-3"),
@@ -48,6 +50,7 @@ describe("Grouping Functions", () => {
       viewers: undefined,
       orphaned: undefined,
       noindex: undefined,
+      featureFlags: undefined,
     },
     {
       id: FernNavigation.V1.NodeId("entry-4"),
@@ -62,6 +65,7 @@ describe("Grouping Functions", () => {
       viewers: undefined,
       orphaned: undefined,
       noindex: undefined,
+      featureFlags: undefined,
     },
   ];
 

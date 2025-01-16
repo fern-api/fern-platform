@@ -3449,6 +3449,25 @@
             }
           },
           "description": "Warning description for incorrect usage of the API"
+        },
+        {
+          "key": "X-API-Warning",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Warning description for incorrect usage of the API"
         }
       ],
       "requests": [

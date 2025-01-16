@@ -7,7 +7,6 @@ import {
 } from "../../BaseOpenApiV3_1Converter.node";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
-import { dedupPayloads } from "../../utils/dedupPayloads";
 import { getEndpointId } from "../../utils/getEndpointId";
 import { mergeSnippets } from "../../utils/mergeSnippets";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
@@ -118,7 +117,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               input: parameter,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: `parameters[${index}]`,
+              pathId: ["parameters", `${index}`],
             });
         }
         // this.pathParameters.push(parameter.name);
@@ -130,7 +129,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               input: parameter,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: `parameters[${index}]`,
+              pathId: ["parameters", `${index}`],
             });
         }
       } else if (parameter.in === "header") {
@@ -141,7 +140,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               input: parameter,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: `parameters[${index}]`,
+              pathId: ["parameters", `${index}`],
             });
         }
       }
@@ -355,9 +354,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         path:
           this.convertPathToPathParts()?.map((part) => part.value.toString()) ??
           [],
-        headers: dedupPayloads(
-          convertOperationObjectProperties(this.requestHeaders)?.flat()
-        ),
+        headers: convertOperationObjectProperties(this.requestHeaders)?.flat(),
         payloads: this.requests?.convertToWebhookPayload(),
         examples: [this.requests?.webhookExample()].filter(isNonNullish),
       };
@@ -377,6 +374,10 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       authIds = Object.keys(auth);
     }
 
+    const responseHeaders = responses
+      ?.flatMap((response) => response.headers)
+      .filter(isNonNullish);
+
     return {
       id: FernRegistry.EndpointId(this.endpointId),
       description: this.description,
@@ -389,18 +390,19 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       auth: authIds?.map((id) => FernRegistry.api.latest.AuthSchemeId(id)),
       defaultEnvironment: environments?.[0]?.id,
       environments,
-      pathParameters: dedupPayloads(
-        convertOperationObjectProperties(this.pathParameters)?.flat()
-      ),
-      queryParameters: dedupPayloads(
-        convertOperationObjectProperties(this.queryParameters)?.flat()
-      ),
-      requestHeaders: dedupPayloads(
-        convertOperationObjectProperties(this.requestHeaders)?.flat()
-      ),
-      responseHeaders: dedupPayloads(
-        responses?.flatMap((response) => response.headers).filter(isNonNullish)
-      ),
+      pathParameters: convertOperationObjectProperties(
+        this.pathParameters
+      )?.flat(),
+      queryParameters: convertOperationObjectProperties(
+        this.queryParameters
+      )?.flat(),
+      requestHeaders: convertOperationObjectProperties(
+        this.requestHeaders
+      )?.flat(),
+      responseHeaders:
+        responseHeaders != null && responseHeaders.length > 0
+          ? responseHeaders
+          : undefined,
       requests: this.requests?.convert(),
       responses: responses?.map((response) => response.response),
       errors,

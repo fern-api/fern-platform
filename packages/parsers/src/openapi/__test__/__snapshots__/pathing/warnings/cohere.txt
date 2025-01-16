@@ -1,0 +1,274 @@
+[
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "paths",
+      "/v1/datasets/usage",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "paths",
+      "/v1/datasets/usage",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
+    "path": [
+      "paths",
+      "/v1/connectors",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "items",
+    ],
+  },
+  {
+    "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
+    "path": [
+      "paths",
+      "/v1/connectors",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
+    "path": [
+      "paths",
+      "/v1/connectors/{id}",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
+    "path": [
+      "paths",
+      "/v1/connectors/{id}",
+      "patch",
+      "responses",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "Image",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "Image",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "Image",
+    ],
+  },
+  {
+    "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received string",
+    "path": [
+      "components",
+      "CreateEmbedJobRequest",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "RerankerDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "RerankerDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "RerankerDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "RerankerDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "RerankerDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "RerankerDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "ChatDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "ChatDataMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "LabelMetric",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "FinetuneDatasetMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "FinetuneDatasetMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "FinetuneDatasetMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "FinetuneDatasetMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "FinetuneDatasetMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
+    "path": [
+      "components",
+      "FinetuneDatasetMetrics",
+    ],
+  },
+  {
+    "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
+    "path": [
+      "components",
+      "Connector",
+    ],
+  },
+]

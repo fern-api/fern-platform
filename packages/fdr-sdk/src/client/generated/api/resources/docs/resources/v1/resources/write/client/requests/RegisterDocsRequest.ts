@@ -84,6 +84,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                                 orphaned: {
  *                                     "key": "value"
  *                                 },
+ *                                 featureFlags: {
+ *                                     "key": "value"
+ *                                 },
  *                                 pointsTo: {
  *                                     "key": "value"
  *                                 }
@@ -109,6 +112,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                         "key": "value"
  *                     },
  *                     orphaned: {
+ *                         "key": "value"
+ *                     },
+ *                     featureFlags: {
  *                         "key": "value"
  *                     },
  *                     pointsTo: {

@@ -36,7 +36,7 @@ export class FernNavigationV1ToLatest {
       viewers: node.viewers,
       orphaned: node.orphaned,
       roles: node.roles,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
 
     return latest;
@@ -119,7 +119,7 @@ export class FernNavigationV1ToLatest {
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -146,7 +146,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -186,7 +186,7 @@ export class FernNavigationV1ToLatest {
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -304,7 +304,7 @@ export class FernNavigationV1ToLatest {
       subtitle: node.subtitle,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -363,7 +363,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -401,7 +401,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -447,7 +447,7 @@ export class FernNavigationV1ToLatest {
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -480,7 +480,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -504,7 +504,7 @@ export class FernNavigationV1ToLatest {
       year: node.year,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -528,7 +528,7 @@ export class FernNavigationV1ToLatest {
       month: node.month,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -554,7 +554,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -594,7 +594,7 @@ export class FernNavigationV1ToLatest {
       availability: this.#availability(node.availability),
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -628,7 +628,7 @@ export class FernNavigationV1ToLatest {
       isResponseStream: node.isResponseStream,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -673,7 +673,7 @@ export class FernNavigationV1ToLatest {
       webSocketId: node.webSocketId,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -705,7 +705,7 @@ export class FernNavigationV1ToLatest {
       webhookId: node.webhookId,
       viewers: node.viewers,
       orphaned: node.orphaned,
-      featureFlags: undefined,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
