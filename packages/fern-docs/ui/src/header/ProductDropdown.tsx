@@ -1,7 +1,7 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FernButton } from "@fern-docs/components";
-import { NavArrowDown } from "iconoir-react";
+import { FernButton, RemoteFontAwesomeIcon } from "@fern-docs/components";
 import { useAtomValue, useSetAtom } from "jotai";
+import { ChevronDown, Package } from "lucide-react";
 import { CURRENT_PRODUCT_ID_ATOM, PRODUCTS_ATOM } from "../atoms/navigation";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { useToHref } from "../hooks/useHref";
@@ -32,12 +32,12 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
           setCurrentProductId(newProductId as FernNavigation.ProductId);
         }}
         options={products.map(
-          ({ productId, title, subtitle, slug, pointsTo, hidden }) => ({
+          ({ productId, title, subtitle, slug, pointsTo, hidden, icon }) => ({
             type: "value",
             label: (
               <div className="flex items-center gap-3">
                 <div className="bg-background-tertiary flex size-10 shrink-0 items-center justify-center rounded-lg">
-                  <ProductIcon productId={productId} />
+                  <ProductIcon icon={icon} />
                 </div>
                 <div className="flex flex-col gap-0.5">
                   <span className="font-medium">{title}</span>
@@ -65,7 +65,7 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
           variant="outlined"
           text={currentProduct?.title ?? currentProductId}
           rightIcon={
-            <NavArrowDown className="transition-transform data-[state=open]:rotate-180" />
+            <ChevronDown className="transition-transform data-[state=open]:rotate-180" />
           }
           disableAutomaticTooltip
         />
@@ -74,58 +74,17 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
   );
 };
 
-const ProductIcon = ({
-  productId,
-}: {
-  productId: FernNavigation.ProductId;
-}) => {
-  switch (productId) {
-    case "sdks":
-      return <CodeIcon className="text-accent size-5" />;
-    case "docs":
-      return <DocumentIcon className="text-accent size-5" />;
-    default:
-      return null;
+const ProductIcon = ({ icon }: { icon?: string }) => {
+  if (icon) {
+    return (
+      <RemoteFontAwesomeIcon
+        className="text-accent group-hover:text-accent-hover size-5"
+        icon={icon.replace(/^fa-(?:brands|regular|solid)-/, "")}
+      />
+    );
   }
+
+  return (
+    <Package className="text-accent group-hover:text-accent-hover size-5" />
+  );
 };
-
-const CodeIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M8 6L3 12L8 18M16 6L21 12L16 18"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const DocumentIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={className}
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M7 7H17M7 12H17M7 17H13"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
