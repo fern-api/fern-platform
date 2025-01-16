@@ -1,5 +1,4 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { BASEPATH_ATOM } from "../atoms/navigation";
 
 export const mockProducts: FernNavigation.ProductNode[] = [
   {

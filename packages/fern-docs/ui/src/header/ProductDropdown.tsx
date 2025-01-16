@@ -1,5 +1,5 @@
-import { FernButton } from "@fern-docs/components";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { FernButton } from "@fern-docs/components";
 import { NavArrowDown } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { CURRENT_PRODUCT_ID_ATOM, PRODUCTS_ATOM } from "../atoms/navigation";
@@ -32,11 +32,11 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
           setCurrentProductId(newProductId);
         }}
         options={products.map(
-          ({ productId, title, subtitle, slug, pointsTo, hidden, authed }) => ({
+          ({ productId, title, subtitle, slug, pointsTo, hidden }) => ({
             type: "value",
             label: (
               <div className="flex items-center gap-3">
-                <div className="bg-background-tertiary flex h-10 w-10 shrink-0 items-center justify-center rounded-lg">
+                <div className="bg-background-tertiary flex size-10 shrink-0 items-center justify-center rounded-lg">
                   <ProductIcon productId={productId} />
                 </div>
                 <div className="flex flex-col gap-0.5">
@@ -81,9 +81,9 @@ const ProductIcon = ({
 }) => {
   switch (productId) {
     case "sdks":
-      return <CodeIcon className="text-accent h-5 w-5" />;
+      return <CodeIcon className="text-accent size-5" />;
     case "docs":
-      return <DocumentIcon className="text-accent h-5 w-5" />;
+      return <DocumentIcon className="text-accent size-5" />;
     default:
       return null;
   }

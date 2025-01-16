@@ -1,14 +1,14 @@
 import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
+import { SidebarTab } from "@fern-platform/fdr-utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
+import { mockProducts } from "../mocks/products";
 import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 import { NavbarLink } from "./types";
-import { mockProducts } from "../mocks/products";
 
 export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
 DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
@@ -41,10 +41,41 @@ export const CURRENT_TAB_INDEX_ATOM = atom<number | undefined>(
 );
 CURRENT_TAB_INDEX_ATOM.debugLabel = "CURRENT_TAB_INDEX_ATOM";
 
-export const CURRENT_PRODUCT_ID_ATOM = atom<FernNavigation.ProductId>((get) => {
-  const products = get(PRODUCTS_ATOM);
-  return products[0]?.id;
-});
+// Jotai recipe: atomWithRefreshAndDefault https://jotai.org/docs/recipes/atom-with-refresh-and-default
+const PRODUCT_REFRESH_ATOM = atom(0);
+const SETTABLE_CURRENT_PRODUCT_ID_ATOM = atom<
+  FernNavigation.ProductId | undefined
+>(undefined);
+SETTABLE_CURRENT_PRODUCT_ID_ATOM.debugLabel =
+  "SETTABLE_CURRENT_PRODUCT_ID_ATOM";
+export const CURRENT_PRODUCT_ID_ATOM = (() => {
+  const overwrittenAtom = atom<{
+    refresh: number;
+    value: FernNavigation.ProductId | undefined;
+  } | null>(null);
+
+  return atom(
+    (get) => {
+      const lastState = get(overwrittenAtom);
+      if (lastState && lastState.refresh === get(PRODUCT_REFRESH_ATOM)) {
+        return lastState.value;
+      }
+      const products = get(PRODUCTS_ATOM);
+      return (
+        get(SETTABLE_CURRENT_PRODUCT_ID_ATOM) ??
+        products[0]?.id ??
+        products[0]?.productId
+      );
+    },
+    (get, set, update: FernNavigation.ProductId | undefined) => {
+      set(overwrittenAtom, {
+        refresh: get(PRODUCT_REFRESH_ATOM),
+        value: update,
+      });
+      set(SETTABLE_CURRENT_PRODUCT_ID_ATOM, update);
+    }
+  );
+})();
 CURRENT_PRODUCT_ID_ATOM.debugLabel = "CURRENT_PRODUCT_ID_ATOM";
 
 export const FILTERED_VERSIONS_ATOM = atom((get) => {
@@ -61,12 +92,36 @@ export const FILTERED_VERSIONS_ATOM = atom((get) => {
 });
 FILTERED_VERSIONS_ATOM.debugLabel = "FILTERED_VERSIONS_ATOM";
 
-export const CURRENT_VERSION_ID_ATOM = atom<
+const VERSION_REFRESH_ATOM = atom(0);
+const SETTABLE_CURRENT_VERSION_ID_ATOM = atom<
   FernNavigation.VersionId | undefined
->((get) => {
-  const filteredVersions = get(FILTERED_VERSIONS_ATOM);
-  return filteredVersions[0]?.id;
-});
+>(undefined);
+SETTABLE_CURRENT_VERSION_ID_ATOM.debugLabel =
+  "SETTABLE_CURRENT_VERSION_ID_ATOM";
+export const CURRENT_VERSION_ID_ATOM = (() => {
+  const overwrittenAtom = atom<{
+    refresh: number;
+    value: FernNavigation.VersionId | undefined;
+  } | null>(null);
+
+  return atom(
+    (get) => {
+      const lastState = get(overwrittenAtom);
+      if (lastState && lastState.refresh === get(VERSION_REFRESH_ATOM)) {
+        return lastState.value;
+      }
+      const filteredVersions = get(FILTERED_VERSIONS_ATOM);
+      return get(SETTABLE_CURRENT_VERSION_ID_ATOM) ?? filteredVersions[0]?.id;
+    },
+    (get, set, update: FernNavigation.VersionId | undefined) => {
+      set(overwrittenAtom, {
+        refresh: get(VERSION_REFRESH_ATOM),
+        value: update,
+      });
+      set(SETTABLE_CURRENT_VERSION_ID_ATOM, update);
+    }
+  );
+})();
 CURRENT_VERSION_ID_ATOM.debugLabel = "CURRENT_VERSION_ID_ATOM";
 
 export const TRAILING_SLASH_ATOM = atom<boolean>(
@@ -84,7 +139,7 @@ NAVBAR_LINKS_ATOM.debugLabel = "NAVBAR_LINKS_ATOM";
 export const CURRENT_VERSION_ATOM = atom((get) => {
   const versionId = get(CURRENT_VERSION_ID_ATOM);
   const versions = get(VERSIONS_ATOM);
-  return versions.find((v) => v.id === versionId);
+  return versions.find((v) => v.versionId === versionId);
 });
 CURRENT_VERSION_ATOM.debugLabel = "CURRENT_VERSION_ATOM";
 
@@ -185,9 +240,5 @@ export function useBasePath(): string | undefined {
   return useAtomValue(BASEPATH_ATOM);
 }
 
-export const PRODUCTS_ATOM = selectAtom(
-  DOCS_ATOM,
-  (docs) => mockProducts,
-  isEqual
-);
+export const PRODUCTS_ATOM = selectAtom(DOCS_ATOM, () => mockProducts, isEqual);
 PRODUCTS_ATOM.debugLabel = "PRODUCTS_ATOM";
