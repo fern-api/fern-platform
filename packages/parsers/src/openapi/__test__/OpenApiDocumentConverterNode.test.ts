@@ -57,13 +57,15 @@ describe("OpenAPI snapshot tests", () => {
         converted = converter.convert();
       }
 
-      // Create snapshot
       if (errors.length > 0) {
-        // console.error("errors:", errors);
+        expect(errors).toMatchSnapshot(
+          `./__snapshots__/pathing/errors/${directory}.txt`
+        );
       }
-      // expect(errors).toHaveLength(0);
       if (warnings.length > 0) {
-        // console.warn("warnings:", warnings);
+        expect(errors).toMatchSnapshot(
+          `./__snapshots__/pathing/warnings/${directory}.txt`
+        );
       }
 
       converted.id = "test-uuid-replacement";
