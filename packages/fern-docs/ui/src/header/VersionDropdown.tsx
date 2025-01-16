@@ -1,10 +1,11 @@
 import { FernButton } from "@fern-docs/components";
 import { getVersionAvailabilityLabel } from "@fern-platform/fdr-utils";
-import { Lock, NavArrowDown } from "iconoir-react";
+import { motion } from "framer-motion";
 import { useAtomValue } from "jotai";
+import { ChevronDown, Lock } from "lucide-react";
 import {
-  CURRENT_VERSION_ID_ATOM,
   CURRENT_PRODUCT_ID_ATOM,
+  CURRENT_VERSION_ID_ATOM,
   PRODUCTS_ATOM,
 } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
@@ -47,7 +48,7 @@ export const VersionDropdown = () => {
             disabled: availability == null,
             href: toHref(pointsTo ?? slug),
             icon: authed ? (
-              <Lock className="text-faded size-4 self-center" />
+              <Lock className="text-muted size-4 self-center" />
             ) : undefined,
             className: hidden ? "opacity-50" : undefined,
           })
@@ -60,9 +61,18 @@ export const VersionDropdown = () => {
           data-testid="version-dropdown"
           intent="primary"
           variant="outlined"
+          className="h-12 px-3"
           text={currentVersion?.title ?? currentVersionId}
           rightIcon={
-            <NavArrowDown className="transition-transform data-[state=open]:rotate-180" />
+            <motion.div
+              animate={{
+                rotate:
+                  "var(--radix-dropdown-menu-trigger-data-[state=open]:rotate-180)",
+              }}
+              transition={{ type: "spring", stiffness: 200, damping: 15 }}
+            >
+              <ChevronDown className="text-muted size-4" />
+            </motion.div>
           }
           disableAutomaticTooltip
         />

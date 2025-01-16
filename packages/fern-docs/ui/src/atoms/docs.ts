@@ -37,6 +37,8 @@ export const EMPTY_DOCS_STATE: DocsProps = {
     versions: [],
     sidebar: undefined,
     trailingSlash: false,
+    currentProductId: undefined,
+    products: [],
   },
   title: undefined,
   favicon: undefined,

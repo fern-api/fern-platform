@@ -41,6 +41,7 @@ export const mockProducts: FernNavigation.ProductNode[] = [
             id: FernNavigation.NodeId("sdks-sidebar"),
             children: [],
           },
+          featureFlags: [],
         },
         {
           type: "version",
@@ -63,6 +64,7 @@ export const mockProducts: FernNavigation.ProductNode[] = [
             id: FernNavigation.NodeId("sdks-sidebar-v2"),
             children: [],
           },
+          featureFlags: [],
         },
         {
           type: "version",
@@ -85,9 +87,11 @@ export const mockProducts: FernNavigation.ProductNode[] = [
             id: FernNavigation.NodeId("sdks-sidebar-v3"),
             children: [],
           },
+          featureFlags: [],
         },
       ],
     },
+    featureFlags: [],
   },
   {
     type: "product",
@@ -114,5 +118,6 @@ export const mockProducts: FernNavigation.ProductNode[] = [
       },
       landingPage: undefined,
     },
+    featureFlags: [],
   },
 ];
