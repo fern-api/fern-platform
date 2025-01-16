@@ -2,7 +2,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "paths",
       "/v1/datasets/usage",
       "get",
@@ -15,7 +14,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "paths",
       "/v1/datasets/usage",
       "get",
@@ -35,7 +33,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
     "path": [
-      "cohere",
       "paths",
       "/v1/connectors",
       "get",
@@ -56,7 +53,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
     "path": [
-      "cohere",
       "paths",
       "/v1/connectors",
       "post",
@@ -84,7 +80,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
     "path": [
-      "cohere",
       "paths",
       "/v1/connectors/{id}",
       "get",
@@ -112,7 +107,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
     "path": [
-      "cohere",
       "paths",
       "/v1/connectors/{id}",
       "patch",
@@ -140,7 +134,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "Image",
     ],
@@ -148,7 +141,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "Image",
     ],
@@ -156,7 +148,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "Image",
     ],
@@ -164,7 +155,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received string",
     "path": [
-      "cohere",
       "components",
       "CreateEmbedJobRequest",
     ],
@@ -172,7 +162,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "RerankerDataMetrics",
     ],
@@ -180,7 +169,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "RerankerDataMetrics",
     ],
@@ -188,7 +176,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "RerankerDataMetrics",
     ],
@@ -196,7 +183,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "RerankerDataMetrics",
     ],
@@ -204,7 +190,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "RerankerDataMetrics",
     ],
@@ -212,7 +197,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "RerankerDataMetrics",
     ],
@@ -220,7 +204,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "ChatDataMetrics",
     ],
@@ -228,7 +211,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "ChatDataMetrics",
     ],
@@ -236,7 +218,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "LabelMetric",
     ],
@@ -244,7 +225,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "FinetuneDatasetMetrics",
     ],
@@ -252,7 +232,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "FinetuneDatasetMetrics",
     ],
@@ -260,7 +239,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "FinetuneDatasetMetrics",
     ],
@@ -268,7 +246,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "FinetuneDatasetMetrics",
     ],
@@ -276,7 +253,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "FinetuneDatasetMetrics",
     ],
@@ -284,7 +260,6 @@
   {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
-      "cohere",
       "components",
       "FinetuneDatasetMetrics",
     ],
@@ -292,7 +267,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received enum",
     "path": [
-      "cohere",
       "components",
       "Connector",
     ],

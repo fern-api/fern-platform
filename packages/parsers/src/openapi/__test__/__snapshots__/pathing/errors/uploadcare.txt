@@ -2,7 +2,6 @@
   {
     "message": "Unprocessable reference: #/components/responses/fileCopyErrors/content/application~1json/schema",
     "path": [
-      "uploadcare",
       "paths",
       "/files/remote_copy/",
       "post",
@@ -16,7 +15,6 @@
   {
     "message": "Invalid example, expected object for json",
     "path": [
-      "uploadcare",
       "paths",
       "/files/{uuid}/metadata/{key}/",
       "get",
@@ -29,7 +27,6 @@
   {
     "message": "Invalid example, expected object for json",
     "path": [
-      "uploadcare",
       "paths",
       "/files/{uuid}/metadata/{key}/",
       "put",
@@ -42,7 +39,6 @@
   {
     "message": "Invalid example, expected object for json",
     "path": [
-      "uploadcare",
       "paths",
       "/files/{uuid}/metadata/{key}/",
       "put",
@@ -55,7 +51,6 @@
   {
     "message": "Error converting node. Please contact support if the error persists",
     "path": [
-      "uploadcare",
       "paths",
       "/groups/{uuid}/",
       "get",
@@ -76,7 +71,6 @@
   {
     "message": "Expected 'items' property to be specified",
     "path": [
-      "uploadcare",
       "paths",
       "/groups/{uuid}/",
       "get",
@@ -96,7 +90,6 @@
   {
     "message": "Error converting node. Please contact support if the error persists",
     "path": [
-      "uploadcare",
       "paths",
       "/groups/{uuid}/",
       "get",
@@ -117,7 +110,6 @@
   {
     "message": "Expected 'items' property to be specified",
     "path": [
-      "uploadcare",
       "paths",
       "/groups/{uuid}/",
       "get",
@@ -137,7 +129,6 @@
   {
     "message": "Expected enum values to be strings. Received 0",
     "path": [
-      "uploadcare",
       "components",
       "fileCopy",
       "enum[0]",
@@ -146,7 +137,6 @@
   {
     "message": "Expected enum values to be strings. Received null",
     "path": [
-      "uploadcare",
       "components",
       "fileCopy",
       "enum[0]",
@@ -155,7 +145,6 @@
   {
     "message": "Expected enum values to be strings. Received null",
     "path": [
-      "uploadcare",
       "components",
       "fileCopy",
       "enum[0]",
@@ -164,7 +153,6 @@
   {
     "message": "Error converting node. Please contact support if the error persists",
     "path": [
-      "uploadcare",
       "components",
       "groupWithFiles",
       "items",
@@ -173,7 +161,6 @@
   {
     "message": "Expected 'items' property to be specified",
     "path": [
-      "uploadcare",
       "components",
       "groupWithFiles",
     ],

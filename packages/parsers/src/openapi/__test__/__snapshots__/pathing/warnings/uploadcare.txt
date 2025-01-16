@@ -2,7 +2,6 @@
   {
     "message": "Expected request body of reference or object with json, streaming or form-data content types. Received: application/x-www-form-urlencoded",
     "path": [
-      "uploadcare",
       "paths",
       "/webhooks/",
       "post",
@@ -13,7 +12,6 @@
   {
     "message": "Expected request body of reference or object with json, streaming or form-data content types. Received: application/x-www-form-urlencoded",
     "path": [
-      "uploadcare",
       "paths",
       "/webhooks/{id}/",
       "put",
@@ -24,7 +22,6 @@
   {
     "message": "Expected request body of reference or object with json, streaming or form-data content types. Received: application/x-www-form-urlencoded",
     "path": [
-      "uploadcare",
       "paths",
       "/webhooks/unsubscribe/",
       "delete",
@@ -35,7 +32,6 @@
   {
     "message": "Expected format to be one of base64url, binary, byte, char, commonmark, date-time, date, decimal, decimal128, duration, email, hostname, html, http-date, idn-email, idn-hostname, int64, ipv4, ipv6, iri-reference, iri, json-pointer, media-range, password, regex, relative-json-pointer, sf-binary, sf-boolean, sf-string, sf-token, time, uri-reference, uri-template, uri, uuid. Received url",
     "path": [
-      "uploadcare",
       "components",
       "copiedFileURL",
     ],
