@@ -69,7 +69,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               input: contentTypeObject,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: "content",
+              pathId: ["content", contentType],
             },
             contentType,
             streamingFormat,

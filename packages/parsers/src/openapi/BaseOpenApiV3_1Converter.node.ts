@@ -13,7 +13,7 @@ export type BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> = {
   input: Input;
   context: BaseOpenApiV3_1ConverterNodeContext;
   readonly accessPath: string[];
-  readonly pathId: string;
+  readonly pathId: string | string[];
 };
 
 export abstract class BaseOpenApiV3_1ConverterNode<
@@ -22,7 +22,7 @@ export abstract class BaseOpenApiV3_1ConverterNode<
 > extends BaseApiConverterNode<Input, Output> {
   protected override readonly context: BaseOpenApiV3_1ConverterNodeContext;
   protected readonly accessPath: string[];
-  protected readonly pathId: string;
+  protected readonly pathId: string | string[];
 
   constructor({
     input,
@@ -37,10 +37,13 @@ export abstract class BaseOpenApiV3_1ConverterNode<
     this.pathId = pathId;
 
     if (
-      this.pathId &&
+      this.pathId != null &&
       this.pathId !== this.accessPath[this.accessPath.length - 1]
     ) {
-      this.accessPath.push(this.pathId);
+      this.accessPath.push(
+        ...(Array.isArray(this.pathId) ? this.pathId : [this.pathId])
+      );
+
       context.logger.debug(`Processing ${toOpenApiPath(this.accessPath)}`);
     }
   }

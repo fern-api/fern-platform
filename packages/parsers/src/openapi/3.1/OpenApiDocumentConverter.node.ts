@@ -2,7 +2,6 @@ import { camelCase } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import { FernRegistry } from "../../client/generated";
-import { SubpackageId } from "../../client/generated/api/resources/api/resources/v1";
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -70,7 +69,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             input: tag,
             context: this.context,
             accessPath: this.accessPath,
-            pathId: `tags[${index}]`,
+            pathId: ["tags", `${index}`],
           })
       );
     }
@@ -143,8 +142,9 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
     const apiDefinitionId = v4();
 
     const { webhookEndpoints, endpoints } = this.paths?.convert() ?? {};
+
     const subpackages: Record<
-      SubpackageId,
+      FernRegistry.api.v1.SubpackageId,
       FernRegistry.api.latest.SubpackageMetadata
     > = {};
     if (endpoints != null) {
