@@ -8,7 +8,7 @@ import { OpenApiDocumentConverterNode } from "../3.1/OpenApiDocumentConverter.no
 import { BaseOpenApiV3_1ConverterNodeContext } from "../BaseOpenApiV3_1Converter.node";
 
 function replaceEndpointUUIDs(json: string): string {
-  return json.replace(
+  return json.replaceAll(
     /"[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"/g,
     '"test-uuid-replacement"'
   );
@@ -58,12 +58,12 @@ describe("OpenAPI snapshot tests", () => {
       }
 
       if (errors.length > 0) {
-        expect(errors).toMatchSnapshot(
+        await expect(errors).toMatchFileSnapshot(
           `./__snapshots__/pathing/errors/${directory}.txt`
         );
       }
       if (warnings.length > 0) {
-        expect(errors).toMatchSnapshot(
+        await expect(warnings).toMatchFileSnapshot(
           `./__snapshots__/pathing/warnings/${directory}.txt`
         );
       }

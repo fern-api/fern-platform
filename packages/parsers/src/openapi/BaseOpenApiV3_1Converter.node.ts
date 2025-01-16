@@ -40,15 +40,9 @@ export abstract class BaseOpenApiV3_1ConverterNode<
       this.pathId != null &&
       this.pathId !== this.accessPath[this.accessPath.length - 1]
     ) {
-      if (Array.isArray(this.pathId)) {
-        this.pathId.map((pathId) =>
-          this.accessPath.push(pathId.replace(/\//g, "~0").replace(/\//g, "~1"))
-        );
-      } else {
-        this.accessPath.push(
-          this.pathId.replace(/~/g, "~0").replace(/\//g, "~1")
-        );
-      }
+      this.accessPath.push(
+        ...(Array.isArray(this.pathId) ? this.pathId : [this.pathId])
+      );
 
       context.logger.debug(`Processing ${toOpenApiPath(this.accessPath)}`);
     }
