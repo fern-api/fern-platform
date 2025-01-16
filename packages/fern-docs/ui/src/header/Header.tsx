@@ -20,9 +20,6 @@ import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
 import { HeaderLogoSection } from "./HeaderLogoSection";
 import { MobileMenuButton } from "./MobileMenuButton";
-import { ProductDropdown } from "./ProductDropdown";
-import { VersionDropdown } from "./VersionDropdown";
-import { NavigationControls } from "./NavigationControls";
 
 export declare namespace Header {
   export interface Props {
@@ -103,57 +100,62 @@ const UnmemoizedHeader = forwardRef<
   const githubRepo = githubLink && getGitHubRepo(githubLink.href);
 
   return (
-    <header className="z-header h-header border-divider bg-background sticky top-0 flex flex-col border-b">
-      <div className="flex h-[var(--header-content-height)] items-center justify-between gap-4 px-6">
-        <div className="flex items-center gap-4">
-          <HeaderLogoSection />
+    <nav
+      aria-label="primary"
+      className={cn("fern-header-content", className)}
+      ref={ref}
+      style={style}
+    >
+      <HeaderLogoSection />
 
-          {showSearchBar && (
-            <div
-              className={cn("fern-header-searchbar", {
-                invisible: isSearchBoxMounted,
-              })}
-            >
-              <SidebarSearchBar className="w-full" />
-            </div>
-          )}
+      {showSearchBar && (
+        <div
+          className={cn("fern-header-searchbar", {
+            invisible: isSearchBoxMounted,
+          })}
+        >
+          <SidebarSearchBar className="w-full" />
         </div>
+      )}
 
-        <div className="flex items-center gap-2">
-          <NavigationControls />
+      <div
+        className={cn("fern-header-right-menu", {
+          "flex-1": showSearchBar,
+        })}
+      >
+        {navbarLinksSection}
 
-          <div className="max-lg-menu">
-            {githubRepo && (
-              <GitHubWidget
-                repo={githubRepo}
-                className={githubLink?.className}
-                id={githubLink?.id}
-              />
-            )}
+        <div className="max-lg-menu">
+          {githubRepo && (
+            <GitHubWidget
+              repo={githubRepo}
+              className={githubLink?.className}
+              id={githubLink?.id}
+            />
+          )}
 
-            {colors.dark && colors.light && <ThemeButton size="large" />}
+          {colors.dark && colors.light && <ThemeButton size="large" />}
 
-            {searchService.isAvailable && (
-              <FernButton
-                onClickCapture={(e) => {
-                  e.stopPropagation();
-                  openSearchDialog();
-                }}
-                icon={<Search className="!size-icon-md" />}
-                intent="none"
-                variant="minimal"
-                rounded={true}
-                size="large"
-                className="max-sm:hidden"
-                id="fern-search-button"
-              />
-            )}
+          {searchService.isAvailable && (
+            <FernButton
+              onClickCapture={(e) => {
+                e.stopPropagation();
+                openSearchDialog();
+              }}
+              icon={<Search className="!size-icon-md" />}
+              intent="none"
+              variant="minimal"
+              rounded={true}
+              size="large"
+              className="max-sm:hidden"
+              id="fern-search-button"
+            />
+          )}
 
-            <MobileMenuButton />
-          </div>
+          <MobileMenuButton />
         </div>
       </div>
-    </header>
+    </nav>
   );
 });
 

@@ -1,13 +1,12 @@
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
-import { LOGO_HREF_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM } from "../atoms";
+import { LOGO_HREF_ATOM, LOGO_TEXT_ATOM } from "../atoms";
 import { FernLink } from "../components/FernLink";
 import { HeaderLogoImage } from "./HeaderLogoImage";
-import { VersionDropdown } from "./VersionDropdown";
+import { NavigationControls } from "./NavigationControls";
 
 export function HeaderLogoSection(): ReactElement {
   const logoHref = useAtomValue(LOGO_HREF_ATOM);
-  const versions = useAtomValue(VERSIONS_ATOM);
   const logoText = useAtomValue(LOGO_TEXT_ATOM);
 
   return (
@@ -21,11 +20,7 @@ export function HeaderLogoSection(): ReactElement {
             </span>
           )}
         </HeaderLogoContainer>
-        {versions.length > 1 && (
-          <div>
-            <VersionDropdown />
-          </div>
-        )}
+        <NavigationControls />
       </div>
     </div>
   );
