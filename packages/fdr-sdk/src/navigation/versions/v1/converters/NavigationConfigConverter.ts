@@ -92,15 +92,14 @@ export class NavigationConfigConverter {
         viewers: undefined,
         orphaned: undefined,
         roles: undefined,
+        featureFlags: undefined,
       };
 
       // tag all children of hidden nodes as hidden
       FernNavigation.V1.traverseDF(toRet, (node, parents) => {
         if (
           FernNavigation.V1.hasMetadata(node) &&
-          parents.some(
-            (p) => FernNavigation.V1.hasMetadata(p) && p.hidden === true
-          )
+          parents.some((p) => FernNavigation.V1.hasMetadata(p) && p.hidden)
         ) {
           node.hidden = true;
         }
@@ -145,6 +144,7 @@ export class NavigationConfigConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
+                featureFlags: undefined,
               };
             }
           );
@@ -193,6 +193,7 @@ export class NavigationConfigConverter {
                       authed: undefined,
                       viewers: undefined,
                       orphaned: undefined,
+                      featureFlags: undefined,
                     };
                   });
                 } else if (tab.type === "link") {
@@ -215,7 +216,7 @@ export class NavigationConfigConverter {
                 } else if (tab.type === "changelogV3") {
                   return tab.node as unknown as FernNavigation.V1.ChangelogNode;
                 } else {
-                  assertNever(tab as never);
+                  assertNever(tab);
                 }
               }),
             }),
@@ -252,11 +253,13 @@ export class NavigationConfigConverter {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
+            featureFlags: undefined,
           };
         }),
         authed: undefined,
         viewers: undefined,
         orphaned: undefined,
+        featureFlags: undefined,
       };
     });
   }
@@ -318,6 +321,7 @@ export class NavigationConfigConverter {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
+            featureFlags: undefined,
           };
         }),
       link: (link) =>
@@ -368,6 +372,7 @@ export class NavigationConfigConverter {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
+            featureFlags: undefined,
           };
         }),
       api: (apiSection) => {

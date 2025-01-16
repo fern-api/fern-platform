@@ -2,6 +2,7 @@
 
 imports:
   commons: ../../commons.yml
+  latest: ../latest/__package__.yml
 
 types:
   Slug:
@@ -325,6 +326,7 @@ types:
     extends:
       - WithNodeId
       - WithPermissions
+      - latest.WithFeatureFlags
     properties:
       title: string
       slug: Slug
