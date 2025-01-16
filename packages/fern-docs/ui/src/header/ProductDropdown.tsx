@@ -29,7 +29,7 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
       <FernLinkDropdown
         value={currentProductId}
         onValueChange={(newProductId) => {
-          setCurrentProductId(newProductId);
+          setCurrentProductId(newProductId as FernNavigation.ProductId);
         }}
         options={products.map(
           ({ productId, title, subtitle, slug, pointsTo, hidden }) => ({
