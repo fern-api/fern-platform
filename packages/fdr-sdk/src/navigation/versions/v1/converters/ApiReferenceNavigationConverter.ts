@@ -539,7 +539,7 @@ export class ApiReferenceNavigationConverter {
 
       if (
         existing == null ||
-        !toRet.includes(existing) ||
+        toRet.indexOf(existing) === -1 ||
         existing.isResponseStream === child.isResponseStream
       ) {
         toRet.push(child);
