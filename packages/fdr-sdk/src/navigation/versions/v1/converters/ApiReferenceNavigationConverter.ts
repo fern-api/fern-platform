@@ -101,8 +101,7 @@ export class ApiReferenceNavigationConverter {
         overviewPageId,
         noindex,
         paginated:
-          this.paginated ??
-          (this.apiSection.longScrolling === false ? true : undefined),
+          this.paginated ?? (!this.apiSection.longScrolling ? true : undefined),
         slug: slug.get(),
         icon: this.apiSection.icon,
         hidden: this.apiSection.hidden,
@@ -116,6 +115,7 @@ export class ApiReferenceNavigationConverter {
         authed: undefined,
         viewers: undefined,
         orphaned: undefined,
+        featureFlags: undefined,
       };
     });
   }
@@ -158,6 +158,7 @@ export class ApiReferenceNavigationConverter {
         authed: undefined,
         viewers: undefined,
         orphaned: undefined,
+        featureFlags: undefined,
       };
     });
   }
@@ -183,6 +184,7 @@ export class ApiReferenceNavigationConverter {
       authed: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     }));
   }
 
@@ -205,6 +207,7 @@ export class ApiReferenceNavigationConverter {
       authed: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     }));
   }
 
@@ -271,7 +274,6 @@ export class ApiReferenceNavigationConverter {
     package_.subpackages.forEach((subpackageId) => {
       const subpackage = this.api.subpackages[subpackageId];
       if (subpackage == null) {
-        // eslint-disable-next-line no-console
         console.error(
           `Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`
         );
@@ -307,6 +309,7 @@ export class ApiReferenceNavigationConverter {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
+            featureFlags: undefined,
           };
         }
       );
@@ -385,6 +388,7 @@ export class ApiReferenceNavigationConverter {
                 authed: undefined,
                 viewers: undefined,
                 orphaned: undefined,
+                featureFlags: undefined,
               };
             })
           );
@@ -392,7 +396,6 @@ export class ApiReferenceNavigationConverter {
         endpointId: (oldEndpointId) => {
           const endpoint = endpoints.get(oldEndpointId.value);
           if (endpoint == null) {
-            // eslint-disable-next-line no-console
             console.error(
               `Endpoint ${oldEndpointId.value} not found in ${targetSubpackageId}`
             );
@@ -410,7 +413,6 @@ export class ApiReferenceNavigationConverter {
         websocketId: (oldWebSocketId) => {
           const webSocket = webSockets.get(oldWebSocketId.value);
           if (webSocket == null) {
-            // eslint-disable-next-line no-console
             console.error(
               `WebSocket ${oldWebSocketId.value} not found in ${targetSubpackageId}`
             );
@@ -428,7 +430,6 @@ export class ApiReferenceNavigationConverter {
         webhookId: (oldWebhookId) => {
           const webhook = webhooks.get(oldWebhookId.value);
           if (webhook == null) {
-            // eslint-disable-next-line no-console
             console.error(
               `Webhook ${oldWebhookId.value} not found in ${targetSubpackageId}`
             );
@@ -446,7 +447,6 @@ export class ApiReferenceNavigationConverter {
         subpackage: ({ subpackageId, items, summaryPageId }) => {
           const subpackage = this.api.subpackages[subpackageId];
           if (subpackage == null) {
-            // eslint-disable-next-line no-console
             console.error(
               `Subpackage ${subpackageId} not found in ${targetSubpackageId}`
             );
@@ -494,6 +494,7 @@ export class ApiReferenceNavigationConverter {
               authed: undefined,
               viewers: undefined,
               orphaned: undefined,
+              featureFlags: undefined,
             });
           });
         },
@@ -537,7 +538,7 @@ export class ApiReferenceNavigationConverter {
 
       if (
         existing == null ||
-        toRet.indexOf(existing) === -1 ||
+        !toRet.includes(existing) ||
         existing.isResponseStream === child.isResponseStream
       ) {
         toRet.push(child);

@@ -69,6 +69,7 @@ export function toRootNode(
       authed: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
       id: FernNavigation.V1.NodeId("root"),
       pointsTo: undefined,
       roles: undefined,
