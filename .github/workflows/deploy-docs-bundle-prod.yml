@@ -1,6 +1,7 @@
 name: Deploy @fern-docs/bundle
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - ui@*
