@@ -115,7 +115,7 @@ export const EndpointUrl = React.forwardRef<
 
       <div className={cn("flex items-center")}>
         <span
-          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} cursor-default rounded-md px-1 py-1`}
+          className={`inline-flex shrink items-baseline ${isHovered ? "hover:bg-tag-default" : ""} cursor-default rounded-md p-1`}
         >
           <CopyToClipboardButton
             content={() =>
