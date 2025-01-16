@@ -60,8 +60,13 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   }
 
   parse(contentType: string | undefined): void {
+    // This sets examples derived from OpenAPI examples.
+    // this.input.example is typed as any
+    // this.input.examples is typed as Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3.ExampleObject> | undefined
+    // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
+    // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
     this.examples = {
-      ...(this.input.example != null
+      ...(this.input.example != null || this.schema?.example() != null
         ? {
             "": { value: this.input.example ?? this.schema?.example() },
           }

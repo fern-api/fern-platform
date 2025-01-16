@@ -226,6 +226,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     }
 
     // In this, we match example names on the request and response. If the example is directly on the request or response, we add to everywhere.
+    // Here, this.input.examples is typed as Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject> | undefined
+    // this.input.example is typed as any
+    // We add a default string key for an example, which should be treated as a global example
+    // We then wrap in an ExampleObject for a consistent shape
     Object.entries({
       "": { value: this.input.example },
       ...this.input.examples,
@@ -243,6 +247,11 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       );
 
       this.examples ??= [];
+      // Here, resolvedSchema?.examples is typed as any[]
+      // resolvedSchema?.example is typed as any
+      // We add a default string key for an example, which should be treated as a global example
+      // We then fallback to generating an example from underlying schemas, which may have examples, or defaults or fallback values
+      // We then wrap in an ExampleObject for a consistent shape
       Object.entries({
         ...resolvedSchema?.examples,
         "": resolvedSchema?.example,
