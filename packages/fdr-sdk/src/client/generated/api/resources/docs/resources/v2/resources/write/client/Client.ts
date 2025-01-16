@@ -269,6 +269,9 @@ export class Write {
      *                                 orphaned: {
      *                                     "key": "value"
      *                                 },
+     *                                 featureFlags: {
+     *                                     "key": "value"
+     *                                 },
      *                                 pointsTo: {
      *                                     "key": "value"
      *                                 }
@@ -294,6 +297,9 @@ export class Write {
      *                         "key": "value"
      *                     },
      *                     orphaned: {
+     *                         "key": "value"
+     *                     },
+     *                     featureFlags: {
      *                         "key": "value"
      *                     },
      *                     pointsTo: {
