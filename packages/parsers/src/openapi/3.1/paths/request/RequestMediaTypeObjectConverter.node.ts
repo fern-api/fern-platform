@@ -60,6 +60,15 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   }
 
   parse(contentType: string | undefined): void {
+    this.examples = {
+      ...(this.input.example != null
+        ? {
+            "": { value: this.input.example ?? this.schema?.example() },
+          }
+        : {}),
+      ...this.input.examples,
+    };
+
     if (this.input.schema != null) {
       if (isReferenceObject(this.input.schema)) {
         this.resolvedSchema = resolveReference(
@@ -130,14 +139,6 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         path: this.accessPath,
       });
     }
-
-    this.examples = {
-      "":
-        this.input.example != null
-          ? { value: this.input.example }
-          : this.input.example,
-      ...this.input.examples,
-    };
   }
 
   convert():

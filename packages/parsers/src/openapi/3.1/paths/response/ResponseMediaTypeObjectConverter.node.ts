@@ -91,7 +91,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                   },
                   context: this.context,
                   accessPath: this.accessPath,
-                  pathId: `examples[${i}]`,
+                  pathId: ["examples", `${i}`],
                 },
                 this.path,
                 this.statusCode,
@@ -130,7 +130,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                   },
                   context: this.context,
                   accessPath: this.accessPath,
-                  pathId: `examples[${i}]`,
+                  pathId: ["examples", `${i}`],
                 },
                 this.path,
                 this.statusCode,
@@ -226,11 +226,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     }
 
     // In this, we match example names on the request and response. If the example is directly on the request or response, we add to everywhere.
-    Object.entries(
-      this.input.examples ?? {
-        "": { value: this.input.example },
-      }
-    ).forEach(([exampleName, exampleObject], i) => {
+    Object.entries({
+      "": { value: this.input.example },
+      ...this.input.examples,
+    }).forEach(([exampleName, exampleObject], i) => {
       this.examples ??= [];
       this.examples = this.examples.concat(
         this.generateSupportedExamples(exampleName, exampleObject, i)
@@ -244,11 +243,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       );
 
       this.examples ??= [];
-      Object.entries(
-        resolvedSchema?.examples ?? {
-          "": resolvedSchema?.example,
-        }
-      ).forEach(([exampleName, exampleObject], i) => {
+      Object.entries({
+        ...resolvedSchema?.examples,
+        "": resolvedSchema?.example,
+      }).forEach(([exampleName, exampleObject], i) => {
         this.examples ??= [];
         this.examples = this.examples.concat(
           this.generateUnsupportedExamples(exampleName, exampleObject, i)
@@ -267,7 +265,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             }).example(),
         };
 
-        if (fallbackExample != null) {
+        if (fallbackExample.value != null) {
           this.examples = this.examples.concat(
             this.generateFallbackExamples(fallbackExample)
           );
