@@ -5,6 +5,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { ChevronDown, Package } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { CURRENT_PRODUCT_ID_ATOM, PRODUCTS_ATOM } from "../atoms/navigation";
+import { FernLink } from "../components/FernLink";
 import { useToHref } from "../hooks/useHref";
 
 export declare namespace ProductDropdown {
@@ -167,34 +168,37 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
                       hidden,
                       icon,
                     }) => (
-                      <motion.div
+                      <FernLink
                         key={productId}
-                        variants={itemVariants}
-                        className={`border-border/50 group flex cursor-pointer items-start gap-4 rounded-lg border p-4 transition-all ${currentProductId === productId ? "border-accent bg-accent/5" : "hover:border-accent/30 hover:bg-background-secondary/50"} ${hidden ? "opacity-50" : ""} `}
+                        href={toHref(pointsTo ?? slug)}
                         onClick={() => {
                           setCurrentProductId(
                             productId as FernNavigation.ProductId
                           );
-                          window.location.href = toHref(pointsTo ?? slug);
                           setIsOpen(false);
                         }}
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
                       >
-                        <div className="bg-background-tertiary/50 group-hover:bg-background-tertiary flex size-12 shrink-0 items-center justify-center rounded-lg transition-colors">
-                          <ProductIcon icon={icon} isLarge />
-                        </div>
-                        <div className="flex flex-col gap-1">
-                          <span className="text-foreground font-medium">
-                            {title}
-                          </span>
-                          {subtitle && (
-                            <span className="text-muted text-sm">
-                              {subtitle}
+                        <motion.div
+                          variants={itemVariants}
+                          className={`border-border/50 group flex cursor-pointer items-start gap-4 rounded-lg border p-4 transition-all ${currentProductId === productId ? "border-accent bg-accent/5" : "hover:border-accent/30 hover:bg-background-secondary/50"} ${hidden ? "opacity-50" : ""} `}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <div className="bg-background-tertiary/50 group-hover:bg-background-tertiary flex size-12 shrink-0 items-center justify-center rounded-lg transition-colors">
+                            <ProductIcon icon={icon} isLarge />
+                          </div>
+                          <div className="flex flex-col gap-1">
+                            <span className="text-foreground font-medium">
+                              {title}
                             </span>
-                          )}
-                        </div>
-                      </motion.div>
+                            {subtitle && (
+                              <span className="text-muted text-sm">
+                                {subtitle}
+                              </span>
+                            )}
+                          </div>
+                        </motion.div>
+                      </FernLink>
                     )
                   )}
                 </motion.div>
