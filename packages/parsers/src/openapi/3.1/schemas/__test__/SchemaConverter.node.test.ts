@@ -21,6 +21,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeInstanceOf(ReferenceConverterNode);
     });
@@ -37,6 +38,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeInstanceOf(ObjectConverterNode);
     });
@@ -50,6 +52,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -63,6 +66,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -76,6 +80,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -89,6 +94,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -105,6 +111,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -119,6 +126,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -132,6 +140,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -148,6 +157,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.typeShapeNode).toBeDefined();
     });
@@ -162,6 +172,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.description).toBe("test description");
     });
@@ -177,6 +188,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const result = node.convert();
       expect(result).toEqual({
@@ -200,6 +212,7 @@ describe("SchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.convert()).toBeUndefined();
     });

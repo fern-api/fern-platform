@@ -1,7 +1,7 @@
 // This is not a real OAS type, it is used to encapsulate a large amount of logic
 
 import { OpenAPIV3_1 } from "openapi-types";
-import { BaseOpenApiV3_1ConverterNodeConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
+import { BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs } from "../../../BaseOpenApiV3_1Converter.node";
 import {
   ConstArrayToType,
   SUPPORTED_MULTIPART_TYPES,
@@ -17,7 +17,7 @@ export class MultipartFormDataPropertySchemaConverterNode extends SchemaConverte
   contentType: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.SchemaObject>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.SchemaObject>
   ) {
     super(args);
     this.safeParse();

@@ -2,8 +2,8 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
-  BaseOpenApiV3_1ConverterNodeWithExample,
+  BaseOpenApiV3_1ConverterNodeWithTracking,
+  BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -16,7 +16,7 @@ export declare namespace MixedSchemaConverterNode {
   )[];
 }
 
-export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
+export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
   MixedSchemaConverterNode.Input,
   | FernRegistry.api.latest.TypeShape.UndiscriminatedUnion[]
   | FernRegistry.api.latest.TypeShape.Alias[]
@@ -25,7 +25,7 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithEx
   nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<MixedSchemaConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<MixedSchemaConverterNode.Input>
   ) {
     super(args);
     this.parse();
@@ -42,6 +42,7 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithEx
             context: this.context,
             accessPath: this.accessPath,
             pathId: this.pathId,
+            seenSchemas: this.seenSchemas,
           });
         }
         return undefined;

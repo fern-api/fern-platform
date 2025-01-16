@@ -52,8 +52,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
-    contentType: string | undefined,
-    protected path: string
+    contentType: string | undefined
   ) {
     super(args);
     this.safeParse(contentType);
@@ -84,6 +83,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             context: this.context,
             accessPath: this.accessPath,
             pathId: "schema",
+            seenSchemas: new Set(),
           });
         } else if (mediaType?.isOctetStream()) {
           this.contentType = "bytes" as const;
@@ -112,6 +112,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                     context: this.context,
                     accessPath: this.accessPath,
                     pathId: `schema.${key}`,
+                    seenSchemas: new Set(),
                   }),
                 ];
               })

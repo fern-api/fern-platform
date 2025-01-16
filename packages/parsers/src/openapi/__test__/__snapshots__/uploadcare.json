@@ -15628,7 +15628,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active"
+                "id": "webhook_is_active",
+                "default": true
               }
             }
           },
@@ -15728,7 +15729,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active"
+                "id": "webhook_is_active",
+                "default": true
               }
             }
           },
@@ -15958,7 +15960,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active"
+                "id": "webhook_is_active",
+                "default": true
               }
             }
           },

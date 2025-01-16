@@ -2,8 +2,9 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
+  BaseOpenApiV3_1ConverterNodeWithTracking,
+  BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
@@ -37,7 +38,7 @@ export type PrimitiveType =
   | BooleanConverterNode.Input
   | StringConverterNode.Input;
 
-export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
+export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
   OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject,
   | FernRegistry.api.latest.TypeShape
   | FernRegistry.api.latest.TypeShape[]
@@ -58,7 +59,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   availability: AvailabilityConverterNode | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<
       OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     >
   ) {
@@ -67,6 +68,17 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   }
 
   parse(): void {
+    if (!isReferenceObject(this.input)) {
+      if (this.accessPath.length >= 100 || this.seenSchemas.has(this.input)) {
+        this.context.errors.warning({
+          message: "Circular or deeply nested schema found, terminating",
+          path: this.accessPath,
+        });
+        return;
+      }
+      this.seenSchemas.add(this.input);
+    }
+
     this.description = this.input.description;
     this.availability = new AvailabilityConverterNode({
       input: this.input,
@@ -104,6 +116,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
+          seenSchemas: this.seenSchemas,
         });
       } else if (
         isNonArraySchema(this.input) &&
@@ -114,6 +127,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
+          seenSchemas: this.seenSchemas,
         });
         // here, isObjectSchema also supports null type
       } else if (isObjectSchema(this.input) && this.input.allOf != null) {
@@ -123,6 +137,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
+          seenSchemas: this.seenSchemas,
         });
       } else if (isNonArraySchema(this.input) && this.input.enum != null) {
         this.typeShapeNode = new EnumConverterNode({
@@ -142,6 +157,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: this.pathId,
+                seenSchemas: this.seenSchemas,
               });
             }
             break;
@@ -152,6 +168,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: this.pathId,
+                seenSchemas: this.seenSchemas,
               });
             }
             break;
@@ -215,6 +232,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
+          seenSchemas: this.seenSchemas,
         });
       }
     }

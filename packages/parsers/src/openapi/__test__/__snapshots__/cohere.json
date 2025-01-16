@@ -28408,7 +28408,8 @@
                       "type": "alias",
                       "value": {
                         "type": "id",
-                        "id": "Status"
+                        "id": "Status",
+                        "default": "STATUS_UNSPECIFIED"
                       }
                     }
                   }
@@ -37832,7 +37833,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "AuthTokenType"
+                "id": "AuthTokenType",
+                "default": "noscheme"
               }
             }
           },
@@ -39455,7 +39457,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "BaseType"
+                "id": "BaseType",
+                "default": "BASE_TYPE_UNSPECIFIED"
               }
             },
             "description": "The type of the base model."
@@ -39470,7 +39473,8 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "Strategy"
+                    "id": "Strategy",
+                    "default": "STRATEGY_UNSPECIFIED"
                   }
                 }
               }
@@ -39606,7 +39610,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "LoraTargetModules"
+                "id": "LoraTargetModules",
+                "default": "LORA_TARGET_MODULES_UNSPECIFIED"
               }
             },
             "description": "The combination of LoRA modules to target."
@@ -39891,7 +39896,8 @@
                   "type": "alias",
                   "value": {
                     "type": "id",
-                    "id": "Status"
+                    "id": "Status",
+                    "default": "STATUS_UNSPECIFIED"
                   }
                 }
               }
@@ -40151,7 +40157,8 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "Status"
+                "id": "Status",
+                "default": "STATUS_UNSPECIFIED"
               }
             },
             "description": "Status of the fine-tuned model."
