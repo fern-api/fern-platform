@@ -21463,35 +21463,19 @@
         {
           "path": "/v1/tokenize",
           "responseStatusCode": 200,
-          "name": "Example",
           "headers": {
             "X-Client-Name": "my-cool-project"
           },
-          "responseBody": {
+          "requestBody": {
             "type": "json",
             "value": {
-              "tokens": [
-                34160,
-                974,
-                514,
-                34,
-                1420,
-                69
-              ],
-              "token_strings": [
-                "token",
-                "ize'",
-                " me",
-                "!",
-                " :",
-                "D"
-              ],
-              "meta": {
-                "api_version": {
-                  "version": "1"
-                }
-              }
+              "text": "tokenize me! :D",
+              "model": "command"
             }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {}
           }
         },
         {
