@@ -4,6 +4,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { wrapNullable } from "../../../utils/wrapNullable";
 import { SchemaConverterNode } from "../SchemaConverter.node";
 
 export declare namespace NullConverterNode {
@@ -13,9 +14,7 @@ export declare namespace NullConverterNode {
 
   export interface Output extends FernRegistry.api.latest.TypeShape.Alias {
     type: "alias";
-    value:
-      | FernRegistry.api.latest.TypeReference.Nullable
-      | FernRegistry.api.latest.TypeReference.Unknown;
+    value: FernRegistry.api.latest.TypeReference.Nullable;
   }
 }
 
@@ -38,19 +37,13 @@ export class NullConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   }
 
   convert(): NullConverterNode.Output | undefined {
-    return {
+    return wrapNullable({
       type: "alias",
       value: {
-        type: "nullable",
-        shape: {
-          type: "alias",
-          value: {
-            type: "unknown",
-            displayName: this.displayName,
-          },
-        },
+        type: "unknown",
+        displayName: this.displayName,
       },
-    };
+    });
   }
 
   example(): null {
