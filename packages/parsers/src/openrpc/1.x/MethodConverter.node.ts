@@ -68,7 +68,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
               input: param.schema as any,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: `params/${param.name}`,
+              pathId: ["params", param.name],
             }).convert();
 
             if (!schema) return undefined;
