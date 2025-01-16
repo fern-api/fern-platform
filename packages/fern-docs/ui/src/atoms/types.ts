@@ -56,12 +56,13 @@ export interface LaunchDarklyInfo {
   clientSideId: string;
   contextEndpoint: string;
   context: LDContext | undefined;
-  defaultFlags: Record<string, unknown> | undefined;
+  defaultFlags: object | undefined;
   options:
     | {
         baseUrl: string | undefined;
         streamUrl: string | undefined;
         eventsUrl: string | undefined;
+        hash: string | undefined;
       }
     | undefined;
 }

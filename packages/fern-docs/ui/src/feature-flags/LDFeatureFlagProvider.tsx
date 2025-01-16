@@ -22,12 +22,13 @@ interface Props extends PropsWithChildren {
    */
   defaultContext?: LDContext;
 
-  defaultFlags?: Record<string, unknown>;
+  defaultFlags?: object;
 
   options?: {
     baseUrl?: string;
     streamUrl?: string;
     eventsUrl?: string;
+    hash?: string;
   };
 }
 
@@ -90,7 +91,7 @@ const IdentifyWrapper = ({
       const res = await fetch(endpoint, { credentials: "include" });
       return {
         context: (await res.json()) as LDContext,
-        hash: res.headers.get("x-hash"),
+        hash: res.headers.get("x-secure-mode-hash"),
       };
     },
     {
