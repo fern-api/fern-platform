@@ -101,7 +101,8 @@ export class ApiReferenceNavigationConverter {
         overviewPageId,
         noindex,
         paginated:
-          this.paginated ?? (!this.apiSection.longScrolling ? true : undefined),
+          this.paginated ??
+          (!this.apiSection.longScrolling ? true : undefined),
         slug: slug.get(),
         icon: this.apiSection.icon,
         hidden: this.apiSection.hidden,
