@@ -1,0 +1,111 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.Get": {
+      "id": "endpoint_.Get",
+      "operationId": "Get",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "get"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Request"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Response"
+            }
+          },
+          "description": "A simple API response."
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/get",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "value": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "Request": {
+      "name": "Request",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "An optional string value.\n"
+          }
+        ]
+      },
+      "description": "A generic request type used throughout the API.\n"
+    },
+    "Response": {
+      "name": "Response",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "value",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            },
+            "description": "An optional numerical value.\n"
+          }
+        ]
+      },
+      "description": "A generic response type used throughout the API.\n"
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}
