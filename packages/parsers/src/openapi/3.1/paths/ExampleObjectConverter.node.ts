@@ -7,9 +7,9 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveExampleReference } from "../../utils/3.1/resolveExampleReference";
-import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isExampleSseEvent } from "../guards/isExampleSseEvent";
 import { isFileWithData } from "../guards/isFileWithData";
+import { ParameterBaseObjectConverterNode } from "./parameters";
 import { RequestMediaTypeObjectConverterNode } from "./request/RequestMediaTypeObjectConverter.node";
 import { ResponseMediaTypeObjectConverterNode } from "./response/ResponseMediaTypeObjectConverter.node";
 
@@ -26,8 +26,15 @@ export declare namespace ExampleObjectConverterNode {
           | undefined;
       }
     | undefined;
-}
 
+  export type Shapes = {
+    requestBody?: RequestMediaTypeObjectConverterNode;
+    responseBody?: ResponseMediaTypeObjectConverterNode;
+    pathParameters?: Record<string, ParameterBaseObjectConverterNode>;
+    queryParameters?: Record<string, ParameterBaseObjectConverterNode>;
+    requestHeaders?: Record<string, ParameterBaseObjectConverterNode>;
+  };
+}
 export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   ExampleObjectConverterNode.Input,
   FernRegistry.api.latest.ExampleEndpointCall
@@ -40,13 +47,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     protected path: string,
     protected responseStatusCode: number,
     protected name: string | undefined,
-    protected requestBody: RequestMediaTypeObjectConverterNode | undefined,
-    protected responseBody: ResponseMediaTypeObjectConverterNode | undefined,
-    // TODO: generate examples from parameter objects, which naturally resolve as schema objects
-    // protected pathParameters: Record<string, ParameterBaseObjectConverterNode> | undefined,
-    // protected queryParameters: Record<string, ParameterBaseObjectConverterNode> | undefined,
-    // protected requestHeaders: Record<string, ParameterBaseObjectConverterNode> | undefined,
-    protected redocExamplesNode: RedocExampleConverterNode | undefined
+    protected shapes: ExampleObjectConverterNode.Shapes
   ) {
     super(args);
     this.safeParse();
@@ -58,7 +59,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       return false;
     }
 
-    return Object.entries(this.requestBody?.fields ?? {}).reduce(
+    return Object.entries(this.shapes.requestBody?.fields ?? {}).reduce(
       (result, [key, field]) => {
         const value = this.resolvedRequestInput?.value[key];
         switch (field.multipartType) {
@@ -107,8 +108,8 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     //     });
     // }
 
-    if (this.requestBody && this.resolvedRequestInput) {
-      switch (this.requestBody?.contentType) {
+    if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
+      switch (this.shapes.requestBody?.contentType) {
         case "json": {
           if (typeof this.resolvedRequestInput.value !== "object") {
             this.context.errors.error({
@@ -142,7 +143,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         case undefined:
           break;
         default:
-          new UnreachableCaseError(this.requestBody.contentType);
+          new UnreachableCaseError(this.shapes.requestBody?.contentType);
           this.context.errors.error({
             message: "Invalid example, unsupported content type",
             path: this.accessPath,
@@ -151,8 +152,11 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    if (this.responseBody && this.resolvedResponseInput) {
-      switch (this.responseBody.contentType) {
+    if (
+      this.shapes.responseBody != null &&
+      this.resolvedResponseInput != null
+    ) {
+      switch (this.shapes.responseBody?.contentType) {
         case "application/json":
           if (
             (this.resolvedResponseInput != null &&
@@ -198,7 +202,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         case undefined:
           break;
         default:
-          new UnreachableCaseError(this.responseBody.contentType);
+          new UnreachableCaseError(this.shapes.responseBody?.contentType);
           return;
       }
     }
@@ -207,15 +211,18 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   convertFormDataExampleRequest():
     | FernRegistry.api.latest.ExampleEndpointRequest
     | undefined {
-    if (this.resolvedRequestInput == null || this.requestBody?.fields == null) {
+    if (
+      this.resolvedRequestInput == null ||
+      this.shapes.requestBody?.fields == null
+    ) {
       return undefined;
     }
-    switch (this.requestBody.contentType) {
+    switch (this.shapes.requestBody?.contentType) {
       case "form-data": {
         const formData = Object.fromEntries(
-          Object.entries(this.requestBody.fields)
+          Object.entries(this.shapes.requestBody.fields)
             .map(([key, field]) => {
-              const value = this.resolvedRequestInput?.value[key];
+              const value = this.resolvedRequestInput?.value?.[key];
               switch (field.multipartType) {
                 case "file": {
                   if (isFileWithData(value)) {
@@ -312,7 +319,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.resolvedResponseInput != null
     ) {
       // TODO: figure out what this should be -- maybe plumb a new description with an extension
-      return `An example request and response for the ${this.path} path.\n Request: ${this.resolvedRequestInput.description}\n Response: ${this.resolvedResponseInput.description}`;
+      return this.resolvedResponseInput.description;
     } else if (this.resolvedRequestInput != null) {
       return this.resolvedRequestInput.description;
     } else if (this.resolvedResponseInput != null) {
@@ -323,8 +330,8 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
   convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
     let requestBody: FernRegistry.api.latest.ExampleEndpointRequest | undefined;
-    if (this.requestBody != null && this.resolvedRequestInput != null) {
-      switch (this.requestBody.contentType) {
+    if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
+      switch (this.shapes.requestBody.contentType) {
         case "form-data":
           requestBody = this.convertFormDataExampleRequest();
           break;
@@ -346,7 +353,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         case undefined:
           break;
         default:
-          new UnreachableCaseError(this.requestBody.contentType);
+          new UnreachableCaseError(this.shapes.requestBody?.contentType);
           break;
       }
     }
@@ -354,10 +361,13 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     let responseBody:
       | FernRegistry.api.latest.ExampleEndpointResponse
       | undefined;
-    if (this.responseBody != null && this.resolvedResponseInput != null) {
-      // Note: if there is a 'value' fielt in an example, we assume that it is an openapi ExampleObject, and not part of the actual example
+    if (
+      this.shapes.responseBody != null &&
+      this.resolvedResponseInput != null
+    ) {
+      // Note: if there is a 'value' field in an example, we assume that it is an openapi ExampleObject, and not part of the actual example
       // To circumvent this, one can nest the object in a 'value' field, since ExampleObject is at minimum just an empty object
-      switch (this.responseBody.contentType) {
+      switch (this.shapes.responseBody.contentType) {
         case "application/json": {
           responseBody = {
             type: "json",
@@ -390,37 +400,43 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           };
           break;
         default:
-          new UnreachableCaseError(this.responseBody.contentType);
+          new UnreachableCaseError(this.shapes.responseBody?.contentType);
           break;
       }
     }
+
+    const pathParameters = Object.fromEntries(
+      Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => {
+        return [key, value.example()];
+      })
+    );
+
+    const queryParameters = Object.fromEntries(
+      Object.entries(this.shapes.queryParameters ?? {}).map(([key, value]) => {
+        return [key, value.example()];
+      })
+    );
+
+    const requestHeaders = Object.fromEntries(
+      Object.entries(this.shapes.requestHeaders ?? {}).map(([key, value]) => {
+        return [key, value.example()];
+      })
+    );
 
     return {
       path: this.path,
       responseStatusCode: this.responseStatusCode,
       name: this.name,
       description: this.convertDescription(),
-      // pathParameters: Object.fromEntries(
-      //     Object.entries(this.pathParameters ?? {}).map(([key, value]) => {
-      //         return [key, value.generateDefault()];
-      //     }),
-      // ),
-      // queryParameters: Object.fromEntries(
-      //     Object.entries(this.queryParameters ?? {}).map(([key, value]) => {
-      //         return [key, value.generateDefault()];
-      //     }),
-      // ),
-      // headers: Object.fromEntries(
-      //     Object.entries(this.requestHeaders ?? {}).map(([key, value]) => {
-      //         return [key, value.generateDefault()];
-      //     }),
-      // ),
-      pathParameters: undefined,
-      queryParameters: undefined,
-      headers: undefined,
+      pathParameters:
+        Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+      queryParameters:
+        Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
+      headers:
+        Object.keys(requestHeaders).length > 0 ? requestHeaders : undefined,
       requestBody,
       responseBody,
-      snippets: this.redocExamplesNode?.convert(),
+      snippets: undefined,
     };
   }
 }

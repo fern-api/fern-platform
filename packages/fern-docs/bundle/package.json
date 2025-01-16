@@ -44,6 +44,7 @@
     "@fern-docs/utils": "workspace:*",
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-platform/fdr-utils": "workspace:*",
+    "@launchdarkly/node-server-sdk": "^9.7.2",
     "@opentelemetry/api": "^1.9.0",
     "@opentelemetry/api-logs": "^0.57.0",
     "@opentelemetry/instrumentation": "^0.57.0",

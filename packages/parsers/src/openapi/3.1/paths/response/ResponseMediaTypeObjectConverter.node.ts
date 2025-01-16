@@ -11,12 +11,15 @@ import {
   SUPPORTED_RESPONSE_CONTENT_TYPES,
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
+import { resolveExampleReference } from "../../../utils/3.1/resolveExampleReference";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
-import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
+import { singleUndefinedArrayIfNullOrEmpty } from "../../../utils/singleUndefinedArrayIfNullOrEmpty";
+import { singleUndefinedRecordIfNullOrEmpty } from "../../../utils/singleUndefinedRecordIfNullOrEmpty";
 import { SchemaConverterNode } from "../../schemas/SchemaConverter.node";
 import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
+import { RequestMediaTypeObjectConverterNode } from "../request/RequestMediaTypeObjectConverter.node";
 
 export type ResponseContentType = ConstArrayToType<
   typeof SUPPORTED_RESPONSE_CONTENT_TYPES
@@ -24,6 +27,17 @@ export type ResponseContentType = ConstArrayToType<
 export type ResponseStreamingFormat = ConstArrayToType<
   typeof SUPPORTED_STREAMING_FORMATS
 >;
+
+function matchExampleName(
+  exampleName: string,
+  requestExampleName: string
+): boolean {
+  return (
+    exampleName === requestExampleName ||
+    requestExampleName === "" ||
+    exampleName === ""
+  );
+}
 
 export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   OpenAPIV3_1.MediaTypeObject,
@@ -42,10 +56,128 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     protected streamingFormat: ResponseStreamingFormat | undefined,
     protected path: string,
     protected statusCode: number,
-    protected redocExamplesNode: RedocExampleConverterNode | undefined
+    protected requests: RequestMediaTypeObjectConverterNode[],
+    protected shapes: ExampleObjectConverterNode.Shapes
   ) {
     super(args);
     this.safeParse(contentType);
+  }
+
+  private isExampleDefined(
+    example: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject | undefined
+  ): boolean {
+    return (
+      example != null &&
+      resolveExampleReference(example, this.context.document)?.value != null
+    );
+  }
+
+  private generateSupportedExamples(
+    exampleName: string,
+    exampleObject: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject,
+    i: number
+  ): ExampleObjectConverterNode[] {
+    return singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap((request) =>
+      Object.entries(singleUndefinedRecordIfNullOrEmpty(request?.examples))
+        .map(([requestExampleName, requestExample]) =>
+          matchExampleName(exampleName, requestExampleName) &&
+          (this.isExampleDefined(requestExample) ||
+            this.isExampleDefined(exampleObject))
+            ? new ExampleObjectConverterNode(
+                {
+                  input: {
+                    requestExample,
+                    responseExample: exampleObject,
+                  },
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: `examples[${i}]`,
+                },
+                this.path,
+                this.statusCode,
+                exampleName === "" ? undefined : exampleName,
+                {
+                  requestBody: request,
+                  responseBody: this,
+                  pathParameters: this.shapes.pathParameters,
+                  queryParameters: this.shapes.queryParameters,
+                  requestHeaders: this.shapes.requestHeaders,
+                }
+              )
+            : undefined
+        )
+        .filter(isNonNullish)
+    );
+  }
+
+  private generateUnsupportedExamples(
+    exampleName: string,
+    exampleObject: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject,
+    i: number
+  ): ExampleObjectConverterNode[] {
+    return singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap((request) =>
+      Object.entries(singleUndefinedRecordIfNullOrEmpty(request?.examples))
+        .map(([requestExampleName, requestExample]) =>
+          matchExampleName(exampleName, requestExampleName) &&
+          (this.isExampleDefined(requestExample) || exampleObject != null)
+            ? new ExampleObjectConverterNode(
+                {
+                  input: {
+                    requestExample,
+                    responseExample: {
+                      value: exampleObject,
+                    },
+                  },
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: `examples[${i}]`,
+                },
+                this.path,
+                this.statusCode,
+                exampleName === "" ? undefined : exampleName,
+                {
+                  requestBody: request,
+                  responseBody: this,
+                  pathParameters: this.shapes.pathParameters,
+                  queryParameters: this.shapes.queryParameters,
+                  requestHeaders: this.shapes.requestHeaders,
+                }
+              )
+            : undefined
+        )
+        .filter(isNonNullish)
+    );
+  }
+
+  private generateFallbackExamples(
+    fallbackExample: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject
+  ): ExampleObjectConverterNode[] {
+    return singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap((request) =>
+      Object.values(singleUndefinedRecordIfNullOrEmpty(request?.examples)).map(
+        (requestExample) =>
+          new ExampleObjectConverterNode(
+            {
+              input: {
+                requestExample,
+                responseExample: fallbackExample,
+              },
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: this.pathId,
+            },
+            this.path,
+            this.statusCode,
+            undefined,
+            {
+              requestBody: request,
+              responseBody: this,
+              pathParameters: this.shapes.pathParameters,
+              queryParameters: this.shapes.queryParameters,
+              requestHeaders: this.shapes.requestHeaders,
+            }
+          )
+      )
+    );
   }
 
   parse(contentType: string | undefined): void {
@@ -82,6 +214,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             "Expected schema for plain text response body. Received null",
           path: this.accessPath,
         });
+        return;
       } else {
         this.schema = new SchemaConverterNode({
           input: this.input.schema,
@@ -92,128 +225,52 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       }
     }
 
-    // TODO: This can all be moved upstream if there is a way to correlate the requests and responses (probably with ref-based config)
-    Object.entries(this.input.examples ?? {}).forEach(
-      ([exampleName, exampleObject], i) => {
-        this.examples ??= [];
-        this.examples.push(
-          new ExampleObjectConverterNode(
-            {
-              input: {
-                requestExample: undefined,
-                responseExample: exampleObject,
-              },
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: `examples[${i}]`,
-            },
-            this.path,
-            this.statusCode,
-            exampleName,
-            undefined,
-            this,
-            // undefined,
-            // undefined,
-            // undefined,
-            this.redocExamplesNode
-          )
-        );
+    // In this, we match example names on the request and response. If the example is directly on the request or response, we add to everywhere.
+    Object.entries(
+      this.input.examples ?? {
+        "": { value: this.input.example },
       }
-    );
+    ).forEach(([exampleName, exampleObject], i) => {
+      this.examples ??= [];
+      this.examples = this.examples.concat(
+        this.generateSupportedExamples(exampleName, exampleObject, i)
+      );
+    });
 
     if (this.contentType != null || this.unsupportedContentType != null) {
       const resolvedSchema = resolveSchemaReference(
         this.input.schema,
         this.context.document
       );
+
       this.examples ??= [];
-      resolvedSchema?.examples?.forEach((example, i) => {
-        if (typeof example !== "object" || !("value" in example)) {
-          this.context.errors.warning({
-            message: "Expected example to be an object with a value property",
-            path: this.accessPath,
-          });
-          return;
+      Object.entries(
+        resolvedSchema?.examples ?? {
+          "": resolvedSchema?.example,
         }
-        this.examples?.push(
-          new ExampleObjectConverterNode(
-            {
-              input: {
-                requestExample: undefined,
-                responseExample: example,
-              },
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: `examples[${i}]`,
-            },
-            this.path,
-            this.statusCode,
-            undefined,
-            undefined,
-            this,
-            // undefined,
-            // undefined,
-            // undefined,
-            this.redocExamplesNode
-          )
+      ).forEach(([exampleName, exampleObject], i) => {
+        this.examples ??= [];
+        this.examples = this.examples.concat(
+          this.generateUnsupportedExamples(exampleName, exampleObject, i)
         );
       });
 
       if (this.examples.length === 0 && resolvedSchema != null) {
-        if (resolvedSchema.example != null) {
-          this.examples.push(
-            new ExampleObjectConverterNode(
-              {
-                input: {
-                  requestExample: undefined,
-                  responseExample: resolvedSchema.example,
-                },
-                context: this.context,
-                accessPath: this.accessPath,
-                pathId: "example",
-              },
-              this.path,
-              this.statusCode,
-              undefined,
-              undefined,
-              this,
-              // undefined,
-              // undefined,
-              // undefined,
-              this.redocExamplesNode
-            )
+        const fallbackExample = {
+          value:
+            resolvedSchema?.example ??
+            new SchemaConverterNode({
+              input: resolvedSchema,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: this.pathId,
+            }).example(),
+        };
+
+        if (fallbackExample != null) {
+          this.examples = this.examples.concat(
+            this.generateFallbackExamples(fallbackExample)
           );
-        } else {
-          const fallbackExample = new SchemaConverterNode({
-            input: resolvedSchema,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: this.pathId,
-          }).example();
-          if (fallbackExample != null) {
-            this.examples.push(
-              new ExampleObjectConverterNode(
-                {
-                  input: {
-                    requestExample: undefined,
-                    responseExample: fallbackExample,
-                  },
-                  context: this.context,
-                  accessPath: this.accessPath,
-                  pathId: this.pathId,
-                },
-                this.path,
-                this.statusCode,
-                undefined,
-                undefined,
-                this,
-                // undefined,
-                // undefined,
-                // undefined,
-                this.redocExamplesNode
-              )
-            );
-          }
         }
       }
     }

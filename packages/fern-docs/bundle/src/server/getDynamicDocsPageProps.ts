@@ -14,11 +14,18 @@ export async function getDynamicDocsPageProps(
   domain: string,
   host: string,
   slug: FernNavigation.Slug,
-  cookies: NextApiRequestCookies
+  cookies: NextApiRequestCookies,
+  rawCookie: string | undefined
 ): Promise<GetServerSideDocsPagePropsResult> {
   /**
    * Authenticated user is guaranteed to have a valid token because the middleware
    * would have redirected them to the login page
    */
-  return getDocsPageProps(domain, host, slug, cookies[COOKIE_FERN_TOKEN]);
+  return getDocsPageProps(
+    domain,
+    host,
+    slug,
+    cookies[COOKIE_FERN_TOKEN],
+    rawCookie
+  );
 }

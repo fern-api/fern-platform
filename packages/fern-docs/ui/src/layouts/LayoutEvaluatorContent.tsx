@@ -39,7 +39,12 @@ export function LayoutEvaluatorContent({
   };
 
   const TableOfContentsComponent = () => {
-    return <TableOfContentsLayout tableOfContents={tableOfContents} />;
+    return (
+      <TableOfContentsLayout
+        tableOfContents={tableOfContents}
+        hideTableOfContents={frontmatter["hide-toc"]}
+      />
+    );
   };
 
   switch (layout) {
@@ -50,7 +55,6 @@ export function LayoutEvaluatorContent({
         <GuideLayout
           PageHeader={PageHeaderComponent}
           TableOfContents={TableOfContentsComponent}
-          hideTableOfContents={frontmatter["hide-toc"]}
           editThisPageUrl={frontmatter["edit-this-page-url"]}
           hideFeedback={frontmatter["hide-feedback"]}
           hideNavLinks={frontmatter["hide-nav-links"]}
@@ -63,7 +67,6 @@ export function LayoutEvaluatorContent({
         <OverviewLayout
           PageHeader={PageHeaderComponent}
           TableOfContents={TableOfContentsComponent}
-          hideTableOfContents={frontmatter["hide-toc"]}
           editThisPageUrl={frontmatter["edit-this-page-url"]}
           hideFeedback={frontmatter["hide-feedback"]}
         >

@@ -5,7 +5,6 @@ import {
   getAuthEdgeConfig,
   getCustomerAnalytics,
   getEdgeFlags,
-  getLaunchDarklySettings,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 import {
@@ -27,6 +26,7 @@ import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
+import { withLaunchDarkly } from "./ld-adapter";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 import { isTrailingSlashEnabled } from "./trailingSlash";
 import {
@@ -48,6 +48,7 @@ interface WithInitialProps {
    */
   host: string;
   fern_token: string | undefined;
+  rawCookie: string | undefined;
 }
 
 export async function withInitialProps({
@@ -56,6 +57,7 @@ export async function withInitialProps({
   domain,
   host,
   fern_token,
+  rawCookie,
 }: WithInitialProps): Promise<
   GetServerSidePropsResult<ComponentProps<typeof DocsPage>>
 > {
@@ -152,6 +154,22 @@ export async function withInitialProps({
       return { notFound: true };
     }
     return withRedirect(authState.authorizationUrl);
+  }
+
+  // TODO: parallelize this with the other edge config calls:
+  const [launchDarkly, flagPredicate] = await withLaunchDarkly(
+    domain,
+    authState,
+    found,
+    rawCookie
+  );
+
+  if (
+    ![...found.parents, found.node]
+      .filter(FernNavigation.hasMetadata)
+      .every((node) => flagPredicate(node))
+  ) {
+    return { notFound: true };
   }
 
   const content = await withResolvedDocsContent({
@@ -328,16 +346,6 @@ export async function withInitialProps({
   const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
   const serializeMdx = await getMdxBundler(engine);
 
-  const launchDarklyConfig = await getLaunchDarklySettings(docs.baseUrl.domain);
-  const launchDarklyInfo =
-    !!launchDarklyConfig?.["client-side-id"] &&
-    !!launchDarklyConfig?.["user-context-endpoint"]
-      ? {
-          clientSideId: launchDarklyConfig?.["client-side-id"],
-          userContextEndpoint: launchDarklyConfig?.["user-context-endpoint"],
-        }
-      : undefined;
-
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
@@ -395,8 +403,8 @@ export async function withInitialProps({
       docs.definition.filesV2,
       found.tabs.length > 0
     ),
-    featureFlags: {
-      launchDarkly: launchDarklyInfo,
+    featureFlagsConfig: {
+      launchDarkly,
     },
   };
 

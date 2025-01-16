@@ -13,6 +13,7 @@ import {
   SidebarTab,
   VersionSwitcherInfo,
 } from "@fern-platform/fdr-utils";
+import type { LDContext } from "launchdarkly-react-client-sdk";
 import { CustomerAnalytics } from "../analytics/types";
 import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
@@ -55,10 +56,20 @@ export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
 
 export interface LaunchDarklyInfo {
   clientSideId: string;
-  userContextEndpoint: string;
+  contextEndpoint: string;
+  context: LDContext | undefined;
+  defaultFlags: object | undefined;
+  options:
+    | {
+        baseUrl: string | undefined;
+        streamUrl: string | undefined;
+        eventsUrl: string | undefined;
+        hash: string | undefined;
+      }
+    | undefined;
 }
 
-export interface FeatureFlags {
+export interface FeatureFlagsConfig {
   launchDarkly: LaunchDarklyInfo | undefined;
 }
 
@@ -86,5 +97,5 @@ export interface DocsProps {
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   stylesheet: string;
-  featureFlags: FeatureFlags | undefined;
+  featureFlagsConfig: FeatureFlagsConfig | undefined;
 }

@@ -20,6 +20,7 @@ function sectionNode(
     overviewPageId: undefined,
     noindex: undefined,
     pointsTo: undefined,
+    featureFlags: undefined,
     ...section,
   };
 }
@@ -39,6 +40,7 @@ function pageNode(
     viewers: undefined,
     orphaned: undefined,
     noindex: undefined,
+    featureFlags: undefined,
     ...page,
   };
 }

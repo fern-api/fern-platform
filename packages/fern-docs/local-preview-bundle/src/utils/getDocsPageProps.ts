@@ -244,7 +244,7 @@ export async function getDocsPageProps(
       docs.definition.filesV2,
       node.tabs.length > 0
     ),
-    featureFlags: undefined, // TODO: match loading logic in withInitialProps ?
+    featureFlagsConfig: undefined,
   };
 
   // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback

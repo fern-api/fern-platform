@@ -184,14 +184,12 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
       this.requestBodyByContentType ?? {}
     )[0];
 
-    if (requestBodyContentTypeKey == null) {
-      return undefined;
-    }
-
     return this.examples.flatMap((example) => {
       return (this.responseBodies ?? []).map((responseBodyNode) => {
         const requestBodyShape =
-          this.requestBodyByContentType?.[requestBodyContentTypeKey];
+          requestBodyContentTypeKey != null
+            ? this.requestBodyByContentType?.[requestBodyContentTypeKey]
+            : undefined;
         let requestBody:
           | FernRegistry.api.latest.ExampleEndpointRequest
           | undefined;
@@ -305,27 +303,35 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
           }
         });
 
+        const pathParameters = Object.fromEntries(
+          Object.entries(example["path-parameters"] ?? {}).map(
+            ([key, value]) => [FernRegistry.PropertyKey(key), value]
+          )
+        );
+        const queryParameters = Object.fromEntries(
+          Object.entries(example["query-parameters"] ?? {}).map(
+            ([key, value]) => [FernRegistry.PropertyKey(key), value]
+          )
+        );
+        const headers = Object.fromEntries(
+          Object.entries(example.headers ?? {}).map(([key, value]) => [
+            FernRegistry.PropertyKey(key),
+            value,
+          ])
+        );
+
         return {
           path: this.path,
           responseStatusCode: this.successResponseStatusCode,
           name: example.name,
           description: example.docs,
-          pathParameters: Object.fromEntries(
-            Object.entries(example["path-parameters"] ?? {}).map(
-              ([key, value]) => [FernRegistry.PropertyKey(key), value]
-            )
-          ),
-          queryParameters: Object.fromEntries(
-            Object.entries(example["query-parameters"] ?? {}).map(
-              ([key, value]) => [FernRegistry.PropertyKey(key), value]
-            )
-          ),
-          headers: Object.fromEntries(
-            Object.entries(example.headers ?? {}).map(([key, value]) => [
-              FernRegistry.PropertyKey(key),
-              value,
-            ])
-          ),
+          pathParameters:
+            Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+          queryParameters:
+            Object.keys(queryParameters).length > 0
+              ? queryParameters
+              : undefined,
+          headers: Object.keys(headers).length > 0 ? headers : undefined,
           requestBody,
           responseBody,
           snippets,

@@ -18,7 +18,6 @@ import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
-import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
 
 export type RequestContentType = ConstArrayToType<
@@ -47,13 +46,14 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     | undefined;
 
   resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
-  example: ExampleObjectConverterNode | undefined;
+  examples?:
+    | Record<string, OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject>
+    | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
     contentType: string | undefined,
-    protected path: string,
-    protected responseStatusCode: number
+    protected path: string
   ) {
     super(args);
     this.safeParse(contentType);
@@ -131,21 +131,13 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
       });
     }
 
-    if (this.contentType != null) {
-      if (this.input.example != null) {
-        // this.example = new ExampleObjectConverterNode(
-        //     {
-        //         input: this.input.example,
-        //         context: this.context,
-        //         accessPath: this.accessPath,
-        //         pathId: "example",
-        //     },
-        //     this.path,
-        //     this.responseStatusCode,
-        //     this,
-        // );
-      }
-    }
+    this.examples = {
+      "":
+        this.input.example != null
+          ? { value: this.input.example }
+          : this.input.example,
+      ...this.input.examples,
+    };
   }
 
   convert():

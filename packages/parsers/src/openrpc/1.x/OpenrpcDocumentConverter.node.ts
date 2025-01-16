@@ -2,7 +2,9 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenrpcDocument } from "@open-rpc/meta-schema";
 import { v4 } from "uuid";
 import { FernRegistry } from "../../client/generated";
+import { ServerObjectConverterNode } from "../../openapi";
 import { ComponentsConverterNode } from "../../openapi/3.1/schemas/ComponentsConverter.node";
+import { coalesceServers } from "../../openapi/utils/3.1/coalesceServers";
 import {
   BaseOpenrpcConverterNode,
   BaseOpenrpcConverterNodeConstructorArgs,
@@ -14,6 +16,7 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
   OpenrpcDocument,
   FernRegistry.api.latest.ApiDefinition
 > {
+  servers: ServerObjectConverterNode[] = [];
   methods: MethodConverterNode[] = [];
   components: ComponentsConverterNode | undefined;
 
@@ -23,6 +26,15 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
   }
 
   parse(): void {
+    if (this.context.openrpc.servers != null) {
+      this.servers = coalesceServers(
+        this.servers,
+        this.input.servers,
+        this.context,
+        this.accessPath
+      );
+    }
+
     if (this.input.methods != null) {
       for (const method of this.input.methods) {
         const resolvedMethod = resolveMethodReference(
@@ -33,15 +45,19 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
           continue;
         }
         this.methods.push(
-          new MethodConverterNode({
-            input: resolvedMethod,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: "methods",
-          })
+          new MethodConverterNode(
+            {
+              input: resolvedMethod,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: "methods",
+            },
+            this.servers
+          )
         );
       }
     }
+
     if (this.context.openrpc.components != null) {
       this.components = new ComponentsConverterNode({
         input: this.context.openrpc.components,

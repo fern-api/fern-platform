@@ -6,9 +6,11 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
+import { singleUndefinedArrayIfNullOrEmpty } from "../../../utils/singleUndefinedArrayIfNullOrEmpty";
 import { STATUS_CODE_MESSAGES } from "../../../utils/statusCodes";
-import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
+import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
 import { convertOperationObjectProperties } from "../parameters/ParameterBaseObjectConverter.node";
+import { RequestMediaTypeObjectConverterNode } from "../request/RequestMediaTypeObjectConverter.node";
 import { ResponseObjectConverterNode } from "./ResponseObjectConverter.node";
 
 export declare namespace ResponsesObjectConverterNode {
@@ -34,7 +36,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponsesObject>,
     protected path: string,
-    protected redocExamplesNode: RedocExampleConverterNode | undefined
+    protected requests: RequestMediaTypeObjectConverterNode[],
+    protected shapes: ExampleObjectConverterNode.Shapes
   ) {
     super(args);
     this.safeParse();
@@ -57,7 +60,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           },
           this.path,
           parseInt(statusCode),
-          this.redocExamplesNode
+          [],
+          this.shapes
         );
       } else {
         this.responsesByStatusCode ??= {};
@@ -74,7 +78,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             },
             this.path,
             parseInt(statusCode),
-            this.redocExamplesNode
+            this.requests,
+            this.shapes
           );
       }
     });
@@ -87,8 +92,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (bodies == null) {
           return undefined;
         }
-        return (
-          convertOperationObjectProperties(response.headers) ?? [undefined]
+        return singleUndefinedArrayIfNullOrEmpty(
+          convertOperationObjectProperties(response.headers)
         ).flatMap((headers) =>
           bodies?.map((body) => ({
             headers,

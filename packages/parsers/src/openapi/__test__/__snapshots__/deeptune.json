@@ -70,8 +70,7 @@
             "value": {
               "file": "string"
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -152,8 +151,7 @@
             "value": {
               "file": "string"
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -219,8 +217,7 @@
                 "is_public": false
               }
             ]
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -288,7 +285,6 @@
         {
           "path": "/v1/voices",
           "responseStatusCode": 200,
-          "description": "string",
           "responseBody": {
             "type": "json",
             "value": {
@@ -297,8 +293,7 @@
               "description": "string",
               "is_public": false
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -377,7 +372,9 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "description": "string",
+          "pathParameters": {
+            "voice_id": "string"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -386,8 +383,7 @@
               "description": "string",
               "is_public": false
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },
@@ -478,7 +474,9 @@
         {
           "path": "/v1/voices/{voice_id}",
           "responseStatusCode": 200,
-          "description": "string",
+          "pathParameters": {
+            "voice_id": "string"
+          },
           "responseBody": {
             "type": "json",
             "value": {
@@ -487,8 +485,7 @@
               "description": "string",
               "is_public": false
             }
-          },
-          "snippets": {}
+          }
         }
       ]
     },

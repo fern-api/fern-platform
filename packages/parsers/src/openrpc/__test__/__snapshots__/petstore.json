@@ -83,7 +83,7 @@
   "endpoints": {
     "list_pets": {
       "id": "list_pets",
-      "displayName": "List all pets",
+      "displayName": "listPets",
       "method": "POST",
       "path": [
         {
@@ -140,9 +140,14 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              1
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "list_pets",
+              "params": [
+                1
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -160,15 +165,21 @@
           }
         }
       ],
+      "description": "List all pets",
       "operationId": "list_pets",
-      "environments": [],
+      "environments": [
+        {
+          "id": "http://localhost:8080",
+          "baseUrl": "http://localhost:8080"
+        }
+      ],
       "requestHeaders": [],
       "responseHeaders": [],
       "namespace": []
     },
     "create_pet": {
       "id": "create_pet",
-      "displayName": "Create a pet",
+      "displayName": "createPet",
       "method": "POST",
       "path": [
         {
@@ -237,10 +248,15 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              "fluffy",
-              "poodle"
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "create_pet",
+              "params": [
+                "fluffy",
+                "poodle"
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -252,15 +268,21 @@
           }
         }
       ],
+      "description": "Create a pet",
       "operationId": "create_pet",
-      "environments": [],
+      "environments": [
+        {
+          "id": "http://localhost:8080",
+          "baseUrl": "http://localhost:8080"
+        }
+      ],
       "requestHeaders": [],
       "responseHeaders": [],
       "namespace": []
     },
     "get_pet": {
       "id": "get_pet",
-      "displayName": "Info for a specific pet",
+      "displayName": "getPet",
       "method": "POST",
       "path": [
         {
@@ -314,9 +336,14 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": [
-              7
-            ]
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "get_pet",
+              "params": [
+                7
+              ]
+            }
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -332,8 +359,14 @@
           }
         }
       ],
+      "description": "Info for a specific pet",
       "operationId": "get_pet",
-      "environments": [],
+      "environments": [
+        {
+          "id": "http://localhost:8080",
+          "baseUrl": "http://localhost:8080"
+        }
+      ],
       "requestHeaders": [],
       "responseHeaders": [],
       "namespace": []

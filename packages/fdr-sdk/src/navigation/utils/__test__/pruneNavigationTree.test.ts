@@ -22,6 +22,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -34,6 +35,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
 
     const result = Pruner.from(root)
@@ -62,6 +64,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -74,6 +77,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: FernNavigation.Slug("root/page"),
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     });
   });
 
@@ -97,6 +101,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -109,6 +114,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: FernNavigation.Slug("root/page"),
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
 
     const result = Pruner.from(root)
@@ -139,6 +145,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -150,6 +157,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
 
     const result = Pruner.from(root)
@@ -179,6 +187,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -190,6 +199,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: FernNavigation.Slug("root/page"),
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     });
   });
 
@@ -214,6 +224,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -225,6 +236,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
 
     const result = Pruner.from(root)
@@ -250,6 +262,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     });
   });
 
@@ -274,6 +287,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -285,6 +299,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
 
     const result = Pruner.from(root)
@@ -314,6 +329,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -325,6 +341,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: FernNavigation.Slug("root/page"),
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     });
   });
 
@@ -356,6 +373,7 @@ describe("pruneNavigationTree", () => {
               noindex: undefined,
               viewers: undefined,
               orphaned: undefined,
+              featureFlags: undefined,
             },
           ],
           collapsed: undefined,
@@ -367,6 +385,7 @@ describe("pruneNavigationTree", () => {
           pointsTo: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
         {
           type: "page",
@@ -381,6 +400,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -392,6 +412,7 @@ describe("pruneNavigationTree", () => {
       pointsTo: undefined,
       viewers: undefined,
       orphaned: undefined,
+      featureFlags: undefined,
     };
 
     const result = Pruner.from(root)
@@ -421,6 +442,7 @@ describe("pruneNavigationTree", () => {
           noindex: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         },
       ],
       collapsed: undefined,
@@ -431,7 +453,7 @@ describe("pruneNavigationTree", () => {
       noindex: undefined,
       viewers: undefined,
       orphaned: undefined,
-
+      featureFlags: undefined,
       // NOTE: points to is updated!
       pointsTo: "root/page",
     });

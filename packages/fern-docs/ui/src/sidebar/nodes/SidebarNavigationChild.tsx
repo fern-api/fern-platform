@@ -1,20 +1,12 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import dynamic from "next/dynamic";
 import { ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
+import { SidebarChangelogNode } from "./SidebarChangelogNode";
 import { SidebarLinkNode } from "./SidebarLinkNode";
 import { SidebarPageNode } from "./SidebarPageNode";
 import { SidebarSectionNode } from "./SidebarSectionNode";
-
-const SidebarChangelogNode = dynamic(
-  () =>
-    import("./SidebarChangelogNode").then(
-      ({ SidebarChangelogNode }) => SidebarChangelogNode
-    ),
-  { ssr: true }
-);
 
 interface SidebarNavigationChildProps {
   node: FernNavigation.NavigationChild;
