@@ -1,3 +1,4 @@
+"use client";
 import { FernButton } from "@fern-docs/components";
 import { getVersionAvailabilityLabel } from "@fern-platform/fdr-utils";
 import { motion } from "framer-motion";
