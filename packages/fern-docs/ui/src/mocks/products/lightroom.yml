@@ -1,0 +1,32 @@
+title: Adobe Lightroom API
+description: Edit and manage photos programmatically using Adobe Lightroom
+
+navigation:
+  type: unversioned
+  id: lightroom-unversioned
+  child:
+    type: sidebarRoot
+    id: lightroom-sidebar
+    children:
+      - type: page
+        id: overview
+        title: Overview
+        slug: lightroom-api
+      - type: section
+        id: guides
+        title: Guides
+        slug: lightroom-api/guides
+        children:
+          - type: page
+            id: quickstart
+            title: Quickstart Guide
+            slug: lightroom-api/guides/quickstart
+          - type: page
+            id: authentication
+            title: Authentication
+            slug: lightroom-api/guides/authentication
+      - type: apiReference
+        id: api-reference
+        title: API Reference
+        slug: lightroom-api/api-reference
+        apiDefinitionId: lightroom

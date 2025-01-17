@@ -1,0 +1,72 @@
+title: Adobe Firefly API
+description: Create images with generative AI using Adobe Firefly
+
+navigation:
+  type: versioned
+  id: firefly-versions
+  children:
+    - type: version
+      id: v3
+      versionId: v3
+      title: Version 3.0
+      slug: firefly-api/v3
+      default: true
+      availability: Beta
+      child:
+        type: sidebarRoot
+        id: firefly-v3-sidebar
+        children:
+          - type: page
+            id: overview
+            title: Overview
+            slug: firefly-api/v3
+          - type: section
+            id: guides
+            title: Guides
+            slug: firefly-api/v3/guides
+            children:
+              - type: page
+                id: quickstart
+                title: Quickstart Guide
+                slug: firefly-api/v3/guides/quickstart
+              - type: page
+                id: authentication
+                title: Authentication
+                slug: firefly-api/v3/guides/authentication
+          - type: apiReference
+            id: api-reference
+            title: API Reference
+            slug: firefly-api/v3/api-reference
+            apiDefinitionId: firefly-v3
+    - type: version
+      id: v2
+      versionId: v2
+      title: Version 2.0
+      slug: firefly-api/v2
+      availability: Stable
+      child:
+        type: sidebarRoot
+        id: firefly-v2-sidebar
+        children:
+          - type: page
+            id: overview
+            title: Overview
+            slug: firefly-api/v2
+          - type: section
+            id: guides
+            title: Guides
+            slug: firefly-api/v2/guides
+            children:
+              - type: page
+                id: quickstart
+                title: Quickstart Guide
+                slug: firefly-api/v2/guides/quickstart
+              - type: page
+                id: authentication
+                title: Authentication
+                slug: firefly-api/v2/guides/authentication
+          - type: apiReference
+            id: api-reference
+            title: API Reference
+            slug: firefly-api/v2/api-reference
+            apiDefinitionId: firefly-v2

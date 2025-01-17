@@ -1,0 +1,40 @@
+title: Adobe Acrobat API
+description: Work with PDFs programmatically using Adobe Acrobat
+
+navigation:
+  type: versioned
+  id: acrobat-versions
+  children:
+    - type: version
+      id: v1
+      versionId: v1
+      title: Version 1.0
+      slug: acrobat-api/v1
+      default: true
+      availability: Stable
+      child:
+        type: sidebarRoot
+        id: acrobat-v1-sidebar
+        children:
+          - type: page
+            id: overview
+            title: Overview
+            slug: acrobat-api/v1
+          - type: section
+            id: guides
+            title: Guides
+            slug: acrobat-api/v1/guides
+            children:
+              - type: page
+                id: quickstart
+                title: Quickstart Guide
+                slug: acrobat-api/v1/guides/quickstart
+              - type: page
+                id: authentication
+                title: Authentication
+                slug: acrobat-api/v1/guides/authentication
+          - type: apiReference
+            id: api-reference
+            title: API Reference
+            slug: acrobat-api/v1/api-reference
+            apiDefinitionId: acrobat-v1

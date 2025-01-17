@@ -1,0 +1,70 @@
+instances:
+  - url: https://firefly93048194218904.docs.buildwithfern.com
+title: Adobe | Documentation
+
+announcement:
+  message: "🎉 Adobe Firefly is now available to all Adobe Creative Cloud users! 🎉"
+
+default-language: python
+
+products:
+  - title: Firefly API
+    id: firefly
+    path: products/firefly.yml
+    default: true
+    subtitle: Create images with generative AI
+    icon: fa-regular fa-wand-magic-sparkles
+  - title: Lightroom API
+    id: lightroom
+    path: products/lightroom.yml
+    subtitle: Edit and manage photos programmatically
+    icon: fa-regular fa-image
+  - title: Acrobat API
+    id: acrobat
+    path: products/acrobat.yml
+    subtitle: Work with PDFs programmatically
+    icon: fa-regular fa-file-pdf
+
+colors:
+  accentPrimary:
+    light: "#3b63fb"
+    dark: "#3b63fb"
+  background:
+    light: "#FFFFFF"
+    dark: "#000000"
+  header-background:
+    light: "#FFFFFF"
+    dark: "#000000"
+
+css: assets/styles.css
+
+logo:
+  light: assets/logo-light.svg
+  dark: assets/logo-dark.svg
+  href: /
+  height: 28
+
+favicon: assets/favicon.ico
+
+navbar-links:
+  - type: filled
+    text: Book a Demo
+    rounded: true
+    url: https://adobe.com/contact-sales
+
+layout:
+  page-width: full
+  tabs-placement: header
+  searchbar-placement: header
+
+typography:
+  bodyFont:
+    name: AdobeClean
+    path: assets/AdobeClean-Regular.woff2
+    weight: 400
+    style: normal
+  headingsFont:
+    name: AdobeClean
+    path: assets/AdobeClean-Bold.woff2
+    weight: 600
+    style: normal
