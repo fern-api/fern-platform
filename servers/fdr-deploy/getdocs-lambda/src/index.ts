@@ -175,10 +175,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
           // console.log("Connected to RDS");
 
           const query = `
-        SELECT url, docsDefinition
-        FROM Docs
-        WHERE url = $1
-      `;
+            SELECT url, docsDefinition
+            FROM Docs
+            WHERE url = $1
+          `;
 
           const result = await client.query<DocumentData>(query, [parsedUrl]);
           // console.log("result", result);
@@ -189,8 +189,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
               body: JSON.stringify({ error: "Document not found" }),
             };
           }
-
-          // console.log("found result")
 
           return {
             statusCode: 200,
@@ -213,12 +211,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       }
     } catch (error) {
       console.error("Error:", error);
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ body: "Error connecting to Redis" }),
+      };
     }
   } else {
     throw new Error("Authorization header was not specified");
   }
-  return {
-    statusCode: 400,
-    body: JSON.stringify({ error: "bad request" }),
-  };
 };
