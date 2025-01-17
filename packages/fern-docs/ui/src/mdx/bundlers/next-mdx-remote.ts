@@ -8,18 +8,19 @@ import {
 import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
+  rehypeSlug,
   rehypeSqueezeParagraphs,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
 } from "@fern-docs/mdx/plugins";
 import { serialize } from "next-mdx-remote/serialize";
 import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
+import { rehypeSlugJsxElementVisitor } from "../plugins/rehype-slug-visitor";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -55,7 +56,7 @@ function withDefaultMdxOptions({
     rehypeSqueezeParagraphs,
     rehypeMdxClassStyle,
     rehypeAcornErrorBoundary,
-    rehypeSlug,
+    [rehypeSlug, { visitJsxElement: rehypeSlugJsxElementVisitor }],
     rehypeKatex,
     rehypeFernCode,
     rehypeFernComponents,

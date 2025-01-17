@@ -1,11 +1,13 @@
-import type { Node as HastNode } from "hast";
-import type { Node as MdastNode } from "mdast";
+import type * as Hast from "hast";
+import type * as Mdast from "mdast";
 import type { MdxJsxElement, MdxJsxElementHast } from "../declarations";
 
-export function isMdxJsxElement(node: MdastNode): node is MdxJsxElement {
+export function isMdxJsxElement(node: Mdast.Node): node is MdxJsxElement {
   return node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement";
 }
 
-export function isMdxJsxElementHast(node: HastNode): node is MdxJsxElementHast {
+export function isMdxJsxElementHast(
+  node: Hast.Node
+): node is MdxJsxElementHast {
   return node.type === "mdxJsxFlowElement" || node.type === "mdxJsxTextElement";
 }

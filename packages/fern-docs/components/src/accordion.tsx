@@ -1,9 +1,14 @@
 import { ChevronRight } from "lucide-react";
 import * as React from "react";
 import * as AccordionPrimitive from "./accordion-primitive";
+import {
+  AccordionItemProps,
+  AccordionMultipleProps,
+  AccordionSingleProps,
+} from "./accordion-primitive";
 import { cn } from "./cn";
 
-const Accordion = React.forwardRef<
+const AccordionRoot = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root>
 >(({ className, ...props }, ref) => {
@@ -17,11 +22,11 @@ const Accordion = React.forwardRef<
     </AccordionPrimitive.Root>
   );
 });
-Accordion.displayName = "Accordion";
+AccordionRoot.displayName = "AccordionRoot";
 
 const AccordionItem = React.forwardRef<
   React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
+  AccordionPrimitive.AccordionItemProps
 >(({ className, children, ...props }, forwardedRef) => (
   <AccordionPrimitive.Item
     ref={forwardedRef}
@@ -64,4 +69,15 @@ const AccordionContent = React.forwardRef<
 ));
 AccordionContent.displayName = AccordionPrimitive.Content.displayName;
 
-export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };
+export const Accordion = {
+  Content: AccordionContent,
+  Item: AccordionItem,
+  Trigger: AccordionTrigger,
+  Root: AccordionRoot,
+};
+
+export type {
+  AccordionItemProps,
+  AccordionMultipleProps,
+  AccordionSingleProps,
+};

@@ -32,15 +32,18 @@ export function customHeadingHandler(state: State, node: Heading): Element {
 }
 
 /**
- * My Heading [#some-anchor] -> { text: "My Heading", anchor: "some-anchor" }
+ * My Heading [#some-anchor] or My Heading {#some-anchor} -> { text: "My Heading", anchor: "some-anchor" }
  * @param headingText should not include the leading `#`
  */
 export function extractAnchorFromHeadingText(headingText: string): {
   text: string;
   anchor?: string;
 } {
-  const match = headingText.match(/^(.*?)(?:\s*\[#([^\]]+)\])?$/);
-  const [, text, anchor] = match || [];
+  const match = headingText.match(
+    /^(.*?)(?:\s*(?:\[#([^\]]+)\]|\{#([^}]+)\}))?$/
+  );
+  const [, text, anchor1, anchor2] = match || [];
+  const anchor = anchor1 || anchor2;
   if (text == null || anchor == null) {
     return { text: headingText };
   }

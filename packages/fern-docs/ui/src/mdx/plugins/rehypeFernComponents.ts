@@ -120,12 +120,8 @@ export function rehypeFernComponents(): (tree: Root) => void {
           return transformSteps(node, index, parent, visitor);
         } else if (node.name === "Tabs" || node.name === "TabGroup") {
           return transformTabs(node, index, parent, visitor);
-        } else if (node.name === "AccordionGroup") {
-          return transformAccordionGroup(node, index, parent, visitor);
         } else if (node.name === "Tab") {
           return transformTabItem(node, index, parent, visitor);
-        } else if (node.name === "Accordion" || node.name === "Expandable") {
-          return transformAccordion(node, index, parent, visitor);
         }
       }
     };
@@ -187,38 +183,6 @@ function transformTabItem(
     children: [],
   };
 
-  parent.children.splice(index, 1, child);
-  return index + 1;
-}
-
-function transformAccordionGroup(
-  node: MdxJsxElementHast,
-  index: number,
-  parent: Root | Element | MdxJsxElementHast,
-  visitor: Visitor
-): VisitorResult {
-  const items = node.children
-    .filter(isMdxJsxElementHast)
-    .filter((child) => child.name === "Accordion");
-
-  items.forEach((tab, index) => {
-    const title = getTitle(tab) ?? `Untitled ${index + 1}`;
-    applyGeneratedId(tab, title);
-    visit(tab, visitor);
-  });
-
-  const child = {
-    type: "mdxJsxFlowElement" as const,
-    name: "AccordionGroup",
-    attributes: [
-      unknownToMdxJsxAttribute(
-        "items",
-        items.map((item) => hastMdxJsxElementHastToProps(item).props)
-      ),
-      ...node.attributes,
-    ],
-    children: [],
-  };
   parent.children.splice(index, 1, child);
   return index + 1;
 }
@@ -296,30 +260,30 @@ function transformSteps(
   return index + 1;
 }
 
-function transformAccordion(
-  node: MdxJsxElementHast,
-  index: number,
-  parent: Root | Element | MdxJsxElementHast,
-  visitor: Visitor
-): VisitorResult {
-  const title = getTitle(node) ?? "Untitled";
-  applyGeneratedId(node, title);
-  visit(node, visitor);
+// function transformAccordion(
+//   node: MdxJsxElementHast,
+//   index: number,
+//   parent: Root | Element | MdxJsxElementHast,
+//   visitor: Visitor
+// ): VisitorResult {
+//   const title = getTitle(node) ?? "Untitled";
+//   applyGeneratedId(node, title);
+//   visit(node, visitor);
 
-  const { props } = hastMdxJsxElementHastToProps(node);
+//   const { props } = hastMdxJsxElementHastToProps(node);
 
-  const items = [props];
+//   const items = [props];
 
-  const child = {
-    type: "mdxJsxFlowElement" as const,
-    name: "AccordionGroup",
-    attributes: [unknownToMdxJsxAttribute("items", items)],
-    children: [],
-  };
+//   const child = {
+//     type: "mdxJsxFlowElement" as const,
+//     name: "AccordionGroup",
+//     attributes: [unknownToMdxJsxAttribute("items", items)],
+//     children: [],
+//   };
 
-  parent.children.splice(index, 1, child);
-  return index + 1;
-}
+//   parent.children.splice(index, 1, child);
+//   return index + 1;
+// }
 
 function getTitle(node: MdxJsxElementHast): string | undefined {
   const title = node.attributes

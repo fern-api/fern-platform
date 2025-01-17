@@ -8,7 +8,7 @@ import {
   FernErrorTag,
 } from "../../components/FernErrorBoundary";
 import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
-import { AccordionGroup } from "./accordion";
+import { Accordion, AccordionGroup } from "./accordion";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
 import { Bleed } from "./bleed";
@@ -48,6 +48,7 @@ const ElevenLabsWaveform = dynamic(() =>
 );
 
 const FERN_COMPONENTS = {
+  Accordion,
   AccordionGroup,
   Availability,
   Badge,
@@ -137,6 +138,7 @@ const ALIASED_HTML_COMPONENTS = {
   A,
   Strong,
   Table,
+  Expandable: Accordion,
 };
 
 export const MDX_COMPONENTS: MDXComponents = {

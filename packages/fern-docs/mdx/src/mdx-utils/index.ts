@@ -1,3 +1,4 @@
+export * from "./attribute-value-as-string";
 export * from "./extract-jsx";
 export * from "./is-mdx-element";
 export * from "./is-mdx-expression";

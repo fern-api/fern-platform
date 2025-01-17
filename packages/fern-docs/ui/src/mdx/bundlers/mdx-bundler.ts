@@ -8,6 +8,7 @@ import {
 import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
+  rehypeSlug,
   rehypeSqueezeParagraphs,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
@@ -17,12 +18,12 @@ import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
+import { rehypeSlugJsxElementVisitor } from "../plugins/rehype-slug-visitor";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -120,7 +121,7 @@ export async function serializeMdx(
           rehypeSqueezeParagraphs,
           rehypeMdxClassStyle,
           rehypeAcornErrorBoundary,
-          rehypeSlug,
+          [rehypeSlug, { visitJsxElement: rehypeSlugJsxElementVisitor }],
           rehypeKatex,
           rehypeFernCode,
           rehypeFernComponents,
