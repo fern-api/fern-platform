@@ -5,9 +5,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ChevronDown, Package } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { CURRENT_PRODUCT_ID_ATOM, PRODUCTS_ATOM } from "../atoms/navigation";
+import {
+  CURRENT_PRODUCT_ID_ATOM,
+  PRODUCTS_ATOM,
+  VERSIONS_ATOM,
+} from "../atoms/navigation";
 import { FernLink } from "../components/FernLink";
 import { useToHref } from "../hooks/useHref";
+import { VersionDropdown } from "./VersionDropdown";
 
 export declare namespace ProductDropdown {
   export interface Props {}
@@ -74,15 +79,22 @@ const itemVariants = {
 
 export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
   const products = useAtomValue(PRODUCTS_ATOM);
+  const versions = useAtomValue(VERSIONS_ATOM);
   const currentProductId = useAtomValue(CURRENT_PRODUCT_ID_ATOM);
   const setCurrentProductId = useSetAtom(CURRENT_PRODUCT_ID_ATOM);
   const toHref = useToHref();
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node) &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -111,6 +123,7 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="hover:text-accent group flex items-center gap-1 transition-all"
+        ref={buttonRef}
       >
         <div className="text-foreground font-small">
           {currentProduct?.title ?? currentProductId}
@@ -126,15 +139,17 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
       <AnimatePresence>
         {isOpen && (
           <>
+            {/* 
+            Header blur effect if desired:
             <motion.div
               className="bg-background/5 fixed inset-0 z-40 backdrop-blur-[1px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-            />
+            /> */}
             <motion.div
-              className="fixed inset-x-4 z-50 mt-2 origin-top lg:absolute lg:inset-x-auto"
+              className="fixed inset-x-4 z-50 mt-2 origin-top xl:absolute xl:inset-x-auto"
               variants={menuVariants}
               initial="hidden"
               animate="visible"
@@ -196,6 +211,16 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
                     )
                   )}
                 </motion.div>
+                {versions.length > 1 && (
+                  <div className="border-border/50 mt-4 border-t pt-4 md:hidden">
+                    <div className="text-muted mb-2 text-sm font-medium">
+                      Version
+                    </div>
+                    <div className="max-w-full">
+                      <VersionDropdown />
+                    </div>
+                  </div>
+                )}
               </div>
             </motion.div>
           </>

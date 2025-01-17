@@ -33,7 +33,7 @@ export const VersionDropdown = () => {
   const currentVersion = versions.find(({ id }) => id === currentVersionId);
 
   return (
-    <div className="flex max-w-32">
+    <div className="flex w-full md:max-w-32">
       <FernLinkDropdown
         value={currentVersionId}
         options={versions.map(
@@ -61,7 +61,7 @@ export const VersionDropdown = () => {
           data-testid="version-dropdown"
           intent="primary"
           variant="outlined"
-          className="h-8 px-2"
+          className="h-8 w-full px-2 md:w-auto"
           text={currentVersion?.title ?? currentVersionId}
           rightIcon={
             <motion.div

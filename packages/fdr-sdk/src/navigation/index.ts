@@ -1,3 +1,4 @@
+import type { RootNode } from "../client/generated/api/resources/navigation/resources/v1/types";
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder";
 import { ApiDefinitionPruner } from "./ApiDefinitionPruner";
 import { ApiTypeIdVisitor } from "./ApiTypeIdVisitor";
@@ -15,3 +16,10 @@ export {
   ApiTypeIdVisitor,
   NodeCollector,
 };
+
+/**
+ * Type guard to check if a node is a ProductGroupNode
+ */
+export function isProductGroup(node: RootNode): boolean {
+  return node.type === "productgroup";
+}

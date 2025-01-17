@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import {
   getAuthEdgeConfig,
@@ -49,6 +49,121 @@ interface WithInitialProps {
   host: string;
   fern_token: string | undefined;
   rawCookie: string | undefined;
+}
+
+interface WithProductSwitcherInfoArgs {
+  /**
+   * The current node to mutate the product switcher info for.
+   */
+  node: FernNavigation.NavigationNodeWithMetadata;
+
+  /**
+   * The parents of the current node, in descending order.
+   */
+  parents: readonly FernNavigation.NavigationNode[];
+
+  /**
+   * All available products to be rendered in the product switcher.
+   */
+  products: readonly FernNavigation.ProductNode[];
+
+  /**
+   * A map of slugs to nodes for ALL nodes in the tree.
+   * This is used to check if a node exists in a different product.
+   */
+  slugMap: Map<string, FernNavigation.NavigationNodeWithMetadata>;
+}
+
+/**
+ * Similar to version switching, we want to preserve the "context" of the current node when switching between products.
+ * For example, if the current node is `/docs/product1/v1/foo/bar`, and the user switches to `/docs/product2`, we need to find
+ * if `/docs/product2/v1/foo/bar` exists. If it doesn't, we can try `/docs/product2/v1/foo` and so on.
+ */
+function withProductSwitcherInfo({
+  node,
+  parents,
+  products,
+  slugMap,
+}: WithProductSwitcherInfoArgs): FernNavigation.ProductNode[] {
+  const { product: currentProduct, nodes } =
+    getNodesUnderCurrentProductAscending(node, parents);
+
+  const unproductedSlugs =
+    currentProduct == null
+      ? []
+      : nodes
+          .filter(FernNavigation.hasMetadata)
+          .map((node) => node.slug)
+          .map((slug) =>
+            FernNavigation.utils.toUnproductedSlug(slug, currentProduct.slug)
+          );
+
+  return products
+    .filter((product) => !product.hidden)
+    .map((product) => {
+      if (product.productId === currentProduct?.productId) {
+        return {
+          ...product,
+          pointsTo: node.slug,
+        };
+      }
+
+      const expectedSlugs = unproductedSlugs.map((slug) =>
+        FernNavigation.slugjoin(product.slug, slug)
+      );
+
+      const expectedSlug = expectedSlugs
+        .map((slug) => {
+          const node = slugMap.get(slug);
+
+          if (node == null) {
+            return undefined;
+          } else if (FernNavigation.isPage(node)) {
+            return node.slug;
+          } else if (FernNavigation.hasRedirect(node)) {
+            return node.pointsTo;
+          }
+
+          return undefined;
+        })
+        .filter(isNonNullish)[0];
+
+      // If we can't find a matching page in the target product, default to the product's landing page
+      const pointsTo = expectedSlug ?? product.pointsTo ?? product.slug;
+
+      return {
+        ...product,
+        pointsTo,
+      };
+    });
+}
+
+function getNodesUnderCurrentProductAscending(
+  node: FernNavigation.NavigationNodeWithMetadata,
+  parents: readonly FernNavigation.NavigationNode[]
+): {
+  product: FernNavigation.ProductNode | undefined;
+  nodes: FernNavigation.NavigationNodeWithMetadata[];
+} {
+  const currentProductIndex = parents.findIndex(
+    (node) => node.type === "product"
+  );
+
+  if (currentProductIndex < 0) {
+    return { product: undefined, nodes: [] };
+  }
+
+  const product = parents[currentProductIndex];
+  if (product == null || product.type !== "product") {
+    return { product: undefined, nodes: [] };
+  }
+
+  parents = parents.slice(currentProductIndex + 1);
+
+  return {
+    product: product as FernNavigation.ProductNode,
+    nodes: [...parents, node].filter(FernNavigation.hasMetadata).reverse(),
+  };
 }
 
 export async function withInitialProps({
@@ -346,6 +461,27 @@ export async function withInitialProps({
   const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
   const serializeMdx = await getMdxBundler(engine);
 
+  // Get all products from the root node
+  const products =
+    (root as { type: string }).type === "productgroup"
+      ? (root as unknown as { children: FernNavigation.ProductNode[] }).children
+      : [];
+
+  // Add product switcher info only if we have products
+  const { product: currentProduct } = getNodesUnderCurrentProductAscending(
+    found.node,
+    found.parents
+  );
+  const productSwitcher =
+    products.length > 0
+      ? withProductSwitcherInfo({
+          node: found.node,
+          parents: found.parents,
+          products,
+          slugMap: found.collector.slugMap,
+        })
+      : [];
+
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
@@ -370,6 +506,8 @@ export async function withInitialProps({
       tabs,
       currentVersionId,
       versions,
+      currentProductId: currentProduct?.productId,
+      products: productSwitcher,
       sidebar,
       trailingSlash: isTrailingSlashEnabled(),
     },

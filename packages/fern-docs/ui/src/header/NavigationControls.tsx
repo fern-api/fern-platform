@@ -10,7 +10,11 @@ export const NavigationControls = () => {
   return (
     <div className="flex items-center gap-2.5">
       {products.length > 1 && <ProductDropdown />}
-      {versions.length > 1 && <VersionDropdown />}
+      {versions.length > 1 && (
+        <div className="hidden md:block">
+          <VersionDropdown />
+        </div>
+      )}
     </div>
   );
 };
