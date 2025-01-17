@@ -9,6 +9,7 @@ import {
   visitDiscriminatedUnion,
 } from "@fern-api/ui-core-utils";
 import { uniq } from "es-toolkit/array";
+import { sum } from "es-toolkit/math";
 import { ReactNode } from "react";
 
 export interface TypeShorthandOptions {
@@ -210,7 +211,13 @@ export function renderTypeShorthand(
       plural ? "objects" : maybeWithArticle("an", "object"),
     enum: (enumValue) => {
       // if there are only 1 or 2 values, we can list them like literals (e.g. "apple" or "banana")
-      if (enumValue.values.length > 0 && enumValue.values.length < 3) {
+      if (enumValue.values.length === 1) {
+        return `"${enumValue.values[0]?.value}"`;
+      }
+      if (
+        enumValue.values.length > 1 &&
+        sum(enumValue.values.map((value) => value.value.length)) < 20
+      ) {
         return enumValue.values.map((value) => `"${value.value}"`).join(" or ");
       }
       return plural ? "enums" : maybeWithArticle("an", "enum");
