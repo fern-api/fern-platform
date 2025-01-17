@@ -8,6 +8,8 @@ import {
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
 import { getEndpointId } from "../../utils/getEndpointId";
+import { mergeSnippets } from "../../utils/mergeSnippets";
+import { mergeXFernAndResponseExamples } from "../../utils/mergeXFernAndResponsesExamples";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { XFernBasePathConverterNode } from "../extensions/XFernBasePathConverter.node";
@@ -154,19 +156,12 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       }
     }
 
-    this.redocExamplesNode = new RedocExampleConverterNode(
-      {
-        input: this.input,
-        context: this.context,
-        accessPath: this.accessPath,
-        pathId: "x-code-samples",
-      },
-      this.path,
-      Object.keys(this.responses?.responsesByStatusCode ?? {})
-        .map(Number)
-        .sort()[0] ?? 200,
-      undefined
-    );
+    this.redocExamplesNode = new RedocExampleConverterNode({
+      input: this.input,
+      context: this.context,
+      accessPath: this.accessPath,
+      pathId: "x-code-samples",
+    });
 
     this.requests =
       this.input.requestBody != null
@@ -329,11 +324,18 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       errors: undefined,
     };
 
-    const examples = [
-      this.redocExamplesNode?.convert(),
-      ...(this.xFernExamplesNode?.convert() ?? []),
-      ...(responses?.flatMap((response) => response.examples) ?? []),
-    ].filter(isNonNullish);
+    const examples = mergeXFernAndResponseExamples(
+      this.xFernExamplesNode?.convert(),
+      responses?.flatMap((response) => response.examples)
+    )?.map((example) => {
+      return {
+        ...example,
+        snippets: mergeSnippets(
+          example.snippets,
+          this.redocExamplesNode?.convert()
+        ),
+      };
+    });
 
     if (this.isWebhook) {
       if (this.method !== "POST" && this.method !== "GET") {
