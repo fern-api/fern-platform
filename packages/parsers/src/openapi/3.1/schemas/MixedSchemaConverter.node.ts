@@ -6,6 +6,7 @@ import {
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
+import { wrapNullable } from "../../utils/wrapNullable";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export declare namespace MixedSchemaConverterNode {
@@ -87,14 +88,7 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithEx
     }));
 
     return this.nullable
-      ? unions.map((union) => ({
-          type: "alias" as const,
-          value: {
-            type: "nullable" as const,
-            default: union.variants[0],
-            shape: union,
-          },
-        }))
+      ? unions.map(wrapNullable).filter(isNonNullish)
       : unions;
   }
 
