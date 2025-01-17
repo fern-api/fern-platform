@@ -11,7 +11,7 @@ export function HeaderLogoSection(): ReactElement {
 
   return (
     <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <HeaderLogoContainer href={logoHref}>
           <HeaderLogoImage />
           {logoText != null && logoText.length > 0 && (

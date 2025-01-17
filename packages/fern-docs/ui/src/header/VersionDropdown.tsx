@@ -61,7 +61,7 @@ export const VersionDropdown = () => {
           data-testid="version-dropdown"
           intent="primary"
           variant="outlined"
-          className="h-12 px-3"
+          className="h-8 px-2"
           text={currentVersion?.title ?? currentVersionId}
           rightIcon={
             <motion.div
@@ -71,7 +71,7 @@ export const VersionDropdown = () => {
               }}
               transition={{ type: "spring", stiffness: 200, damping: 15 }}
             >
-              <ChevronDown className="text-muted size-4" />
+              <ChevronDown className="text-muted size-4 text-xs" />
             </motion.div>
           }
           disableAutomaticTooltip

@@ -110,20 +110,13 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
 
   return (
     <div className="relative">
-      <motion.button
+      <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="border-border/50 bg-background-secondary/50 hover:border-accent/30 hover:bg-background-secondary group flex items-center gap-2 rounded-lg border px-3 py-2 transition-all"
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        className="hover:text-accent group flex items-center gap-1 transition-all"
       >
-        <div className="flex items-center gap-2">
-          <div className="bg-background-tertiary/50 group-hover:bg-background-tertiary flex size-8 shrink-0 items-center justify-center rounded-md transition-colors">
-            <ProductIcon icon={currentProduct?.icon} />
-          </div>
-          <span className="text-foreground font-medium">
-            {currentProduct?.title ?? currentProductId}
-          </span>
+        <div className="text-foreground font-small">
+          {currentProduct?.title ?? currentProductId}
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
@@ -131,7 +124,7 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
         >
           <ChevronDown className="text-muted size-4" />
         </motion.div>
-      </motion.button>
+      </button>
 
       <AnimatePresence>
         {isOpen && (
