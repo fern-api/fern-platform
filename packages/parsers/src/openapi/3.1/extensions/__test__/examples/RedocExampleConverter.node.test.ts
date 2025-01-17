@@ -107,26 +107,24 @@ describe("RedocExampleConverterNode", () => {
       const result = node.convert();
 
       expect(result).toEqual({
-        snippets: {
-          typescript: [
-            {
-              name: "TS Example",
-              language: "TypeScript",
-              code: "console.log('hello')",
-              install: undefined,
-              generated: false,
-              description: undefined,
-            },
-            {
-              name: undefined,
-              language: "TypeScript",
-              code: "console.log('world')",
-              install: undefined,
-              generated: false,
-              description: undefined,
-            },
-          ],
-        },
+        typescript: [
+          {
+            name: "TS Example",
+            language: "TypeScript",
+            code: "console.log('hello')",
+            install: undefined,
+            generated: false,
+            description: undefined,
+          },
+          {
+            name: undefined,
+            language: "TypeScript",
+            code: "console.log('world')",
+            install: undefined,
+            generated: false,
+            description: undefined,
+          },
+        ],
       });
     });
 

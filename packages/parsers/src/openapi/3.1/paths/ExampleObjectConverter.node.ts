@@ -13,6 +13,8 @@ import { ParameterBaseObjectConverterNode } from "./parameters";
 import { RequestMediaTypeObjectConverterNode } from "./request/RequestMediaTypeObjectConverter.node";
 import { ResponseMediaTypeObjectConverterNode } from "./response/ResponseMediaTypeObjectConverter.node";
 
+export const GLOBAL_EXAMPLE_NAME = "";
+
 export declare namespace ExampleObjectConverterNode {
   export type Input =
     | {

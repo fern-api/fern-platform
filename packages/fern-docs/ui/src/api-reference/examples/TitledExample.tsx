@@ -71,12 +71,12 @@ export const TitledExample = forwardRef<
           ) : (
             <div className="min-w-0 flex-1 shrink">{title}</div>
           )}
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             {actions}
             {!disableClipboard && (
               <CopyToClipboardButton
                 content={copyToClipboardText}
-                className="-m-1"
+                className="-m-1 size-fit"
               />
             )}
           </div>

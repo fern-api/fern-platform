@@ -66,6 +66,7 @@ export class ChangelogNavigationConverter {
         authed: undefined,
         viewers: undefined,
         orphaned: undefined,
+        featureFlags: undefined,
       };
     });
   }
@@ -102,6 +103,7 @@ export class ChangelogNavigationConverter {
             authed: undefined,
             viewers: undefined,
             orphaned: undefined,
+            featureFlags: undefined,
           };
         })
       ),
@@ -129,6 +131,7 @@ export class ChangelogNavigationConverter {
           authed: undefined,
           viewers: undefined,
           orphaned: undefined,
+          featureFlags: undefined,
         }))
       ),
       "month",
@@ -157,6 +160,7 @@ export class ChangelogNavigationConverter {
         authed: undefined,
         viewers: undefined,
         orphaned: undefined,
+        featureFlags: undefined,
       };
     });
   }

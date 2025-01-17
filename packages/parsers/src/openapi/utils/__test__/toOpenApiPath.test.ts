@@ -18,7 +18,7 @@ describe("toOpenApiPath", () => {
 
   it("should handle elements with special characters", () => {
     expect(toOpenApiPath(["path", "with spaces", "special/char"])).toBe(
-      "#/path/with spaces/special/char"
+      "#/path/with spaces/special~1char"
     );
   });
 });
