@@ -17,7 +17,7 @@
   ],
   "type": "module",
   "exports": {
-    "./bundlers": "./src/mdx/bundlers/index.ts",
+    "./bundlers/mdx-bundler": "./src/mdx/bundlers/mdx-bundler.ts",
     "./bundlers/next-mdx-remote": "./src/mdx/bundlers/next-mdx-remote.ts",
     ".": "./src/index.ts"
   },
@@ -58,6 +58,7 @@
     "@fern-ui/loadable": "workspace:*",
     "@fern-ui/react-commons": "workspace:*",
     "@inkeep/widgets": "^0.2.288",
+    "@mdx-js/react": "^3.1.0",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/primitive": "^1.1.1",
     "@radix-ui/react-accordion": "^1.2.2",
