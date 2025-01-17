@@ -1,3 +1,4 @@
+"use client";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { RemoteFontAwesomeIcon } from "@fern-docs/components";
 import { AnimatePresence, motion } from "framer-motion";
@@ -77,14 +78,11 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
   const setCurrentProductId = useSetAtom(CURRENT_PRODUCT_ID_ATOM);
   const toHref = useToHref();
   const [isOpen, setIsOpen] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -109,9 +107,8 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
         : "md:grid-cols-3 xl:grid-cols-4";
 
   return (
-    <div className="relative">
+    <div className="relative" id="fern-product-dropdown">
       <button
-        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="hover:text-accent group flex items-center gap-1 transition-all"
       >
@@ -137,13 +134,16 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
               onClick={() => setIsOpen(false)}
             />
             <motion.div
-              className="absolute inset-x-0 z-50 mt-2 origin-top"
+              className="fixed inset-x-4 z-50 mt-2 origin-top lg:absolute lg:inset-x-auto"
               variants={menuVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
             >
-              <div className="border-border bg-background w-[1000px] max-w-[calc(100vw-2rem)] rounded-xl border p-6 shadow-lg">
+              <div
+                className="border-border bg-background w-[min(calc(100vw-2rem),1000px)] rounded-xl border p-6 shadow-lg"
+                ref={menuRef}
+              >
                 <motion.div
                   className={`grid grid-cols-1 gap-4 ${gridCols}`}
                   variants={containerVariants}
@@ -170,22 +170,23 @@ export const ProductDropdown: React.FC<ProductDropdown.Props> = () => {
                           );
                           setIsOpen(false);
                         }}
+                        className="group block h-full"
                       >
                         <motion.div
                           variants={itemVariants}
-                          className={`border-border/50 group flex cursor-pointer items-start gap-4 rounded-lg border p-4 transition-all ${currentProductId === productId ? "border-accent bg-accent/5" : "hover:border-accent/30 hover:bg-background-secondary/50"} ${hidden ? "opacity-50" : ""} `}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
+                          className={`border-border/50 group-hover:border-accent/30 group-hover:bg-background-secondary/50 flex h-full cursor-pointer items-center gap-4 rounded-lg border bg-white/50 p-4 transition-all ${currentProductId === productId ? "border-accent bg-accent/5" : ""} ${hidden ? "opacity-50" : ""}`}
+                          whileHover={{ scale: 1.01 }}
+                          whileTap={{ scale: 0.99 }}
                         >
                           <div className="bg-background-tertiary/50 group-hover:bg-background-tertiary flex size-12 shrink-0 items-center justify-center rounded-lg transition-colors">
                             <ProductIcon icon={icon} isLarge />
                           </div>
-                          <div className="flex flex-col gap-1">
-                            <span className="text-foreground font-medium">
+                          <div className="flex flex-1 flex-col justify-center gap-1">
+                            <span className="text-foreground font-medium leading-snug">
                               {title}
                             </span>
                             {subtitle && (
-                              <span className="text-muted text-sm">
+                              <span className="text-muted text-sm/tight">
                                 {subtitle}
                               </span>
                             )}
