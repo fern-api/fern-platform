@@ -23,16 +23,11 @@ export declare namespace RedocExampleConverterNode {
 
 export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
   unknown,
-  FernRegistry.api.latest.ExampleEndpointCall
+  Record<string, FernRegistry.api.latest.CodeSnippet[]>
 > {
   codeSamples: RedocExampleConverterNode.RedocCodeSample[] | undefined;
 
-  constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>,
-    protected path: string,
-    protected responseStatusCode: number,
-    protected name: string | undefined
-  ) {
+  constructor(args: BaseOpenApiV3_1ConverterNodeConstructorArgs<unknown>) {
     super(args);
     this.safeParse();
   }
@@ -50,9 +45,14 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     this.codeSamples.forEach((codeSample) => {
       if (
-        Object.values(FernRegistry.api.v1.read.SupportedLanguage).includes(
-          codeSample.lang.toLowerCase() as FernRegistry.api.v1.read.SupportedLanguage
-        )
+        ![
+          ...Object.values(FernRegistry.api.v1.read.SupportedLanguage),
+          "Kotlin",
+          "Swift",
+          "PHP",
+        ]
+          .map((l) => l.toLowerCase())
+          .includes(codeSample.lang.toLowerCase())
       ) {
         this.context.errors.warning({
           message: `Unsupported language: ${codeSample.lang}. This may not render correctly.`,
@@ -62,7 +62,7 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
     });
   }
 
-  convert(): FernRegistry.api.latest.ExampleEndpointCall | undefined {
+  convert(): Record<string, FernRegistry.api.latest.CodeSnippet[]> | undefined {
     const convertedCodeSamples: Record<
       string,
       FernRegistry.api.latest.CodeSnippet[]
@@ -81,17 +81,6 @@ export class RedocExampleConverterNode extends BaseOpenApiV3_1ConverterNode<
     if (Object.keys(convertedCodeSamples).length === 0) {
       return undefined;
     }
-    return {
-      path: this.path,
-      responseStatusCode: this.responseStatusCode,
-      name: this.name,
-      description: undefined,
-      pathParameters: undefined,
-      queryParameters: undefined,
-      headers: undefined,
-      requestBody: undefined,
-      responseBody: undefined,
-      snippets: convertedCodeSamples,
-    };
+    return convertedCodeSamples;
   }
 }

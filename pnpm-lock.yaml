@@ -753,6 +753,9 @@ importers:
       '@launchdarkly/node-server-sdk':
         specifier: ^9.7.2
         version: 9.7.2
+      '@mdx-js/react':
+        specifier: ^3.1.0
+        version: 3.1.0(@types/react@18.3.3)(react@18.3.1)
       '@opentelemetry/api':
         specifier: ^1.9.0
         version: 1.9.0
@@ -2049,6 +2052,9 @@ importers:
       '@inkeep/widgets':
         specifier: ^0.2.288
         version: 0.2.288(@internationalized/date@3.5.4)(@types/react@18.3.3)(jsdom@24.0.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
+      '@mdx-js/react':
+        specifier: ^3.1.0
+        version: 3.1.0(@types/react@18.3.3)(react@18.3.1)
       '@radix-ui/colors':
         specifier: ^3.0.0
         version: 3.0.0
@@ -5287,8 +5293,8 @@ packages:
   '@mdx-js/mdx@3.0.1':
     resolution: {integrity: sha512-eIQ4QTrOWyL3LWEe/bu6Taqzq2HQvHcyTMaOrI95P2/LmJE7AsfPfgJGuFLPVqBUE1BC1rik3VIhU+s9u72arA==}
 
-  '@mdx-js/react@3.0.1':
-    resolution: {integrity: sha512-9ZrPIU4MGf6et1m1ov3zKf+q9+deetI51zprKB1D/z3NOb+rUxxtEl3mCjW5wTGh6VhRdwPueh1oRzi6ezkA8A==}
+  '@mdx-js/react@3.1.0':
+    resolution: {integrity: sha512-QjHtSaoameoalGnKDT3FoIl4+9RwyTmo9ZJGBdLOks/YOiWHoRDI3PUwEzOE7kEmGcV3AFcp9K6dYu9rEuKLAQ==}
     peerDependencies:
       '@types/react': '>=16'
       react: 18.3.1
@@ -7260,7 +7266,7 @@ packages:
     resolution: {integrity: sha512-GWrNeElMYHO8FVETjW205u2s9IXFs46fmVKY8T1dHgksCm3JV8w4k14gM2eaZbOUOH/tGcOuz5YbqJl8iKkA8w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      next: ^13.5.0 || ^14.0.0 || ^15.0.0
+      next: npm:@fern-api/next@14.2.9-fork.2
       react: 18.3.1
       react-dom: 18.3.1
       storybook: ^8.4.4
@@ -20689,7 +20695,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@mdx-js/react@3.0.1(@types/react@18.3.3)(react@18.3.1)':
+  '@mdx-js/react@3.1.0(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
       '@types/mdx': 2.0.13
       '@types/react': 18.3.3
@@ -22980,7 +22986,7 @@ snapshots:
 
   '@storybook/addon-docs@8.4.4(@types/react@18.3.3)(storybook@8.4.4(prettier@3.4.2))(webpack-sources@3.2.3)':
     dependencies:
-      '@mdx-js/react': 3.0.1(@types/react@18.3.3)(react@18.3.1)
+      '@mdx-js/react': 3.1.0(@types/react@18.3.3)(react@18.3.1)
       '@storybook/blocks': 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
       '@storybook/csf-plugin': 8.4.4(storybook@8.4.4(prettier@3.4.2))(webpack-sources@3.2.3)
       '@storybook/react-dom-shim': 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
@@ -31629,7 +31635,7 @@ snapshots:
     dependencies:
       '@babel/code-frame': 7.26.2
       '@mdx-js/mdx': 3.0.1
-      '@mdx-js/react': 3.0.1(@types/react@18.3.3)(react@18.3.1)
+      '@mdx-js/react': 3.1.0(@types/react@18.3.3)(react@18.3.1)
       react: 18.3.1
       unist-util-remove: 3.1.1
       vfile: 6.0.1

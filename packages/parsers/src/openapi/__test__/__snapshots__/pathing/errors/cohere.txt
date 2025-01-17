@@ -1,0 +1,50 @@
+[
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/finetuning/finetuned-models",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/finetuning/finetuned-models",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/finetuning/finetuned-models",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/finetuning/finetuned-models",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+    ],
+  },
+]

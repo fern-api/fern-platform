@@ -1,7 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
-import { getMdxBundler } from "@fern-docs/ui/bundlers";
+import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { EdgeFlags } from "@fern-docs/utils";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
@@ -12,6 +12,7 @@ interface WithResolvedDocsContentOpts {
   authState: AuthState;
   definition: DocsV1Read.DocsDefinition;
   edgeFlags: EdgeFlags;
+  scope?: Record<string, unknown>;
 }
 
 export async function withResolvedDocsContent({
@@ -20,6 +21,7 @@ export async function withResolvedDocsContent({
   authState,
   definition,
   edgeFlags,
+  scope,
 }: WithResolvedDocsContentOpts): Promise<DocsContent | undefined> {
   const node = withPrunedNavigation(found.node, {
     visibleNodeIds: [found.node.id],
@@ -35,9 +37,6 @@ export async function withResolvedDocsContent({
     visibleNodeIds: [found.node.id],
     authed: authState.authed,
   });
-
-  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-  const serializeMdx = await getMdxBundler(engine);
 
   return resolveDocsContent({
     node,
@@ -67,9 +66,10 @@ export async function withResolvedDocsContent({
     edgeFlags,
     mdxOptions: {
       files: definition.jsFiles,
+      scope,
     },
     serializeMdx,
     domain,
-    engine,
+    engine: "mdx-bundler",
   });
 }

@@ -16,7 +16,7 @@ import {
   getSeoProps,
   renderThemeStylesheet,
 } from "@fern-docs/ui";
-import { getMdxBundler } from "@fern-docs/ui/bundlers";
+import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { addLeadingSlash, getRedirectForPath } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
@@ -172,18 +172,6 @@ export async function withInitialProps({
     return { notFound: true };
   }
 
-  const content = await withResolvedDocsContent({
-    domain: docs.baseUrl.domain,
-    found,
-    authState,
-    definition: docs.definition,
-    edgeFlags,
-  });
-
-  if (content == null) {
-    return { notFound: true };
-  }
-
   const getApiRoute = getApiRouteSupplier({
     basepath: docs.baseUrl.basePath,
     includeTrailingSlash: isTrailingSlashEnabled(),
@@ -307,6 +295,28 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
+  const content = await withResolvedDocsContent({
+    domain: docs.baseUrl.domain,
+    found,
+    authState,
+    definition: docs.definition,
+    edgeFlags,
+    scope: {
+      props: {
+        authed: authState.authed,
+        user: authState.authed ? authState.user : undefined,
+        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
+        // note: do NOT override `props.components`
+        version: found?.currentVersion?.versionId,
+        tab: found?.currentTab?.title,
+      },
+    },
+  });
+
+  if (content == null) {
+    return { notFound: true };
+  }
+
   const tabs = filteredTabs.map((tab, index) =>
     visitDiscriminatedUnion(tab)._visit<SidebarTab>({
       tab: (tab) => ({
@@ -342,9 +352,6 @@ export async function withInitialProps({
     found.currentTab == null
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
-
-  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-  const serializeMdx = await getMdxBundler(engine);
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
