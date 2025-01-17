@@ -18,6 +18,7 @@ import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
+import { GLOBAL_EXAMPLE_NAME } from "../ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
 
 export type RequestContentType = ConstArrayToType<
@@ -68,7 +69,9 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     this.examples = {
       ...(this.input.example != null || this.schema?.example() != null
         ? {
-            "": { value: this.input.example ?? this.schema?.example() },
+            [GLOBAL_EXAMPLE_NAME]: {
+              value: this.input.example ?? this.schema?.example(),
+            },
           }
         : {}),
       ...this.input.examples,
