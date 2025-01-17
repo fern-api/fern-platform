@@ -13,7 +13,6 @@ export interface EdgeFlags {
   useJavaScriptAsTypeScript: boolean;
   alwaysEnableJavaScriptFetch: boolean;
   scrollInContainerEnabled: boolean;
-  useMdxBundler: boolean;
   isBatchStreamToggleDisabled: boolean;
   isAuthEnabledInDocs: boolean;
   isAskAiEnabled: boolean;
@@ -48,7 +47,6 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   useJavaScriptAsTypeScript: false,
   alwaysEnableJavaScriptFetch: false,
   scrollInContainerEnabled: false,
-  useMdxBundler: false,
   isBatchStreamToggleDisabled: false,
   isAuthEnabledInDocs: false,
   isAskAiEnabled: false,
