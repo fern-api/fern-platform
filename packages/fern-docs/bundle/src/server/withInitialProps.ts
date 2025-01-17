@@ -172,18 +172,6 @@ export async function withInitialProps({
     return { notFound: true };
   }
 
-  const content = await withResolvedDocsContent({
-    domain: docs.baseUrl.domain,
-    found,
-    authState,
-    definition: docs.definition,
-    edgeFlags,
-  });
-
-  if (content == null) {
-    return { notFound: true };
-  }
-
   const getApiRoute = getApiRouteSupplier({
     basepath: docs.baseUrl.basePath,
     includeTrailingSlash: isTrailingSlashEnabled(),
@@ -306,6 +294,28 @@ export async function withInitialProps({
     (tab) =>
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
+
+  const content = await withResolvedDocsContent({
+    domain: docs.baseUrl.domain,
+    found,
+    authState,
+    definition: docs.definition,
+    edgeFlags,
+    scope: {
+      props: {
+        authed: authState.authed,
+        user: authState.authed ? authState.user : undefined,
+        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
+        // note: do NOT override `props.components`
+        version: found?.currentVersion?.versionId,
+        tab: found?.currentTab?.title,
+      },
+    },
+  });
+
+  if (content == null) {
+    return { notFound: true };
+  }
 
   const tabs = filteredTabs.map((tab, index) =>
     visitDiscriminatedUnion(tab)._visit<SidebarTab>({

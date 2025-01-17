@@ -41,7 +41,13 @@ export async function serializeMdx(
 ): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
   content: string | undefined,
-  { options = {}, disableMinify, files, filename }: FernSerializeMdxOptions = {}
+  {
+    options = {},
+    disableMinify,
+    files,
+    filename,
+    scope = {},
+  }: FernSerializeMdxOptions = {}
 ): Promise<FernDocs.MarkdownText | undefined> {
   if (content == null) {
     return undefined;
@@ -162,12 +168,11 @@ export async function serializeMdx(
 
     // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
     const { jsxElements } = toTree(content, { sanitize: false });
-
     return {
       engine: "mdx-bundler",
       code: bundled.code,
       frontmatter: bundled.frontmatter,
-      scope: {},
+      scope,
       jsxRefs: jsxElements,
     };
   } catch (e) {

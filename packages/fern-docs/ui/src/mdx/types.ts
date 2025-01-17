@@ -12,6 +12,7 @@ export type FernSerializeMdxOptions = {
   disableMinify?: boolean;
 
   files?: Record<string, string>;
+  scope?: Record<string, unknown>;
 };
 
 export type SerializeMdxFunc =

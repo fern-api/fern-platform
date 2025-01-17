@@ -12,6 +12,7 @@ interface WithResolvedDocsContentOpts {
   authState: AuthState;
   definition: DocsV1Read.DocsDefinition;
   edgeFlags: EdgeFlags;
+  scope?: Record<string, unknown>;
 }
 
 export async function withResolvedDocsContent({
@@ -20,6 +21,7 @@ export async function withResolvedDocsContent({
   authState,
   definition,
   edgeFlags,
+  scope,
 }: WithResolvedDocsContentOpts): Promise<DocsContent | undefined> {
   const node = withPrunedNavigation(found.node, {
     visibleNodeIds: [found.node.id],
@@ -67,6 +69,7 @@ export async function withResolvedDocsContent({
     edgeFlags,
     mdxOptions: {
       files: definition.jsFiles,
+      scope,
     },
     serializeMdx,
     domain,
