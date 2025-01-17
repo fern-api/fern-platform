@@ -41,13 +41,7 @@ export async function serializeMdx(
 ): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
   content: string | undefined,
-  {
-    options = {},
-    disableMinify,
-    files,
-    filename,
-    scope = {},
-  }: FernSerializeMdxOptions = {}
+  { options = {}, files, filename, scope = {} }: FernSerializeMdxOptions = {}
 ): Promise<FernDocs.MarkdownText | undefined> {
   if (content == null) {
     return undefined;
@@ -92,6 +86,14 @@ export async function serializeMdx(
         return filename;
       }),
 
+      globals: {
+        "@mdx-js/react": {
+          varName: "MdxJsReact",
+          namedExports: ["useMDXComponents"],
+          defaultExport: false,
+        },
+      },
+
       mdxOptions: (o: Options) => {
         o.remarkRehypeOptions = {
           ...o.remarkRehypeOptions,
@@ -102,6 +104,8 @@ export async function serializeMdx(
             ...options?.remarkRehypeOptions?.handlers,
           },
         };
+
+        o.providerImportSource = "@mdx-js/react";
 
         const remarkPlugins: PluggableList = [
           remarkSqueezeParagraphs,
@@ -155,7 +159,7 @@ export async function serializeMdx(
       },
 
       esbuildOptions: (o) => {
-        o.minify = disableMinify ? false : true;
+        o.minify = process.env.NODE_ENV === "production";
         return o;
       },
     });

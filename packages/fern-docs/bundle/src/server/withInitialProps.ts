@@ -16,7 +16,7 @@ import {
   getSeoProps,
   renderThemeStylesheet,
 } from "@fern-docs/ui";
-import { getMdxBundler } from "@fern-docs/ui/bundlers";
+import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { addLeadingSlash, getRedirectForPath } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
@@ -352,9 +352,6 @@ export async function withInitialProps({
     found.currentTab == null
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
-
-  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-  const serializeMdx = await getMdxBundler(engine);
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
