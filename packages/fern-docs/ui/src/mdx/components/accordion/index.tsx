@@ -3,6 +3,7 @@ import {
   AccordionMultipleProps,
   AccordionSingleProps,
   Accordion as FernAccordion,
+  cn,
 } from "@fern-docs/components";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import { uniq } from "es-toolkit/array";
@@ -10,7 +11,6 @@ import { kebabCase } from "es-toolkit/string";
 import { useAtomValue } from "jotai";
 import React from "react";
 import { UnreachableCaseError } from "ts-essentials";
-import { cn } from "../../../../../components/src/cn";
 import { ANCHOR_ATOM } from "../../../atoms";
 import { filterChildren } from "../../common/util";
 

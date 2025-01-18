@@ -1,3 +1,4 @@
+export { toString as hastToString } from "hast-util-to-string";
 export type { MdxJsxAttribute } from "mdast-util-mdx";
 export { visit } from "unist-util-visit";
 export * from "./declarations";

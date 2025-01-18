@@ -4,6 +4,9 @@ import {
   valueToEstree,
   type Options as ValueToEstreeOptions,
 } from "estree-util-value-to-estree";
+import { toEstree } from "hast-util-to-estree";
+import { isHastElement, isHastText } from "../hast-utils";
+import { isMdxJsxElementHast } from "./is-mdx-element";
 import { isMdxJsxAttributeValueExpression } from "./is-mdx-jsx-attr";
 
 export function unknownToEstreeExpression(
@@ -26,6 +29,22 @@ export function unknownToEstreeExpression(
           (elem): elem is ExpressionStatement =>
             elem.type === "ExpressionStatement"
         )?.expression ?? {
+          type: "Literal",
+          value: null,
+        }
+      );
+    }
+
+    if (
+      isHastElement(value) ||
+      isHastText(value) ||
+      isMdxJsxElementHast(value)
+    ) {
+      return (
+        toEstree(value)?.body.filter(
+          (elem): elem is ExpressionStatement =>
+            elem.type === "ExpressionStatement"
+        )?.[0]?.expression ?? {
           type: "Literal",
           value: null,
         }

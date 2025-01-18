@@ -1,4 +1,7 @@
+import { toEstree } from "hast-util-to-estree";
 import type { MdxJsxAttribute } from "mdast-util-mdx";
+import { isHastElement, isHastText } from "../hast-utils";
+import { isMdxJsxElementHast } from "./is-mdx-element";
 import { isMdxJsxAttributeValueExpression } from "./is-mdx-jsx-attr";
 import { unknownToEstreeExpression } from "./unknown-to-estree-expression";
 
@@ -19,16 +22,19 @@ export function unknownToMdxJsxAttributeValue(
     type: "mdxJsxAttributeValueExpression",
     value: "__expression__",
     data: {
-      estree: {
-        type: "Program",
-        sourceType: "module",
-        body: [
-          {
-            type: "ExpressionStatement",
-            expression: unknownToEstreeExpression(value),
-          },
-        ],
-      },
+      estree:
+        isHastElement(value) || isHastText(value) || isMdxJsxElementHast(value)
+          ? toEstree(value)
+          : {
+              type: "Program",
+              sourceType: "module",
+              body: [
+                {
+                  type: "ExpressionStatement",
+                  expression: unknownToEstreeExpression(value),
+                },
+              ],
+            },
     },
   };
 }

@@ -1,7 +1,10 @@
-import type { Element, ElementContent, Root, RootContent, Text } from "hast";
+import { isPlainObject } from "@fern-api/ui-core-utils";
+import type { Text } from "hast";
 
-export function isHastText(
-  value: ElementContent | Element | Root | RootContent | null | undefined
-): value is Text {
-  return value ? value.type === "text" : false;
+export function isHastText(value: unknown): value is Text {
+  return (
+    isPlainObject(value) &&
+    value.type === "text" &&
+    typeof value.value === "string"
+  );
 }
