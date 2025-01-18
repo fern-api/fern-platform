@@ -1,4 +1,7 @@
-import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
+import {
+  ApiDefinitionV1ToLatest,
+  S3Loader,
+} from "@fern-api/fdr-sdk/api-definition";
 import type {
   APIV1Read,
   DocsV1Read,
@@ -31,7 +34,7 @@ interface ResolveDocsContentArgs {
   prev: FernNavigation.NavigationNodeNeighbor | undefined;
   next: FernNavigation.NavigationNodeNeighbor | undefined;
   apis: Record<string, APIV1Read.ApiDefinition>;
-  apisV2: Record<string, FdrAPI.api.latest.ApiDefinition>;
+  apisV2: Record<string, FdrAPI.api.latest.LatestApiDefinition>;
   pages: Record<string, DocsV1Read.PageContent>;
   mdxOptions?: FernSerializeMdxOptions;
   edgeFlags: EdgeFlags;
@@ -69,6 +72,7 @@ export async function resolveDocsContent({
       engine
     );
 
+  const s3Loader = new S3Loader();
   // TODO: remove legacy when done
   const apiLoaders = {
     ...mapValues(apis, (api) => {
@@ -81,14 +85,22 @@ export async function resolveDocsContent({
         .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
         .withResolveDescriptions();
     }),
-    ...mapValues(apisV2 ?? {}, (api) => {
-      return ApiDefinitionLoader.create(domain, api.id)
-        .withMdxBundler(serializeMdx, engine)
-        .withEdgeFlags(edgeFlags)
-        .withApiDefinition(api)
-        .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
-        .withResolveDescriptions();
-    }),
+    ...Object.fromEntries(
+      await Promise.all(
+        Object.entries(apisV2 ?? {}).map(async ([apiId, api]) => {
+          const resolvedApi = await s3Loader.loadApiDefinition(api);
+          return [
+            apiId,
+            ApiDefinitionLoader.create(domain, resolvedApi.id)
+              .withMdxBundler(serializeMdx, engine)
+              .withEdgeFlags(edgeFlags)
+              .withApiDefinition(resolvedApi)
+              .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
+              .withResolveDescriptions(),
+          ];
+        })
+      )
+    ),
   };
 
   let result: DocsContent | undefined;

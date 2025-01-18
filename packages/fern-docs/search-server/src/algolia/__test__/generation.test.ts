@@ -50,10 +50,16 @@ for (const fixtureName of [
   describe(fixtureName, () => {
     it("should work", async () => {
       const fixture = readFixture(fixtureName);
+      const mockGetPresignedDocsAssetsDownloadUrl = vi.fn();
       const root = FernNavigation.utils.toRootNode(fixture);
-      const apis = FernNavigation.utils.toApis(fixture);
+      console.log(`${fixtureName} - a`);
+      const apis = await FernNavigation.utils.toApis(
+        fixture,
+        mockGetPresignedDocsAssetsDownloadUrl
+      );
+      console.log(`${fixtureName} - b`);
       const pages = FernNavigation.utils.toPages(fixture);
-
+      console.log(`${fixtureName} - c`);
       const { records, tooLarge } = createAlgoliaRecords({
         root,
         domain: "test.com",
@@ -61,9 +67,9 @@ for (const fixtureName of [
         pages,
         apis,
       });
-
+      console.log(`${fixtureName} - d`);
       expect(tooLarge.length).toBe(0);
-
+      console.log(`${fixtureName} - e`);
       records.forEach((record) => {
         if (record.description != null) {
           expect(record.description.length).toBeLessThanOrEqual(50_000);
@@ -73,9 +79,11 @@ for (const fixtureName of [
           expect(record.content.length).toBeLessThanOrEqual(50_000);
         }
       });
+      console.log(`${fixtureName} - f`);
       await expect(JSON.stringify(records, null, 2)).toMatchFileSnapshot(
         path.join("__snapshots__", `${fixtureName}.test.ts.json`)
       );
-    });
+      console.log(`${fixtureName} - g`);
+    }, 100_000);
   });
 }
