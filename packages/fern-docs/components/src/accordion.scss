@@ -8,7 +8,7 @@
   }
 
   .fern-accordion-item {
-    @apply first:rounded-t-[inherit] last:rounded-b-[inherit];
+    @apply overflow-hidden first:rounded-t-[inherit] last:rounded-b-[inherit];
   }
 
   .fern-accordion-trigger {

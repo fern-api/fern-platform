@@ -1,10 +1,10 @@
 import type { Root as HastRoot } from "hast";
 import type { Root as MdastRoot } from "mdast";
 import { toHast } from "mdast-util-to-hast";
-import rehypeSlug from "rehype-slug";
 import { customHeadingHandler } from "./handlers/custom-headings";
 import { mdastFromMarkdown } from "./mdast-utils/mdast-from-markdown";
 import { extractJsx } from "./mdx-utils/extract-jsx";
+import { RehypeSlugOptions, rehypeSlug } from "./plugins/rehype-slug";
 import { remarkMarkAndUnravel } from "./plugins/remark-mark-and-unravel";
 import { remarkSanitizeAcorn } from "./plugins/remark-sanitize-acorn";
 import { sanitizeBreaks } from "./sanitize/sanitize-breaks";
@@ -22,6 +22,7 @@ interface ToTreeOptions {
   format?: "mdx" | "md";
   allowedIdentifiers?: string[];
   sanitize?: boolean;
+  rehypeSlugOptions?: RehypeSlugOptions;
 }
 
 /**
@@ -34,6 +35,7 @@ export function toTree(
     format = "mdx",
     allowedIdentifiers = [],
     sanitize = true,
+    rehypeSlugOptions,
   }: ToTreeOptions = {}
 ): {
   mdast: MdastRoot;
@@ -63,7 +65,7 @@ export function toTree(
   }) as HastRoot;
 
   // add ids to headings
-  rehypeSlug()(hast);
+  rehypeSlug(rehypeSlugOptions)(hast);
 
   return {
     mdast,

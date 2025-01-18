@@ -8,6 +8,7 @@ import {
 import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
+  rehypeSlug,
   rehypeSqueezeParagraphs,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
@@ -17,15 +18,16 @@ import { mapKeys } from "es-toolkit/object";
 import { bundleMDX } from "mdx-bundler";
 import path, { dirname } from "path";
 import rehypeKatex from "rehype-katex";
-import rehypeSlug from "rehype-slug";
 import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
-import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
-import { rehypeFernCode } from "../plugins/rehypeFernCode";
-import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
+import { rehypeExtractAsides } from "../plugins/rehype-extract-asides";
+import { rehypeFernCode } from "../plugins/rehype-fern-code";
+import { rehypeJsxAlias } from "../plugins/rehype-jsx-alias";
+import { rehypeMigrateSteps } from "../plugins/rehype-migrate-steps";
+import { rehypeSlugJsxElementVisitor } from "../plugins/rehype-slug-visitor";
 import type { FernSerializeMdxOptions } from "../types";
 
 /**
@@ -130,10 +132,31 @@ export async function serializeMdx(
           rehypeSqueezeParagraphs,
           rehypeMdxClassStyle,
           rehypeAcornErrorBoundary,
-          rehypeSlug,
           rehypeKatex,
           rehypeFernCode,
-          rehypeFernComponents,
+          [
+            rehypeJsxAlias,
+            {
+              aliases: {
+                a: "A",
+                embed: "Embed",
+                h1: "H1",
+                h2: "H2",
+                h3: "H3",
+                h4: "H4",
+                h5: "H5",
+                h6: "H6",
+                img: "Image",
+                li: "Li",
+                ol: "Ol",
+                strong: "Strong",
+                table: "Table",
+                ul: "Ul",
+              },
+            },
+          ],
+          rehypeMigrateSteps,
+          [rehypeSlug, { visitJsxElement: rehypeSlugJsxElementVisitor }],
           // always extract asides at the end
           rehypeExtractAsides,
         ];

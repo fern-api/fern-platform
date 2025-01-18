@@ -8,7 +8,7 @@ import {
   FernErrorTag,
 } from "../../components/FernErrorBoundary";
 import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
-import { AccordionGroup } from "./accordion";
+import { Accordion, AccordionGroup } from "./accordion";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
 import { Bleed } from "./bleed";
@@ -40,7 +40,7 @@ import { ParamField } from "./mintlify";
 import { ReferenceLayoutAside, ReferenceLayoutMain } from "./reference-layout";
 import { EndpointRequestSnippet, EndpointResponseSnippet } from "./snippets";
 import { Step, StepGroup } from "./steps";
-import { TabGroup } from "./tabs";
+import { Tab, TabGroup } from "./tabs";
 import { Tooltip } from "./tooltip";
 
 const ElevenLabsWaveform = dynamic(() =>
@@ -48,6 +48,7 @@ const ElevenLabsWaveform = dynamic(() =>
 );
 
 const FERN_COMPONENTS = {
+  Accordion,
   AccordionGroup,
   Availability,
   Badge,
@@ -73,6 +74,7 @@ const FERN_COMPONENTS = {
   SearchBar: SidebarSearchBar,
   Step,
   StepGroup,
+  Tab,
   TabGroup,
   Tooltip,
 
@@ -87,10 +89,12 @@ const FERN_COMPONENTS = {
   LaunchNote: LaunchNoteCallout,
 
   // deprecated, aliased for backwards compatibility
+  Accordions: AccordionGroup,
   Cards: CardGroup,
   CodeBlocks: CodeGroup,
-  Tabs: TabGroup,
   ElevenLabsWaveform,
+  Expandable: Accordion,
+  Tabs: TabGroup,
 };
 
 // internal-use only
@@ -105,38 +109,38 @@ const INTERNAL_COMPONENTS = {
 };
 
 const HTML_COMPONENTS: MDXComponents = {
-  table: Table,
+  a: A,
+  embed: Embed,
   h1: (props) => HeadingRenderer(1, props),
   h2: (props) => HeadingRenderer(2, props),
   h3: (props) => HeadingRenderer(3, props),
   h4: (props) => HeadingRenderer(4, props),
   h5: (props) => HeadingRenderer(5, props),
   h6: (props) => HeadingRenderer(6, props),
-  ol: Ol,
-  ul: Ul,
-  li: Li,
-  a: A,
   img: Image,
-  embed: Embed,
+  li: Li,
+  ol: Ol,
   strong: Strong,
+  table: Table,
+  ul: Ul,
 };
 
 const ALIASED_HTML_COMPONENTS = {
-  Image,
+  A,
   Embed,
-  IFrame,
   H1: (props: ComponentProps<"h1">): ReactElement => HeadingRenderer(1, props),
   H2: (props: ComponentProps<"h2">): ReactElement => HeadingRenderer(2, props),
   H3: (props: ComponentProps<"h3">): ReactElement => HeadingRenderer(3, props),
   H4: (props: ComponentProps<"h4">): ReactElement => HeadingRenderer(4, props),
   H5: (props: ComponentProps<"h5">): ReactElement => HeadingRenderer(5, props),
   H6: (props: ComponentProps<"h6">): ReactElement => HeadingRenderer(6, props),
-  Ol,
-  Ul,
+  IFrame,
+  Image,
   Li,
-  A,
+  Ol,
   Strong,
   Table,
+  Ul,
 };
 
 export const MDX_COMPONENTS: MDXComponents = {

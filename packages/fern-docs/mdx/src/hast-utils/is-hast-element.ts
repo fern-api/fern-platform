@@ -1,7 +1,12 @@
-import type { Element, ElementContent, Root, RootContent } from "hast";
+import { isPlainObject } from "@fern-api/ui-core-utils";
+import type { Element } from "hast";
 
-export function isHastElement(
-  value: ElementContent | Element | Root | RootContent | null | undefined
-): value is Element {
-  return value ? value.type === "element" : false;
+export function isHastElement(value: unknown): value is Element {
+  return (
+    isPlainObject(value) &&
+    value.type === "element" &&
+    typeof value.tagName === "string" &&
+    isPlainObject(value.properties) &&
+    Array.isArray(value.children)
+  );
 }

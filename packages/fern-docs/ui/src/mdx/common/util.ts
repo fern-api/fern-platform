@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * The interface that the user-provided `CodeBlocks` children should adhere to.
  */
@@ -11,6 +13,29 @@ export type ExpectedCodeBlockChildren = {
     };
   };
 };
+
+export function filterChildren<Props>(
+  children: React.ReactNode,
+  type: React.ElementType<Props>
+) {
+  return squeezeFragments(children)
+    .filter(React.isValidElement)
+    .filter(
+      (element): element is React.ReactElement<Props> => element.type === type
+    );
+}
+
+function squeezeFragments(children: React.ReactNode): React.ReactNode[] {
+  return React.Children.toArray(children).flatMap((child) => {
+    if (React.isValidElement(child) && child.type === React.Fragment) {
+      if (!child.props?.children) {
+        return [];
+      }
+      return squeezeFragments(child.props.children);
+    }
+    return [child];
+  });
+}
 
 // export function stringHasMarkdown(s: string): boolean {
 //     s = s.trim();

@@ -1539,9 +1539,6 @@ importers:
       micromark-extension-mdxjs:
         specifier: ^3.0.0
         version: 3.0.0
-      rehype-slug:
-        specifier: ^6.0.0
-        version: 6.0.0
       style-to-object:
         specifier: ^1.0.5
         version: 1.0.6
@@ -2091,6 +2088,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.6
         version: 1.1.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-use-controllable-state':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@18.3.3)(react@18.3.1)
       '@radix-ui/react-visually-hidden':
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2214,9 +2214,6 @@ importers:
       rehype-katex:
         specifier: ^7.0.0
         version: 7.0.0
-      rehype-slug:
-        specifier: ^6.0.0
-        version: 6.0.0
       remark-gemoji:
         specifier: ^8.0.0
         version: 8.0.0
@@ -14748,9 +14745,6 @@ packages:
 
   rehype-raw@6.1.1:
     resolution: {integrity: sha512-d6AKtisSRtDRX4aSPsJGTfnzrX2ZkHQLE5kiUuGOeEoLpbEulFF4hj0mLPbsa+7vmguDKOVVEQdHKDSwoaIDsQ==}
-
-  rehype-slug@6.0.0:
-    resolution: {integrity: sha512-lWyvf/jwu+oS5+hL5eClVd3hNdmwM1kAC0BUvEGD19pajQMIzcNUd/k9GsfQ+FfECvX+JE+e9/btsKH0EjJT6A==}
 
   relateurl@0.2.7:
     resolution: {integrity: sha512-G08Dxvm4iDN3MLM0EsP62EDV9IuhXPR6blNz6Utcp7zyV3tr4HVNINt6MpaRWbxoOHT3Q7YN2P+jaHX8vUbgog==}
@@ -33210,14 +33204,6 @@ snapshots:
       '@types/hast': 2.3.10
       hast-util-raw: 7.2.3
       unified: 10.1.2
-
-  rehype-slug@6.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
-      github-slugger: 2.0.0
-      hast-util-heading-rank: 3.0.0
-      hast-util-to-string: 3.0.0
-      unist-util-visit: 5.0.0
 
   relateurl@0.2.7: {}
 

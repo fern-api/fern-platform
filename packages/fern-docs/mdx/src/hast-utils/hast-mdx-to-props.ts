@@ -1,12 +1,10 @@
-import type { ElementContent } from "hast";
-import { toEstree } from "hast-util-to-estree";
 import { h } from "hastscript";
 import type {
   MdxJsxAttribute,
-  MdxJsxAttributeValueExpression,
   MdxJsxExpressionAttribute,
 } from "mdast-util-mdx";
 import type { MdxJsxElementHast } from "../declarations";
+import { unknownToMdxJsxAttributeValue } from "../mdx-utils";
 
 interface MdxJsxElementHastAttributes {
   /**
@@ -37,7 +35,7 @@ export function hastMdxJsxElementHastToProps(
   if (element.children.length > 0) {
     // Note: this is a blanket assumption that all child text nodes should be wrapped in a <p> tag
     // before removing this assumption, test against real-world examples for correctness
-    props.children = hastChildrenToAttributeValueExpression(
+    props.children = unknownToMdxJsxAttributeValue(
       element.children.map((child) =>
         child.type === "text" ? h("p", child) : child
       )
@@ -45,21 +43,4 @@ export function hastMdxJsxElementHastToProps(
   }
 
   return { props, expressions };
-}
-
-function hastChildrenToAttributeValueExpression(
-  children: ElementContent[]
-): MdxJsxAttributeValueExpression {
-  return {
-    type: "mdxJsxAttributeValueExpression",
-    value: "__children__",
-    data: {
-      estree: toEstree({
-        type: "mdxJsxFlowElement",
-        name: null,
-        attributes: [],
-        children,
-      }),
-    },
-  };
 }
