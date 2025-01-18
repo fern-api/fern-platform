@@ -5,6 +5,7 @@ import { FernRegistry } from "../../client/generated";
 import { ServerObjectConverterNode } from "../../openapi";
 import { ComponentsConverterNode } from "../../openapi/3.1/schemas/ComponentsConverter.node";
 import { coalesceServers } from "../../openapi/utils/3.1/coalesceServers";
+import { computeSubpackages } from "../../utils/computeSubpackages";
 import {
   BaseOpenrpcConverterNode,
   BaseOpenrpcConverterNodeConstructorArgs,
@@ -72,25 +73,27 @@ export class OpenrpcDocumentConverterNode extends BaseOpenrpcConverterNode<
     const apiDefinitionId = v4();
     const types = this.components?.convert();
 
-    console.log(this.methods?.length);
-
     const methods = this.methods
       ?.map((method) => {
         return method.convert();
       })
       .filter(isNonNullish);
 
+    const endpoints = Object.fromEntries(
+      methods?.map((method) => [method.id, method]) ?? []
+    );
+
+    const subpackages = computeSubpackages({ endpoints });
+
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),
       types: Object.fromEntries(
         Object.entries(types ?? {}).map(([id, type]) => [id, type])
       ),
-      endpoints: Object.fromEntries(
-        methods?.map((method) => [method.id, method]) ?? []
-      ),
+      endpoints,
       websockets: {},
       webhooks: {},
-      subpackages: {},
+      subpackages,
       auths: {},
       globalHeaders: [],
     };
