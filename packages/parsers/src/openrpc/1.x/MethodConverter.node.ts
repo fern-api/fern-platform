@@ -1,6 +1,5 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { MethodObject } from "@open-rpc/meta-schema";
-import { camelCase } from "es-toolkit";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../client/generated";
 import { generateExampleForJsonSchema } from "../../examples/generateExampleForJsonSchema";
@@ -13,6 +12,26 @@ import {
 import { resolveContentDescriptorObject } from "../utils/resolveContentDescriptorObject";
 import { resolveExample } from "../utils/resolveExample";
 import { resolveExamplePairingOrReference } from "../utils/resolveExamplePairing";
+
+const API_KEY_PATH_PARAMETER: FernRegistry.api.latest.ObjectProperty = {
+  key: FernRegistry.PropertyKey("apiKey"),
+  description: undefined,
+  availability: undefined,
+  valueShape: {
+    type: "alias",
+    value: {
+      type: "primitive",
+      value: {
+        type: "string",
+        format: undefined,
+        regex: undefined,
+        minLength: undefined,
+        maxLength: undefined,
+        default: undefined,
+      },
+    },
+  },
+};
 
 export class MethodConverterNode extends BaseOpenrpcConverterNode<
   MethodObject,
@@ -204,11 +223,13 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
       // This is a basic implementation that needs to be expanded
       return {
         id: FernRegistry.EndpointId(this.input.name),
-        displayName: camelCase(this.input.name),
+        displayName: this.input.name,
         method: "POST",
-        path: [{ type: "literal", value: "" }],
+        path: [
+          { type: "pathParameter", value: FernRegistry.PropertyKey("apiKey") },
+        ],
         auth: undefined,
-        pathParameters: [],
+        pathParameters: [API_KEY_PATH_PARAMETER],
         queryParameters: [],
         requests: request != null ? [request] : undefined,
         responses:
@@ -229,7 +250,11 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
         requestHeaders: [],
         responseHeaders: [],
         snippetTemplates: undefined,
-        namespace: [],
+        // use the first tag as the namespace
+        namespace:
+          this.method.tags?.[0] != null
+            ? [FernRegistry.api.v1.SubpackageId(this.method.tags[0])]
+            : undefined,
       };
     } catch (_error) {
       this.context.errors.error({

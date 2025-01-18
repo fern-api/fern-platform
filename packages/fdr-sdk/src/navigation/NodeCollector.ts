@@ -134,9 +134,6 @@ export class NodeCollector {
       this.orphanedNodes.push(existing.node);
       this.#setNode(node.slug, node, parents);
     } else {
-      if (FernNavigation.isPage(existing.node)) {
-        console.warn(`Duplicate slug found: ${node.slug}`, node.title);
-      }
       this.orphanedNodes.push(node);
     }
   }
