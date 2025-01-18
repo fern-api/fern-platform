@@ -12,6 +12,7 @@ import {
 import { resolveContentDescriptorObject } from "../utils/resolveContentDescriptorObject";
 import { resolveExample } from "../utils/resolveExample";
 import { resolveExamplePairingOrReference } from "../utils/resolveExamplePairing";
+import { resolveTag } from "../utils/resolveTags";
 
 const API_KEY_PATH_PARAMETER: FernRegistry.api.latest.ObjectProperty = {
   key: FernRegistry.PropertyKey("apiKey"),
@@ -251,10 +252,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
         responseHeaders: [],
         snippetTemplates: undefined,
         // use the first tag as the namespace
-        namespace:
-          this.method.tags?.[0] != null
-            ? [FernRegistry.api.v1.SubpackageId(this.method.tags[0])]
-            : undefined,
+        namespace: this.getNamespace(),
       };
     } catch (_error) {
       this.context.errors.error({
@@ -263,6 +261,17 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
       });
       return undefined;
     }
+  }
+
+  private getNamespace(): FernRegistry.api.v1.SubpackageId[] | undefined {
+    if (this.method.tags?.[0] == null) {
+      return undefined;
+    }
+    const resolvedTag = resolveTag(this.method.tags[0], this.context.openrpc);
+    if (resolvedTag?.name == null) {
+      return undefined;
+    }
+    return [FernRegistry.api.v1.SubpackageId(resolvedTag.name)];
   }
 
   private convertToHttpResponse(

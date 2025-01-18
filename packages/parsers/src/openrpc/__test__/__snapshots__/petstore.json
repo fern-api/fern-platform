@@ -83,15 +83,28 @@
   "endpoints": {
     "list_pets": {
       "id": "list_pets",
-      "displayName": "listPets",
+      "displayName": "list_pets",
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -175,19 +188,34 @@
       ],
       "requestHeaders": [],
       "responseHeaders": [],
-      "namespace": []
+      "namespace": [
+        "pets"
+      ]
     },
     "create_pet": {
       "id": "create_pet",
-      "displayName": "createPet",
+      "displayName": "create_pet",
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -278,19 +306,34 @@
       ],
       "requestHeaders": [],
       "responseHeaders": [],
-      "namespace": []
+      "namespace": [
+        "pets"
+      ]
     },
     "get_pet": {
       "id": "get_pet",
-      "displayName": "getPet",
+      "displayName": "get_pet",
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -369,7 +412,9 @@
       ],
       "requestHeaders": [],
       "responseHeaders": [],
-      "namespace": []
+      "namespace": [
+        "pets"
+      ]
     }
   },
   "websockets": {},
