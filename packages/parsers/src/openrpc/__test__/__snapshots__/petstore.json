@@ -419,7 +419,13 @@
   },
   "websockets": {},
   "webhooks": {},
-  "subpackages": {},
+  "subpackages": {
+    "pets": {
+      "id": "pets",
+      "name": "pets",
+      "displayName": "pets"
+    }
+  },
   "auths": {},
   "globalHeaders": []
 }
