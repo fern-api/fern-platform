@@ -223,7 +223,7 @@ export class S3ServiceImpl implements S3Service {
       input.ContentType = "image/svg+xml";
     }
     const command = new PutObjectCommand(input);
-    return {
+    const result = {
       url: await getSignedUrl(
         isPrivate ? this.privateDocsS3 : this.publicDocsS3,
         command,
@@ -231,6 +231,15 @@ export class S3ServiceImpl implements S3Service {
       ),
       key,
     };
+    if (!isPrivate) {
+      try {
+        const url = new URL(result.url);
+        result.url = result.url.replace(url.host, this.publicDocsCDNUrl);
+      } catch (error) {
+        console.error("Failed to replace S3 URL with CDN URL:", error);
+      }
+    }
+    return result;
   }
 
   async getPresignedApiDefinitionSourceDownloadUrl({
