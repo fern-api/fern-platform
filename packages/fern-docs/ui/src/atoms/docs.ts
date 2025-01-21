@@ -47,9 +47,12 @@ export const EMPTY_DOCS_STATE: DocsProps = {
   layout: undefined,
   js: undefined,
   navbarLinks: [],
-  logoHeight: undefined,
-  logoHref: undefined,
-  files: {},
+  logo: {
+    height: undefined,
+    href: undefined,
+    light: undefined,
+    dark: undefined,
+  },
   content: {
     type: "markdown-page",
     slug: FernNavigation.Slug(""),

@@ -21,7 +21,9 @@ import { addLeadingSlash, getRedirectForPath } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
+import { UnreachableCaseError } from "ts-essentials";
 import urlJoin from "url-join";
+import { LogoImageData } from "../../../ui/src/atoms";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
@@ -295,6 +297,29 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
+  function resolveFileSrc(src: string): LogoImageData | undefined {
+    const fileId = FernNavigation.FileId(
+      src.startsWith("file:") ? src.slice(5) : src
+    );
+    const file = docs.definition.filesV2[fileId];
+    if (file == null) {
+      return undefined;
+    }
+
+    if (file.type === "image") {
+      return {
+        src: file.url,
+        width: file.width,
+        height: file.height,
+        blurDataURL: file.blurDataUrl,
+      };
+    } else if (file.type === "url") {
+      return { src: file.url };
+    } else {
+      throw new UnreachableCaseError(file);
+    }
+  }
+
   const content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,
     found,
@@ -311,6 +336,7 @@ export async function withInitialProps({
         tab: found?.currentTab?.title,
       },
     },
+    replaceSrc: resolveFileSrc,
   });
 
   if (content == null) {
@@ -353,6 +379,19 @@ export async function withInitialProps({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
+  const lightLogoFileId =
+    docs.definition.config.colorsV3?.type === "light"
+      ? docs.definition.config.colorsV3.logo
+      : docs.definition.config.colorsV3?.type === "darkAndLight"
+        ? docs.definition.config.colorsV3.light.logo
+        : undefined;
+  const darkLogoFileId =
+    docs.definition.config.colorsV3?.type === "dark"
+      ? docs.definition.config.colorsV3.logo
+      : docs.definition.config.colorsV3?.type === "darkAndLight"
+        ? docs.definition.config.colorsV3.dark.logo
+        : undefined;
+
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
@@ -361,9 +400,15 @@ export async function withInitialProps({
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    logoHeight: docs.definition.config.logoHeight,
-    logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
-    files: docs.definition.filesV2,
+    // logoHeight: docs.definition.config.logoHeight,
+    // logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
+    logo: {
+      height: docs.definition.config.logoHeight,
+      href: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
+      light:
+        lightLogoFileId != null ? resolveFileSrc(lightLogoFileId) : undefined,
+      dark: darkLogoFileId != null ? resolveFileSrc(darkLogoFileId) : undefined,
+    },
     content,
     announcement:
       docs.definition.config.announcement != null

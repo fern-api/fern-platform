@@ -1,5 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { Options } from "@mdx-js/esbuild";
+import { RehypeFilesOptions } from "./plugins/rehype-files";
 
 export type FernSerializeMdxOptions = {
   parseFrontmatter?: boolean; // default: true
@@ -9,6 +10,7 @@ export type FernSerializeMdxOptions = {
 
   files?: Record<string, string>;
   scope?: Record<string, unknown>;
+  replaceSrc?: RehypeFilesOptions["replaceSrc"];
 };
 
 export type SerializeMdxFunc =

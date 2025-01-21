@@ -1,8 +1,9 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { EdgeFlags } from "@fern-docs/utils";
+import { LogoImageData } from "../../../ui/src/atoms/types";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 
@@ -13,6 +14,7 @@ interface WithResolvedDocsContentOpts {
   definition: DocsV1Read.DocsDefinition;
   edgeFlags: EdgeFlags;
   scope?: Record<string, unknown>;
+  replaceSrc?: (src: string) => LogoImageData | undefined;
 }
 
 export async function withResolvedDocsContent({
@@ -22,6 +24,7 @@ export async function withResolvedDocsContent({
   definition,
   edgeFlags,
   scope,
+  replaceSrc,
 }: WithResolvedDocsContentOpts): Promise<DocsContent | undefined> {
   const node = withPrunedNavigation(found.node, {
     visibleNodeIds: [found.node.id],
@@ -67,6 +70,9 @@ export async function withResolvedDocsContent({
     mdxOptions: {
       files: definition.jsFiles,
       scope,
+
+      // inject the file url and dimensions for images and other embeddable files
+      replaceSrc,
     },
     serializeMdx,
     domain,

@@ -20,6 +20,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import type { PluggableList } from "unified";
+import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -29,6 +30,7 @@ type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
 function withDefaultMdxOptions({
   options = {},
+  replaceSrc,
 }: FernSerializeMdxOptions = {}): SerializeOptions["mdxOptions"] {
   const remarkRehypeOptions = {
     ...options.remarkRehypeOptions,
@@ -54,6 +56,7 @@ function withDefaultMdxOptions({
   const rehypePlugins: PluggableList = [
     rehypeSqueezeParagraphs,
     rehypeMdxClassStyle,
+    [rehypeFiles, { replaceSrc }],
     rehypeAcornErrorBoundary,
     rehypeSlug,
     rehypeKatex,

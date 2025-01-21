@@ -10,6 +10,7 @@ const isTrailingSlashEnabled =
   process.env.TRAILING_SLASH === "1" ||
   process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 
+// TODO: move this to a shared location (this is copied in @fern-docs/ui FernImage.tsx)
 const DOCS_FILES_ALLOWLIST = [
   {
     protocol: "https",

@@ -23,6 +23,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { PluggableList } from "unified";
+import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -41,7 +42,13 @@ export async function serializeMdx(
 ): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
   content: string | undefined,
-  { options = {}, files, filename, scope = {} }: FernSerializeMdxOptions = {}
+  {
+    options = {},
+    files,
+    filename,
+    scope = {},
+    replaceSrc,
+  }: FernSerializeMdxOptions = {}
 ): Promise<FernDocs.MarkdownText | undefined> {
   if (content == null) {
     return undefined;
@@ -129,6 +136,7 @@ export async function serializeMdx(
         const rehypePlugins: PluggableList = [
           rehypeSqueezeParagraphs,
           rehypeMdxClassStyle,
+          [rehypeFiles, { replaceSrc }],
           rehypeAcornErrorBoundary,
           rehypeSlug,
           rehypeKatex,

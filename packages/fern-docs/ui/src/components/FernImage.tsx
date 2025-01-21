@@ -1,86 +1,110 @@
 /* eslint-disable @next/next/no-img-element */
 
-import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import Image from "next/image";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
+import { UnreachableCaseError } from "ts-essentials";
+
+// TODO: move this to a shared location
+const NEXT_IMAGE_HOSTS = [
+  "fdr-prod-docs-files.s3.us-east-1.amazonaws.com",
+  "fdr-prod-docs-files-public.s3.amazonaws.com",
+  "fdr-dev2-docs-files.s3.us-east-1.amazonaws.com",
+  "fdr-dev2-docs-files-public.s3.amazonaws.com",
+  "files.buildwithfern.com",
+  "files-dev2.buildwithfern.com",
+];
 
 export const FernImage = forwardRef<
   HTMLImageElement,
-  Omit<ComponentPropsWithoutRef<typeof Image>, "src" | "alt"> & {
-    /**
-     * FDR may return a URL or an image object depending on the version of the Fern CLI used to build the docs.
-     * If the file has width/height metadata, we can render it using next/image for optimized loading.
-     */
-    src: DocsV1Read.File_ | undefined;
-    /**
-     * The alt text for the image.
-     * @default ""
-     */
-    alt?: string;
-  }
->(({ src, ...props }, ref) => {
+  ComponentPropsWithoutRef<typeof Image>
+>((props, ref) => {
+  const {
+    src,
+    alt,
+    width,
+    height,
+    fill,
+    loader,
+    quality,
+    priority,
+    loading,
+    placeholder,
+    blurDataURL,
+    unoptimized,
+    overrideSrc,
+    onLoadingComplete,
+    layout,
+    objectFit,
+    objectPosition,
+    lazyBoundary,
+    lazyRoot,
+    ...rest
+  } = props;
+
   if (src == null) {
     return null;
   }
 
-  const { width, height } =
-    src.type === "image"
-      ? getDimensions({
-          intrinsicWidth: src.width,
-          intrinsicHeight: src.height,
-          width: props.width,
-          height: props.height,
-        })
-      : props;
+  const originalSrc = getSrc(src);
+  const { host, pathname } = safeGetUrl(originalSrc);
 
-  const blurDataURL =
-    props.blurDataURL ?? (src.type === "image" ? src.blurDataUrl : undefined);
+  const aspectRatio = withAspectRatio(withDimensions(props));
 
-  const pathname = safeGetPathname(src.url);
-
-  if (src.type === "url") {
+  // nextjs requires a strict allowlist of hosts for <Image>
+  // so we'll fall back to <img> if the host is not in the allowlist (or if no custom loader is provided)
+  if ((!host || !NEXT_IMAGE_HOSTS.includes(host)) && !loader) {
     return (
       <img
         ref={ref}
-        {...props}
-        src={src.url}
-        alt={props.alt}
-        fetchPriority={props.priority ? "high" : undefined}
-        loading={props.priority ? "eager" : undefined}
+        {...rest}
+        src={getSrc(src)}
+        alt={alt}
+        width={width}
+        height={height}
+        fetchPriority={priority ? "high" : undefined}
+        loading={loading}
         // on local dev, the preflight css for <img> tags is `max-width: 100%; height: auto;`
         // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
         style={{
-          width,
-          height,
+          aspectRatio,
           ...props.style,
         }}
       />
     );
   }
 
+  // if we're here, we're using the <Image> component
+  // we'll use the inline style prop to override the aspect ratio
+  // and pass the rest of the props to the <Image> component
   return (
     <Image
       ref={ref}
-      {...props}
-      src={src.url}
-      overrideSrc={src.url}
+      {...rest}
+      src={src}
+      alt={alt}
       width={width}
       height={height}
-      alt={props.alt ?? (src.type === "image" ? src.alt : undefined) ?? ""}
-      placeholder={
-        props.placeholder ?? (blurDataURL != null ? "blur" : "empty")
-      }
+      fill={fill}
+      loader={loader}
+      quality={quality}
+      priority={priority}
+      loading={loading}
+      placeholder={placeholder}
       blurDataURL={blurDataURL}
       unoptimized={
-        pathname?.endsWith(".gif") ||
-        pathname?.endsWith(".svg") ||
-        props.unoptimized
+        pathname?.endsWith(".gif") || pathname?.endsWith(".svg") || unoptimized
       }
+      overrideSrc={originalSrc}
+      onLoadingComplete={onLoadingComplete}
+      layout={layout}
+      objectFit={objectFit}
+      objectPosition={objectPosition}
+      lazyBoundary={lazyBoundary}
+      lazyRoot={lazyRoot}
       // on local dev, the preflight css for <img> tags is `max-width: 100%; height: auto;`
       // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
       style={{
-        width,
-        height,
+        aspectRatio,
         ...props.style,
       }}
     />
@@ -89,51 +113,55 @@ export const FernImage = forwardRef<
 
 FernImage.displayName = "FernImage";
 
-function safeGetPathname(url: string): string | undefined {
+function safeGetUrl(src: string): {
+  host: string | undefined;
+  pathname: string | undefined;
+} {
   try {
-    return new URL(url, "https://n").pathname.toLowerCase();
+    const url = new URL(src, "https://n");
+    return { host: url.host, pathname: url.pathname.toLowerCase() };
   } catch (_e) {
-    return undefined;
+    return { host: undefined, pathname: undefined };
   }
 }
 
-export function getDimensions({
-  intrinsicWidth,
-  intrinsicHeight,
-  width,
-  height,
-}: {
-  intrinsicWidth: number;
-  intrinsicHeight: number;
-  width?: number | `${number}`;
-  height?: number | `${number}`;
-}): { width: number; height: number } {
-  const propWidth = asNumber(width);
-  const propHeight = asNumber(height);
-
-  // If the user has explicitly set the width and height, use those values.
-  if (propWidth != null && propHeight != null) {
-    return { width: propWidth, height: propHeight };
+function getSrc(src: ComponentPropsWithoutRef<typeof Image>["src"]): string {
+  if (typeof src === "string") {
+    return src;
   }
-
-  const aspectRatio = intrinsicWidth / intrinsicHeight;
-
-  // if the user has the width and height, use that to determine the aspect ratio
-  if (propWidth != null) {
-    return { width: propWidth, height: propWidth / aspectRatio };
-  } else if (propHeight != null) {
-    return { width: propHeight * aspectRatio, height: propHeight };
+  if (typeof src === "object" && "src" in src) {
+    return src.src;
   }
-
-  return { width: intrinsicWidth, height: intrinsicHeight };
+  if (typeof src === "object" && "default" in src) {
+    return src.default.src;
+  }
+  throw new UnreachableCaseError(src);
 }
 
-function asNumber(value: number | `${number}` | undefined): number | undefined {
-  if (value == null) {
+function withDimensions(
+  props: ComponentPropsWithoutRef<typeof Image>
+): { width: number; height: number } | undefined {
+  if (props.width != null && props.height != null) {
+    return { width: Number(props.width), height: Number(props.height) };
+  }
+  if (
+    typeof props.src === "object" &&
+    "width" in props.src &&
+    "height" in props.src
+  ) {
+    return { width: props.src.width, height: props.src.height };
+  }
+  if (typeof props.src === "object" && "default" in props.src) {
+    return { width: props.src.default.width, height: props.src.default.height };
+  }
+  return undefined;
+}
+
+function withAspectRatio(
+  dimensions: { width: number; height: number } | undefined
+): number | undefined {
+  if (dimensions == null) {
     return undefined;
   }
-  if (typeof value === "string") {
-    return parseInt(value, 10);
-  }
-  return value;
+  return dimensions.width / dimensions.height;
 }

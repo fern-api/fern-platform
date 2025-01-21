@@ -32,7 +32,9 @@ import {
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
+import { UnreachableCaseError } from "ts-essentials";
 import urljoin from "url-join";
+import { LogoImageData } from "../../../ui/src/atoms/types";
 
 export async function getDocsPageProps(
   docs: DocsV2Read.LoadDocsForUrlResponse,
@@ -84,6 +86,29 @@ export async function getDocsPageProps(
   // TODO: get feature flags from the API
   const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
+  function resolveFileSrc(src: string): LogoImageData | undefined {
+    const fileId = FernNavigation.FileId(
+      src.startsWith("file:") ? src.slice(5) : src
+    );
+    const file = docs.definition.filesV2[fileId];
+    if (file == null) {
+      return undefined;
+    }
+
+    if (file.type === "image") {
+      return {
+        src: file.url,
+        width: file.width,
+        height: file.height,
+        blurDataURL: file.blurDataUrl,
+      };
+    } else if (file.type === "url") {
+      return { src: file.url };
+    } else {
+      throw new UnreachableCaseError(file);
+    }
+  }
+
   const content = await resolveDocsContent({
     domain: docs.baseUrl.domain,
     node: node.node,
@@ -109,6 +134,18 @@ export async function getDocsPageProps(
     edgeFlags,
     mdxOptions: {
       files: docs.definition.jsFiles,
+      scope: {
+        env: "development",
+        props: {
+          authed: false,
+          user: undefined,
+          version: node.currentVersion?.versionId,
+          tab: node.currentTab?.title,
+        },
+      },
+
+      // inject the file url and dimensions for images and other embeddable files
+      replaceSrc: resolveFileSrc,
     },
     serializeMdx,
     engine: "next-mdx-remote",
@@ -182,6 +219,19 @@ export async function getDocsPageProps(
     }
   });
 
+  const lightLogoFileId =
+    docs.definition.config.colorsV3?.type === "light"
+      ? docs.definition.config.colorsV3.logo
+      : docs.definition.config.colorsV3?.type === "darkAndLight"
+        ? docs.definition.config.colorsV3.light.logo
+        : undefined;
+  const darkLogoFileId =
+    docs.definition.config.colorsV3?.type === "dark"
+      ? docs.definition.config.colorsV3.logo
+      : docs.definition.config.colorsV3?.type === "darkAndLight"
+        ? docs.definition.config.colorsV3.dark.logo
+        : undefined;
+
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
@@ -190,9 +240,13 @@ export async function getDocsPageProps(
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    logoHeight: docs.definition.config.logoHeight,
-    logoHref: docs.definition.config.logoHref,
-    files: docs.definition.filesV2,
+    logo: {
+      height: docs.definition.config.logoHeight,
+      href: docs.definition.config.logoHref,
+      light:
+        lightLogoFileId != null ? resolveFileSrc(lightLogoFileId) : undefined,
+      dark: darkLogoFileId != null ? resolveFileSrc(darkLogoFileId) : undefined,
+    },
     content,
     announcement:
       docs.definition.config.announcement != null
