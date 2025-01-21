@@ -54,20 +54,6 @@ To run the integration tests: `pnpm test:ete`.
 
 Many of our tests rely on [Vite](https://vitejs.dev/) snapshots. To rewrite snapshots, use `-u`: `pnpm test -u` and `pnpm test:ete -u`.
 
-### CLI
-
-To build the CLI, run either:
-
-- `pnpm dist:cli:dev`. This compiles and bundles a CLI that communicates with our dev cloud environment. The CLI is outputted to `packages/cli/cli/dist/dev/cli.cjs`.
-
-- `pnpm dist:cli:prod`. This compiles and bundles a CLI that communicates with our production cloud environment. The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
-
-To run the locally-generated CLI, run:
-
-```
-FERN_NO_VERSION_REDIRECTION=true node <path to CLI> <args>
-```
-
 ### Docs UI
 
 To build and run the NextJS docs UI, run:
