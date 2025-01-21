@@ -162,13 +162,6 @@ export function endpointDefinitionToMarkdown(
           `- ${pascalCaseHeaderKey(param.key)}${getShorthand(param.valueShape, types, param.description)}`
       )
       .join("\n"),
-    endpoint.requests?.[0] != null ? "## Request Body" : undefined,
-    typeof endpoint.requests?.[0]?.description === "string"
-      ? endpoint.requests?.[0]?.description
-      : undefined,
-    endpoint.requests?.[0] != null
-      ? `\`\`\`json\n${JSON.stringify(endpoint.requests[0].body)}\n\`\`\``
-      : undefined,
     endpoint.responseHeaders?.length ? "## Response Headers" : undefined,
     endpoint.responseHeaders
       ?.map(
