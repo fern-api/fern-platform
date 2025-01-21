@@ -15,6 +15,11 @@
     @apply hover:bg-tag-default flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
     @apply list-none;
 
+    // Hide the default arrow on WebKit browsers
+    &::-webkit-details-marker {
+      @apply hidden;
+    }
+
     .fern-accordion-trigger-arrow {
       @apply t-muted ease-shift size-4 shrink-0 transition-transform duration-[400ms];
     }
