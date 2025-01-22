@@ -404,6 +404,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       errors,
       examples,
       snippetTemplates: undefined,
+      protocol: {
+        type: "rest"
+      }
     };
   }
 }

@@ -559,6 +559,9 @@ import * as FernRegistry from "../../../../../../../../index";
  *                             "key": "value"
  *                         }
  *                     },
+ *                     protocol: {
+ *                         type: "rest"
+ *                     },
  *                     description: "string",
  *                     availability: "Stable",
  *                     namespace: [{

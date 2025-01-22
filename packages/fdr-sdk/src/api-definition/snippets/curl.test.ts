@@ -280,4 +280,44 @@ describe("curl", () => {
           ]
         `);
   });
+
+  it("generates POST request with openrpc protocol", () => {
+    expect(
+      convertToCurl(
+        {
+          method: "POST",
+          url: "https://api.example.com/jsonrpc",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          searchParams: {},
+          body: {
+            type: "json",
+            value: {
+              jsonrpc: "2.0",
+              method: "users.create",
+              params: {
+                name: "John Doe",
+                email: "john@example.com",
+              },
+              id: 1,
+            },
+          },
+        },
+        { usesApplicationJsonInFormDataValue: false }
+      )
+    ).toMatchInlineSnapshot(`
+          "curl -X POST https://api.example.com/jsonrpc \\
+               -H "Content-Type: application/json" \\
+               -d '{
+            "jsonrpc": "2.0",
+            "method": "users.create", 
+            "params": {
+              "name": "John Doe",
+              "email": "john@example.com"
+            },
+            "id": 1
+          }'"
+        `);
+  });
 });
