@@ -145,6 +145,11 @@ export function SearchV2(): ReactElement | false {
     </>
   );
 
+  const headers = withSkewProtection({
+    "X-Fern-Host": domain,
+  });
+  headers;
+
   return (
     <SearchClientRoot
       appId={appId}
@@ -169,7 +174,7 @@ export function SearchV2(): ReactElement | false {
             api={chatEndpoint}
             headers={{
               "X-Fern-Host": domain,
-              "X-Deployment-Id": process.env.VERCEL_DEPLOYMENT_ID,
+              "X-Deployment-Id": process.env.NEXT_DEPLOYMENT_ID ?? "",
             }}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
