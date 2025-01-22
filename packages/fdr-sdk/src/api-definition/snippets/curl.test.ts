@@ -311,7 +311,7 @@ describe("curl", () => {
                -H "Content-Type: application/json" \\
                -d '{
             "jsonrpc": "2.0",
-            "method": "users.create", 
+            "method": "users.create",
             "params": {
               "name": "John Doe",
               "email": "john@example.com"

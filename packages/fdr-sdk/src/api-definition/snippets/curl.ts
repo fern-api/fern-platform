@@ -209,7 +209,15 @@ function getBodyDataString(
 }
 
 function unsafeStringifyHttpRequestExampleToCurl(
-  { method, url, searchParams, headers, basicAuth, body, protocol }: SnippetHttpRequest,
+  {
+    method,
+    url,
+    searchParams,
+    headers,
+    basicAuth,
+    body,
+    protocol,
+  }: SnippetHttpRequest,
   { usesApplicationJsonInFormDataValue }: Flags
 ): string {
   const httpRequest = getHttpRequest(method, url, searchParams);
@@ -236,7 +244,12 @@ function unsafeStringifyHttpRequestExampleToCurl(
 
   const bodyDataStrings = isFormUrlEncoded
     ? []
-    : getBodyDataString(method, body, usesApplicationJsonInFormDataValue, protocol);
+    : getBodyDataString(
+        method,
+        body,
+        usesApplicationJsonInFormDataValue,
+        protocol
+      );
 
   const allStrings = compact([
     ...headersStrings,

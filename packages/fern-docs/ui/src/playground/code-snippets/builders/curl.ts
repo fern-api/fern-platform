@@ -39,7 +39,10 @@ export class CurlSnippetBuilder extends PlaygroundCodeSnippetBuilder {
     return visitDiscriminatedUnion(this.formState.body, "type")._visit<
       SnippetHttpRequest["body"]
     >({
-      json: ({ value }) => ({ type: "json", value: this.maybeWrapJsonBody(value) }),
+      json: ({ value }) => ({
+        type: "json",
+        value: this.maybeWrapJsonBody(value),
+      }),
       "form-data": ({ value }) => {
         const newValue: Record<string, SnippetHttpRequestBodyFormValue> = {};
         for (const [key, v] of Object.entries(value)) {
