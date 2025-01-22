@@ -82,6 +82,10 @@
   },
   "endpoints": {
     "list_pets": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "list_pets"
+      },
       "id": "list_pets",
       "displayName": "list_pets",
       "method": "POST",
@@ -159,6 +163,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
+<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
@@ -167,6 +172,11 @@
                 "limit": 1
               }
             }
+=======
+            "value": [
+              1
+            ]
+>>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -199,6 +209,10 @@
       ]
     },
     "create_pet": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "create_pet"
+      },
       "id": "create_pet",
       "displayName": "create_pet",
       "method": "POST",
@@ -288,6 +302,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
+<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
@@ -297,6 +312,12 @@
                 "tag": "poodle"
               }
             }
+=======
+            "value": [
+              "fluffy",
+              "poodle"
+            ]
+>>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -323,6 +344,10 @@
       ]
     },
     "get_pet": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "get_pet"
+      },
       "id": "get_pet",
       "displayName": "get_pet",
       "method": "POST",
@@ -391,6 +416,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
+<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
@@ -399,6 +425,11 @@
                 "petId": 7
               }
             }
+=======
+            "value": [
+              7
+            ]
+>>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
