@@ -124,11 +124,14 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        const environmentType = process.env.NODE_ENV ?? "development";
+        const environmentType =
+          process.env.APPLICATION_ENVIRONMENT ??
+          process.env.FERN_ENVIRONMENT ??
+          "dev";
         let dbDocsDefUrl = "";
-        if (environmentType === "development") {
+        if (environmentType === "dev") {
           dbDocsDefUrl = `https://docs-definitions-dev2.buildwithfern.com/${this.domain}.json`;
-        } else if (environmentType === "production") {
+        } else if (environmentType === "prod") {
           dbDocsDefUrl = `https://docs-definitions.buildwithfern.com/${this.domain}.json`;
         }
         const response = await fetch(dbDocsDefUrl);
