@@ -13,6 +13,7 @@ import {
 } from "@fern-docs/search-server/turbopuffer";
 import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
 import { embed, EmbeddingModel, streamText, tool } from "ai";
+import { initLogger, traced, wrapAISDKModel } from "braintrust";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -21,12 +22,18 @@ export const maxDuration = 60;
 export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
+  const _logger = initLogger({
+    projectName: "Braintrust Evaluation",
+    apiKey: process.env.BRAINTRUST_API_KEY,
+  });
   const bedrock = createAmazonBedrock({
     region: "us-west-2",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
-  const languageModel = bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0");
+  const languageModel = wrapAISDKModel(
+    bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0")
+  );
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
@@ -78,65 +85,53 @@ export async function POST(req: NextRequest) {
     date: new Date().toDateString(),
     documents,
   });
-
-  const result = streamText({
-    model: languageModel,
-    system,
-    messages,
-    maxSteps: 10,
-    maxRetries: 3,
-    tools: {
-      search: tool({
-        description:
-          "Search the knowledge base for the user's query. Semantic search is enabled.",
-        parameters: z.object({
-          query: z.string(),
+  const result = traced(() =>
+    streamText({
+      model: languageModel,
+      system,
+      messages,
+      maxSteps: 10,
+      maxRetries: 3,
+      tools: {
+        search: tool({
+          description:
+            "Search the knowledge base for the user's query. Semantic search is enabled.",
+          parameters: z.object({
+            query: z.string(),
+          }),
+          async execute({ query }) {
+            const response = await runQueryTurbopuffer(query, {
+              embeddingModel,
+              namespace,
+              authed: user != null,
+              roles: user?.roles ?? [],
+            });
+            return response.map((hit) => {
+              const { domain, pathname, hash } = hit.attributes;
+              const url = `https://${domain}${pathname}${hash ?? ""}`;
+              return { url, ...hit.attributes };
+            });
+          },
         }),
-        async execute({ query }) {
-          const response = await runQueryTurbopuffer(query, {
-            embeddingModel,
-            namespace,
-            authed: user != null,
-            roles: user?.roles ?? [],
-          });
-          return response.map((hit) => {
-            const { domain, pathname, hash } = hit.attributes;
-            const url = `https://${domain}${pathname}${hash ?? ""}`;
-            return { url, ...hit.attributes };
-          });
-        },
-      }),
-    },
-    experimental_telemetry: {
-      isEnabled: true,
-      recordInputs: true,
-      recordOutputs: true,
-      functionId: "ask_ai_chat",
-      metadata: {
-        domain,
-        languageModel: languageModel.modelId,
-        embeddingModel: embeddingModel.modelId,
-        db: "turbopuffer",
-        namespace,
       },
-    },
-    onFinish: async (e) => {
-      const end = Date.now();
-      await track("ask_ai", {
-        languageModel: languageModel.modelId,
-        embeddingModel: embeddingModel.modelId,
-        durationMs: end - start,
-        domain,
-        namespace,
-        numToolCalls: e.toolCalls.length,
-        finishReason: e.finishReason,
-        ...e.usage,
-      });
-      e.warnings?.forEach((warning) => {
-        console.warn(warning);
-      });
-    },
-  });
+      onFinish: async (e) => {
+        const end = Date.now();
+        await track("ask_ai", {
+          languageModel: languageModel.modelId,
+          embeddingModel: embeddingModel.modelId,
+          durationMs: end - start,
+          domain,
+          namespace,
+          numToolCalls: e.toolCalls.length,
+          finishReason: e.finishReason,
+          ...e.usage,
+        });
+        e.warnings?.forEach((warning) => {
+          console.warn(warning);
+        });
+      },
+    })
+  );
 
   const response = result.toDataStreamResponse();
   response.headers.set("Access-Control-Allow-Origin", "*");
