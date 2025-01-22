@@ -16,6 +16,7 @@ import {
   getGitHubInfo,
   getGitHubRepo,
   renderThemeStylesheet,
+  withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import {
@@ -34,7 +35,6 @@ import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import { withLaunchDarkly } from "./ld-adapter";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
-import { withLogo } from "./withLogo";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
@@ -308,7 +308,8 @@ export async function withInitialProps({
     );
     const file = docs.definition.filesV2[fileId];
     if (file == null) {
-      return undefined;
+      // the file is not found, so we return the src as the image data
+      return { src };
     }
 
     if (file.type === "image") {

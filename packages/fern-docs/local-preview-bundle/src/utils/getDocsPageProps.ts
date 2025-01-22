@@ -100,7 +100,8 @@ export async function getDocsPageProps(
     );
     const file = docs.definition.filesV2[fileId];
     if (file == null) {
-      return undefined;
+      // the file is not found, so we return the src as the image data
+      return { src };
     }
 
     if (file.type === "image") {
