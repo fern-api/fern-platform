@@ -10,7 +10,6 @@ export { withLogo } from "./atoms/logo";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";
-export * from "./mdx/types";
 export { ProxyRequestSchema } from "./playground/types";
 export type {
   ProxyRequest,
