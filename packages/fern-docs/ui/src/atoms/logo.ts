@@ -41,13 +41,23 @@ export function withLogo(
   found: FernNavigation.utils.Node.Found,
   frontmatter: Frontmatter | undefined,
   resolveFileSrc: (src: string | undefined) => ImageData | undefined
-): LogoConfiguration {
+): {
+  height: number;
+  href: string;
+  light: ImageData | undefined;
+  dark: ImageData | undefined;
+} {
   const height = definition.config.logoHeight;
   const href =
     definition.config.logoHref ??
     encodeURI(
       conformTrailingSlash(
-        addLeadingSlash(found.root.canonicalSlug ?? found.root.slug)
+        addLeadingSlash(
+          found.landingPage?.canonicalSlug ??
+            found.root.slug ??
+            found.root.canonicalSlug ??
+            found.root.slug
+        )
       )
     );
 

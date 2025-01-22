@@ -57,7 +57,7 @@ export const FernImage = forwardRef<
       <img
         ref={ref}
         {...rest}
-        src={getSrc(src)}
+        src={originalSrc}
         alt={alt}
         width={width}
         height={height}
@@ -67,6 +67,8 @@ export const FernImage = forwardRef<
         // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
         style={{
           aspectRatio,
+          width: "auto",
+          height: "auto",
           ...props.style,
         }}
       />
@@ -105,6 +107,8 @@ export const FernImage = forwardRef<
       // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
       style={{
         aspectRatio,
+        width: "auto",
+        height: "auto",
         ...props.style,
       }}
     />
