@@ -13,7 +13,10 @@ export function mdastFromMarkdown(
   format: "mdx" | "md" = "mdx"
 ): MdastRoot {
   if (format === "md") {
-    return fromMarkdown(content);
+    return fromMarkdown(content, {
+      extensions: [math(), gfm()],
+      mdastExtensions: [mathFromMarkdown(), gfmFromMarkdown()],
+    });
   } else if (format === "mdx") {
     return fromMarkdown(content, {
       extensions: [mdxjs(), math(), gfm()],

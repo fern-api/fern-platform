@@ -41,7 +41,10 @@ export function toTree(
   jsxElements: string[];
   esmElements: string[];
 } {
-  content = sanitize ? sanitizeMdxExpression(sanitizeBreaks(content)) : content;
+  content =
+    sanitize && format === "mdx"
+      ? sanitizeMdxExpression(sanitizeBreaks(content))[0]
+      : content;
 
   const mdast = mdastFromMarkdown(content, format);
 

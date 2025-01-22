@@ -324,4 +324,9 @@ describe("remarkSanitizeAcorn", () => {
     const result = sanitizeAcorns("export const foo = await something();");
     expect(result).toBe("\\{export const foo = await something();}\n");
   });
+
+  it("should not escape frontmatter but escape other identifiers", () => {
+    const result = sanitizeAcorns("{frontmatter.foo} and {something}");
+    expect(result).toBe("{frontmatter.foo} and \\{something}\n");
+  });
 });
