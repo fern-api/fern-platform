@@ -5,8 +5,7 @@ import {
   getAuthEdgeConfig,
   getPreviewUrlAuthConfig,
 } from "@fern-docs/edge-config";
-import { withoutStaging } from "@fern-docs/utils";
-import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
+import { removeTrailingSlash, withoutStaging } from "@fern-docs/utils";
 import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
