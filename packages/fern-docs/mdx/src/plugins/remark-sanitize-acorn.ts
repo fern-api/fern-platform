@@ -14,6 +14,7 @@ interface Options {
  * Not allowed: Promise, crypto, etc.
  *
  * Note: `props` will be used by @mdx-js/esbuild
+ * and `frontmatter` is injected by @mdx-js/mdx
  */
 const ALLOWED_GLOBAL_IDENTIFIERS: string[] = [
   "Math",
@@ -24,6 +25,7 @@ const ALLOWED_GLOBAL_IDENTIFIERS: string[] = [
   "Map",
   "URL",
   "props",
+  "frontmatter",
 ];
 
 /**
