@@ -19,6 +19,11 @@ describe("S3 Service", () => {
         bucketRegion: "us-east-1",
         urlOverride: undefined,
       },
+      dbDocsDefinitionS3: {
+        bucketName: "fdr-dev2-db-docs-def-public",
+        bucketRegion: "us-east-1",
+        urlOverride: undefined,
+      },
       privateApiDefinitionSourceS3: {
         bucketName: "fdr-source-files",
         bucketRegion: "us-east-1",
