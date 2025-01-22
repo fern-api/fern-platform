@@ -169,6 +169,7 @@ export function SearchV2(): ReactElement | false {
             api={chatEndpoint}
             headers={{
               "X-Fern-Host": domain,
+              "X-Deployment-Id": process.env.VERCEL_DEPLOYMENT_ID,
             }}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
