@@ -127,9 +127,9 @@ export class DocsLoader {
         const environmentType = process.env.NODE_ENV ?? "development";
         let dbDocsDefUrl = "";
         if (environmentType === "development") {
-          dbDocsDefUrl = `https://db-docs-def.dev.buildwithfern.com/${this.domain}.json`;
+          dbDocsDefUrl = `https://docs-definitions-dev2.buildwithfern.com/${this.domain}.json`;
         } else if (environmentType === "production") {
-          dbDocsDefUrl = `https://db-docs-def.buildwithfern.com/${this.domain}.json`;
+          dbDocsDefUrl = `https://docs-definitions.buildwithfern.com/${this.domain}.json`;
         }
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {

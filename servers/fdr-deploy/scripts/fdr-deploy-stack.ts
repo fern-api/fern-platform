@@ -238,7 +238,7 @@ export class FdrDeployStack extends Stack {
     const dbDocsDefinitionDomainName =
       environmentType === "PROD"
         ? "docs-definitions.buildwithfern.com"
-        : `docs-definitions-dev2.buildwithfern.com`;
+        : "docs-definitions-dev2.buildwithfern.com";
     const dbDocsDefinitionDistribution = new cloudfront.Distribution(
       this,
       "DbDocsDefinitionDistribution",
