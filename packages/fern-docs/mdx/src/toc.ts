@@ -99,8 +99,12 @@ export function makeToc(
         return;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
-      const depth = parseInt(node.name[1]!);
+      const depth = parseInt(node.name[1] ?? "0");
+      if (depth < 1 || depth > 6) {
+        // depth must be between 1 and 6
+        return;
+      }
+
       const title = hastToString(node);
       headings.push({ depth, id, title });
     }
@@ -179,8 +183,10 @@ function makeTree(
   const tree: TableOfContentsItem[] = [];
 
   while (headings.length > 0) {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-unnecessary-type-assertion
-    const firstToken = headings[0]!;
+    const firstToken = headings[0];
+    if (!firstToken) {
+      break;
+    }
 
     // if the next heading is at a higher level
     if (firstToken.depth < depth) {
