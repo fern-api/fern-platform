@@ -22,7 +22,7 @@ export const maxDuration = 60;
 export const revalidate = 0;
 
 export async function POST(req: NextRequest) {
-  const logger = initLogger({
+  const _logger = initLogger({
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
