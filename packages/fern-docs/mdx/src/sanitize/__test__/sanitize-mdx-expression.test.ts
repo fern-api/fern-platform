@@ -131,7 +131,7 @@ describe("sanitizeMdxExpression", () => {
       sanitizeMdxExpression(
         "{ M1:2, M1:4 } => {M1:6} 2] Minimum - min of all the values for the"
       )
-    ).toMatchInlineSnapshot([
+    ).toStrictEqual([
       "\\{ M1:2, M1:4 } => \\{M1:6} 2] Minimum - min of all the values for the",
       true,
     ]);
