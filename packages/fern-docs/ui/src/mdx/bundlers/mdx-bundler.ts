@@ -4,6 +4,7 @@ import {
   sanitizeBreaks,
   sanitizeMdxExpression,
   toTree,
+  type PluggableList,
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
@@ -22,7 +23,6 @@ import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
-import { PluggableList } from "unified";
 import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";

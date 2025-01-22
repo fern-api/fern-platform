@@ -1,10 +1,10 @@
+import type { Hast } from "@fern-docs/mdx";
 import {
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdxJsxAttributeToString,
   visit,
 } from "@fern-docs/mdx";
-import type { Root } from "hast";
 import type { ImageData } from "../../atoms/types";
 
 export interface RehypeFilesOptions {
@@ -26,8 +26,10 @@ export interface RehypeFilesOptions {
  * @param options - the options for the plugin
  * @returns a function that will transform the tree
  */
-export function rehypeFiles(options: RehypeFilesOptions): (tree: Root) => void {
-  return function (tree: Root): void {
+export function rehypeFiles(
+  options: RehypeFilesOptions
+): (tree: Hast.Root) => void {
+  return function (tree: Hast.Root): void {
     visit(tree, (node) => {
       if (isMdxJsxElementHast(node)) {
         const attributes = node.attributes.filter(isMdxJsxAttribute);

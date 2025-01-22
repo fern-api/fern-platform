@@ -1,4 +1,4 @@
-import type { Element } from "hast";
+import type { Hast } from "@fern-docs/mdx";
 import { parseBlockMetaString } from "../plugins/rehypeFernCode";
 
 describe("parseBlockMetaString", () => {
@@ -97,7 +97,7 @@ describe("parseBlockMetaString", () => {
   });
 });
 
-function createElement(metastring: string, lang = "plaintext"): Element {
+function createElement(metastring: string, lang = "plaintext"): Hast.Element {
   return {
     type: "element",
     tagName: "pre",

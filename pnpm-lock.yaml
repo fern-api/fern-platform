@@ -1563,6 +1563,9 @@ importers:
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.7.2)
+      unified:
+        specifier: ^11.0.4
+        version: 11.0.4
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -2160,12 +2163,6 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
-      hast-util-to-jsx-runtime:
-        specifier: ^2.3.0
-        version: 2.3.0
-      hast-util-to-string:
-        specifier: ^3.0.0
-        version: 3.0.0
       iconoir-react:
         specifier: ^7.7.0
         version: 7.7.0(react@18.3.1)
@@ -2268,12 +2265,6 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
-      unified:
-        specifier: ^11.0.4
-        version: 11.0.4
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
       url-join:
         specifier: 5.0.0
         version: 5.0.0
@@ -2338,18 +2329,9 @@ importers:
       '@testing-library/react':
         specifier: ^14.3.1
         version: 14.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/hast':
-        specifier: ^3.0.4
-        version: 3.0.4
       '@types/jsonpath':
         specifier: ^0.2.4
         version: 0.2.4
-      '@types/mdast':
-        specifier: ^4.0.4
-        version: 4.0.4
-      '@types/mdx':
-        specifier: ^2.0.13
-        version: 2.0.13
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
@@ -11613,9 +11595,6 @@ packages:
 
   hast-util-to-parse5@7.1.0:
     resolution: {integrity: sha512-YNRgAJkH2Jky5ySkIqFXTQiaqcAtJyVE+D5lkN6CdtOqrnkLfGYYrEcKuHOJZlp+MwjSwuD3fZuawI+sic/RBw==}
-
-  hast-util-to-string@3.0.0:
-    resolution: {integrity: sha512-OGkAxX1Ua3cbcW6EJ5pT/tslVb90uViVkcJ4ZZIMW/R33DX/AkcJcRrPebPwJkHYwlDHXz4aIwvAAaAdtrACFA==}
 
   hast-util-to-string@3.0.1:
     resolution: {integrity: sha512-XelQVTDWvqcl3axRfI0xSeoVKzyIFPwsAGSLIsKdJKQMXDYJS4WYrBNF/8J7RdhIcFI2BOHgAifggsvsxp/3+A==}
@@ -29532,10 +29511,6 @@ snapshots:
       space-separated-tokens: 2.0.2
       web-namespaces: 2.0.1
       zwitch: 2.0.4
-
-  hast-util-to-string@3.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
 
   hast-util-to-string@3.0.1:
     dependencies:
