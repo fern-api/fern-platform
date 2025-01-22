@@ -26,14 +26,14 @@ export async function POST(req: NextRequest) {
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
-  const bedrock = wrapAISDKModel(
-    createAmazonBedrock({
-      region: "us-west-2",
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-    })
+  const bedrock = createAmazonBedrock({
+    region: "us-west-2",
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  });
+  const languageModel = wrapAISDKModel(
+    bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0")
   );
-  const languageModel = bedrock("anthropic.claude-3-5-sonnet-20241022-v2:0");
 
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
