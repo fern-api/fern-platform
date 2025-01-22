@@ -40,9 +40,7 @@ export interface S3ApiDefinitionSourceFileInfo {
 export interface S3Service {
   writeDBDocsDefinition(arg0: {
     domain: string;
-    dbDocsDefinition: FdrAPI.docs.v1.db.DocsDefinitionDb.V3 & {
-      config: FdrAPI.docs.v1.db.DocsDbConfig;
-    };
+    readDocsDefinition: any;
   }): Promise<PutObjectCommandOutput>;
   getPresignedDocsAssetsUploadUrls({
     domain,
@@ -335,15 +333,15 @@ export class S3ServiceImpl implements S3Service {
 
   async writeDBDocsDefinition({
     domain,
-    dbDocsDefinition,
+    readDocsDefinition,
   }: {
     domain: string;
-    dbDocsDefinition: any;
+    readDocsDefinition: any;
   }): Promise<PutObjectCommandOutput> {
     const command = new PutObjectCommand({
       Bucket: this.config.dbDocsDefinitionS3.bucketName,
       Key: `${domain}.json`,
-      Body: JSON.stringify(dbDocsDefinition),
+      Body: JSON.stringify(readDocsDefinition),
     });
     return await this.dbDocsDefinitionS3.send(command);
   }

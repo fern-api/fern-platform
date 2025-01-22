@@ -277,13 +277,31 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           indexSegments,
         });
 
+        const readDocsDefinition = convertDocsDefinitionToRead({
+          docsDbDefinition: dbDocsDefinition,
+          algoliaSearchIndex: undefined,
+          filesV2: {},
+          apis: mapValues(apiDefinitionsById, (def) =>
+            convertDbAPIDefinitionToRead(def)
+          ),
+          apisV2: mapValues(apiDefinitionsLatestById, (def) => def),
+          id: DocsV1Write.DocsConfigId(""),
+          search: getSearchInfoFromDocs({
+            algoliaIndex: undefined,
+            indexSegmentIds: [],
+            activeIndexSegments: [],
+            docsDbDefinition: dbDocsDefinition,
+            app,
+          }),
+        });
+
         try {
           await app.services.s3.writeDBDocsDefinition({
             domain: docsRegistrationInfo.fernUrl.getFullUrl(),
-            dbDocsDefinition,
+            readDocsDefinition,
           });
         } catch (e) {
-          app.logger.info(
+          app.logger.error(
             `Error while trying to write DB docs definition for ${docsRegistrationInfo.fernUrl}`,
             e
           );

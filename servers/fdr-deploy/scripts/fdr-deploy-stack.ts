@@ -208,26 +208,37 @@ export class FdrDeployStack extends Stack {
     );
 
     // for revalidate-all and finish-register workflow
-    const dbDocsDefinitionBucket = new Bucket(this, "fdr-db-def-public", {
-      bucketName: `fdr-${environmentType.toLowerCase()}-db-docs-def-public`,
-      cors: [
-        {
-          allowedMethods: [HttpMethods.GET, HttpMethods.POST, HttpMethods.PUT],
-          allowedOrigins: ["*"],
-          allowedHeaders: ["*"],
+    const dbDocsDefinitionBucket = new Bucket(
+      this,
+      "fdr-docs-definitions-public",
+      {
+        bucketName: `fdr-${environmentType.toLowerCase()}-docs-definitions-public`,
+        cors: [
+          {
+            allowedMethods: [
+              HttpMethods.GET,
+              HttpMethods.POST,
+              HttpMethods.PUT,
+            ],
+            allowedOrigins: ["*"],
+            allowedHeaders: ["*"],
+          },
+        ],
+        blockPublicAccess: {
+          blockPublicAcls: false,
+          blockPublicPolicy: false,
+          ignorePublicAcls: false,
+          restrictPublicBuckets: false,
         },
-      ],
-      blockPublicAccess: {
-        blockPublicAcls: false,
-        blockPublicPolicy: false,
-        ignorePublicAcls: false,
-        restrictPublicBuckets: false,
-      },
-      versioned: true,
-    });
+        versioned: true,
+      }
+    );
     dbDocsDefinitionBucket.grantPublicAccess();
 
-    const dbDocsDefinitionDomainName = `db-docs-def.${environmentType.toLowerCase()}.buildwithfern.com`;
+    const dbDocsDefinitionDomainName =
+      environmentType === "PROD"
+        ? "docs-definitions.buildwithfern.com"
+        : `docs-definitions-dev2.buildwithfern.com`;
     const dbDocsDefinitionDistribution = new cloudfront.Distribution(
       this,
       "DbDocsDefinitionDistribution",
