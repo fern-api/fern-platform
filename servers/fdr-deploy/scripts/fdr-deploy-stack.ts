@@ -207,10 +207,65 @@ export class FdrDeployStack extends Stack {
       }
     );
 
+    // for revalidate-all and finish-register workflow
+    const dbDocsDefinitionBucket = new Bucket(
+      this,
+      "fdr-docs-definitions-public",
+      {
+        bucketName: `fdr-${environmentType.toLowerCase()}-docs-definitions-public`,
+        cors: [
+          {
+            allowedMethods: [
+              HttpMethods.GET,
+              HttpMethods.POST,
+              HttpMethods.PUT,
+            ],
+            allowedOrigins: ["*"],
+            allowedHeaders: ["*"],
+          },
+        ],
+        blockPublicAccess: {
+          blockPublicAcls: false,
+          blockPublicPolicy: false,
+          ignorePublicAcls: false,
+          restrictPublicBuckets: false,
+        },
+        versioned: true,
+      }
+    );
+    dbDocsDefinitionBucket.grantPublicAccess();
+
+    const dbDocsDefinitionDomainName =
+      environmentType === "PROD"
+        ? "docs-definitions.buildwithfern.com"
+        : "docs-definitions-dev2.buildwithfern.com";
+    const dbDocsDefinitionDistribution = new cloudfront.Distribution(
+      this,
+      "DbDocsDefinitionDistribution",
+      {
+        defaultBehavior: {
+          origin: new origins.S3Origin(dbDocsDefinitionBucket),
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+        },
+        domainNames: [dbDocsDefinitionDomainName],
+        certificate,
+      }
+    );
+
     new route53.ARecord(this, "PublicDocsFilesRecord", {
       recordName: publicDocsFilesDomainName,
       target: route53.RecordTarget.fromAlias(
         new targets.CloudFrontTarget(publicDocsFilesDistribution)
+      ),
+      zone: hostedZone,
+    });
+
+    new route53.ARecord(this, "DbDocsDefinitionRecord", {
+      recordName: dbDocsDefinitionDomainName,
+      target: route53.RecordTarget.fromAlias(
+        new targets.CloudFrontTarget(dbDocsDefinitionDistribution)
       ),
       zone: hostedZone,
     });
@@ -265,6 +320,9 @@ export class FdrDeployStack extends Stack {
             PUBLIC_S3_BUCKET_REGION: publicDocsBucket.stack.region,
             PRIVATE_S3_BUCKET_NAME: privateDocsBucket.bucketName,
             PRIVATE_S3_BUCKET_REGION: privateDocsBucket.stack.region,
+            DB_DOCS_DEFINITION_BUCKET_NAME: dbDocsDefinitionBucket.bucketName,
+            DB_DOCS_DEFINITION_BUCKET_REGION:
+              dbDocsDefinitionBucket.stack.region,
             API_DEFINITION_SOURCE_BUCKET_NAME:
               privateApiDefinitionSourceBucket.bucketName,
             API_DEFINITION_SOURCE_BUCKET_REGION:
