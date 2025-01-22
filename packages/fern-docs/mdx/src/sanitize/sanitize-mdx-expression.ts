@@ -18,6 +18,7 @@ const RULE_IDS = {
   NON_SPREAD: "non-spread",
   SPREAD_EXTRA: "spread-extra",
   ACORN: "acorn",
+  END_TAG_MISMATCH: "end-tag-mismatch",
 } as const;
 
 /**
@@ -25,15 +26,24 @@ const RULE_IDS = {
  * This function attempts to sanitize the markdown by escaping the curly braces, but listening for VFileMessage errors.
  *
  * This is not really efficient because it can loop a lot and depends on try-catching errors, but it performs a bit of "magic" to improve quality of life.
+ *
+ * @param content - the markdown content to sanitize
+ * @returns the sanitized markdown content and a boolean indicating is sanitized (false if it failed to sanitize)
  */
-export function sanitizeMdxExpression(content: string): string {
+export function sanitizeMdxExpression(
+  content: string
+): [string, handled: boolean] {
   // these are errors encountered but sanitized
   const errors: ErrorContext[] = [];
 
   let loops = 0;
   while (loops++ < 100) {
-    if (loops === 100) {
-      console.error("Infinite Loop Detected: sanitizing acorn failed");
+    if (loops >= 100) {
+      console.error(
+        "Infinite Loop Detected: sanitizing acorn failed:",
+        content
+      );
+      return [content, false];
     }
 
     try {
@@ -48,6 +58,15 @@ export function sanitizeMdxExpression(content: string): string {
             e.line != null ? content.split("\n")[e.line - 1] : undefined,
         };
         errors.push(errorContext);
+
+        if (e.ruleId === RULE_IDS.END_TAG_MISMATCH) {
+          const [newContent, handled] = handleEndTagMismatch(content, e);
+          errorContext.handled = handled;
+          if (handled) {
+            content = newContent;
+            continue;
+          }
+        }
 
         if (
           e.ruleId === RULE_IDS.UNEXPECTED_EOF ||
@@ -107,17 +126,15 @@ export function sanitizeMdxExpression(content: string): string {
     }
   }
 
-  if (errors.length > 0) {
-    console.debug(
-      "MDX sanitization errors:",
-      errors.map(
-        (e) =>
-          `handled=${e.handled}, rule=${e.error.ruleId}, line=\`${e.affectedLine}\``
-      )
-    );
-  }
+  errors.forEach((e) => {
+    if (!e.handled) {
+      console.error(
+        `Unhandled MDX sanitization error: ${String(e.error.message)}: ${e.affectedLine}`
+      );
+    }
+  });
 
-  return content;
+  return [content, errors.length === 0 || errors.every((e) => e.handled)];
 }
 
 function escapeAllUnescapedOpeningBrackets(content: string): string {
@@ -127,7 +144,7 @@ function escapeAllUnescapedOpeningBrackets(content: string): string {
 function handleUnexpectedEOF(
   content: string,
   _e: VFileMessage
-): [string, boolean] {
+): [string, handled: boolean] {
   const stack: [number, "{" | "<"][] = [];
 
   const needsEscaping: number[] = [];
@@ -144,8 +161,11 @@ function handleUnexpectedEOF(
         continue;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const [start, openingChar] = stack.pop()!;
+      const popped = stack.pop();
+      if (!popped) {
+        continue;
+      }
+      const [start, openingChar] = popped;
       if (
         (char === ">" && openingChar === "<") ||
         (char === "}" && openingChar === "{")
@@ -174,7 +194,7 @@ function handleUnexpectedEOF(
 function handleSpreadExtra(
   content: string,
   e: VFileMessage
-): [string, boolean] {
+): [string, handled: boolean] {
   let handled = false;
 
   const start = e.place == null ? -1 : getStart(content.split("\n"), e.place);
@@ -204,7 +224,7 @@ function handleSpreadExtra(
 function escapeCurrentLine(
   content: string,
   e: VFileMessage
-): [string, boolean] {
+): [string, handled: boolean] {
   const line = e.line ?? (isPoint(e.place) ? e.place?.line : undefined);
 
   if (line == null) {
@@ -227,7 +247,7 @@ function escapeCurrentLine(
 function handleUnexpectedCharacter(
   content: string,
   e: VFileMessage
-): [string, boolean] {
+): [string, handled: boolean] {
   const start = e.place == null ? -1 : getStart(content.split("\n"), e.place);
 
   const lastAlligatorBracket = content.slice(0, start).lastIndexOf("<");
@@ -248,6 +268,46 @@ function handleUnexpectedCharacter(
     content.slice(0, lastCharacterToEscape) +
       "\\" +
       content.slice(lastCharacterToEscape),
+    true,
+  ];
+}
+
+function handleEndTagMismatch(
+  content: string,
+  e: VFileMessage
+): [string, handled: boolean] {
+  // reason example: Expected a closing tag for `<service-account-id>` (1:139-1:159) before the end of `paragraph`
+  // parse (1:139-1:159) to get the start and end of the tag
+  const tagLocationStr = e.reason?.match(/\((\d+:\d+-\d+:\d+)\)/)?.[1];
+  if (tagLocationStr == null) {
+    return [content, false];
+  }
+  const [tagStartLine, tagStartColumn, tagEndLine, tagEndColumn] =
+    tagLocationStr.split(/[:-]/g).map((s) => parseInt(s));
+
+  if (!tagStartLine || !tagStartColumn || !tagEndLine || !tagEndColumn) {
+    return [content, false];
+  }
+
+  const lines = content.split("\n");
+
+  const start = getStart(lines, {
+    line: tagStartLine,
+    column: tagStartColumn,
+  });
+
+  const end = getStart(lines, {
+    line: tagEndLine,
+    column: tagEndColumn,
+  });
+
+  return [
+    content.slice(0, start) +
+      content
+        .slice(start, end)
+        .replaceAll(/</g, "&lt;")
+        .replaceAll(/>/g, "&gt;") +
+      content.slice(end),
     true,
   ];
 }

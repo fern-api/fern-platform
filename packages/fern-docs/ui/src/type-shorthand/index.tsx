@@ -218,13 +218,7 @@ export function renderTypeShorthand(
       },
       discriminatedUnion: () =>
         plural ? "objects" : maybeWithArticle("an", "object"),
-      enum: (enumValue) => {
-        // if there are only 1 or 2 values, we can list them like literals (e.g. "apple" or "banana")
-        if (enumValue.values.length > 0 && enumValue.values.length < 3) {
-          return enumValue.values
-            .map((value) => `"${value.value}"`)
-            .join(" or ");
-        }
+      enum: () => {
         return plural ? "enums" : maybeWithArticle("an", "enum");
       },
 

@@ -114,7 +114,7 @@ export async function serializeMdx(
   // }
 
   content = sanitizeBreaks(content);
-  content = sanitizeMdxExpression(content);
+  content = sanitizeMdxExpression(content)[0];
 
   try {
     const result = await serialize<

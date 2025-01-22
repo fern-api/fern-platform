@@ -2,83 +2,112 @@ import { sanitizeMdxExpression } from "../sanitize-mdx-expression";
 
 describe("sanitizeMdxExpression", () => {
   it("should escape base cases", () => {
-    expect(sanitizeMdxExpression("{")).toBe("\\{");
-    expect(sanitizeMdxExpression("<")).toBe("\\<");
-    expect(sanitizeMdxExpression("{{")).toBe("\\{\\{");
-    expect(sanitizeMdxExpression("<<")).toBe("\\<\\<");
+    expect(sanitizeMdxExpression("{")).toStrictEqual(["\\{", true]);
+    expect(sanitizeMdxExpression("<")).toStrictEqual(["\\<", true]);
+    expect(sanitizeMdxExpression("{{")).toStrictEqual(["\\{\\{", true]);
+    expect(sanitizeMdxExpression("<<")).toStrictEqual(["\\<\\<", true]);
 
-    expect(sanitizeMdxExpression("{a}{")).toBe("{a}\\{");
-    expect(sanitizeMdxExpression("<a><</a>")).toBe("<a>\\<</a>");
-    expect(sanitizeMdxExpression("{{a}")).toBe("\\{{a}");
-    expect(sanitizeMdxExpression("{a{}")).toBe("\\{a{}");
-    expect(sanitizeMdxExpression("<a<")).toBe("\\<a\\<");
+    expect(sanitizeMdxExpression("{a}{")).toStrictEqual(["{a}\\{", true]);
+    expect(sanitizeMdxExpression("<a><</a>")).toStrictEqual([
+      "<a>\\<</a>",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("{{a}")).toStrictEqual(["\\{{a}", true]);
+    expect(sanitizeMdxExpression("{a{}")).toStrictEqual(["\\{a{}", true]);
+    expect(sanitizeMdxExpression("<a<")).toStrictEqual(["\\<a\\<", true]);
 
-    expect(sanitizeMdxExpression("</")).toBe("\\</");
-    expect(sanitizeMdxExpression("<a")).toBe("\\<a");
-    expect(sanitizeMdxExpression("<a:")).toBe("\\<a:");
-    expect(sanitizeMdxExpression("<a.")).toBe("\\<a.");
-    expect(sanitizeMdxExpression("<a b")).toBe("\\<a b");
-    expect(sanitizeMdxExpression("<a b:")).toBe("\\<a b:");
-    expect(sanitizeMdxExpression("<a b=")).toBe("\\<a b=");
-    expect(sanitizeMdxExpression('<a b="')).toBe('\\<a b="');
-    expect(sanitizeMdxExpression("<a b='")).toBe("\\<a b='");
-    expect(sanitizeMdxExpression("<a b={")).toBe("\\<a b=\\{");
-    expect(sanitizeMdxExpression("<a/")).toBe("\\<a/");
-    expect(sanitizeMdxExpression("<.>")).toBe("\\<.>");
-    expect(sanitizeMdxExpression("</.>")).toBe("\\</.>");
-    expect(sanitizeMdxExpression("<a?>")).toBe("\\<a?>");
-    expect(sanitizeMdxExpression("<a:+>")).toBe("\\<a:+>");
-    expect(sanitizeMdxExpression("<a./>")).toBe("\\<a./>");
-    expect(sanitizeMdxExpression("<a b!>")).toBe("\\<a b!>");
-    expect(sanitizeMdxExpression("<a b:1>")).toBe("\\<a b:1>");
-    expect(sanitizeMdxExpression("<a b=>")).toBe("\\<a b=>");
-    expect(sanitizeMdxExpression("<a/->")).toBe("\\<a/->");
-    expect(sanitizeMdxExpression("> <a\nb>")).toBe("> \\<a\nb>");
+    expect(sanitizeMdxExpression("</")).toStrictEqual(["\\</", true]);
+    expect(sanitizeMdxExpression("<a")).toStrictEqual(["\\<a", true]);
+    expect(sanitizeMdxExpression("<a:")).toStrictEqual(["\\<a:", true]);
+    expect(sanitizeMdxExpression("<a.")).toStrictEqual(["\\<a.", true]);
+    expect(sanitizeMdxExpression("<a b")).toStrictEqual(["\\<a b", true]);
+    expect(sanitizeMdxExpression("<a b:")).toStrictEqual(["\\<a b:", true]);
+    expect(sanitizeMdxExpression("<a b=")).toStrictEqual(["\\<a b=", true]);
+    expect(sanitizeMdxExpression('<a b="')).toStrictEqual(['\\<a b="', true]);
+    expect(sanitizeMdxExpression("<a b='")).toStrictEqual(["\\<a b='", true]);
+    expect(sanitizeMdxExpression("<a b={")).toStrictEqual(["\\<a b=\\{", true]);
+    expect(sanitizeMdxExpression("<a/")).toStrictEqual(["\\<a/", true]);
+    expect(sanitizeMdxExpression("<.>")).toStrictEqual(["\\<.>", true]);
+    expect(sanitizeMdxExpression("</.>")).toStrictEqual(["\\</.>", true]);
+    expect(sanitizeMdxExpression("<a?>")).toStrictEqual(["\\<a?>", true]);
+    expect(sanitizeMdxExpression("<a:+>")).toStrictEqual(["\\<a:+>", true]);
+    expect(sanitizeMdxExpression("<a./>")).toStrictEqual(["\\<a./>", true]);
+    expect(sanitizeMdxExpression("<a b!>")).toStrictEqual(["\\<a b!>", true]);
+    expect(sanitizeMdxExpression("<a b:1>")).toStrictEqual(["\\<a b:1>", true]);
+    expect(sanitizeMdxExpression("<a b=>")).toStrictEqual(["\\<a b=>", true]);
+    expect(sanitizeMdxExpression("<a/->")).toStrictEqual(["\\<a/->", true]);
+    expect(sanitizeMdxExpression("> <a\nb>")).toStrictEqual([
+      "> \\<a\nb>",
+      true,
+    ]);
 
-    expect(sanitizeMdxExpression("a { b")).toBe("a \\{ b");
-    expect(sanitizeMdxExpression("> {a\nb}")).toBe("> \\{a\nb}");
-    expect(sanitizeMdxExpression("<a {b=c}={} d>")).toBe(
-      "\\<a \\{b=c}=\\{} d>"
-    );
-    expect(sanitizeMdxExpression("<a {...b,c} d>")).toBe("\\<a \\{...b,c} d>");
-    expect(sanitizeMdxExpression("a { b { c } d")).toBe("a \\{ b { c } d");
-    expect(sanitizeMdxExpression('a {"b" "c"} d')).toBe('a \\{"b" "c"} d');
-    expect(sanitizeMdxExpression('a {var b = "c"} d')).toBe(
-      'a \\{var b = "c"} d'
-    );
+    expect(sanitizeMdxExpression("a { b")).toStrictEqual(["a \\{ b", true]);
+    expect(sanitizeMdxExpression("> {a\nb}")).toStrictEqual([
+      "> \\{a\nb}",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<a {b=c}={} d>")).toStrictEqual([
+      "\\<a \\{b=c}=\\{} d>",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<a {...b,c} d>")).toStrictEqual([
+      "\\<a \\{...b,c} d>",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("a { b { c } d")).toStrictEqual([
+      "a \\{ b { c } d",
+      true,
+    ]);
+    expect(sanitizeMdxExpression('a {"b" "c"} d')).toStrictEqual([
+      'a \\{"b" "c"} d',
+      true,
+    ]);
+    expect(sanitizeMdxExpression('a {var b = "c"} d')).toStrictEqual([
+      'a \\{var b = "c"} d',
+      true,
+    ]);
   });
 
   it("should escape only the part of the line that contains the error", () => {
-    expect(sanitizeMdxExpression("a { b { c } d e")).toBe("a \\{ b { c } d e");
-    expect(sanitizeMdxExpression("<Something {...props>")).toBe(
-      "\\<Something \\{...props>"
-    );
-    expect(sanitizeMdxExpression("<Something {...props} d>")).toBe(
-      "\\<Something \\{...props} d>"
-    );
-    expect(sanitizeMdxExpression("<Something {...props} />")).toBe(
-      "<Something {...props} />"
-    );
-    expect(sanitizeMdxExpression("<Something></Something>")).toBe(
-      "<Something></Something>"
-    );
-    expect(sanitizeMdxExpression("<Something>{b</Something>")).toBe(
-      "<Something>\\{b</Something>"
-    );
-    expect(sanitizeMdxExpression("<Something>{b}</Something>")).toBe(
-      "<Something>{b}</Something>"
-    );
-    expect(sanitizeMdxExpression("<Something>{b + a}</Something>")).toBe(
-      "<Something>{b + a}</Something>"
-    );
+    expect(sanitizeMdxExpression("a { b { c } d e")).toStrictEqual([
+      "a \\{ b { c } d e",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<Something {...props>")).toStrictEqual([
+      "\\<Something \\{...props>",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<Something {...props} d>")).toStrictEqual([
+      "&lt;Something \\{...props} d&gt;",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<Something {...props} />")).toStrictEqual([
+      "<Something {...props} />",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<Something></Something>")).toStrictEqual([
+      "<Something></Something>",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<Something>{b</Something>")).toStrictEqual([
+      "<Something>\\{b</Something>",
+      true,
+    ]);
+    expect(sanitizeMdxExpression("<Something>{b}</Something>")).toStrictEqual([
+      "<Something>{b}</Something>",
+      true,
+    ]);
+    expect(
+      sanitizeMdxExpression("<Something>{b + a}</Something>")
+    ).toStrictEqual(["<Something>{b + a}</Something>", true]);
 
-    expect(sanitizeMdxExpression("This is a test. a < b, but b > c. {c}")).toBe(
-      "This is a test. a < b, but b > c. {c}"
-    );
+    expect(
+      sanitizeMdxExpression("This is a test. a < b, but b > c. {c}")
+    ).toStrictEqual(["This is a test. a < b, but b > c. {c}", true]);
 
     expect(
       sanitizeMdxExpression("This is a test. a <= b, but b > c. {c} d")
-    ).toBe("This is a test. a \\<= b, but b > c. {c} d");
+    ).toStrictEqual(["This is a test. a \\<= b, but b > c. {c} d", true]);
   });
 
   it("should handle complex cases", () => {
@@ -86,27 +115,46 @@ describe("sanitizeMdxExpression", () => {
       sanitizeMdxExpression(
         "previous billing period) Ex. January {M1:{VM:VM0}}, February"
       )
-    ).toMatchInlineSnapshot(
-      '"previous billing period) Ex. January \\{M1:\\{VM:VM0}}, February"'
-    );
+    ).toStrictEqual([
+      "previous billing period) Ex. January \\{M1:\\{VM:VM0}}, February",
+      true,
+    ]);
     expect(
       sanitizeMdxExpression(
         "from the previous month Ex. January15 {M1:{VM:VM0,on, 4}} February15"
       )
-    ).toMatchInlineSnapshot(
-      '"from the previous month Ex. January15 \\{M1:\\{VM:VM0,on, 4}} February15"'
-    );
+    ).toStrictEqual([
+      "from the previous month Ex. January15 \\{M1:\\{VM:VM0,on, 4}} February15",
+      true,
+    ]);
     expect(
       sanitizeMdxExpression(
         "{ M1:2, M1:4 } => {M1:6} 2] Minimum - min of all the values for the"
       )
-    ).toMatchInlineSnapshot(
-      '"\\{ M1:2, M1:4 } => \\{M1:6} 2] Minimum - min of all the values for the"'
-    );
+    ).toStrictEqual([
+      "\\{ M1:2, M1:4 } => \\{M1:6} 2] Minimum - min of all the values for the",
+      true,
+    ]);
   });
 
   it("should avoid escaping math expressions", () => {
-    expect(sanitizeMdxExpression("$$x^2$$")).toBe("$$x^2$$");
-    expect(sanitizeMdxExpression("$${x^2}$$")).toBe("$${x^2}$$");
+    expect(sanitizeMdxExpression("$$x^2$$")).toStrictEqual(["$$x^2$$", true]);
+    expect(sanitizeMdxExpression("$${x^2}$$")).toStrictEqual([
+      "$${x^2}$$",
+      true,
+    ]);
+  });
+
+  it("should handle end-tag-mismatch", () => {
+    expect(sanitizeMdxExpression("<a>")).toStrictEqual(["&lt;a&gt;", true]);
+
+    expect(
+      sanitizeMdxExpression(
+        "This is the JSON that can be generated in the Google Cloud Console at https://console.cloud.google.com/iam-admin/serviceaccounts/details/<service-account-id>/keys."
+      )
+    ).toStrictEqual([
+      "This is the JSON that can be generated in the Google Cloud Console at https://console.cloud.google.com/iam-admin/serviceaccounts/details/&lt;service-account-id&gt;/keys.",
+      true,
+    ]);
   });
 });

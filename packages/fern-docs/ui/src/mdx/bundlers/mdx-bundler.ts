@@ -55,7 +55,7 @@ export async function serializeMdx(
   }
 
   content = sanitizeBreaks(content);
-  content = sanitizeMdxExpression(content);
+  content = sanitizeMdxExpression(content)[0];
 
   if (process.platform === "win32") {
     process.env.ESBUILD_BINARY_PATH = path.join(
