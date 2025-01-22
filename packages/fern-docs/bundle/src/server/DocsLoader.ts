@@ -119,18 +119,19 @@ export class DocsLoader {
       .load();
   }
 
+  private getDocsDefinitionUrl() {
+    return (
+      process.env.NEXT_PUBLIC_DOCS_DEFINITION_S3_URL ??
+      "https://docs-definitions.buildwithfern.com"
+    );
+  }
+
   private async loadDocs(): Promise<
     DocsV2Read.LoadDocsForUrlResponse | undefined
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        const environmentType = process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "dev2";
-        let dbDocsDefUrl = "";
-        if (environmentType.includes("dev2")) {
-          dbDocsDefUrl = `https://docs-definitions-dev2.buildwithfern.com/${this.domain}.json`;
-        } else {
-          dbDocsDefUrl = `https://docs-definitions.buildwithfern.com/${this.domain}.json`;
-        }
+        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.domain}.json`;
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {
           const json = await response.json();
