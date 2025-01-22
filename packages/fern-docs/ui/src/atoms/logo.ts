@@ -1,3 +1,6 @@
+import type { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { FileIdOrUrl, Frontmatter, Logo } from "@fern-api/fdr-sdk/docs";
+import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom } from "jotai";
 import { selectAtom } from "jotai/utils";
@@ -30,78 +33,97 @@ export const LOGO_ATOM = atom<LogoConfiguration>((get) => {
   };
 });
 
-// export const LOGO_HREF_ATOM = atom<string | undefined>(
-//   (get) => get(DOCS_ATOM).logo.href
-// );
-// LOGO_HREF_ATOM.debugLabel = "LOGO_HREF_ATOM";
+export function withLogo(
+  definition: FdrAPI.docs.v1.read.DocsDefinition,
+  found: FernNavigation.utils.Node.Found,
+  frontmatter: Frontmatter | undefined,
+  resolveFileSrc: (
+    fileId: FernNavigation.FileId | undefined
+  ) => ImageData | undefined
+): LogoConfiguration {
+  const height = definition.config.logoHeight;
+  const href =
+    definition.config.logoHref ??
+    encodeURI(
+      conformTrailingSlash(
+        addLeadingSlash(found.root.canonicalSlug ?? found.root.slug)
+      )
+    );
 
-// const DEFAULT_LOGO_HEIGHT = 20;
-// export const LOGO_HEIGHT_ATOM = atom<number>(
-//   (get) => get(DOCS_ATOM).logo.height ?? DEFAULT_LOGO_HEIGHT
-// );
-// LOGO_HEIGHT_ATOM.debugLabel = "LOGO_HEIGHT_ATOM";
+  const frontmatterLogo = getLogoFromFrontmatter(frontmatter);
 
-// export function useLogoHeight(): number {
-//   return useAtomValue(LOGO_HEIGHT_ATOM);
-// }
+  const light =
+    frontmatterLogo.light?.type === "url"
+      ? { src: frontmatterLogo.light.value }
+      : frontmatterLogo.light?.type === "fileId"
+        ? resolveFileSrc(frontmatterLogo.light.value)
+        : resolveFileSrc(
+            definition.config.colorsV3?.type === "light"
+              ? definition.config.colorsV3.logo
+              : definition.config.colorsV3?.type === "darkAndLight"
+                ? definition.config.colorsV3.light.logo
+                : undefined
+          );
+  const dark =
+    frontmatterLogo.dark?.type === "url"
+      ? { src: frontmatterLogo.dark.value }
+      : frontmatterLogo.dark?.type === "fileId"
+        ? resolveFileSrc(frontmatterLogo.dark.value)
+        : resolveFileSrc(
+            definition.config.colorsV3?.type === "dark"
+              ? definition.config.colorsV3.logo
+              : definition.config.colorsV3?.type === "darkAndLight"
+                ? definition.config.colorsV3.dark.logo
+                : undefined
+          );
 
-// function isFileIdOrUrl(logo: Logo | undefined): logo is FileIdOrUrl {
-//   if (logo == null) {
-//     return false;
-//   }
-//   if (typeof logo !== "object") {
-//     return false;
-//   }
-//   if (!("type" in logo && "value" in logo)) {
-//     return false;
-//   }
-//   return logo.type === "fileId" || logo.type === "url";
-// }
+  return {
+    height: height ?? 20,
+    href,
+    light,
+    dark,
+  };
+}
 
-// export const LOGO_IMAGE_ATOM = atom<LogoConfiguration>((get) => {
-//   const { content, colors } = get(DOCS_ATOM);
-//   const markdownText =
-//     content.type === "markdown-page"
-//       ? content.content
-//       : content.type === "changelog" && content.node.overviewPageId != null
-//         ? content.pages[content.node.overviewPageId]
-//         : content.type === "changelog-entry"
-//           ? content.page
-//           : undefined;
+function getLogoFromFrontmatter(frontmatter: Frontmatter | undefined): {
+  light?: FileIdOrUrl;
+  dark?: FileIdOrUrl;
+} {
+  if (frontmatter == null) {
+    return { light: undefined, dark: undefined };
+  }
+  const { logo } = frontmatter;
+  if (logo != null && typeof logo === "object") {
+    if (
+      "light" in logo &&
+      "dark" in logo &&
+      isFileIdOrUrl(logo.light) &&
+      isFileIdOrUrl(logo.dark)
+    ) {
+      return { light: logo.light, dark: logo.dark };
+    }
+    if ("light" in logo && isFileIdOrUrl(logo.light)) {
+      return { light: logo.light, dark: logo.light };
+    }
+    if ("dark" in logo && isFileIdOrUrl(logo.dark)) {
+      return { light: logo.dark, dark: logo.dark };
+    }
+    if (isFileIdOrUrl(logo)) {
+      return { light: logo, dark: logo };
+    }
+  }
+  return { light: undefined, dark: undefined };
+}
 
-//   const { logo } =
-//     typeof markdownText === "object"
-//       ? markdownText.frontmatter
-//       : EMPTY_FRONTMATTER;
-
-//   if (logo != null && typeof logo === "object") {
-//     if (
-//       "light" in logo &&
-//       "dark" in logo &&
-//       isFileIdOrUrl(logo.light) &&
-//       isFileIdOrUrl(logo.dark)
-//     ) {
-//       return { light: logo.light, dark: logo.dark };
-//     }
-//     if ("light" in logo && isFileIdOrUrl(logo.light)) {
-//       return { light: logo.light, dark: logo.light };
-//     }
-//     if ("dark" in logo && isFileIdOrUrl(logo.dark)) {
-//       return { light: logo.dark, dark: logo.dark };
-//     }
-//     if (isFileIdOrUrl(logo)) {
-//       return { light: logo, dark: logo };
-//     }
-//   }
-
-//   const light =
-//     colors.light?.logo != null
-//       ? { type: "fileId" as const, value: colors.light.logo }
-//       : undefined;
-//   const dark =
-//     colors.dark?.logo != null
-//       ? { type: "fileId" as const, value: colors.dark.logo }
-//       : undefined;
-
-//   return { light: light ?? dark, dark: dark ?? light };
-// });
+function isFileIdOrUrl(logo: Logo | undefined): logo is FileIdOrUrl {
+  if (logo == null) {
+    return false;
+  }
+  if (typeof logo !== "object") {
+    return false;
+  }
+  if (!("type" in logo && "value" in logo)) {
+    return false;
+  }
+  return logo.type === "fileId" || logo.type === "url";
+}

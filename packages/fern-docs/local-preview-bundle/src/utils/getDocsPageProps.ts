@@ -26,6 +26,7 @@ import {
   NavbarLink,
   renderThemeStylesheet,
   resolveDocsContent,
+  withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
 import {
@@ -89,7 +90,11 @@ export async function getDocsPageProps(
   // TODO: get feature flags from the API
   const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
-  function resolveFileSrc(src: string): ImageData | undefined {
+  function resolveFileSrc(src: string | undefined): ImageData | undefined {
+    if (src == null) {
+      return undefined;
+    }
+
     const fileId = FernNavigation.FileId(
       src.startsWith("file:") ? src.slice(5) : src
     );
@@ -224,19 +229,6 @@ export async function getDocsPageProps(
     }
   });
 
-  const lightLogoFileId =
-    docs.definition.config.colorsV3?.type === "light"
-      ? docs.definition.config.colorsV3.logo
-      : docs.definition.config.colorsV3?.type === "darkAndLight"
-        ? docs.definition.config.colorsV3.light.logo
-        : undefined;
-  const darkLogoFileId =
-    docs.definition.config.colorsV3?.type === "dark"
-      ? docs.definition.config.colorsV3.logo
-      : docs.definition.config.colorsV3?.type === "darkAndLight"
-        ? docs.definition.config.colorsV3.dark.logo
-        : undefined;
-
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
@@ -245,13 +237,7 @@ export async function getDocsPageProps(
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    logo: {
-      height: docs.definition.config.logoHeight,
-      href: docs.definition.config.logoHref,
-      light:
-        lightLogoFileId != null ? resolveFileSrc(lightLogoFileId) : undefined,
-      dark: darkLogoFileId != null ? resolveFileSrc(darkLogoFileId) : undefined,
-    },
+    logo: withLogo(docs.definition, node, frontmatter, resolveFileSrc),
     content,
     announcement:
       docs.definition.config.announcement != null

@@ -6,6 +6,7 @@ export type {
   LogoConfiguration,
   NavbarLink,
 } from "./atoms";
+export { withLogo } from "./atoms/logo";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
 export { getApiRouteSupplier } from "./hooks/useApiRoute";

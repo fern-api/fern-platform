@@ -393,7 +393,7 @@ export async function withInitialProps({
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    logo: withLogo(docs.definition, found, resolveFileSrc),
+    logo: withLogo(docs.definition, found, frontmatter, resolveFileSrc),
     content,
     announcement:
       docs.definition.config.announcement != null
