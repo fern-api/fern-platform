@@ -123,12 +123,27 @@ export class DocsLoader {
     DocsV2Read.LoadDocsForUrlResponse | undefined
   > {
     if (!this.#loadForDocsUrlResponse) {
-      const response = await loadWithUrl(this.domain);
-
-      if (response.ok) {
-        this.#loadForDocsUrlResponse = response.body;
-      } else {
-        this.#error = response.error;
+      try {
+        const environmentType = process.env.NODE_ENV ?? "development";
+        let dbDocsDefUrl = "";
+        if (environmentType === "development") {
+          dbDocsDefUrl = `https://db-docs-def.dev.buildwithfern.com/${this.domain}.json`;
+        } else if (environmentType === "production") {
+          dbDocsDefUrl = `https://db-docs-def.buildwithfern.com/${this.domain}.json`;
+        }
+        const response = await fetch(dbDocsDefUrl);
+        if (response.ok) {
+          const json = await response.json();
+          return json as DocsV2Read.LoadDocsForUrlResponse;
+        }
+      } catch {
+        // Not served by cloudfront, fetch from Redis and then RDS
+        const response = await loadWithUrl(this.domain);
+        if (response.ok) {
+          this.#loadForDocsUrlResponse = response.body;
+        } else {
+          this.#error = response.error;
+        }
       }
     }
     return this.#loadForDocsUrlResponse;

@@ -2,6 +2,7 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   PutObjectCommandInput,
+  PutObjectCommandOutput,
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -37,6 +38,12 @@ export interface S3ApiDefinitionSourceFileInfo {
 }
 
 export interface S3Service {
+  writeDBDocsDefinition(arg0: {
+    domain: string;
+    dbDocsDefinition: FdrAPI.docs.v1.db.DocsDefinitionDb.V3 & {
+      config: FdrAPI.docs.v1.db.DocsDbConfig;
+    };
+  }): Promise<PutObjectCommandOutput>;
   getPresignedDocsAssetsUploadUrls({
     domain,
     filepaths,
@@ -79,6 +86,7 @@ export class S3ServiceImpl implements S3Service {
   private publicDocsS3: S3Client;
   private privateDocsS3: S3Client;
   private privateApiDefinitionSourceS3: S3Client;
+  private dbDocsDefinitionS3: S3Client;
   private presignedDownloadUrlCache = new Cache<string>(
     10_000,
     ONE_WEEK_IN_SECONDS
@@ -101,6 +109,16 @@ export class S3ServiceImpl implements S3Service {
         ? { endpoint: config.privateDocsS3.urlOverride }
         : {}),
       region: config.privateDocsS3.bucketRegion,
+      credentials: {
+        accessKeyId: config.awsAccessKey,
+        secretAccessKey: config.awsSecretKey,
+      },
+    });
+    this.dbDocsDefinitionS3 = new S3Client({
+      ...(config.dbDocsDefinitionS3.urlOverride != null
+        ? { endpoint: config.dbDocsDefinitionS3.urlOverride }
+        : {}),
+      region: config.dbDocsDefinitionS3.bucketRegion,
       credentials: {
         accessKeyId: config.awsAccessKey,
         secretAccessKey: config.awsSecretKey,
@@ -313,6 +331,21 @@ export class S3ServiceImpl implements S3Service {
       }),
       key,
     };
+  }
+
+  async writeDBDocsDefinition({
+    domain,
+    dbDocsDefinition,
+  }: {
+    domain: string;
+    dbDocsDefinition: any;
+  }): Promise<PutObjectCommandOutput> {
+    const command = new PutObjectCommand({
+      Bucket: this.config.dbDocsDefinitionS3.bucketName,
+      Key: `${domain}.json`,
+      Body: JSON.stringify(dbDocsDefinition),
+    });
+    return await this.dbDocsDefinitionS3.send(command);
   }
 
   constructS3DocsKey({

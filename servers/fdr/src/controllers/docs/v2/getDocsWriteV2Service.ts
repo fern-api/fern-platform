@@ -277,6 +277,11 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           indexSegments,
         });
 
+        await app.services.s3.writeDBDocsDefinition({
+          domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+          dbDocsDefinition,
+        });
+
         /**
          * IMPORTANT NOTE:
          * vercel cache is not shared between custom domains, so we need to revalidate on EACH custom domain individually
