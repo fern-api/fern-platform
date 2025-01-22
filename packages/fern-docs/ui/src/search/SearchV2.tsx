@@ -44,6 +44,7 @@ import {
 import { Feedback } from "../feedback/Feedback";
 import { useApiRoute } from "../hooks/useApiRoute";
 import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
+import { withSkewProtection } from "../util/withSkewProtection";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -145,12 +146,9 @@ export function SearchV2(): ReactElement | false {
     </>
   );
 
-  const headers: Record<string, string> = {
+  const headers = withSkewProtection({
     "X-Fern-Host": domain,
-  };
-  if (process.env.NEXT_DEPLOYMENT_ID) {
-    headers["X-Deployment-Id"] = process.env.NEXT_DEPLOYMENT_ID;
-  }
+  });
 
   return (
     <SearchClientRoot
