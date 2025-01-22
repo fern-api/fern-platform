@@ -277,10 +277,17 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           indexSegments,
         });
 
-        await app.services.s3.writeDBDocsDefinition({
-          domain: docsRegistrationInfo.fernUrl.getFullUrl(),
-          dbDocsDefinition,
-        });
+        try {
+          await app.services.s3.writeDBDocsDefinition({
+            domain: docsRegistrationInfo.fernUrl.getFullUrl(),
+            dbDocsDefinition,
+          });
+        } catch (e) {
+          app.logger.info(
+            `Error while trying to write DB docs definition for ${docsRegistrationInfo.fernUrl}`,
+            e
+          );
+        }
 
         /**
          * IMPORTANT NOTE:
