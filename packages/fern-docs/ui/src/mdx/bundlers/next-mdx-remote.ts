@@ -1,6 +1,7 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import {
   customHeadingHandler,
+  getFrontmatter,
   sanitizeBreaks,
   sanitizeMdxExpression,
   toTree,
@@ -24,14 +25,15 @@ import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
+import { remarkExtractTitle } from "../plugins/remark-extract-title";
 import type { FernSerializeMdxOptions } from "../types";
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;
 
-function withDefaultMdxOptions({
-  options = {},
-  replaceSrc,
-}: FernSerializeMdxOptions = {}): SerializeOptions["mdxOptions"] {
+function withDefaultMdxOptions(
+  { options = {}, replaceSrc }: FernSerializeMdxOptions = {},
+  frontmatter: FernDocs.Frontmatter
+): SerializeOptions["mdxOptions"] {
   const remarkRehypeOptions = {
     ...options.remarkRehypeOptions,
     handlers: {
@@ -41,6 +43,7 @@ function withDefaultMdxOptions({
   };
 
   const remarkPlugins: PluggableList = [
+    [remarkExtractTitle, { frontmatter }],
     remarkSqueezeParagraphs,
     remarkSanitizeAcorn,
     remarkGfm,
@@ -117,13 +120,16 @@ export async function serializeMdx(
   content = sanitizeMdxExpression(content)[0];
 
   try {
+    const { data: frontmatter, content: contentWithoutFrontmatter } =
+      getFrontmatter(content);
+
     const result = await serialize<
       Record<string, unknown>,
       FernDocs.Frontmatter
-    >(content, {
+    >(contentWithoutFrontmatter, {
       scope: options?.scope,
-      mdxOptions: withDefaultMdxOptions(options),
-      parseFrontmatter: true,
+      mdxOptions: withDefaultMdxOptions(options, frontmatter),
+      parseFrontmatter: false, // this is parsed above via getFrontmatter
     });
 
     // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
@@ -132,7 +138,7 @@ export async function serializeMdx(
     return {
       engine: "next-mdx-remote",
       code: result.compiledSource,
-      frontmatter: result.frontmatter,
+      frontmatter: frontmatter,
       scope: result.scope,
       jsxRefs: jsxElements,
     };

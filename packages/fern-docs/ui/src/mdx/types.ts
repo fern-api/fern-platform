@@ -3,7 +3,6 @@ import type { Options } from "@mdx-js/esbuild";
 import { RehypeFilesOptions } from "./plugins/rehype-files";
 
 export type FernSerializeMdxOptions = {
-  parseFrontmatter?: boolean; // default: true
   filename?: string;
   showError?: boolean;
   options?: Options;

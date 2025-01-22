@@ -1,9 +1,11 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
+import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { getFrontmatter } from "@fern-docs/mdx";
 import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { EdgeFlags } from "@fern-docs/utils";
-import { LogoImageData } from "../../../ui/src/atoms/types";
+import { ImageData } from "../../../ui/src/atoms/types";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 
@@ -14,7 +16,7 @@ interface WithResolvedDocsContentOpts {
   definition: DocsV1Read.DocsDefinition;
   edgeFlags: EdgeFlags;
   scope?: Record<string, unknown>;
-  replaceSrc?: (src: string) => LogoImageData | undefined;
+  replaceSrc?: (src: string) => ImageData | undefined;
 }
 
 export async function withResolvedDocsContent({
@@ -78,4 +80,38 @@ export async function withResolvedDocsContent({
     domain,
     engine: "mdx-bundler",
   });
+}
+
+export function extractFrontmatterFromDocsContent(
+  nodeId: FernNavigation.NodeId,
+  docsContent: DocsContent | undefined
+): FernDocs.Frontmatter | undefined {
+  if (docsContent == null) {
+    return undefined;
+  }
+  switch (docsContent.type) {
+    case "markdown-page":
+      return getFrontmatterFromMarkdownText(docsContent.content);
+    case "changelog-entry":
+      return getFrontmatterFromMarkdownText(docsContent.page);
+    case "api-reference-page": {
+      const mdx = docsContent.mdxs[nodeId];
+      if (mdx == null) {
+        return undefined;
+      }
+      return getFrontmatterFromMarkdownText(mdx.content);
+    }
+    default:
+      // TODO: handle changelog overview page and other pages
+      return undefined;
+  }
+}
+
+function getFrontmatterFromMarkdownText(
+  markdownText: FernDocs.MarkdownText
+): FernDocs.Frontmatter | undefined {
+  if (typeof markdownText === "string") {
+    return getFrontmatter(markdownText).data;
+  }
+  return markdownText.frontmatter;
 }

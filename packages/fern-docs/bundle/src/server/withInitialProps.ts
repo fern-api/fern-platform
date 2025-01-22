@@ -7,35 +7,42 @@ import {
   getEdgeFlags,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
+import { withSeo } from "@fern-docs/seo";
 import {
-  DocsPage,
-  NavbarLink,
+  type DocsPage,
+  type ImageData,
+  type NavbarLink,
   getApiRouteSupplier,
   getGitHubInfo,
   getGitHubRepo,
-  getSeoProps,
   renderThemeStylesheet,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
-import { addLeadingSlash, getRedirectForPath } from "@fern-docs/utils";
+import {
+  addLeadingSlash,
+  getRedirectForPath,
+  isTrailingSlashEnabled,
+} from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import urlJoin from "url-join";
-import { LogoImageData } from "../../../ui/src/atoms";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import { withLaunchDarkly } from "./ld-adapter";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
-import { isTrailingSlashEnabled } from "./trailingSlash";
+import { withLogo } from "./withLogo";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
 } from "./withPrunedNavigation";
-import { withResolvedDocsContent } from "./withResolvedDocsContent";
+import {
+  extractFrontmatterFromDocsContent,
+  withResolvedDocsContent,
+} from "./withResolvedDocsContent";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -194,12 +201,6 @@ export async function withInitialProps({
           : undefined,
   };
 
-  const logoHref =
-    docs.definition.config.logoHref ??
-    (found.landingPage?.slug != null && !found.landingPage.hidden
-      ? encodeURI(addLeadingSlash(found.landingPage.slug))
-      : undefined);
-
   const navbarLinks: NavbarLink[] = [];
 
   docs.definition.config.navbarLinks?.forEach((link) => {
@@ -297,7 +298,11 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
-  function resolveFileSrc(src: string): LogoImageData | undefined {
+  function resolveFileSrc(src: string | undefined): ImageData | undefined {
+    if (src == null) {
+      return undefined;
+    }
+
     const fileId = FernNavigation.FileId(
       src.startsWith("file:") ? src.slice(5) : src
     );
@@ -338,6 +343,7 @@ export async function withInitialProps({
     },
     replaceSrc: resolveFileSrc,
   });
+  const frontmatter = extractFrontmatterFromDocsContent(found.node.id, content);
 
   if (content == null) {
     return { notFound: true };
@@ -379,19 +385,6 @@ export async function withInitialProps({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
-  const lightLogoFileId =
-    docs.definition.config.colorsV3?.type === "light"
-      ? docs.definition.config.colorsV3.logo
-      : docs.definition.config.colorsV3?.type === "darkAndLight"
-        ? docs.definition.config.colorsV3.light.logo
-        : undefined;
-  const darkLogoFileId =
-    docs.definition.config.colorsV3?.type === "dark"
-      ? docs.definition.config.colorsV3.logo
-      : docs.definition.config.colorsV3?.type === "darkAndLight"
-        ? docs.definition.config.colorsV3.dark.logo
-        : undefined;
-
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
@@ -400,15 +393,7 @@ export async function withInitialProps({
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    // logoHeight: docs.definition.config.logoHeight,
-    // logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
-    logo: {
-      height: docs.definition.config.logoHeight,
-      href: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
-      light:
-        lightLogoFileId != null ? resolveFileSrc(lightLogoFileId) : undefined,
-      dark: darkLogoFileId != null ? resolveFileSrc(darkLogoFileId) : undefined,
-    },
+    logo: withLogo(docs.definition, found, resolveFileSrc),
     content,
     announcement:
       docs.definition.config.announcement != null
@@ -427,15 +412,14 @@ export async function withInitialProps({
     },
     edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FernNavigation.ApiDefinitionId),
-    seo: getSeoProps(
+    seo: withSeo(
       docs.baseUrl.domain,
       docs.definition.config,
-      docs.definition.pages,
+      frontmatter,
       docs.definition.filesV2,
       docs.definition.apis,
       found,
-      await getSeoDisabled(domain),
-      isTrailingSlashEnabled()
+      await getSeoDisabled(domain)
     ),
     user: authState.authed ? authState.user : undefined,
     fallback: {},

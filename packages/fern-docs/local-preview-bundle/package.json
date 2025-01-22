@@ -36,6 +36,8 @@
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/components": "workspace:*",
+    "@fern-docs/mdx": "workspace:*",
+    "@fern-docs/seo": "workspace:*",
     "@fern-docs/syntax-highlighter": "workspace:*",
     "@fern-docs/ui": "workspace:*",
     "@fern-docs/utils": "workspace:*",

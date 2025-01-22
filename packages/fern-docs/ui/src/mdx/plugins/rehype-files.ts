@@ -5,10 +5,10 @@ import {
   visit,
 } from "@fern-docs/mdx";
 import type { Root } from "hast";
-import type { LogoImageData } from "../../atoms/types";
+import type { ImageData } from "../../atoms/types";
 
 export interface RehypeFilesOptions {
-  replaceSrc?(src: string): LogoImageData | undefined;
+  replaceSrc?(src: string): ImageData | undefined;
 }
 
 /**

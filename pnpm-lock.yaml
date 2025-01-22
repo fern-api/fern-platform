@@ -735,6 +735,9 @@ importers:
       '@fern-docs/search-utils':
         specifier: workspace:*
         version: link:../search-utils
+      '@fern-docs/seo':
+        specifier: workspace:*
+        version: link:../seo
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
@@ -1336,6 +1339,12 @@ importers:
       '@fern-docs/components':
         specifier: workspace:*
         version: link:../components
+      '@fern-docs/mdx':
+        specifier: workspace:*
+        version: link:../mdx
+      '@fern-docs/seo':
+        specifier: workspace:*
+        version: link:../seo
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
@@ -1567,46 +1576,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
-      depcheck:
-        specifier: ^1.4.3
-        version: 1.4.7
-      eslint:
-        specifier: 9.17.0
-        version: 9.17.0(jiti@1.21.7)
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.7.2)
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-
-  packages/fern-docs/next-seo:
-    dependencies:
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
-      next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-    devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.19.33
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
       depcheck:
         specifier: ^1.4.3
         version: 1.4.7
@@ -1965,6 +1934,58 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
 
+  packages/fern-docs/seo:
+    dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: workspace:*
+        version: link:../../fdr-sdk
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
+      '@fern-docs/mdx':
+        specifier: workspace:*
+        version: link:../mdx
+      '@fern-docs/utils':
+        specifier: workspace:*
+        version: link:../utils
+      next:
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+    devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@fern-platform/fdr-utils':
+        specifier: workspace:*
+        version: link:../../commons/fdr-utils
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      '@types/react':
+        specifier: ^18
+        version: 18.3.3
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      eslint:
+        specifier: 9.17.0
+        version: 9.17.0(jiti@1.21.7)
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      stylelint:
+        specifier: ^16.1.0
+        version: 16.5.0(typescript@5.7.2)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
+
   packages/fern-docs/syntax-highlighter:
     dependencies:
       '@fern-docs/components':
@@ -2034,15 +2055,15 @@ importers:
       '@fern-docs/mdx':
         specifier: workspace:*
         version: link:../mdx
-      '@fern-docs/next-seo':
-        specifier: workspace:*
-        version: link:../next-seo
       '@fern-docs/search-ui':
         specifier: workspace:*
         version: link:../search-ui
       '@fern-docs/search-utils':
         specifier: workspace:*
         version: link:../search-utils
+      '@fern-docs/seo':
+        specifier: workspace:*
+        version: link:../seo
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
@@ -2323,6 +2344,9 @@ importers:
       '@types/jsonpath':
         specifier: ^0.2.4
         version: 0.2.4
+      '@types/mdast':
+        specifier: ^4.0.4
+        version: 4.0.4
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
@@ -20678,7 +20702,7 @@ snapshots:
 
   '@internationalized/date@3.5.4':
     dependencies:
-      '@swc/helpers': 0.5.5
+      '@swc/helpers': 0.5.15
 
   '@ioredis/commands@1.2.0': {}
 
@@ -30568,7 +30592,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 18.19.33
+      '@types/node': 20.12.12
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

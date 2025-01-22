@@ -1,3 +1,4 @@
+import { FernDocs } from "@fern-api/fdr-sdk";
 import {
   ApiDefinition,
   CodeSnippet,
@@ -14,11 +15,14 @@ import {
 } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { getFrontmatter } from "@fern-docs/mdx";
+import { withSeo } from "@fern-docs/seo";
 import {
+  DocsContent,
   DocsPage,
   getGitHubInfo,
   getGitHubRepo,
-  getSeoProps,
+  ImageData,
   NavbarLink,
   renderThemeStylesheet,
   resolveDocsContent,
@@ -34,7 +38,6 @@ import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import urljoin from "url-join";
-import { LogoImageData } from "../../../ui/src/atoms/types";
 
 export async function getDocsPageProps(
   docs: DocsV2Read.LoadDocsForUrlResponse,
@@ -86,7 +89,7 @@ export async function getDocsPageProps(
   // TODO: get feature flags from the API
   const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
-  function resolveFileSrc(src: string): LogoImageData | undefined {
+  function resolveFileSrc(src: string): ImageData | undefined {
     const fileId = FernNavigation.FileId(
       src.startsWith("file:") ? src.slice(5) : src
     );
@@ -150,6 +153,8 @@ export async function getDocsPageProps(
     serializeMdx,
     engine: "next-mdx-remote",
   });
+
+  const frontmatter = extractFrontmatterFromDocsContent(node.node.id, content);
 
   if (content == null) {
     console.error(`Failed to resolve path for ${slug}`);
@@ -297,15 +302,14 @@ export async function getDocsPageProps(
     },
     edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FdrAPI.ApiDefinitionId),
-    seo: getSeoProps(
+    seo: withSeo(
       docs.baseUrl.domain,
       docs.definition.config,
-      docs.definition.pages,
+      frontmatter,
       docs.definition.filesV2,
       docs.definition.apis,
       node,
-      true,
-      false
+      true
     ),
     fallback: {},
     analytics: undefined,
@@ -416,3 +420,37 @@ const resolveExample = async (
 
   return { ...example, snippets };
 };
+
+export function extractFrontmatterFromDocsContent(
+  nodeId: FernNavigation.NodeId,
+  docsContent: DocsContent | undefined
+): FernDocs.Frontmatter | undefined {
+  if (docsContent == null) {
+    return undefined;
+  }
+  switch (docsContent.type) {
+    case "markdown-page":
+      return getFrontmatterFromMarkdownText(docsContent.content);
+    case "changelog-entry":
+      return getFrontmatterFromMarkdownText(docsContent.page);
+    case "api-reference-page": {
+      const mdx = docsContent.mdxs[nodeId];
+      if (mdx == null) {
+        return undefined;
+      }
+      return getFrontmatterFromMarkdownText(mdx.content);
+    }
+    default:
+      // TODO: handle changelog overview page and other pages
+      return undefined;
+  }
+}
+
+function getFrontmatterFromMarkdownText(
+  markdownText: FernDocs.MarkdownText
+): FernDocs.Frontmatter | undefined {
+  if (typeof markdownText === "string") {
+    return getFrontmatter(markdownText).data;
+  }
+  return markdownText.frontmatter;
+}

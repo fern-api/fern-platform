@@ -6,7 +6,7 @@ import type {
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { FernUser } from "@fern-docs/auth";
-import { NextSeoProps } from "@fern-docs/next-seo";
+import { NextSeoProps } from "@fern-docs/seo";
 import type { EdgeFlags } from "@fern-docs/utils";
 import {
   ColorsConfig,
@@ -96,7 +96,7 @@ export interface DocsProps {
   featureFlagsConfig: FeatureFlagsConfig | undefined;
 }
 
-export interface LogoImageData {
+export interface ImageData {
   src: string;
   height?: number;
   width?: number;
@@ -108,8 +108,8 @@ export interface LogoImageData {
 export interface LogoConfiguration {
   height: number | undefined;
   href: string | undefined;
-  light: LogoImageData | undefined;
-  dark: LogoImageData | undefined;
+  light: ImageData | undefined;
+  dark: ImageData | undefined;
 }
 
 export interface JsConfig {

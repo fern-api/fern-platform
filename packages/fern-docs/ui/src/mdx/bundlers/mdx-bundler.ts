@@ -27,6 +27,7 @@ import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
+import { remarkExtractTitle } from "../plugins/remark-extract-title";
 import type { FernSerializeMdxOptions } from "../types";
 
 /**
@@ -101,7 +102,7 @@ export async function serializeMdx(
         },
       },
 
-      mdxOptions: (o: Options) => {
+      mdxOptions: (o: Options, frontmatter) => {
         o.remarkRehypeOptions = {
           ...o.remarkRehypeOptions,
           ...options,
@@ -115,6 +116,7 @@ export async function serializeMdx(
         o.providerImportSource = "@mdx-js/react";
 
         const remarkPlugins: PluggableList = [
+          [remarkExtractTitle, { frontmatter }],
           remarkSqueezeParagraphs,
           remarkSanitizeAcorn,
           remarkGfm,

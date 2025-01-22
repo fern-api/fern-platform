@@ -4,7 +4,7 @@ import { selectAtom } from "jotai/utils";
 import { DOCS_ATOM } from "./docs";
 import { EDGE_FLAGS_ATOM } from "./flags";
 import { BASEPATH_ATOM } from "./navigation";
-import { LogoImageData } from "./types";
+import { ImageData } from "./types";
 
 export const LOGO_TEXT_ATOM = atom<string | undefined>((get) =>
   get(EDGE_FLAGS_ATOM).isDocsLogoTextEnabled ? "docs" : undefined
@@ -15,8 +15,8 @@ const INTERNAL_LOGO_ATOM = selectAtom(DOCS_ATOM, (docs) => docs.logo, isEqual);
 interface LogoConfiguration {
   href: string;
   height: number;
-  light: LogoImageData | undefined;
-  dark: LogoImageData | undefined;
+  light: ImageData | undefined;
+  dark: ImageData | undefined;
 }
 
 export const LOGO_ATOM = atom<LogoConfiguration>((get) => {

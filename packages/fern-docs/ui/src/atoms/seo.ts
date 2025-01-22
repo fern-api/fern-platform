@@ -1,4 +1,4 @@
-import { NextSeoProps } from "@fern-docs/next-seo";
+import { NextSeoProps } from "@fern-docs/seo";
 import { atom } from "jotai";
 import { DOCS_ATOM } from "./docs";
 import { THEME_BG_COLOR } from "./theme";

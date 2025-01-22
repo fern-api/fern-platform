@@ -67,7 +67,7 @@ const nextConfig = {
     "@fern-docs/components",
     "@fern-docs/edge-config",
     "@fern-docs/mdx",
-    "@fern-docs/next-seo",
+    "@fern-docs/seo",
     "@fern-docs/search-server",
     "@fern-docs/search-ui",
     "@fern-docs/search-utils",
