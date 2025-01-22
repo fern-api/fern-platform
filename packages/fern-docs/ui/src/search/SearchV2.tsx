@@ -145,10 +145,12 @@ export function SearchV2(): ReactElement | false {
     </>
   );
 
-  const headers = withSkewProtection({
+  const headers: Record<string, string> = {
     "X-Fern-Host": domain,
-  });
-  headers;
+  };
+  if (process.env.NEXT_DEPLOYMENT_ID) {
+    headers["X-Deployment-Id"] = process.env.NEXT_DEPLOYMENT_ID;
+  }
 
   return (
     <SearchClientRoot
@@ -172,10 +174,7 @@ export function SearchV2(): ReactElement | false {
             askAI={askAi}
             setAskAI={setAskAi}
             api={chatEndpoint}
-            headers={{
-              "X-Fern-Host": domain,
-              "X-Deployment-Id": process.env.NEXT_DEPLOYMENT_ID ?? "",
-            }}
+            headers={headers}
             suggestionsApi={suggestEndpoint}
             initialInput={initialInput}
             setInitialInput={setInitialInput}
