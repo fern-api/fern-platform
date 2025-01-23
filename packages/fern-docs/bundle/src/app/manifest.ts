@@ -1,43 +1,29 @@
-import { loadWithUrl } from "@/server/loadWithUrl";
-import { getDocsDomainApp } from "@/server/xfernhost/app";
-import { DocsV1Read } from "@fern-api/fdr-sdk";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
+import { getDocsDomainApp, getHostApp } from "@/server/xfernhost/app";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { DocsLoader } from "@fern-docs/cache";
 import { addLeadingSlash } from "@fern-docs/utils";
 import type { MetadataRoute } from "next";
-import { notFound } from "next/navigation";
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   const domain = getDocsDomainApp();
+  const host = getHostApp() ?? domain;
 
-  const docs = await loadWithUrl(domain);
-
-  if (!docs.ok) {
-    notFound();
-  }
-
-  const favicon = selectFile(
-    docs.body.definition.filesV2,
-    docs.body.definition.config.favicon
-  );
+  const docsLoader: DocsLoader = DocsLoaderImpl.for(domain, host);
+  const docsConfig = await docsLoader.getDocsConfig();
+  const root = await docsLoader.root();
+  const favicon = docsConfig?.favicon
+    ? await docsLoader.getFile(docsConfig.favicon)
+    : undefined;
 
   return {
-    name: docs.body.definition.config.title ?? "Documentation",
-    start_url: addLeadingSlash(docs.body.baseUrl.basePath ?? ""),
+    name: docsConfig?.title ?? "Documentation",
+    start_url: addLeadingSlash(root?.slug ?? ""),
     display: "browser",
     icons: [
       favicon != null
-        ? { src: favicon, sizes: "any", type: "image/x-icon" }
+        ? { src: favicon.url, sizes: "any", type: "image/x-icon" }
         : undefined,
     ].filter(isNonNullish),
   };
-}
-
-function selectFile(
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
-  fileId: DocsV1Read.FileId | undefined
-) {
-  if (!fileId) {
-    return undefined;
-  }
-  return files[fileId]?.url;
 }

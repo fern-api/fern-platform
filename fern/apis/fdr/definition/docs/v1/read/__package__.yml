@@ -83,7 +83,7 @@ types:
   PageContent:
     properties:
       markdown: optional<string>
-      fileId: optional<rootCommons.FileId>
+      url: optional<rootCommons.Url>
       editThisPageUrl: optional<rootCommons.Url>
 
   DocsConfig:

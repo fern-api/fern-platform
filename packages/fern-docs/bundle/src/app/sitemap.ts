@@ -1,4 +1,4 @@
-import { DocsLoader } from "@/server/DocsLoader";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
 import { withPrunedNavigation } from "@/server/withPrunedNavigation";
 import { getDocsDomainApp, getHostApp } from "@/server/xfernhost/app";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
@@ -14,9 +14,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const host = getHostApp() ?? domain;
 
   // load the root node, and prune it— sitemap should only include public routes
-  const root = withPrunedNavigation(await DocsLoader.for(domain, host).root(), {
-    authed: false,
-  });
+  const root = withPrunedNavigation(
+    await DocsLoaderImpl.for(domain, host).root(),
+    {
+      authed: false,
+    }
+  );
 
   // collect all indexable page slugs
   const slugs = NodeCollector.collect(root).indexablePageSlugs;

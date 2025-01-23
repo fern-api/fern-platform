@@ -29,7 +29,7 @@ import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import urlJoin from "url-join";
-import { DocsLoader } from "./DocsLoader";
+import { DocsLoaderImpl } from "./DocsLoaderImpl";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
@@ -100,7 +100,7 @@ export async function withInitialProps({
   );
 
   // create loader (this will load all nodes)
-  const loader = DocsLoader.for(domain, host)
+  const loader = DocsLoaderImpl.for(domain, host)
     .withEdgeFlags(edgeFlags)
     .withAuth(authConfig, authState)
     .withLoadDocsForUrlResponse(docs);
@@ -327,7 +327,7 @@ export async function withInitialProps({
   }
 
   const content = await withResolvedDocsContent({
-    domain: docs.baseUrl.domain,
+    loader,
     found,
     authState,
     definition: docs.definition,

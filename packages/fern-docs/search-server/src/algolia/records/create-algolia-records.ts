@@ -17,7 +17,7 @@ interface CreateAlgoliaRecordsOptions {
   root: FernNavigation.RootNode;
   domain: string;
   org_id: string;
-  pages: Record<FernNavigation.PageId, string>;
+  pages: Record<FernNavigation.PageId, string | undefined>;
   apis: Record<ApiDefinition.ApiDefinitionId, ApiDefinition.ApiDefinition>;
   authed?: (node: NavigationNodePage) => boolean;
 }
@@ -44,10 +44,10 @@ export function createAlgoliaRecords({
   const pageNodes = Array.from(collector.slugMap.values())
     .filter(FernNavigation.isPage)
     // exclude hidden pages
-    .filter((node) => node.hidden !== true)
+    .filter((node) => !node.hidden)
     // exclude pages that are noindexed
     .filter((node) =>
-      FernNavigation.hasMarkdown(node) ? node.noindex !== true : true
+      FernNavigation.hasMarkdown(node) ? !node.noindex : true
     );
 
   const markdownNodes = pageNodes.filter(FernNavigation.hasMarkdown);

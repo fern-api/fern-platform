@@ -1,9 +1,10 @@
-import { DocsLoader } from "@/server/DocsLoader";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { NodeCollector } from "@fern-api/fdr-sdk/navigation";
 import { assertNever, withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { DocsLoader } from "@fern-docs/cache";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { Feed, Item } from "feed";
@@ -24,7 +25,7 @@ export async function handleChangelog(
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fernToken = cookies().get(COOKIE_FERN_TOKEN)?.value;
-  const loader = DocsLoader.for(domain, host, fernToken);
+  const loader = DocsLoaderImpl.for(domain, host, fernToken);
 
   const root = await loader.root();
 
@@ -50,21 +51,20 @@ export async function handleChangelog(
     generator: "buildwithfern.com",
   });
 
-  const pages = await loader.pages();
-  const files = await loader.files();
-
-  node.children.forEach((year) => {
-    year.children.forEach((month) => {
-      month.children.forEach((entry) => {
-        try {
-          feed.addItem(toFeedItem(entry, domain, pages, files));
-        } catch (e) {
-          console.error(e);
-          // TODO: sentry
-        }
+  await Promise.all(
+    node.children.flatMap((year) => {
+      year.children.flatMap((month) => {
+        month.children.flatMap(async (entry) => {
+          try {
+            feed.addItem(await toFeedItem(entry, loader));
+          } catch (e) {
+            console.error(e);
+            // TODO: sentry
+          }
+        });
       });
-    });
-  });
+    })
+  );
 
   if (format === "json") {
     return new NextResponse(feed.json1(), {
@@ -81,19 +81,19 @@ export async function handleChangelog(
   }
 }
 
-function toFeedItem(
+async function toFeedItem(
   entry: FernNavigation.ChangelogEntryNode,
-  domain: string,
-  pages: Record<DocsV1Read.PageId, DocsV1Read.PageContent>,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
-): Item {
+  loader: DocsLoader
+): Promise<Item> {
   const item: Item = {
     title: entry.title,
-    link: urlJoin(withDefaultProtocol(domain), entry.slug),
+    link: urlJoin(withDefaultProtocol(loader.domain), entry.slug),
     date: new Date(entry.date),
   };
 
-  const markdown = pages[entry.pageId]?.markdown;
+  const markdown = await loader
+    .getPage(entry.pageId)
+    .then((page) => page?.markdown);
   if (markdown != null) {
     const { data: frontmatter, content } = getFrontmatter(markdown);
     item.description =
@@ -109,7 +109,7 @@ function toFeedItem(
       if (frontmatter.image != null && typeof frontmatter.image === "string") {
         image = frontmatter.image;
       } else if (frontmatter["og:image"] != null) {
-        image = toUrl(frontmatter["og:image"], files);
+        image = await toUrl(frontmatter["og:image"], loader);
       }
 
       if (image != null) {
@@ -124,17 +124,17 @@ function toFeedItem(
   return item;
 }
 
-function toUrl(
+async function toUrl(
   idOrUrl: DocsV1Read.FileIdOrUrl | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
-): string | undefined {
+  loader: DocsLoader
+): Promise<string | undefined> {
   if (idOrUrl == null) {
     return undefined;
   }
   if (idOrUrl.type === "url") {
     return idOrUrl.value;
   } else if (idOrUrl.type === "fileId") {
-    return files[idOrUrl.value]?.url;
+    return loader.getFile(idOrUrl.value).then((file) => file?.url);
   } else {
     assertNever(idOrUrl);
   }

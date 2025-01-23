@@ -1,4 +1,5 @@
 import { NavigationNodePage } from "@fern-api/fdr-sdk/navigation";
+import { DocsLoader } from "@fern-docs/cache";
 import { algoliasearch } from "algoliasearch";
 import { assert } from "ts-essentials";
 import { loadDocsWithUrl } from "../../fdr/load-docs-with-url";
@@ -18,36 +19,19 @@ interface AlgoliaIndexerPayload {
   writeApiKey: string;
 
   /**
-   * The FDR environment to use. (either `https://registry-dev2.buildwithfern.com` or `https://registry.buildwithfern.com`)
-   */
-  environment: string;
-
-  /**
-   * The shared secret token use to authenticate with FDR.
-   */
-  fernToken: string;
-
-  /**
-   * The domain to load docs for.
-   */
-  domain: string;
-
-  /**
    * The Algolia index name to use.
    */
   indexName: string;
 
   /**
+   * The docs loader.
+   */
+  loader: DocsLoader;
+
+  /**
    * Whether the page is authed or not.
    */
   authed?: (node: NavigationNodePage) => boolean;
-
-  // feature flags for v1 -> v2 migration
-  isBatchStreamToggleDisabled?: boolean;
-  isApiScrollingDisabled?: boolean;
-  useJavaScriptAsTypeScript?: boolean;
-  alwaysEnableJavaScriptFetch?: boolean;
-  usesApplicationJsonInFormDataValue?: boolean;
 }
 
 export interface AlgoliaIndexerTaskResponse {
@@ -70,7 +54,9 @@ export async function algoliaIndexerTask(
   const algolia = algoliasearch(payload.appId, payload.writeApiKey);
 
   // load the docs
-  const { org_id, root, pages, apis, domain } = await loadDocsWithUrl(payload);
+  const { org_id, root, pages, apis, domain } = await loadDocsWithUrl(
+    payload.loader
+  );
 
   // create new records (this is the target state of the index)
   const { records: targetRecords, tooLarge } = createAlgoliaRecords({

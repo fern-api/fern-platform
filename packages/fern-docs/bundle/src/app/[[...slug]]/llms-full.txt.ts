@@ -1,11 +1,10 @@
-import { DocsLoader } from "@/server/DocsLoader";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { uniqBy } from "es-toolkit/array";
 import { cookies } from "next/headers";
@@ -20,10 +19,7 @@ export async function handleLLMSFullTxt(
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
-  const edgeFlags = await getEdgeFlags(domain);
-  const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
-    edgeFlags
-  );
+  const loader = DocsLoaderImpl.for(domain, host, fern_token);
 
   const root = getSectionRoot(await loader.root(), path);
 
@@ -53,7 +49,7 @@ export async function handleLLMSFullTxt(
         nodes,
         (a) => FernNavigation.getPageId(a) ?? a.canonicalSlug ?? a.slug
       ).map(async (node) => {
-        const markdown = await getMarkdownForPath(node, loader, edgeFlags);
+        const markdown = await getMarkdownForPath(node, loader);
         if (markdown == null) {
           return undefined;
         }

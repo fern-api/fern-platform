@@ -6,22 +6,23 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { EdgeFlags, removeLeadingSlash } from "@fern-docs/utils";
+import { DocsLoader } from "@fern-docs/cache";
+import { removeLeadingSlash } from "@fern-docs/utils";
 import { isString } from "es-toolkit/predicate";
-import { DocsLoader } from "./DocsLoader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";
 
 export async function getMarkdownForPath(
   node: FernNavigation.NavigationNodePage,
-  loader: DocsLoader,
-  edgeFlags: EdgeFlags
+  loader: DocsLoader
 ): Promise<{ content: string; contentType: "markdown" | "mdx" } | undefined> {
-  loader = loader.withEdgeFlags(edgeFlags);
-  const pages = await loader.pages();
+  const pages = await loader.getAllPages();
 
   if (FernNavigation.isApiLeaf(node)) {
-    const apiDefinition = await loader.getApiDefinition(node.apiDefinitionId);
+    const apiDefinition = await loader
+      .getApiDefinitionLoader(node.apiDefinitionId)
+      .then((loader) => loader?.load());
+
     if (apiDefinition == null) {
       return undefined;
     }
@@ -79,43 +80,6 @@ export function getPageNodeForPath(
   }
   return found.node;
 }
-
-// function getPageInfo(
-//     root: FernNavigation.RootNode | undefined,
-//     slug: FernNavigation.Slug,
-// ):
-//     | {
-//           nodeTitle: string;
-//           pageId?: FernNavigation.PageId;
-//           apiLeaf?: FernNavigation.NavigationNodeApiLeaf;
-//       }
-//     | undefined {
-//     if (root == null) {
-//         return undefined;
-//     }
-
-//     const foundNode = FernNavigation.utils.findNode(root, slug);
-//     if (foundNode == null || foundNode.type !== "found" || !FernNavigation.isPage(foundNode.node)) {
-//         return undefined;
-//     }
-
-//     if (FernNavigation.isApiLeaf(foundNode.node)) {
-//         return {
-//             nodeTitle: foundNode.node.title,
-//             apiLeaf: foundNode.node,
-//         };
-//     }
-
-//     const pageId = FernNavigation.getPageId(foundNode.node);
-//     if (pageId == null) {
-//         return undefined;
-//     }
-
-//     return {
-//         nodeTitle: foundNode.node.title,
-//         pageId,
-//     };
-// }
 
 export function endpointDefinitionToMarkdown(
   endpoint: EndpointDefinition,

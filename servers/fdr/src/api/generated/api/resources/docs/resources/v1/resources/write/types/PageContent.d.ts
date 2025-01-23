@@ -4,6 +4,6 @@
 import * as FernRegistry from "../../../../../../../index";
 export interface PageContent {
     markdown: string | undefined;
-    fileId: FernRegistry.FileId | undefined;
+    url: FernRegistry.Url | undefined;
     editThisPageUrl: FernRegistry.Url | undefined;
 }

@@ -1,4 +1,4 @@
-import { DocsLoader } from "@/server/DocsLoader";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
 import { getMarkdownForPath } from "@/server/getMarkdownForPath";
 import { getSectionRoot } from "@/server/getSectionRoot";
 import { getLlmTxtMetadata } from "@/server/llm-txt-md";
@@ -6,7 +6,7 @@ import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isNonNullish, withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEdgeFlags } from "@fern-docs/edge-config";
+import { DocsLoader } from "@fern-docs/cache";
 import { COOKIE_FERN_TOKEN, addLeadingSlash } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -40,13 +40,10 @@ export async function handleLLMSTxt(
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
-  const edgeFlags = await getEdgeFlags(domain);
-  const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
-    edgeFlags
-  );
+  const loader: DocsLoader = DocsLoaderImpl.for(domain, host, fern_token);
 
   const root = getSectionRoot(await loader.root(), path);
-  const pages = await loader.pages();
+  const pages = await loader.getAllPages();
 
   if (root == null) {
     return NextResponse.json(null, { status: 404 });
@@ -71,7 +68,7 @@ export async function handleLLMSTxt(
   const landingPage = getLandingPage(root);
   const markdown =
     landingPage != null
-      ? await getMarkdownForPath(landingPage, loader, edgeFlags)
+      ? await getMarkdownForPath(landingPage, loader)
       : undefined;
 
   // traverse the tree in a depth-first manner to collect all the nodes that have markdown content

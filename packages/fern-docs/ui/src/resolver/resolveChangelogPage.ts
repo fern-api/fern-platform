@@ -1,6 +1,6 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { DocsLoader } from "@fern-docs/cache";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "./DocsContent";
@@ -9,7 +9,7 @@ import { parseMarkdownPageToAnchorTag } from "./parseMarkdownPageToAnchorTag";
 interface ResolveChangelogPageOptions {
   node: FernNavigation.ChangelogNode;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  pages: Record<string, DocsV1Read.PageContent>;
+  loader: DocsLoader;
   serializeMdx: MDX_SERIALIZER;
   mdxOptions: FernSerializeMdxOptions | undefined;
 }
@@ -17,7 +17,7 @@ interface ResolveChangelogPageOptions {
 export async function resolveChangelogPage({
   node,
   breadcrumb,
-  pages,
+  loader,
   serializeMdx,
   mdxOptions,
 }: ResolveChangelogPageOptions): Promise<DocsContent.ChangelogPage> {
@@ -30,15 +30,10 @@ export async function resolveChangelogPage({
       }
     }
   });
-  const allPages = Object.fromEntries(
-    Object.entries(pages).map(([key, value]) => {
-      return [key, value.markdown];
-    })
-  );
   const pageRecords = (
     await Promise.all(
       [...pageIds].map(async (pageId) => {
-        const pageContent = pages[pageId];
+        const pageContent = await loader.getPage(pageId);
         if (pageContent == null) {
           return;
         }
@@ -47,7 +42,7 @@ export async function resolveChangelogPage({
           markdown: await serializeMdx(pageContent.markdown, {
             ...mdxOptions,
             filename: pageId,
-            files: { ...(mdxOptions?.files ?? {}), ...allPages },
+            files: mdxOptions?.files,
           }),
           anchorTag: parseMarkdownPageToAnchorTag(pageContent.markdown),
         };
@@ -57,7 +52,7 @@ export async function resolveChangelogPage({
 
   const markdown =
     node.overviewPageId != null
-      ? pages[node.overviewPageId]?.markdown
+      ? await loader.getPage(node.overviewPageId).then((page) => page?.markdown)
       : undefined;
 
   const page =

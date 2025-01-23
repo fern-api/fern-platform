@@ -1,10 +1,9 @@
-import { DocsLoader } from "@/server/DocsLoader";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
 import {
   getMarkdownForPath,
   getPageNodeForPath,
 } from "@/server/getMarkdownForPath";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
-import { getEdgeFlags } from "@fern-docs/edge-config";
 import { addLeadingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
@@ -23,10 +22,7 @@ export async function handleMarkdown(
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
-  const edgeFlags = await getEdgeFlags(domain);
-  const loader = DocsLoader.for(domain, host, fern_token).withEdgeFlags(
-    edgeFlags
-  );
+  const loader = DocsLoaderImpl.for(domain, host, fern_token);
 
   const node = getPageNodeForPath(await loader.root(), path);
   console.log(path, node);
@@ -39,7 +35,7 @@ export async function handleMarkdown(
     return new NextResponse(null, { status: 403 });
   }
 
-  const markdown = await getMarkdownForPath(node, loader, edgeFlags);
+  const markdown = await getMarkdownForPath(node, loader);
   if (markdown == null) {
     notFound();
   }

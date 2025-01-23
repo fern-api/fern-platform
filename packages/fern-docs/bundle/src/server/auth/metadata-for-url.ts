@@ -1,4 +1,4 @@
-import { DocsLoader } from "@fern-docs/cache";
+import { DocsLoaderImpl } from "../DocsLoaderImpl";
 
 export interface OrgMetadata {
   orgId: string;
@@ -6,16 +6,16 @@ export interface OrgMetadata {
 }
 
 export async function getOrgMetadataForDomain(
-  domain: string
+  domain: string,
+  host: string,
+  fernToken?: string
 ): Promise<OrgMetadata | undefined> {
   if (!domain || typeof domain !== "string") {
     return undefined;
   }
 
   try {
-    const docsLoader = DocsLoader.create(domain).withEnvironment(
-      process.env.NEXT_PUBLIC_FDR_ORIGIN
-    );
+    const docsLoader = DocsLoaderImpl.for(domain, host, fernToken);
     const metadata = await docsLoader.getMetadata();
     return metadata ?? undefined;
   } catch (_) {

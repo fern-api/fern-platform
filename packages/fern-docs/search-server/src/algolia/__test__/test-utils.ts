@@ -44,6 +44,9 @@ export function readFixtureToRootNode(
     ),
     ...fixture.definition.apisV2,
   };
-  const pages = mapValues(fixture.definition.pages, (page) => page.markdown);
+  const pages = mapValues(
+    fixture.definition.pages,
+    (page) => page.markdown ?? ""
+  );
   return { root, apis, pages };
 }

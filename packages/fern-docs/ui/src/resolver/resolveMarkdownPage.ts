@@ -2,7 +2,7 @@ import { type ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { ApiDefinitionLoader, type MarkdownLoader } from "@fern-docs/cache";
+import { type MarkdownLoader } from "@fern-docs/cache";
 import { getFrontmatter, makeToc, toTree } from "@fern-docs/mdx";
 import type { DocsContent } from "./DocsContent";
 
@@ -10,7 +10,9 @@ interface ResolveMarkdownPageOptions {
   version: FernNavigation.VersionNode | FernNavigation.RootNode;
   node: FernNavigation.NavigationNodeWithMarkdown;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  apiLoaders: Record<FernNavigation.ApiDefinitionId, ApiDefinitionLoader>;
+  getApiDefinition: (
+    id: FernNavigation.ApiDefinitionId
+  ) => Promise<ApiDefinition | undefined>;
   neighbors: DocsContent.Neighbors;
   markdownLoader: MarkdownLoader;
 }
@@ -31,7 +33,7 @@ export async function resolveMarkdownPage({
   node,
   version,
   breadcrumb,
-  apiLoaders,
+  getApiDefinition,
   neighbors,
   markdownLoader,
 }: ResolveMarkdownPageOptions): Promise<DocsContent.MarkdownPage | undefined> {
@@ -80,12 +82,7 @@ export async function resolveMarkdownPage({
           ): Promise<
             [id: FernNavigation.ApiDefinitionId, ApiDefinition] | undefined
           > => {
-            const loader = apiLoaders[id];
-            if (loader == null) {
-              console.error("API definition not found", id);
-              return;
-            }
-            const apiDefinition = await loader.load();
+            const apiDefinition = await getApiDefinition(id);
 
             if (apiDefinition == null) {
               console.error(`Failed to load API definition for ${id}`);
@@ -122,7 +119,7 @@ export async function resolveMarkdownPageWithoutApiRefs({
   | Omit<DocsContent.MarkdownPage, "type" | "apis" | "endpointIdsToSlugs">
   | undefined
 > {
-  const rawMarkdown = markdownLoader.getRawMarkdown(node);
+  const rawMarkdown = await markdownLoader.getRawMarkdown(node);
 
   if (!rawMarkdown) {
     console.error(`Failed to load markdown for ${node.slug}`);
@@ -152,7 +149,7 @@ export async function resolveMarkdownPageWithoutApiRefs({
   }
 
   if (frontmatter["edit-this-page-url"] == null) {
-    frontmatter["edit-this-page-url"] = markdownLoader.getEditThisPageUrl(node);
+    frontmatter["edit-this-page-url"] = await markdownLoader.getSourceUrl(node);
   }
 
   const titleRaw = frontmatter?.title ?? node.title;

@@ -1,18 +1,5 @@
 import { FernDocs } from "@fern-api/fdr-sdk";
-import {
-  ApiDefinition,
-  CodeSnippet,
-  convertToCurl,
-  EndpointDefinition,
-  ExampleEndpointCall,
-  toSnippetHttpRequest,
-  Transformer,
-} from "@fern-api/fdr-sdk/api-definition";
-import {
-  APIV1Read,
-  FdrAPI,
-  type DocsV2Read,
-} from "@fern-api/fdr-sdk/client/types";
+import { FdrAPI, type DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
@@ -44,11 +31,7 @@ export async function getDocsPageProps(
   docs: DocsV2Read.LoadDocsForUrlResponse,
   slugArray: string[]
 ): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
-  // HACKHACK: temporarily disable endpoint pairs for cohere in local preview
-  const root = FernNavigation.utils.toRootNode(
-    docs,
-    docs.baseUrl.domain.includes("cohere")
-  );
+  const root = FernNavigation.utils.toRootNode(docs);
   const slug = FernNavigation.slugjoin(...slugArray);
 
   // compute manual redirects
@@ -119,7 +102,7 @@ export async function getDocsPageProps(
   }
 
   const content = await resolveDocsContent({
-    domain: docs.baseUrl.domain,
+    loader: undefined,
     node: node.node,
     version: node.currentVersion ?? root,
     apiReference: node.apiReference,
@@ -127,20 +110,6 @@ export async function getDocsPageProps(
     breadcrumb: node.breadcrumb,
     prev: node.prev,
     next: node.next,
-    apis: docs.definition.apis,
-    apisV2:
-      docs.definition.apisV2 != null
-        ? Object.fromEntries(
-            await Promise.all(
-              Object.values(docs.definition.apisV2).map(async (api) => {
-                const resolved = await resolveHttpCodeSnippets(api);
-                return [api.id, resolved] as const;
-              })
-            )
-          )
-        : {},
-    pages: docs.definition.pages,
-    edgeFlags,
     mdxOptions: {
       files: docs.definition.jsFiles,
       scope: {
@@ -331,82 +300,6 @@ export async function getDocsPageProps(
 
   return { props };
 }
-
-// TODO: actually need to add http examples here
-const resolveHttpCodeSnippets = async (
-  apiDefinition: ApiDefinition
-): Promise<ApiDefinition> => {
-  // Collect all endpoints first, so that we can resolve descriptions in a single batch
-  const collected: EndpointDefinition[] = [];
-  Transformer.with({
-    EndpointDefinition: (endpoint) => {
-      collected.push(endpoint);
-      return endpoint;
-    },
-  }).apiDefinition(apiDefinition);
-
-  // Resolve example code snippets in parallel
-  const result = Object.fromEntries(
-    await Promise.all(
-      collected.map(async (endpoint) => {
-        if (endpoint.examples == null || endpoint.examples.length === 0) {
-          return [endpoint.id, endpoint] as const;
-        }
-
-        const examples = await Promise.all(
-          endpoint.examples.map((example) =>
-            resolveExample(apiDefinition, endpoint, example)
-          )
-        );
-
-        return [endpoint.id, { ...endpoint, examples }] as const;
-      })
-    )
-  );
-
-  // reduce the api definition with newly resolved examples
-  return {
-    ...apiDefinition,
-    endpoints: { ...apiDefinition.endpoints, ...result },
-  };
-};
-
-const resolveExample = async (
-  apiDefinition: ApiDefinition,
-  endpoint: EndpointDefinition,
-  example: ExampleEndpointCall
-): Promise<ExampleEndpointCall> => {
-  const snippets = { ...example.snippets };
-
-  const pushSnippet = (snippet: CodeSnippet) => {
-    (snippets[snippet.language] ??= []).push(snippet);
-  };
-
-  // Check if curl snippet exists
-  if (!snippets[APIV1Read.SupportedLanguage.Curl]?.length) {
-    const endpointAuth = endpoint.auth?.[0];
-    const curlCode = convertToCurl(
-      toSnippetHttpRequest(
-        endpoint,
-        example,
-        endpointAuth != null ? apiDefinition.auths[endpointAuth] : undefined
-      ),
-      {
-        usesApplicationJsonInFormDataValue: false,
-      }
-    );
-    pushSnippet({
-      name: undefined,
-      language: APIV1Read.SupportedLanguage.Curl,
-      install: undefined,
-      code: curlCode,
-      generated: true,
-      description: undefined,
-    });
-  }
-
-  return { ...example, snippets };
-};
 
 export function extractFrontmatterFromDocsContent(
   nodeId: FernNavigation.NodeId,

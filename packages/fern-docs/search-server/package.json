@@ -58,6 +58,7 @@
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
+    "@fern-docs/cache": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
     "@fern-docs/utils": "workspace:*",
     "@langchain/textsplitters": "^0.1.0",

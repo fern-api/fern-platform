@@ -1,3 +1,4 @@
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { kv } from "@vercel/kv";
 const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
@@ -7,16 +8,16 @@ export interface DocsMetadata {
   isPreviewUrl: boolean;
 }
 
-export class DocsDomainKVCache {
-  private static instance: Map<string, DocsDomainKVCache> = new Map<
+export class DocsKVCache {
+  private static instance: Map<string, DocsKVCache> = new Map<
     string,
-    DocsDomainKVCache
+    DocsKVCache
   >();
-  public static getInstance(domain: string): DocsDomainKVCache {
-    const instance = DocsDomainKVCache.instance.get(domain);
+  public static getInstance(domain: string): DocsKVCache {
+    const instance = DocsKVCache.instance.get(domain);
     if (!instance) {
-      const newInstance = new DocsDomainKVCache(domain);
-      DocsDomainKVCache.instance.set(domain, newInstance);
+      const newInstance = new DocsKVCache(domain);
+      DocsKVCache.instance.set(domain, newInstance);
       return newInstance;
     } else {
       return instance;
@@ -47,5 +48,19 @@ export class DocsDomainKVCache {
     } catch (e) {
       console.error(`Could not set ${key} in cache`, e);
     }
+  }
+
+  public async addVisitedSlugs(...slug: FernNavigation.Slug[]): Promise<void> {
+    await kv.sadd(this.createKey("visited-slugs"), ...slug);
+  }
+
+  public async getVisitedSlugs(): Promise<FernNavigation.Slug[]> {
+    return kv.smembers(this.createKey("visited-slugs"));
+  }
+
+  public async removeVisitedSlugs(
+    ...slug: FernNavigation.Slug[]
+  ): Promise<void> {
+    await kv.srem(this.createKey("visited-slugs"), ...slug);
   }
 }

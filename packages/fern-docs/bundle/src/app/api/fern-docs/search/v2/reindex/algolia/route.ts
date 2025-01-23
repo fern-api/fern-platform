@@ -1,20 +1,15 @@
 import { track } from "@/server/analytics/posthog";
-import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import {
-  algoliaAppId,
-  algoliaWriteApiKey,
-  fdrEnvironment,
-  fernToken,
-} from "@/server/env-variables";
+import { DocsLoaderImpl } from "@/server/DocsLoaderImpl";
+import { algoliaAppId, algoliaWriteApiKey } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
-import { getDocsDomainEdge } from "@/server/xfernhost/edge";
-import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
+import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import {
   SEARCH_INDEX,
   algoliaIndexSettingsTask,
   algoliaIndexerTask,
 } from "@fern-docs/search-server/algolia";
-import { addLeadingSlash, withoutStaging } from "@fern-docs/utils";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const maxDuration = 900; // 15 minutes
@@ -22,9 +17,11 @@ export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
   const domain = getDocsDomainEdge(req);
+  const host = getHostEdge(req);
 
   try {
-    const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
+    const loader = DocsLoaderImpl.for(domain, host);
+    const orgMetadata = await loader.getMetadata();
     if (orgMetadata == null) {
       return NextResponse.json("Not found", { status: 404 });
     }
@@ -40,10 +37,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     const start = Date.now();
-    const [authEdgeConfig, edgeFlags] = await Promise.all([
-      getAuthEdgeConfig(domain),
-      getEdgeFlags(domain),
-    ]);
+    const authEdgeConfig = await getAuthEdgeConfig(domain);
 
     await algoliaIndexSettingsTask({
       appId: algoliaAppId(),
@@ -55,9 +49,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       appId: algoliaAppId(),
       writeApiKey: algoliaWriteApiKey(),
       indexName: SEARCH_INDEX,
-      environment: fdrEnvironment(),
-      fernToken: fernToken(),
-      domain: withoutStaging(domain),
+      loader,
       authed: (node) => {
         if (authEdgeConfig == null) {
           return false;
@@ -70,7 +62,6 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           ) === Gate.DENY
         );
       },
-      ...edgeFlags,
     });
 
     const end = Date.now();

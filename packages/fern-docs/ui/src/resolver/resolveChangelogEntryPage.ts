@@ -1,5 +1,5 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DocsLoader } from "@fern-docs/cache";
 import { getFrontmatter } from "@fern-docs/mdx";
 import type { MDX_SERIALIZER } from "../mdx/bundler";
 import type { FernSerializeMdxOptions } from "../mdx/types";
@@ -9,7 +9,7 @@ interface ResolveChangelogEntryPageOptions {
   node: FernNavigation.ChangelogEntryNode;
   parents: readonly FernNavigation.NavigationNodeParent[];
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  pages: Record<string, DocsV1Read.PageContent>;
+  loader: DocsLoader;
   serializeMdx: MDX_SERIALIZER;
   mdxOptions: FernSerializeMdxOptions | undefined;
   neighbors: DocsContent.Neighbors;
@@ -19,7 +19,7 @@ export async function resolveChangelogEntryPage({
   node,
   parents,
   breadcrumb,
-  pages,
+  loader,
   serializeMdx,
   mdxOptions,
   neighbors,
@@ -34,14 +34,18 @@ export async function resolveChangelogEntryPage({
   }
   const changelogMarkdown =
     changelogNode.overviewPageId != null
-      ? pages[changelogNode.overviewPageId]?.markdown
+      ? await loader
+          .getPage(changelogNode.overviewPageId)
+          .then((page) => page?.markdown)
       : undefined;
   const changelogTitle =
     (changelogMarkdown != null
       ? getFrontmatter(changelogMarkdown).data.title
       : undefined) ?? changelogNode.title;
 
-  const markdown = pages[node.pageId]?.markdown;
+  const markdown = await loader
+    .getPage(node.pageId)
+    .then((page) => page?.markdown);
   if (markdown == null) {
     // TODO: sentry
 

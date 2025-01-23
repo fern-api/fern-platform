@@ -1,6 +1,7 @@
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DocsLoader } from "@fern-docs/cache";
 import { getFrontmatter } from "@fern-docs/mdx";
 import {
   resolveDocsContent,
@@ -13,7 +14,7 @@ import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 
 interface WithResolvedDocsContentOpts {
-  domain: string;
+  loader: DocsLoader;
   found: FernNavigation.utils.Node.Found;
   authState: AuthState;
   definition: DocsV1Read.DocsDefinition;
@@ -23,7 +24,7 @@ interface WithResolvedDocsContentOpts {
 }
 
 export async function withResolvedDocsContent({
-  domain,
+  loader,
   found,
   authState,
   definition,
@@ -47,6 +48,7 @@ export async function withResolvedDocsContent({
   });
 
   return resolveDocsContent({
+    loader,
     node,
     apiReference,
 
@@ -68,10 +70,6 @@ export async function withResolvedDocsContent({
         ? undefined
         : found.next,
 
-    apis: definition.apis,
-    apisV2: definition.apisV2,
-    pages: definition.pages,
-    edgeFlags,
     mdxOptions: {
       files: definition.jsFiles,
       scope,
@@ -79,8 +77,8 @@ export async function withResolvedDocsContent({
       // inject the file url and dimensions for images and other embeddable files
       replaceSrc,
     },
+
     serializeMdx,
-    domain,
     engine: "mdx-bundler",
   });
 }

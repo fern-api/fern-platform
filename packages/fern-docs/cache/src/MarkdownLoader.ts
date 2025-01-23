@@ -1,25 +1,25 @@
-import type { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { DocsLoader } from "./DocsLoader";
 import { MarkdownKVCache } from "./MarkdownKVCache";
 
 export class MarkdownLoader {
-  public static create(domain: string): MarkdownLoader {
-    return new MarkdownLoader(domain);
+  public static create(loader: DocsLoader): MarkdownLoader {
+    return new MarkdownLoader(loader);
   }
 
   private cache: MarkdownKVCache;
-  private constructor(domain: string) {
-    this.cache = MarkdownKVCache.getInstance(domain);
+  private constructor(private loader: DocsLoader) {
+    this.cache = MarkdownKVCache.getInstance(loader.domain);
   }
 
-  private pages: Record<FernNavigation.PageId, DocsV1Read.PageContent> = {};
-  public withPages(
-    pages: Record<FernNavigation.PageId, DocsV1Read.PageContent>
-  ): this {
-    this.pages = { ...this.pages, ...pages };
-    return this;
-  }
+  // private pages: Record<FernNavigation.PageId, DocsV1Read.PageContent> = {};
+  // public withPages(
+  //   pages: Record<FernNavigation.PageId, DocsV1Read.PageContent>
+  // ): this {
+  //   this.pages = { ...this.pages, ...pages };
+  //   return this;
+  // }
 
   // this is the docs instance id
   private instanceId: string | undefined;
@@ -68,31 +68,31 @@ export class MarkdownLoader {
     return serialized;
   }
 
-  public getEditThisPageUrl(
+  public async getSourceUrl(
     node: FernNavigation.NavigationNodeWithMarkdown
-  ): FernNavigation.Url | undefined {
+  ): Promise<string | undefined> {
     const pageId = FernNavigation.getPageId(node);
     if (!pageId) {
       return;
     }
 
-    const page = this.pages[pageId];
+    const page = await this.loader.getPage(pageId);
     if (!page) {
       return;
     }
 
-    return page.editThisPageUrl;
+    return page.sourceUrl;
   }
 
-  public getRawMarkdown(
+  public async getRawMarkdown(
     node: FernNavigation.NavigationNodeWithMarkdown
-  ): { pageId: FernNavigation.PageId; markdown: string } | undefined {
+  ): Promise<{ pageId: FernNavigation.PageId; markdown: string } | undefined> {
     const pageId = FernNavigation.getPageId(node);
     if (!pageId) {
       return;
     }
 
-    const page = this.pages[pageId];
+    const page = await this.loader.getPage(pageId);
     if (!page) {
       return;
     }
