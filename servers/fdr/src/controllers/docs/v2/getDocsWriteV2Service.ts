@@ -277,36 +277,6 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           indexSegments,
         });
 
-        const readDocsDefinition = convertDocsDefinitionToRead({
-          docsDbDefinition: dbDocsDefinition,
-          algoliaSearchIndex: undefined,
-          filesV2: {},
-          apis: mapValues(apiDefinitionsById, (def) =>
-            convertDbAPIDefinitionToRead(def)
-          ),
-          apisV2: mapValues(apiDefinitionsLatestById, (def) => def),
-          id: DocsV1Write.DocsConfigId(""),
-          search: getSearchInfoFromDocs({
-            algoliaIndex: undefined,
-            indexSegmentIds: [],
-            activeIndexSegments: [],
-            docsDbDefinition: dbDocsDefinition,
-            app,
-          }),
-        });
-
-        try {
-          await app.services.s3.writeDBDocsDefinition({
-            domain: docsRegistrationInfo.fernUrl.getFullUrl(),
-            readDocsDefinition,
-          });
-        } catch (e) {
-          app.logger.error(
-            `Error while trying to write DB docs definition for ${docsRegistrationInfo.fernUrl}`,
-            e
-          );
-        }
-
         /**
          * IMPORTANT NOTE:
          * vercel cache is not shared between custom domains, so we need to revalidate on EACH custom domain individually
@@ -315,6 +285,24 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           docsRegistrationInfo.fernUrl,
           ...docsRegistrationInfo.customUrls,
         ];
+
+        for (const url of urls) {
+          try {
+            const response = await app.docsDefinitionCache.getDocsForUrl({
+              url: url.toURL(),
+            });
+
+            await app.services.s3.writeLoadDocsForUrlResponse({
+              domain: url.hostname,
+              readDocsDefinition: response,
+            });
+          } catch (e) {
+            app.logger.error(
+              `Error while trying to write DB docs definition for ${url.getFullUrl()}`,
+              e
+            );
+          }
+        }
 
         try {
           await Promise.all(

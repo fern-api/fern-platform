@@ -38,9 +38,12 @@ export interface S3ApiDefinitionSourceFileInfo {
 }
 
 export interface S3Service {
-  writeDBDocsDefinition(arg0: {
+  writeLoadDocsForUrlResponse({
+    domain,
+    readDocsDefinition,
+  }: {
     domain: string;
-    readDocsDefinition: any;
+    readDocsDefinition: FernRegistry.docs.v2.read.LoadDocsForUrlResponse;
   }): Promise<PutObjectCommandOutput>;
   getPresignedDocsAssetsUploadUrls({
     domain,
@@ -132,6 +135,21 @@ export class S3ServiceImpl implements S3Service {
         secretAccessKey: config.awsSecretKey,
       },
     });
+  }
+
+  async writeLoadDocsForUrlResponse({
+    domain,
+    readDocsDefinition,
+  }: {
+    domain: string;
+    readDocsDefinition: FernRegistry.docs.v2.read.LoadDocsForUrlResponse;
+  }): Promise<PutObjectCommandOutput> {
+    const command = new PutObjectCommand({
+      Bucket: this.config.dbDocsDefinitionS3.bucketName,
+      Key: `${domain}.json`,
+      Body: JSON.stringify(readDocsDefinition),
+    });
+    return await this.dbDocsDefinitionS3.send(command);
   }
 
   async getPresignedDocsAssetsDownloadUrl({
@@ -320,21 +338,6 @@ export class S3ServiceImpl implements S3Service {
       }),
       key,
     };
-  }
-
-  async writeDBDocsDefinition({
-    domain,
-    readDocsDefinition,
-  }: {
-    domain: string;
-    readDocsDefinition: any;
-  }): Promise<PutObjectCommandOutput> {
-    const command = new PutObjectCommand({
-      Bucket: this.config.dbDocsDefinitionS3.bucketName,
-      Key: `${domain}.json`,
-      Body: JSON.stringify(readDocsDefinition),
-    });
-    return await this.dbDocsDefinitionS3.send(command);
   }
 
   constructS3DocsKey({
