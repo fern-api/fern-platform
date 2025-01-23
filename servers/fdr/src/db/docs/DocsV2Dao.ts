@@ -105,6 +105,12 @@ export interface DocsV2Dao {
     domainSuffix: string;
   }): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
 
+  listDocsUrlsUpdatedWithin(opts: {
+    days: number;
+    limit?: number;
+    page?: number;
+  }): Promise<DocsV2Read.ListAllDocsUrlsResponse>;
+
   transferDomainOwner({
     domain,
     toOrgId,
@@ -332,6 +338,53 @@ export class DocsV2DaoImpl implements DocsV2Dao {
         docsRegistrationInfo.fernUrl,
         ...docsRegistrationInfo.customUrls,
       ],
+    };
+  }
+
+  public async listDocsUrlsUpdatedWithin({
+    days,
+    limit = 1000,
+    page = 1,
+  }: {
+    days: number;
+    limit?: number;
+    page?: number;
+  }): Promise<DocsV2Read.ListAllDocsUrlsResponse> {
+    limit = Math.min(limit, 1000);
+    const cutoffDate = new Date();
+    cutoffDate.setDate(cutoffDate.getDate() - days);
+
+    const response = await this.prisma.docsV2.findMany({
+      select: {
+        orgID: true,
+        domain: true,
+        path: true,
+        updatedTime: true,
+      },
+      where: {
+        isPreview: false,
+        authType: "PUBLIC",
+        updatedTime: {
+          gte: cutoffDate,
+        },
+      },
+      distinct: "domain",
+      orderBy: {
+        updatedTime: "desc",
+      },
+      take: limit,
+      skip: Math.min(limit * (page - 1), 0),
+    });
+
+    return {
+      urls: response.map(
+        (r): DocsV2Read.DocsDomainItem => ({
+          domain: r.domain,
+          basePath: r.path.length > 1 ? r.path : undefined,
+          organizationId: FdrAPI.OrgId(r.orgID),
+          updatedAt: r.updatedTime.toISOString(),
+        })
+      ),
     };
   }
 

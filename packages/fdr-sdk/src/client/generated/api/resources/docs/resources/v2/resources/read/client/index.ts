@@ -6,3 +6,4 @@ export * as getPrivateDocsForUrl from "./getPrivateDocsForUrl";
 export * as listAllDocsUrls from "./listAllDocsUrls";
 export * as getDocsConfigById from "./getDocsConfigById";
 export * as getSearchApiKeyForIndexSegment from "./getSearchApiKeyForIndexSegment";
+export * as prepopulateFdrReadS3Bucket from "./prepopulateFdrReadS3Bucket";

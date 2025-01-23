@@ -466,6 +466,49 @@ export class Read {
         };
     }
 
+    /**
+     * Prepopulates the FDR read S3 bucket with docs definitions
+     *
+     * @param {Read.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.docs.v2.read.prepopulateFdrReadS3Bucket()
+     */
+    public async prepopulateFdrReadS3Bucket(
+        requestOptions?: Read.RequestOptions
+    ): Promise<core.APIResponse<void, FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error>> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.environment)) ?? environments.FernRegistryEnvironment.Prod,
+                "/v2/registry/docs/prepopulate-s3-bucket"
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                ok: true,
+                body: undefined,
+            };
+        }
+
+        return {
+            ok: false,
+            error: FernRegistry.docs.v2.read.prepopulateFdrReadS3Bucket.Error._unknown(_response.error),
+        };
+    }
+
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
