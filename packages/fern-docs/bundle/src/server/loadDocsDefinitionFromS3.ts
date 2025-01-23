@@ -1,6 +1,6 @@
 import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { docsDefinitionVersion } from "@fern-api/fdr-sdk/docs";
+import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 
 export async function loadDocsDefinitionFromS3({
   domain,
@@ -11,7 +11,7 @@ export async function loadDocsDefinitionFromS3({
 }): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> {
   try {
     const cleanDomain = domain.replace(/^https?:\/\//, "");
-    const dbDocsDefUrl = `${docsDefinitionUrl}/${cleanDomain}/${docsDefinitionVersion()}.json`;
+    const dbDocsDefUrl = `${docsDefinitionUrl}/${getS3KeyForV1DocsDefinition(cleanDomain)}`;
     const signedUrl = getSignedUrl({
       url: dbDocsDefUrl,
       privateKey: process.env.CLOUDFRONT_PRIVATE_KEY || "",
