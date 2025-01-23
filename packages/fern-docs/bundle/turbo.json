@@ -4,7 +4,7 @@
   "globalEnv": ["FERN_ENVIRONMENT", "APPLICATION_ENVIRONMENT"],
   "tasks": {
     "build": {
-      "env": ["CLOUDFRONT_PRIVATE_KEY", "CLOUDFRONT_KEY_GROUP_ID"]
+      "env": ["CLOUDFRONT_PRIVATE_KEY", "CLOUDFRONT_KEY_PAIR_ID"]
     },
     "docs:build": {
       "outputs": [".next/**", "!.next/cache/**"],
