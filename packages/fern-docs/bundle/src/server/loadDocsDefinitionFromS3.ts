@@ -19,10 +19,7 @@ export async function loadDocsDefinitionFromS3({
       keyPairId: process.env.CLOUDFRONT_KEY_GROUP_ID || "",
       dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toString(),
     });
-    console.log("signedUrl", signedUrl);
     const response = await fetch(dbDocsDefUrl);
-    console.log("response", response.ok);
-    console.log("response.status", response.status);
     if (response.ok) {
       const json = await response.json();
       return json as FdrAPI.docs.v2.read.LoadDocsForUrlResponse;
