@@ -1,7 +1,12 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
-  "globalEnv": ["FERN_ENVIRONMENT", "APPLICATION_ENVIRONMENT"],
+  "globalEnv": [
+    "FERN_ENVIRONMENT",
+    "APPLICATION_ENVIRONMENT",
+    "CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY",
+    "CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID"
+  ],
   "tasks": {
     "docs:build": {
       "outputs": [".next/**", "!.next/cache/**"],
