@@ -118,7 +118,7 @@ export class DocsLoader {
       .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
       .load();
   }
-  
+
   private async loadDocs(): Promise<
     DocsV2Read.LoadDocsForUrlResponse | undefined
   > {
