@@ -47,6 +47,7 @@ jobs:
       ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
       ALGOLIA_SEARCH_V2_DOMAINS: "workato,rohin-bhargava-staging,monite,humanloop,cohere,buildwithfern.com/learn"
       ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+      CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID: ${{ secrets.CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID }}
       APPLICATION_ENVIRONMENT: dev
     steps:
       - uses: actions/checkout@v4
