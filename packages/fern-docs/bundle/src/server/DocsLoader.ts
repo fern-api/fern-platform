@@ -131,11 +131,14 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        // const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.host}.json`;
-        const dbDocsDefUrl = `https://docs-definitions-dev2.buildwithfern.com/dubwub.docs.dev.buildwithfern.com.json`;
+        console.log("fetching docs definition:");
+        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.domain}.json`;
+        console.log("dbDocsDefUrl", dbDocsDefUrl);
+        console.log("this.host", this.host);
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {
           const json = await response.json();
+          console.log(json);
           return json as DocsV2Read.LoadDocsForUrlResponse;
         }
       } catch {
