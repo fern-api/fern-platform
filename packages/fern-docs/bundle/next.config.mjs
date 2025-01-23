@@ -192,6 +192,12 @@ const nextConfig = {
       config.externals = config.externals || [];
       config.externals.push("esbuild");
     }
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        crypto: require.resolve("crypto-browserify"),
+      };
+    }
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
