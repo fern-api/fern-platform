@@ -131,12 +131,8 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-<<<<<<< HEAD
         // const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.host}.json`;
         const dbDocsDefUrl = `https://docs-definitions-dev2.buildwithfern.com/dubwub.docs.dev.buildwithfern.com.json`;
-=======
-        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.host}.json`;
->>>>>>> main
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {
           const json = await response.json();
