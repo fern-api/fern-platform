@@ -36,6 +36,8 @@
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/components": "workspace:*",
+    "@fern-docs/mdx": "workspace:*",
+    "@fern-docs/seo": "workspace:*",
     "@fern-docs/syntax-highlighter": "workspace:*",
     "@fern-docs/ui": "workspace:*",
     "@fern-docs/utils": "workspace:*",
@@ -48,6 +50,7 @@
     "react": "^18",
     "react-dom": "^18",
     "styled-jsx": "^5.1.2",
+    "ts-essentials": "^10.0.1",
     "url-join": "5.0.0"
   },
   "devDependencies": {

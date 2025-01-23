@@ -1,14 +1,13 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { markdownToString } from "@fern-docs/mdx";
 import { DefinitionObjectFactory } from "@fern-platform/fdr-utils";
-import { extractHeadline, getSeoProps } from "../getSeoProp";
+import { withSeo } from "../with-seo";
 
 describe("getSeoProps", () => {
   it("seo disabled", () => {
-    const props = getSeoProps(
+    const props = withSeo(
       "host",
       DefinitionObjectFactory.createDocsDefinition().config,
-      {},
+      undefined,
       {},
       {},
       {
@@ -33,17 +32,9 @@ describe("getSeoProps", () => {
           slug: FernNavigation.Slug(""),
         } as FernNavigation.RootNode,
       },
-      true,
-      false
+      true
     );
     expect(props.noindex).toBe(true);
     expect(props.nofollow).toBe(true);
-  });
-
-  it("extracts SEO title properly", () => {
-    expect(markdownToString(extractHeadline("#"))).toBe("");
-    expect(markdownToString(extractHeadline("# goodcase"))).toBe("goodcase");
-    expect(markdownToString(extractHeadline("## h2"))).toBe(undefined);
-    expect(markdownToString(extractHeadline("##nospaceh2"))).toBe(undefined);
   });
 });

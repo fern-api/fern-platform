@@ -8,6 +8,7 @@ import type { AuthEdgeConfig } from "@fern-docs/auth";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
+import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithAuthState } from "./withRbac";
 
@@ -131,12 +132,10 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.domain}.json`;
-        const response = await fetch(dbDocsDefUrl);
-        if (response.ok) {
-          const json = await response.json();
-          return json as DocsV2Read.LoadDocsForUrlResponse;
-        }
+        return await loadDocsDefinitionFromS3({
+          domain: this.domain,
+          docsDefinitionUrl: this.getDocsDefinitionUrl(),
+        });
       } catch {
         // Not served by cloudfront, fetch from Redis and then RDS
         const response = await loadWithUrl(this.domain);
