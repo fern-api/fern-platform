@@ -9,7 +9,7 @@ export async function loadDocsDefinitionFromS3({
 }): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
   try {
     console.log("fetching docs definition:");
-    console.log("domain:", domain);
+    console.log("domain:", "dubwub.docs.dev.buildwithfern.com");
     const cleanDomain = domain.replace(/^https?:\/\//, "");
     const dbDocsDefUrl = `${docsDefinitionUrl}/${cleanDomain}.json`;
     console.log("dbDocsDefUrl", dbDocsDefUrl);
