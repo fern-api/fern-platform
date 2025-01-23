@@ -15,6 +15,34 @@ const DOCS_CONFIG_ID_CACHE = new Cache<DocsV2Read.GetDocsConfigByIdResponse>(
 
 export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
   return new DocsV2ReadService({
+    prepopulateFdrReadS3Bucket: async (req, res) => {
+      try {
+        await app.services.auth.checkUserBelongsToOrg({
+          authHeader: req.headers.authorization,
+          orgId: "fern",
+        });
+
+        const allDocsUrls = await app.dao.docsV2().listDocsUrlsUpdatedWithin({
+          days: 15,
+          page: 1,
+          limit: 200,
+        });
+
+        for (const urlRow of allDocsUrls.urls) {
+          const url = ParsedBaseUrl.parse(urlRow.domain);
+          const docsDefinition = await app.docsDefinitionCache.getDocsForUrl({
+            url: url.toURL(),
+          });
+
+          await app.services.s3.writeLoadDocsForUrlResponse({
+            domain: url.hostname,
+            readDocsDefinition: docsDefinition,
+          });
+        }
+
+        return await res.send();
+      } catch (e) {}
+    },
     getDocsForUrl: async (req, res) => {
       try {
         // if the auth header belongs to fern, return the docs definition

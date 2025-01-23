@@ -45,6 +45,11 @@ export interface ReadServiceMethods {
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
         locals: any;
     }, next: express.NextFunction): void | Promise<void>;
+    prepopulateFdrReadS3Bucket(req: express.Request<never, never, never, never>, res: {
+        send: () => Promise<void>;
+        cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+        locals: any;
+    }, next: express.NextFunction): void | Promise<void>;
 }
 export declare class ReadService {
     private readonly methods;
