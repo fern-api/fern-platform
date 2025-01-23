@@ -1,3 +1,4 @@
+import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import {
   ApiDefinition,
@@ -131,14 +132,17 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        console.log("fetching docs definition:");
-        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.domain}.json`;
-        console.log("dbDocsDefUrl", dbDocsDefUrl);
-        console.log("this.host", this.host);
+        const dbDocsDefUrl = getSignedUrl({
+          url: `${this.getDocsDefinitionUrl()}/${this.domain}.json`,
+          privateKey: process.env.CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY || "",
+          keyPairId: process.env.CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID || "",
+          dateLessThan: new Date(
+            Date.now() + 1000 * 60 * 60 * 24 * 30
+          ).toString(),
+        });
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {
           const json = await response.json();
-          console.log(json);
           return json as DocsV2Read.LoadDocsForUrlResponse;
         }
       } catch {
