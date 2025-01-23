@@ -9,7 +9,9 @@ export async function loadDocsDefinitionFromS3({
 }): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
   try {
     console.log("fetching docs definition:");
-    const dbDocsDefUrl = `${docsDefinitionUrl}/${domain}.json`;
+    console.log("domain:", domain);
+    const cleanDomain = domain.replace(/^https?:\/\//, "");
+    const dbDocsDefUrl = `${docsDefinitionUrl}/${cleanDomain}.json`;
     console.log("dbDocsDefUrl", dbDocsDefUrl);
 
     const response = await fetch(dbDocsDefUrl);
