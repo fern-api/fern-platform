@@ -3,6 +3,12 @@
   "extends": ["//"],
   "globalEnv": ["FERN_ENVIRONMENT", "APPLICATION_ENVIRONMENT"],
   "tasks": {
+    "build": {
+      "env": [
+        "CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY",
+        "CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID"
+      ]
+    },
     "docs:build": {
       "outputs": [".next/**", "!.next/cache/**"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"]
@@ -15,14 +21,6 @@
     },
     "docs:lint": {
       "dependsOn": ["^build", "^compile"]
-    }
-  },
-  "pipeline": {
-    "build": {
-      "env": [
-        "CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY",
-        "CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID"
-      ]
     }
   }
 }
