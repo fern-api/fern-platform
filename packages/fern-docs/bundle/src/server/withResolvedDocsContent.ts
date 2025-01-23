@@ -2,10 +2,13 @@ import { DocsV1Read } from "@fern-api/fdr-sdk";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { getFrontmatter } from "@fern-docs/mdx";
-import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
+import {
+  resolveDocsContent,
+  type DocsContent,
+  type ImageData,
+} from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { EdgeFlags } from "@fern-docs/utils";
-import { ImageData } from "../../../ui/src/atoms/types";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
 
