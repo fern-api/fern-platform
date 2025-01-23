@@ -8,6 +8,9 @@
     "directory": "packages/fern-docs/bundle"
   },
   "sideEffects": false,
+  "browser": {
+    "crypto": false
+  },
   "scripts": {
     "depcheck": "depcheck",
     "docs:build": "next build",
