@@ -246,7 +246,7 @@ export class FdrDeployStack extends Stack {
     const dbDocsPublicKey = cloudfront.PublicKey.fromPublicKeyId(
       this,
       "DbDocsDefinitionPublicKey",
-      getEnvironmentVariableOrThrow("CLOUDFRONT_DOCS_DEFINITION_KEYPAIR_ID")
+      getEnvironmentVariableOrThrow("CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID")
     );
 
     // Create the key group
