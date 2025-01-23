@@ -1,0 +1,26 @@
+import { DocsV2Read } from "@fern-api/fdr-sdk";
+
+export async function loadDocsDefinitionFromS3({
+  domain,
+  docsDefinitionUrl,
+}: {
+  domain: string;
+  docsDefinitionUrl: string;
+}): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
+  try {
+    console.log("fetching docs definition:");
+    const dbDocsDefUrl = `${docsDefinitionUrl}/${domain}.json`;
+    console.log("dbDocsDefUrl", dbDocsDefUrl);
+
+    const response = await fetch(dbDocsDefUrl);
+    if (response.ok) {
+      const json = await response.json();
+      console.log(json);
+      return json as DocsV2Read.LoadDocsForUrlResponse;
+    }
+    return undefined;
+  } catch (error) {
+    console.error("Error loading docs definition from S3:", error);
+    return undefined;
+  }
+}
