@@ -249,7 +249,7 @@ export class FdrDeployStack extends Stack {
           origin: new origins.S3Origin(dbDocsDefinitionBucket),
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
           trustedKeyGroups: [dbDocsKeyGroup],
         },
         domainNames: [dbDocsDefinitionDomainName],

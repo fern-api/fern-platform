@@ -11,17 +11,18 @@ export async function loadDocsDefinitionFromS3({
   try {
     const cleanDomain = domain.replace(/^https?:\/\//, "");
     const dbDocsDefUrl = `${docsDefinitionUrl}/${cleanDomain}.json`;
+    console.log("dbDocsDefUrl", dbDocsDefUrl);
 
-    const response = await fetch(
-      getSignedUrl({
-        url: dbDocsDefUrl,
-        privateKey: process.env.CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY || "",
-        keyPairId: process.env.CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID || "",
-        dateLessThan: new Date(
-          Date.now() + 1000 * 60 * 60 * 24 * 30
-        ).toString(),
-      })
-    );
+    const signedUrl = getSignedUrl({
+      url: dbDocsDefUrl,
+      privateKey: process.env.CLOUDFRONT_PRIVATE_KEY || "",
+      keyPairId: process.env.CLOUDFRONT_KEY_GROUP_ID || "",
+      dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toString(),
+    });
+    console.log("signedUrl", signedUrl);
+    const response = await fetch(dbDocsDefUrl);
+    console.log("response", response.ok);
+    console.log("response.status", response.status);
     if (response.ok) {
       const json = await response.json();
       return json as FdrAPI.docs.v2.read.LoadDocsForUrlResponse;
