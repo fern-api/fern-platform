@@ -143,6 +143,7 @@ export class DocsLoader {
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {
           const json = await response.json();
+          console.log(json);
           return json as DocsV2Read.LoadDocsForUrlResponse;
         }
       } catch {
