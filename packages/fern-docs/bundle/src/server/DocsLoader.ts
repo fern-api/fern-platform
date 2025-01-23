@@ -132,12 +132,19 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        return await loadDocsDefinitionFromS3({
+        const response = await loadDocsDefinitionFromS3({
           domain: this.domain,
           docsDefinitionUrl: this.getDocsDefinitionUrl(),
         });
-      } catch {
+        if (response == null) {
+          throw new Error(
+            `Failed to load docs definition for domain: ${this.domain}`
+          );
+        }
+        this.#loadForDocsUrlResponse = response;
+      } catch (error) {
         // Not served by cloudfront, fetch from Redis and then RDS
+        console.error("Failed to load docs definition from S3:", error);
         const response = await loadWithUrl(this.domain);
         if (response.ok) {
           this.#loadForDocsUrlResponse = response.body;
