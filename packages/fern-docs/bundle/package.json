@@ -39,6 +39,7 @@
     "@fern-docs/search-server": "workspace:*",
     "@fern-docs/search-ui": "workspace:*",
     "@fern-docs/search-utils": "workspace:*",
+    "@fern-docs/seo": "workspace:*",
     "@fern-docs/syntax-highlighter": "workspace:*",
     "@fern-docs/ui": "workspace:*",
     "@fern-docs/utils": "workspace:*",

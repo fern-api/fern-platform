@@ -735,6 +735,9 @@ importers:
       '@fern-docs/search-utils':
         specifier: workspace:*
         version: link:../search-utils
+      '@fern-docs/seo':
+        specifier: workspace:*
+        version: link:../seo
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
@@ -791,7 +794,7 @@ importers:
         version: 5.13.0
       braintrust:
         specifier: ^0.0.182
-        version: 0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
+        version: 0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
@@ -1336,6 +1339,12 @@ importers:
       '@fern-docs/components':
         specifier: workspace:*
         version: link:../components
+      '@fern-docs/mdx':
+        specifier: workspace:*
+        version: link:../mdx
+      '@fern-docs/seo':
+        specifier: workspace:*
+        version: link:../seo
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
@@ -1372,6 +1381,9 @@ importers:
       styled-jsx:
         specifier: ^5.1.2
         version: 5.1.6(@babel/core@7.26.0)(react@18.3.1)
+      ts-essentials:
+        specifier: ^10.0.1
+        version: 10.0.1(typescript@5.7.2)
       url-join:
         specifier: 5.0.0
         version: 5.0.0
@@ -1476,6 +1488,9 @@ importers:
       '@types/mdast':
         specifier: ^4.0.4
         version: 4.0.4
+      '@types/mdx':
+        specifier: ^2.0.13
+        version: 2.0.13
       '@types/unist':
         specifier: ^3.0.3
         version: 3.0.3
@@ -1551,6 +1566,9 @@ importers:
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.7.2)
+      unified:
+        specifier: ^11.0.4
+        version: 11.0.4
       unist-util-visit:
         specifier: ^5.0.0
         version: 5.0.0
@@ -1564,46 +1582,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
-      depcheck:
-        specifier: ^1.4.3
-        version: 1.4.7
-      eslint:
-        specifier: 9.17.0
-        version: 9.17.0(jiti@1.21.7)
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.7.2)
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-
-  packages/fern-docs/next-seo:
-    dependencies:
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
-      next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-    devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.19.33
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
       depcheck:
         specifier: ^1.4.3
         version: 1.4.7
@@ -1962,6 +1940,58 @@ importers:
         specifier: ^2.1.4
         version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
 
+  packages/fern-docs/seo:
+    dependencies:
+      '@fern-api/fdr-sdk':
+        specifier: workspace:*
+        version: link:../../fdr-sdk
+      '@fern-api/ui-core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
+      '@fern-docs/mdx':
+        specifier: workspace:*
+        version: link:../mdx
+      '@fern-docs/utils':
+        specifier: workspace:*
+        version: link:../utils
+      next:
+        specifier: npm:@fern-api/next@14.2.9-fork.2
+        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+    devDependencies:
+      '@fern-platform/configs':
+        specifier: workspace:*
+        version: link:../../configs
+      '@fern-platform/fdr-utils':
+        specifier: workspace:*
+        version: link:../../commons/fdr-utils
+      '@types/node':
+        specifier: ^18.7.18
+        version: 18.19.33
+      '@types/react':
+        specifier: ^18
+        version: 18.3.3
+      depcheck:
+        specifier: ^1.4.3
+        version: 1.4.7
+      eslint:
+        specifier: 9.17.0
+        version: 9.17.0(jiti@1.21.7)
+      prettier:
+        specifier: ^3.4.2
+        version: 3.4.2
+      stylelint:
+        specifier: ^16.1.0
+        version: 16.5.0(typescript@5.7.2)
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
+
   packages/fern-docs/syntax-highlighter:
     dependencies:
       '@fern-docs/components':
@@ -2031,15 +2061,15 @@ importers:
       '@fern-docs/mdx':
         specifier: workspace:*
         version: link:../mdx
-      '@fern-docs/next-seo':
-        specifier: workspace:*
-        version: link:../next-seo
       '@fern-docs/search-ui':
         specifier: workspace:*
         version: link:../search-ui
       '@fern-docs/search-utils':
         specifier: workspace:*
         version: link:../search-utils
+      '@fern-docs/seo':
+        specifier: workspace:*
+        version: link:../seo
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
@@ -2136,12 +2166,6 @@ importers:
       github-slugger:
         specifier: ^2.0.0
         version: 2.0.0
-      hast-util-to-jsx-runtime:
-        specifier: ^2.3.0
-        version: 2.3.0
-      hast-util-to-string:
-        specifier: ^3.0.0
-        version: 3.0.0
       iconoir-react:
         specifier: ^7.7.0
         version: 7.7.0(react@18.3.1)
@@ -2244,12 +2268,6 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
-      unified:
-        specifier: ^11.0.4
-        version: 11.0.4
-      unist-util-visit:
-        specifier: ^5.0.0
-        version: 5.0.0
       url-join:
         specifier: 5.0.0
         version: 5.0.0
@@ -2314,15 +2332,9 @@ importers:
       '@testing-library/react':
         specifier: ^14.3.1
         version: 14.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/hast':
-        specifier: ^3.0.4
-        version: 3.0.4
       '@types/jsonpath':
         specifier: ^0.2.4
         version: 0.2.4
-      '@types/mdx':
-        specifier: ^2.0.13
-        version: 2.0.13
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
@@ -7341,7 +7353,7 @@ packages:
     resolution: {integrity: sha512-GWrNeElMYHO8FVETjW205u2s9IXFs46fmVKY8T1dHgksCm3JV8w4k14gM2eaZbOUOH/tGcOuz5YbqJl8iKkA8w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
-      next: ^13.5.0 || ^14.0.0 || ^15.0.0
+      next: npm:@fern-api/next@14.2.9-fork.2
       react: 18.3.1
       react-dom: 18.3.1
       storybook: ^8.4.4
@@ -11586,9 +11598,6 @@ packages:
 
   hast-util-to-parse5@7.1.0:
     resolution: {integrity: sha512-YNRgAJkH2Jky5ySkIqFXTQiaqcAtJyVE+D5lkN6CdtOqrnkLfGYYrEcKuHOJZlp+MwjSwuD3fZuawI+sic/RBw==}
-
-  hast-util-to-string@3.0.0:
-    resolution: {integrity: sha512-OGkAxX1Ua3cbcW6EJ5pT/tslVb90uViVkcJ4ZZIMW/R33DX/AkcJcRrPebPwJkHYwlDHXz4aIwvAAaAdtrACFA==}
 
   hast-util-to-string@3.0.1:
     resolution: {integrity: sha512-XelQVTDWvqcl3axRfI0xSeoVKzyIFPwsAGSLIsKdJKQMXDYJS4WYrBNF/8J7RdhIcFI2BOHgAifggsvsxp/3+A==}
@@ -18532,16 +18541,6 @@ snapshots:
       '@smithy/types': 3.6.0
       tslib: 2.8.1
 
-  '@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0)':
-    dependencies:
-      '@aws-sdk/client-sts': 3.682.0
-      '@aws-sdk/core': 3.723.0
-      '@aws-sdk/types': 3.723.0
-      '@smithy/property-provider': 4.0.0
-      '@smithy/types': 4.0.0
-      tslib: 2.8.1
-    optional: true
-
   '@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0)':
     dependencies:
       '@aws-sdk/client-sts': 3.723.0
@@ -20675,7 +20674,7 @@ snapshots:
 
   '@internationalized/date@3.5.4':
     dependencies:
-      '@swc/helpers': 0.5.5
+      '@swc/helpers': 0.5.15
 
   '@ioredis/commands@1.2.0': {}
 
@@ -24590,9 +24589,9 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@vercel/functions@1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))':
+  '@vercel/functions@1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))':
     optionalDependencies:
-      '@aws-sdk/credential-provider-web-identity': 3.723.0(@aws-sdk/client-sts@3.682.0)
+      '@aws-sdk/credential-provider-web-identity': 3.723.0(@aws-sdk/client-sts@3.723.0)
 
   '@vercel/kv@2.0.0':
     dependencies:
@@ -26499,12 +26498,12 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
 
-  braintrust@0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8):
+  braintrust@0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8):
     dependencies:
       '@ai-sdk/provider': 1.0.4
       '@braintrust/core': 0.0.76
       '@next/env': 14.2.9
-      '@vercel/functions': 1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))
+      '@vercel/functions': 1.5.2(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.723.0))
       ai: 3.4.33(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
       argparse: 2.0.1
       chalk: 4.1.2
@@ -29506,10 +29505,6 @@ snapshots:
       web-namespaces: 2.0.1
       zwitch: 2.0.4
 
-  hast-util-to-string@3.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
-
   hast-util-to-string@3.0.1:
     dependencies:
       '@types/hast': 3.0.4
@@ -30565,7 +30560,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 18.19.33
+      '@types/node': 20.12.12
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

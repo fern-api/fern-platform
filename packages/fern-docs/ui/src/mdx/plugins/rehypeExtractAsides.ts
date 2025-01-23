@@ -1,6 +1,8 @@
-import { extractElementsFromRootContentHast } from "@fern-docs/mdx";
-import type { ElementContent, Root } from "hast";
-import { visit } from "unist-util-visit";
+import {
+  extractElementsFromRootContentHast,
+  type Hast,
+  visit,
+} from "@fern-docs/mdx";
 
 interface Options {
   mainElementName?: string;
@@ -13,9 +15,9 @@ interface Options {
 export function rehypeExtractAsides({
   mainElementName = "ReferenceLayoutMain",
   asideElementName = "ReferenceLayoutAside",
-}: Options = {}): (tree: Root) => undefined {
+}: Options = {}): (tree: Hast.Root) => undefined {
   return (tree) => {
-    const asides: ElementContent[] = [];
+    const asides: Hast.ElementContent[] = [];
 
     visit(tree, "mdxJsxFlowElement", (node, index, parent) => {
       if (node.name !== "Aside" || index == null || parent == null) {
