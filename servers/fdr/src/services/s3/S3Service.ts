@@ -12,6 +12,7 @@ import {
   DocsV2Write,
   FdrAPI,
 } from "@fern-api/fdr-sdk";
+import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
@@ -146,7 +147,7 @@ export class S3ServiceImpl implements S3Service {
   }): Promise<PutObjectCommandOutput> {
     const command = new PutObjectCommand({
       Bucket: this.config.dbDocsDefinitionS3.bucketName,
-      Key: `${domain}.json`,
+      Key: getS3KeyForV1DocsDefinition(domain),
       Body: JSON.stringify(readDocsDefinition),
     });
     return await this.dbDocsDefinitionS3.send(command);
