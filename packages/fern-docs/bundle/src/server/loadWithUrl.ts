@@ -24,7 +24,10 @@ export async function loadWithUrl(
       docsDefinitionUrl: getDocsDefinitionUrl(),
     });
     if (response != null) {
-      return response;
+      return {
+        ok: true,
+        body: response,
+      };
     }
   } catch (error) {
     console.error("Failed to load docs definition:", error);
