@@ -188,6 +188,41 @@ export class DocsLoader {
     return root;
   }
 
+  private cache: Record<
+    FernNavigation.PageId,
+    { markdown: string; editThisPageUrl: string | undefined }
+  > = {};
+
+  public async getPage(
+    pageId: FernNavigation.PageId
+  ): Promise<
+    { markdown: string; editThisPageUrl: string | undefined } | undefined
+  > {
+    if (this.cache[pageId] != null) {
+      return this.cache[pageId];
+    }
+    const docs = await this.loadDocs();
+    const page = docs?.definition.pages[pageId];
+    if (!page) {
+      return undefined;
+    }
+    let markdown = page.markdown;
+    if (markdown == null && page.fileId != null) {
+      const fileUrl = docs.definition.filesV2[page.fileId]?.url;
+      if (fileUrl != null) {
+        const fileResponse = await fetch(fileUrl);
+        if (fileResponse.ok) {
+          markdown = await fileResponse.text();
+        }
+      }
+    }
+    if (!markdown) {
+      return undefined;
+    }
+    this.cache[pageId] = { markdown, editThisPageUrl: page.editThisPageUrl };
+    return this.cache[pageId];
+  }
+
   // NOTE: authentication is based on the navigation nodes, so we don't need to check it here,
   // as long as these pages are NOT shipped to the client-side.
   public async pages(): Promise<
