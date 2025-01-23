@@ -1,5 +1,5 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
+import { removeTrailingSlash } from "@fern-docs/utils";
 import urlJoin from "url-join";
 import { AuthState, getWorkosRbacRoles } from "./getAuthState";
 import { getWorkosSSOAuthorizationUrl } from "./workos";

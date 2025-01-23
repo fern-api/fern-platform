@@ -82,5 +82,4 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
   );
 };
 
-export { Embed } from "./embed";
 export { Image } from "./image";

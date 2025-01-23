@@ -1,10 +1,10 @@
-import type { Root } from "hast";
+import type { Hast } from "@fern-docs/mdx";
 
 export interface CodeBlockItem {
   // language: string;
   title?: string;
   code: string | undefined;
-  hast: Root | undefined;
+  hast: Hast.Root | undefined;
   // highlightLines?: (number | [number, number])[];
   // highlightStyle?: "highlight" | "focus";
 }
