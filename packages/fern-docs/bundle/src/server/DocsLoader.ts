@@ -131,7 +131,7 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       try {
-        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.domain}.json`;
+        const dbDocsDefUrl = `${this.getDocsDefinitionUrl()}/${this.host}.json`;
         const response = await fetch(dbDocsDefUrl);
         if (response.ok) {
           const json = await response.json();
