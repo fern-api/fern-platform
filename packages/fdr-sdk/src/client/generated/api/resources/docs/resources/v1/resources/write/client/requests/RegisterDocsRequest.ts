@@ -11,6 +11,7 @@ import * as FernRegistry from "../../../../../../../../index";
  *             pages: {
  *                 "string": {
  *                     markdown: "string",
+ *                     fileId: FernRegistry.FileId("string"),
  *                     editThisPageUrl: FernRegistry.Url("string")
  *                 }
  *             },

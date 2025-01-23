@@ -77,7 +77,8 @@ types:
 
   PageContent:
     properties:
-      markdown: string # eventually PageContent should just be a rootCommons.FileId ?
+      markdown: optional<string>
+      fileId: optional<rootCommons.FileId>
       editThisPageUrl: optional<rootCommons.Url>
 
   DocsConfig:
