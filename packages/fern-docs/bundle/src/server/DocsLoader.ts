@@ -8,7 +8,6 @@ import type { AuthEdgeConfig } from "@fern-docs/auth";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
 import { getAuthState, type AuthState } from "./auth/getAuthState";
-import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithAuthState } from "./withRbac";
 
@@ -119,38 +118,16 @@ export class DocsLoader {
       .withEnvironment(process.env.NEXT_PUBLIC_FDR_ORIGIN)
       .load();
   }
-
-  private getDocsDefinitionUrl() {
-    return (
-      process.env.NEXT_PUBLIC_DOCS_DEFINITION_S3_URL ??
-      "https://docs-definitions.buildwithfern.com"
-    );
-  }
-
+  
   private async loadDocs(): Promise<
     DocsV2Read.LoadDocsForUrlResponse | undefined
   > {
     if (!this.#loadForDocsUrlResponse) {
-      try {
-        const response = await loadDocsDefinitionFromS3({
-          domain: this.domain,
-          docsDefinitionUrl: this.getDocsDefinitionUrl(),
-        });
-        if (response == null) {
-          throw new Error(
-            `Failed to load docs definition for domain: ${this.domain}`
-          );
-        }
-        this.#loadForDocsUrlResponse = response;
-      } catch (error) {
-        // Not served by cloudfront, fetch from Redis and then RDS
-        console.error("Failed to load docs definition from S3:", error);
-        const response = await loadWithUrl(this.domain);
-        if (response.ok) {
-          this.#loadForDocsUrlResponse = response.body;
-        } else {
-          this.#error = response.error;
-        }
+      const response = await loadWithUrl(this.domain);
+      if (response.ok) {
+        this.#loadForDocsUrlResponse = response.body;
+      } else {
+        this.#error = response.error;
       }
     }
     return this.#loadForDocsUrlResponse;
