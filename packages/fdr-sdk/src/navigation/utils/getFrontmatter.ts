@@ -4,7 +4,7 @@
  */
 export function getFrontmatter(markdown: string): string | undefined {
   const frontmatterMatch = /^---\s*([\s\S]*?)\s*---/.exec(markdown.trimStart());
-  if (!frontmatterMatch || frontmatterMatch[1] == null) {
+  if (frontmatterMatch?.[1] == null) {
     return undefined;
   }
   return frontmatterMatch[1];
