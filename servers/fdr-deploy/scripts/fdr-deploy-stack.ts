@@ -32,12 +32,13 @@ import {
   ApplicationProtocol,
   HttpCodeElb,
 } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { PolicyStatement, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
-import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { BlockPublicAccess, Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
@@ -208,6 +209,19 @@ export class FdrDeployStack extends Stack {
     );
 
     // for revalidate-all and finish-register workflow
+    const dbDocsDefinitionOAC = new cloudfront.CfnOriginAccessControl(
+      this,
+      "DbDocsDefinitionOAC",
+      {
+        originAccessControlConfig: {
+          name: `${id}-db-docs-definition-oac`,
+          originAccessControlOriginType: "s3",
+          signingBehavior: "always",
+          signingProtocol: "sigv4",
+        },
+      }
+    );
+
     const dbDocsDefinitionBucket = new Bucket(
       this,
       "fdr-docs-definitions-public",
@@ -224,16 +238,26 @@ export class FdrDeployStack extends Stack {
             allowedHeaders: ["*"],
           },
         ],
-        blockPublicAccess: {
-          blockPublicAcls: false,
-          blockPublicPolicy: false,
-          ignorePublicAcls: false,
-          restrictPublicBuckets: false,
-        },
+        blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
         versioned: true,
       }
     );
-    dbDocsDefinitionBucket.grantPublicAccess();
+
+    const dbDocsPublicKey = cloudfront.PublicKey.fromPublicKeyId(
+      this,
+      "DbDocsDefinitionPublicKey",
+      getEnvironmentVariableOrThrow("CLOUDFRONT_DOCS_DEFINITION_KEYPAIR_ID")
+    );
+
+    // Create the key group
+    const dbDocsKeyGroup = new cloudfront.KeyGroup(
+      this,
+      "DbDocsDefinitionKeyGroup",
+      {
+        items: [dbDocsPublicKey],
+        comment: "Key group for DB docs definition access",
+      }
+    );
 
     const dbDocsDefinitionDomainName =
       environmentType === "PROD"
@@ -248,11 +272,24 @@ export class FdrDeployStack extends Stack {
           viewerProtocolPolicy:
             cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
           cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+          trustedKeyGroups: [dbDocsKeyGroup],
         },
         domainNames: [dbDocsDefinitionDomainName],
         certificate,
       }
     );
+
+    const dbDocsDefinitionBucketPolicy = new PolicyStatement({
+      actions: ["s3:GetObject"],
+      resources: [dbDocsDefinitionBucket.arnForObjects("*")],
+      principals: [new ServicePrincipal("cloudfront.amazonaws.com")],
+      conditions: {
+        StringEquals: {
+          "AWS:SourceArn": `arn:aws:cloudfront::${this.account}:distribution/${dbDocsDefinitionDistribution.distributionId}`,
+        },
+      },
+    });
+    dbDocsDefinitionBucket.addToResourcePolicy(dbDocsDefinitionBucketPolicy);
 
     new route53.ARecord(this, "PublicDocsFilesRecord", {
       recordName: publicDocsFilesDomainName,

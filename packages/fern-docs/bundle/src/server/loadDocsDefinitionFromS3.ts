@@ -1,4 +1,5 @@
-import { DocsV2Read } from "@fern-api/fdr-sdk";
+import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
+import { FdrAPI } from "@fern-api/fdr-sdk";
 
 export async function loadDocsDefinitionFromS3({
   domain,
@@ -6,18 +7,24 @@ export async function loadDocsDefinitionFromS3({
 }: {
   domain: string;
   docsDefinitionUrl: string;
-}): Promise<DocsV2Read.LoadDocsForUrlResponse | undefined> {
+}): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> {
   try {
-    console.log("fetching docs definition:");
     const cleanDomain = domain.replace(/^https?:\/\//, "");
     const dbDocsDefUrl = `${docsDefinitionUrl}/${cleanDomain}.json`;
-    console.log("dbDocsDefUrl", dbDocsDefUrl);
 
-    const response = await fetch(dbDocsDefUrl);
+    const response = await fetch(
+      getSignedUrl({
+        url: dbDocsDefUrl,
+        privateKey: process.env.CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY || "",
+        keyPairId: process.env.CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID || "",
+        dateLessThan: new Date(
+          Date.now() + 1000 * 60 * 60 * 24 * 30
+        ).toString(),
+      })
+    );
     if (response.ok) {
       const json = await response.json();
-      console.log(json);
-      return json as DocsV2Read.LoadDocsForUrlResponse;
+      return json as FdrAPI.docs.v2.read.LoadDocsForUrlResponse;
     }
     return undefined;
   } catch (error) {

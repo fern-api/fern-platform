@@ -1,4 +1,3 @@
-import { getSignedUrl } from "@aws-sdk/cloudfront-signer";
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk";
 import {
   ApiDefinition,
@@ -120,40 +119,15 @@ export class DocsLoader {
       .load();
   }
 
-  private getDocsDefinitionUrl() {
-    return (
-      process.env.NEXT_PUBLIC_DOCS_DEFINITION_S3_URL ??
-      "https://docs-definitions.buildwithfern.com"
-    );
-  }
-
   private async loadDocs(): Promise<
     DocsV2Read.LoadDocsForUrlResponse | undefined
   > {
     if (!this.#loadForDocsUrlResponse) {
-      try {
-        const dbDocsDefUrl = getSignedUrl({
-          url: `${this.getDocsDefinitionUrl()}/${this.domain}.json`,
-          privateKey: process.env.CLOUDFRONT_DOCS_DEFINITION_PRIVATE_KEY || "",
-          keyPairId: process.env.CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID || "",
-          dateLessThan: new Date(
-            Date.now() + 1000 * 60 * 60 * 24 * 30
-          ).toString(),
-        });
-        const response = await fetch(dbDocsDefUrl);
-        if (response.ok) {
-          const json = await response.json();
-          console.log(json);
-          return json as DocsV2Read.LoadDocsForUrlResponse;
-        }
-      } catch {
-        // Not served by cloudfront, fetch from Redis and then RDS
-        const response = await loadWithUrl(this.domain);
-        if (response.ok) {
-          this.#loadForDocsUrlResponse = response.body;
-        } else {
-          this.#error = response.error;
-        }
+      const response = await loadWithUrl(this.domain);
+      if (response.ok) {
+        this.#loadForDocsUrlResponse = response.body;
+      } else {
+        this.#error = response.error;
       }
     }
     return this.#loadForDocsUrlResponse;
