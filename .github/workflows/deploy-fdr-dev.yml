@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - dd/write-to-s3
     paths:
       - "fern/apis/fdr/**"
       - "fern/fern.config.json"
