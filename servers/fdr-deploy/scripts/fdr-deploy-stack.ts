@@ -209,19 +209,6 @@ export class FdrDeployStack extends Stack {
     );
 
     // for revalidate-all and finish-register workflow
-    const dbDocsDefinitionOAC = new cloudfront.CfnOriginAccessControl(
-      this,
-      "DbDocsDefinitionOAC",
-      {
-        originAccessControlConfig: {
-          name: `${id}-db-docs-definition-oac`,
-          originAccessControlOriginType: "s3",
-          signingBehavior: "always",
-          signingProtocol: "sigv4",
-        },
-      }
-    );
-
     const dbDocsDefinitionBucket = new Bucket(
       this,
       "fdr-docs-definitions-public",
@@ -243,20 +230,11 @@ export class FdrDeployStack extends Stack {
       }
     );
 
-    const dbDocsPublicKey = cloudfront.PublicKey.fromPublicKeyId(
+    const keyGroupId = getEnvironmentVariableOrThrow("CLOUDFRONT_KEY_GROUP_ID");
+    const dbDocsKeyGroup = cloudfront.KeyGroup.fromKeyGroupId(
       this,
-      "DbDocsDefinitionPublicKey",
-      getEnvironmentVariableOrThrow("CLOUDFRONT_DOCS_DEFINITION_KEY_PAIR_ID")
-    );
-
-    // Create the key group
-    const dbDocsKeyGroup = new cloudfront.KeyGroup(
-      this,
-      "DbDocsDefinitionKeyGroup",
-      {
-        items: [dbDocsPublicKey],
-        comment: "Key group for DB docs definition access",
-      }
+      "DbDocsKeyGroup",
+      keyGroupId
     );
 
     const dbDocsDefinitionDomainName =
