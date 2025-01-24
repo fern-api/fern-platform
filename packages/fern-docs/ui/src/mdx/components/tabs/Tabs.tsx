@@ -37,7 +37,16 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
           ApiDefinition.cleanLanguage(tab.language) === selectedLanguage
       );
       if (matchingTab) {
-        setActiveTab(matchingTab.id);
+        setActiveTab((prevActiveTab) => {
+          const prevTab = tabs.find((tab) => tab.id === prevActiveTab);
+          if (
+            prevTab?.language &&
+            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
+          ) {
+            return prevActiveTab;
+          }
+          return matchingTab.id;
+        });
       }
     }
   }, [selectedLanguage, tabs]);
@@ -56,7 +65,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
   return (
     <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
       <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
-        {tabs.map(({ title, id, language }) => (
+        {tabs.map(({ title, id }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
               className="text-default scroll-mt-content-padded hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
