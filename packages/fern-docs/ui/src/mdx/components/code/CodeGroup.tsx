@@ -40,7 +40,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
             <div className="flex min-h-10 overflow-x-auto">
               <div className="flex items-center px-3 py-1.5">
                 <span className="t-muted rounded text-sm font-semibold">
-                  {items[0].title ?? "Untitled"}
+                  {items[0].title ?? items[0].language}
                 </span>
               </div>
             </div>
@@ -72,7 +72,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
                   className="data-[state=active]:shadow-accent group flex min-h-10 items-center px-2 py-1.5 data-[state=active]:shadow-[inset_0_-2px_0_0_rgba(0,0,0,0.1)]"
                 >
                   <span className="t-muted group-data-[state=active]:t-default group-hover:bg-tag-default whitespace-nowrap rounded px-2 py-1 text-sm group-data-[state=active]:font-semibold">
-                    {item.title ?? `Untitled ${idx + 1}`}
+                    {item.title ?? item.language}
                   </span>
                 </Tabs.Trigger>
               ))}
