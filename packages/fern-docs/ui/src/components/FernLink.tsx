@@ -5,27 +5,33 @@ import {
   ReactElement,
   forwardRef,
   useEffect,
+  useMemo,
   useState,
   type ComponentProps,
 } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
 import { useMemoOne } from "use-memo-one";
-import { SLUG_ATOM, useDomain } from "../atoms";
+import { FILES_ATOM, SLUG_ATOM, useDomain } from "../atoms";
 import { selectHref } from "../hooks/useHref";
+import { getFernEmbedSrc } from "../mdx/common/util";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
   showExternalLinkIcon?: boolean;
+  isDownload?: boolean;
 }
 
 export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
-  ({ showExternalLinkIcon = false, ...props }, ref): ReactElement => {
+  (
+    { showExternalLinkIcon = false, isDownload = false, ...props },
+    ref
+  ): ReactElement => {
     const url = toUrlObject(props.href);
     const isExternalUrl = checkIsExternalUrl(url);
 
     // if the url is relative, we will need to invoke useRouter to resolve the relative url
     // since useRouter injects the router context, it will cause a re-render any time the route changes.
     // to avoid unnecessary re-renders, we will isolate the useRouter call to a separate component.
-    if (!isExternalUrl && checkIsRelativeUrl(url)) {
+    if (!isExternalUrl && !isDownload && checkIsRelativeUrl(url)) {
       return <FernRelativeLink ref={ref} {...props} />;
     }
 
@@ -50,6 +56,10 @@ export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
           url={url}
         />
       );
+    }
+
+    if (isDownload) {
+      return <FernEmbedLink ref={ref} url={url} {...props} />;
     }
 
     return <Link ref={ref} {...props} />;
@@ -123,6 +133,32 @@ const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
 );
 
 FernExternalLink.displayName = "FernExternalLink";
+
+interface FernEmbedLinkProps extends Omit<ComponentProps<"a">, "href"> {
+  url: UrlObject;
+}
+
+const FernEmbedLink = forwardRef<HTMLAnchorElement, FernEmbedLinkProps>(
+  ({ url, ...props }, ref) => {
+    const files = useAtomValue(FILES_ATOM);
+
+    console.log("found embed link", url);
+
+    const fernEmbedSrc = useMemo(
+      () => getFernEmbedSrc(formatUrlString(url), files),
+      [files, url]
+    );
+    const urlString = checkIsExternalUrl(url)
+      ? formatUrlString(url)
+      : fernEmbedSrc?.url.toString();
+
+    console.log("urlString", urlString);
+
+    return <a ref={ref} {...props} href={urlString} />;
+  }
+);
+
+FernEmbedLink.displayName = "FernEmbedLink";
 
 const LinkWith404Fallback = forwardRef<HTMLAnchorElement, LinkProps>(
   (props, ref) => {

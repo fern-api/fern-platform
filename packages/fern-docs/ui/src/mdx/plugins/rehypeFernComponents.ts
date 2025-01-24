@@ -39,6 +39,8 @@ export function rehypeFernComponents(): (tree: Root) => void {
           // node.name = "Table";
         } else if (node.name === "embed") {
           node.name = "Embed";
+        } else if (node.name === "a") {
+          node.name = "A";
         }
       }
     });

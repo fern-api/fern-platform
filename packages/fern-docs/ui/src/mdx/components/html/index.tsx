@@ -69,6 +69,9 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
   const hideExternalLinkIcon =
     isValidElement(children) &&
     (children.type === "img" || isImageElement(children));
+  const isDownload = rest.download != null;
+
+  console.log("isDownload: ", isDownload);
 
   return (
     <FernLink
@@ -76,6 +79,7 @@ export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
       href={href ?? {}}
       {...rest}
       showExternalLinkIcon={!hideExternalLinkIcon}
+      isDownload={isDownload}
     >
       <NoZoom>{children}</NoZoom>
     </FernLink>

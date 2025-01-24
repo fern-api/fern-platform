@@ -1,3 +1,5 @@
+import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+
 /**
  * The interface that the user-provided `CodeBlocks` children should adhere to.
  */
@@ -10,6 +12,23 @@ export type ExpectedCodeBlockChildren = {
       };
     };
   };
+};
+
+export const getFernEmbedSrc = (
+  src: string | null | undefined,
+  files: Record<string, DocsV1Read.File_>
+): DocsV1Read.File_ | undefined => {
+  if (src == null) {
+    return undefined;
+  }
+
+  // if src starts with `file:`, assume it's a referenced file; fallback to src if not found
+  if (src.startsWith("file:")) {
+    const fileId = FdrAPI.FileId(src.slice(5));
+    return files[fileId] ?? { type: "url", url: FdrAPI.Url(src) };
+  }
+
+  return { type: "url", url: FdrAPI.Url(src) };
 };
 
 // export function stringHasMarkdown(s: string): boolean {
