@@ -31,34 +31,37 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
 
   useEffect(() => {
     if (selectedLanguage) {
-      console.log("selectedLanguage: ", selectedLanguage);
-      const matchingTab = items.find(
-        (item) =>
-          item.language &&
-          ApiDefinition.cleanLanguage(item.language) === selectedLanguage
-      );
+      const matchingTab = items.find((item) => {
+        const cleanedItemLanguage = ApiDefinition.cleanLanguage(item.language);
+        return item.language && cleanedItemLanguage === selectedLanguage;
+      });
+
       if (matchingTab) {
-        console.log(
-          "handleTabChange, setting tab index: ",
-          items.indexOf(matchingTab)
-        );
-        setSelectedTabIndex(items.indexOf(matchingTab));
+        const newIndex = items.indexOf(matchingTab);
+        setSelectedTabIndex((prevIndex) => {
+          const prevTab = items[prevIndex];
+          if (
+            prevTab?.language &&
+            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
+          ) {
+            return prevIndex;
+          }
+          return newIndex;
+        });
       }
     }
-  }, [selectedLanguage, selectedTabIndex, items]);
+  }, [selectedLanguage, items]);
 
-  const handleTabChange = (value: any) => {
-    setSelectedTabIndex(parseInt(value, 10));
-    const tab = items[selectedTabIndex];
-    console.log("selected tab: ", tab);
+  const handleTabChange = (value: string) => {
+    const newIndex = parseInt(value, 10);
+    setSelectedTabIndex(newIndex);
+
+    const tab = items[newIndex];
     const cleanedLanguage = tab?.language
       ? ApiDefinition.cleanLanguage(tab.language)
       : undefined;
 
-    console.log("cleaned language: ", cleanedLanguage);
-    console.log("selected language: ", selectedLanguage);
     if (cleanedLanguage && cleanedLanguage !== selectedLanguage) {
-      console.log("handleTabChange, setting language: ", cleanedLanguage);
       setSelectedLanguage(cleanedLanguage);
     }
   };
@@ -115,7 +118,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     <Tabs.Root
       className={containerClass}
       onValueChange={handleTabChange}
-      defaultValue="0"
+      value={selectedTabIndex.toString()}
     >
       <div className="bg-tag-default-soft rounded-t-[inherit]">
         <div className="shadow-border-default mx-px flex min-h-10 items-center justify-between shadow-[inset_0_-1px_0_0]">
