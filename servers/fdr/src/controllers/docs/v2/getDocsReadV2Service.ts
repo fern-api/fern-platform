@@ -23,7 +23,7 @@ export function getDocsReadV2Service(app: FdrApplication): DocsV2ReadService {
         });
 
         const allDocsUrls = await app.dao.docsV2().listDocsUrlsUpdatedWithin({
-          days: 15,
+          days: 60,
           page: 1,
           limit: 200,
         });
