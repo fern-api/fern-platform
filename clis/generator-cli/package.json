@@ -34,7 +34,7 @@
     "@types/yargs": "^17.0.32",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.15",
     "depcheck": "^1.4.7",
-    "esbuild": "0.20.2",
+    "esbuild": "0.24.2",
     "eslint": "^9",
     "execa": "^9.5.1",
     "prettier": "^3.4.2",
