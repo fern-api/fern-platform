@@ -2,10 +2,11 @@ import { ApiDefinition } from "@fern-api/fdr-sdk";
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, ReactNode, useEffect, useState } from "react";
+import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { ANCHOR_ATOM, FERN_LANGUAGE_ATOM } from "../../../atoms";
 
 export interface TabProps {
-  title: string;
+  title?: string;
   id: string;
   toc?: boolean;
   children: ReactNode;
@@ -45,24 +46,24 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
     const selectedTab = tabs.find((tab) => tab.id === tabId);
-    if (
-      selectedTab?.language &&
-      ApiDefinition.cleanLanguage(selectedTab.language) !== selectedLanguage
-    ) {
-      setSelectedLanguage(selectedTab.language);
+    const cleanedLanguage = selectedTab?.language
+      ? ApiDefinition.cleanLanguage(selectedTab.language)
+      : undefined;
+    if (cleanedLanguage && cleanedLanguage !== selectedLanguage) {
+      setSelectedLanguage(cleanedLanguage);
     }
   };
 
   return (
     <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
       <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
-        {tabs.map(({ title, id }) => (
+        {tabs.map(({ title, id, language }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>
             <h6
               className="text-default scroll-mt-content-padded hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
               id={id}
             >
-              {title}
+              {title ?? getLanguageDisplayName(language ?? "Untitled")}
             </h6>
           </RadixTabs.Trigger>
         ))}
