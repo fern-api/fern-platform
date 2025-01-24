@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<ErrorProps> = async ({
     res.statusCode < 600 &&
     req.url != null &&
     resolvedUrl.startsWith("/static") &&
-    query.error !== "true"
+    !query.error
   ) {
     const url = parseResolvedUrl(resolvedUrl);
     return {
