@@ -16,6 +16,7 @@ import {
   getGitHubInfo,
   getGitHubRepo,
   renderThemeStylesheet,
+  withCustomJavascript,
   withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
@@ -392,7 +393,7 @@ export async function withInitialProps({
     title: docs.definition.config.title,
     favicon: docs.definition.config.favicon,
     colors,
-    js: docs.definition.config.js,
+    js: withCustomJavascript(docs.definition.config.js, resolveFileSrc),
     navbarLinks,
     logo: withLogo(docs.definition, found, frontmatter, resolveFileSrc),
     content,

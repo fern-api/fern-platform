@@ -26,6 +26,7 @@ import {
   NavbarLink,
   renderThemeStylesheet,
   resolveDocsContent,
+  withCustomJavascript,
   withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
@@ -236,7 +237,7 @@ export async function getDocsPageProps(
     title: docs.definition.config.title,
     favicon: docs.definition.config.favicon,
     colors,
-    js: docs.definition.config.js,
+    js: withCustomJavascript(docs.definition.config.js, resolveFileSrc),
     navbarLinks,
     logo: withLogo(docs.definition, node, frontmatter, resolveFileSrc),
     content,
