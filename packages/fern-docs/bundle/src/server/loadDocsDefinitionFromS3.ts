@@ -28,8 +28,6 @@ export async function loadDocsDefinitionFromS3({
       dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toString(),
     });
     const response = await fetch(signedUrl);
-    console.log("signedUrl", signedUrl);
-    console.log("response.ok", response.ok);
     if (response.ok) {
       const json = await response.json();
       return json as FdrAPI.docs.v2.read.LoadDocsForUrlResponse;
