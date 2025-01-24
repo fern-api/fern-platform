@@ -28,14 +28,13 @@ export async function loadDocsDefinitionFromS3({
       dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toString(),
     });
     const response = await fetch(signedUrl);
-    console.log("signedUrl", signedUrl);
-    console.log("response.ok", response.ok);
     if (response.ok) {
+      console.log("Successfully loaded docs definition from S3: ", signedUrl);
       const json = await response.json();
       return json as FdrAPI.docs.v2.read.LoadDocsForUrlResponse;
     }
     throw new Error(
-      `Failed to load docs definition. Status: ${response.status}. Error: ${await response.text()}`
+      `Failed to load docs definition from S3. Status: ${response.status}. Error: ${await response.text()}`
     );
   } catch (error) {
     console.error("Error loading docs definition from S3:", error);
