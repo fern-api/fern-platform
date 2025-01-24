@@ -191,6 +191,14 @@ async function serializeMdxImpl(
 }
 
 export async function serializeMdx(
+  content: string,
+  options?: FernSerializeMdxOptions
+): Promise<FernDocs.MarkdownText>;
+export async function serializeMdx(
+  content: string | undefined,
+  options?: FernSerializeMdxOptions
+): Promise<FernDocs.MarkdownText | undefined>;
+export async function serializeMdx(
   content: string | undefined,
   options?: FernSerializeMdxOptions
 ): Promise<FernDocs.MarkdownText | undefined> {
