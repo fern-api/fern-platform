@@ -1,3 +1,4 @@
+import { ApiDefinition } from "@fern-api/fdr-sdk";
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, ReactNode, useEffect, useState } from "react";
@@ -30,15 +31,13 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
 
   useEffect(() => {
     if (selectedLanguage) {
-      const matchingTab = tabs.find((tab) => tab.language === selectedLanguage);
+      const matchingTab = tabs.find(
+        (tab) =>
+          tab.language &&
+          ApiDefinition.cleanLanguage(tab.language) === selectedLanguage
+      );
       if (matchingTab) {
         setActiveTab(matchingTab.id);
-      } else {
-        // if no language matches, look for a default
-        const defaultTab = tabs.find((tab) => tab.language === "default");
-        if (defaultTab) {
-          setActiveTab(defaultTab.id);
-        }
       }
     }
   }, [selectedLanguage, tabs]);
@@ -46,7 +45,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
     const selectedTab = tabs.find((tab) => tab.id === tabId);
-    if (selectedTab?.language) {
+    if (selectedTab?.language && selectedTab.language !== selectedLanguage) {
       setSelectedLanguage(selectedTab.language);
     }
   };
