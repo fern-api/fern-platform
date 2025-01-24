@@ -86,6 +86,7 @@ export async function POST(req: NextRequest) {
     date: new Date().toDateString(),
     documents,
   });
+  // eslint-disable-next-line @typescript-eslint/await-thenable
   const result = await traced(() =>
     streamText({
       model: languageModel,
