@@ -192,6 +192,10 @@ const nextConfig = {
       config.externals = config.externals || [];
       config.externals.push("esbuild");
     }
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      crypto: false,
+    };
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
       exclude: /node_modules/,
