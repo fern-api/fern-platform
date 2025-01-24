@@ -63,7 +63,10 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
               className="text-default scroll-mt-content-padded hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
               id={id}
             >
-              {title ?? getLanguageDisplayName(language ?? "Untitled")}
+              {title ??
+                getLanguageDisplayName(
+                  ApiDefinition.cleanLanguage(language ?? "Untitled")
+                )}
             </h6>
           </RadixTabs.Trigger>
         ))}
