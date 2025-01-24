@@ -203,6 +203,7 @@ export async function serializeMdx(
       console.error(e);
     }
     attempts++;
+    // exponential backoff
     await new Promise((resolve) => setTimeout(resolve, 1000 * attempts));
   }
   return content;
