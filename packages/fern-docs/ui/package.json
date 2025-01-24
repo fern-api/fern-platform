@@ -151,7 +151,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "chromatic": "^11.3.0",
-    "depcheck": "^1.4.3",
+    "depcheck": "^1.4.7",
     "eslint": "^9",
     "eslint-plugin-storybook": "^0.8.0",
     "express": "^4.21.2",
