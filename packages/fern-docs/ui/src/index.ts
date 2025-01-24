@@ -7,7 +7,7 @@ export type {
   LogoConfiguration,
   NavbarLink,
 } from "./atoms";
-export { withCustomJavascript } from "./atoms/js";
+export { withCustomJavascript } from "./atoms/docs";
 export { withLogo } from "./atoms/logo";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";

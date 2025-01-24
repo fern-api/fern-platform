@@ -1,10 +1,15 @@
 export * from "./announcement";
 export * from "./apis";
 export * from "./auth";
-export * from "./docs";
+export {
+  DOCS_ATOM,
+  EMPTY_ANALYTICS_CONFIG,
+  EMPTY_DOCS_STATE,
+  HydrateAtoms,
+  JS_ATOM,
+} from "./docs";
 export * from "./flags";
 export * from "./hooks";
-export { JS_ATOM } from "./js";
 export * from "./lang";
 export * from "./layout";
 export * from "./location";
