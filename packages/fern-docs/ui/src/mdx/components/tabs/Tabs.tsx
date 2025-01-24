@@ -2,7 +2,6 @@ import { ApiDefinition } from "@fern-api/fdr-sdk";
 import * as RadixTabs from "@radix-ui/react-tabs";
 import { useAtom, useAtomValue } from "jotai";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { ANCHOR_ATOM, FERN_LANGUAGE_ATOM } from "../../../atoms";
 
 export interface TabProps {
@@ -63,10 +62,7 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
               className="text-default scroll-mt-content-padded hover:border-default data-[state=active]:t-accent data-[state=active]:border-accent -mb-px flex max-w-max cursor-pointer whitespace-nowrap border-b border-transparent pb-2.5 pt-3 text-sm font-semibold leading-6"
               id={id}
             >
-              {title ??
-                getLanguageDisplayName(
-                  ApiDefinition.cleanLanguage(language ?? "Untitled")
-                )}
+              {title}
             </h6>
           </RadixTabs.Trigger>
         ))}
