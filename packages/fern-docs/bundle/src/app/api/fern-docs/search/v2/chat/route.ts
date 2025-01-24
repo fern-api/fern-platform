@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
     date: new Date().toDateString(),
     documents,
   });
-  const result = traced(() =>
+  const result = await traced(() =>
     streamText({
       model: languageModel,
       system,
