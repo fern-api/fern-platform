@@ -77,11 +77,11 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 
 ### Docs Dev Environment
 
-To run the docs dev environment, make sure vercel is installed:
+To run the docs dev environment, first make sure vercel is installed:
 
 - `npm install -g vercel`
 
-Then link vercel to the project:
+From the fern-platform repository, link vercel to the Fern project:
 
 - `vercel link --project app.buildwithfern.com`
 - When prompted to setup the project, say `yes`
@@ -92,7 +92,9 @@ Then, run `vercel pull`, which will create `/fern-platform/.vercel/.env.developm
 Then, copy that file (creating if necessary) to `/fern-platform/packages/fern-docs/bundle/.env.local`
 Finally, to run the dev server, `cd /packages/fern-docs/bundle` and run `pnpm docs:dev`, which should begin running on `localhost:3000`
 
-Optionally, to reroute to a different docs domain, add a `NEXT_PUBLIC_DOCS_DOMAIN` to `.env.local`
+To set a dev docs domain, add a `NEXT_PUBLIC_DOCS_DOMAIN` to `.env.local`. For instance:
+
+- `NEXT_PUBLIC_DOCS_DOMAIN=customer.docs.buildwithfern.com`
 
 ## Testing in Staging
 
