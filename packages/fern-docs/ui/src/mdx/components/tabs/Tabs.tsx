@@ -45,7 +45,10 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
   const handleTabChange = (tabId: string) => {
     setActiveTab(tabId);
     const selectedTab = tabs.find((tab) => tab.id === tabId);
-    if (selectedTab?.language && selectedTab.language !== selectedLanguage) {
+    if (
+      selectedTab?.language &&
+      ApiDefinition.cleanLanguage(selectedTab.language) !== selectedLanguage
+    ) {
       setSelectedLanguage(selectedTab.language);
     }
   };
