@@ -17,40 +17,31 @@
       "path": "../../commons/fdr-utils"
     },
     {
-      "path": "../../fdr-sdk/tsconfig.build.json"
+      "path": "../search-utils"
     },
     {
       "path": "../auth"
     },
     {
-      "path": "../cache"
-    },
-    {
-      "path": "../components"
-    },
-    {
       "path": "../edge-config"
+    },
+    {
+      "path": "../utils"
+    },
+    {
+      "path": "../cache"
     },
     {
       "path": "../mdx"
     },
     {
-      "path": "../search-server"
-    },
-    {
-      "path": "../search-utils"
-    },
-    {
-      "path": "../seo"
-    },
-    {
-      "path": "../syntax-highlighter"
+      "path": "../../fdr-sdk/tsconfig.build.json"
     },
     {
       "path": "../ui/tsconfig.build.json"
     },
     {
-      "path": "../utils"
+      "path": "../components"
     }
   ]
 }

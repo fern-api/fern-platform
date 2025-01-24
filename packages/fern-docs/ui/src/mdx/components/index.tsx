@@ -1,5 +1,5 @@
 import { RemoteFontAwesomeIcon } from "@fern-docs/components";
-import type { MDXComponents } from "@fern-docs/mdx";
+import type { MDXComponents } from "mdx/types";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import {
@@ -31,7 +31,7 @@ import { CodeGroup } from "./code/CodeGroup";
 import { Column, ColumnGroup } from "./columns";
 import { Feature } from "./feature";
 import { Frame } from "./frame";
-import { A, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
+import { A, Embed, HeadingRenderer, Image, Li, Ol, Strong, Ul } from "./html";
 import { Table } from "./html-table";
 import { If } from "./if";
 import { IFrame } from "./iframe";
@@ -117,11 +117,13 @@ const HTML_COMPONENTS: MDXComponents = {
   li: Li,
   a: A,
   img: Image,
+  embed: Embed,
   strong: Strong,
 };
 
 const ALIASED_HTML_COMPONENTS = {
   Image,
+  Embed,
   IFrame,
   H1: (props: ComponentProps<"h1">): ReactElement => HeadingRenderer(1, props),
   H2: (props: ComponentProps<"h2">): ReactElement => HeadingRenderer(2, props),

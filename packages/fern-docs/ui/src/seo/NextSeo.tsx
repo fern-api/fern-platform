@@ -1,4 +1,4 @@
-import { buildTags } from "@fern-docs/seo";
+import { buildTags } from "@fern-docs/next-seo";
 import { useAtomValue } from "jotai";
 import Head from "next/head";
 import { ReactElement } from "react";

@@ -4,7 +4,6 @@ import {
   sanitizeBreaks,
   sanitizeMdxExpression,
   toTree,
-  type PluggableList,
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
@@ -23,11 +22,10 @@ import remarkGemoji from "remark-gemoji";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
-import { rehypeFiles } from "../plugins/rehype-files";
+import { PluggableList } from "unified";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { remarkExtractTitle } from "../plugins/remark-extract-title";
 import type { FernSerializeMdxOptions } from "../types";
 
 /**
@@ -43,13 +41,7 @@ export async function serializeMdx(
 ): Promise<FernDocs.MarkdownText | undefined>;
 export async function serializeMdx(
   content: string | undefined,
-  {
-    options = {},
-    files,
-    filename,
-    scope = {},
-    replaceSrc,
-  }: FernSerializeMdxOptions = {}
+  { options = {}, files, filename, scope = {} }: FernSerializeMdxOptions = {}
 ): Promise<FernDocs.MarkdownText | undefined> {
   if (content == null) {
     return undefined;
@@ -102,7 +94,7 @@ export async function serializeMdx(
         },
       },
 
-      mdxOptions: (o: Options, frontmatter) => {
+      mdxOptions: (o: Options) => {
         o.remarkRehypeOptions = {
           ...o.remarkRehypeOptions,
           ...options,
@@ -116,7 +108,6 @@ export async function serializeMdx(
         o.providerImportSource = "@mdx-js/react";
 
         const remarkPlugins: PluggableList = [
-          [remarkExtractTitle, { frontmatter }],
           remarkSqueezeParagraphs,
           remarkSanitizeAcorn,
           remarkGfm,
@@ -138,7 +129,6 @@ export async function serializeMdx(
         const rehypePlugins: PluggableList = [
           rehypeSqueezeParagraphs,
           rehypeMdxClassStyle,
-          [rehypeFiles, { replaceSrc }],
           rehypeAcornErrorBoundary,
           rehypeSlug,
           rehypeKatex,

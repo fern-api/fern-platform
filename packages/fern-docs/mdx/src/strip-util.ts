@@ -1,5 +1,5 @@
+import { toString } from "hast-util-to-string";
 import { visit } from "unist-util-visit";
-import { hastToString } from "./hast-utils/hast-to-string.js";
 import { isMdxJsxElementHast } from "./mdx-utils/is-mdx-element.js";
 import { toTree } from "./parse.js";
 
@@ -35,5 +35,5 @@ export function stripUtil(
   });
 
   // TODO: (andrew), this might have some issues with formatting new lines
-  return hastToString(hast);
+  return toString(hast);
 }

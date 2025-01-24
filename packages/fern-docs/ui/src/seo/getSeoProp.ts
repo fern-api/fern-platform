@@ -1,6 +1,5 @@
 import { APIV1Read, DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import type {
+import {
   WithJsonLdBreadcrumbs,
   WithMetadataConfig,
 } from "@fern-api/fdr-sdk/docs";
@@ -8,13 +7,12 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import {
   assertNonNullish,
   visitDiscriminatedUnion,
-  withDefaultProtocol,
 } from "@fern-api/ui-core-utils";
-import { markdownToString } from "@fern-docs/mdx";
-import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
-
-import type { LinkTag, MetaTag, NextSeoProps } from "./types";
-import { getBreadcrumbList } from "./with-breadcrumb";
+import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
+import type { LinkTag, MetaTag, NextSeoProps } from "@fern-docs/next-seo";
+import { getToHref } from "../hooks/useHref";
+import { getFontExtension } from "../themes/stylesheet/getFontVariables";
+import { getBreadcrumbList } from "./getBreadcrumbList";
 
 const EMPTY_METADATA_CONFIG: WithMetadataConfig & WithJsonLdBreadcrumbs = {
   "og:image": undefined,
@@ -53,10 +51,10 @@ function getFile(
   });
 }
 
-export function withSeo(
+export function getSeoProps(
   domain: string,
   { metadata, title, favicon, typographyV2: typography }: DocsV1Read.DocsConfig,
-  frontmatter: FernDocs.Frontmatter | undefined,
+  pages: Record<string, DocsV1Read.PageContent>,
   files: Record<string, DocsV1Read.File_>,
   apis: Record<string, APIV1Read.ApiDefinition>,
   {
@@ -67,7 +65,8 @@ export function withSeo(
     FernNavigation.utils.Node.Found,
     "node" | "parents" | "currentVersion" | "root"
   >,
-  isSeoDisabled: boolean
+  isSeoDisabled: boolean,
+  isTrailingSlashEnabled: boolean
 ): NextSeoProps {
   const additionalMetaTags: MetaTag[] = [];
   const additionalLinkTags: LinkTag[] = [];
@@ -86,12 +85,10 @@ export function withSeo(
    * Canonical slugs are computed upstream, where duplicated markdown pages, and multi-version docs are both handled.
    */
   // TODO: set canonical domain in docs.yml
-  seo.canonical = String(
-    new URL(
-      conformTrailingSlash(addLeadingSlash(node.canonicalSlug ?? node.slug)),
-      withDefaultProtocol(domain)
-    )
-  );
+  const toHref = getToHref(isTrailingSlashEnabled);
+  seo.canonical = toHref(node.canonicalSlug ?? node.slug, domain);
+
+  const pageId = FernNavigation.getPageId(node);
 
   let ogMetadata: WithMetadataConfig & WithJsonLdBreadcrumbs = {
     ...EMPTY_METADATA_CONFIG,
@@ -107,7 +104,9 @@ export function withSeo(
     });
   }
 
-  if (frontmatter != null) {
+  const page = pageId != null ? pages[pageId] : undefined;
+  if (page != null) {
+    const { data: frontmatter, content } = getFrontmatter(page.markdown);
     ogMetadata = { ...ogMetadata, ...frontmatter };
 
     // add breadcrumb list if it exists, otherwise compute it
@@ -151,7 +150,9 @@ export function withSeo(
       }
     }
 
-    seo.title = markdownToString(frontmatter.headline ?? frontmatter.title);
+    seo.title = markdownToString(
+      frontmatter.headline ?? extractHeadline(content) ?? frontmatter.title
+    );
     seo.description = markdownToString(
       frontmatter.description ?? frontmatter.subtitle ?? frontmatter.excerpt
     );
@@ -342,10 +343,13 @@ function getPreloadedFont(
   };
 }
 
-function getFontExtension(url: string): string {
-  const ext = url.split(".").pop();
-  if (ext == null) {
-    throw new Error("No extension found for font: " + url);
+// TODO: make this more robust and well-tested i.e. title over multiple lines
+export function extractHeadline(markdownContent: string): string | undefined {
+  if (
+    markdownContent.trim().startsWith("#") &&
+    !markdownContent.trim().startsWith("##")
+  ) {
+    return markdownContent.trim().split("\n")[0];
   }
-  return ext;
+  return;
 }

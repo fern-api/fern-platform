@@ -1,3 +1,5 @@
+import { DocsV1Read, FdrAPI } from "@fern-api/fdr-sdk";
+import { useAtomValue } from "jotai";
 import {
   ComponentProps,
   ComponentPropsWithoutRef,
@@ -8,7 +10,7 @@ import {
   useContext,
 } from "react";
 import Zoom from "react-medium-image-zoom";
-import { useEdgeFlags } from "../../../atoms";
+import { FILES_ATOM, useEdgeFlags } from "../../../atoms";
 import { FernImage } from "../../../components/FernImage";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 import { toPixelValue } from "../../../util/to-pixel-value";
@@ -33,18 +35,10 @@ export const Image = forwardRef<
      * @default false
      */
     enableZoom?: boolean;
-
-    // other props from next/image that are supported
-    fill?: boolean | undefined;
-    quality?: number | `${number}` | undefined;
-    priority?: boolean | undefined;
-    loading?: "eager" | "lazy" | undefined;
-    blurDataURL?: string | undefined;
-    unoptimized?: boolean | undefined;
   }
 >((props, ref) => {
   const {
-    src,
+    src: srcProp,
     width,
     height,
     noZoom: isImageZoomDisabledProp = false,
@@ -53,14 +47,8 @@ export const Image = forwardRef<
     ...rest
   } = props;
 
-  const isImageZoomDisabled = useIsImageZoomDisabled({
-    noZoom: isImageZoomDisabledProp,
-    enableZoom: isImageZoomEnabledOverride,
-  });
-
-  if (!src) {
-    return null;
-  }
+  const files = useAtomValue(FILES_ATOM);
+  const src = srcProp ? selectFile(files, srcProp) : undefined;
 
   const fernImage = (
     <FernImage
@@ -69,16 +57,26 @@ export const Image = forwardRef<
       width={toPixelValue(width)}
       height={toPixelValue(height)}
       {...rest}
-      alt={rest.alt ?? ""}
+      style={{
+        // since the `toPixelValue` will return undefined for non-pixel values, we need to preserve the original values using the `style` prop
+        width,
+        height,
+        ...style,
+      }}
     />
   );
+
+  const isImageZoomDisabled = useIsImageZoomDisabled({
+    noZoom: isImageZoomDisabledProp,
+    enableZoom: isImageZoomEnabledOverride,
+  });
 
   if (isImageZoomDisabled) {
     return fernImage;
   }
 
   return (
-    <Zoom zoomImg={{ src }} classDialog="custom-backdrop">
+    <Zoom zoomImg={{ src: src?.url }} classDialog="custom-backdrop">
       {fernImage}
     </Zoom>
   );
@@ -127,4 +125,26 @@ function useIsImageZoomDisabled({
     isImageZoomDisabledLayout
     ? !enableZoom
     : noZoom;
+}
+
+/**
+ * Conforms the `src` prop to the File type.
+ * @param files - Files map
+ * @param src - Source
+ * @returns File
+ */
+function selectFile(
+  files: Record<string, DocsV1Read.File_>,
+  src: string
+): DocsV1Read.File_ | undefined {
+  if (src == null) {
+    return undefined;
+  }
+
+  // `file:` is a special signifier that the src references a file in the Files record.
+  // which was functionality introduced in https://github.com/fern-api/fern/pull/3847
+  // but this will be deprecated so that any string in the src prop can be used to lookup a file in the Files record,
+  // and fallback as "url" if not found.
+  const fileId = FdrAPI.FileId(src.startsWith("file:") ? src.slice(5) : src);
+  return files[fileId] ?? { type: "url", url: FdrAPI.Url(src) };
 }

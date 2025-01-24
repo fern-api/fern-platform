@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { getBreadcrumbList } from "../with-breadcrumb";
+import { getBreadcrumbList } from "../getBreadcrumbList";
 
 describe("getBreadcrumbList", () => {
   it("should override the title used in the breadcrumb's last item", () => {

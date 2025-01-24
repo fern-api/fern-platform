@@ -1,7 +1,7 @@
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
 import { extractNextDataPathname } from "@/server/extractNextDataPathname";
 import { getLaunchDarklySettings } from "@fern-docs/edge-config";
-import { removeTrailingSlash } from "@fern-docs/utils";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withMiddlewareAuth } from "./server/withMiddlewareAuth";

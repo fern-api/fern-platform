@@ -1,4 +1,3 @@
-import { removeTrailingSlash } from "@fern-docs/utils";
 import { addLocale } from "next/dist/client/add-locale";
 import type PageLoader from "next/dist/client/page-loader";
 import { addPathPrefix } from "next/dist/shared/lib/router/utils/add-path-prefix";
@@ -6,6 +5,7 @@ import getAssetPathFromRoute from "next/dist/shared/lib/router/utils/get-asset-p
 import { interpolateAs } from "next/dist/shared/lib/router/utils/interpolate-as";
 import { isDynamicRoute } from "next/dist/shared/lib/router/utils/is-dynamic";
 import { parseRelativeUrl } from "next/dist/shared/lib/router/utils/parse-relative-url";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { Router } from "next/router";
 import { useEffect } from "react";
 

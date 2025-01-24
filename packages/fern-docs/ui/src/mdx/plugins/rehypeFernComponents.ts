@@ -1,27 +1,30 @@
 import {
-  CONTINUE,
-  Hast,
   hastMdxJsxElementHastToProps,
-  hastToString,
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
+  type MdxJsxElementHast,
+} from "@fern-docs/mdx";
+import GithubSlugger from "github-slugger";
+import type { Doctype, Element, ElementContent, Root } from "hast";
+import { toString } from "hast-util-to-string";
+import {
+  CONTINUE,
   visit,
   type BuildVisitor,
   type VisitorResult,
-} from "@fern-docs/mdx";
-import GithubSlugger from "github-slugger";
+} from "unist-util-visit";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
 
 type Visitor = BuildVisitor<
-  Hast.Root | Hast.Doctype | Hast.ElementContent,
-  Hast.Root | Hast.Element | Hast.MdxJsxElement | undefined
+  Root | Doctype | ElementContent,
+  Root | Element | MdxJsxElementHast | undefined
 >;
 
-export function rehypeFernComponents(): (tree: Hast.Root) => void {
-  return function (tree: Hast.Root): void {
+export function rehypeFernComponents(): (tree: Root) => void {
+  return function (tree: Root): void {
     slugger.reset();
 
     // convert img to Image
@@ -132,9 +135,9 @@ export function rehypeFernComponents(): (tree: Hast.Root) => void {
 }
 
 function transformTabs(
-  node: Hast.MdxJsxElement,
+  node: MdxJsxElementHast,
   index: number,
-  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
+  parent: Root | Element | MdxJsxElementHast,
   visitor: Visitor
 ): VisitorResult {
   const tabs = node.children
@@ -165,9 +168,9 @@ function transformTabs(
 }
 
 function transformTabItem(
-  node: Hast.MdxJsxElement,
+  node: MdxJsxElementHast,
   index: number,
-  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
+  parent: Root | Element | MdxJsxElementHast,
   visitor: Visitor
 ): VisitorResult {
   const title = getTitle(node) ?? "Untitled";
@@ -189,9 +192,9 @@ function transformTabItem(
 }
 
 function transformAccordionGroup(
-  node: Hast.MdxJsxElement,
+  node: MdxJsxElementHast,
   index: number,
-  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
+  parent: Root | Element | MdxJsxElementHast,
   visitor: Visitor
 ): VisitorResult {
   const items = node.children
@@ -222,12 +225,12 @@ function transformAccordionGroup(
 
 // TODO: handle lone <Step> component
 function transformSteps(
-  node: Hast.MdxJsxElement,
+  node: MdxJsxElementHast,
   index: number,
-  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
+  parent: Root | Element | MdxJsxElementHast,
   visitor: Visitor
 ): VisitorResult {
-  const children: Hast.MdxJsxElement[] = [];
+  const children: MdxJsxElementHast[] = [];
 
   node.children.forEach((child) => {
     if (child.type === "mdxJsxFlowElement" && child.name === "Step") {
@@ -242,7 +245,7 @@ function transformSteps(
 
       children.push(child);
     } else if (child.type === "element" && child.tagName === "h3") {
-      const title = hastToString(child);
+      const title = toString(child);
 
       // id may have been set by customHeadingHandler in remarkRehypeHandlers.ts
       const slug =
@@ -294,9 +297,9 @@ function transformSteps(
 }
 
 function transformAccordion(
-  node: Hast.MdxJsxElement,
+  node: MdxJsxElementHast,
   index: number,
-  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
+  parent: Root | Element | MdxJsxElementHast,
   visitor: Visitor
 ): VisitorResult {
   const title = getTitle(node) ?? "Untitled";
@@ -318,7 +321,7 @@ function transformAccordion(
   return index + 1;
 }
 
-function getTitle(node: Hast.MdxJsxElement): string | undefined {
+function getTitle(node: MdxJsxElementHast): string | undefined {
   const title = node.attributes
     .filter(isMdxJsxAttribute)
     .find((attr) => attr.name === "title")?.value;
@@ -326,7 +329,7 @@ function getTitle(node: Hast.MdxJsxElement): string | undefined {
   return typeof title === "string" ? title : undefined;
 }
 
-function applyGeneratedId(node: Hast.MdxJsxElement, title: string): void {
+function applyGeneratedId(node: MdxJsxElementHast, title: string): void {
   const id = node.attributes
     .filter(isMdxJsxAttribute)
     .find((attr) => attr.name === "id");

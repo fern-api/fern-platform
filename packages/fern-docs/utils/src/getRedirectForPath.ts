@@ -1,8 +1,8 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import type { Redirect } from "next/types";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
-import { removeTrailingSlash } from "./trailing-slash";
 
 /**
  * Match a path against a pattern, wrapped in a try-catch block to prevent crashes

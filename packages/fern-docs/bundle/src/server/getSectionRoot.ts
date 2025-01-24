@@ -1,6 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, STOP } from "@fern-api/fdr-sdk/traversers";
-import { removeLeadingSlash } from "@fern-docs/utils";
+import { removeLeadingSlash } from "./removeLeadingSlash";
 
 export function getSectionRoot(
   root: FernNavigation.RootNode | undefined,

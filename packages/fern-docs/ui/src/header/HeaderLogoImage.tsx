@@ -1,38 +1,65 @@
+import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { useAtomValue } from "jotai";
-import { ReactElement } from "react";
-import { DOCS_ATOM, LOGO_ATOM } from "../atoms";
+import { ComponentPropsWithoutRef, forwardRef, ReactElement } from "react";
+import { DOCS_ATOM, LOGO_IMAGE_ATOM, useFile, useLogoHeight } from "../atoms";
 import { FernImage } from "../components/FernImage";
 
+const FernFileImage = forwardRef<
+  HTMLImageElement,
+  Omit<ComponentPropsWithoutRef<typeof FernImage>, "src"> & {
+    fileId: DocsV1Read.FileId;
+  }
+>(({ fileId, ...props }, ref) => {
+  return <FernImage {...props} ref={ref} src={useFile(fileId)} />;
+});
+
+FernFileImage.displayName = "FernFileImage";
+
+const FernFileOrUrlImage = forwardRef<
+  HTMLImageElement,
+  Omit<ComponentPropsWithoutRef<typeof FernImage>, "src"> & {
+    fileIdOrUrl: DocsV1Read.FileIdOrUrl;
+  }
+>(({ fileIdOrUrl, ...props }, ref) => {
+  if (fileIdOrUrl.type === "fileId") {
+    return <FernFileImage {...props} ref={ref} fileId={fileIdOrUrl.value} />;
+  }
+  return (
+    <FernImage
+      {...props}
+      ref={ref}
+      src={{ type: "url", url: fileIdOrUrl.value }}
+    />
+  );
+});
+
+FernFileOrUrlImage.displayName = "FernFileOrUrlImage";
+
 export function HeaderLogoImage(): ReactElement | null {
+  const logoImageHeight = useLogoHeight();
   const title = useAtomValue(DOCS_ATOM).title ?? "Logo";
-  const { light, dark, height } = useAtomValue(LOGO_ATOM);
+  const { light, dark } = useAtomValue(LOGO_IMAGE_ATOM);
 
   if (light != null && dark != null) {
     return (
       <>
-        <FernImage
+        <FernFileOrUrlImage
           alt={title}
-          src={light.src}
+          fileIdOrUrl={light}
           className="fern-logo-light"
-          height={light.height}
-          width={light.width}
-          blurDataURL={light.blurDataURL}
+          height={logoImageHeight}
           priority={true}
           loading="eager"
           quality={100}
-          style={{ height }}
         />
-        <FernImage
+        <FernFileOrUrlImage
           alt={title}
-          src={dark.src}
+          fileIdOrUrl={dark}
           className="fern-logo-dark"
-          height={dark.height}
-          width={dark.width}
-          blurDataURL={dark.blurDataURL}
+          height={logoImageHeight}
           priority={true}
           loading="eager"
           quality={100}
-          style={{ height }}
         />
       </>
     );
@@ -45,17 +72,15 @@ export function HeaderLogoImage(): ReactElement | null {
   }
 
   return (
-    <FernImage
+    <FernFileOrUrlImage
       alt={title}
-      src={logoFile.src}
+      fileIdOrUrl={logoFile}
       className="fern-logo"
-      height={logoFile.height}
-      width={logoFile.width}
-      blurDataURL={logoFile.blurDataURL}
+      height={logoImageHeight}
+      style={{ height: logoImageHeight }}
       priority={true}
       loading="eager"
       quality={100}
-      style={{ height }}
     />
   );
 }

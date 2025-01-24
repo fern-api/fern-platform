@@ -7,27 +7,20 @@ import {
   getEdgeFlags,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
-import { withSeo } from "@fern-docs/seo";
 import {
-  type DocsPage,
-  type ImageData,
-  type NavbarLink,
+  DocsPage,
+  NavbarLink,
   getApiRouteSupplier,
   getGitHubInfo,
   getGitHubRepo,
+  getSeoProps,
   renderThemeStylesheet,
-  withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
-import {
-  addLeadingSlash,
-  getRedirectForPath,
-  isTrailingSlashEnabled,
-} from "@fern-docs/utils";
+import { addLeadingSlash, getRedirectForPath } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
-import { UnreachableCaseError } from "ts-essentials";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
@@ -35,14 +28,12 @@ import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import { withLaunchDarkly } from "./ld-adapter";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
+import { isTrailingSlashEnabled } from "./trailingSlash";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
 } from "./withPrunedNavigation";
-import {
-  extractFrontmatterFromDocsContent,
-  withResolvedDocsContent,
-} from "./withResolvedDocsContent";
+import { withResolvedDocsContent } from "./withResolvedDocsContent";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -201,6 +192,12 @@ export async function withInitialProps({
           : undefined,
   };
 
+  const logoHref =
+    docs.definition.config.logoHref ??
+    (found.landingPage?.slug != null && !found.landingPage.hidden
+      ? encodeURI(addLeadingSlash(found.landingPage.slug))
+      : undefined);
+
   const navbarLinks: NavbarLink[] = [];
 
   docs.definition.config.navbarLinks?.forEach((link) => {
@@ -298,34 +295,6 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
-  function resolveFileSrc(src: string | undefined): ImageData | undefined {
-    if (src == null) {
-      return undefined;
-    }
-
-    const fileId = FernNavigation.FileId(
-      src.startsWith("file:") ? src.slice(5) : src
-    );
-    const file = docs.definition.filesV2[fileId];
-    if (file == null) {
-      // the file is not found, so we return the src as the image data
-      return { src };
-    }
-
-    if (file.type === "image") {
-      return {
-        src: file.url,
-        width: file.width,
-        height: file.height,
-        blurDataURL: file.blurDataUrl,
-      };
-    } else if (file.type === "url") {
-      return { src: file.url };
-    } else {
-      throw new UnreachableCaseError(file);
-    }
-  }
-
   const content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,
     found,
@@ -342,9 +311,7 @@ export async function withInitialProps({
         tab: found?.currentTab?.title,
       },
     },
-    replaceSrc: resolveFileSrc,
   });
-  const frontmatter = extractFrontmatterFromDocsContent(found.node.id, content);
 
   if (content == null) {
     return { notFound: true };
@@ -394,7 +361,9 @@ export async function withInitialProps({
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    logo: withLogo(docs.definition, found, frontmatter, resolveFileSrc),
+    logoHeight: docs.definition.config.logoHeight,
+    logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
+    files: docs.definition.filesV2,
     content,
     announcement:
       docs.definition.config.announcement != null
@@ -413,14 +382,15 @@ export async function withInitialProps({
     },
     edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FernNavigation.ApiDefinitionId),
-    seo: withSeo(
+    seo: getSeoProps(
       docs.baseUrl.domain,
       docs.definition.config,
-      frontmatter,
+      docs.definition.pages,
       docs.definition.filesV2,
       docs.definition.apis,
       found,
-      await getSeoDisabled(domain)
+      await getSeoDisabled(domain),
+      isTrailingSlashEnabled()
     ),
     user: authState.authed ? authState.user : undefined,
     fallback: {},

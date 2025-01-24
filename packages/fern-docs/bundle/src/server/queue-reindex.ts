@@ -5,9 +5,9 @@ import {
   HEADER_X_FERN_HOST,
   HEADER_X_VERCEL_PROTECTION_BYPASS,
   addLeadingSlash,
-  conformTrailingSlash,
-  removeTrailingSlash,
 } from "@fern-docs/utils";
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
+import { conformTrailingSlash } from "./trailingSlash";
 
 const q = new Client({ token: qstashToken() });
 

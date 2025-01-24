@@ -1,4 +1,3 @@
-import { FernDocs } from "@fern-api/fdr-sdk";
 import {
   ApiDefinition,
   CodeSnippet,
@@ -15,18 +14,14 @@ import {
 } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { getFrontmatter } from "@fern-docs/mdx";
-import { withSeo } from "@fern-docs/seo";
 import {
-  DocsContent,
   DocsPage,
   getGitHubInfo,
   getGitHubRepo,
-  ImageData,
+  getSeoProps,
   NavbarLink,
   renderThemeStylesheet,
   resolveDocsContent,
-  withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
 import {
@@ -37,7 +32,6 @@ import {
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
-import { UnreachableCaseError } from "ts-essentials";
 import urljoin from "url-join";
 
 export async function getDocsPageProps(
@@ -90,34 +84,6 @@ export async function getDocsPageProps(
   // TODO: get feature flags from the API
   const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
-  function resolveFileSrc(src: string | undefined): ImageData | undefined {
-    if (src == null) {
-      return undefined;
-    }
-
-    const fileId = FernNavigation.FileId(
-      src.startsWith("file:") ? src.slice(5) : src
-    );
-    const file = docs.definition.filesV2[fileId];
-    if (file == null) {
-      // the file is not found, so we return the src as the image data
-      return { src };
-    }
-
-    if (file.type === "image") {
-      return {
-        src: file.url,
-        width: file.width,
-        height: file.height,
-        blurDataURL: file.blurDataUrl,
-      };
-    } else if (file.type === "url") {
-      return { src: file.url };
-    } else {
-      throw new UnreachableCaseError(file);
-    }
-  }
-
   const content = await resolveDocsContent({
     domain: docs.baseUrl.domain,
     node: node.node,
@@ -143,24 +109,10 @@ export async function getDocsPageProps(
     edgeFlags,
     mdxOptions: {
       files: docs.definition.jsFiles,
-      scope: {
-        env: "development",
-        props: {
-          authed: false,
-          user: undefined,
-          version: node.currentVersion?.versionId,
-          tab: node.currentTab?.title,
-        },
-      },
-
-      // inject the file url and dimensions for images and other embeddable files
-      replaceSrc: resolveFileSrc,
     },
     serializeMdx,
     engine: "next-mdx-remote",
   });
-
-  const frontmatter = extractFrontmatterFromDocsContent(node.node.id, content);
 
   if (content == null) {
     console.error(`Failed to resolve path for ${slug}`);
@@ -238,7 +190,9 @@ export async function getDocsPageProps(
     colors,
     js: docs.definition.config.js,
     navbarLinks,
-    logo: withLogo(docs.definition, node, frontmatter, resolveFileSrc),
+    logoHeight: docs.definition.config.logoHeight,
+    logoHref: docs.definition.config.logoHref,
+    files: docs.definition.filesV2,
     content,
     announcement:
       docs.definition.config.announcement != null
@@ -289,14 +243,15 @@ export async function getDocsPageProps(
     },
     edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FdrAPI.ApiDefinitionId),
-    seo: withSeo(
+    seo: getSeoProps(
       docs.baseUrl.domain,
       docs.definition.config,
-      frontmatter,
+      docs.definition.pages,
       docs.definition.filesV2,
       docs.definition.apis,
       node,
-      true
+      true,
+      false
     ),
     fallback: {},
     analytics: undefined,
@@ -407,37 +362,3 @@ const resolveExample = async (
 
   return { ...example, snippets };
 };
-
-export function extractFrontmatterFromDocsContent(
-  nodeId: FernNavigation.NodeId,
-  docsContent: DocsContent | undefined
-): FernDocs.Frontmatter | undefined {
-  if (docsContent == null) {
-    return undefined;
-  }
-  switch (docsContent.type) {
-    case "markdown-page":
-      return getFrontmatterFromMarkdownText(docsContent.content);
-    case "changelog-entry":
-      return getFrontmatterFromMarkdownText(docsContent.page);
-    case "api-reference-page": {
-      const mdx = docsContent.mdxs[nodeId];
-      if (mdx == null) {
-        return undefined;
-      }
-      return getFrontmatterFromMarkdownText(mdx.content);
-    }
-    default:
-      // TODO: handle changelog overview page and other pages
-      return undefined;
-  }
-}
-
-function getFrontmatterFromMarkdownText(
-  markdownText: FernDocs.MarkdownText
-): FernDocs.Frontmatter | undefined {
-  if (typeof markdownText === "string") {
-    return getFrontmatter(markdownText).data;
-  }
-  return markdownText.frontmatter;
-}

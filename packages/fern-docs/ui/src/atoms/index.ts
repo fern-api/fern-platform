@@ -2,6 +2,7 @@ export * from "./announcement";
 export * from "./apis";
 export * from "./auth";
 export * from "./docs";
+export * from "./files";
 export * from "./flags";
 export * from "./hooks";
 export * from "./lang";

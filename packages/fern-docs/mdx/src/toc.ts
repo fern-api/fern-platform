@@ -1,8 +1,8 @@
 import { slug } from "github-slugger";
 import type { Doctype, ElementContent, Root } from "hast";
 import { headingRank } from "hast-util-heading-rank";
+import { toString } from "hast-util-to-string";
 import { SKIP, visit, type BuildVisitor } from "unist-util-visit";
-import { hastToString } from "./hast-utils";
 import { hastGetBooleanValue } from "./hast-utils/hast-get-boolean-value";
 import { isHastElement } from "./hast-utils/is-hast-element";
 import { isMdxJsxElementHast } from "./mdx-utils/is-mdx-element";
@@ -81,7 +81,7 @@ export function makeToc(
         return;
       }
 
-      const title = hastToString(node);
+      const title = toString(node);
 
       headings.push({ depth: rank, id, title });
     }
@@ -99,13 +99,9 @@ export function makeToc(
         return;
       }
 
-      const depth = parseInt(node.name[1] ?? "0");
-      if (depth < 1 || depth > 6) {
-        // depth must be between 1 and 6
-        return;
-      }
-
-      const title = hastToString(node);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const depth = parseInt(node.name[1]!);
+      const title = toString(node);
       headings.push({ depth, id, title });
     }
 
@@ -183,10 +179,8 @@ function makeTree(
   const tree: TableOfContentsItem[] = [];
 
   while (headings.length > 0) {
-    const firstToken = headings[0];
-    if (!firstToken) {
-      break;
-    }
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const firstToken = headings[0]!;
 
     // if the next heading is at a higher level
     if (firstToken.depth < depth) {

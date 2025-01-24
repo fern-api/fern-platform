@@ -1,5 +1,5 @@
 {
-  "name": "@fern-docs/seo",
+  "name": "@fern-docs/next-seo",
   "version": "0.0.0",
   "private": true,
   "repository": {
@@ -30,15 +30,11 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "@fern-api/ui-core-utils": "workspace:*",
-    "@fern-docs/mdx": "workspace:*",
-    "@fern-docs/utils": "workspace:*",
     "next": "npm:@fern-api/next@14.2.9-fork.2",
     "react": "^18"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@fern-platform/fdr-utils": "workspace:*",
     "@types/node": "^18.7.18",
     "@types/react": "^18",
     "depcheck": "^1.4.3",

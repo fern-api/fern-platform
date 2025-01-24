@@ -1,17 +1,16 @@
+import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
+import { once } from "./once";
+
 function isTruthy(value: string | undefined) {
   return value != null && ["true", "1"].includes(value.trim().toLowerCase());
 }
 
-export const isTrailingSlashEnabled = (): boolean => {
+export const isTrailingSlashEnabled = once((): boolean => {
   return isTruthy(process.env.TRAILING_SLASH);
-};
+});
 
-export const addTrailingSlash = (pathname: string): string => {
+const addTrailingSlash = (pathname: string): string => {
   return pathname.endsWith("/") ? pathname : `${pathname}/`;
-};
-
-export const removeTrailingSlash = (pathname: string): string => {
-  return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
 };
 
 export function conformTrailingSlash(pathname: string): string {
