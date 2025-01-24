@@ -230,7 +230,7 @@ export class FdrDeployStack extends Stack {
       }
     );
 
-    const keyGroupId = getEnvironmentVariableOrThrow("CLOUDFRONT_KEY_PAIR_ID");
+    const keyGroupId = "06e52e5a-38d5-4459-b623-babb2420ea77";
     const dbDocsKeyGroup = cloudfront.KeyGroup.fromKeyGroupId(
       this,
       "DbDocsKeyGroup",
