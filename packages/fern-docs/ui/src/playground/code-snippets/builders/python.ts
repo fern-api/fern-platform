@@ -48,7 +48,7 @@ ${this.#buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
             if (v.value == null) {
               return undefined;
             }
-            return `'${k}': ('${v.value.name}', open('${v.value.name}', 'rb')),`;
+            return `('${k}', ('${v.value.name}', open('${v.value.name}', 'rb'))),`;
           })
           .filter(isNonNullish);
         const fileArrays = Object.entries(value)
@@ -60,19 +60,19 @@ ${this.#buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
           )
           .map(([k, v]) => {
             const fileStrings = v.value.map(
-              (file) => `('${file.name}', open('${file.name}', 'rb'))`
+              (file) => `('${k}', ('${file.name}', open('${file.name}', 'rb')))`
             );
             if (fileStrings.length === 0) {
               return;
             }
-            return `'${k}': [${fileStrings.length === 0 ? fileStrings[0] : indentAfter(`\n${fileStrings.join(",\n")},\n`, 2, 0)}],`;
+            return fileStrings.join(",\n");
           })
           .filter(isNonNullish);
 
         const fileEntries = [...singleFiles, ...fileArrays].join("\n");
         const files =
           fileEntries.length > 0
-            ? `{\n${indentAfter(fileEntries, 2)}\n}`
+            ? `[\n${indentAfter(fileEntries, 2)}\n]`
             : undefined;
 
         const dataEntries = Object.entries(value)
