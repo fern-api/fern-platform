@@ -79,6 +79,7 @@ const nextConfig = {
     "@fern-ui/react-commons",
   ],
   experimental: {
+    serverComponentsExternalPackages: true,
     scrollRestoration: true,
     instrumentationHook: true,
     hardNavigate404: true,
