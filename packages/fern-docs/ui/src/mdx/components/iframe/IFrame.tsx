@@ -6,9 +6,7 @@ import {
   ComponentProps,
   ReactElement,
   RefObject,
-  forwardRef,
   useEffect,
-  useImperativeHandle,
   useRef,
   useState,
 } from "react";
@@ -21,59 +19,52 @@ export declare namespace IFrame {
   }
 }
 
-export const IFrame = forwardRef<HTMLIFrameElement, IFrame.Props>(
-  (
-    {
-      experimental_enableRequestFullscreen,
-      experimental_onFullscreenChange,
-      experimental_onReceiveMessage,
-      ...props
-    },
-    ref
-  ): ReactElement => {
-    const iframeRef = useRef<HTMLIFrameElement>(null);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    useImperativeHandle(ref, () => iframeRef.current!);
+export const IFrame = ({
+  experimental_enableRequestFullscreen,
+  experimental_onFullscreenChange,
+  experimental_onReceiveMessage,
+  ...props
+}: IFrame.Props) => {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
-    useEffect(() => {
-      const contentWindow = iframeRef.current?.contentWindow;
-      if (contentWindow == null || experimental_onReceiveMessage == null) {
-        return;
-      }
-      contentWindow.addEventListener("message", experimental_onReceiveMessage);
-      return () => {
-        contentWindow.removeEventListener(
-          "message",
-          experimental_onReceiveMessage
-        );
-      };
-    }, [experimental_onReceiveMessage]);
-
-    if (
-      experimental_enableRequestFullscreen &&
-      typeof document !== "undefined" &&
-      document.fullscreenEnabled
-    ) {
-      return (
-        <ExperimentalIFrameWithFullscreen
-          iframeRef={iframeRef}
-          onFullscreenChange={experimental_onFullscreenChange}
-        >
-          <iframe ref={iframeRef} {...props} />
-        </ExperimentalIFrameWithFullscreen>
-      );
+  useEffect(() => {
+    const contentWindow = iframeRef.current?.contentWindow;
+    if (contentWindow == null || experimental_onReceiveMessage == null) {
+      return;
     }
+    contentWindow.addEventListener("message", experimental_onReceiveMessage);
+    return () => {
+      contentWindow.removeEventListener(
+        "message",
+        experimental_onReceiveMessage
+      );
+    };
+  }, [experimental_onReceiveMessage]);
 
-    // prevent hydration mismatch by setting data-state to closed
-    return <iframe data-state="closed" ref={ref} {...props} />;
+  if (
+    experimental_enableRequestFullscreen &&
+    typeof document !== "undefined" &&
+    document.fullscreenEnabled
+  ) {
+    return (
+      <ExperimentalIFrameWithFullscreen
+        iframeRef={iframeRef}
+        onFullscreenChange={experimental_onFullscreenChange}
+      >
+        <iframe ref={iframeRef} {...props} />
+      </ExperimentalIFrameWithFullscreen>
+    );
   }
-);
+
+  // prevent hydration mismatch by setting data-state to closed
+  return <iframe data-state="closed" ref={iframeRef} {...props} />;
+};
 
 IFrame.displayName = "IFrame";
 
 interface ExperimentalIFrameWithFullscreenProps {
   onFullscreenChange?: (isFullscreen: boolean) => void;
-  iframeRef: RefObject<HTMLIFrameElement>;
+  iframeRef: RefObject<HTMLIFrameElement | null>;
   children: ReactElement<ComponentProps<"iframe">>;
 }
 

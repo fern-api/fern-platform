@@ -5,6 +5,7 @@ import type {
   WithMetadataConfig,
 } from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { WithNodeMetadata } from "@fern-api/fdr-sdk/navigation";
 import {
   assertNonNullish,
   visitDiscriminatedUnion,
@@ -12,7 +13,6 @@ import {
 } from "@fern-api/ui-core-utils";
 import { markdownToString } from "@fern-docs/mdx";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
-
 import type { LinkTag, MetaTag, NextSeoProps } from "./types";
 import { getBreadcrumbList } from "./with-breadcrumb";
 
@@ -113,7 +113,12 @@ export function withSeo(
     // add breadcrumb list if it exists, otherwise compute it
     seo.breadcrumbList ??=
       ogMetadata["jsonld:breadcrumb"] ??
-      getBreadcrumbList(domain, parents, node, frontmatter.title);
+      getBreadcrumbList(
+        domain,
+        parents.filter(FernNavigation.hasMetadata) as WithNodeMetadata[],
+        node,
+        frontmatter.title
+      );
 
     // add canonical url if frontmatter has it
     if (frontmatter["canonical-url"] != null) {

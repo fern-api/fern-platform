@@ -5,7 +5,7 @@ import { noop } from "ts-essentials";
 import { useEventCallback } from "./useEventCallback";
 
 export function useResizeObserver(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   measure: (entries: ResizeObserverEntry[]) => void
 ): void {
   // ResizeObserver is not supported in SSG, so this hook should be disabled on the server-side

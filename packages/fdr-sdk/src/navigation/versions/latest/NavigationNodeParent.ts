@@ -1,4 +1,6 @@
-import { NavigationNode } from "./NavigationNode";
-import { NavigationNodeLeaf } from "./NavigationNodeLeaf";
+import { FernNavigation } from "../../..";
 
-export type NavigationNodeParent = Exclude<NavigationNode, NavigationNodeLeaf>;
+export type NavigationNodeParent = Exclude<
+  FernNavigation.NavigationNode,
+  FernNavigation.NavigationNodeLeaf
+>;

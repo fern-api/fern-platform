@@ -47,34 +47,59 @@ const ElevenLabsWaveform = dynamic(() =>
   import("./waveform/WaveformComplex").then((mod) => mod.default)
 );
 
-const FERN_COMPONENTS = {
+const FERN_COMPONENTS: MDXComponents = {
   AccordionGroup,
-  Availability,
-  Badge,
+  Availability: (props: ComponentProps<typeof Availability>) => (
+    <Availability {...props} />
+  ),
+  Badge: (props: ComponentProps<typeof Badge>) => <Badge {...props} />,
   Bleed,
   Button,
   ButtonGroup,
-  Callout,
-  Card,
-  CardGroup,
-  ClientLibraries,
-  CodeBlock,
-  CodeGroup, // note: alias is handled in rehypeFernCode
-  Column,
-  ColumnGroup,
-  EndpointRequestSnippet,
-  EndpointResponseSnippet,
+  Callout: (props: ComponentProps<typeof Callout>) => <Callout {...props} />,
+  Card: (props: ComponentProps<typeof Card>) => <Card {...props} />,
+  CardGroup: (props: ComponentProps<typeof CardGroup>) => (
+    <CardGroup {...props} />
+  ),
+  ClientLibraries: (props: ComponentProps<typeof ClientLibraries>) => (
+    <ClientLibraries {...props} />
+  ),
+  CodeBlock: (props: ComponentProps<typeof CodeBlock>) => (
+    <CodeBlock {...props} />
+  ),
+  // note: alias for CodeGroup is handled in rehypeFernCode
+  CodeGroup: (props: ComponentProps<typeof CodeGroup>) => (
+    <CodeGroup {...props} />
+  ),
+  Column: (props: ComponentProps<typeof Column>) => <Column {...props} />,
+  ColumnGroup: (props: ComponentProps<typeof ColumnGroup>) => (
+    <ColumnGroup {...props} />
+  ),
+  EndpointRequestSnippet: (
+    props: ComponentProps<typeof EndpointRequestSnippet>
+  ) => <EndpointRequestSnippet {...props} />,
+  EndpointResponseSnippet: (
+    props: ComponentProps<typeof EndpointResponseSnippet>
+  ) => <EndpointResponseSnippet {...props} />,
   Feature,
-  Frame,
-  Icon: RemoteFontAwesomeIcon,
-  If,
-  Mermaid,
-  ParamField,
-  SearchBar: SidebarSearchBar,
-  Step,
-  StepGroup,
-  TabGroup,
-  Tooltip,
+  Frame: (props: ComponentProps<typeof Frame>) => <Frame {...props} />,
+  Icon: (props: ComponentProps<typeof RemoteFontAwesomeIcon>) => (
+    <RemoteFontAwesomeIcon {...props} />
+  ),
+  If: (props: ComponentProps<typeof If>) => <If {...props} />,
+  Mermaid: (props: ComponentProps<typeof Mermaid>) => <Mermaid {...props} />,
+  ParamField: (props: ComponentProps<typeof ParamField>) => (
+    <ParamField {...props} />
+  ),
+  SearchBar: (props: ComponentProps<typeof SidebarSearchBar>) => (
+    <SidebarSearchBar {...props} />
+  ),
+  Step: (props: ComponentProps<typeof Step>) => <Step {...props} />,
+  StepGroup: (props: ComponentProps<typeof StepGroup>) => (
+    <StepGroup {...props} />
+  ),
+  TabGroup: (props: ComponentProps<typeof TabGroup>) => <TabGroup {...props} />,
+  Tooltip: (props: ComponentProps<typeof Tooltip>) => <Tooltip {...props} />,
 
   // callout aliases
   Info: InfoCallout,
@@ -87,10 +112,14 @@ const FERN_COMPONENTS = {
   LaunchNote: LaunchNoteCallout,
 
   // deprecated, aliased for backwards compatibility
-  Cards: CardGroup,
-  CodeBlocks: CodeGroup,
-  Tabs: TabGroup,
-  ElevenLabsWaveform,
+  Cards: (props: ComponentProps<typeof CardGroup>) => <CardGroup {...props} />,
+  CodeBlocks: (props: ComponentProps<typeof CodeGroup>) => (
+    <CodeGroup {...props} />
+  ),
+  Tabs: (props: ComponentProps<typeof TabGroup>) => <TabGroup {...props} />,
+  ElevenLabsWaveform: (props: ComponentProps<typeof ElevenLabsWaveform>) => (
+    <ElevenLabsWaveform {...props} />
+  ),
 };
 
 // internal-use only
@@ -120,7 +149,7 @@ const HTML_COMPONENTS: MDXComponents = {
   strong: Strong,
 };
 
-const ALIASED_HTML_COMPONENTS = {
+const ALIASED_HTML_COMPONENTS: MDXComponents = {
   Image,
   IFrame,
   H1: (props: ComponentProps<"h1">): ReactElement => HeadingRenderer(1, props),

@@ -39,7 +39,12 @@ describe("getBreadcrumbList", () => {
       },
     ];
     expect(
-      getBreadcrumbList("buildwithfern.com", parents, node, "Overriden Title")
+      getBreadcrumbList(
+        "buildwithfern.com",
+        parents.filter(FernNavigation.hasMetadata),
+        node,
+        "Overriden Title"
+      )
     ).toEqual({
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",

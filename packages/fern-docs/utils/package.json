@@ -35,7 +35,7 @@
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
     "@fern-api/ui-core-utils": "workspace:*",
-    "next": "15.1.6",
+    "next": "14.2.23",
     "path-to-regexp": "6.3.0",
     "url-join": "5.0.0"
   },

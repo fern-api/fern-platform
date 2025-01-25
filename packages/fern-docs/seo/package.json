@@ -33,15 +33,15 @@
     "@fern-api/ui-core-utils": "workspace:*",
     "@fern-docs/mdx": "workspace:*",
     "@fern-docs/utils": "workspace:*",
-    "next": "15.1.6",
-    "react": "^19",
+    "next": "14.2.23",
+    "react": "^18",
     "schema-dts": "^1.1.2"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@fern-platform/fdr-utils": "workspace:*",
     "@types/node": "^18.19.74",
-    "@types/react": "^19",
+    "@types/react": "^18",
     "depcheck": "^1.4.7",
     "eslint": "^9",
     "prettier": "^3.4.2",

@@ -1,5 +1,5 @@
 import { slug } from "github-slugger";
-import { Children, isValidElement, ReactNode } from "react";
+import { Children, isValidElement, PropsWithChildren, ReactNode } from "react";
 
 export function getSlugFromChildren(children: ReactNode): string {
   const text = Children.toArray(children).reduce(flatten, "");
@@ -12,7 +12,7 @@ export function getSlugFromChildren(children: ReactNode): string {
 const flatten = (text: string, child: ReactNode): string => {
   return typeof child === "string"
     ? text + child
-    : isValidElement(child)
+    : isValidElement<PropsWithChildren>(child)
       ? Children.toArray(child.props.children).reduce(flatten, text)
       : "";
 };

@@ -2,8 +2,8 @@ import cn from "clsx";
 import {
   AnchorHTMLAttributes,
   ComponentProps,
+  ComponentPropsWithRef,
   createElement,
-  FC,
   isValidElement,
   ReactElement,
 } from "react";
@@ -22,22 +22,14 @@ export const HeadingRenderer = (
   );
 };
 
-export const P: FC<{ variant: "api" | "markdown" } & ComponentProps<"p">> = ({
-  variant,
+export const Strong = ({
   className,
   ...rest
-}) => {
-  return <p {...rest} />;
-};
-
-export const Strong: FC<ComponentProps<"strong">> = ({
-  className,
-  ...rest
-}) => {
+}: ComponentPropsWithRef<"strong">) => {
   return <strong {...rest} className={cn(className, "font-semibold")} />;
 };
 
-export const Ol: FC<ComponentProps<"ol">> = ({ className, ...rest }) => {
+export const Ol = ({ className, ...rest }: ComponentPropsWithRef<"ol">) => {
   return (
     <ol
       {...rest}
@@ -46,7 +38,7 @@ export const Ol: FC<ComponentProps<"ol">> = ({ className, ...rest }) => {
   );
 };
 
-export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
+export const Ul = ({ className, ...rest }: ComponentPropsWithRef<"ul">) => {
   return (
     <ul
       {...rest}
@@ -55,16 +47,16 @@ export const Ul: FC<ComponentProps<"ul">> = ({ className, ...rest }) => {
   );
 };
 
-export const Li: FC<ComponentProps<"li">> = ({ className, ...rest }) => {
+export const Li = ({ className, ...rest }: ComponentPropsWithRef<"li">) => {
   return <li {...rest} className={cn(className)} />;
 };
 
-export const A: FC<AnchorHTMLAttributes<HTMLAnchorElement>> = ({
+export const A = ({
   className,
   children,
   href,
   ...rest
-}) => {
+}: AnchorHTMLAttributes<HTMLAnchorElement>) => {
   const cnCombined = cn("fern-mdx-link", className);
   const hideExternalLinkIcon =
     isValidElement(children) &&
