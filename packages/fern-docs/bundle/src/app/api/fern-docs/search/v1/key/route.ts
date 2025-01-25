@@ -5,8 +5,6 @@ import { SearchConfig, getSearchConfig } from "@fern-docs/search-utils";
 import { provideRegistryService } from "@fern-docs/ui";
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
-
 export async function GET(
   req: NextRequest
 ): Promise<NextResponse<SearchConfig>> {
