@@ -187,14 +187,14 @@ const nextConfig = {
     remotePatterns: DOCS_FILES_ALLOWLIST,
     path: cdnUri != null ? `${cdnUri.href}_next/image` : undefined,
   },
-  webpack: (config, { isServer }) => {
+  webpack: async (config, { isServer }) => {
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push("esbuild");
     }
     config.resolve.fallback = {
       ...config.resolve.fallback,
-      crypto: false,
+      crypto: await import.meta.resolve("crypto-browserify"),
     };
     config.module.rules.push({
       test: /\.(glsl|vs|fs|vert|frag)$/,
