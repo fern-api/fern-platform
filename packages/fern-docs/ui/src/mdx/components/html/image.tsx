@@ -2,6 +2,7 @@ import {
   ComponentProps,
   ComponentPropsWithoutRef,
   createContext,
+  forwardRef,
   ReactElement,
   ReactNode,
   useContext,
@@ -20,8 +21,9 @@ export function NoZoom({ children }: { children: ReactNode }) {
   );
 }
 
-export const Image = (
-  props: ComponentPropsWithoutRef<"img"> & {
+export const Image = forwardRef<
+  HTMLImageElement,
+  ComponentPropsWithoutRef<"img"> & {
     /**
      * @default false
      */
@@ -40,7 +42,7 @@ export const Image = (
     blurDataURL?: string | undefined;
     unoptimized?: boolean | undefined;
   }
-) => {
+>((props, ref) => {
   const {
     src,
     width,
@@ -62,6 +64,7 @@ export const Image = (
 
   const fernImage = (
     <FernImage
+      ref={ref}
       src={src}
       width={toPixelValue(width)}
       height={toPixelValue(height)}
@@ -79,7 +82,7 @@ export const Image = (
       {fernImage}
     </Zoom>
   );
-};
+});
 
 Image.displayName = "Image";
 
