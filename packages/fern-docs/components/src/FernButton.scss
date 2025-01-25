@@ -431,6 +431,6 @@
   }
 
   .fern-copy-button {
-    @apply backdrop-blur;
+    @apply size-fit backdrop-blur;
   }
 }
