@@ -26,6 +26,7 @@ env:
   FERNIE_SLACK_APP_TOKEN: ${{ secrets.FERNIE_SLACK_APP_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
   NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+  CLOUDFRONT_KEY_PAIR_ID: ${{ secrets.CLOUDFRONT_KEY_PAIR_ID }}
 
 jobs:
   sdk:
@@ -45,6 +46,7 @@ jobs:
       ALGOLIA_SEARCH_INDEX: ${{ secrets.ALGOLIA_SEARCH_INDEX }}
       ALGOLIA_SEARCH_V2_DOMAINS: "workato,rohin-bhargava-staging,monite,humanloop,cohere,buildwithfern.com/learn"
       ALGOLIA_SEARCH_API_KEY: ${{ secrets.ALGOLIA_SEARCH_API_KEY }}
+      CLOUDFRONT_KEY_PAIR_ID: ${{ secrets.CLOUDFRONT_KEY_PAIR_ID }}
       APPLICATION_ENVIRONMENT: dev
     steps:
       - uses: actions/checkout@v4
@@ -85,6 +87,7 @@ jobs:
           VERSION="${git_version}" pnpm --filter=@fern-platform/fdr-deploy deploy:dev
         env:
           DATABASE_URL: ${{ secrets.DEV_POSTGRES_URL }}/fdr?schema=public&connection_limit=6&pool_timeout=30
+          CLOUDFRONT_KEY_PAIR_ID: ${{ secrets.CLOUDFRONT_KEY_PAIR_ID }}
 
   smoke-test:
     needs: deploy_dev

@@ -1,27 +1,19 @@
 import { unknownToString } from "@fern-api/ui-core-utils";
+import type { Hast } from "@fern-docs/mdx";
 import {
   isHastElement,
   isHastText,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
+  visit,
   type MdxJsxElementHast,
 } from "@fern-docs/mdx";
 import type { FernSyntaxHighlighterProps } from "@fern-docs/syntax-highlighter";
-import type { Element, Root } from "hast";
 import rangeParser from "parse-numeric-range";
-import { visit } from "unist-util-visit";
 import type { CodeGroup } from "../components/code";
 
-declare module "hast" {
-  interface ElementData {
-    visited?: boolean;
-    meta?: string | null;
-    metastring?: string;
-  }
-}
-
-export function rehypeFernCode(): (tree: Root) => void {
-  return async function (tree: Root): Promise<void> {
+export function rehypeFernCode(): (tree: Hast.Root) => void {
+  return async function (tree: Hast.Root): Promise<void> {
     // match CodeBlocks and its CodeBlock children
     visit(tree, (node, index, parent) => {
       if (index == null) {
@@ -203,7 +195,7 @@ function visitCodeBlockNodes(nodeToVisit: MdxJsxElementHast) {
   return codeBlockItems;
 }
 
-function getCode(node: Element): string | undefined {
+function getCode(node: Hast.Element): string | undefined {
   const code = node.children.find(isHastText)?.value;
 
   if (code == null || code.length === 0) {
@@ -212,7 +204,7 @@ function getCode(node: Element): string | undefined {
   return code;
 }
 
-export function isBlockCode(element: Element): element is Element {
+export function isBlockCode(element: Hast.Element): element is Hast.Element {
   return (
     element.tagName === "pre" &&
     Array.isArray(element.children) &&
@@ -240,7 +232,7 @@ function maybeParseInt(str: string | null | undefined): number | undefined {
 }
 
 export function parseBlockMetaString(
-  element: Element,
+  element: Hast.Element,
   defaultFallback = "plaintext"
 ): FernCodeMeta {
   const originalMeta: string = unknownToString(

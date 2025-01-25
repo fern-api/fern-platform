@@ -1,5 +1,5 @@
 import { RemoteFontAwesomeIcon } from "@fern-docs/components";
-import type { MDXComponents } from "mdx/types";
+import type { MDXComponents } from "@fern-docs/mdx";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
 import {

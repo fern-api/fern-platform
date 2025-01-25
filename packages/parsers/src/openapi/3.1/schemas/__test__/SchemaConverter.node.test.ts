@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { ObjectConverterNode } from "../ObjectConverter.node";
 import { ReferenceConverterNode } from "../ReferenceConverter.node";
 import { SchemaConverterNode } from "../SchemaConverter.node";
@@ -201,7 +201,13 @@ describe("SchemaConverterNode", () => {
         accessPath: [],
         pathId: "test",
       });
-      expect(node.convert()).toBeUndefined();
+      expect(node.convert()).toEqual({
+        type: "alias",
+        value: {
+          type: "unknown",
+          displayName: undefined,
+        },
+      });
     });
   });
 });

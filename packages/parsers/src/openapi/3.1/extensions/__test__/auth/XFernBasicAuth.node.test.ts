@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { XFernBasicAuthNode } from "../../auth/XFernBasicAuth.node";
 import { TokenSecurityScheme } from "../../auth/types/TokenSecurityScheme";
 

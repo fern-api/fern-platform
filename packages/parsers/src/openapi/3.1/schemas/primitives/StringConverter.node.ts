@@ -43,6 +43,7 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   minLength: number | undefined;
   maxLength: number | undefined;
   enum: EnumConverterNode | undefined;
+  mimeType: string | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>
@@ -104,6 +105,12 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   }
 
   parse(): void {
+    this.regex = this.input.pattern;
+    this.minLength = this.input.minLength;
+    this.maxLength = this.input.maxLength;
+
+    this.mimeType = this.input.contentMediaType;
+
     if (this.input.default != null && typeof this.input.default !== "string") {
       this.context.errors.warning({
         message: `Expected default value to be a string. Received ${this.input.default}`,
@@ -150,14 +157,21 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
       type: "alias",
       value: {
         type: "primitive",
-        value: {
-          type,
-          format: type === "string" ? this.format : undefined,
-          regex: this.regex,
-          minLength: this.minLength,
-          maxLength: this.maxLength,
-          default: this.default,
-        },
+        value:
+          type === "base64"
+            ? {
+                type,
+                mimeType: this.mimeType,
+                default: this.default,
+              }
+            : {
+                type,
+                format: type === "string" ? this.format : undefined,
+                regex: this.regex,
+                minLength: this.minLength,
+                maxLength: this.maxLength,
+                default: this.default,
+              },
       },
     };
   }

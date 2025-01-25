@@ -36,6 +36,7 @@ export class FernNavigationV1ToLatest {
       viewers: node.viewers,
       orphaned: node.orphaned,
       roles: node.roles,
+      featureFlags: node.featureFlags,
     };
 
     return latest;
@@ -61,11 +62,11 @@ export class FernNavigationV1ToLatest {
     /**
      * the default version should be the preferred canonical slug
      */
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const defaultVersion = this.version(node.children[defaultVersionIdx]!, [
-      ...parents,
-      node,
-    ]);
+    const defaultVersionV1 = node.children[defaultVersionIdx];
+    if (!defaultVersionV1) {
+      throw new Error("default version is undefined");
+    }
+    const defaultVersion = this.version(defaultVersionV1, [...parents, node]);
 
     /**
      * visit the rest of the children, but splice the default version in its original position
@@ -118,6 +119,7 @@ export class FernNavigationV1ToLatest {
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -144,6 +146,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -183,13 +186,14 @@ export class FernNavigationV1ToLatest {
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
 
   public link = (
     node: FernNavigation.V1.LinkNode,
-    parents: FernNavigation.V1.NavigationNode[]
+    _parents: FernNavigation.V1.NavigationNode[]
   ): FernNavigation.LinkNode => {
     const latest: FernNavigation.LinkNode = {
       type: "link",
@@ -247,11 +251,11 @@ export class FernNavigationV1ToLatest {
     /**
      * the default product should be the preferred canonical slug
      */
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const defaultProduct = this.product(node.children[defaultProductIdx]!, [
-      ...parents,
-      node,
-    ]);
+    const defaultProductV1 = node.children[defaultProductIdx];
+    if (!defaultProductV1) {
+      throw new Error("default product is undefined");
+    }
+    const defaultProduct = this.product(defaultProductV1, [...parents, node]);
 
     /**
      * visit the rest of the children, but splice the default product in its original position
@@ -300,6 +304,7 @@ export class FernNavigationV1ToLatest {
       subtitle: node.subtitle,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -358,6 +363,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -395,6 +401,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -440,6 +447,7 @@ export class FernNavigationV1ToLatest {
       pointsTo: node.pointsTo ? FernNavigation.Slug(node.pointsTo) : undefined,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -472,6 +480,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -495,6 +504,7 @@ export class FernNavigationV1ToLatest {
       year: node.year,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -518,13 +528,14 @@ export class FernNavigationV1ToLatest {
       month: node.month,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
 
   public changelogEntry = (
     node: FernNavigation.V1.ChangelogEntryNode,
-    parents: FernNavigation.V1.NavigationNode[]
+    _parents: FernNavigation.V1.NavigationNode[]
   ): FernNavigation.ChangelogEntryNode => {
     const slug = FernNavigation.Slug(node.slug);
     // NOTE: do NOT use title disambiguation key here, since the title may not always be unique
@@ -543,6 +554,7 @@ export class FernNavigationV1ToLatest {
       noindex: node.noindex,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -582,6 +594,7 @@ export class FernNavigationV1ToLatest {
       availability: this.#availability(node.availability),
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -615,6 +628,7 @@ export class FernNavigationV1ToLatest {
       isResponseStream: node.isResponseStream,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -659,6 +673,7 @@ export class FernNavigationV1ToLatest {
       webSocketId: node.webSocketId,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };
@@ -690,6 +705,7 @@ export class FernNavigationV1ToLatest {
       webhookId: node.webhookId,
       viewers: node.viewers,
       orphaned: node.orphaned,
+      featureFlags: node.featureFlags,
     };
     return latest;
   };

@@ -26,24 +26,33 @@ export function EndpointExampleSegmentedControl({
             onClick={() => {
               onSelectExample(exampleKey);
             }}
-            className="min-w-0 shrink truncate"
+            className={
+              "min-w-0 shrink truncate" +
+              (exampleKey === selectedExample?.exampleKey
+                ? " ring-primary-500"
+                : " ring-transparent")
+            }
             mono
             size="small"
-            variant={
-              exampleKey === selectedExample?.exampleKey
-                ? "outlined"
-                : "minimal"
-            }
+            variant="outlined"
             intent={
               exampleKey === selectedExample?.exampleKey ? "primary" : "none"
             }
           >
-            {(exampleKey === selectedExample?.exampleKey
-              ? selectedExample?.name
-              : undefined) ??
-              examples[0]?.name ??
-              examples[0]?.exampleCall.name ??
-              `Example ${exampleIndex + 1}`}
+            <span
+              className={
+                exampleKey === selectedExample?.exampleKey
+                  ? "text-accent-aa"
+                  : "text-faded"
+              }
+            >
+              {(exampleKey === selectedExample?.exampleKey
+                ? selectedExample?.name
+                : undefined) ??
+                examples[0]?.name ??
+                examples[0]?.exampleCall.name ??
+                `Example ${exampleIndex + 1}`}
+            </span>
           </FernButton>
         );
       })}

@@ -286,6 +286,24 @@ export function getDocsWriteV2Service(app: FdrApplication): DocsV2WriteService {
           ...docsRegistrationInfo.customUrls,
         ];
 
+        for (const url of urls) {
+          try {
+            const response = await app.docsDefinitionCache.getDocsForUrl({
+              url: url.toURL(),
+            });
+
+            await app.services.s3.writeLoadDocsForUrlResponse({
+              domain: url.hostname,
+              readDocsDefinition: response,
+            });
+          } catch (e) {
+            app.logger.error(
+              `Error while trying to write DB docs definition for ${url.getFullUrl()}`,
+              e
+            );
+          }
+        }
+
         try {
           await Promise.all(
             urls.map(async (baseUrl) => {

@@ -42,7 +42,7 @@ export class SecurityRequirementObjectConverterNode extends BaseOpenApiV3_1Conve
           input: resolvedSecurityScheme,
           context: this.context,
           accessPath: this.accessPath,
-          pathId: `security[${index}]`,
+          pathId: ["security", `${index}`],
         });
 
         if (resolvedAuthScheme.convert() != null) {

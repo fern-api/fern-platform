@@ -5,5 +5,5 @@ export function isWebhookDefinition(
     | FernRegistry.api.latest.EndpointDefinition
     | FernRegistry.api.latest.WebhookDefinition
 ): definition is FernRegistry.api.latest.WebhookDefinition {
-  return "payload" in definition;
+  return "payloads" in definition && definition.payloads != null;
 }

@@ -25,6 +25,7 @@ exports[`no-version-yes-tabs > gets navigation root for /docs/api/page-2 1`] = `
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.tab-1.tab-1.section-1.page-2",
@@ -54,6 +55,7 @@ exports[`no-version-yes-tabs > gets navigation root for /docs/api/tab-1 1`] = `
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.tab-1.tab-1.section-3.page-6",
@@ -75,6 +77,7 @@ exports[`no-version-yes-tabs > gets navigation root for /docs/api/tab-2 1`] = `
 {
   "authed": undefined,
   "canonicalSlug": undefined,
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root.uv.tab-2.tab-2.section-5.page-10",

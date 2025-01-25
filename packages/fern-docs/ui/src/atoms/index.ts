@@ -1,14 +1,19 @@
 export * from "./announcement";
 export * from "./apis";
 export * from "./auth";
-export * from "./docs";
-export * from "./files";
+export {
+  DOCS_ATOM,
+  EMPTY_ANALYTICS_CONFIG,
+  EMPTY_DOCS_STATE,
+  HydrateAtoms,
+  JS_ATOM,
+} from "./docs";
 export * from "./flags";
 export * from "./hooks";
 export * from "./lang";
 export * from "./layout";
 export * from "./location";
-export * from "./logo";
+export { LOGO_ATOM, LOGO_TEXT_ATOM } from "./logo";
 export * from "./navigation";
 export * from "./playground";
 export * from "./seo";

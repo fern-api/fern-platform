@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { MultipartFormDataPropertySchemaConverterNode } from "../../request/MultipartFormDataPropertySchemaConverter.node";
 
 describe("MultipartFormDataPropertySchemaConverterNode", () => {
@@ -123,7 +123,10 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
     const result = converter.convert();
     expect(result).toEqual({
       type: "alias",
-      value: { type: "primitive", value: { type: "base64" } },
+      value: {
+        type: "primitive",
+        value: { type: "base64", mimeType: "image/jpeg" },
+      },
     });
   });
 });

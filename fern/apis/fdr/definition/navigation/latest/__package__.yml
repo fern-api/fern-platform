@@ -327,6 +327,7 @@ types:
     extends:
       - WithNodeId
       - WithPermissions
+      - WithFeatureFlags
     properties:
       title:
         type: string
@@ -372,6 +373,17 @@ types:
   WithRedirect:
     properties:
       pointsTo: optional<Slug>
+
+  WithFeatureFlags:
+    properties:
+      featureFlags: optional<list<FeatureFlagOptions>>
+
+  # note: do not change this type because it will cause a breaking change in the <Feature> mdx component
+  FeatureFlagOptions:
+    properties:
+      flag: string
+      fallbackValue: optional<unknown>
+      match: optional<unknown>
 
   BreadcrumbItem:
     properties:

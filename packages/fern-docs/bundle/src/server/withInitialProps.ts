@@ -5,35 +5,45 @@ import {
   getAuthEdgeConfig,
   getCustomerAnalytics,
   getEdgeFlags,
-  getLaunchDarklySettings,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
+import { withSeo } from "@fern-docs/seo";
 import {
-  DocsPage,
-  NavbarLink,
+  type DocsPage,
+  type ImageData,
+  type NavbarLink,
   getApiRouteSupplier,
   getGitHubInfo,
   getGitHubRepo,
-  getSeoProps,
   renderThemeStylesheet,
+  withCustomJavascript,
+  withLogo,
 } from "@fern-docs/ui";
-import { getMdxBundler } from "@fern-docs/ui/bundlers";
-import { addLeadingSlash, getRedirectForPath } from "@fern-docs/utils";
+import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
+import {
+  addLeadingSlash,
+  getRedirectForPath,
+  isTrailingSlashEnabled,
+} from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import { GetServerSidePropsResult, Redirect } from "next";
 import { ComponentProps } from "react";
+import { UnreachableCaseError } from "ts-essentials";
 import urlJoin from "url-join";
 import { DocsLoader } from "./DocsLoader";
 import { getAuthState } from "./auth/getAuthState";
 import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
+import { withLaunchDarkly } from "./ld-adapter";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
-import { isTrailingSlashEnabled } from "./trailingSlash";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
 } from "./withPrunedNavigation";
-import { withResolvedDocsContent } from "./withResolvedDocsContent";
+import {
+  extractFrontmatterFromDocsContent,
+  withResolvedDocsContent,
+} from "./withResolvedDocsContent";
 import { withVersionSwitcherInfo } from "./withVersionSwitcherInfo";
 
 interface WithInitialProps {
@@ -48,6 +58,7 @@ interface WithInitialProps {
    */
   host: string;
   fern_token: string | undefined;
+  rawCookie: string | undefined;
 }
 
 export async function withInitialProps({
@@ -56,6 +67,7 @@ export async function withInitialProps({
   domain,
   host,
   fern_token,
+  rawCookie,
 }: WithInitialProps): Promise<
   GetServerSidePropsResult<ComponentProps<typeof DocsPage>>
 > {
@@ -154,15 +166,19 @@ export async function withInitialProps({
     return withRedirect(authState.authorizationUrl);
   }
 
-  const content = await withResolvedDocsContent({
-    domain: docs.baseUrl.domain,
-    found,
+  // TODO: parallelize this with the other edge config calls:
+  const [launchDarkly, flagPredicate] = await withLaunchDarkly(
+    domain,
     authState,
-    definition: docs.definition,
-    edgeFlags,
-  });
+    found,
+    rawCookie
+  );
 
-  if (content == null) {
+  if (
+    ![...found.parents, found.node]
+      .filter(FernNavigation.hasMetadata)
+      .every((node) => flagPredicate(node))
+  ) {
     return { notFound: true };
   }
 
@@ -185,12 +201,6 @@ export async function withInitialProps({
           ? docs.definition.config.colorsV3.dark
           : undefined,
   };
-
-  const logoHref =
-    docs.definition.config.logoHref ??
-    (found.landingPage?.slug != null && !found.landingPage.hidden
-      ? encodeURI(addLeadingSlash(found.landingPage.slug))
-      : undefined);
 
   const navbarLinks: NavbarLink[] = [];
 
@@ -289,6 +299,58 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
+  function resolveFileSrc(src: string | undefined): ImageData | undefined {
+    if (src == null) {
+      return undefined;
+    }
+
+    const fileId = FernNavigation.FileId(
+      src.startsWith("file:") ? src.slice(5) : src
+    );
+    const file = docs.definition.filesV2[fileId];
+    if (file == null) {
+      // the file is not found, so we return the src as the image data
+      return { src };
+    }
+
+    if (file.type === "image") {
+      return {
+        src: file.url,
+        width: file.width,
+        height: file.height,
+        blurDataURL: file.blurDataUrl,
+      };
+    } else if (file.type === "url") {
+      return { src: file.url };
+    } else {
+      throw new UnreachableCaseError(file);
+    }
+  }
+
+  const content = await withResolvedDocsContent({
+    domain: docs.baseUrl.domain,
+    found,
+    authState,
+    definition: docs.definition,
+    edgeFlags,
+    scope: {
+      props: {
+        authed: authState.authed,
+        user: authState.authed ? authState.user : undefined,
+        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
+        // note: do NOT override `props.components`
+        version: found?.currentVersion?.versionId,
+        tab: found?.currentTab?.title,
+      },
+    },
+    replaceSrc: resolveFileSrc,
+  });
+  const frontmatter = extractFrontmatterFromDocsContent(found.node.id, content);
+
+  if (content == null) {
+    return { notFound: true };
+  }
+
   const tabs = filteredTabs.map((tab, index) =>
     visitDiscriminatedUnion(tab)._visit<SidebarTab>({
       tab: (tab) => ({
@@ -325,30 +387,15 @@ export async function withInitialProps({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
-  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-  const serializeMdx = await getMdxBundler(engine);
-
-  const launchDarklyConfig = await getLaunchDarklySettings(docs.baseUrl.domain);
-  const launchDarklyInfo =
-    !!launchDarklyConfig?.["client-side-id"] &&
-    !!launchDarklyConfig?.["user-context-endpoint"]
-      ? {
-          clientSideId: launchDarklyConfig?.["client-side-id"],
-          userContextEndpoint: launchDarklyConfig?.["user-context-endpoint"],
-        }
-      : undefined;
-
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,
     layout: docs.definition.config.layout,
     title: docs.definition.config.title,
     favicon: docs.definition.config.favicon,
     colors,
-    js: docs.definition.config.js,
+    js: withCustomJavascript(docs.definition.config.js, resolveFileSrc),
     navbarLinks,
-    logoHeight: docs.definition.config.logoHeight,
-    logoHref: logoHref != null ? FernNavigation.Url(logoHref) : undefined,
-    files: docs.definition.filesV2,
+    logo: withLogo(docs.definition, found, frontmatter, resolveFileSrc),
     content,
     announcement:
       docs.definition.config.announcement != null
@@ -367,15 +414,14 @@ export async function withInitialProps({
     },
     edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FernNavigation.ApiDefinitionId),
-    seo: getSeoProps(
+    seo: withSeo(
       docs.baseUrl.domain,
       docs.definition.config,
-      docs.definition.pages,
+      frontmatter,
       docs.definition.filesV2,
       docs.definition.apis,
       found,
-      await getSeoDisabled(domain),
-      isTrailingSlashEnabled()
+      await getSeoDisabled(domain)
     ),
     user: authState.authed ? authState.user : undefined,
     fallback: {},
@@ -395,8 +441,8 @@ export async function withInitialProps({
       docs.definition.filesV2,
       found.tabs.length > 0
     ),
-    featureFlags: {
-      launchDarkly: launchDarklyInfo,
+    featureFlagsConfig: {
+      launchDarkly,
     },
   };
 

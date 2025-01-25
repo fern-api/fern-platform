@@ -18,7 +18,7 @@ import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
-import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
+import { GLOBAL_EXAMPLE_NAME } from "../ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
 
 export type RequestContentType = ConstArrayToType<
@@ -47,19 +47,36 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     | undefined;
 
   resolvedSchema: OpenAPIV3_1.SchemaObject | undefined;
-  example: ExampleObjectConverterNode | undefined;
+  examples?:
+    | Record<string, OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject>
+    | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
     contentType: string | undefined,
-    protected path: string,
-    protected responseStatusCode: number
+    protected path: string
   ) {
     super(args);
     this.safeParse(contentType);
   }
 
   parse(contentType: string | undefined): void {
+    // This sets examples derived from OpenAPI examples.
+    // this.input.example is typed as any
+    // this.input.examples is typed as Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3.ExampleObject> | undefined
+    // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
+    // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
+    this.examples = {
+      ...(this.input.example != null || this.schema?.example() != null
+        ? {
+            [GLOBAL_EXAMPLE_NAME]: {
+              value: this.input.example ?? this.schema?.example(),
+            },
+          }
+        : {}),
+      ...this.input.examples,
+    };
+
     if (this.input.schema != null) {
       if (isReferenceObject(this.input.schema)) {
         this.resolvedSchema = resolveReference(
@@ -129,22 +146,6 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         message: "Expected media type schema or reference.",
         path: this.accessPath,
       });
-    }
-
-    if (this.contentType != null) {
-      if (this.input.example != null) {
-        // this.example = new ExampleObjectConverterNode(
-        //     {
-        //         input: this.input.example,
-        //         context: this.context,
-        //         accessPath: this.accessPath,
-        //         pathId: "example",
-        //     },
-        //     this.path,
-        //     this.responseStatusCode,
-        //     this,
-        // );
-      }
     }
   }
 

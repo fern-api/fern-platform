@@ -60,7 +60,7 @@
       @apply px-1;
 
       > .fern-button-content {
-        @apply w-7 sm:w-6;
+        @apply h-7 w-7 sm:h-6 sm:w-6;
       }
     }
 
@@ -428,5 +428,9 @@
         @apply mr-3;
       }
     }
+  }
+
+  .fern-copy-button {
+    @apply size-fit backdrop-blur;
   }
 }

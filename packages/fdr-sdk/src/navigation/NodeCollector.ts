@@ -2,6 +2,7 @@ import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { once } from "es-toolkit/function";
 import { FernNavigation } from "./..";
 import { pruneVersionNode } from "./utils/pruneVersionNode";
+import { NavigationNodeWithMetadata } from "./versions";
 
 interface NavigationNodeWithMetadataAndParents {
   node: FernNavigation.NavigationNodeWithMetadata;
@@ -133,10 +134,6 @@ export class NodeCollector {
       this.orphanedNodes.push(existing.node);
       this.#setNode(node.slug, node, parents);
     } else {
-      if (FernNavigation.isPage(existing.node)) {
-        // eslint-disable-next-line no-console
-        console.warn(`Duplicate slug found: ${node.slug}`, node.title);
-      }
       this.orphanedNodes.push(node);
     }
   }
@@ -234,6 +231,29 @@ export class NodeCollector {
   });
   get indexablePageSlugs(): string[] {
     return this.#getIndexablePageSlugs();
+  }
+
+  #getIndexablePageNodesWithAuth = once((): NavigationNodeWithMetadata[] => {
+    const slugRecord: Record<string, NavigationNodeWithMetadata> = {};
+
+    [...this.slugToNode.values()]
+      .filter(({ node }) => FernNavigation.isPage(node))
+      .filter(({ node }) => !node.hidden)
+      .filter(({ node }) =>
+        FernNavigation.hasMarkdown(node) ? !node.noindex : true
+      )
+      .forEach((node) => {
+        const canonicalSlug = node.node.canonicalSlug ?? node.node.slug;
+        // Only keep the first node we see for each canonical slug
+        if (!(canonicalSlug in slugRecord)) {
+          slugRecord[canonicalSlug] = node.node;
+        }
+      });
+
+    return Object.values(slugRecord);
+  });
+  get indexablePageNodesWithAuth(): NavigationNodeWithMetadata[] {
+    return this.#getIndexablePageNodesWithAuth();
   }
 
   public getVersionNodes = (): FernNavigation.VersionNode[] => {

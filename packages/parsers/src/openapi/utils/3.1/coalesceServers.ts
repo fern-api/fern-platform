@@ -16,7 +16,7 @@ export function coalesceServers(
           input: server,
           context,
           accessPath,
-          pathId: `servers[${index}]`,
+          pathId: ["servers", `${index}`],
         })
     ),
   ];

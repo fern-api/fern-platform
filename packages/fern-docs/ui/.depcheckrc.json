@@ -4,7 +4,6 @@
     "@types/node",
     "vite",
     "@types/react",
-    "@types/react",
     "@types/react-dom",
     "@radix-ui/colors",
     "autoprefixer",
@@ -14,7 +13,6 @@
     "@tailwindcss/forms",
     "tailwindcss",
     "cssnano",
-    "unist-util-visit",
     "@chromatic-com/storybook",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
@@ -22,8 +20,7 @@
     "@storybook/addon-onboarding",
     "@storybook/blocks",
     "@storybook/test",
-    "@emotion/is-prop-valid",
-    "mdx"
+    "@emotion/is-prop-valid"
   ],
   "ignore-patterns": ["dist"]
 }

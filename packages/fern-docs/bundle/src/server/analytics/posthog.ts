@@ -1,15 +1,19 @@
 import { PostHog } from "posthog-node";
 
-function getPosthogKey(): string {
+function getPosthogKey(): string | undefined {
   const key = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
   if (key == null) {
-    throw new Error("NEXT_PUBLIC_POSTHOG_API_KEY is not set");
+    return undefined;
   }
   return key.trim();
 }
 
-function getPosthog(): PostHog {
-  return new PostHog(getPosthogKey(), {
+function getPosthog(): PostHog | undefined {
+  const key = getPosthogKey();
+  if (!key) {
+    return undefined;
+  }
+  return new PostHog(key, {
     host: "https://us.i.posthog.com",
   });
 }
@@ -21,7 +25,7 @@ export async function track(
   try {
     const client = getPosthog();
 
-    client.capture({
+    client?.capture({
       event,
       distinctId: "server-side-event",
       properties: {
@@ -31,7 +35,7 @@ export async function track(
       },
     });
 
-    await client.shutdown();
+    await client?.shutdown();
   } catch (error) {
     if (process.env.NODE_ENV !== "development") {
       console.error(error);

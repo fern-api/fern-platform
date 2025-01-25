@@ -15,7 +15,6 @@ import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
   usePlaygroundEndpointFormState,
 } from "../../atoms";
-import { useStandardProxyEnvironment } from "../../hooks/useStandardProxyEnvironment";
 import { Callout } from "../../mdx/components/callout";
 import { PasswordInputGroup } from "../PasswordInputGroup";
 import { PlaygroundEndpointForm } from "../endpoint";
@@ -39,7 +38,6 @@ function FoundOAuthReferencedEndpointForm({
   disabled?: boolean;
 }): ReactElement {
   const [value, setValue] = useAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
-  const proxyEnvironment = useStandardProxyEnvironment();
   const [formState, setFormState] = usePlaygroundEndpointFormState(context);
   const [baseUrl] = usePlaygroundBaseUrl(context.endpoint);
 
@@ -53,7 +51,6 @@ function FoundOAuthReferencedEndpointForm({
     await oAuthClientCredentialReferencedEndpointLoginFlow({
       formState,
       endpoint: context.endpoint,
-      proxyEnvironment,
       referencedEndpoint,
       baseUrl,
       setValue,

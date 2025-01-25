@@ -19,12 +19,11 @@ const EDGE_FLAGS = [
   "http-snippets-enabled" as const,
   "inline-feedback-enabled" as const,
   "dark-code-enabled" as const,
-  "proxy-uses-app-buildwithfern" as const,
+  "disable-proxy" as const,
   "image-zoom-disabled" as const,
   "use-javascript-as-typescript" as const,
   "always-enable-javascript-fetch" as const,
   "scroll-in-container-enabled" as const,
-  "use-mdx-bundler" as const,
   "batch-stream-toggle-disabled" as const,
   "enabled-auth-in-generated-docs" as const,
   "ask-ai-enabled" as const,
@@ -87,9 +86,9 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["dark-code-enabled"]
     );
-    const proxyShouldUseAppBuildwithfernCom = checkDomainMatchesCustomers(
+    const isProxyDisabled = checkDomainMatchesCustomers(
       domain,
-      config["proxy-uses-app-buildwithfern"]
+      config["disable-proxy"]
     );
     const isImageZoomDisabled = checkDomainMatchesCustomers(
       domain,
@@ -106,10 +105,6 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
     const scrollInContainerEnabled = checkDomainMatchesCustomers(
       domain,
       config["scroll-in-container-enabled"]
-    );
-    const useMdxBundler = checkDomainMatchesCustomers(
-      domain,
-      config["use-mdx-bundler"]
     );
     const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(
       domain,
@@ -184,12 +179,11 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isHttpSnippetsEnabled,
       isInlineFeedbackEnabled,
       isDarkCodeEnabled,
-      proxyShouldUseAppBuildwithfernCom,
+      isProxyDisabled,
       isImageZoomDisabled,
       useJavaScriptAsTypeScript,
       alwaysEnableJavaScriptFetch,
       scrollInContainerEnabled,
-      useMdxBundler,
       isBatchStreamToggleDisabled,
       isAuthEnabledInDocs,
       isAskAiEnabled,
@@ -219,12 +213,11 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isHttpSnippetsEnabled: false,
       isInlineFeedbackEnabled: isFern(domain),
       isDarkCodeEnabled: false,
-      proxyShouldUseAppBuildwithfernCom: false,
+      isProxyDisabled: false,
       isImageZoomDisabled: false,
       useJavaScriptAsTypeScript: false,
       alwaysEnableJavaScriptFetch: false,
       scrollInContainerEnabled: false,
-      useMdxBundler: false,
       isBatchStreamToggleDisabled: false,
       isAuthEnabledInDocs: false,
       isAskAiEnabled: false,

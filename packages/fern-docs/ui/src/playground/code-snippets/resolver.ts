@@ -25,7 +25,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
   public create(
     authState: PlaygroundAuthState,
     formState: PlaygroundEndpointRequestFormState,
-    proxyEnvironment: string,
     playgroundEnvironment: string | undefined,
     setOAuthValue: (value: (prev: any) => any) => void
   ): PlaygroundCodeSnippetResolver {
@@ -36,7 +35,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
       false,
       this.isSnippetTemplatesEnabled,
       this.isFileForgeHackEnabled,
-      proxyEnvironment,
       playgroundEnvironment,
       setOAuthValue
     );
@@ -45,7 +43,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
   public createRedacted(
     authState: PlaygroundAuthState,
     formState: PlaygroundEndpointRequestFormState,
-    proxyEnvironment: string,
     playgroundEnvironment: string | undefined,
     setOAuthValue: (value: (prev: any) => any) => void
   ): PlaygroundCodeSnippetResolver {
@@ -56,7 +53,6 @@ export class PlaygroundCodeSnippetResolverBuilder {
       true,
       this.isSnippetTemplatesEnabled,
       this.isFileForgeHackEnabled,
-      proxyEnvironment,
       playgroundEnvironment,
       setOAuthValue
     );
@@ -93,7 +89,6 @@ export class PlaygroundCodeSnippetResolver {
     isAuthHeadersRedacted: boolean,
     public isSnippetTemplatesEnabled: boolean,
     private isFileForgeHackEnabled: boolean,
-    proxyEnvironment: string,
     private baseUrl: string | undefined,
     setOAuthValue: (value: (prev: any) => any) => void
   ) {
@@ -107,7 +102,6 @@ export class PlaygroundCodeSnippetResolver {
       {
         formState,
         endpoint: this.context.endpoint,
-        proxyEnvironment,
         baseUrl: this.baseUrl,
         setValue: setOAuthValue,
       }

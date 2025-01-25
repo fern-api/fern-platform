@@ -161,6 +161,7 @@ exports[`primer > gets navigation root for /docs/api/v2.1/api-reference/client-s
   "availability": undefined,
   "canonicalSlug": "docs/api/v2.3/api-reference/client-session-api/retrieve-client-side-token",
   "endpointId": "subpackage_clientSessionApi.retrieveClientSideToken",
+  "featureFlags": undefined,
   "hidden": undefined,
   "icon": undefined,
   "id": "root..v2.1.uv.api-reference.subpackage_clientSessionApi.subpackage_clientSessionApi.retrieveClientSideToken",

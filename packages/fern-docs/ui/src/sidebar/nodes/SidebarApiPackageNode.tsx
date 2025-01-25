@@ -7,6 +7,7 @@ import {
   useIsSelectedSidebarNode,
   useToggleExpandedSidebarNode,
 } from "../../atoms";
+import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
@@ -59,39 +60,41 @@ export function SidebarApiPackageNode({
   const showIndicator = childSelected && !expanded;
 
   return (
-    <CollapsibleSidebarGroup<FernNavigation.ApiPackageChild>
-      open={expanded}
-      nodes={node.children}
-      renderNode={renderNode}
-    >
-      <SidebarSlugLink
-        nodeId={node.id}
-        icon={node.icon}
-        className={className}
-        depth={Math.max(depth - 1, 0)}
-        title={node.title}
-        expanded={expanded}
-        onClick={(e) => {
-          if (e.isDefaultPrevented()) {
-            return;
-          }
-          if (selected && expanded) {
+    <WithFeatureFlags featureFlags={node.featureFlags}>
+      <CollapsibleSidebarGroup<FernNavigation.ApiPackageChild>
+        open={expanded}
+        nodes={node.children}
+        renderNode={renderNode}
+      >
+        <SidebarSlugLink
+          nodeId={node.id}
+          icon={node.icon}
+          className={className}
+          depth={Math.max(depth - 1, 0)}
+          title={node.title}
+          expanded={expanded}
+          onClick={(e) => {
+            if (e.isDefaultPrevented()) {
+              return;
+            }
+            if (selected && expanded) {
+              e.preventDefault();
+            }
+            handleToggleExpand();
+          }}
+          onClickIndicator={(e) => {
+            handleToggleExpand();
             e.preventDefault();
-          }
-          handleToggleExpand();
-        }}
-        onClickIndicator={(e) => {
-          handleToggleExpand();
-          e.preventDefault();
-        }}
-        expandable={node.children.length > 0}
-        showIndicator={showIndicator}
-        hidden={node.hidden}
-        authed={node.authed}
-        slug={node.overviewPageId != null ? node.slug : undefined}
-        selected={selected}
-        shallow={shallow}
-      />
-    </CollapsibleSidebarGroup>
+          }}
+          expandable={node.children.length > 0}
+          showIndicator={showIndicator}
+          hidden={node.hidden}
+          authed={node.authed}
+          slug={node.overviewPageId != null ? node.slug : undefined}
+          selected={selected}
+          shallow={shallow}
+        />
+      </CollapsibleSidebarGroup>
+    </WithFeatureFlags>
   );
 }

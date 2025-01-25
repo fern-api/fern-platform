@@ -1,0 +1,68 @@
+[
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/text-to-speech",
+      "post",
+      "responses",
+      "content",
+      "audio/mpeg",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/text-to-speech/from-prompt",
+      "post",
+      "responses",
+      "content",
+      "audio/mpeg",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/voices",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/voices",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/voices/{voice_id}",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+    ],
+  },
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/v1/voices/{voice_id}",
+      "put",
+      "responses",
+      "content",
+      "application/json",
+    ],
+  },
+]

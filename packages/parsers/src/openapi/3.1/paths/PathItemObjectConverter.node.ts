@@ -45,6 +45,9 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       this.context,
       this.accessPath
     );
+    const path = Array.isArray(this.pathId)
+      ? this.pathId.join("/")
+      : this.pathId;
 
     if (this.input.get != null) {
       this.get = new OperationObjectConverterNode(
@@ -56,7 +59,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         },
         this.servers,
         this.globalAuth,
-        this.pathId,
+        path,
         "GET",
         this.basePath,
         this.isWebhook
@@ -72,7 +75,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         },
         this.servers,
         this.globalAuth,
-        this.pathId,
+        path,
         "POST",
         this.basePath,
         this.isWebhook
@@ -88,7 +91,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         },
         this.servers,
         this.globalAuth,
-        this.pathId,
+        path,
         "PUT",
         this.basePath
       );
@@ -103,7 +106,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         },
         this.servers,
         this.globalAuth,
-        this.pathId,
+        path,
         "PATCH",
         this.basePath
       );
@@ -118,7 +121,7 @@ export class PathItemObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         },
         this.servers,
         this.globalAuth,
-        this.pathId,
+        path,
         "DELETE",
         this.basePath
       );

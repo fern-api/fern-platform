@@ -1,14 +1,33 @@
-import { FdrAPI, type DocsV2Read } from "@fern-api/fdr-sdk/client/types";
+import { FernDocs } from "@fern-api/fdr-sdk";
+import {
+  ApiDefinition,
+  CodeSnippet,
+  convertToCurl,
+  EndpointDefinition,
+  ExampleEndpointCall,
+  toSnippetHttpRequest,
+  Transformer,
+} from "@fern-api/fdr-sdk/api-definition";
+import {
+  APIV1Read,
+  FdrAPI,
+  type DocsV2Read,
+} from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import { getFrontmatter } from "@fern-docs/mdx";
+import { withSeo } from "@fern-docs/seo";
 import {
+  DocsContent,
   DocsPage,
-  NavbarLink,
   getGitHubInfo,
   getGitHubRepo,
-  getSeoProps,
+  ImageData,
+  NavbarLink,
   renderThemeStylesheet,
   resolveDocsContent,
+  withCustomJavascript,
+  withLogo,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
 import {
@@ -19,6 +38,7 @@ import {
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import type { GetServerSidePropsResult } from "next";
 import { ComponentProps } from "react";
+import { UnreachableCaseError } from "ts-essentials";
 import urljoin from "url-join";
 
 export async function getDocsPageProps(
@@ -71,6 +91,34 @@ export async function getDocsPageProps(
   // TODO: get feature flags from the API
   const edgeFlags: EdgeFlags = DEFAULT_EDGE_FLAGS;
 
+  function resolveFileSrc(src: string | undefined): ImageData | undefined {
+    if (src == null) {
+      return undefined;
+    }
+
+    const fileId = FernNavigation.FileId(
+      src.startsWith("file:") ? src.slice(5) : src
+    );
+    const file = docs.definition.filesV2[fileId];
+    if (file == null) {
+      // the file is not found, so we return the src as the image data
+      return { src };
+    }
+
+    if (file.type === "image") {
+      return {
+        src: file.url,
+        width: file.width,
+        height: file.height,
+        blurDataURL: file.blurDataUrl,
+      };
+    } else if (file.type === "url") {
+      return { src: file.url };
+    } else {
+      throw new UnreachableCaseError(file);
+    }
+  }
+
   const content = await resolveDocsContent({
     domain: docs.baseUrl.domain,
     node: node.node,
@@ -81,15 +129,39 @@ export async function getDocsPageProps(
     prev: node.prev,
     next: node.next,
     apis: docs.definition.apis,
-    apisV2: docs.definition.apisV2,
+    apisV2:
+      docs.definition.apisV2 != null
+        ? Object.fromEntries(
+            await Promise.all(
+              Object.values(docs.definition.apisV2).map(async (api) => {
+                const resolved = await resolveHttpCodeSnippets(api);
+                return [api.id, resolved] as const;
+              })
+            )
+          )
+        : {},
     pages: docs.definition.pages,
     edgeFlags,
     mdxOptions: {
       files: docs.definition.jsFiles,
+      scope: {
+        env: "development",
+        props: {
+          authed: false,
+          user: undefined,
+          version: node.currentVersion?.versionId,
+          tab: node.currentTab?.title,
+        },
+      },
+
+      // inject the file url and dimensions for images and other embeddable files
+      replaceSrc: resolveFileSrc,
     },
     serializeMdx,
     engine: "next-mdx-remote",
   });
+
+  const frontmatter = extractFrontmatterFromDocsContent(node.node.id, content);
 
   if (content == null) {
     console.error(`Failed to resolve path for ${slug}`);
@@ -165,11 +237,9 @@ export async function getDocsPageProps(
     title: docs.definition.config.title,
     favicon: docs.definition.config.favicon,
     colors,
-    js: docs.definition.config.js,
+    js: withCustomJavascript(docs.definition.config.js, resolveFileSrc),
     navbarLinks,
-    logoHeight: docs.definition.config.logoHeight,
-    logoHref: docs.definition.config.logoHref,
-    files: docs.definition.filesV2,
+    logo: withLogo(docs.definition, node, frontmatter, resolveFileSrc),
     content,
     announcement:
       docs.definition.config.announcement != null
@@ -220,15 +290,14 @@ export async function getDocsPageProps(
     },
     edgeFlags,
     apis: Object.keys(docs.definition.apis).map(FdrAPI.ApiDefinitionId),
-    seo: getSeoProps(
+    seo: withSeo(
       docs.baseUrl.domain,
       docs.definition.config,
-      docs.definition.pages,
+      frontmatter,
       docs.definition.filesV2,
       docs.definition.apis,
       node,
-      true,
-      false
+      true
     ),
     fallback: {},
     analytics: undefined,
@@ -244,7 +313,7 @@ export async function getDocsPageProps(
       docs.definition.filesV2,
       node.tabs.length > 0
     ),
-    featureFlags: undefined, // TODO: match loading logic in withInitialProps ?
+    featureFlagsConfig: undefined,
   };
 
   // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
@@ -262,4 +331,114 @@ export async function getDocsPageProps(
   }
 
   return { props };
+}
+
+// TODO: actually need to add http examples here
+const resolveHttpCodeSnippets = async (
+  apiDefinition: ApiDefinition
+): Promise<ApiDefinition> => {
+  // Collect all endpoints first, so that we can resolve descriptions in a single batch
+  const collected: EndpointDefinition[] = [];
+  Transformer.with({
+    EndpointDefinition: (endpoint) => {
+      collected.push(endpoint);
+      return endpoint;
+    },
+  }).apiDefinition(apiDefinition);
+
+  // Resolve example code snippets in parallel
+  const result = Object.fromEntries(
+    await Promise.all(
+      collected.map(async (endpoint) => {
+        if (endpoint.examples == null || endpoint.examples.length === 0) {
+          return [endpoint.id, endpoint] as const;
+        }
+
+        const examples = await Promise.all(
+          endpoint.examples.map((example) =>
+            resolveExample(apiDefinition, endpoint, example)
+          )
+        );
+
+        return [endpoint.id, { ...endpoint, examples }] as const;
+      })
+    )
+  );
+
+  // reduce the api definition with newly resolved examples
+  return {
+    ...apiDefinition,
+    endpoints: { ...apiDefinition.endpoints, ...result },
+  };
+};
+
+const resolveExample = async (
+  apiDefinition: ApiDefinition,
+  endpoint: EndpointDefinition,
+  example: ExampleEndpointCall
+): Promise<ExampleEndpointCall> => {
+  const snippets = { ...example.snippets };
+
+  const pushSnippet = (snippet: CodeSnippet) => {
+    (snippets[snippet.language] ??= []).push(snippet);
+  };
+
+  // Check if curl snippet exists
+  if (!snippets[APIV1Read.SupportedLanguage.Curl]?.length) {
+    const endpointAuth = endpoint.auth?.[0];
+    const curlCode = convertToCurl(
+      toSnippetHttpRequest(
+        endpoint,
+        example,
+        endpointAuth != null ? apiDefinition.auths[endpointAuth] : undefined
+      ),
+      {
+        usesApplicationJsonInFormDataValue: false,
+      }
+    );
+    pushSnippet({
+      name: undefined,
+      language: APIV1Read.SupportedLanguage.Curl,
+      install: undefined,
+      code: curlCode,
+      generated: true,
+      description: undefined,
+    });
+  }
+
+  return { ...example, snippets };
+};
+
+export function extractFrontmatterFromDocsContent(
+  nodeId: FernNavigation.NodeId,
+  docsContent: DocsContent | undefined
+): FernDocs.Frontmatter | undefined {
+  if (docsContent == null) {
+    return undefined;
+  }
+  switch (docsContent.type) {
+    case "markdown-page":
+      return getFrontmatterFromMarkdownText(docsContent.content);
+    case "changelog-entry":
+      return getFrontmatterFromMarkdownText(docsContent.page);
+    case "api-reference-page": {
+      const mdx = docsContent.mdxs[nodeId];
+      if (mdx == null) {
+        return undefined;
+      }
+      return getFrontmatterFromMarkdownText(mdx.content);
+    }
+    default:
+      // TODO: handle changelog overview page and other pages
+      return undefined;
+  }
+}
+
+function getFrontmatterFromMarkdownText(
+  markdownText: FernDocs.MarkdownText
+): FernDocs.Frontmatter | undefined {
+  if (typeof markdownText === "string") {
+    return getFrontmatter(markdownText).data;
+  }
+  return markdownText.frontmatter;
 }

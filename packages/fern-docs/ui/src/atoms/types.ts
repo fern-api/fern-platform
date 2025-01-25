@@ -6,13 +6,14 @@ import type {
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { FernUser } from "@fern-docs/auth";
-import { NextSeoProps } from "@fern-docs/next-seo";
+import { NextSeoProps } from "@fern-docs/seo";
 import type { EdgeFlags } from "@fern-docs/utils";
 import {
   ColorsConfig,
   SidebarTab,
   VersionSwitcherInfo,
 } from "@fern-platform/fdr-utils";
+import type { LDContext } from "launchdarkly-react-client-sdk";
 import { CustomerAnalytics } from "../analytics/types";
 import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
@@ -53,10 +54,20 @@ export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
 
 export interface LaunchDarklyInfo {
   clientSideId: string;
-  userContextEndpoint: string;
+  contextEndpoint: string;
+  context: LDContext | undefined;
+  defaultFlags: object | undefined;
+  options:
+    | {
+        baseUrl: string | undefined;
+        streamUrl: string | undefined;
+        eventsUrl: string | undefined;
+        hash: string | undefined;
+      }
+    | undefined;
 }
 
-export interface FeatureFlags {
+export interface FeatureFlagsConfig {
   launchDarkly: LaunchDarklyInfo | undefined;
 }
 
@@ -68,11 +79,9 @@ export interface DocsProps {
   colors: ColorsConfig;
   announcement: AnnouncementConfig | undefined;
   layout: DocsV1Read.DocsLayoutConfig | undefined;
-  js: DocsV1Read.JsConfig | undefined;
+  js: JsConfig | undefined;
   navbarLinks: NavbarLink[];
-  logoHeight: DocsV1Read.Height | undefined;
-  logoHref: DocsV1Read.Url | undefined;
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>;
+  logo: LogoConfiguration;
   content: DocsContent;
   edgeFlags: EdgeFlags;
   apis: FdrAPI.ApiDefinitionId[];
@@ -84,5 +93,35 @@ export interface DocsProps {
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
   stylesheet: string;
-  featureFlags: FeatureFlags | undefined;
+  featureFlagsConfig: FeatureFlagsConfig | undefined;
+}
+
+export interface ImageData {
+  src: string;
+  height?: number;
+  width?: number;
+  blurDataURL?: string;
+  blurWidth?: number;
+  blurHeight?: number;
+}
+
+export interface LogoConfiguration {
+  height: number | undefined;
+  href: string | undefined;
+  light: ImageData | undefined;
+  dark: ImageData | undefined;
+}
+
+export interface JsConfig {
+  remote:
+    | {
+        url: string;
+        strategy:
+          | "beforeInteractive"
+          | "afterInteractive"
+          | "lazyOnload"
+          | undefined;
+      }[]
+    | undefined;
+  inline: string[] | undefined;
 }

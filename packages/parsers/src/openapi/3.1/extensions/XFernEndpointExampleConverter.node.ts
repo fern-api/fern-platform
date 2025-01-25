@@ -11,6 +11,7 @@ import { extendType } from "../../utils/extendType";
 import { isExampleCodeSampleSchemaLanguage } from "../guards/isExampleCodeSampleSchemaLanguage";
 import { isExampleCodeSampleSchemaSdk } from "../guards/isExampleCodeSampleSchemaSdk";
 import { isExampleResponseBody } from "../guards/isExampleResponseBody";
+import { isExampleStreamResponse } from "../guards/isExampleResponseStream";
 import { isExampleSseResponseBody } from "../guards/isExampleSseResponseBody";
 import { isFileWithData } from "../guards/isFileWithData";
 import { isRecord } from "../guards/isRecord";
@@ -184,14 +185,12 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
       this.requestBodyByContentType ?? {}
     )[0];
 
-    if (requestBodyContentTypeKey == null) {
-      return undefined;
-    }
-
     return this.examples.flatMap((example) => {
       return (this.responseBodies ?? []).map((responseBodyNode) => {
         const requestBodyShape =
-          this.requestBodyByContentType?.[requestBodyContentTypeKey];
+          requestBodyContentTypeKey != null
+            ? this.requestBodyByContentType?.[requestBodyContentTypeKey]
+            : undefined;
         let requestBody:
           | FernRegistry.api.latest.ExampleEndpointRequest
           | undefined;
@@ -234,6 +233,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
         let responseBody:
           | FernRegistry.api.latest.ExampleEndpointResponse
           | undefined;
+
         switch (responseBodyNode.contentType) {
           case "application/json": {
             if (isExampleResponseBody(example.response)) {
@@ -257,12 +257,15 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
             break;
           }
           case "application/octet-stream":
-            if (typeof example.response === "string") {
+            if (
+              !isExampleSseResponseBody(example.response) &&
+              isExampleStreamResponse(example.response)
+            ) {
               responseBody = {
-                type: "filename",
-                // TODO: example response should be a filename for now, but we should support different types of file patterns,
-                // e.g. an S3 link with an audio stream
-                value: example.response,
+                type: "stream",
+                // TODO: example response should be a stream for now, but we should support different types of file patterns,
+                // e.g. an S3 link with a filename
+                value: example.response.stream,
               };
             }
             break;
@@ -305,27 +308,35 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
           }
         });
 
+        const pathParameters = Object.fromEntries(
+          Object.entries(example["path-parameters"] ?? {}).map(
+            ([key, value]) => [FernRegistry.PropertyKey(key), value]
+          )
+        );
+        const queryParameters = Object.fromEntries(
+          Object.entries(example["query-parameters"] ?? {}).map(
+            ([key, value]) => [FernRegistry.PropertyKey(key), value]
+          )
+        );
+        const headers = Object.fromEntries(
+          Object.entries(example.headers ?? {}).map(([key, value]) => [
+            FernRegistry.PropertyKey(key),
+            value,
+          ])
+        );
+
         return {
           path: this.path,
           responseStatusCode: this.successResponseStatusCode,
           name: example.name,
           description: example.docs,
-          pathParameters: Object.fromEntries(
-            Object.entries(example["path-parameters"] ?? {}).map(
-              ([key, value]) => [FernRegistry.PropertyKey(key), value]
-            )
-          ),
-          queryParameters: Object.fromEntries(
-            Object.entries(example["query-parameters"] ?? {}).map(
-              ([key, value]) => [FernRegistry.PropertyKey(key), value]
-            )
-          ),
-          headers: Object.fromEntries(
-            Object.entries(example.headers ?? {}).map(([key, value]) => [
-              FernRegistry.PropertyKey(key),
-              value,
-            ])
-          ),
+          pathParameters:
+            Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
+          queryParameters:
+            Object.keys(queryParameters).length > 0
+              ? queryParameters
+              : undefined,
+          headers: Object.keys(headers).length > 0 ? headers : undefined,
           requestBody,
           responseBody,
           snippets,

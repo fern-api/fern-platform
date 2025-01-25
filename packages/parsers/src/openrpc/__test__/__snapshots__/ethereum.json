@@ -1,0 +1,5638 @@
+{
+  "id": "test-uuid-replacement",
+  "types": {
+    "ProofNode": {
+      "name": "ProofNode",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Bytes"
+        }
+      },
+      "description": "An individual node used to prove a path down a merkle-patricia-tree"
+    },
+    "StorageProofKey": {
+      "name": "StorageProofKey",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Integer"
+        }
+      },
+      "description": "The key used to get the storage slot in its account tree."
+    },
+    "StorageProof": {
+      "name": "storageProofSet",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "key",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "StorageProofKey"
+                  }
+                }
+              },
+              {
+                "key": "value",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The value of the storage slot in its account tree"
+              },
+              {
+                "key": "proof",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "ProofNodes"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "description": "Current block header PoW hash."
+    },
+    "ProofNodes": {
+      "name": "proofNodes",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "ProofNode"
+            }
+          }
+        }
+      },
+      "description": "The set of node values needed to traverse a patricia merkle tree (from root to leaf) to retrieve a value"
+    },
+    "PowHash": {
+      "name": "PowHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "DataWord"
+        }
+      },
+      "description": "Current block header PoW hash."
+    },
+    "SeedHash": {
+      "name": "SeedHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "DataWord"
+        }
+      },
+      "description": "The seed hash used for the DAG."
+    },
+    "MixHash": {
+      "name": "MixHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "DataWord"
+        }
+      },
+      "description": "The mix digest."
+    },
+    "Difficulty": {
+      "name": "Difficulty",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "DataWord"
+        }
+      },
+      "description": "The boundary condition ('target'), 2^256 / difficulty."
+    },
+    "FilterId": {
+      "name": "filterId",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "An identifier used to reference the filter."
+    },
+    "BlockHash": {
+      "name": "blockHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[a-fA-F\\d]{64}$"
+          }
+        }
+      },
+      "description": "The hex representation of the Keccak 256 of the RLP encoded block"
+    },
+    "BlockNumber": {
+      "name": "BlockNumber",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Integer"
+        }
+      },
+      "description": "The hex representation of the block's height"
+    },
+    "BlockNumberTag": {
+      "name": "blockNumberTag",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "earliest"
+          },
+          {
+            "value": "latest"
+          },
+          {
+            "value": "pending"
+          }
+        ]
+      },
+      "description": "The optional block height description"
+    },
+    "BlockOrNull": {
+      "name": "blockOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Block"
+            }
+          }
+        }
+      }
+    },
+    "IntegerOrNull": {
+      "name": "integerOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
+        }
+      }
+    },
+    "AddressOrNull": {
+      "name": "addressOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Address"
+            }
+          }
+        }
+      }
+    },
+    "Receipt": {
+      "name": "receipt",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "blockHash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockHash"
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "contractAddress",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "AddressOrNull"
+              }
+            },
+            "description": "The contract address created, if the transaction was a contract creation, otherwise null"
+          },
+          {
+            "key": "cumulativeGasUsed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Integer"
+              }
+            },
+            "description": "The gas units used by the transaction"
+          },
+          {
+            "key": "from",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "From"
+              }
+            }
+          },
+          {
+            "key": "gasUsed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Integer"
+              }
+            },
+            "description": "The total gas used by the transaction"
+          },
+          {
+            "key": "logs",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Log"
+                  }
+                }
+              }
+            },
+            "description": "An array of all the logs triggered during the transaction"
+          },
+          {
+            "key": "logsBloom",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BloomFilter"
+              }
+            }
+          },
+          {
+            "key": "to",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "To"
+              }
+            }
+          },
+          {
+            "key": "transactionHash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "TransactionHash"
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "TransactionIndex"
+              }
+            }
+          },
+          {
+            "key": "postTransactionState",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
+              }
+            },
+            "description": "The intermediate stateRoot directly after transaction execution."
+          },
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "Whether or not the transaction threw an error."
+          }
+        ]
+      },
+      "description": "The receipt of a transaction"
+    },
+    "BloomFilter": {
+      "name": "bloomFilter",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "A 2048 bit bloom filter from the logs of the transaction. Each log sets 3 bits though taking the low-order 11 bits of each of the first three pairs of bytes in a Keccak 256 hash of the log's byte series"
+    },
+    "Log": {
+      "name": "log",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "address",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Address"
+              }
+            },
+            "description": "Sender of the transaction"
+          },
+          {
+            "key": "blockHash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockHash"
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockNumber"
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Bytes"
+              }
+            },
+            "description": "The data/input string sent along with the transaction"
+          },
+          {
+            "key": "logIndex",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Integer"
+              }
+            },
+            "description": "The index of the event within its transaction, null when its pending"
+          },
+          {
+            "key": "removed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "description": "Whether or not the log was orphaned off the main chain"
+          },
+          {
+            "key": "topics",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Topics"
+              }
+            }
+          },
+          {
+            "key": "transactionHash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "TransactionHash"
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "TransactionIndex"
+              }
+            }
+          }
+        ]
+      },
+      "description": "An indexed event generated during a transaction"
+    },
+    "Topics": {
+      "name": "LogTopics",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Topic"
+            }
+          }
+        }
+      },
+      "description": "Topics are order-dependent. Each topic can also be an array of DATA with 'or' options."
+    },
+    "Topic": {
+      "name": "Topic",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "DataWord"
+        }
+      },
+      "description": "32 Bytes DATA of indexed log arguments. (In solidity: The first topic is the hash of the signature of the event (e.g. Deposit(address,bytes32,uint256))"
+    },
+    "TransactionIndex": {
+      "name": "TransactionIndex",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "IntegerOrNull"
+        }
+      },
+      "description": "The index of the transaction. null when its pending"
+    },
+    "BlockNumberOrNull": {
+      "name": "blockNumberOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockNumber"
+            }
+          }
+        }
+      },
+      "description": "The block number or null when its the pending block"
+    },
+    "BlockHashOrNull": {
+      "name": "BlockHashOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "KeccakOrPending"
+        }
+      },
+      "description": "The block hash or null when its the pending block"
+    },
+    "NonceOrNull": {
+      "name": "nonceOrNull",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Nonce"
+            }
+          }
+        }
+      },
+      "description": "Randomly selected number to satisfy the proof-of-work or null when its the pending block"
+    },
+    "From": {
+      "name": "From",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Address"
+        }
+      },
+      "description": "The sender of the transaction"
+    },
+    "To": {
+      "name": "To",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Address"
+            }
+          }
+        }
+      },
+      "description": "Destination address of the transaction. Null if it was a contract create."
+    },
+    "Block": {
+      "name": "Block",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "number",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockNumberOrNull"
+              }
+            }
+          },
+          {
+            "key": "hash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockHashOrNull"
+              }
+            }
+          },
+          {
+            "key": "parentHash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "BlockHash"
+              }
+            }
+          },
+          {
+            "key": "nonce",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "NonceOrNull"
+              }
+            }
+          },
+          {
+            "key": "sha3Uncles",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Keccak"
+              }
+            },
+            "description": "Keccak hash of the uncles data in the block"
+          },
+          {
+            "key": "logsBloom",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^0x[a-fA-F\\d]+$"
+                }
+              }
+            },
+            "description": "The bloom filter for the logs of the block or null when its the pending block"
+          },
+          {
+            "key": "transactionsRoot",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Keccak"
+              }
+            },
+            "description": "The root of the transactions trie of the block."
+          },
+          {
+            "key": "stateRoot",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Keccak"
+              }
+            },
+            "description": "The root of the final state trie of the block"
+          },
+          {
+            "key": "receiptsRoot",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Keccak"
+              }
+            },
+            "description": "The root of the receipts trie of the block"
+          },
+          {
+            "key": "miner",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "AddressOrNull"
+              }
+            }
+          },
+          {
+            "key": "difficulty",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Integer of the difficulty for this block"
+          },
+          {
+            "key": "totalDifficulty",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "IntegerOrNull"
+              }
+            },
+            "description": "Integer of the total difficulty of the chain until this block"
+          },
+          {
+            "key": "extraData",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The 'extra data' field of this block"
+          },
+          {
+            "key": "size",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "Integer the size of this block in bytes"
+          },
+          {
+            "key": "gasLimit",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The maximum gas allowed in this block"
+          },
+          {
+            "key": "gasUsed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The total used gas by all transactions in this block"
+          },
+          {
+            "key": "timestamp",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The unix timestamp for when the block was collated"
+          },
+          {
+            "key": "transactions",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Transaction"
+                  }
+                }
+              }
+            },
+            "description": "Array of transaction objects, or 32 Bytes transaction hashes depending on the last given parameter"
+          },
+          {
+            "key": "uncles",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "list",
+                "itemShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
+              }
+            },
+            "description": "Array of uncle hashes"
+          }
+        ]
+      },
+      "description": "The Block is the collection of relevant pieces of information (known as the block header), together with information corresponding to the comprised transactions, and a set of other block headers that are known to have a parent equal to the present block’s parent’s parent."
+    },
+    "Transaction": {
+      "name": "transaction",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "blockHash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHashOrNull"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "blockNumber",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumberOrNull"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "from",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "From"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "gas",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The gas limit provided by the sender in Wei"
+          },
+          {
+            "key": "gasPrice",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "The gas price willing to be paid by the sender in Wei"
+          },
+          {
+            "key": "hash",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionHash"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "input",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "The data field sent with the transaction"
+          },
+          {
+            "key": "nonce",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Nonce"
+              }
+            },
+            "description": "The total number of prior transactions made by the sender"
+          },
+          {
+            "key": "to",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "To"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "transactionIndex",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionIndex"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "key": "value",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
+              }
+            },
+            "description": "Value of Ether being transferred in Wei"
+          },
+          {
+            "key": "v",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "ECDSA recovery id"
+          },
+          {
+            "key": "r",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "ECDSA signature r"
+          },
+          {
+            "key": "s",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "description": "ECDSA signature s"
+          }
+        ]
+      }
+    },
+    "Transactions": {
+      "name": "transactions",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Transaction"
+            }
+          }
+        }
+      },
+      "description": "An array of transactions"
+    },
+    "TransactionHash": {
+      "name": "TransactionHash",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Keccak"
+        }
+      },
+      "description": "Keccak 256 Hash of the RLP encoding of a transaction"
+    },
+    "KeccakOrPending": {
+      "name": "keccakOrPending",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Keccak"
+            }
+          }
+        }
+      }
+    },
+    "Keccak": {
+      "name": "keccak",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[a-fA-F\\d]{64}$"
+          }
+        }
+      },
+      "description": "Hex representation of a Keccak 256 hash"
+    },
+    "Nonce": {
+      "name": "Nonce",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "id",
+          "id": "Integer"
+        }
+      },
+      "description": "A number only to be used once"
+    },
+    "Null": {
+      "name": "null",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "unknown",
+              "displayName": "null"
+            }
+          }
+        }
+      },
+      "description": "Null"
+    },
+    "Integer": {
+      "name": "integer",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[a-fA-F0-9]+$"
+          }
+        }
+      },
+      "description": "Hex representation of the integer"
+    },
+    "Address": {
+      "name": "address",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x[a-fA-F\\d]{40}$"
+          }
+        }
+      }
+    },
+    "Addresses": {
+      "name": "addresses",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "list",
+          "itemShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Address"
+            }
+          }
+        }
+      },
+      "description": "List of contract addresses from which to monitor events"
+    },
+    "Position": {
+      "name": "position",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([a-fA-F0-9]?)+$"
+          }
+        }
+      },
+      "description": "Hex representation of the storage slot where the variable exists"
+    },
+    "DataWord": {
+      "name": "dataWord",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([a-fA-F\\d]{64})?$"
+          }
+        }
+      },
+      "description": "Hex representation of a 256 bit unit of data"
+    },
+    "Bytes": {
+      "name": "bytes",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^0x([a-fA-F0-9]?)+$"
+          }
+        }
+      },
+      "description": "Hex representation of a variable length byte array"
+    }
+  },
+  "endpoints": {
+    "web3_clientVersion": {
+      "id": "web3_clientVersion",
+      "displayName": "web3_clientVersion",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Returns the version of the current client"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "web3_clientVersion",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
+      "description": "Returns the version of the current client",
+      "operationId": "web3_clientVersion",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "web3_sha3": {
+      "id": "web3_sha3",
+      "displayName": "web3_sha3",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "data",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "regex": "^0x[a-fA-F\\d]+$"
+                    }
+                  }
+                },
+                "description": "data to hash using the Keccak-256 algorithm"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Keccak"
+            }
+          },
+          "description": "Hashes data using the Keccak-256 algorithm"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "sha3Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "web3_sha3",
+              "params": [
+                "0x68656c6c6f20776f726c64"
+              ]
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "sha3ResultExample",
+              "value": "0x47173285a8d7341e5e972fc677286384f802f8ef42a5ec5f03bbfa254cb01fad"
+            }
+          }
+        }
+      ],
+      "description": "Hashes data using the Keccak-256 algorithm",
+      "operationId": "web3_sha3",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "net_listening": {
+      "id": "net_listening",
+      "displayName": "net_listening",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          },
+          "description": "Determines if this client is listening for new network connections."
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "netListeningTrueExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_listening"
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "netListeningExampleFalseResult",
+              "value": true
+            }
+          }
+        }
+      ],
+      "description": "Determines if this client is listening for new network connections.",
+      "operationId": "net_listening",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "net_peerCount": {
+      "id": "net_peerCount",
+      "displayName": "net_peerCount",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Returns the number of peers currently connected to this client."
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_peerCount",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
+      "description": "Returns the number of peers currently connected to this client.",
+      "operationId": "net_peerCount",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "net_version": {
+      "id": "net_version",
+      "displayName": "net_version",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^[\\d]+$"
+              }
+            }
+          },
+          "description": "Returns the network ID associated with the current network."
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "net_version",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
+      "description": "Returns the network ID associated with the current network.",
+      "operationId": "net_version",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_blockNumber": {
+      "id": "eth_blockNumber",
+      "displayName": "eth_blockNumber",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockNumber"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_blockNumber",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of most recent block.",
+      "operationId": "eth_blockNumber",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_call": {
+      "id": "eth_call",
+      "displayName": "eth_call",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "transaction",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Transaction"
+                  }
+                }
+              },
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Bytes"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_call",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Executes a new message call (locally) immediately without creating a transaction on the block chain.",
+      "operationId": "eth_call",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_chainId": {
+      "id": "eth_chainId",
+      "displayName": "eth_chainId",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "regex": "^0x[a-fA-F\\d]+$"
+              }
+            }
+          },
+          "description": "Returns the currently configured chain id, a value used in replay-protected transaction signing as introduced by [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md)."
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_chainId",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
+      "description": "Returns the currently configured chain id, a value used in replay-protected transaction signing as introduced by [EIP-155](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md).",
+      "operationId": "eth_chainId",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_coinbase": {
+      "id": "eth_coinbase",
+      "displayName": "eth_coinbase",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Address"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_coinbase",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the client coinbase address.",
+      "operationId": "eth_coinbase",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_estimateGas": {
+      "id": "eth_estimateGas",
+      "displayName": "eth_estimateGas",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "transaction",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Transaction"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_estimateGas",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Generates and returns an estimate of how much gas is necessary to allow the transaction to complete. The transaction will not be added to the blockchain. Note that the estimate may be significantly more than the amount of gas actually used by the transaction, for a variety of reasons including EVM mechanics and node performance.",
+      "operationId": "eth_estimateGas",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_gasPrice": {
+      "id": "eth_gasPrice",
+      "displayName": "eth_gasPrice",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_gasPrice",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the current price per gas in wei",
+      "operationId": "eth_gasPrice",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getBalance": {
+      "id": "eth_getBalance",
+      "displayName": "eth_getBalance",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "address",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                },
+                "description": "The address of the account or contract"
+              },
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                },
+                "description": "A BlockNumber at which to request the balance"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "IntegerOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBalance",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns Ether balance of a given or account or contract",
+      "operationId": "eth_getBalance",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getBlockByHash": {
+      "id": "eth_getBlockByHash",
+      "displayName": "eth_getBlockByHash",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
+              },
+              {
+                "key": "includeTransactions",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "description": "If `true` it returns the full transaction objects, if `false` only the hashes of the transactions."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockByHash",
+              "params": {
+                "includeTransactions": false
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Gets a block for a given hash",
+      "operationId": "eth_getBlockByHash",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getBlockByNumber": {
+      "id": "eth_getBlockByNumber",
+      "displayName": "eth_getBlockByNumber",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              },
+              {
+                "key": "includeTransactions",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "description": "If `true` it returns the full transaction objects, if `false` only the hashes of the transactions."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockByNumber",
+              "params": {
+                "includeTransactions": false
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Gets a block for a given number",
+      "operationId": "eth_getBlockByNumber",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getBlockTransactionCountByHash": {
+      "id": "eth_getBlockTransactionCountByHash",
+      "displayName": "eth_getBlockTransactionCountByHash",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "IntegerOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockTransactionCountByHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of transactions in a block from a block matching the given block hash.",
+      "operationId": "eth_getBlockTransactionCountByHash",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getBlockTransactionCountByNumber": {
+      "id": "eth_getBlockTransactionCountByNumber",
+      "displayName": "eth_getBlockTransactionCountByNumber",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "IntegerOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getBlockTransactionCountByNumber",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of transactions in a block from a block matching the given block number.",
+      "operationId": "eth_getBlockTransactionCountByNumber",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getCode": {
+      "id": "eth_getCode",
+      "displayName": "eth_getCode",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "address",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                },
+                "description": "The address of the contract"
+              },
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                },
+                "description": "A BlockNumber of which the code existed"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Bytes"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getCode",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns code at a given contract address",
+      "operationId": "eth_getCode",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getFilterChanges": {
+      "id": "eth_getFilterChanges",
+      "displayName": "eth_getFilterChanges",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "filterId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "FilterId"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Log"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getFilterChanges",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null
+            ]
+          }
+        }
+      ],
+      "description": "Polling method for a filter, which returns an array of logs which occurred since last poll.",
+      "operationId": "eth_getFilterChanges",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getFilterLogs": {
+      "id": "eth_getFilterLogs",
+      "displayName": "eth_getFilterLogs",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "filterId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "FilterId"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Log"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getFilterLogs",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null
+            ]
+          }
+        }
+      ],
+      "description": "Returns an array of all logs matching filter with given id.",
+      "operationId": "eth_getFilterLogs",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getRawTransactionByHash": {
+      "id": "eth_getRawTransactionByHash",
+      "displayName": "eth_getRawTransactionByHash",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "transactionHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionHash"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Bytes"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getRawTransactionByHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns raw transaction data of a transaction with the given hash.",
+      "operationId": "eth_getRawTransactionByHash",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getRawTransactionByBlockHashAndIndex": {
+      "id": "eth_getRawTransactionByBlockHashAndIndex",
+      "displayName": "eth_getRawTransactionByBlockHashAndIndex",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
+              },
+              {
+                "key": "index",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The ordering in which a transaction is mined within its block."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Bytes"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getRawTransactionByBlockHashAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns raw transaction data of a transaction with the block hash and index of which it was mined.",
+      "operationId": "eth_getRawTransactionByBlockHashAndIndex",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getRawTransactionByBlockNumberAndIndex": {
+      "id": "eth_getRawTransactionByBlockNumberAndIndex",
+      "displayName": "eth_getRawTransactionByBlockNumberAndIndex",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              },
+              {
+                "key": "index",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The ordering in which a transaction is mined within its block."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Bytes"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getRawTransactionByBlockNumberAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns raw transaction data of a transaction with the block number and index of which it was mined.",
+      "operationId": "eth_getRawTransactionByBlockNumberAndIndex",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getLogs": {
+      "id": "eth_getLogs",
+      "displayName": "eth_getLogs",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "filter",
+                "valueShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "fromBlock",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "key": "toBlock",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "key": "address",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "Address"
+                        }
+                      }
+                    },
+                    {
+                      "key": "topics",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "Topics"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Log"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getLogs",
+              "params": {
+                "filter": {}
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null
+            ]
+          }
+        }
+      ],
+      "description": "Returns an array of all logs matching a given filter object.",
+      "operationId": "eth_getLogs",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getStorageAt": {
+      "id": "eth_getStorageAt",
+      "displayName": "eth_getStorageAt",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "address",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                }
+              },
+              {
+                "key": "key",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Position"
+                  }
+                }
+              },
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "DataWord"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getStorageAt",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Gets a storage value from a contract address, a position, and an optional blockNumber",
+      "operationId": "eth_getStorageAt",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getTransactionByBlockHashAndIndex": {
+      "id": "eth_getTransactionByBlockHashAndIndex",
+      "displayName": "eth_getTransactionByBlockHashAndIndex",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
+              },
+              {
+                "key": "index",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The ordering in which a transaction is mined within its block."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Transaction"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "nullExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionByBlockHashAndIndex",
+              "params": [
+                "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+                "0x0"
+              ]
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "nullResultExample",
+              "value": null
+            }
+          }
+        }
+      ],
+      "description": "Returns the information about a transaction requested by the block hash and index of which it was mined.",
+      "operationId": "eth_getTransactionByBlockHashAndIndex",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getTransactionByBlockNumberAndIndex": {
+      "id": "eth_getTransactionByBlockNumberAndIndex",
+      "displayName": "eth_getTransactionByBlockNumberAndIndex",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              },
+              {
+                "key": "index",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The ordering in which a transaction is mined within its block."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Transaction"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionByBlockNumberAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the information about a transaction requested by the block number and index of which it was mined.",
+      "operationId": "eth_getTransactionByBlockNumberAndIndex",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getTransactionByHash": {
+      "id": "eth_getTransactionByHash",
+      "displayName": "eth_getTransactionByHash",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "transactionHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionHash"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Transaction"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionByHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the information about a transaction requested by transaction hash.",
+      "operationId": "eth_getTransactionByHash",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getTransactionCount": {
+      "id": "eth_getTransactionCount",
+      "displayName": "eth_getTransactionCount",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "address",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                }
+              },
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Nonce"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionCount",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of transactions sent from an address",
+      "operationId": "eth_getTransactionCount",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getTransactionReceipt": {
+      "id": "eth_getTransactionReceipt",
+      "displayName": "eth_getTransactionReceipt",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "transactionHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "TransactionHash"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Receipt"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getTransactionReceipt",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the receipt information of a transaction by its hash.",
+      "operationId": "eth_getTransactionReceipt",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getUncleByBlockHashAndIndex": {
+      "id": "eth_getUncleByBlockHashAndIndex",
+      "displayName": "eth_getUncleByBlockHashAndIndex",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
+              },
+              {
+                "key": "index",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The ordering in which a uncle is included within its block."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleByBlockHashAndIndex",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns information about a uncle of a block by hash and uncle index position.",
+      "operationId": "eth_getUncleByBlockHashAndIndex",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getUncleByBlockNumberAndIndex": {
+      "id": "eth_getUncleByBlockNumberAndIndex",
+      "displayName": "eth_getUncleByBlockNumberAndIndex",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "uncleBlockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                },
+                "description": "The block in which the uncle was included"
+              },
+              {
+                "key": "index",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The ordering in which a uncle is included within its block."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "nullResultExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleByBlockNumberAndIndex",
+              "params": [
+                "0x0",
+                "0x0"
+              ]
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "nullResultExample",
+              "value": null
+            }
+          }
+        }
+      ],
+      "description": "Returns information about a uncle of a block by hash and uncle index position.",
+      "operationId": "eth_getUncleByBlockNumberAndIndex",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getUncleCountByBlockHash": {
+      "id": "eth_getUncleCountByBlockHash",
+      "displayName": "eth_getUncleCountByBlockHash",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockHash"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "IntegerOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleCountByBlockHash",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of uncles in a block from a block matching the given block hash.",
+      "operationId": "eth_getUncleCountByBlockHash",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getUncleCountByBlockNumber": {
+      "id": "eth_getUncleCountByBlockNumber",
+      "displayName": "eth_getUncleCountByBlockNumber",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "IntegerOrNull"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getUncleCountByBlockNumber",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of uncles in a block from a block matching the given block number.",
+      "operationId": "eth_getUncleCountByBlockNumber",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getProof": {
+      "id": "eth_getProof",
+      "displayName": "eth_getProof",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "address",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                },
+                "description": "The address of the account or contract"
+              },
+              {
+                "key": "storageKeys",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
+              },
+              {
+                "key": "blockNumber",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "address",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Address"
+                      }
+                    },
+                    "description": "The address of the account or contract of the request"
+                  },
+                  {
+                    "key": "accountProof",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "ProofNodes"
+                      }
+                    }
+                  },
+                  {
+                    "key": "balance",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Integer"
+                      }
+                    },
+                    "description": "The Ether balance of the account or contract of the request"
+                  },
+                  {
+                    "key": "codeHash",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Keccak"
+                      }
+                    },
+                    "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
+                  },
+                  {
+                    "key": "nonce",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Nonce"
+                      }
+                    },
+                    "description": "The transaction count of the account or contract of the request"
+                  },
+                  {
+                    "key": "storageHash",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Keccak"
+                      }
+                    },
+                    "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
+                  },
+                  {
+                    "key": "storageProof",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "StorageProof"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getProof",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        }
+      ],
+      "description": "Returns the account- and storage-values of the specified account including the Merkle-proof.",
+      "operationId": "eth_getProof",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_getWork": {
+      "id": "eth_getWork",
+      "displayName": "eth_getWork",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "undiscriminatedUnion",
+                "variants": [
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "PowHash"
+                      }
+                    }
+                  },
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "SeedHash"
+                      }
+                    }
+                  },
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Difficulty"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_getWork",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": [
+              null,
+              null,
+              null
+            ]
+          }
+        }
+      ],
+      "description": "Returns the hash of the current block, the seedHash, and the boundary condition to be met ('target').",
+      "operationId": "eth_getWork",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_hashrate": {
+      "id": "eth_hashrate",
+      "displayName": "eth_hashrate",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_hashrate",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the number of hashes per second that the node is mining with.",
+      "operationId": "eth_hashrate",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_mining": {
+      "id": "eth_mining",
+      "displayName": "eth_mining",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_mining",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
+      "description": "Returns true if client is actively mining new blocks.",
+      "operationId": "eth_mining",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_newBlockFilter": {
+      "id": "eth_newBlockFilter",
+      "displayName": "eth_newBlockFilter",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "FilterId"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newBlockFilter",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Creates a filter in the node, to notify when a new block arrives. To check if the state has changed, call eth_getFilterChanges.",
+      "operationId": "eth_newBlockFilter",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_newFilter": {
+      "id": "eth_newFilter",
+      "displayName": "eth_newFilter",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "filter",
+                "valueShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "fromBlock",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "key": "toBlock",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "key": "address",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "Address"
+                        }
+                      }
+                    },
+                    {
+                      "key": "topics",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "Topics"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newFilter",
+              "params": {
+                "filter": {}
+              }
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Creates a filter object, based on filter options, to notify when the state changes (logs). To check if the state has changed, call eth_getFilterChanges.",
+      "operationId": "eth_newFilter",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_newPendingTransactionFilter": {
+      "id": "eth_newPendingTransactionFilter",
+      "displayName": "eth_newPendingTransactionFilter",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "FilterId"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_newPendingTransactionFilter",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Creates a filter in the node, to notify when new pending transactions arrive. To check if the state has changed, call eth_getFilterChanges.",
+      "operationId": "eth_newPendingTransactionFilter",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_pendingTransactions": {
+      "id": "eth_pendingTransactions",
+      "displayName": "eth_pendingTransactions",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Transactions"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_pendingTransactions",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the transactions that are pending in the transaction pool and have a from address that is one of the accounts this node manages.",
+      "operationId": "eth_pendingTransactions",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_protocolVersion": {
+      "id": "eth_protocolVersion",
+      "displayName": "eth_protocolVersion",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_protocolVersion",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Returns the current ethereum protocol version.",
+      "operationId": "eth_protocolVersion",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_sendRawTransaction": {
+      "id": "eth_sendRawTransaction",
+      "displayName": "eth_sendRawTransaction",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "signedTransactionData",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Bytes"
+                  }
+                },
+                "description": "The signed transaction data"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Keccak"
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_sendRawTransaction",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json"
+          }
+        }
+      ],
+      "description": "Creates new message call transaction or a contract creation for signed transactions.",
+      "operationId": "eth_sendRawTransaction",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_submitHashrate": {
+      "id": "eth_submitHashrate",
+      "displayName": "eth_submitHashrate",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "hashRate",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "DataWord"
+                  }
+                }
+              },
+              {
+                "key": "id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "DataWord"
+                  }
+                },
+                "description": "String identifying the client"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_submitHashrate",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
+      "description": "Used for submitting mining hashrate.",
+      "operationId": "eth_submitHashrate",
+      "environments": [],
+      "availability": "Deprecated",
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_submitWork": {
+      "id": "eth_submitWork",
+      "displayName": "eth_submitWork",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "nonce",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Nonce"
+                  }
+                }
+              },
+              {
+                "key": "powHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "PowHash"
+                  }
+                }
+              },
+              {
+                "key": "mixHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "MixHash"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "submitWorkExample",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_submitWork",
+              "params": [
+                "0x0000000000000001",
+                "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+                "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
+              ]
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "name": "solutionInvalidExample",
+              "description": "this example should return `false` as it is not a valid pow to submit",
+              "value": false
+            }
+          }
+        }
+      ],
+      "description": "Used for submitting a proof-of-work solution.",
+      "operationId": "eth_submitWork",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_syncing": {
+      "id": "eth_syncing",
+      "displayName": "eth_syncing",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "startingBlock",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "Block at which the import started (will only be reset, after the sync reached his head)"
+              },
+              {
+                "key": "currentBlock",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The current block, same as eth_blockNumber"
+              },
+              {
+                "key": "highestBlock",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The estimated highest block"
+              },
+              {
+                "key": "knownStates",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The known states"
+              },
+              {
+                "key": "pulledStates",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The pulled states"
+              }
+            ]
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_syncing",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {}
+          }
+        }
+      ],
+      "description": "Returns an object with data about the sync status or false.",
+      "operationId": "eth_syncing",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    },
+    "eth_uninstallFilter": {
+      "id": "eth_uninstallFilter",
+      "displayName": "eth_uninstallFilter",
+      "method": "POST",
+      "path": [
+        {
+          "type": "pathParameter",
+          "value": "apiKey"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "filterId",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "FilterId"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "name": "Example",
+          "path": "",
+          "pathParameters": {},
+          "queryParameters": {},
+          "headers": {},
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "id": 1,
+              "jsonrpc": "2.0",
+              "method": "eth_uninstallFilter",
+              "params": {}
+            }
+          },
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": false
+          }
+        }
+      ],
+      "description": "Uninstalls a filter with given id. Should always be called when watch is no longer needed. Additionally Filters timeout when they aren't requested with eth_getFilterChanges for a period of time.",
+      "operationId": "eth_uninstallFilter",
+      "environments": [],
+      "requestHeaders": [],
+      "responseHeaders": []
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "subpackages": {},
+  "auths": {},
+  "globalHeaders": []
+}

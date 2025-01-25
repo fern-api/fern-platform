@@ -1,4 +1,4 @@
-import { createMockContext } from "../../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../../__test__/createMockContext.util";
 import { XFernBasicUsernameVariableNameConverterNode } from "../../auth/XFernBasicUsernameVariableNameConverter.node";
 
 describe("XFernBasicUsernameVariableNameConverterNode", () => {

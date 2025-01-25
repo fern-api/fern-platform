@@ -1,8 +1,7 @@
-import { camelCase } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { v4 } from "uuid";
 import { FernRegistry } from "../../client/generated";
-import { SubpackageId } from "../../client/generated/api/resources/api/resources/v1";
+import { computeSubpackages } from "../../utils/computeSubpackages";
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -10,6 +9,7 @@ import {
 import { coalesceServers } from "../utils/3.1/coalesceServers";
 import { SecurityRequirementObjectConverterNode } from "./auth/SecurityRequirementObjectConverter.node";
 import { XFernBasePathConverterNode } from "./extensions/XFernBasePathConverter.node";
+import { XFernGlobalHeadersConverterNode } from "./extensions/XFernGlobalHeadersConverter.node";
 import { XFernGroupsConverterNode } from "./extensions/XFernGroupsConverter.node";
 import { PathsObjectConverterNode } from "./paths/PathsObjectConverter.node";
 import { ServerObjectConverterNode } from "./paths/ServerObjectConverter.node";
@@ -29,6 +29,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
   basePath: XFernBasePathConverterNode | undefined;
   fernGroups: XFernGroupsConverterNode | undefined;
   tags: TagObjectConverterNode[] | undefined;
+  globalHeaders: XFernGlobalHeadersConverterNode | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.Document>
@@ -68,7 +69,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
             input: tag,
             context: this.context,
             accessPath: this.accessPath,
-            pathId: `tags[${index}]`,
+            pathId: ["tags", `${index}`],
           })
       );
     }
@@ -128,44 +129,24 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         pathId: "components",
       });
     }
+
+    this.globalHeaders = new XFernGlobalHeadersConverterNode({
+      input: this.input,
+      context: this.context,
+      accessPath: this.accessPath,
+      pathId: "x-fern-global-headers",
+    });
   }
 
   convert(): FernRegistry.api.latest.ApiDefinition | undefined {
     const apiDefinitionId = v4();
 
     const { webhookEndpoints, endpoints } = this.paths?.convert() ?? {};
+
     const subpackages: Record<
-      SubpackageId,
+      FernRegistry.api.v1.SubpackageId,
       FernRegistry.api.latest.SubpackageMetadata
-    > = {};
-    if (endpoints != null) {
-      Object.values(endpoints).forEach((endpoint) =>
-        endpoint.namespace?.forEach((subpackage) => {
-          const qualifiedPath: string[] = [];
-          subpackages[FernRegistry.api.v1.SubpackageId(camelCase(subpackage))] =
-            {
-              id: FernRegistry.api.v1.SubpackageId(camelCase(subpackage)),
-              name: [...qualifiedPath, subpackage].join("/"),
-              displayName: subpackage,
-            };
-          qualifiedPath.push(subpackage);
-        })
-      );
-    }
-    if (webhookEndpoints != null) {
-      Object.values(webhookEndpoints).forEach((webhook) =>
-        webhook.namespace?.forEach((subpackage) => {
-          const qualifiedPath: string[] = [];
-          subpackages[FernRegistry.api.v1.SubpackageId(camelCase(subpackage))] =
-            {
-              id: FernRegistry.api.v1.SubpackageId(camelCase(subpackage)),
-              name: [...qualifiedPath, subpackage].join("/"),
-              displayName: subpackage,
-            };
-          qualifiedPath.push(subpackage);
-        })
-      );
-    }
+    > = computeSubpackages({ endpoints, webhookEndpoints });
 
     const types = this.components?.convert();
 
@@ -188,8 +169,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       // This is not necessary and will be removed
       subpackages,
       auths: this.auth?.convert() ?? {},
-      // TODO: Implement globalHeaders
-      globalHeaders: undefined,
+      globalHeaders: this.globalHeaders?.convert(),
     };
   }
 }

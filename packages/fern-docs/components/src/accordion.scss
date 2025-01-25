@@ -1,0 +1,39 @@
+@layer components {
+  .fern-accordion {
+    @apply fern-card divide-default divide-y rounded-lg;
+
+    li {
+      @apply list-outside;
+    }
+  }
+
+  .fern-accordion-item {
+    @apply first:rounded-t-[inherit] last:rounded-b-[inherit];
+  }
+
+  .fern-accordion-trigger {
+    @apply hover:bg-tag-default flex cursor-pointer items-center gap-3 rounded-[inherit] p-4 transition-colors hover:transition-none data-[state=open]:rounded-b-none;
+    @apply list-none;
+
+    // Hide the default arrow on WebKit browsers
+    &::-webkit-details-marker {
+      @apply hidden;
+    }
+
+    .fern-accordion-trigger-arrow {
+      @apply t-muted ease-shift size-4 shrink-0 transition-transform duration-[400ms];
+    }
+
+    &[data-state="open"] .fern-accordion-trigger-arrow {
+      @apply rotate-90;
+    }
+
+    .fern-accordion-trigger-title {
+      @apply t-default m-0 -mb-px flex max-w-max text-left text-base leading-6;
+    }
+  }
+
+  .fern-accordion-content {
+    @apply fern-collapsible;
+  }
+}

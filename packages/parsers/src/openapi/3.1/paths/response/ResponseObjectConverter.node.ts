@@ -6,9 +6,10 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import { resolveResponseReference } from "../../../utils/3.1/resolveResponseReference";
-import { RedocExampleConverterNode } from "../../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../../guards/isReferenceObject";
+import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
 import { ParameterBaseObjectConverterNode } from "../parameters/ParameterBaseObjectConverter.node";
+import { RequestMediaTypeObjectConverterNode } from "../request/RequestMediaTypeObjectConverter.node";
 import {
   ResponseMediaTypeObjectConverterNode,
   ResponseStreamingFormat,
@@ -28,7 +29,8 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     >,
     protected path: string,
     protected statusCode: number,
-    protected redocExamplesNode: RedocExampleConverterNode | undefined
+    protected requests: RequestMediaTypeObjectConverterNode[],
+    protected shapes: ExampleObjectConverterNode.Shapes
   ) {
     super(args);
     this.safeParse();
@@ -67,13 +69,15 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               input: contentTypeObject,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: "content",
+              pathId: ["content", contentType],
             },
             contentType,
             streamingFormat,
             this.path,
             this.statusCode,
-            this.redocExamplesNode
+            this.requests,
+            // TODO: add response headers, but this needs to be added to FDR shape
+            this.shapes
           )
         );
       }

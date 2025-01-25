@@ -1,7 +1,5 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { once } from "es-toolkit/function";
-import { useBasePath, useEdgeFlags } from "../atoms";
-import { useApiRoute } from "./useApiRoute";
 
 const APP_BUILDWITHFERN_COM = "app.buildwithfern.com";
 
@@ -23,12 +21,3 @@ export const getAppBuildwithfernCom = once((): string => {
 
   return withDefaultProtocol(APP_BUILDWITHFERN_COM);
 });
-
-export function useStandardProxyEnvironment(): string {
-  const basePath = useBasePath();
-  const { proxyShouldUseAppBuildwithfernCom } = useEdgeFlags();
-  const proxyBasePath = proxyShouldUseAppBuildwithfernCom
-    ? getAppBuildwithfernCom()
-    : basePath;
-  return useApiRoute("/api/fern-docs/proxy", { basepath: proxyBasePath });
-}

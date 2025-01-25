@@ -14,6 +14,7 @@ import {
   useRef,
   useState,
 } from "react";
+import urlJoin from "url-join";
 import {
   PLAYGROUND_AUTH_STATE_ATOM,
   store,
@@ -27,7 +28,7 @@ import { usePlaygroundBaseUrl } from "../utils/select-environment";
 import { PlaygroundWebSocketContent } from "./PlaygroundWebSocketContent";
 
 // TODO: decide if this should be an env variable, and if we should move REST proxy to the same (or separate) cloudflare worker
-const WEBSOCKET_PROXY_URI = "wss://websocket.proxy.ferndocs.com/ws";
+const WEBSOCKET_PROXY_URI = "wss://proxy.ferndocs.com/";
 
 interface PlaygroundWebSocketProps {
   context: WebSocketContext;
@@ -104,7 +105,7 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
 
       setConnectedState("opening");
 
-      socket.current = new WebSocket(WEBSOCKET_PROXY_URI);
+      socket.current = new WebSocket(urlJoin(WEBSOCKET_PROXY_URI, url));
 
       socket.current.onopen = () => {
         const authState = store.get(PLAYGROUND_AUTH_STATE_ATOM);
@@ -119,22 +120,27 @@ export const PlaygroundWebSocket: FC<PlaygroundWebSocketProps> = ({
         socket.current?.send(
           JSON.stringify({ type: "handshake", url, headers })
         );
+
+        setConnectedState("opened");
+        resolve(true);
       };
 
       socket.current.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        if (data.type === "handshake" && data.status === "connected") {
-          setConnectedState("opened");
-          resolve(true);
-        } else if (
-          data.type === "data" &&
-          (!websocketMessageLimit ||
-            activeSessionMessageCount < websocketMessageLimit)
+        function maybeParsedData() {
+          try {
+            return JSON.parse(event.data);
+          } catch {
+            return event.data;
+          }
+        }
+
+        if (
+          !websocketMessageLimit ||
+          activeSessionMessageCount < websocketMessageLimit
         ) {
           pushMessage({
             type: "received",
-            data:
-              typeof data.data === "string" ? JSON.parse(data.data) : data.data,
+            data: maybeParsedData(),
             origin: "server",
             displayName: undefined,
           });

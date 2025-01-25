@@ -10,6 +10,12 @@ const PRIVATE_S3_BUCKET_NAME_ENV_VAR = "PRIVATE_S3_BUCKET_NAME";
 const PRIVATE_S3_BUCKET_REGION_ENV_VAR = "PRIVATE_S3_BUCKET_REGION";
 const PRIVATE_S3_URL_OVERRIDE_ENV_VAR = "PRIVATE_S3_URL_OVERRIDE";
 
+const DB_DOCS_DEFINITION_BUCKET_NAME_ENV_VAR = "DB_DOCS_DEFINITION_BUCKET_NAME";
+const DB_DOCS_DEFINITION_BUCKET_REGION_ENV_VAR =
+  "DB_DOCS_DEFINITION_BUCKET_REGION";
+const DB_DOCS_DEFINITION_BUCKET_URL_OVERRIDE_ENV_VAR =
+  "DB_DOCS_DEFINITION_BUCKET_URL_OVERRIDE";
+
 const API_DEFINITION_SOURCE_BUCKET_NAME_ENV_VAR =
   "API_DEFINITION_SOURCE_BUCKET_NAME";
 const API_DEFINITION_SOURCE_BUCKET_REGION_ENV_VAR =
@@ -45,6 +51,7 @@ export interface FdrConfig {
   cdnPublicDocsUrl: string;
   publicDocsS3: S3Config;
   privateDocsS3: S3Config;
+  dbDocsDefinitionS3: S3Config;
   privateApiDefinitionSourceS3: S3Config;
   domainSuffix: string;
   algoliaAppId: string;
@@ -79,6 +86,15 @@ export function getConfig(): FdrConfig {
         PRIVATE_S3_BUCKET_REGION_ENV_VAR
       ),
       urlOverride: process.env[PRIVATE_S3_URL_OVERRIDE_ENV_VAR],
+    },
+    dbDocsDefinitionS3: {
+      bucketName: getEnvironmentVariableOrThrow(
+        DB_DOCS_DEFINITION_BUCKET_NAME_ENV_VAR
+      ),
+      bucketRegion: getEnvironmentVariableOrThrow(
+        DB_DOCS_DEFINITION_BUCKET_REGION_ENV_VAR
+      ),
+      urlOverride: process.env[DB_DOCS_DEFINITION_BUCKET_URL_OVERRIDE_ENV_VAR],
     },
     privateApiDefinitionSourceS3: {
       bucketName: getEnvironmentVariableOrThrow(

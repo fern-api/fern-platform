@@ -2,6 +2,7 @@ import {
   GetObjectCommand,
   PutObjectCommand,
   PutObjectCommandInput,
+  PutObjectCommandOutput,
   S3Client,
 } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
@@ -11,6 +12,7 @@ import {
   DocsV2Write,
   FdrAPI,
 } from "@fern-api/fdr-sdk";
+import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 import { v4 as uuidv4 } from "uuid";
 import { Cache } from "../../Cache";
 import { FernRegistry } from "../../api/generated";
@@ -37,6 +39,13 @@ export interface S3ApiDefinitionSourceFileInfo {
 }
 
 export interface S3Service {
+  writeLoadDocsForUrlResponse({
+    domain,
+    readDocsDefinition,
+  }: {
+    domain: string;
+    readDocsDefinition: FernRegistry.docs.v2.read.LoadDocsForUrlResponse;
+  }): Promise<PutObjectCommandOutput>;
   getPresignedDocsAssetsUploadUrls({
     domain,
     filepaths,
@@ -79,6 +88,7 @@ export class S3ServiceImpl implements S3Service {
   private publicDocsS3: S3Client;
   private privateDocsS3: S3Client;
   private privateApiDefinitionSourceS3: S3Client;
+  private dbDocsDefinitionS3: S3Client;
   private presignedDownloadUrlCache = new Cache<string>(
     10_000,
     ONE_WEEK_IN_SECONDS
@@ -106,6 +116,16 @@ export class S3ServiceImpl implements S3Service {
         secretAccessKey: config.awsSecretKey,
       },
     });
+    this.dbDocsDefinitionS3 = new S3Client({
+      ...(config.dbDocsDefinitionS3.urlOverride != null
+        ? { endpoint: config.dbDocsDefinitionS3.urlOverride }
+        : {}),
+      region: config.dbDocsDefinitionS3.bucketRegion,
+      credentials: {
+        accessKeyId: config.awsAccessKey,
+        secretAccessKey: config.awsSecretKey,
+      },
+    });
     this.privateApiDefinitionSourceS3 = new S3Client({
       ...(config.privateApiDefinitionSourceS3.urlOverride != null
         ? { endpoint: config.privateApiDefinitionSourceS3.urlOverride }
@@ -116,6 +136,21 @@ export class S3ServiceImpl implements S3Service {
         secretAccessKey: config.awsSecretKey,
       },
     });
+  }
+
+  async writeLoadDocsForUrlResponse({
+    domain,
+    readDocsDefinition,
+  }: {
+    domain: string;
+    readDocsDefinition: FernRegistry.docs.v2.read.LoadDocsForUrlResponse;
+  }): Promise<PutObjectCommandOutput> {
+    const command = new PutObjectCommand({
+      Bucket: this.config.dbDocsDefinitionS3.bucketName,
+      Key: getS3KeyForV1DocsDefinition(domain),
+      Body: JSON.stringify(readDocsDefinition),
+    });
+    return await this.dbDocsDefinitionS3.send(command);
   }
 
   async getPresignedDocsAssetsDownloadUrl({

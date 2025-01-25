@@ -1,5 +1,5 @@
 import { OpenAPIV3_1 } from "openapi-types";
-import { createMockContext } from "../../../../__test__/createMockContext.util";
+import { createMockContext } from "../../../__test__/createMockContext.util";
 import { ArrayConverterNode } from "../ArrayConverter.node";
 import { StringConverterNode } from "../primitives/StringConverter.node";
 
@@ -91,7 +91,21 @@ describe("ArrayConverterNode", () => {
         message: "Expected type declaration. Received: null",
         path: ["test", "items"],
       });
-      expect(converted).toBeUndefined();
+      expect(converted).toEqual([
+        {
+          type: "alias",
+          value: {
+            type: "list",
+            itemShape: {
+              type: "alias",
+              value: {
+                type: "unknown",
+                displayName: undefined,
+              },
+            },
+          },
+        },
+      ]);
     });
   });
 });

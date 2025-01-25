@@ -111,6 +111,7 @@ types:
   Base64Type:
     properties:
       default: optional<base64>
+      mimeType: optional<string>
 
   DateType:
     properties:
