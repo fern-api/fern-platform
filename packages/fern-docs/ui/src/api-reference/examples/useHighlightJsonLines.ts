@@ -1,5 +1,5 @@
 import { isPlainObject } from "@fern-api/ui-core-utils";
-import jsonpath from "jsonpath";
+import { JSONPath } from "jsonpath-plus";
 import { useMemo } from "react";
 import { JsonPropertyPath, JsonPropertyPathPart } from "./JsonPropertyPath";
 import { lineNumberOf } from "./utils";
@@ -45,7 +45,10 @@ export function getJsonLineNumbers(
 
   const query = "$" + getQueryPart(part);
 
-  const results: unknown[] = jsonpath.query(json, query);
+  const results: unknown[] = JSONPath({
+    path: query,
+    json: json as null | boolean | number | string | object | any[],
+  });
   if (part.type === "objectFilter") {
     if (
       isPlainObject(json) &&

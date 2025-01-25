@@ -34,13 +34,14 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "next": "npm:@fern-api/next@14.2.9-fork.2",
+    "@fern-api/ui-core-utils": "workspace:*",
+    "next": "15.1.6",
     "path-to-regexp": "6.3.0",
     "url-join": "5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.19.74",
     "depcheck": "^1.4.7",
     "eslint": "^9",
     "prettier": "^3.4.2",

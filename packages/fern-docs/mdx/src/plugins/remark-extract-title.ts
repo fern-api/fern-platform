@@ -2,7 +2,7 @@ import { FernDocs } from "@fern-api/fdr-sdk";
 import { mdastToString, type Mdast } from "@fern-docs/mdx";
 
 interface Options {
-  frontmatter: FernDocs.Frontmatter;
+  frontmatter: Partial<FernDocs.Frontmatter>;
 }
 
 /**

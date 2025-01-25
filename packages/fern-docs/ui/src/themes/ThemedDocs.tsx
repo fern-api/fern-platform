@@ -1,6 +1,7 @@
+"use client";
+
 import dynamic from "next/dynamic";
-import { ReactElement } from "react";
-import { DocsContent } from "../resolver/DocsContent";
+import { PropsWithChildren, ReactElement } from "react";
 
 const THEMES = {
   default: dynamic(
@@ -18,11 +19,10 @@ export type FernTheme = keyof typeof THEMES;
 
 export function ThemedDocs({
   theme,
-  content,
-}: {
+  children,
+}: PropsWithChildren<{
   theme: FernTheme;
-  content: DocsContent;
-}): ReactElement {
+}>): ReactElement {
   const Docs = THEMES[theme];
-  return <Docs content={content} />;
+  return <Docs>{children}</Docs>;
 }

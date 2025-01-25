@@ -1,5 +1,3 @@
-import { Client } from "@upstash/qstash";
-
 import { qstashToken } from "@/server/env-variables";
 import {
   HEADER_X_FERN_HOST,
@@ -8,6 +6,8 @@ import {
   conformTrailingSlash,
   removeTrailingSlash,
 } from "@fern-docs/utils";
+import { Client } from "@upstash/qstash";
+import { getEnv } from "@vercel/functions";
 
 const q = new Client({ token: qstashToken() });
 
@@ -23,16 +23,17 @@ async function queue<TBody = unknown>(
     retries?: number;
   }
 ): Promise<string | undefined> {
-  if (process.env.VERCEL && process.env.VERCEL_ENV !== "development") {
+  const { VERCEL, VERCEL_ENV, VERCEL_AUTOMATION_BYPASS_SECRET } = getEnv();
+  if (VERCEL && VERCEL_ENV !== "development") {
     const headers = new Headers(request?.headers);
 
     // add x-fern-host header to identify the docs domain (for compatibility with vercel preview urls)
     headers.set(HEADER_X_FERN_HOST, domain);
 
-    if (process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
+    if (VERCEL_AUTOMATION_BYPASS_SECRET) {
       headers.set(
         HEADER_X_VERCEL_PROTECTION_BYPASS,
-        process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+        VERCEL_AUTOMATION_BYPASS_SECRET
       );
     }
 

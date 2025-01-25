@@ -1,3 +1,5 @@
+import "server-only";
+
 export function algoliaAppId(): string {
   return getEnvVariable("ALGOLIA_APP_ID");
 }
@@ -10,8 +12,8 @@ export function algoliaSearchApikey(): string {
   return getEnvVariable("ALGOLIA_SEARCH_API_KEY");
 }
 
-export function fernToken(): string {
-  return getEnvVariable("FERN_TOKEN");
+export function adminFernToken(): string {
+  return getEnvVariable("ADMIN_FERN_TOKEN");
 }
 
 export function fdrEnvironment(): string {

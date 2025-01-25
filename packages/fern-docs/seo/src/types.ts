@@ -1,4 +1,4 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
+import { BreadcrumbList, WithContext } from "schema-dts";
 
 export type OpeningHoursSpecification = {
   opens: string;
@@ -485,6 +485,6 @@ export interface NextSeoProps {
   additionalMetaTags?: readonly MetaTag[];
   additionalLinkTags?: readonly LinkTag[];
   children?: never;
-  breadcrumbList?: FernDocs.JsonLdBreadcrumbList;
+  breadcrumbList?: WithContext<BreadcrumbList>;
   viewport?: string;
 }

@@ -8,7 +8,6 @@
     "postcss",
     "postcss-import",
     "cssnano",
-    "jsonpath",
     "@tailwindcss/typography",
     "@tailwindcss/forms",
     "tailwindcss",

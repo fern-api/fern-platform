@@ -11,12 +11,8 @@ import { uniqBy } from "es-toolkit/array";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function handleLLMSFullTxt(
-  req: NextRequest,
-  { params }: { params: { slug?: string[] } }
-): Promise<NextResponse> {
-  const slug = params.slug ?? [];
-  const path = addLeadingSlash(slug.join("/"));
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;

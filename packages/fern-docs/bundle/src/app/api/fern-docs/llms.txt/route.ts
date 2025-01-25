@@ -32,11 +32,8 @@ import { NextRequest, NextResponse } from "next/server";
  * - should hidden pages be included under an `## Optional` heading?
  */
 
-export async function handleLLMSTxt(
-  req: NextRequest,
-  { params }: { params: { slug?: string[] } }
-): Promise<NextResponse> {
-  const path = addLeadingSlash(params.slug?.join("/") ?? "");
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;

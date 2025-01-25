@@ -1,5 +1,6 @@
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { COOKIE_FERN_DOCS_PREVIEW, HEADER_X_FERN_HOST } from "@fern-docs/utils";
+import { getEnv } from "@vercel/functions";
 import type { IncomingHttpHeaders } from "http";
 import type { NextApiRequest } from "next";
 import { getNextPublicDocsDomain } from "./dev";
@@ -41,10 +42,10 @@ export function getHostNodeStatic(): string | undefined {
   }
 
   if (
-    process.env.VERCEL_ENV === "preview" ||
-    process.env.VERCEL_ENV === "development"
+    getEnv().VERCEL_ENV === "preview" ||
+    getEnv().VERCEL_ENV === "development"
   ) {
-    return process.env.VERCEL_URL;
+    return getEnv().VERCEL_URL;
   }
 
   return undefined;

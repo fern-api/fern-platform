@@ -2,6 +2,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
+import { BreadcrumbList, WithContext } from "schema-dts";
 import * as JsonLd from "./jsonld";
 
 function toUrl(domain: string, slug: FernNavigation.Slug): string {
@@ -15,10 +16,10 @@ function toUrl(domain: string, slug: FernNavigation.Slug): string {
 
 export function getBreadcrumbList(
   domain: string,
-  parents: readonly FernNavigation.NavigationNode[],
+  parents: readonly FernNavigation.WithNodeMetadata[],
   node: FernNavigation.NavigationNodePage,
   title?: string
-): FernDocs.JsonLdBreadcrumbList {
+): WithContext<BreadcrumbList> {
   title ??= node.title;
 
   const elements: FernDocs.JsonLdBreadcrumbListElement[] = [];

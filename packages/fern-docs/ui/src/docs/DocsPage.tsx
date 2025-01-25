@@ -7,7 +7,7 @@ import {
   useSetJustNavigated,
   type DocsProps,
 } from "../atoms";
-import { BgImageGradient } from "../components/BgImageGradient";
+import { BgImageGradientWithAtom } from "../components/BgImageGradient";
 import { JavascriptProvider } from "../components/JavascriptProvider";
 import { LinkPreloadApiRoute } from "../components/LinkPreload";
 import { useBeforePopState } from "../hooks/useBeforePopState";
@@ -21,6 +21,7 @@ import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
 import { ThemeScript } from "../themes/ThemeScript";
 import { ThemedDocs } from "../themes/ThemedDocs";
+import { DocsMainContent } from "./DocsMainContent";
 
 const SearchDialog = dynamic(
   () =>
@@ -77,8 +78,11 @@ export function DocsPage(pageProps: DocsProps): ReactElement | null {
       <NextSeo />
       <InitializeTheme />
       <SearchDialog />
-      <BgImageGradient />
-      <ThemedDocs theme={pageProps.theme} content={pageProps.content} />
+      <BgImageGradientWithAtom />
+      <ThemedDocs theme={pageProps.theme}>
+        <DocsMainContent content={pageProps.content} />
+      </ThemedDocs>
+
       <PlaygroundContextProvider />
       <JavascriptProvider />
     </>

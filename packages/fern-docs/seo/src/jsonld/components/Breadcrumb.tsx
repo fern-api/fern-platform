@@ -1,24 +1,19 @@
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import Head from "next/head";
 import { ReactElement, memo } from "react";
+import { BreadcrumbList, WithContext } from "schema-dts";
 
 export const Breadcrumb = memo(
   ({
     breadcrumbList,
   }: {
-    breadcrumbList: FernDocs.JsonLdBreadcrumbList;
+    breadcrumbList: WithContext<BreadcrumbList>;
   }): ReactElement => {
     return (
-      <Head>
-        <script
-          key="jsonld-breadcrumb"
-          type="application/ld+json"
-          id="jsonld-breadcrumb"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(breadcrumbList),
-          }}
-        />
-      </Head>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbList),
+        }}
+      />
     );
   }
 );

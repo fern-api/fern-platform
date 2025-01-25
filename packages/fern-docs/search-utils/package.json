@@ -35,7 +35,7 @@
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
     "@inkeep/widgets": "^0.2.288",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.19.74",
     "depcheck": "^1.4.7",
     "eslint": "^9",
     "instantsearch.js": "^4.75.4",

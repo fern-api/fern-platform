@@ -5,9 +5,11 @@ import { getS3KeyForV1DocsDefinition } from "@fern-api/fdr-sdk/docs";
 export async function loadDocsDefinitionFromS3({
   domain,
   docsDefinitionUrl,
+  request,
 }: {
   domain: string;
   docsDefinitionUrl: string;
+  request?: RequestInit;
 }): Promise<FdrAPI.docs.v2.read.LoadDocsForUrlResponse | undefined> {
   try {
     const cleanDomain = domain.replace(/^https?:\/\//, "");
@@ -27,7 +29,7 @@ export async function loadDocsDefinitionFromS3({
       keyPairId: cloudfrontKeyPairId,
       dateLessThan: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toString(),
     });
-    const response = await fetch(signedUrl);
+    const response = await fetch(signedUrl, request);
     if (response.ok) {
       console.log("Successfully loaded docs definition from S3: ", signedUrl);
       const json = await response.json();

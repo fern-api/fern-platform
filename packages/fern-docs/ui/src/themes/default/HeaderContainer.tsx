@@ -1,3 +1,5 @@
+"use client";
+
 import { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
@@ -7,7 +9,7 @@ import {
   useColors,
   useIsMobileSidebarOpen,
 } from "../../atoms";
-import { BgImageGradient } from "../../components/BgImageGradient";
+import { BgImageGradientWithAtom } from "../../components/BgImageGradient";
 import { Announcement } from "../../header/Announcement";
 import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";
@@ -41,7 +43,7 @@ export function HeaderContainer({
         }
       >
         <div className="clipped-background">
-          <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
+          <BgImageGradientWithAtom className="h-screen opacity-60 dark:opacity-80" />
         </div>
         <div className="fern-header">
           <Header className="max-w-page-width mx-auto" />

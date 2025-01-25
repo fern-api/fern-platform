@@ -1,3 +1,5 @@
+"use client";
+
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { getMDXComponent } from "mdx-bundler/client";

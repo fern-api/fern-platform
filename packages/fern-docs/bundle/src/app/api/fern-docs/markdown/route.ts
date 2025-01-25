@@ -14,12 +14,8 @@ import { NextRequest, NextResponse } from "next/server";
  * This endpoint returns the markdown content of any page in the docs by adding `.md` or `.mdx` to the end of any docs page.
  */
 
-export async function handleMarkdown(
-  req: NextRequest,
-  { params }: { params: { slug?: string[] } }
-): Promise<NextResponse> {
-  const slug = params.slug ?? [];
-  const path = addLeadingSlash(slug.join("/"));
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;

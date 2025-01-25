@@ -3,7 +3,13 @@ import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Router } from "next/router";
-import { ReactElement, memo, useEffect, useRef } from "react";
+import {
+  PropsWithChildren,
+  ReactElement,
+  memo,
+  useEffect,
+  useRef,
+} from "react";
 import {
   ANNOUNCEMENT_HEIGHT_ATOM,
   CONTENT_HEIGHT_ATOM,
@@ -11,9 +17,7 @@ import {
   SHOW_HEADER_ATOM,
   SIDEBAR_DISMISSABLE_ATOM,
 } from "../../atoms";
-import { DocsMainContent } from "../../docs/DocsMainContent";
 import { Announcement } from "../../header/Announcement";
-import { DocsContent } from "../../resolver/DocsContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -45,11 +49,7 @@ const CohereDocsStyle = () => {
   );
 };
 
-function UnmemoizedCohereDocs({
-  content,
-}: {
-  content: DocsContent;
-}): ReactElement {
+function UnmemoizedCohereDocs({ children }: PropsWithChildren): ReactElement {
   const showHeader = useAtomValue(SHOW_HEADER_ATOM);
   const announcementHeight = useAtomValue(ANNOUNCEMENT_HEIGHT_ATOM);
 
@@ -100,7 +100,7 @@ function UnmemoizedCohereDocs({
           ref={mainRef}
           scrollbars="vertical"
         >
-          <DocsMainContent content={content} />
+          {children}
 
           {/* Enables footer DOM injection */}
           <footer id="fern-footer" />

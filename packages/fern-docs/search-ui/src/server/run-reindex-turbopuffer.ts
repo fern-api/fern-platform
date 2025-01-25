@@ -5,7 +5,11 @@ import {
   turbopufferUpsertTask,
 } from "@fern-docs/search-server/turbopuffer";
 import { embed, embedMany } from "ai";
-import { fdrEnvironment, fernToken, turbopufferApiKey } from "./env-variables";
+import {
+  adminFernToken,
+  fdrEnvironment,
+  turbopufferApiKey,
+} from "./env-variables";
 
 const openai = createOpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -21,7 +25,7 @@ export const runReindexTurbopuffer = async (
     namespace: `${domain}_${model.modelId}`,
     payload: {
       environment: fdrEnvironment(),
-      fernToken: fernToken(),
+      fernToken: adminFernToken(),
       domain,
     },
     vectorizer: async (chunks) => {

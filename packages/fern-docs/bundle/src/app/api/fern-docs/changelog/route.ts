@@ -13,13 +13,12 @@ import urlJoin from "url-join";
 
 export const revalidate = 60 * 60 * 24;
 
-export async function handleChangelog(
-  req: NextRequest,
-  { params }: { params: { slug?: string[]; format?: "rss" | "atom" | "json" } }
-): Promise<NextResponse> {
-  const slug = params.slug ?? [];
-  const path = addLeadingSlash(slug.join("/"));
-  const format = params.format ?? "rss";
+const FORMATS = ["rss", "atom", "json"] as const;
+type Format = (typeof FORMATS)[number];
+
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const path = addLeadingSlash(req.nextUrl.searchParams.get("slug") ?? "");
+  const format = getFormat(req);
 
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
@@ -79,6 +78,18 @@ export async function handleChangelog(
       headers: { "Content-Type": "application/rss+xml" },
     });
   }
+}
+
+function isFormat(format: string): format is Format {
+  return FORMATS.includes(format as Format);
+}
+
+function getFormat(req: NextRequest): Format {
+  const format = req.nextUrl.searchParams.get("format");
+  if (!format || !isFormat(format)) {
+    return "rss";
+  }
+  return format;
 }
 
 function toFeedItem(

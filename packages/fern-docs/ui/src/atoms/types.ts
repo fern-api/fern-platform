@@ -7,7 +7,7 @@ import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { FernUser } from "@fern-docs/auth";
 import { NextSeoProps } from "@fern-docs/seo";
-import type { EdgeFlags } from "@fern-docs/utils";
+import type { EdgeFlags, JsConfig, LogoConfiguration } from "@fern-docs/utils";
 import {
   ColorsConfig,
   SidebarTab,
@@ -94,34 +94,4 @@ export interface DocsProps {
   defaultLang: DocsV1Read.ProgrammingLanguage;
   stylesheet: string;
   featureFlagsConfig: FeatureFlagsConfig | undefined;
-}
-
-export interface ImageData {
-  src: string;
-  height?: number;
-  width?: number;
-  blurDataURL?: string;
-  blurWidth?: number;
-  blurHeight?: number;
-}
-
-export interface LogoConfiguration {
-  height: number | undefined;
-  href: string | undefined;
-  light: ImageData | undefined;
-  dark: ImageData | undefined;
-}
-
-export interface JsConfig {
-  remote:
-    | {
-        url: string;
-        strategy:
-          | "beforeInteractive"
-          | "afterInteractive"
-          | "lazyOnload"
-          | undefined;
-      }[]
-    | undefined;
-  inline: string[] | undefined;
 }

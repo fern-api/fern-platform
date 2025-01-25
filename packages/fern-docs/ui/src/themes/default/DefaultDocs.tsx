@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useAtomValue } from "jotai";
-import { ReactElement, memo } from "react";
+import { PropsWithChildren, ReactElement, memo } from "react";
 import {
   CONTENT_HEIGHT_ATOM,
   DOCS_LAYOUT_ATOM,
@@ -11,8 +11,6 @@ import {
   useColors,
   useTheme,
 } from "../../atoms";
-import { DocsMainContent } from "../../docs/DocsMainContent";
-import { DocsContent } from "../../resolver/DocsContent";
 import { Sidebar } from "../../sidebar/Sidebar";
 import { HeaderContainer } from "./HeaderContainer";
 
@@ -38,11 +36,7 @@ const DefaultDocsStyle = () => {
   );
 };
 
-function UnmemoizedDefaultDocs({
-  content,
-}: {
-  content: DocsContent;
-}): ReactElement {
+function UnmemoizedDefaultDocs({ children }: PropsWithChildren): ReactElement {
   const colors = useColors();
   const layout = useAtomValue(DOCS_LAYOUT_ATOM);
   const showHeader = useAtomValue(SHOW_HEADER_ATOM);
@@ -80,7 +74,7 @@ function UnmemoizedDefaultDocs({
             "fern-sidebar-disabled": isSidebarDismissable,
           })}
         >
-          <DocsMainContent content={content} />
+          {children}
         </div>
       </div>
 

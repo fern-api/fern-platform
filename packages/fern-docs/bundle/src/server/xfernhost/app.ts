@@ -4,9 +4,9 @@ import { getNextPublicDocsDomain } from "./dev";
 import { getHostNodeStatic } from "./node";
 import { cleanHost } from "./util";
 
-export function getDocsDomainApp(): string {
-  const cookiesList = cookies();
-  const headersList = headers();
+export async function getDocsDomainApp(): Promise<Promise<string>> {
+  const cookiesList = await cookies();
+  const headersList = await headers();
   const hosts = [
     getNextPublicDocsDomain(),
     cookiesList.get(COOKIE_FERN_DOCS_PREVIEW)?.value,
@@ -28,8 +28,8 @@ export function getDocsDomainApp(): string {
 }
 
 // use this for testing auth-based redirects on development and preview environments
-export function getHostApp(): string | undefined {
-  const headersList = headers();
+export async function getHostApp(): Promise<string | undefined> {
+  const headersList = await headers();
   // if x-fern-host is set, assume it's proxied:
   return (
     headersList.get(HEADER_X_FERN_HOST) ??

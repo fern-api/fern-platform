@@ -43,25 +43,24 @@
     "@fern-docs/utils": "workspace:*",
     "@fern-platform/fdr-utils": "workspace:*",
     "cssnano": "^6.0.3",
-    "jsonpath": "^1.1.1",
-    "next": "npm:@fern-api/next@14.2.9-fork.2",
+    "next": "15.1.6",
     "node-fetch": "2.7.0",
     "postcss-import": "^16.0.1",
-    "react": "^18",
-    "react-dom": "^18",
+    "react": "^19",
+    "react-dom": "^19",
     "styled-jsx": "^5.1.2",
     "ts-essentials": "^10.0.1",
     "url-join": "5.0.0"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",
-    "@next/bundle-analyzer": "14.2.9",
+    "@next/bundle-analyzer": "15.1.6",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.19.74",
     "@types/node-fetch": "2.6.9",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "autoprefixer": "^10.4.16",
     "depcheck": "^1.4.7",
     "eslint": "^9",
@@ -77,11 +76,5 @@
     "typescript": "^5",
     "vitest": "^2.1.4",
     "ws": "^8.17.1"
-  },
-  "optionalDependencies": {
-    "@next/swc-darwin-arm64": "14.2.9",
-    "@next/swc-darwin-x64": "14.2.9",
-    "@next/swc-linux-x64-gnu": "14.2.9",
-    "@next/swc-win32-x64-msvc": "14.2.9"
   }
 }

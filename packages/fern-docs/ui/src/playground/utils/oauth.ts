@@ -8,7 +8,7 @@ import {
   visitDiscriminatedUnion,
 } from "@fern-api/ui-core-utils";
 import { mapValues } from "es-toolkit/object";
-import jsonpath from "jsonpath";
+import { JSONPath } from "jsonpath-plus";
 import { executeProxyRest } from "../fetch-utils/executeProxyRest";
 import { PlaygroundEndpointRequestFormState, ProxyRequest } from "../types";
 import { serializeFormStateBody } from "./serialize";
@@ -68,10 +68,16 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
     json: async (jsonRes) => {
       if (jsonRes.response.ok) {
         try {
-          const accessToken = jsonpath.query(
-            jsonRes.response,
-            referencedEndpoint.accessTokenLocator
-          )?.[0];
+          const accessToken = JSONPath({
+            path: referencedEndpoint.accessTokenLocator,
+            json: jsonRes.response.body as
+              | null
+              | boolean
+              | number
+              | string
+              | object
+              | any[],
+          })?.[0];
           setValue((prev) => ({
             ...prev,
             selectedInputMethod: "credentials",

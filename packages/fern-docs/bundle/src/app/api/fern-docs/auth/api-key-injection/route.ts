@@ -2,11 +2,12 @@ import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
+import { fernToken } from "@/server/fern-token";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-docs/auth";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { COOKIE_FERN_TOKEN, removeTrailingSlash } from "@fern-docs/utils";
+import { removeTrailingSlash } from "@fern-docs/utils";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import urlJoin from "url-join";
@@ -20,13 +21,13 @@ export async function GET(
 ): Promise<NextResponse<APIKeyInjectionConfig>> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const cookieJar = cookies();
+  const cookieJar = await cookies();
 
   const edgeConfig = await getAuthEdgeConfig(domain);
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
-  const fern_token = cookieJar.get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = await fernToken();
   const access_token = cookieJar.get("access_token")?.value;
   const refresh_token = cookieJar.get("refresh_token")?.value;
   const fernUser = await safeVerifyFernJWTConfig(fern_token, edgeConfig);

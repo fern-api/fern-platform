@@ -11,6 +11,7 @@ import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
   rehypeSqueezeParagraphs,
+  remarkExtractTitle,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
 } from "@fern-docs/mdx/plugins";
@@ -25,7 +26,6 @@ import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { remarkExtractTitle } from "../plugins/remark-extract-title";
 import type { FernSerializeMdxOptions } from "../types";
 
 type SerializeOptions = NonNullable<Parameters<typeof serialize>[1]>;

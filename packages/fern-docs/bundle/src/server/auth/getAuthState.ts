@@ -18,7 +18,7 @@ import { handleWorkosAuth } from "./workos-handler";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
-interface DomainAndHost {
+export interface DomainAndHost {
   /**
    * x-fern-host (NOT the host of the request)
    */
@@ -87,6 +87,9 @@ export async function getAuthStateInternal({
 }: {
   host: string;
   fernToken: string | undefined;
+  /**
+   * The pathname of the request, which is used to determine the authorization url state parameter
+   */
   pathname?: string;
   authConfig?: AuthEdgeConfig;
   previewAuthConfig?: PreviewUrlAuth;

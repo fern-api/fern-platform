@@ -1,5 +1,4 @@
 import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
-import type { Redirect } from "next/types";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
 import { removeTrailingSlash } from "./trailing-slash";
@@ -42,7 +41,7 @@ export function getRedirectForPath(
   pathWithoutBasepath: string,
   baseUrl: DocsV2Read.BaseUrl,
   redirects: DocsV1Read.RedirectConfig[] = []
-): { redirect: Redirect } | undefined {
+): { destination: string; permanent: boolean } | undefined {
   for (const redirect of redirects) {
     const source = removeTrailingSlash(
       withBasepath(redirect.source, baseUrl.basePath)
@@ -65,10 +64,8 @@ export function getRedirectForPath(
       // - Do NOT conform trailing slash in the destination because this relies on the user's direct configuration
       // - Do encode the URI to prevent any potential issues with special characters
       return {
-        redirect: {
-          destination: encodeURI(destination),
-          permanent: redirect.permanent ?? false,
-        },
+        destination: encodeURI(destination),
+        permanent: redirect.permanent ?? false,
       };
     }
   }

@@ -46,7 +46,7 @@
     "@types/adm-zip": "^0.5.5",
     "@types/aws-lambda": "^8.10.71",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^18.7.18",
+    "@types/node": "^18.19.74",
     "@types/semver": "^7.5.8",
     "@types/url-join": "4.0.1",
     "esbuild": "0.24.2",

@@ -8,6 +8,9 @@
   "references": [
     {
       "path": "../../fdr-sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../../commons/core-utils"
     }
   ]
 }

@@ -10,6 +10,7 @@ import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
   rehypeSqueezeParagraphs,
+  remarkExtractTitle,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
 } from "@fern-docs/mdx/plugins";
@@ -27,7 +28,6 @@ import { rehypeFiles } from "../plugins/rehype-files";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
-import { remarkExtractTitle } from "../plugins/remark-extract-title";
 import type { FernSerializeMdxOptions } from "../types";
 
 /**
@@ -216,3 +216,5 @@ export async function serializeMdx(
   }
   return content;
 }
+
+export { MdxBundlerComponent } from "./mdx-bundler-component";

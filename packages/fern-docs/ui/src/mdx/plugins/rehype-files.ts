@@ -11,7 +11,7 @@ import {
 } from "@fern-docs/mdx";
 import { walk } from "estree-walker";
 
-import type { ImageData } from "../../atoms/types";
+import type { ImageData } from "@fern-docs/utils";
 
 export interface RehypeFilesOptions {
   replaceSrc?(src: string): ImageData | undefined;

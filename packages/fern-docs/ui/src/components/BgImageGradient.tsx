@@ -1,5 +1,7 @@
+"use client";
+
+import type { ColorsConfig } from "@fern-platform/fdr-utils";
 import cn from "clsx";
-import { FC } from "react";
 import { useColors } from "../atoms";
 
 export declare namespace BgImageGradient {
@@ -8,8 +10,13 @@ export declare namespace BgImageGradient {
   }
 }
 
-export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
-  const colors = useColors();
+export const BgImageGradient = ({
+  className,
+  colors,
+}: {
+  className?: string;
+  colors: Partial<ColorsConfig>;
+}) => {
   const darkBackground = colors.dark?.background;
   const lightBackground = colors.light?.background;
   const darkBackgroundImage = colors.dark?.backgroundImage;
@@ -29,4 +36,13 @@ export const BgImageGradient: FC<BgImageGradient.Props> = ({ className }) => {
       })}
     />
   );
+};
+
+export const BgImageGradientWithAtom = ({
+  className,
+}: {
+  className?: string;
+}) => {
+  const colors = useColors();
+  return <BgImageGradient className={className} colors={colors} />;
 };

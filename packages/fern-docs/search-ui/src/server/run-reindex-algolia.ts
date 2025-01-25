@@ -5,16 +5,15 @@ import {
   algoliaIndexerTask,
 } from "@fern-docs/search-server/algolia";
 import {
+  adminFernToken,
   algoliaAppId,
   algoliaWriteApiKey,
   fdrEnvironment,
-  fernToken,
 } from "./env-variables";
 
 export const runReindexAlgolia = async (
   domain: string
 ): Promise<AlgoliaIndexerTaskResponse> => {
-  // eslint-disable-next-line no-console
   console.time("reindexing");
 
   await algoliaIndexSettingsTask({
@@ -28,11 +27,10 @@ export const runReindexAlgolia = async (
     writeApiKey: algoliaWriteApiKey(),
     indexName: SEARCH_INDEX,
     environment: fdrEnvironment(),
-    fernToken: fernToken(),
+    fernToken: adminFernToken(),
     domain,
   });
 
-  // eslint-disable-next-line no-console
   console.timeEnd("reindexing");
 
   return response;

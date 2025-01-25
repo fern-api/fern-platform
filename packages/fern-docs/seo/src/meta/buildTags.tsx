@@ -602,10 +602,7 @@ export const buildTags = (config: NextSeoProps): ReactNode[] => {
     });
   }
 
-  if (
-    config.breadcrumbList != null &&
-    config.breadcrumbList.itemListElement.length > 0
-  ) {
+  if (config.breadcrumbList) {
     tagsToRender.push(
       <script
         key="jsonld-breadcrumb"

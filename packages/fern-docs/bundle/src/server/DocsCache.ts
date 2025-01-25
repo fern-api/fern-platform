@@ -1,7 +1,8 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
+import { getEnv } from "@vercel/functions";
 import { kv } from "@vercel/kv";
 
-const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
+const DEPLOYMENT_ID = getEnv().VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
 export class DocsKVCache {

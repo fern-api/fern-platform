@@ -1,17 +1,10 @@
 export { track } from "./analytics";
 export { type CustomerAnalytics } from "./analytics/types";
-export type {
-  DocsProps,
-  ImageData,
-  JsConfig,
-  LogoConfiguration,
-  NavbarLink,
-} from "./atoms";
-export { withCustomJavascript } from "./atoms/docs";
-export { withLogo } from "./atoms/logo";
+export type { DocsProps, NavbarLink } from "./atoms";
 export * from "./docs/DocsPage";
 export * from "./docs/NextApp";
-export { getApiRouteSupplier } from "./hooks/useApiRoute";
+export { Providers } from "./docs/Providers";
+export { LayoutEvaluatorContent } from "./layouts/LayoutEvaluatorContent";
 export { ProxyRequestSchema } from "./playground/types";
 export type {
   ProxyRequest,
