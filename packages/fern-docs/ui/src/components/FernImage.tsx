@@ -52,7 +52,10 @@ export const FernImage = forwardRef<
 
   // nextjs requires a strict allowlist of hosts for <Image>
   // so we'll fall back to <img> if the host is not in the allowlist (or if no custom loader is provided)
-  if ((!host || !NEXT_IMAGE_HOSTS.includes(host)) && !loader) {
+  if (
+    ((!host || !NEXT_IMAGE_HOSTS.includes(host)) && !loader) ||
+    (!width && !height)
+  ) {
     return (
       <img
         ref={ref}
