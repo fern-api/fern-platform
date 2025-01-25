@@ -18,7 +18,7 @@ export const config = {
 };
 
 // reduce concurrency per domain
-const DEFAULT_BATCH_SIZE = 100;
+const DEFAULT_BATCH_SIZE = 500;
 
 function isSuccessResult(
   result: FernDocs.RevalidationResult
