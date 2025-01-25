@@ -81,6 +81,7 @@
     "colorjs.io": "^0.5.2",
     "es-toolkit": "^1.27.0",
     "esbuild": "0.24.2",
+    "estree-walker": "^3.0.3",
     "fastdom": "^1.0.12",
     "framer-motion": "^11.2.4",
     "github-slugger": "^2.0.0",
