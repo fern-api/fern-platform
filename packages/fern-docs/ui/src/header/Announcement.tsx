@@ -32,7 +32,8 @@ const AnnouncementInternal = forwardRef<
     }
   });
 
-  useImperativeHandle(forwardedRef, () => ref.current);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  useImperativeHandle(forwardedRef, () => ref.current!);
 
   return (
     <motion.div
