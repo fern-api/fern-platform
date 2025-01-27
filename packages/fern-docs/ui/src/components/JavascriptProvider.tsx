@@ -1,12 +1,14 @@
-import { atom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import Script from "next/script";
 import { memo } from "react";
-import { DOCS_ATOM } from "../atoms";
-
-const JS_ATOM = atom((get) => get(DOCS_ATOM).js);
+import { JS_ATOM } from "../atoms";
 
 export const JavascriptProvider = memo(() => {
   const js = useAtomValue(JS_ATOM);
+
+  if (!js) {
+    return false;
+  }
 
   return (
     <>

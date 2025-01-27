@@ -1,4 +1,7 @@
-export type { MdxJsxAttribute } from "mdast-util-mdx";
+export type {
+  MdxJsxAttribute,
+  MdxJsxExpressionAttribute,
+} from "mdast-util-mdx";
 export type { MDXComponents } from "mdx/types";
 export type { PluggableList } from "unified";
 export {

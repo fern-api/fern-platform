@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,
   });
+
   const bedrock = createAmazonBedrock({
     region: "us-west-2",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -85,7 +86,8 @@ export async function POST(req: NextRequest) {
     date: new Date().toDateString(),
     documents,
   });
-  const result = traced(() =>
+  // eslint-disable-next-line @typescript-eslint/await-thenable
+  const result = await traced(() =>
     streamText({
       model: languageModel,
       system,

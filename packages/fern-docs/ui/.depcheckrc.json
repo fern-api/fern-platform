@@ -4,7 +4,6 @@
     "@types/node",
     "vite",
     "@types/react",
-    "@types/react",
     "@types/react-dom",
     "@radix-ui/colors",
     "autoprefixer",
