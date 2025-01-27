@@ -1,0 +1,5 @@
+@layer components {
+  .api-explorer {
+    @apply bg-background-translucent border-default inset-x-0 bottom-0 border-t shadow-xl backdrop-blur-2xl;
+  }
+}
