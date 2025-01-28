@@ -54,7 +54,7 @@ export type NavbarLink = DefaultNavbarLink | GithubNavbarLink;
 
 export interface LaunchDarklyInfo {
   clientSideId: string;
-  contextEndpoint: string;
+  contextEndpoint: string | undefined;
   context: LDContext | undefined;
   defaultFlags: object | undefined;
   options:
