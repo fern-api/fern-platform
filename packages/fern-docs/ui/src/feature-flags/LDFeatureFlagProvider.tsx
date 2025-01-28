@@ -14,7 +14,7 @@ interface Props extends PropsWithChildren {
   /**
    * The endpoint to fetch the user context from.
    */
-  contextEndpoint: string;
+  contextEndpoint: string | undefined;
 
   /**
    * Default anonymous user context.
@@ -32,6 +32,12 @@ interface Props extends PropsWithChildren {
   };
 }
 
+const ANONYMOUS_CONTEXT: LDContext = {
+  kind: "user",
+  key: "anonymous",
+  anonymous: true,
+};
+
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
   contextEndpoint,
@@ -43,16 +49,20 @@ export const LDFeatureFlagProvider: FC<Props> = ({
   return (
     <LDProvider
       clientSideID={clientSideId}
-      context={defaultContext}
+      context={defaultContext ?? ANONYMOUS_CONTEXT}
       flags={defaultFlags}
       options={options}
     >
-      <IdentifyWrapper
-        contextEndpoint={contextEndpoint}
-        defaultContext={defaultContext}
-      >
-        {children}
-      </IdentifyWrapper>
+      {contextEndpoint ? (
+        <IdentifyWrapper
+          contextEndpoint={contextEndpoint}
+          defaultContext={defaultContext}
+        >
+          {children}
+        </IdentifyWrapper>
+      ) : (
+        children
+      )}
     </LDProvider>
   );
 };
