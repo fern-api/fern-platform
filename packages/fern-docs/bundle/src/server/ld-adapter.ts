@@ -7,11 +7,14 @@ import { AuthState } from "./auth/getAuthState";
 import { getOrgMetadataForDomain } from "./auth/metadata-for-url";
 
 async function withLaunchDarklyContext(
-  endpoint: string,
+  endpoint: string | undefined,
   authState: AuthState,
   node: FernNavigation.utils.Node,
   rawCookie: string | undefined
 ): Promise<ld.LDContext> {
+  if (endpoint == null) {
+    return { kind: "user", key: "anonymous", anonymous: true };
+  }
   try {
     const url = new URL(endpoint);
     url.searchParams.set("anonymous", String(!authState.authed));
@@ -46,7 +49,7 @@ async function withLaunchDarklyContext(
 
 interface LaunchDarklyInfo {
   clientSideId: string;
-  contextEndpoint: string;
+  contextEndpoint: string | undefined;
   context: ld.LDContext | undefined;
   defaultFlags: object | undefined;
   options:

@@ -10,7 +10,7 @@ const LaunchDarklyEdgeConfigSchema = z.object({
   // IMPORTANT: we will pass cookies to this endpoint, so if we move this to docs.yml,
   // we should add a check to make sure the target domain is trusted. Trust should always be granted manually by a fern engineer,
   // so it should be managed in edge config, or FGA.
-  "context-endpoint": z.string(),
+  "context-endpoint": z.string().optional(),
 
   options: z
     .object({
