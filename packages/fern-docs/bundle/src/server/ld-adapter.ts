@@ -4,6 +4,7 @@ import * as ld from "@launchdarkly/node-server-sdk";
 import { isEqual } from "es-toolkit/predicate";
 import { camelCase } from "es-toolkit/string";
 import { AuthState } from "./auth/getAuthState";
+import { getOrgMetadataForDomain } from "./auth/metadata-for-url";
 
 async function withLaunchDarklyContext(
   endpoint: string,
@@ -69,7 +70,10 @@ export async function withLaunchDarkly(
     (node: FernNavigation.WithFeatureFlags) => boolean,
   ]
 > {
-  const launchDarklyConfig = await getLaunchDarklySettings(domain);
+  const launchDarklyConfig = await getLaunchDarklySettings(
+    domain,
+    getOrgMetadataForDomain(domain).then((metadata) => metadata?.orgId)
+  );
   if (launchDarklyConfig) {
     const context = await withLaunchDarklyContext(
       launchDarklyConfig["context-endpoint"],

@@ -26,11 +26,15 @@ export type LaunchDarklyEdgeConfig = z.infer<
 >;
 
 export async function getLaunchDarklySettings(
-  domain: string
+  domain: string,
+  orgId?: Promise<string | undefined>
 ): Promise<LaunchDarklyEdgeConfig | undefined> {
   const allConfigs =
     await get<Record<string, LaunchDarklyEdgeConfig>>("launchdarkly");
-  const config = allConfigs?.[domain] ?? allConfigs?.[withoutStaging(domain)];
+  const config =
+    allConfigs?.[domain] ??
+    allConfigs?.[withoutStaging(domain)] ??
+    allConfigs?.[(await orgId) ?? ""];
   if (config) {
     const result = LaunchDarklyEdgeConfigSchema.safeParse(config);
     if (result.success) {
