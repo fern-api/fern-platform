@@ -3,14 +3,10 @@ import { cookies, headers } from "next/headers";
 import { getDocsDomainApp, getHostApp } from "./xfernhost/app";
 
 export async function withServerProps() {
-  const domain = await getDocsDomainApp();
-  const host = (await getHostApp()) ?? domain;
-  const fern_token = await cookies().then(
-    (cookies) => cookies.get(COOKIE_FERN_TOKEN)?.value
-  );
-  const rawCookie = await headers().then(
-    (headers) => headers.get("cookie") ?? undefined
-  );
+  const domain = getDocsDomainApp();
+  const host = getHostApp() ?? domain;
+  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const rawCookie = headers().get("cookie") ?? undefined;
 
   return {
     domain,

@@ -15,11 +15,9 @@ import { notFound } from "next/navigation";
 export default async function Page({
   params,
 }: {
-  params: Promise<{ slug?: string[] }>;
+  params: { slug?: string[] };
 }) {
-  const slug = await params.then((params) =>
-    FernNavigation.slugjoin(params.slug)
-  );
+  const slug = FernNavigation.slugjoin(params.slug);
   const { domain, host, fern_token } = await withServerProps();
   const findNode = createCachedFindNode(domain, host);
   const docs = createCachedDocsLoader(domain, host);

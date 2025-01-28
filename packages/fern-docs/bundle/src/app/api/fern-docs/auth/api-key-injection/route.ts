@@ -21,13 +21,13 @@ export async function GET(
 ): Promise<NextResponse<APIKeyInjectionConfig>> {
   const domain = getDocsDomainEdge(req);
   const host = getHostEdge(req);
-  const cookieJar = await cookies();
+  const cookieJar = cookies();
 
   const edgeConfig = await getAuthEdgeConfig(domain);
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
-  const fern_token = await fernToken();
+  const fern_token = fernToken();
   const access_token = cookieJar.get("access_token")?.value;
   const refresh_token = cookieJar.get("refresh_token")?.value;
   const fernUser = await safeVerifyFernJWTConfig(fern_token, edgeConfig);

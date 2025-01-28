@@ -10,8 +10,8 @@ import urljoin from "url-join";
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const domain = await getDocsDomainApp();
-  const host = (await getHostApp()) ?? domain;
+  const domain = getDocsDomainApp();
+  const host = getHostApp() ?? domain;
 
   // load the root node, and prune it— sitemap should only include public routes
   const root = withPrunedNavigation(await DocsLoader.for(domain, host).root(), {

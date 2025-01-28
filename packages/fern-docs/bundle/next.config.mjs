@@ -81,7 +81,7 @@ const nextConfig = {
   experimental: {
     scrollRestoration: true,
     instrumentationHook: true,
-    hardNavigate404: true,
+    // hardNavigate404: true,
     optimizePackageImports: [
       "@fern-api/fdr-sdk",
       "@fern-docs/ui",
