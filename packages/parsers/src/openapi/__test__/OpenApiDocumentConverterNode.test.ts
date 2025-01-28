@@ -50,20 +50,22 @@ describe("OpenAPI snapshot tests", () => {
           input: parsed,
           context,
           accessPath: [],
-          pathId: directory,
+          pathId: undefined,
         });
         errors.push(...converter.errors());
         warnings.push(...converter.warnings());
         converted = converter.convert();
       }
 
-      // Create snapshot
       if (errors.length > 0) {
-        // console.error("errors:", errors);
+        await expect(errors).toMatchFileSnapshot(
+          `./__snapshots__/pathing/errors/${directory}.txt`
+        );
       }
-      // expect(errors).toHaveLength(0);
       if (warnings.length > 0) {
-        // console.warn("warnings:", warnings);
+        await expect(warnings).toMatchFileSnapshot(
+          `./__snapshots__/pathing/warnings/${directory}.txt`
+        );
       }
 
       if (converted) {

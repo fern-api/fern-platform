@@ -229,5 +229,33 @@
     }
   },
   "auths": {},
-  "globalHeaders": []
+  "globalHeaders": [
+    {
+      "key": "my-api-key",
+      "valueShape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    {
+      "key": "another_header",
+      "valueShape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    },
+    {
+      "key": "version",
+      "valueShape": {
+        "type": "alias",
+        "value": {
+          "type": "unknown"
+        }
+      }
+    }
+  ]
 }

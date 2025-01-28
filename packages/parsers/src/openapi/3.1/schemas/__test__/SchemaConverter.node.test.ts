@@ -214,7 +214,13 @@ describe("SchemaConverterNode", () => {
         pathId: "test",
         seenSchemas: new Set(),
       });
-      expect(node.convert()).toBeUndefined();
+      expect(node.convert()).toEqual({
+        type: "alias",
+        value: {
+          type: "unknown",
+          displayName: undefined,
+        },
+      });
     });
   });
 });

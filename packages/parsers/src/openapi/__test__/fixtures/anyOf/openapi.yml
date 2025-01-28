@@ -33,7 +33,7 @@ components:
           - type: string
           - type: 'null'
           description: |
-            An optional string value.
+            A nullable string value.
           title: ID
 
     Response:
@@ -45,5 +45,5 @@ components:
           - type: number
           - type: 'null'
           description: |
-            An optional numerical value.
+            A nullable numerical value.
           title: Value

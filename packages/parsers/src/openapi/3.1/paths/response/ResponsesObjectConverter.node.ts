@@ -92,6 +92,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
         if (bodies == null) {
           return undefined;
         }
+
         return singleUndefinedArrayIfNullOrEmpty(
           convertOperationObjectProperties(response.headers)
         ).flatMap((headers) =>
@@ -102,8 +103,8 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               body,
               description: response.description,
             },
-            examples: (response.responses ?? []).flatMap((response) =>
-              (response.examples ?? [])
+            examples: (response.responses ?? []).flatMap((res) =>
+              (res.examples ?? [])
                 .map((example) => example.convert())
                 .filter(isNonNullish)
             ),

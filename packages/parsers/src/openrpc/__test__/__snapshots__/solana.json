@@ -8,11 +8,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -278,8 +291,7 @@
       "operationId": "getAccountInfo",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBalance": {
       "id": "getBalance",
@@ -287,11 +299,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -406,8 +431,7 @@
       "operationId": "getBalance",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlock": {
       "id": "getBlock",
@@ -415,11 +439,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -1604,8 +1641,7 @@
       "operationId": "getBlock",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlockCommitment": {
       "id": "getBlockCommitment",
@@ -1613,11 +1649,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -1721,8 +1770,7 @@
       "operationId": "getBlockCommitment",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlockHeight": {
       "id": "getBlockHeight",
@@ -1730,11 +1778,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -1835,8 +1896,7 @@
       "operationId": "getBlockHeight",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlockProduction": {
       "id": "getBlockProduction",
@@ -1844,11 +1904,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -2060,8 +2133,7 @@
       "operationId": "getBlockProduction",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlocks": {
       "id": "getBlocks",
@@ -2069,11 +2141,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -2197,8 +2282,7 @@
       "operationId": "getBlocks",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlocksWithLimit": {
       "id": "getBlocksWithLimit",
@@ -2206,11 +2290,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -2334,8 +2431,7 @@
       "operationId": "getBlocksWithLimit",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getBlockTime": {
       "id": "getBlockTime",
@@ -2343,11 +2439,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -2429,8 +2538,7 @@
       "operationId": "getBlockTime",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getClusterNodes": {
       "id": "getClusterNodes",
@@ -2438,11 +2546,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -2626,8 +2747,7 @@
       "operationId": "getClusterNodes",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getEpochInfo": {
       "id": "getEpochInfo",
@@ -2635,11 +2755,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -2828,8 +2961,7 @@
       "operationId": "getEpochInfo",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getEpochSchedule": {
       "id": "getEpochSchedule",
@@ -2837,11 +2969,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -2953,8 +3098,7 @@
       "operationId": "getEpochSchedule",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getFeeForMessage": {
       "id": "getFeeForMessage",
@@ -2962,11 +3106,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -3099,8 +3256,7 @@
       "operationId": "getFeeForMessage",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getFirstAvailableBlock": {
       "id": "getFirstAvailableBlock",
@@ -3108,11 +3264,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -3156,8 +3325,7 @@
       "operationId": "getFirstAvailableBlock",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getGenesisHash": {
       "id": "getGenesisHash",
@@ -3165,11 +3333,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -3213,8 +3394,7 @@
       "operationId": "getGenesisHash",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getHealth": {
       "id": "getHealth",
@@ -3222,11 +3402,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -3270,8 +3463,7 @@
       "operationId": "getHealth",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getHighestSnapshotSlot": {
       "id": "getHighestSnapshotSlot",
@@ -3279,11 +3471,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -3359,8 +3564,7 @@
       "operationId": "getHighestSnapshotSlot",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getIdentity": {
       "id": "getIdentity",
@@ -3368,11 +3572,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -3428,8 +3645,7 @@
       "operationId": "getIdentity",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getInflationGovernor": {
       "id": "getInflationGovernor",
@@ -3437,11 +3653,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -3610,8 +3839,7 @@
       "operationId": "getInflationGovernor",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getInflationRate": {
       "id": "getInflationRate",
@@ -3619,11 +3847,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -3721,8 +3962,7 @@
       "operationId": "getInflationRate",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getInflationReward": {
       "id": "getInflationReward",
@@ -3730,11 +3970,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -3959,8 +4212,7 @@
       "operationId": "getInflationReward",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getLargestAccounts": {
       "id": "getLargestAccounts",
@@ -3968,11 +4220,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -4109,8 +4374,7 @@
       "operationId": "getLargestAccounts",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getLatestBlockhash": {
       "id": "getLatestBlockhash",
@@ -4118,11 +4382,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -4249,8 +4526,7 @@
       "operationId": "getLatestBlockhash",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getMaxRetransmitSlot": {
       "id": "getMaxRetransmitSlot",
@@ -4258,11 +4534,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -4306,8 +4595,7 @@
       "operationId": "getMaxRetransmitSlot",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getMaxShredInsertSlot": {
       "id": "getMaxShredInsertSlot",
@@ -4315,11 +4603,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -4363,8 +4664,7 @@
       "operationId": "getMaxShredInsertSlot",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getMinimumBalanceForRentExemption": {
       "id": "getMinimumBalanceForRentExemption",
@@ -4372,11 +4672,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -4489,8 +4802,7 @@
       "operationId": "getMinimumBalanceForRentExemption",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getMultipleAccounts": {
       "id": "getMultipleAccounts",
@@ -4498,11 +4810,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -4785,8 +5110,7 @@
       "operationId": "getMultipleAccounts",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getProgramAccounts": {
       "id": "getProgramAccounts",
@@ -4794,11 +5118,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -5113,8 +5450,7 @@
       "operationId": "getProgramAccounts",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getRecentPerformanceSamples": {
       "id": "getRecentPerformanceSamples",
@@ -5122,11 +5458,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -5272,8 +5621,7 @@
       "operationId": "getRecentPerformanceSamples",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getRecentPrioritizationFees": {
       "id": "getRecentPrioritizationFees",
@@ -5281,11 +5629,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -5397,8 +5758,7 @@
       "operationId": "getRecentPrioritizationFees",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getSignaturesForAddress": {
       "id": "getSignaturesForAddress",
@@ -5406,11 +5766,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -5678,8 +6051,7 @@
       "operationId": "getSignaturesForAddress",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getSignatureStatuses": {
       "id": "getSignatureStatuses",
@@ -5687,11 +6059,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -5881,8 +6266,7 @@
       "operationId": "getSignatureStatuses",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getSlot": {
       "id": "getSlot",
@@ -5890,11 +6274,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -5995,8 +6392,7 @@
       "operationId": "getSlot",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getSlotLeader": {
       "id": "getSlotLeader",
@@ -6004,11 +6400,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -6109,8 +6518,7 @@
       "operationId": "getSlotLeader",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getSlotLeaders": {
       "id": "getSlotLeaders",
@@ -6118,11 +6526,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -6214,8 +6635,7 @@
       "operationId": "getSlotLeaders",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getSupply": {
       "id": "getSupply",
@@ -6223,11 +6643,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -6390,8 +6823,7 @@
       "operationId": "getSupply",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getTokenAccountBalance": {
       "id": "getTokenAccountBalance",
@@ -6399,11 +6831,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -6564,8 +7009,7 @@
       "operationId": "getTokenAccountBalance",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getTokenAccountsByOwner": {
       "id": "getTokenAccountsByOwner",
@@ -6573,11 +7017,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -6916,8 +7373,7 @@
       "operationId": "getTokenAccountsByOwner",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getTokenSupply": {
       "id": "getTokenSupply",
@@ -6925,11 +7381,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -7090,8 +7559,7 @@
       "operationId": "getTokenSupply",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getTransaction": {
       "id": "getTransaction",
@@ -7099,11 +7567,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -7318,8 +7799,7 @@
       "operationId": "getTransaction",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getVersion": {
       "id": "getVersion",
@@ -7327,11 +7807,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -7401,8 +7894,7 @@
       "operationId": "getVersion",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "getVoteAccounts": {
       "id": "getVoteAccounts",
@@ -7410,11 +7902,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -7837,8 +8342,7 @@
       "operationId": "getVoteAccounts",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "isBlockhashValid": {
       "id": "isBlockhashValid",
@@ -7846,11 +8350,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -7979,8 +8496,7 @@
       "operationId": "isBlockhashValid",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "minimumLedgerSlot": {
       "id": "minimumLedgerSlot",
@@ -7988,11 +8504,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "responses": [
         {
@@ -8036,8 +8565,7 @@
       "operationId": "minimumLedgerSlot",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "requestAirdrop": {
       "id": "requestAirdrop",
@@ -8045,11 +8573,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -8164,8 +8705,7 @@
       "operationId": "requestAirdrop",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "sendTransaction": {
       "id": "sendTransaction",
@@ -8173,11 +8713,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -8339,8 +8892,7 @@
       "operationId": "sendTransaction",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     },
     "simulateTransaction": {
       "id": "simulateTransaction",
@@ -8348,11 +8900,24 @@
       "method": "POST",
       "path": [
         {
-          "type": "literal",
-          "value": ""
+          "type": "pathParameter",
+          "value": "apiKey"
         }
       ],
-      "pathParameters": [],
+      "pathParameters": [
+        {
+          "key": "apiKey",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
       "queryParameters": [],
       "requests": [
         {
@@ -8821,8 +9386,7 @@
       "operationId": "simulateTransaction",
       "environments": [],
       "requestHeaders": [],
-      "responseHeaders": [],
-      "namespace": []
+      "responseHeaders": []
     }
   },
   "websockets": {},

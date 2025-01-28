@@ -118,7 +118,7 @@ export async function serializeMdx(
       Record<string, unknown>,
       FernDocs.Frontmatter
     >(content, {
-      scope: {},
+      scope: options?.scope,
       mdxOptions: withDefaultMdxOptions(options),
       parseFrontmatter: true,
     });
@@ -130,7 +130,7 @@ export async function serializeMdx(
       engine: "next-mdx-remote",
       code: result.compiledSource,
       frontmatter: result.frontmatter,
-      scope: {},
+      scope: result.scope,
       jsxRefs: jsxElements,
     };
   } catch (e) {

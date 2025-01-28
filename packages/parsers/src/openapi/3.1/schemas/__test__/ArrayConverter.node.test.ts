@@ -95,7 +95,21 @@ describe("ArrayConverterNode", () => {
         message: "Expected type declaration. Received: null",
         path: ["test", "items"],
       });
-      expect(converted).toBeUndefined();
+      expect(converted).toEqual([
+        {
+          type: "alias",
+          value: {
+            type: "list",
+            itemShape: {
+              type: "alias",
+              value: {
+                type: "unknown",
+                displayName: undefined,
+              },
+            },
+          },
+        },
+      ]);
     });
   });
 });

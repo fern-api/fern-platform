@@ -11,6 +11,7 @@ import { extendType } from "../../utils/extendType";
 import { isExampleCodeSampleSchemaLanguage } from "../guards/isExampleCodeSampleSchemaLanguage";
 import { isExampleCodeSampleSchemaSdk } from "../guards/isExampleCodeSampleSchemaSdk";
 import { isExampleResponseBody } from "../guards/isExampleResponseBody";
+import { isExampleStreamResponse } from "../guards/isExampleResponseStream";
 import { isExampleSseResponseBody } from "../guards/isExampleSseResponseBody";
 import { isFileWithData } from "../guards/isFileWithData";
 import { isRecord } from "../guards/isRecord";
@@ -232,6 +233,7 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
         let responseBody:
           | FernRegistry.api.latest.ExampleEndpointResponse
           | undefined;
+
         switch (responseBodyNode.contentType) {
           case "application/json": {
             if (isExampleResponseBody(example.response)) {
@@ -255,12 +257,15 @@ export class XFernEndpointExampleConverterNode extends BaseOpenApiV3_1ConverterN
             break;
           }
           case "application/octet-stream":
-            if (typeof example.response === "string") {
+            if (
+              !isExampleSseResponseBody(example.response) &&
+              isExampleStreamResponse(example.response)
+            ) {
               responseBody = {
-                type: "filename",
-                // TODO: example response should be a filename for now, but we should support different types of file patterns,
-                // e.g. an S3 link with an audio stream
-                value: example.response,
+                type: "stream",
+                // TODO: example response should be a stream for now, but we should support different types of file patterns,
+                // e.g. an S3 link with a filename
+                value: example.response.stream,
               };
             }
             break;

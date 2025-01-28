@@ -18,6 +18,7 @@ import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
+import { GLOBAL_EXAMPLE_NAME } from "../ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
 
 export type RequestContentType = ConstArrayToType<
@@ -59,6 +60,22 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   }
 
   parse(contentType: string | undefined): void {
+    // This sets examples derived from OpenAPI examples.
+    // this.input.example is typed as any
+    // this.input.examples is typed as Record<string, OpenAPIV3_1.ReferenceObject | OpenAPIV3.ExampleObject> | undefined
+    // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
+    // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
+    this.examples = {
+      ...(this.input.example != null || this.schema?.example() != null
+        ? {
+            [GLOBAL_EXAMPLE_NAME]: {
+              value: this.input.example ?? this.schema?.example(),
+            },
+          }
+        : {}),
+      ...this.input.examples,
+    };
+
     if (this.input.schema != null) {
       if (isReferenceObject(this.input.schema)) {
         this.resolvedSchema = resolveReference(
@@ -131,14 +148,6 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         path: this.accessPath,
       });
     }
-
-    this.examples = {
-      "":
-        this.input.example != null
-          ? { value: this.input.example }
-          : this.input.example,
-      ...this.input.examples,
-    };
   }
 
   convert():

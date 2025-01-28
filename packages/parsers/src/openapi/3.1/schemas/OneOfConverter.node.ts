@@ -7,6 +7,7 @@ import {
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
+import { wrapNullable } from "../../utils/wrapNullable";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
 export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
@@ -16,6 +17,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
   | FernRegistry.api.latest.TypeShape[]
 > {
   isUnionOfObjects: boolean | undefined;
+  isNullable: boolean | undefined;
   discriminated: boolean | undefined;
   discriminant: string | undefined;
   discriminatedMapping: Record<string, SchemaConverterNode> | undefined;
@@ -36,19 +38,26 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
           resolveSchemaReference(schema, this.context.document)?.type ===
           "object"
       );
+      this.isNullable = (this.input.oneOf ?? this.input.anyOf)?.some(
+        (schema) =>
+          resolveSchemaReference(schema, this.context.document)?.type === "null"
+      );
       if (this.input.discriminator == null) {
         this.discriminated = false;
-        this.undiscriminatedMapping = (
-          this.input.oneOf ?? this.input.anyOf
-        )?.map((schema) => {
-          return new SchemaConverterNode({
-            input: schema,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: this.pathId,
-            seenSchemas: this.seenSchemas,
-          });
-        });
+        this.undiscriminatedMapping = (this.input.oneOf ?? this.input.anyOf)
+          ?.map((schema) => {
+            return resolveSchemaReference(schema, this.context.document)
+              ?.type !== "null"
+              ? new SchemaConverterNode({
+                  input: schema,
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId: this.pathId,
+                  seenSchemas: this.seenSchemas,
+                })
+              : undefined;
+          })
+          .filter(isNonNullish);
       } else {
         const maybeMapping = this.input.discriminator.mapping;
         if (maybeMapping != null) {
@@ -90,9 +99,12 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     | FernRegistry.api.latest.TypeShape[]
     | undefined {
     if (!this.isUnionOfObjects && !this.discriminated) {
-      return this.undiscriminatedMapping
+      const convertedNodes = this.undiscriminatedMapping
         ?.flatMap((node) => node.convert())
         .filter(isNonNullish);
+      return this.isNullable && convertedNodes != null
+        ? convertedNodes.map(wrapNullable).filter(isNonNullish)
+        : convertedNodes;
     }
 
     if (
@@ -106,12 +118,12 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     ) {
       return undefined;
     }
-    return this.discriminated &&
+    const union =
+      this.discriminated &&
       this.discriminant != null &&
       this.discriminatedMapping != null
-      ? [
-          {
-            type: "discriminatedUnion",
+        ? {
+            type: "discriminatedUnion" as const,
             discriminant: FernRegistry.PropertyKey(this.discriminant),
             variants: Object.entries(this.discriminatedMapping)
               .flatMap(([key, node]) => {
@@ -133,12 +145,10 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
                   .filter(isNonNullish);
               })
               .filter(isNonNullish),
-          },
-        ]
-      : this.undiscriminatedMapping != null
-        ? [
-            {
-              type: "undiscriminatedUnion",
+          }
+        : this.undiscriminatedMapping != null
+          ? {
+              type: "undiscriminatedUnion" as const,
               variants: this.undiscriminatedMapping
                 .flatMap((node) => {
                   const convertedShapes = maybeSingleValueToArray(
@@ -160,9 +170,10 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
                     .filter(isNonNullish);
                 })
                 .filter(isNonNullish),
-            },
-          ]
-        : undefined;
+            }
+          : undefined;
+    const wrappedUnion = this.isNullable ? wrapNullable(union) : union;
+    return wrappedUnion != null ? [wrappedUnion] : undefined;
   }
 
   example(): Record<string, unknown> | undefined {

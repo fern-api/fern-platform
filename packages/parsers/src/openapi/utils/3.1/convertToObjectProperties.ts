@@ -5,6 +5,7 @@ import {
   SchemaConverterNode,
 } from "../../3.1";
 import { maybeSingleValueToArray } from "../maybeSingleValueToArray";
+import { wrapOptional } from "../wrapOptional";
 
 export function convertToObjectProperties(
   properties:
@@ -23,15 +24,10 @@ export function convertToObjectProperties(
       return maybeValueShapes
         ?.map((valueShape) => {
           if (requiredProperties != null && !requiredProperties.includes(key)) {
-            valueShape = {
-              type: "alias",
-              value: {
-                type: "optional",
-                shape: valueShape,
-                default:
-                  valueShape.type === "enum" ? valueShape.default : undefined,
-              },
-            };
+            valueShape = wrapOptional(
+              valueShape,
+              valueShape.type === "enum" ? valueShape.default : undefined
+            );
           }
 
           return {

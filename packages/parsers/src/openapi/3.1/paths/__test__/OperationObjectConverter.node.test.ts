@@ -66,7 +66,6 @@ describe("OperationObjectConverterNode", () => {
             },
           },
         ],
-        examples: [],
       });
     });
 

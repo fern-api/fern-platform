@@ -1,3 +1,4 @@
+import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../client/generated";
@@ -7,6 +8,7 @@ import {
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
+import { wrapNullable } from "../../utils/wrapNullable";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { isArraySchema } from "../guards/isArraySchema";
 import { isBooleanSchema } from "../guards/isBooleanSchema";
@@ -30,6 +32,7 @@ import { IntegerConverterNode } from "./primitives/IntegerConverter.node";
 import { NullConverterNode } from "./primitives/NullConverter.node";
 import { NumberConverterNode } from "./primitives/NumberConverter.node";
 import { StringConverterNode } from "./primitives/StringConverter.node";
+import { UnknownConverterNode } from "./primitives/UnknownConverter.node";
 import { ReferenceConverterNode } from "./ReferenceConverter.node";
 
 export type PrimitiveType =
@@ -238,6 +241,12 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     }
 
     if (this.typeShapeNode == null) {
+      this.typeShapeNode = new UnknownConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: this.pathId,
+      });
       this.context.errors.error({
         message: "Expected type declaration. Received: null",
         path: this.accessPath,
@@ -250,21 +259,12 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     | FernRegistry.api.latest.TypeShape[]
     | undefined {
     const maybeShapes = this.typeShapeNode?.convert();
-    const mappedShapes = maybeSingleValueToArray(maybeShapes)?.map((shape) =>
-      this.nullable
-        ? {
-            type: "alias" as const,
-            value: {
-              type: "nullable" as const,
-              shape,
-            },
-          }
-        : shape
-    );
-
     if (maybeShapes == null) {
       return undefined;
     }
+    const mappedShapes = maybeSingleValueToArray(maybeShapes)
+      ?.map((shape) => (this.nullable ? wrapNullable(shape) : shape))
+      .filter(isNonNullish);
 
     return Array.isArray(maybeShapes) && maybeShapes.length > 1
       ? mappedShapes
