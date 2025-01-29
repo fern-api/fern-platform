@@ -53,6 +53,7 @@
     "docs:build": {
       "dependsOn": ["^build", "^compile", "^docs:build"],
       "env": [
+        "BRAINTRUST_API_KEY",
         "ALGOLIA_API_KEY",
         "ALGOLIA_APP_ID",
         "ALGOLIA_SEARCH_API_KEY",

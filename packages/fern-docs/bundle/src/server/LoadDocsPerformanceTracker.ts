@@ -1,9 +1,9 @@
+import { track } from "@/server/analytics/posthog";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { DocsPage } from "@fern-docs/ui";
 import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-docs/utils";
 import { GetServerSidePropsResult } from "next/types";
 import { ComponentProps } from "react";
-import { track } from "./analytics/posthog";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {

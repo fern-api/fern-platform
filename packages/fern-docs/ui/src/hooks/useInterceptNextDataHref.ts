@@ -1,3 +1,4 @@
+import { removeTrailingSlash } from "@fern-docs/utils";
 import { addLocale } from "next/dist/client/add-locale";
 import type PageLoader from "next/dist/client/page-loader";
 import { addPathPrefix } from "next/dist/shared/lib/router/utils/add-path-prefix";
@@ -5,7 +6,6 @@ import getAssetPathFromRoute from "next/dist/shared/lib/router/utils/get-asset-p
 import { interpolateAs } from "next/dist/shared/lib/router/utils/interpolate-as";
 import { isDynamicRoute } from "next/dist/shared/lib/router/utils/is-dynamic";
 import { parseRelativeUrl } from "next/dist/shared/lib/router/utils/parse-relative-url";
-import { removeTrailingSlash } from "next/dist/shared/lib/router/utils/remove-trailing-slash";
 import { Router } from "next/router";
 import { useEffect } from "react";
 
@@ -20,7 +20,12 @@ function createPageLoaderGetDataHref(
     const buildId = window.__NEXT_DATA__.buildId;
     const { pathname: hrefPathname, query, search } = parseRelativeUrl(href);
     const { pathname: asPathname } = parseRelativeUrl(asPath);
-    const route = removeTrailingSlash(hrefPathname);
+    let route = removeTrailingSlash(hrefPathname);
+
+    if (route === "") {
+      route = "/index";
+    }
+
     if (!route.startsWith("/")) {
       throw new Error(`Route name should start with a "/", got "${route}"`);
     }
@@ -30,6 +35,7 @@ function createPageLoaderGetDataHref(
         removeTrailingSlash(addLocale(path, locale)),
         ".json"
       );
+      // ->> /_next/data/development/index.json
       return addPathPrefix(
         `/_next/data/${buildId}${dataRoute}${search}`,
         basePath

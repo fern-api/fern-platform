@@ -1,30 +1,28 @@
 import {
+  CONTINUE,
+  Hast,
   hastMdxJsxElementHastToProps,
+  hastToString,
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   unknownToMdxJsxAttribute,
-  type MdxJsxElementHast,
-} from "@fern-docs/mdx";
-import GithubSlugger from "github-slugger";
-import type { Doctype, Element, ElementContent, Root } from "hast";
-import { toString } from "hast-util-to-string";
-import {
-  CONTINUE,
   visit,
   type BuildVisitor,
   type VisitorResult,
-} from "unist-util-visit";
+} from "@fern-docs/mdx";
+import GithubSlugger from "github-slugger";
+import { getLanguageDisplayName } from "../../api-reference/examples/code-example";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
 
 type Visitor = BuildVisitor<
-  Root | Doctype | ElementContent,
-  Root | Element | MdxJsxElementHast | undefined
+  Hast.Root | Hast.Doctype | Hast.ElementContent,
+  Hast.Root | Hast.Element | Hast.MdxJsxElement | undefined
 >;
 
-export function rehypeFernComponents(): (tree: Root) => void {
-  return function (tree: Root): void {
+export function rehypeFernComponents(): (tree: Hast.Root) => void {
+  return function (tree: Hast.Root): void {
     slugger.reset();
 
     // convert img to Image
@@ -37,8 +35,6 @@ export function rehypeFernComponents(): (tree: Root) => void {
         } else if (node.name === "table") {
           // DO NOT coerce <table> into <Table> (see: https://buildwithfern.slack.com/archives/C06QKJWD4VD/p1722602687550179)
           // node.name = "Table";
-        } else if (node.name === "embed") {
-          node.name = "Embed";
         }
       }
     });
@@ -135,9 +131,9 @@ export function rehypeFernComponents(): (tree: Root) => void {
 }
 
 function transformTabs(
-  node: MdxJsxElementHast,
+  node: Hast.MdxJsxElement,
   index: number,
-  parent: Root | Element | MdxJsxElementHast,
+  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
   const tabs = node.children
@@ -168,9 +164,9 @@ function transformTabs(
 }
 
 function transformTabItem(
-  node: MdxJsxElementHast,
+  node: Hast.MdxJsxElement,
   index: number,
-  parent: Root | Element | MdxJsxElementHast,
+  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
   const title = getTitle(node) ?? "Untitled";
@@ -192,9 +188,9 @@ function transformTabItem(
 }
 
 function transformAccordionGroup(
-  node: MdxJsxElementHast,
+  node: Hast.MdxJsxElement,
   index: number,
-  parent: Root | Element | MdxJsxElementHast,
+  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
   const items = node.children
@@ -225,12 +221,12 @@ function transformAccordionGroup(
 
 // TODO: handle lone <Step> component
 function transformSteps(
-  node: MdxJsxElementHast,
+  node: Hast.MdxJsxElement,
   index: number,
-  parent: Root | Element | MdxJsxElementHast,
+  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
-  const children: MdxJsxElementHast[] = [];
+  const children: Hast.MdxJsxElement[] = [];
 
   node.children.forEach((child) => {
     if (child.type === "mdxJsxFlowElement" && child.name === "Step") {
@@ -245,7 +241,7 @@ function transformSteps(
 
       children.push(child);
     } else if (child.type === "element" && child.tagName === "h3") {
-      const title = toString(child);
+      const title = hastToString(child);
 
       // id may have been set by customHeadingHandler in remarkRehypeHandlers.ts
       const slug =
@@ -297,9 +293,9 @@ function transformSteps(
 }
 
 function transformAccordion(
-  node: MdxJsxElementHast,
+  node: Hast.MdxJsxElement,
   index: number,
-  parent: Root | Element | MdxJsxElementHast,
+  parent: Hast.Root | Hast.Element | Hast.MdxJsxElement,
   visitor: Visitor
 ): VisitorResult {
   const title = getTitle(node) ?? "Untitled";
@@ -321,15 +317,28 @@ function transformAccordion(
   return index + 1;
 }
 
-function getTitle(node: MdxJsxElementHast): string | undefined {
+function getTitle(node: Hast.MdxJsxElement): string | undefined {
   const title = node.attributes
     .filter(isMdxJsxAttribute)
     .find((attr) => attr.name === "title")?.value;
+
+  if (typeof title === "string") {
+    return title;
+  }
+
+  const language = node.attributes
+    .filter(isMdxJsxAttribute)
+    .find((attr) => attr.name === "language")?.value;
+
+  if (typeof language === "string") {
+    return getLanguageDisplayName(language);
+  }
+
   // TODO: handle expression attributes
-  return typeof title === "string" ? title : undefined;
+  return undefined;
 }
 
-function applyGeneratedId(node: MdxJsxElementHast, title: string): void {
+function applyGeneratedId(node: Hast.MdxJsxElement, title: string): void {
   const id = node.attributes
     .filter(isMdxJsxAttribute)
     .find((attr) => attr.name === "id");

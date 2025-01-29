@@ -124,7 +124,6 @@ export class DocsLoader {
   > {
     if (!this.#loadForDocsUrlResponse) {
       const response = await loadWithUrl(this.domain);
-
       if (response.ok) {
         this.#loadForDocsUrlResponse = response.body;
       } else {

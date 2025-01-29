@@ -32,12 +32,13 @@ import {
   ApplicationProtocol,
   HttpCodeElb,
 } from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { PolicyStatement, ServicePrincipal } from "aws-cdk-lib/aws-iam";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import * as targets from "aws-cdk-lib/aws-route53-targets";
 import { LoadBalancerTarget } from "aws-cdk-lib/aws-route53-targets";
-import { Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
+import { BlockPublicAccess, Bucket, HttpMethods } from "aws-cdk-lib/aws-s3";
 import { PrivateDnsNamespace } from "aws-cdk-lib/aws-servicediscovery";
 import * as sns from "aws-cdk-lib/aws-sns";
 import { EmailSubscription } from "aws-cdk-lib/aws-sns-subscriptions";
@@ -207,10 +208,79 @@ export class FdrDeployStack extends Stack {
       }
     );
 
+    // for revalidate-all and finish-register workflow
+    const dbDocsDefinitionBucket = new Bucket(
+      this,
+      "fdr-docs-definitions-public",
+      {
+        bucketName: `fdr-${environmentType.toLowerCase()}-docs-definitions-public`,
+        cors: [
+          {
+            allowedMethods: [
+              HttpMethods.GET,
+              HttpMethods.POST,
+              HttpMethods.PUT,
+            ],
+            allowedOrigins: ["*"],
+            allowedHeaders: ["*"],
+          },
+        ],
+        blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+        versioned: true,
+      }
+    );
+
+    const keyGroupId = "06e52e5a-38d5-4459-b623-babb2420ea77";
+    const dbDocsKeyGroup = cloudfront.KeyGroup.fromKeyGroupId(
+      this,
+      "DbDocsKeyGroup",
+      keyGroupId
+    );
+
+    const dbDocsDefinitionDomainName =
+      environmentType === "PROD"
+        ? "docs-definitions.buildwithfern.com"
+        : "docs-definitions-dev2.buildwithfern.com";
+    const dbDocsDefinitionDistribution = new cloudfront.Distribution(
+      this,
+      "DbDocsDefinitionDistribution",
+      {
+        defaultBehavior: {
+          origin: new origins.S3Origin(dbDocsDefinitionBucket),
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
+          trustedKeyGroups: [dbDocsKeyGroup],
+        },
+        domainNames: [dbDocsDefinitionDomainName],
+        certificate,
+      }
+    );
+
+    const dbDocsDefinitionBucketPolicy = new PolicyStatement({
+      actions: ["s3:GetObject"],
+      resources: [dbDocsDefinitionBucket.arnForObjects("*")],
+      principals: [new ServicePrincipal("cloudfront.amazonaws.com")],
+      conditions: {
+        StringEquals: {
+          "AWS:SourceArn": `arn:aws:cloudfront::${this.account}:distribution/${dbDocsDefinitionDistribution.distributionId}`,
+        },
+      },
+    });
+    dbDocsDefinitionBucket.addToResourcePolicy(dbDocsDefinitionBucketPolicy);
+
     new route53.ARecord(this, "PublicDocsFilesRecord", {
       recordName: publicDocsFilesDomainName,
       target: route53.RecordTarget.fromAlias(
         new targets.CloudFrontTarget(publicDocsFilesDistribution)
+      ),
+      zone: hostedZone,
+    });
+
+    new route53.ARecord(this, "DbDocsDefinitionRecord", {
+      recordName: dbDocsDefinitionDomainName,
+      target: route53.RecordTarget.fromAlias(
+        new targets.CloudFrontTarget(dbDocsDefinitionDistribution)
       ),
       zone: hostedZone,
     });
@@ -265,6 +335,9 @@ export class FdrDeployStack extends Stack {
             PUBLIC_S3_BUCKET_REGION: publicDocsBucket.stack.region,
             PRIVATE_S3_BUCKET_NAME: privateDocsBucket.bucketName,
             PRIVATE_S3_BUCKET_REGION: privateDocsBucket.stack.region,
+            DB_DOCS_DEFINITION_BUCKET_NAME: dbDocsDefinitionBucket.bucketName,
+            DB_DOCS_DEFINITION_BUCKET_REGION:
+              dbDocsDefinitionBucket.stack.region,
             API_DEFINITION_SOURCE_BUCKET_NAME:
               privateApiDefinitionSourceBucket.bucketName,
             API_DEFINITION_SOURCE_BUCKET_REGION:

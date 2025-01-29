@@ -1,4 +1,12 @@
 {
-  "ignores": ["@fern-platform/configs", "@types/node", "vite", "@types/react"],
+  "ignores": [
+    "@fern-platform/configs",
+    "@types/node",
+    "@types/react",
+    "hast",
+    "mdast",
+    "mdx",
+    "vite"
+  ],
   "ignore-patterns": ["dist"]
 }

@@ -104,6 +104,11 @@ service:
       response: GetSearchApiKeyForIndexSegmentResponse
       errors:
         - IndexSegmentNotFoundError 
+    
+    prepopulateFdrReadS3Bucket:
+      method: POST
+      path: /prepopulate-s3-bucket
+      docs: Prepopulates the FDR read S3 bucket with docs definitions
 
 types:
   DocsUrlMetadata: 

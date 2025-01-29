@@ -6,12 +6,11 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { EdgeFlags } from "@fern-docs/utils";
+import { EdgeFlags, removeLeadingSlash } from "@fern-docs/utils";
 import { isString } from "es-toolkit/predicate";
 import { DocsLoader } from "./DocsLoader";
 import { pascalCaseHeaderKey } from "./headerKeyCase";
 import { convertToLlmTxtMarkdown } from "./llm-txt-md";
-import { removeLeadingSlash } from "./removeLeadingSlash";
 
 export async function getMarkdownForPath(
   node: FernNavigation.NavigationNodePage,
@@ -162,13 +161,6 @@ export function endpointDefinitionToMarkdown(
           `- ${pascalCaseHeaderKey(param.key)}${getShorthand(param.valueShape, types, param.description)}`
       )
       .join("\n"),
-    endpoint.requests?.[0] != null ? "## Request Body" : undefined,
-    typeof endpoint.requests?.[0]?.description === "string"
-      ? endpoint.requests?.[0]?.description
-      : undefined,
-    endpoint.requests?.[0] != null
-      ? `\`\`\`json\n${JSON.stringify(endpoint.requests[0].body)}\n\`\`\``
-      : undefined,
     endpoint.responseHeaders?.length ? "## Response Headers" : undefined,
     endpoint.responseHeaders
       ?.map(
