@@ -9357,7 +9357,15 @@
           "description": "Version header."
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 204,
+          "body": {
+            "type": "empty"
+          },
+          "description": "Key of a file metadata successfully deleted."
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -10403,7 +10411,15 @@
           "description": "Version header."
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 204,
+          "body": {
+            "type": "empty"
+          },
+          "description": "The group has been deleted successfully."
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
@@ -12022,7 +12038,15 @@
         }
       ],
       "requests": [],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 204,
+          "body": {
+            "type": "empty"
+          },
+          "description": "Webhook successfully deleted."
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,

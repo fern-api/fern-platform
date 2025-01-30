@@ -27699,7 +27699,15 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 202,
+          "body": {
+            "type": "empty"
+          },
+          "description": "successful"
+        }
+      ],
       "errors": [
         {
           "statusCode": 401,
@@ -27823,7 +27831,15 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "empty"
+          },
+          "description": "successful"
+        }
+      ],
       "errors": [
         {
           "statusCode": 401,
@@ -28394,7 +28410,15 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "empty"
+          },
+          "description": "successful"
+        }
+      ],
       "errors": [],
       "examples": []
     },
@@ -32559,7 +32583,15 @@
           }
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "empty"
+          },
+          "description": "Successful"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
