@@ -1389,10 +1389,16 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "regex": "^0x[a-fA-F\\d]+$"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "regex": "^0x[a-fA-F\\d]+$"
+                        }
+                      }
                     }
                   }
                 },
@@ -2164,8 +2170,14 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "BlockNumber"
+                      }
+                    }
                   }
                 },
                 "description": "A BlockNumber at which to request the balance"
@@ -2641,8 +2653,14 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "BlockNumber"
+                      }
+                    }
                   }
                 },
                 "description": "A BlockNumber of which the code existed"
