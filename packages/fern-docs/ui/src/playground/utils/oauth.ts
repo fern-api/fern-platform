@@ -88,6 +88,9 @@ export const oAuthClientCredentialReferencedEndpointLoginFlow = async ({
         setDisplayFailedLogin && setDisplayFailedLogin(true);
       }
     },
+    string: () => {
+      setDisplayFailedLogin && setDisplayFailedLogin(true);
+    },
     file: () => {
       setDisplayFailedLogin && setDisplayFailedLogin(true);
     },
