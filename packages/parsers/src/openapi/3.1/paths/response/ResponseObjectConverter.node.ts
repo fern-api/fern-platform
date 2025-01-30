@@ -22,6 +22,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   headers: Record<string, ParameterBaseObjectConverterNode> | undefined;
   responses: ResponseMediaTypeObjectConverterNode[] | undefined;
   description: string | undefined;
+  emptyResponse: boolean | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
@@ -60,33 +61,39 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       });
     });
 
-    Object.entries(input.content ?? {}).forEach(
-      ([contentType, contentTypeObject]) => {
-        this.responses ??= [];
-        this.responses.push(
-          new ResponseMediaTypeObjectConverterNode(
-            {
-              input: contentTypeObject,
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: ["content", contentType],
-            },
-            contentType,
-            streamingFormat,
-            this.path,
-            this.statusCode,
-            this.requests,
-            // TODO: add response headers, but this needs to be added to FDR shape
-            this.shapes
-          )
-        );
-      }
-    );
+    if (input.content == null) {
+      this.emptyResponse = true;
+    } else {
+      Object.entries(input.content ?? {}).forEach(
+        ([contentType, contentTypeObject]) => {
+          this.responses ??= [];
+          this.responses.push(
+            new ResponseMediaTypeObjectConverterNode(
+              {
+                input: contentTypeObject,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: ["content", contentType],
+              },
+              contentType,
+              streamingFormat,
+              this.path,
+              this.statusCode,
+              this.requests,
+              // TODO: add response headers, but this needs to be added to FDR shape
+              this.shapes
+            )
+          );
+        }
+      );
+    }
   }
 
   convert(): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
-    return this.responses
-      ?.flatMap((response) => response.convert())
-      .filter(isNonNullish);
+    return this.emptyResponse
+      ? [{ type: "empty" }]
+      : this.responses
+          ?.flatMap((response) => response.convert())
+          .filter(isNonNullish);
   }
 }
