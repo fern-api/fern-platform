@@ -42,7 +42,11 @@ import { EDGE_FLAGS_ATOM } from "./flags";
 import { useAtomEffect } from "./hooks";
 import { HEADER_HEIGHT_ATOM } from "./layout";
 import { LOCATION_ATOM } from "./location";
-import { CURRENT_NODE_ATOM, NAVIGATION_NODES_ATOM } from "./navigation";
+import {
+  CURRENT_NODE_ATOM,
+  DOMAIN_ATOM,
+  NAVIGATION_NODES_ATOM,
+} from "./navigation";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
 
@@ -437,6 +441,8 @@ export function useOpenPlayground(): (
   return useAtomCallback(
     useCallbackOne(
       async (get, set, node?: FernNavigation.NavigationNodeApiLeaf) => {
+        const domain = get(DOMAIN_ATOM);
+
         if (!get(HAS_API_PLAYGROUND)) {
           set(PLAYGROUND_NODE_ID, undefined);
           return;
@@ -497,7 +503,10 @@ export function useOpenPlayground(): (
             formStateAtom,
             getInitialEndpointRequestFormStateWithExample(
               context,
-              context.endpoint.examples?.[0],
+              // HACKHACK: twelvelabs
+              domain.includes("twelvelabs")
+                ? undefined
+                : context.endpoint.examples?.[0],
               playgroundInitialState
             )
           );
