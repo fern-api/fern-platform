@@ -15,14 +15,16 @@ export async function toBodyInit(
       for (const [key, value] of Object.entries(body.value)) {
         switch (value.type) {
           case "json": {
-            formData.append(
-              key,
-              value.contentType
-                ? new Blob([JSON.stringify(value.value)], {
-                    type: value.contentType,
-                  })
-                : JSON.stringify(value.value)
-            );
+            if (value.value !== undefined) {
+              formData.append(
+                key,
+                value.contentType
+                  ? new Blob([JSON.stringify(value.value)], {
+                      type: value.contentType,
+                    })
+                  : JSON.stringify(value.value)
+              );
+            }
             break;
           }
           case "file":
