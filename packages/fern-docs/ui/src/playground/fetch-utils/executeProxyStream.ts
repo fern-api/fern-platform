@@ -6,7 +6,8 @@ const PROXY_URL = "https://proxy.ferndocs.com/";
 
 export async function executeProxyStream(
   req: ProxyRequest,
-  disableProxy: boolean = false
+  disableProxy: boolean = false,
+  domain: string,
 ): Promise<[Response, ReadableStream<Uint8Array>]> {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set(
@@ -24,7 +25,7 @@ export async function executeProxyStream(
     {
       method: req.method,
       headers: requestHeaders,
-      body: await toBodyInit(req.body),
+      body: await toBodyInit(req.body, domain),
       mode: "cors",
     }
   );

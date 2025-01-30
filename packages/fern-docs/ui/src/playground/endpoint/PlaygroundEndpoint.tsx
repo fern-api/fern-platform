@@ -16,6 +16,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { ReactElement, useCallback, useState } from "react";
 import { track } from "../../analytics";
 import {
+  DOMAIN_ATOM,
   FERN_USER_ATOM,
   PLAYGROUND_AUTH_STATE_ATOM,
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,
@@ -76,6 +77,8 @@ export const PlaygroundEndpoint = ({
 
   const setOAuthValue = useSetAtom(PLAYGROUND_AUTH_STATE_OAUTH_ATOM);
 
+  const domain = useAtomValue(DOMAIN_ATOM);
+
   const sendRequest = useCallback(async () => {
     if (endpoint == null) {
       return;
@@ -131,7 +134,11 @@ export const PlaygroundEndpoint = ({
         ),
       };
       if (endpoint.responses?.[0]?.body.type === "stream") {
-        const [res, stream] = await executeProxyStream(req, isProxyDisabled);
+        const [res, stream] = await executeProxyStream(
+          req,
+          isProxyDisabled,
+          domain
+        );
 
         const time = Date.now();
         const reader = stream.getReader();
@@ -156,7 +163,7 @@ export const PlaygroundEndpoint = ({
           );
         }
       } else {
-        const res = await executeProxyRest(req, isProxyDisabled);
+        const res = await executeProxyRest(req, isProxyDisabled, domain);
         setResponse(loaded(res));
         if (res.type !== "stream") {
           track("api_playground_request_received", {
@@ -192,6 +199,7 @@ export const PlaygroundEndpoint = ({
     setOAuthValue,
     usesApplicationJsonInFormDataValue,
     isProxyDisabled,
+    domain,
   ]);
 
   const settings = usePlaygroundSettings();

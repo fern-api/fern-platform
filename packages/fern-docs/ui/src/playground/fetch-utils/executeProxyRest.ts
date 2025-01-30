@@ -7,7 +7,8 @@ const PROXY_URL = "https://proxy.ferndocs.com/";
 
 export async function executeProxyRest(
   req: ProxyRequest,
-  disableProxy: boolean = false
+  disableProxy: boolean = false,
+  domain: string
 ): Promise<PlaygroundResponse> {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set(
@@ -25,7 +26,7 @@ export async function executeProxyRest(
     {
       method: req.method,
       headers: requestHeaders,
-      body: await toBodyInit(req.body),
+      body: await toBodyInit(req.body, domain),
       mode: "cors",
     }
   );

@@ -2,7 +2,8 @@ import { UnreachableCaseError } from "ts-essentials";
 import { ProxyRequest } from "../types/proxy";
 
 export async function toBodyInit(
-  body: ProxyRequest["body"]
+  body: ProxyRequest["body"],
+  domain: string
 ): Promise<BodyInit | null> {
   if (body == null) {
     return null;
@@ -18,20 +19,39 @@ export async function toBodyInit(
             if (value.value === undefined) {
               break;
             }
-            if (value.contentType === "application/json") {
-              formData.append(
-                key,
-                new Blob([JSON.stringify(value.value)], {
-                  type: "application/json",
-                })
-              );
-            } else {
-              const finalValue =
-                typeof value.value === "string"
-                  ? value.value
-                  : JSON.stringify(value.value);
+            // HACKHACK: twelvelabs
+            if (domain.includes("twelvelabs") && Array.isArray(value.value)) {
+              value.value.forEach((v) => {
+                if (value.contentType === "application/json") {
+                  formData.append(
+                    key,
+                    new Blob([JSON.stringify(v)], {
+                      type: "application/json",
+                    })
+                  );
+                } else {
+                  const finalValue =
+                    typeof v === "string" ? v : JSON.stringify(v);
 
-              formData.append(key, finalValue);
+                  formData.append(key, finalValue);
+                }
+              });
+            } else {
+              if (value.contentType === "application/json") {
+                formData.append(
+                  key,
+                  new Blob([JSON.stringify(value.value)], {
+                    type: "application/json",
+                  })
+                );
+              } else {
+                const finalValue =
+                  typeof value.value === "string"
+                    ? value.value
+                    : JSON.stringify(value.value);
+
+                formData.append(key, finalValue);
+              }
             }
             break;
           }
