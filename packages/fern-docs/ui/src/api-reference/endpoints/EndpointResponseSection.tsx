@@ -74,6 +74,7 @@ function EndpointResponseSectionContent({
   types,
 }: EndpointResponseSectionContentProps) {
   switch (body.type) {
+    case "empty":
     case "fileDownload":
     case "streamingText":
       return null;
@@ -118,6 +119,8 @@ function getResponseSummary({
   isAudioFileDownloadSpanSummary: boolean;
 }) {
   switch (response.body.type) {
+    case "empty":
+      return "This endpoint returns nothing.";
     case "fileDownload": {
       if (isAudioFileDownloadSpanSummary) {
         return (

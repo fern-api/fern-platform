@@ -5,6 +5,7 @@
 import * as FernRegistry from "../../../../../../../index";
 
 export type HttpResponseBodyShape =
+    | FernRegistry.api.latest.HttpResponseBodyShape.Empty
     | FernRegistry.api.latest.HttpResponseBodyShape.Object_
     | FernRegistry.api.latest.HttpResponseBodyShape.Alias
     | FernRegistry.api.latest.HttpResponseBodyShape.FileDownload
@@ -12,6 +13,10 @@ export type HttpResponseBodyShape =
     | FernRegistry.api.latest.HttpResponseBodyShape.Stream;
 
 export declare namespace HttpResponseBodyShape {
+    interface Empty {
+        type: "empty";
+    }
+
     interface Object_ extends FernRegistry.api.latest.ObjectType {
         type: "object";
     }
