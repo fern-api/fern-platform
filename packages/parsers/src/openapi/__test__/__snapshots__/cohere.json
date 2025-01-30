@@ -12220,7 +12220,36 @@
           "description": "The name of the project that is making the request.\n"
         }
       ],
-      "responses": [],
+      "responseHeaders": [
+        {
+          "key": "X-API-Warning",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "Warning description for incorrect usage of the API"
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "empty"
+          },
+          "description": "OK"
+        }
+      ],
       "errors": [
         {
           "statusCode": 400,
