@@ -1,4 +1,5 @@
 import {
+  FormDataField,
   HttpRequestBodyShape,
   ObjectProperty,
   TypeDefinition,
@@ -8,7 +9,11 @@ import {
   unwrapReference,
 } from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { PlaygroundFormStateBody } from "../types";
+import { UnreachableCaseError } from "ts-essentials";
+import {
+  PlaygroundFormDataEntryValue,
+  PlaygroundFormStateBody,
+} from "../types";
 
 export function getEmptyValueForObjectProperties(
   properties: ObjectProperty[] = [],
@@ -42,8 +47,64 @@ export function getEmptyValueForHttpRequestBody(
       value: getEmptyValueForType(value, types),
     }),
     bytes: () => ({ type: "octet-stream", value: undefined }),
-    formData: () => ({ type: "form-data", value: {} }),
+    formData: (formData) => ({
+      type: "form-data",
+      value: getEmptyValueForFormDataFields(formData.fields, types),
+    }),
   });
+}
+
+function getEmptyValueForFormDataFields(
+  fields: FormDataField[],
+  types: Record<string, TypeDefinition>
+): Record<string, PlaygroundFormDataEntryValue> {
+  return fields
+    .filter((field) => formDataFieldIsRequired(field, types))
+    .reduce((acc: Record<string, PlaygroundFormDataEntryValue>, field) => {
+      acc[field.key] = getEmptyValueForField(field, types);
+      return acc;
+    }, {});
+}
+
+export function formDataFieldIsRequired(
+  field: FormDataField,
+  types: Record<string, TypeDefinition>
+): boolean {
+  switch (field.type) {
+    case "property":
+      return !unwrapReference(field.valueShape, types).isOptional;
+    case "file":
+    case "files":
+      return !field.isOptional;
+    default:
+      throw new UnreachableCaseError(field);
+  }
+}
+
+export function getEmptyValueForField(
+  field: FormDataField,
+  types: Record<string, TypeDefinition>
+): PlaygroundFormDataEntryValue {
+  if (field.type === "property") {
+    return {
+      type: "json",
+      value: getEmptyValueForType(
+        unwrapReference(field.valueShape, types).shape,
+        types
+      ),
+    };
+  } else if (field.type === "file") {
+    return {
+      type: "file",
+      value: undefined,
+    };
+  } else if (field.type === "files") {
+    return {
+      type: "fileArray",
+      value: [],
+    };
+  }
+  throw new UnreachableCaseError(field);
 }
 
 export function getEmptyValueForType(

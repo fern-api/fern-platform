@@ -15,6 +15,9 @@ export async function toBodyInit(
       for (const [key, value] of Object.entries(body.value)) {
         switch (value.type) {
           case "json": {
+            if (value.value === undefined) {
+              break;
+            }
             if (value.contentType === "application/json") {
               formData.append(
                 key,
