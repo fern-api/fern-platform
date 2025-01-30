@@ -101,7 +101,7 @@ export async function executeProxyRest(
             String(new TextEncoder().encode(text).length),
         };
       }
-    } catch () {
+    } catch {
       throw new Error("Failed to read response body");
     }
   }
