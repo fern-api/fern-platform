@@ -1,0 +1,61 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "Pet": {
+      "name": "Pet",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "long"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "tag",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "optional",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

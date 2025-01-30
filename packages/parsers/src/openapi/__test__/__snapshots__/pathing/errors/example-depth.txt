@@ -1,0 +1,13 @@
+[
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/tree",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+    ],
+  },
+]

@@ -1,0 +1,86 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "Triangle": {
+      "name": "Triangle",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "triangle"
+                }
+              ]
+            }
+          },
+          {
+            "key": "base",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          },
+          {
+            "key": "height",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Square": {
+      "name": "Square",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "type",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "square"
+                }
+              ]
+            }
+          },
+          {
+            "key": "sideLength",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

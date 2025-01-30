@@ -21,6 +21,7 @@ describe("MixedSchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
 
       expect(node.nullable).toBe(true);
@@ -38,6 +39,7 @@ describe("MixedSchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
 
       expect(node.nullable).toBeUndefined();
@@ -57,6 +59,7 @@ describe("MixedSchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
 
       const result = node.convert()[0];
@@ -78,6 +81,7 @@ describe("MixedSchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
 
       const result = node.convert()[0];
@@ -95,6 +99,7 @@ describe("MixedSchemaConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
 
       node.typeNodes = undefined;

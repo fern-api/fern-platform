@@ -36,6 +36,7 @@ describe("convertToObjectProperties", () => {
       context: mockContext,
       accessPath: [],
       pathId: "",
+      seenSchemas: new Set(),
     });
     nameSchemaConverterNode.availability = new AvailabilityConverterNode({
       input: {
@@ -55,6 +56,7 @@ describe("convertToObjectProperties", () => {
         context: mockContext,
         accessPath: [],
         pathId: "",
+        seenSchemas: new Set(),
       }),
     };
 
@@ -100,6 +102,7 @@ describe("convertToObjectProperties", () => {
       context: mockContext,
       accessPath: [],
       pathId: "",
+      seenSchemas: new Set(),
     });
 
     const properties = {

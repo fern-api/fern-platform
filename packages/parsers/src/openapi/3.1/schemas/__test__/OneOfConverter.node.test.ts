@@ -35,6 +35,7 @@ describe("OneOfConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.discriminated).toBe(false);
       expect(node.undiscriminatedMapping?.length).toBe(2);
@@ -56,6 +57,7 @@ describe("OneOfConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.discriminated).toBe(true);
       expect(node.discriminant).toBe("type");
@@ -80,6 +82,7 @@ describe("OneOfConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const result = node.convert()[0];
       expect(result?.type).toBe("discriminatedUnion");
@@ -99,6 +102,7 @@ describe("OneOfConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const result = node.convert()[0];
       expect(result?.type).toBe("undiscriminatedUnion");
@@ -158,6 +162,7 @@ describe("OneOfConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const result = node.convert();
       expect(result).toBeUndefined();

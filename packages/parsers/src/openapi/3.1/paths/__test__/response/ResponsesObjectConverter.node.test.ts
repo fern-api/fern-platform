@@ -22,12 +22,17 @@ describe("ResponsesObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponsesObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponsesObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      [],
+      {}
+    );
 
     const result = converter.convert();
     expect(result?.responses).toBeDefined();
@@ -60,7 +65,8 @@ describe("ResponsesObjectConverterNode", () => {
         pathId: "test",
       },
       "testpath",
-      undefined
+      [],
+      {}
     );
 
     const result = converter.convert();
@@ -90,12 +96,17 @@ describe("ResponsesObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponsesObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponsesObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      [],
+      {}
+    );
 
     const result = converter.convert();
     expect(result?.responses[0]?.headers).toBeDefined();
@@ -118,12 +129,17 @@ describe("ResponsesObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponsesObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponsesObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      [],
+      {}
+    );
 
     const result = converter.convert();
     expect(result?.responses).toBeDefined();
@@ -132,12 +148,17 @@ describe("ResponsesObjectConverterNode", () => {
   it("should handle empty responses", () => {
     const input: OpenAPIV3_1.ResponsesObject = {};
 
-    const converter = new ResponsesObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponsesObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      [],
+      {}
+    );
 
     const result = converter.convert();
     expect(result?.responses).toEqual([]);

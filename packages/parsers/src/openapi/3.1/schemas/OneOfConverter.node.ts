@@ -2,15 +2,15 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
-  BaseOpenApiV3_1ConverterNodeWithExample,
+  BaseOpenApiV3_1ConverterNodeWithTracking,
+  BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { wrapNullable } from "../../utils/wrapNullable";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
-export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
+export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
   OpenAPIV3_1.NonArraySchemaObject,
   | [FernRegistry.api.latest.TypeShape.DiscriminatedUnion]
   | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
@@ -25,7 +25,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   undiscriminatedMapping: SchemaConverterNode[] | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>
   ) {
     super(args);
     this.safeParse();
@@ -53,6 +53,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
                   context: this.context,
                   accessPath: this.accessPath,
                   pathId: this.pathId,
+                  seenSchemas: this.seenSchemas,
                 })
               : undefined;
           })
@@ -84,6 +85,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
               context: this.context,
               accessPath: [...this.accessPath, "discriminator", "mapping", key],
               pathId: key,
+              seenSchemas: this.seenSchemas,
             });
           });
         }

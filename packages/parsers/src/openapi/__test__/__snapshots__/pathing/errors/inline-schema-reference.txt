@@ -1,0 +1,14 @@
+[
+  {
+    "message": "Unprocessable reference: #/components/responses/NotFound/content/application~1json/schema",
+    "path": [
+      "paths",
+      "/example",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "type",
+    ],
+  },
+]
