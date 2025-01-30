@@ -48,34 +48,62 @@ export async function executeProxyRest(
     res.headers.get("Content-Type")?.toLowerCase()?.includes("application/json")
   ) {
     const startTime = Date.now();
-    const json = await res.json();
-    const endTime = Date.now();
+    try {
+      const text = await res.text();
+      const endTime = Date.now();
 
-    const fallbackTime =
-      Number(res.headers.get("X-Fern-Proxy-Origin-Latency") ?? 0) +
-      endTime -
-      startTime;
+      const fallbackTime =
+        Number(res.headers.get("X-Fern-Proxy-Origin-Latency") ?? 0) +
+        endTime -
+        startTime;
 
-    return {
-      type: "json",
-      response: {
-        headers: responseHeaders,
-        ok: res.ok,
-        redirected: res.redirected,
-        status: res.status,
-        statusText: res.statusText,
-        type: res.type,
-        url: res.url,
-        body: json,
-      },
-      contentType: res.headers.get("Content-Type") ?? "application/json",
-      time: Number(
-        res.headers.get("X-Fern-Proxy-Response-Time") ?? fallbackTime
-      ),
-      size:
-        res.headers.get("Content-Length") ??
-        String(new TextEncoder().encode(JSON.stringify(json)).length),
-    };
+      try {
+        const json = JSON.parse(text);
+        return {
+          type: "json",
+          response: {
+            headers: responseHeaders,
+            ok: res.ok,
+            redirected: res.redirected,
+            status: res.status,
+            statusText: res.statusText,
+            type: res.type,
+            url: res.url,
+            body: json,
+          },
+          contentType: res.headers.get("Content-Type") ?? "application/json",
+          time: Number(
+            res.headers.get("X-Fern-Proxy-Response-Time") ?? fallbackTime
+          ),
+          size:
+            res.headers.get("Content-Length") ??
+            String(new TextEncoder().encode(text).length),
+        };
+      } catch {
+        return {
+          type: "string",
+          response: {
+            headers: responseHeaders,
+            ok: res.ok,
+            redirected: res.redirected,
+            status: res.status,
+            statusText: res.statusText,
+            type: res.type,
+            url: res.url,
+            body: text,
+          },
+          contentType: res.headers.get("Content-Type") ?? "text/plain",
+          time: Number(
+            res.headers.get("X-Fern-Proxy-Response-Time") ?? fallbackTime
+          ),
+          size:
+            res.headers.get("Content-Length") ??
+            String(new TextEncoder().encode(text).length),
+        };
+      }
+    } catch (e) {
+      throw new Error("Failed to read response body");
+    }
   }
 
   const startTime = Date.now();
