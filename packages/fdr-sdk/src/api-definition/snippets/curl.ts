@@ -27,7 +27,6 @@ export function convertToCurl(
   try {
     return unsafeStringifyHttpRequestExampleToCurl(request, opts);
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error(e);
 
     return "";
@@ -40,9 +39,14 @@ function getHttpRequest(
   searchParams: Record<string, unknown>
 ): string {
   const queryParams = toUrlEncoded(searchParams)
-    .map(
-      ([key, value]) => `${key}=${encodeURIComponent(unknownToString(value))}`
-    )
+    .map(([key, value]) => {
+      if (Array.isArray(value)) {
+        return value
+          .map((v) => `${key}=${encodeURIComponent(unknownToString(v))}`)
+          .join("&");
+      }
+      return `${key}=${encodeURIComponent(unknownToString(value))}`;
+    })
     .join("&");
   if (method !== "GET") {
     return queryParams.length > 0
@@ -81,11 +85,11 @@ function getBodyJsonString(value: unknown | null | undefined): string[] {
   }
 
   if (typeof value === "string") {
-    return [`-d ${`"${value.replace(/"/g, '\\"')}"`}`];
+    return [`-d "${value.replace(/"/g, '\\"')}"`];
   }
 
   const stringifiedValue = JSON.stringify(value, null, 2).replace(/'/g, "\\'");
-  return [`-d ${`'${stringifiedValue}'`}`];
+  return [`-d '${stringifiedValue}'`];
 }
 
 function getBodyBytesString(filename: string): string[] {
@@ -234,9 +238,7 @@ function unsafeStringifyHttpRequestExampleToCurl(
   return `curl ${httpRequest}${allStrings.map(withNewLine).join("")}`;
 }
 
-function toUrlEncoded(
-  urlQueries: Record<string, unknown>
-): Array<[string, string]> {
+function toUrlEncoded(urlQueries: Record<string, unknown>): [string, string][] {
   return Object.entries(urlQueries).flatMap(
     ([key, value]): [string, string][] => {
       if (Array.isArray(value)) {
