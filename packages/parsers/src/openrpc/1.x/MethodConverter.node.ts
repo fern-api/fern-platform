@@ -102,7 +102,16 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
 
             return {
               key: FernRegistry.PropertyKey(param.name),
-              valueShape,
+              valueShape: !param.required
+                ? {
+                    type: "alias",
+                    value: {
+                      type: "optional",
+                      shape: valueShape,
+                      default: undefined,
+                    },
+                  }
+                : valueShape,
               description: param.description,
               availability: undefined,
             };
