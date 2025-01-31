@@ -76,7 +76,7 @@
   }
 
   .fern-sidebar-container {
-    @apply bg-sidebar border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden h-fit lg:block;
+    @apply bg-sidebar border-concealed top-header-offset mt-header-offset max-h-vh-minus-header w-sidebar-width sticky hidden lg:block;
     @apply flex flex-col;
 
     &.fern-sidebar-fixed {
