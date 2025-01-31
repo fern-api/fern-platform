@@ -144,7 +144,6 @@ export const PlaygroundEndpoint = ({
             break;
           }
           result += decoder.decode(value);
-          console.log(result);
           setResponse(
             loaded({
               type: "stream",
