@@ -8,7 +8,7 @@ import {
   PropertyKey,
   toSnippetHttpRequest,
 } from "@fern-api/fdr-sdk/api-definition";
-import { ApiDefinitionLoader } from "../src";
+import { ApiDefinitionLoader } from "../ApiDefinitionLoader";
 
 describe("curl snippet generation", () => {
   it("generates correct curl snippet", async () => {
@@ -116,8 +116,8 @@ describe("curl snippet generation", () => {
     `);
 
     expect(
-      apiDefinition.endpoints[EndpointId("testEndpoint")].examples?.[0]
-        .snippets[APIV1Read.SupportedLanguage.Curl]?.[0].code
+      apiDefinition?.endpoints?.[EndpointId("testEndpoint")]?.examples?.[0]
+        ?.snippets?.[APIV1Read.SupportedLanguage.Curl]?.[0]?.code
     ).toEqual(curlCode);
   });
 });
