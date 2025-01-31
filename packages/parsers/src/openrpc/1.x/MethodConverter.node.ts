@@ -155,14 +155,21 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
                   resolvedExample.params.length > 0
                     ? {
                         type: "json",
-                        value: resolvedExample.params.map((param) => {
-                          const resolvedParam = resolveExample(
-                            param,
-                            this.context.openrpc
-                          );
-                          if (!resolvedParam) return undefined;
-                          return resolvedParam.value;
-                        }),
+                        value: Object.fromEntries(
+                          resolvedExample.params
+                            .map((param) => {
+                              const resolvedParam = resolveExample(
+                                param,
+                                this.context.openrpc
+                              );
+                              if (!resolvedParam) return undefined;
+                              return [
+                                resolvedParam.name ?? "",
+                                resolvedParam.value,
+                              ];
+                            })
+                            .filter(isNonNullish)
+                        ),
                       }
                     : undefined,
                 responseStatusCode: 200,
@@ -175,6 +182,18 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
           .filter(isNonNullish) ?? [];
 
       if (examples.length <= 0) {
+        const requestBody = generateExampleForJsonSchema({
+          type: "object",
+          properties: Object.fromEntries(
+            this.method.params?.map((param) => {
+              const resolvedParam = resolveContentDescriptorObject(
+                param,
+                this.context.openrpc
+              );
+              return [resolvedParam?.name ?? "", resolvedParam?.schema ?? {}];
+            }) ?? []
+          ),
+        });
         const example = {
           name: "Example",
           path: "",
@@ -183,21 +202,12 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
           headers: {},
           requestBody: {
             type: "json" as const,
-            value: generateExampleForJsonSchema({
-              type: "object",
-              properties: Object.fromEntries(
-                this.method.params?.map((param) => {
-                  const resolvedParam = resolveContentDescriptorObject(
-                    param,
-                    this.context.openrpc
-                  );
-                  return [
-                    resolvedParam?.name ?? "",
-                    resolvedParam?.schema ?? {},
-                  ];
-                }) ?? []
-              ),
-            }),
+            value: {
+              id: 1,
+              jsonrpc: "2.0",
+              method: this.method.name,
+              params: requestBody,
+            },
           },
           responseStatusCode: 200,
           responseBody: {

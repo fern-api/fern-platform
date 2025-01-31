@@ -163,9 +163,9 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "list_pets",
-              "params": [
-                1
-              ]
+              "params": {
+                "limit": 1
+              }
             }
           },
           "responseStatusCode": 200,
@@ -292,10 +292,10 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "create_pet",
-              "params": [
-                "fluffy",
-                "poodle"
-              ]
+              "params": {
+                "newPetName": "fluffy",
+                "tag": "poodle"
+              }
             }
           },
           "responseStatusCode": 200,
@@ -395,9 +395,9 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "get_pet",
-              "params": [
-                7
-              ]
+              "params": {
+                "petId": 7
+              }
             }
           },
           "responseStatusCode": 200,
