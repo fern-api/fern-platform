@@ -116,12 +116,7 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       );
     }
 
-    if (this.input.components == null) {
-      this.context.errors.warning({
-        message: "Expected 'components' property to be specified",
-        path: this.accessPath,
-      });
-    } else {
+    if (this.input.components != null) {
       this.components = new ComponentsConverterNode({
         input: this.input.components,
         context: this.context,

@@ -1,21 +1,21 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNode,
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
+  BaseOpenApiV3_1ConverterNodeWithTracking,
+  BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 
-export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
+export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
   OpenAPIV3_1.ReferenceObject,
   FernRegistry.api.latest.TypeShape.Alias
 > {
   schemaId: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ReferenceObject>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.ReferenceObject>
   ) {
     super(args);
     this.safeParse();
@@ -58,8 +58,8 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNode<
       input: schema,
       context: this.context,
       accessPath: this.accessPath,
-      pathId: this.input.$ref.split("/").pop() ?? "",
-      seenSchemas: new Set(),
+      pathId: this.schemaId ?? "",
+      seenSchemas: this.seenSchemas,
     }).example();
   }
 }

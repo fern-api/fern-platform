@@ -1,27 +1,5 @@
 [
   {
-    "message": "Circular or deeply nested schema found, terminating",
-    "path": [
-      "paths",
-      "/v1/datasets",
-      "post",
-      "requestBody",
-      "content",
-      "schema.data",
-    ],
-  },
-  {
-    "message": "Circular or deeply nested schema found, terminating",
-    "path": [
-      "paths",
-      "/v1/datasets",
-      "post",
-      "requestBody",
-      "content",
-      "schema.eval_data",
-    ],
-  },
-  {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
       "paths",
@@ -31,6 +9,8 @@
       "content",
       "application/json",
       "type",
+      "properties",
+      "organization_usage",
     ],
   },
   {
@@ -44,8 +24,12 @@
       "application/json",
       "type",
       "ListConnectorsResponse",
+      "properties",
+      "connectors",
       "items",
       "Connector",
+      "properties",
+      "auth_type",
     ],
   },
   {
@@ -59,7 +43,11 @@
       "application/json",
       "type",
       "CreateConnectorResponse",
+      "properties",
+      "connector",
       "Connector",
+      "properties",
+      "auth_type",
     ],
   },
   {
@@ -73,7 +61,11 @@
       "application/json",
       "type",
       "GetConnectorResponse",
+      "properties",
+      "connector",
       "Connector",
+      "properties",
+      "auth_type",
     ],
   },
   {
@@ -87,7 +79,11 @@
       "application/json",
       "type",
       "UpdateConnectorResponse",
+      "properties",
+      "connector",
       "Connector",
+      "properties",
+      "auth_type",
     ],
   },
   {
@@ -95,6 +91,8 @@
     "path": [
       "components",
       "Image",
+      "properties",
+      "width",
     ],
   },
   {
@@ -102,6 +100,8 @@
     "path": [
       "components",
       "Image",
+      "properties",
+      "height",
     ],
   },
   {
@@ -109,6 +109,8 @@
     "path": [
       "components",
       "Image",
+      "properties",
+      "bit_depth",
     ],
   },
   {
@@ -116,6 +118,8 @@
     "path": [
       "components",
       "CreateEmbedJobRequest",
+      "properties",
+      "model",
     ],
   },
   {
@@ -123,6 +127,8 @@
     "path": [
       "components",
       "RerankerDataMetrics",
+      "properties",
+      "num_train_queries",
     ],
   },
   {
@@ -130,6 +136,8 @@
     "path": [
       "components",
       "RerankerDataMetrics",
+      "properties",
+      "num_train_relevant_passages",
     ],
   },
   {
@@ -137,6 +145,8 @@
     "path": [
       "components",
       "RerankerDataMetrics",
+      "properties",
+      "num_train_hard_negatives",
     ],
   },
   {
@@ -144,6 +154,8 @@
     "path": [
       "components",
       "RerankerDataMetrics",
+      "properties",
+      "num_eval_queries",
     ],
   },
   {
@@ -151,6 +163,8 @@
     "path": [
       "components",
       "RerankerDataMetrics",
+      "properties",
+      "num_eval_relevant_passages",
     ],
   },
   {
@@ -158,6 +172,8 @@
     "path": [
       "components",
       "RerankerDataMetrics",
+      "properties",
+      "num_eval_hard_negatives",
     ],
   },
   {
@@ -165,6 +181,8 @@
     "path": [
       "components",
       "ChatDataMetrics",
+      "properties",
+      "num_train_turns",
     ],
   },
   {
@@ -172,6 +190,8 @@
     "path": [
       "components",
       "ChatDataMetrics",
+      "properties",
+      "num_eval_turns",
     ],
   },
   {
@@ -179,6 +199,8 @@
     "path": [
       "components",
       "LabelMetric",
+      "properties",
+      "total_examples",
     ],
   },
   {
@@ -186,6 +208,8 @@
     "path": [
       "components",
       "FinetuneDatasetMetrics",
+      "properties",
+      "trainable_token_count",
     ],
   },
   {
@@ -193,6 +217,8 @@
     "path": [
       "components",
       "FinetuneDatasetMetrics",
+      "properties",
+      "total_examples",
     ],
   },
   {
@@ -200,6 +226,8 @@
     "path": [
       "components",
       "FinetuneDatasetMetrics",
+      "properties",
+      "train_examples",
     ],
   },
   {
@@ -207,6 +235,8 @@
     "path": [
       "components",
       "FinetuneDatasetMetrics",
+      "properties",
+      "train_size_bytes",
     ],
   },
   {
@@ -214,6 +244,8 @@
     "path": [
       "components",
       "FinetuneDatasetMetrics",
+      "properties",
+      "eval_examples",
     ],
   },
   {
@@ -221,6 +253,8 @@
     "path": [
       "components",
       "FinetuneDatasetMetrics",
+      "properties",
+      "eval_size_bytes",
     ],
   },
   {
@@ -228,6 +262,8 @@
     "path": [
       "components",
       "Connector",
+      "properties",
+      "auth_type",
     ],
   },
 ]

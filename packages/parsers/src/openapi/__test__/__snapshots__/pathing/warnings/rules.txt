@@ -10,6 +10,8 @@
       "application/json",
       "type",
       "Schema",
+      "properties",
+      "name",
     ],
   },
   {
@@ -24,6 +26,8 @@
     "path": [
       "components",
       "Schema",
+      "properties",
+      "name",
     ],
   },
 ]

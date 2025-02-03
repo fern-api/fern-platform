@@ -51,7 +51,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             input: property,
             context: this.context,
             accessPath: this.accessPath,
-            pathId: this.pathId,
+            pathId: ["properties", key],
             seenSchemas: this.seenSchemas,
           }),
         ];
@@ -68,7 +68,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
               input: this.input.additionalProperties,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: this.pathId,
+              pathId: ["additionalProperties"],
               seenSchemas: this.seenSchemas,
             })
         : undefined;
@@ -76,7 +76,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     if (this.input.allOf != null) {
       this.extends = this.extends.concat(
         this.input.allOf
-          .map((type) => {
+          .map((type, allOfIndex) => {
             if (isReferenceObject(type)) {
               return getSchemaIdFromReference(type);
             } else {
@@ -91,7 +91,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                           input: property,
                           context: this.context,
                           accessPath: this.accessPath,
-                          pathId: this.pathId,
+                          pathId: [
+                            "allOf",
+                            allOfIndex.toString(),
+                            "properties",
+                            key,
+                          ],
                           seenSchemas: this.seenSchemas,
                         }),
                       ];

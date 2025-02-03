@@ -10,6 +10,8 @@
       "application/json",
       "type",
       "Response",
+      "properties",
+      "id",
     ],
   },
   {
@@ -23,6 +25,8 @@
       "application/json",
       "type",
       "Response",
+      "properties",
+      "value",
     ],
   },
   {
@@ -30,6 +34,8 @@
     "path": [
       "components",
       "Request",
+      "properties",
+      "id",
     ],
   },
   {
@@ -37,6 +43,8 @@
     "path": [
       "components",
       "Request",
+      "properties",
+      "value",
     ],
   },
   {
@@ -44,6 +52,8 @@
     "path": [
       "components",
       "Response",
+      "properties",
+      "id",
     ],
   },
   {
@@ -51,6 +61,8 @@
     "path": [
       "components",
       "Response",
+      "properties",
+      "value",
     ],
   },
 ]

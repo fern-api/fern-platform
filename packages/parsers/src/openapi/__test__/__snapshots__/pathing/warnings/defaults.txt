@@ -31,10 +31,8 @@
       "content",
       "application/json",
       "type",
+      "properties",
+      "boolField2",
     ],
-  },
-  {
-    "message": "Expected 'components' property to be specified",
-    "path": [],
   },
 ]

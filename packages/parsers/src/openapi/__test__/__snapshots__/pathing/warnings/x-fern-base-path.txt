@@ -1,6 +1,0 @@
-[
-  {
-    "message": "Expected 'components' property to be specified",
-    "path": [],
-  },
-]

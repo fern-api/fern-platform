@@ -1,8 +1,0 @@
-[
-  {
-    "message": "Expected 'schemas' property to be specified",
-    "path": [
-      "components",
-    ],
-  },
-]
