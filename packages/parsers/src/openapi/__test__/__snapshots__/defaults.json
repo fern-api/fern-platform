@@ -1,1 +1,252 @@
-undefined
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.test": {
+      "id": "endpoint_.test",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "test"
+        }
+      ],
+      "environments": [],
+      "queryParameters": [
+        {
+          "key": "boolParam1",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "boolParam2",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean",
+                    "default": "true"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "boolParam3",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean",
+                    "default": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "boolParam4",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean",
+                    "default": "false"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "stringParam",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "default": "defaultString"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "numberParam",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "default": 42
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "integerParam",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer",
+                    "default": 100
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "boolField1",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "default": true
+                    }
+                  }
+                }
+              },
+              {
+                "key": "boolField2",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "default": "true"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "stringField",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "default": "defaultValue"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "numberField",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "default": 3.14
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/test",
+          "responseStatusCode": 200,
+          "queryParameters": {
+            "boolParam1": true,
+            "boolParam2": "true",
+            "boolParam3": false,
+            "boolParam4": "false",
+            "stringParam": "defaultString",
+            "numberParam": 42,
+            "integerParam": 100
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "boolField1": true,
+              "boolField2": "true",
+              "stringField": "defaultValue",
+              "numberField": 3.14
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {}
+}

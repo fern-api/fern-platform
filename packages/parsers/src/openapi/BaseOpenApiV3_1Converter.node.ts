@@ -36,16 +36,22 @@ export abstract class BaseOpenApiV3_1ConverterNode<
     this.accessPath = [...accessPath];
     this.pathId = pathId;
 
-    if (
-      this.pathId != null &&
-      this.pathId !== this.accessPath[this.accessPath.length - 1]
-    ) {
-      this.accessPath.push(
-        ...(Array.isArray(this.pathId) ? this.pathId : [this.pathId])
-      );
-
-      context.logger.debug(`Processing ${toOpenApiPath(this.accessPath)}`);
+    if (pathId != null) {
+      const pathIdArray = Array.isArray(this.pathId)
+        ? this.pathId
+        : [this.pathId];
+      if (
+        !pathIdArray.every(
+          (id, index) =>
+            id ===
+            this.accessPath[this.accessPath.length - pathIdArray.length + index]
+        )
+      ) {
+        this.accessPath.push(...pathIdArray);
+      }
     }
+
+    context.logger.debug(`Processing ${toOpenApiPath(this.accessPath)}`);
   }
 
   abstract parse(...additionalArgs: unknown[]): void;
@@ -72,14 +78,14 @@ export abstract class BaseOpenApiV3_1ConverterNodeWithExample<
 
 export type BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<Input> =
   BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> & {
-    seenSchemas: Set<OpenAPIV3_1.SchemaObject>;
+    seenSchemas: Set<OpenAPIV3_1.ReferenceObject["$ref"]>;
   };
 
 export abstract class BaseOpenApiV3_1ConverterNodeWithTracking<
   Input,
   Output,
 > extends BaseOpenApiV3_1ConverterNodeWithExample<Input, Output> {
-  protected readonly seenSchemas: Set<OpenAPIV3_1.SchemaObject>;
+  protected readonly seenSchemas: Set<OpenAPIV3_1.ReferenceObject["$ref"]>;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<Input>

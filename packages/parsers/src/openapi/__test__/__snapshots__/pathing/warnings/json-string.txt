@@ -4,6 +4,8 @@
     "path": [
       "components",
       "User",
+      "properties",
+      "metadata",
     ],
   },
 ]

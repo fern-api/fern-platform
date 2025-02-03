@@ -7,6 +7,7 @@ import {
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { wrapNullable } from "../../utils/wrapNullable";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
@@ -71,17 +72,6 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
   }
 
   parse(): void {
-    if (!isReferenceObject(this.input)) {
-      if (this.accessPath.length >= 100 || this.seenSchemas.has(this.input)) {
-        this.context.errors.warning({
-          message: "Circular or deeply nested schema found, terminating",
-          path: this.accessPath,
-        });
-        return;
-      }
-      this.seenSchemas.add(this.input);
-    }
-
     this.description = this.input.description;
     this.availability = new AvailabilityConverterNode({
       input: this.input,
@@ -96,11 +86,29 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
 
     // Check if the input is a reference object
     if (isReferenceObject(this.input)) {
+      const refPath = getSchemaIdFromReference(this.input);
+      if (refPath == null) {
+        this.context.errors.error({
+          message: "Reference object does not have a valid schema ID",
+          path: this.accessPath,
+        });
+        return;
+      }
+      if (this.seenSchemas.has(refPath)) {
+        this.context.errors.warning({
+          message: "Circular or deeply nested schema found, terminating",
+          path: this.accessPath,
+        });
+        return;
+      }
+      this.seenSchemas.add(refPath);
+
       this.typeShapeNode = new ReferenceConverterNode({
         input: this.input,
         context: this.context,
         accessPath: this.accessPath,
-        pathId: this.pathId,
+        pathId: refPath,
+        seenSchemas: this.seenSchemas,
       });
     } else {
       // If the object is not a reference object, then it is a schema object, gather all appropriate variables
