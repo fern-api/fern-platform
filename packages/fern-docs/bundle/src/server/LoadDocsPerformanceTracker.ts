@@ -1,9 +1,7 @@
 import { track } from "@/server/analytics/posthog";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { DocsPage } from "@fern-docs/ui";
 import { TRACK_LOAD_DOCS_PERFORMANCE } from "@fern-docs/utils";
 import { GetServerSidePropsResult } from "next/types";
-import { ComponentProps } from "react";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
 
 export class LoadDocsPerformanceTracker {
@@ -34,9 +32,9 @@ export class LoadDocsPerformanceTracker {
   }
 
   private initialPropsDurationMs: number | undefined;
-  async trackInitialPropsPromise(
-    promise: Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>>
-  ): Promise<GetServerSidePropsResult<ComponentProps<typeof DocsPage>>> {
+  async trackInitialPropsPromise<T>(
+    promise: Promise<GetServerSidePropsResult<T>>
+  ): Promise<GetServerSidePropsResult<T>> {
     const start = Date.now();
     const result = await promise;
     const end = Date.now();

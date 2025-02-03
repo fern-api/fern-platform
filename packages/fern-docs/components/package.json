@@ -112,7 +112,6 @@
     "chromatic": "^11.3.0",
     "depcheck": "^1.4.7",
     "eslint": "^9",
-    "eslint-plugin-storybook": "^0.8.0",
     "jsdom": "^24.0.0",
     "postcss-import": "^16.0.1",
     "prettier": "^3.4.2",

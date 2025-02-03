@@ -10,7 +10,7 @@ const isTrailingSlashEnabled =
   process.env.TRAILING_SLASH === "1" ||
   process.env.NEXT_PUBLIC_TRAILING_SLASH === "1";
 
-// TODO: move this to a shared location (this is copied in @fern-docs/ui FernImage.tsx)
+// TODO: move this to a shared location (this is copied in FernImage.tsx)
 const DOCS_FILES_ALLOWLIST = [
   {
     protocol: "https",
@@ -49,7 +49,6 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: isTrailingSlashEnabled,
   transpilePackages: [
-    "next-mdx-remote",
     "esbuild",
     "es-toolkit",
     "three",
@@ -72,7 +71,6 @@ const nextConfig = {
     "@fern-docs/search-ui",
     "@fern-docs/search-utils",
     "@fern-docs/syntax-highlighter",
-    "@fern-docs/ui",
     "@fern-docs/utils",
     "@fern-platform/fdr-utils",
     "@fern-ui/loadable",
@@ -84,7 +82,6 @@ const nextConfig = {
     // hardNavigate404: true,
     optimizePackageImports: [
       "@fern-api/fdr-sdk",
-      "@fern-docs/ui",
       "@fern-docs/mdx",
       "@fern-docs/components",
       "@fern-docs/search-server",

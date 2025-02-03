@@ -1,8 +1,8 @@
 import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import { loadWithUrl } from "@/server/loadWithUrl";
+import { provideRegistryService } from "@/server/registry";
 import { getInkeepSettings } from "@fern-docs/edge-config";
 import { SearchConfig, getSearchConfig } from "@fern-docs/search-utils";
-import { provideRegistryService } from "@fern-docs/ui";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "nodejs";

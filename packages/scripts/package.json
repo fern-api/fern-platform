@@ -32,7 +32,7 @@
     "chalk": "^5.3.0",
     "execa": "^9.5.1",
     "js-yaml": "^4.1.0",
-    "ts-essentials": "^10.0.1",
+    "ts-essentials": "^10",
     "yargs": "^17.4.1"
   },
   "devDependencies": {

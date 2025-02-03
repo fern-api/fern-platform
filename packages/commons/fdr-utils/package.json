@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "workspace:*",
-    "ts-essentials": "^10.0.1"
+    "ts-essentials": "^10"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

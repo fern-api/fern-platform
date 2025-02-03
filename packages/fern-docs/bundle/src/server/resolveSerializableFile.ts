@@ -1,4 +1,4 @@
-import { SerializableFile } from "@fern-docs/ui";
+import { SerializableFile } from "@/client";
 
 export async function resolveSerializableFile(
   file: Pick<SerializableFile, "dataUrl" | "type">

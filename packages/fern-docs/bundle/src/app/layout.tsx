@@ -1,6 +1,6 @@
 "use server";
 
-import "@fern-docs/ui/src/css/globals.scss";
+import "@/client/css/globals.scss";
 import { Metadata, Viewport } from "next";
 import StyledJsxRegistry from "./registry";
 

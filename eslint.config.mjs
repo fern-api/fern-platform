@@ -2,6 +2,7 @@
 
 import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
+import storybook from "eslint-plugin-storybook";
 import vitest from "eslint-plugin-vitest";
 import tseslint from "typescript-eslint";
 
@@ -37,6 +38,8 @@ export default tseslint.config(
       },
     },
   },
+
+  ...storybook.configs["flat/recommended"],
 
   ...compat.config({
     extends: [

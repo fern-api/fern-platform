@@ -1,15 +1,15 @@
 "use server";
 
 import { createCachedFindNode } from "@/app/find-node";
+import {
+  MdxBundlerComponent,
+  serializeMdx,
+} from "@/client/mdx/bundlers/mdx-bundler";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { withServerProps } from "@/server/withServerProps";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getPageId } from "@fern-api/fdr-sdk/navigation";
-import {
-  MdxBundlerComponent,
-  serializeMdx,
-} from "@fern-docs/ui/bundlers/mdx-bundler";
 import { notFound } from "next/navigation";
 
 export default async function Page({

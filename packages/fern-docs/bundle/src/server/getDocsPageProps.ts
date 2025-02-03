@@ -1,6 +1,6 @@
+import type { DocsPage } from "@/client";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import type { FernUser } from "@fern-docs/auth";
-import type { DocsPage } from "@fern-docs/ui";
 import type { GetServerSidePropsResult } from "next";
 import type { ComponentProps } from "react";
 import { LoadDocsPerformanceTracker } from "./LoadDocsPerformanceTracker";

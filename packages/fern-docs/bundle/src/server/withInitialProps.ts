@@ -1,3 +1,11 @@
+import {
+  type DocsPage,
+  type NavbarLink,
+  getGitHubInfo,
+  getGitHubRepo,
+  renderThemeStylesheet,
+} from "@/client";
+import { serializeMdx } from "@/client/mdx/bundlers/mdx-bundler";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -8,14 +16,6 @@ import {
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 import { withSeo } from "@fern-docs/seo";
-import {
-  type DocsPage,
-  type NavbarLink,
-  getGitHubInfo,
-  getGitHubRepo,
-  renderThemeStylesheet,
-} from "@fern-docs/ui";
-import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import {
   addLeadingSlash,
   getApiRouteSupplier,
@@ -298,7 +298,7 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
-  const resolveFileSrc = createFileResolver(docs);
+  const resolveFileSrc = createFileResolver(docs.definition.filesV2);
 
   const content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,

@@ -33,7 +33,7 @@
     "test": "vitest --run --passWithNoTests --globals"
   },
   "dependencies": {
-    "zod": "^3.23.8"
+    "zod": "^3"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

@@ -1,5 +1,6 @@
 "use server";
 
+import { renderThemeStylesheet } from "@/client";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { withServerProps } from "@/server/withServerProps";
 import { DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
@@ -9,7 +10,6 @@ import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import { getBreadcrumbList } from "@fern-docs/seo";
 import { Breadcrumb } from "@fern-docs/seo/src/jsonld";
-import { renderThemeStylesheet } from "@fern-docs/ui";
 import {
   addLeadingSlash,
   conformTrailingSlash,

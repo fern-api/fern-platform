@@ -41,7 +41,7 @@
     "instantsearch.js": "^4.75.4",
     "prettier": "^3.4.2",
     "stylelint": "^16.1.0",
-    "ts-essentials": "^10.0.1",
+    "ts-essentials": "^10",
     "typescript": "^5",
     "vitest": "^2.1.4"
   }

@@ -1,4 +1,4 @@
-import { track } from "@fern-docs/ui";
+import { track } from "@/client/analytics";
 import Error from "next/error";
 import { ReactElement, useEffect } from "react";
 

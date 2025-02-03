@@ -38,7 +38,7 @@
     "@fern-docs/utils": "workspace:*",
     "@vercel/kv": "^2.0.0",
     "httpsnippet-lite": "^3.0.5",
-    "ts-essentials": "^10.0.1"
+    "ts-essentials": "^10"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

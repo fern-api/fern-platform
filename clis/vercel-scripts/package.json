@@ -16,7 +16,7 @@
     "@fern-fern/fern-docs-sdk": "0.0.5",
     "@fern-fern/vercel": "0.0.4655",
     "execa": "^9.5.1",
-    "ts-essentials": "^10.0.1"
+    "ts-essentials": "^10"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

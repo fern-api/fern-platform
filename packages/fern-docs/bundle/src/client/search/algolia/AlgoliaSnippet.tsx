@@ -2,7 +2,6 @@ import { MarkdownText } from "@fern-api/fdr-sdk/docs";
 import { BaseHit, Hit } from "instantsearch.js";
 import { useEffect, useState } from "react";
 import { MdxContent } from "../../mdx/MdxContent";
-import { serializeMdx } from "../../mdx/bundlers/next-mdx-remote";
 import { replaceBackticksWithCodeTags } from "../../util/replaceBackticksWithCodeTag";
 import { replaceMarksInUrls } from "../../util/replaceMarksInUrls";
 
@@ -51,15 +50,15 @@ export const AlgoliaSnippet: React.FC<AlgoliaSnippetProps> = ({ hit }) => {
             snippet = removeOutsideGuards[1];
           }
 
-          const mdx = await serializeMdx(
-            new DOMParser()
-              .parseFromString(snippet ?? "", "text/html")
-              .body.innerHTML.replaceAll(
-                "<mark>",
-                '<mark class="fern-highlight">'
-              ) ?? ""
-          );
-          setMdx(mdx);
+          // const mdx = await serializeMdx(
+          //   new DOMParser()
+          //     .parseFromString(snippet ?? "", "text/html")
+          //     .body.innerHTML.replaceAll(
+          //       "<mark>",
+          //       '<mark class="fern-highlight">'
+          //     ) ?? ""
+          // );
+          // setMdx(mdx);
         }
       }
     })().catch(() => undefined);

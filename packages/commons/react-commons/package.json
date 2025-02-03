@@ -34,7 +34,7 @@
     "fastdom": "^1.0.12",
     "immer": "^9.0.15",
     "react": "^18",
-    "ts-essentials": "^10.0.1"
+    "ts-essentials": "^10"
   },
   "devDependencies": {
     "@fern-platform/configs": "workspace:*",

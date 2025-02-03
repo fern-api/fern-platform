@@ -1,8 +1,8 @@
+import { serializeMdx } from "@/client/mdx/bundlers/mdx-bundler";
 import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getEdgeFlags } from "@fern-docs/edge-config";
-import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

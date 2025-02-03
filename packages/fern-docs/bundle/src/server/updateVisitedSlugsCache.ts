@@ -1,7 +1,7 @@
 // add or remove the slug from the cache based on the props
 
+import { DocsProps } from "@/client";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { DocsProps } from "@fern-docs/ui";
 import { GetStaticPropsResult } from "next";
 import { DocsKVCache } from "./DocsCache";
 
