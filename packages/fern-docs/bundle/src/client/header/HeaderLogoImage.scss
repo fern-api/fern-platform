@@ -1,15 +1,13 @@
 @layer components {
-  .fern-logo,
-  .fern-logo-light,
-  .fern-logo-dark {
+  .fern-logo {
     @apply max-h-full object-contain;
   }
 
-  .fern-logo-light {
+  .fern-logo[data-theme="light"] {
     @apply block dark:hidden;
   }
 
-  .fern-logo-dark {
+  .fern-logo[data-theme="dark"] {
     @apply hidden dark:block;
   }
 }

@@ -18,6 +18,7 @@ import { withServerProps } from "./withServerProps";
 export interface DocsLoader {
   host: string;
   domain: string;
+  fern_token: string | undefined;
 
   /**
    * @returns the base url (including base path) of the docs
@@ -35,7 +36,10 @@ export interface DocsLoader {
   /**
    * @returns the api definition for the given id
    */
-  getApi: (id: string) => Promise<ApiDefinition.ApiDefinition | undefined>;
+  getApi: (
+    id: string,
+    endpointId: string | undefined
+  ) => Promise<ApiDefinition.ApiDefinition | undefined>;
 
   /**
    * @returns the root node of the docs (aware of authentication)
@@ -111,13 +115,14 @@ export const createCachedDocsLoader = async (): Promise<DocsLoader> => {
     undefined,
     authConfig
   );
-  return new CachedDocsLoaderImpl(authConfig, authState);
+  return new CachedDocsLoaderImpl(authConfig, authState, fern_token);
 };
 
 class CachedDocsLoaderImpl implements DocsLoader {
   constructor(
     private _authConfig: AuthEdgeConfig | undefined,
-    private _authState: AuthState & DomainAndHost
+    private _authState: AuthState & DomainAndHost,
+    private _fern_token: string | undefined
   ) {}
 
   public get domain() {
@@ -126,6 +131,10 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public get host() {
     return this._authState.host;
+  }
+
+  public get fern_token() {
+    return this._fern_token;
   }
 
   public getBaseUrl = unstable_cache(
