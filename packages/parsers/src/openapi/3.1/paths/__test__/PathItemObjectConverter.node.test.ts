@@ -129,7 +129,7 @@ describe("PathItemObjectConverterNode", () => {
       });
       expect(result?.[1]).toMatchObject({
         description: "Create a pet",
-        id: "endpoint_.petId", 
+        id: "endpoint_.petId",
         method: "POST",
         path: [
           {
