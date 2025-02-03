@@ -418,6 +418,7 @@ export class Transformer {
         ...value,
         shape: this.visitor.TypeShape(value.shape, `${parentKey}/stream/shape`),
       }),
+      empty: identity,
     });
     return { ...response, body };
   };

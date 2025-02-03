@@ -4,13 +4,17 @@ import * as ld from "@launchdarkly/node-server-sdk";
 import { isEqual } from "es-toolkit/predicate";
 import { camelCase } from "es-toolkit/string";
 import { AuthState } from "./auth/getAuthState";
+import { getOrgMetadataForDomain } from "./auth/metadata-for-url";
 
 async function withLaunchDarklyContext(
-  endpoint: string,
+  endpoint: string | undefined,
   authState: AuthState,
   node: FernNavigation.utils.Node,
   rawCookie: string | undefined
 ): Promise<ld.LDContext> {
+  if (endpoint == null) {
+    return { kind: "user", key: "anonymous", anonymous: true };
+  }
   try {
     const url = new URL(endpoint);
     url.searchParams.set("anonymous", String(!authState.authed));
@@ -45,7 +49,7 @@ async function withLaunchDarklyContext(
 
 interface LaunchDarklyInfo {
   clientSideId: string;
-  contextEndpoint: string;
+  contextEndpoint: string | undefined;
   context: ld.LDContext | undefined;
   defaultFlags: object | undefined;
   options:
@@ -69,7 +73,10 @@ export async function withLaunchDarkly(
     (node: FernNavigation.WithFeatureFlags) => boolean,
   ]
 > {
-  const launchDarklyConfig = await getLaunchDarklySettings(domain);
+  const launchDarklyConfig = await getLaunchDarklySettings(
+    domain,
+    getOrgMetadataForDomain(domain).then((metadata) => metadata?.orgId)
+  );
   if (launchDarklyConfig) {
     const context = await withLaunchDarklyContext(
       launchDarklyConfig["context-endpoint"],

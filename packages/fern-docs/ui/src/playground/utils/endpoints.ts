@@ -6,7 +6,7 @@ import { ExampleEndpointCall } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-docs/auth";
 import { compact } from "es-toolkit/array";
-import { mapValues, pick } from "es-toolkit/object";
+import { mapValues, omitBy, pick } from "es-toolkit/object";
 import type {
   PlaygroundEndpointRequestFormState,
   PlaygroundFormDataEntryValue,
@@ -74,19 +74,24 @@ export function getInitialEndpointRequestFormStateWithExample(
         ? exampleCall?.requestBody?.type === "form"
           ? {
               type: "form-data",
-              value: mapValues(
-                exampleCall.requestBody.value,
-                (exampleValue): PlaygroundFormDataEntryValue =>
-                  exampleValue.type === "filename" ||
-                  exampleValue.type === "filenameWithData"
-                    ? { type: "file", value: undefined }
-                    : exampleValue.type === "filenames" ||
-                        exampleValue.type === "filenamesWithData"
-                      ? { type: "fileArray", value: [] }
-                      : {
-                          type: "json",
-                          value: exampleValue.value,
-                        }
+              value: omitUndefinedValues(
+                mapValues(
+                  exampleCall.requestBody.value,
+                  (exampleValue): PlaygroundFormDataEntryValue | undefined =>
+                    exampleValue.type === "filename" ||
+                    exampleValue.type === "filenameWithData"
+                      ? { type: "file", value: undefined }
+                      : exampleValue.type === "filenames" ||
+                          exampleValue.type === "filenamesWithData"
+                        ? { type: "fileArray", value: [] }
+                        : exampleValue.type === "json" &&
+                            exampleValue.value !== undefined
+                          ? {
+                              type: "json",
+                              value: exampleValue.value,
+                            }
+                          : undefined
+                )
               ),
             }
           : exampleCall?.requestBody?.type === "bytes"
@@ -97,6 +102,15 @@ export function getInitialEndpointRequestFormStateWithExample(
             context?.types ?? EMPTY_OBJECT
           ),
   };
+}
+
+function omitUndefinedValues<T>(
+  record: Record<string, T>
+): Record<string, NonNullable<T>> {
+  return omitBy(record, (value) => value == null) as Record<
+    string,
+    NonNullable<T>
+  >;
 }
 
 function filterParams(

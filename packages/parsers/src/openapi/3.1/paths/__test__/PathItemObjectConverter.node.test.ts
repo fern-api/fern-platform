@@ -93,7 +93,15 @@ describe("PathItemObjectConverterNode", () => {
             },
           },
         ],
-        responses: [],
+        responses: [
+          {
+            body: {
+              type: "empty",
+            },
+            description: "A pet to be returned",
+            statusCode: 200,
+          },
+        ],
         errors: [],
         examples: [],
       });
@@ -120,7 +128,15 @@ describe("PathItemObjectConverterNode", () => {
           },
         ],
         environments: [],
-        responses: [],
+        responses: [
+          {
+            body: {
+              type: "empty",
+            },
+            description: "A pet to be returned",
+            statusCode: 200,
+          },
+        ],
         errors: [],
         examples: [],
       });

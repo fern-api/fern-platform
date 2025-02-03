@@ -1,0 +1,33 @@
+[
+  {
+    "message": "Invalid example, expected object for json",
+    "path": [
+      "paths",
+      "/user/{userId}",
+      "post",
+      "responses",
+      "content",
+      "application/json",
+      "examples",
+      "",
+    ],
+  },
+  {
+    "message": "Expected type declaration. Received: null",
+    "path": [
+      "x-fern-global-headers",
+    ],
+  },
+  {
+    "message": "Expected type declaration. Received: null",
+    "path": [
+      "x-fern-global-headers",
+    ],
+  },
+  {
+    "message": "Expected type declaration. Received: null",
+    "path": [
+      "x-fern-global-headers",
+    ],
+  },
+]

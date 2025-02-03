@@ -1,0 +1,120 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.example": {
+      "id": "endpoint_.example",
+      "displayName": "Default and validation rules",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "example"
+        }
+      ],
+      "environments": [],
+      "responses": [],
+      "errors": [],
+      "examples": []
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "String": {
+      "name": "String",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string",
+            "regex": "^[a-zA-Z0-9]*$",
+            "minLength": 3,
+            "maxLength": 10,
+            "default": "fern"
+          }
+        }
+      }
+    },
+    "Schema": {
+      "name": "Schema",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": 10,
+                  "maximum": 100,
+                  "default": 50
+                }
+              }
+            },
+            "description": "The unique ID of the type."
+          },
+          {
+            "key": "age",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer",
+                  "minimum": -2147483649,
+                  "maximum": 2147483648,
+                  "default": 50
+                }
+              }
+            },
+            "description": "The age of the type."
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "regex": "^[a-zA-Z0-9]*$",
+                  "minLength": 3,
+                  "maxLength": 10,
+                  "default": "type"
+                }
+              }
+            },
+            "description": "The unique name of the type."
+          },
+          {
+            "key": "value",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "minimum": 1.1,
+                  "maximum": 2.2,
+                  "default": 1.1
+                }
+              }
+            },
+            "description": "The value of the type."
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

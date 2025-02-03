@@ -11,6 +11,7 @@ import {
   type VisitorResult,
 } from "@fern-docs/mdx";
 import GithubSlugger from "github-slugger";
+import { getLanguageDisplayName } from "../../api-reference/examples/code-example";
 
 // TODO: combine this with rehype-slug so that we don't have to maintain two slugger instances
 const slugger = new GithubSlugger();
@@ -34,8 +35,6 @@ export function rehypeFernComponents(): (tree: Hast.Root) => void {
         } else if (node.name === "table") {
           // DO NOT coerce <table> into <Table> (see: https://buildwithfern.slack.com/archives/C06QKJWD4VD/p1722602687550179)
           // node.name = "Table";
-        } else if (node.name === "embed") {
-          node.name = "Embed";
         }
       }
     });
@@ -322,8 +321,21 @@ function getTitle(node: Hast.MdxJsxElement): string | undefined {
   const title = node.attributes
     .filter(isMdxJsxAttribute)
     .find((attr) => attr.name === "title")?.value;
+
+  if (typeof title === "string") {
+    return title;
+  }
+
+  const language = node.attributes
+    .filter(isMdxJsxAttribute)
+    .find((attr) => attr.name === "language")?.value;
+
+  if (typeof language === "string") {
+    return getLanguageDisplayName(language);
+  }
+
   // TODO: handle expression attributes
-  return typeof title === "string" ? title : undefined;
+  return undefined;
 }
 
 function applyGeneratedId(node: Hast.MdxJsxElement, title: string): void {

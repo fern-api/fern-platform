@@ -3,6 +3,7 @@ import { extractNextDataPathname } from "@/server/extractNextDataPathname";
 import { getLaunchDarklySettings } from "@fern-docs/edge-config";
 import { removeTrailingSlash } from "@fern-docs/utils";
 import { NextResponse, type NextMiddleware } from "next/server";
+import { getOrgMetadataForDomain } from "./server/auth/metadata-for-url";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withMiddlewareAuth } from "./server/withMiddlewareAuth";
 import { withMiddlewareRewrite } from "./server/withMiddlewareRewrite";
@@ -132,7 +133,10 @@ export const middleware: NextMiddleware = async (request) => {
 
   // TODO: this adds additional latency to the page load. can we batch this somehow?
   const launchDarkly = await getLaunchDarklySettings(
-    getDocsDomainEdge(request)
+    getDocsDomainEdge(request),
+    getOrgMetadataForDomain(getDocsDomainEdge(request)).then(
+      (metadata) => metadata?.orgId
+    )
   );
 
   return withMiddlewareAuth(
@@ -156,6 +160,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api/fern-docs|_next/static|_next/image|_vercel|favicon.ico).*)",
+    "/((?!api/fern-docs|.well-known|_next/static|_next/image|_vercel|favicon.ico).*)",
   ],
 };

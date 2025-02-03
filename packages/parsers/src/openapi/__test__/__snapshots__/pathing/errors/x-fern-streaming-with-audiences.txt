@@ -1,0 +1,15 @@
+[
+  {
+    "message": "Invalid example, expected object for json",
+    "path": [
+      "paths",
+      "/user/{userId}",
+      "get",
+      "responses",
+      "content",
+      "application/json",
+      "examples",
+      "",
+    ],
+  },
+]

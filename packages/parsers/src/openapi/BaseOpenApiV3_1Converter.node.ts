@@ -69,3 +69,22 @@ export abstract class BaseOpenApiV3_1ConverterNodeWithExample<
 > extends BaseOpenApiV3_1ConverterNode<Input, Output> {
   abstract example(): unknown | undefined;
 }
+
+export type BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<Input> =
+  BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> & {
+    seenSchemas: Set<OpenAPIV3_1.SchemaObject>;
+  };
+
+export abstract class BaseOpenApiV3_1ConverterNodeWithTracking<
+  Input,
+  Output,
+> extends BaseOpenApiV3_1ConverterNodeWithExample<Input, Output> {
+  protected readonly seenSchemas: Set<OpenAPIV3_1.SchemaObject>;
+
+  constructor(
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<Input>
+  ) {
+    super(args);
+    this.seenSchemas = new Set(args.seenSchemas);
+  }
+}

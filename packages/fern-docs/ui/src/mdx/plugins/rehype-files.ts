@@ -1,10 +1,16 @@
-import type { Hast } from "@fern-docs/mdx";
+import type {
+  Hast,
+  MdxJsxAttribute,
+  MdxJsxExpressionAttribute,
+} from "@fern-docs/mdx";
 import {
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdxJsxAttributeToString,
   visit,
 } from "@fern-docs/mdx";
+import { walk } from "estree-walker";
+
 import type { ImageData } from "../../atoms/types";
 
 export interface RehypeFilesOptions {
@@ -121,5 +127,43 @@ export function rehypeFiles(
         }
       }
     });
+
+    // additional support for jsx attributes that are nested inside of jsx attributes
+    visit(tree, (node) => {
+      if (isMdxJsxElementHast(node)) {
+        node.attributes.forEach((attr) => {
+          const estree = getEstree(attr);
+          if (estree == null) {
+            return;
+          }
+          walk(estree, {
+            enter(node) {
+              if (node.type === "Literal" && typeof node.value === "string") {
+                // TODO: if the replaced src is a Image (contains width and height), we need to add them to the parent JSX root somehow.
+                // for example: <Card icon={<img src="fileId" />} /> -> <Card icon={<img src="replacedImgUrl" width={w} height={h} />} />
+                // currently, we cannot leverage NextJS Image Optimization for this edge case.
+                node.value =
+                  options.replaceSrc?.(node.value)?.src ?? node.value;
+              }
+            },
+          });
+        });
+      }
+    });
   };
+}
+
+function getEstree(attr: MdxJsxAttribute | MdxJsxExpressionAttribute) {
+  if (
+    attr.type === "mdxJsxAttribute" &&
+    attr.value &&
+    typeof attr.value !== "string" &&
+    attr.value.type === "mdxJsxAttributeValueExpression" &&
+    attr.value.data?.estree
+  ) {
+    return attr.value.data?.estree;
+  } else if (attr.type === "mdxJsxExpressionAttribute" && attr.data?.estree) {
+    return attr.data?.estree;
+  }
+  return null;
 }

@@ -1,13 +1,15 @@
+import { ApiDefinition } from "@fern-api/fdr-sdk";
 import * as RadixTabs from "@radix-ui/react-tabs";
-import { useAtomValue } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { FC, ReactNode, useEffect, useState } from "react";
-import { ANCHOR_ATOM } from "../../../atoms";
+import { ANCHOR_ATOM, FERN_LANGUAGE_ATOM } from "../../../atoms";
 
 export interface TabProps {
-  title: string;
+  title?: string;
   id: string;
   toc?: boolean;
   children: ReactNode;
+  language?: string;
 }
 
 export interface TabGroupProps {
@@ -18,6 +20,7 @@ export interface TabGroupProps {
 export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
   const [activeTab, setActiveTab] = useState(() => tabs[0]?.id);
   const anchor = useAtomValue(ANCHOR_ATOM);
+  const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
   useEffect(() => {
     if (anchor != null) {
       if (tabs.some((tab) => tab.id === anchor)) {
@@ -26,8 +29,41 @@ export const TabGroup: FC<TabGroupProps> = ({ tabs }) => {
     }
   }, [anchor, tabs]);
 
+  useEffect(() => {
+    if (selectedLanguage) {
+      const matchingTab = tabs.find(
+        (tab) =>
+          tab.language &&
+          ApiDefinition.cleanLanguage(tab.language) === selectedLanguage
+      );
+      if (matchingTab) {
+        setActiveTab((prevActiveTab) => {
+          const prevTab = tabs.find((tab) => tab.id === prevActiveTab);
+          if (
+            prevTab?.language &&
+            ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
+          ) {
+            return prevActiveTab;
+          }
+          return matchingTab.id;
+        });
+      }
+    }
+  }, [selectedLanguage, tabs]);
+
+  const handleTabChange = (tabId: string) => {
+    setActiveTab(tabId);
+    const selectedTab = tabs.find((tab) => tab.id === tabId);
+    const cleanedLanguage = selectedTab?.language
+      ? ApiDefinition.cleanLanguage(selectedTab.language)
+      : undefined;
+    if (cleanedLanguage && cleanedLanguage !== selectedLanguage) {
+      setSelectedLanguage(cleanedLanguage);
+    }
+  };
+
   return (
-    <RadixTabs.Root value={activeTab} onValueChange={setActiveTab}>
+    <RadixTabs.Root value={activeTab} onValueChange={handleTabChange}>
       <RadixTabs.List className="border-default mb-6 mt-4 flex gap-4 border-b first:-mt-3">
         {tabs.map(({ title, id }) => (
           <RadixTabs.Trigger key={id} value={id} asChild>

@@ -20,12 +20,18 @@ describe("ResponseObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponseObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponseObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      200,
+      [],
+      {}
+    );
 
     expect(converter.description).toBe("Success response");
     expect(converter.responses).toBeDefined();
@@ -44,12 +50,18 @@ describe("ResponseObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponseObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponseObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      200,
+      [],
+      {}
+    );
 
     expect(converter.headers).toBeDefined();
     expect(converter.headers?.["X-Rate-Limit"]).toBeDefined();
@@ -74,12 +86,18 @@ describe("ResponseObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponseObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponseObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      200,
+      [],
+      {}
+    );
 
     expect(converter.responses).toBeDefined();
     expect(converter.responses?.length).toBe(1);
@@ -90,12 +108,18 @@ describe("ResponseObjectConverterNode", () => {
       $ref: "#/components/responses/NonExistent",
     };
 
-    new ResponseObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    new ResponseObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      200,
+      [],
+      {}
+    );
 
     expect(mockContext.errors.error).toHaveBeenCalledWith({
       message: "Undefined reference: #/components/responses/NonExistent",
@@ -124,12 +148,18 @@ describe("ResponseObjectConverterNode", () => {
       },
     };
 
-    const converter = new ResponseObjectConverterNode({
-      input,
-      context: mockContext,
-      accessPath: [],
-      pathId: "test",
-    });
+    const converter = new ResponseObjectConverterNode(
+      {
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+      },
+      "test",
+      200,
+      [],
+      {}
+    );
 
     const shapes = converter.convert();
     expect(shapes).toBeDefined();
