@@ -264,37 +264,20 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getAccountInfo",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getAccountInfo",
-                "params": {
-                  "Pubkey": "string",
-                  "Configuration": {
-                    "commitment": "processed",
-                    "encoding": "base58",
-                    "dataSlice": {
-                      "length": 0,
-                      "offset": 0
-                    },
-                    "minContextSlot": 0
-                  }
+                "Pubkey": "string",
+                "Configuration": {
+                  "commitment": "processed",
+                  "encoding": "base58",
+                  "dataSlice": {
+                    "length": 0,
+                    "offset": 0
+                  },
+                  "minContextSlot": 0
                 }
-=======
-              "Pubkey": "string",
-              "Configuration": {
-                "commitment": "processed",
-                "encoding": "base58",
-                "dataSlice": {
-                  "length": 0,
-                  "offset": 0
-                },
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -445,27 +428,15 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBalance",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBalance",
-                "params": {
-                  "Pubkey": "string",
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Pubkey": "string",
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Pubkey": "string",
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -1569,33 +1540,18 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlock",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlock",
-                "params": {
-                  "slot": 0,
-                  "Configuration": {
-                    "commitment": "processed",
-                    "encoding": "json",
-                    "transactionDetails": "full",
-                    "maxSupportedTransactionVersion": 0,
-                    "rewards": true
-                  }
+                "slot": 0,
+                "Configuration": {
+                  "commitment": "processed",
+                  "encoding": "json",
+                  "transactionDetails": "full",
+                  "maxSupportedTransactionVersion": 0,
+                  "rewards": true
                 }
-=======
-              "slot": 0,
-              "Configuration": {
-                "commitment": "processed",
-                "encoding": "json",
-                "transactionDetails": "full",
-                "maxSupportedTransactionVersion": 0,
-                "rewards": true
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -1824,21 +1780,12 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlockCommitment",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlockCommitment",
-                "params": {
-                  "block": 0
-                }
+                "block": 0
               }
-=======
-              "block": 0
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -1971,25 +1918,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlockHeight",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlockHeight",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -2219,31 +2155,17 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlockProduction",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlockProduction",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "identity": "string",
-                    "range": {
-                      "firstSlot": 0,
-                      "lastSlot": 0
-                    }
+                "Configuration": {
+                  "commitment": "processed",
+                  "identity": "string",
+                  "range": {
+                    "firstSlot": 0,
+                    "lastSlot": 0
                   }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "identity": "string",
-                "range": {
-                  "firstSlot": 0,
-                  "lastSlot": 0
->>>>>>> 925716ed7 (fix)
                 }
               }
             }
@@ -2405,27 +2327,15 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlocks",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlocks",
-                "params": {
-                  "start_slot": 0,
-                  "end_slot": 0,
-                  "Configuration": {
-                    "commitment": "processed"
-                  }
+                "start_slot": 0,
+                "end_slot": 0,
+                "Configuration": {
+                  "commitment": "processed"
                 }
-=======
-              "start_slot": 0,
-              "end_slot": 0,
-              "Configuration": {
-                "commitment": "processed"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -2576,27 +2486,15 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlocksWithLimit",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlocksWithLimit",
-                "params": {
-                  "start_slot": 0,
-                  "limit": 0,
-                  "Configuration": {
-                    "commitment": "processed"
-                  }
+                "start_slot": 0,
+                "limit": 0,
+                "Configuration": {
+                  "commitment": "processed"
                 }
-=======
-              "start_slot": 0,
-              "limit": 0,
-              "Configuration": {
-                "commitment": "processed"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -2703,23 +2601,13 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getBlockTime",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getBlockTime",
-                "params": {
-                  "block": {
-                    "block": 0
-                  }
+                "block": {
+                  "block": 0
                 }
-=======
-              "block": {
-                "block": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -2919,21 +2807,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getClusterNodes",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getClusterNodes",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3151,25 +3030,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getEpochInfo",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getEpochInfo",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -3308,21 +3176,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getEpochSchedule",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getEpochSchedule",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3484,31 +3343,17 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getFeeForMessage",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getFeeForMessage",
-                "params": {
-                  "Message": {
-                    "Message": "string"
-                  },
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Message": {
+                  "Message": "string"
+                },
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Message": {
-                "Message": "string"
-              },
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -3578,21 +3423,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getFirstAvailableBlock",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getFirstAvailableBlock",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3660,21 +3496,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getGenesisHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getGenesisHash",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3742,21 +3569,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getHealth",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getHealth",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3853,21 +3671,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getHighestSnapshotSlot",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getHighestSnapshotSlot",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3948,21 +3757,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getIdentity",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getIdentity",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4153,25 +3953,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getInflationGovernor",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getInflationGovernor",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -4296,21 +4085,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getInflationRate",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getInflationRate",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4548,33 +4328,18 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getInflationReward",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getInflationReward",
-                "params": {
-                  "Addresses": {
-                    "Addresses": [
-                      "string"
-                    ],
-                    "commitment": "processed",
-                    "epoch": 0,
-                    "minContextSlot": 0
-                  }
+                "Addresses": {
+                  "Addresses": [
+                    "string"
+                  ],
+                  "commitment": "processed",
+                  "epoch": 0,
+                  "minContextSlot": 0
                 }
-=======
-              "Addresses": {
-                "Addresses": [
-                  "string"
-                ],
-                "commitment": "processed",
-                "epoch": 0,
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -4742,25 +4507,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getLargestAccounts",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getLargestAccounts",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "filter": "circulating"
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "filter": "circulating"
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "filter": "circulating"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -4917,25 +4671,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getLatestBlockhash",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getLatestBlockhash",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -5008,21 +4751,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getMaxRetransmitSlot",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getMaxRetransmitSlot",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5090,21 +4824,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getMaxShredInsertSlot",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getMaxShredInsertSlot",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5241,29 +4966,16 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getMinimumBalanceForRentExemption",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getMinimumBalanceForRentExemption",
-                "params": {
-                  "Account data length": {
-                    "dataLength": 0
-                  },
-                  "Configuration": {
-                    "commitment": "processed"
-                  }
+                "Account data length": {
+                  "dataLength": 0
+                },
+                "Configuration": {
+                  "commitment": "processed"
                 }
-=======
-              "Account data length": {
-                "dataLength": 0
-              },
-              "Configuration": {
-                "commitment": "processed"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -5555,41 +5267,22 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getMultipleAccounts",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getMultipleAccounts",
-                "params": {
-                  "Pubkeys": [
-                    "string"
-                  ],
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0,
-                    "dataSlice": {
-                      "length": 0,
-                      "offset": 0
-                    },
-                    "encoding": "base58"
-                  }
+                "Pubkeys": [
+                  "string"
+                ],
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0,
+                  "dataSlice": {
+                    "length": 0,
+                    "offset": 0
+                  },
+                  "encoding": "base58"
                 }
-=======
-              "Pubkeys": [
-                "string"
-              ],
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0,
-                "dataSlice": {
-                  "length": 0,
-                  "offset": 0
-                },
-                "encoding": "base58"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -5921,41 +5614,22 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getProgramAccounts",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getProgramAccounts",
-                "params": {
-                  "Pubkey": "string",
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0,
-                    "withContext": false,
-                    "encoding": "base58",
-                    "dataSlice": {
-                      "length": 0,
-                      "offset": 0
-                    },
-                    "filters": []
-                  }
+                "Pubkey": "string",
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0,
+                  "withContext": false,
+                  "encoding": "base58",
+                  "dataSlice": {
+                    "length": 0,
+                    "offset": 0
+                  },
+                  "filters": []
                 }
-=======
-              "Pubkey": "string",
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0,
-                "withContext": false,
-                "encoding": "base58",
-                "dataSlice": {
-                  "length": 0,
-                  "offset": 0
-                },
-                "filters": []
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -6138,21 +5812,12 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getRecentPerformanceSamples",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getRecentPerformanceSamples",
-                "params": {
-                  "limit": 0
-                }
+                "limit": 0
               }
-=======
-              "limit": 0
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -6295,25 +5960,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getRecentPrioritizationFees",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getRecentPrioritizationFees",
-                "params": {
-                  "Account addresses": [
-                    "string"
-                  ]
-                }
+                "Account addresses": [
+                  "string"
+                ]
               }
-=======
-              "Account addresses": [
-                "string"
-              ]
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -6600,33 +6254,18 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getSignaturesForAddress",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSignaturesForAddress",
-                "params": {
-                  "Account address": "string",
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0,
-                    "limit": 1000,
-                    "before": "string",
-                    "until": "string"
-                  }
+                "Account address": "string",
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0,
+                  "limit": 1000,
+                  "before": "string",
+                  "until": "string"
                 }
-=======
-              "Account address": "string",
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0,
-                "limit": 1000,
-                "before": "string",
-                "until": "string"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -6843,29 +6482,16 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getSignatureStatuses",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSignatureStatuses",
-                "params": {
-                  "Signatures": [
-                    "string"
-                  ],
-                  "Configuration": {
-                    "searchTransactionHistory": false
-                  }
+                "Signatures": [
+                  "string"
+                ],
+                "Configuration": {
+                  "searchTransactionHistory": false
                 }
-=======
-              "Signatures": [
-                "string"
-              ],
-              "Configuration": {
-                "searchTransactionHistory": false
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -7002,25 +6628,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getSlot",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSlot",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -7149,25 +6764,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getSlotLeader",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSlotLeader",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -7281,23 +6885,13 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getSlotLeaders",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSlotLeaders",
-                "params": {
-                  "Start slot": 0,
-                  "Limit": 0
-                }
+                "Start slot": 0,
+                "Limit": 0
               }
-=======
-              "Start slot": 0,
-              "Limit": 0
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -7482,25 +7076,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getSupply",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getSupply",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "excludeNonCirculatingAccountsList": false
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "excludeNonCirculatingAccountsList": false
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "excludeNonCirculatingAccountsList": false
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -7691,25 +7274,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getTokenAccountBalance",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getTokenAccountBalance",
-                "params": {
-                  "Token account Pubkey": "string",
-                  "Configuration": {
-                    "commitment": "processed"
-                  }
+                "Token account Pubkey": "string",
+                "Configuration": {
+                  "commitment": "processed"
                 }
-=======
-              "Token account Pubkey": "string",
-              "Configuration": {
-                "commitment": "processed"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -8063,45 +7635,24 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getTokenAccountsByOwner",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getTokenAccountsByOwner",
-                "params": {
-                  "Token owner Pubkey": "string",
-                  "Token filter": {
-                    "mint": "string",
-                    "programId": "string"
-                  },
-                  "Configuration": {
-                    "commitment": "processed",
-                    "minContextSlot": 0,
-                    "dataSlice": {
-                      "length": 0,
-                      "offset": 0
-                    },
-                    "encoding": "base58"
-                  }
-                }
-=======
-              "Token owner Pubkey": "string",
-              "Token filter": {
-                "mint": "string",
-                "programId": "string"
-              },
-              "Configuration": {
-                "commitment": "processed",
-                "minContextSlot": 0,
-                "dataSlice": {
-                  "length": 0,
-                  "offset": 0
+                "Token owner Pubkey": "string",
+                "Token filter": {
+                  "mint": "string",
+                  "programId": "string"
                 },
-                "encoding": "base58"
->>>>>>> 925716ed7 (fix)
+                "Configuration": {
+                  "commitment": "processed",
+                  "minContextSlot": 0,
+                  "dataSlice": {
+                    "length": 0,
+                    "offset": 0
+                  },
+                  "encoding": "base58"
+                }
               }
             }
           },
@@ -8299,25 +7850,14 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getTokenSupply",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getTokenSupply",
-                "params": {
-                  "Token Mint Pubkey": "string",
-                  "Configuration": {
-                    "commitment": "processed"
-                  }
+                "Token Mint Pubkey": "string",
+                "Configuration": {
+                  "commitment": "processed"
                 }
-=======
-              "Token Mint Pubkey": "string",
-              "Configuration": {
-                "commitment": "processed"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -8557,29 +8097,16 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getTransaction",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getTransaction",
-                "params": {
-                  "Transaction signature": "string",
-                  "Configuration": {
-                    "commitment": "processed",
-                    "maxSupportedTransactionVersion": 0,
-                    "encoding": "json"
-                  }
+                "Transaction signature": "string",
+                "Configuration": {
+                  "commitment": "processed",
+                  "maxSupportedTransactionVersion": 0,
+                  "encoding": "json"
                 }
-=======
-              "Transaction signature": "string",
-              "Configuration": {
-                "commitment": "processed",
-                "maxSupportedTransactionVersion": 0,
-                "encoding": "json"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -8678,21 +8205,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getVersion",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getVersion",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -9109,29 +8627,16 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getVoteAccounts",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "getVoteAccounts",
-                "params": {
-                  "Configuration": {
-                    "commitment": "processed",
-                    "votePubkey": "string",
-                    "keepUnstakedDelinquents": false,
-                    "delinquentSlotDistance": 0
-                  }
+                "Configuration": {
+                  "commitment": "processed",
+                  "votePubkey": "string",
+                  "keepUnstakedDelinquents": false,
+                  "delinquentSlotDistance": 0
                 }
-=======
-              "Configuration": {
-                "commitment": "processed",
-                "votePubkey": "string",
-                "keepUnstakedDelinquents": false,
-                "delinquentSlotDistance": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -9319,29 +8824,16 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "isBlockhashValid",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "isBlockhashValid",
-                "params": {
-                  "blockhash": "string",
-                  "Configuration": {
-                    "blockhash": "string",
-                    "commitment": "processed",
-                    "minContextSlot": 0
-                  }
-                }
-=======
-              "blockhash": "string",
-              "Configuration": {
                 "blockhash": "string",
-                "commitment": "processed",
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
+                "Configuration": {
+                  "blockhash": "string",
+                  "commitment": "processed",
+                  "minContextSlot": 0
+                }
               }
             }
           },
@@ -9411,21 +8903,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "minimumLedgerSlot",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "minimumLedgerSlot",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -9565,27 +9048,15 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "requestAirdrop",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "requestAirdrop",
-                "params": {
-                  "Pubkey": "string",
-                  "Lamports": 0,
-                  "Configuration": {
-                    "commitment": "processed"
-                  }
+                "Pubkey": "string",
+                "Lamports": 0,
+                "Configuration": {
+                  "commitment": "processed"
                 }
-=======
-              "Pubkey": "string",
-              "Lamports": 0,
-              "Configuration": {
-                "commitment": "processed"
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -9771,33 +9242,18 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "sendTransaction",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "sendTransaction",
-                "params": {
-                  "Transaction": "string",
-                  "Configuration": {
-                    "encoding": "base58",
-                    "skipPreflight": false,
-                    "preflightCommitment": "processed",
-                    "maxRetries": 0,
-                    "minContextSlot": 0
-                  }
+                "Transaction": "string",
+                "Configuration": {
+                  "encoding": "base58",
+                  "skipPreflight": false,
+                  "preflightCommitment": "processed",
+                  "maxRetries": 0,
+                  "minContextSlot": 0
                 }
-=======
-              "Transaction": "string",
-              "Configuration": {
-                "encoding": "base58",
-                "skipPreflight": false,
-                "preflightCommitment": "processed",
-                "maxRetries": 0,
-                "minContextSlot": 0
->>>>>>> 925716ed7 (fix)
               }
             }
           },
@@ -10258,45 +9714,24 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "simulateTransaction",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "simulateTransaction",
-                "params": {
-                  "Transaction": "string",
-                  "Configuration": {
-                    "commitment": "processed",
-                    "sigVerify": false,
-                    "replaceRecentBlockhash": false,
-                    "minContextSlot": 0,
-                    "encoding": "base58",
-                    "innerInstructions": false,
-                    "accounts": {
-                      "addresses": [
-                        "string"
-                      ],
-                      "encoding": "base58"
-                    }
+                "Transaction": "string",
+                "Configuration": {
+                  "commitment": "processed",
+                  "sigVerify": false,
+                  "replaceRecentBlockhash": false,
+                  "minContextSlot": 0,
+                  "encoding": "base58",
+                  "innerInstructions": false,
+                  "accounts": {
+                    "addresses": [
+                      "string"
+                    ],
+                    "encoding": "base58"
                   }
-=======
-              "Transaction": "string",
-              "Configuration": {
-                "commitment": "processed",
-                "sigVerify": false,
-                "replaceRecentBlockhash": false,
-                "minContextSlot": 0,
-                "encoding": "base58",
-                "innerInstructions": false,
-                "accounts": {
-                  "addresses": [
-                    "string"
-                  ],
-                  "encoding": "base58"
->>>>>>> 925716ed7 (fix)
                 }
               }
             }

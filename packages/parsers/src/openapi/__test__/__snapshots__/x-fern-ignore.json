@@ -133,7 +133,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

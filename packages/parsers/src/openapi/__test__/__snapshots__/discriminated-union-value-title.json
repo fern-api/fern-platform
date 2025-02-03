@@ -53,7 +53,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

@@ -1336,21 +1336,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "web3_clientVersion",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "web3_clientVersion",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1448,20 +1439,9 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "web3_sha3",
-              "params": {
-                "sha3ParamExample": "0x68656c6c6f20776f726c64"
-              }
+              "sha3ParamExample": "0x68656c6c6f20776f726c64"
             }
-=======
-            "value": [
-              "0x68656c6c6f20776f726c64"
-            ]
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1601,21 +1581,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "net_peerCount",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "net_peerCount",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1685,21 +1656,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "net_version",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "net_version",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1765,21 +1727,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_blockNumber",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_blockNumber",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1875,21 +1828,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_call",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_call",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1958,21 +1902,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_chainId",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_chainId",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2038,21 +1973,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_coinbase",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_coinbase",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2138,21 +2064,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_estimateGas",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_estimateGas",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2217,21 +2134,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_gasPrice",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_gasPrice",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2335,21 +2243,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBalance",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBalance",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2449,21 +2348,12 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBlockByHash",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockByHash",
-                "params": {
-                  "includeTransactions": false
-                }
+                "includeTransactions": false
               }
-=======
-              "includeTransactions": false
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -2564,21 +2454,12 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBlockByNumber",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockByNumber",
-                "params": {
-                  "includeTransactions": false
-                }
+                "includeTransactions": false
               }
-=======
-              "includeTransactions": false
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -2665,21 +2546,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBlockTransactionCountByHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockTransactionCountByHash",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2765,21 +2637,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBlockTransactionCountByNumber",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockTransactionCountByNumber",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2883,21 +2746,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getCode",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getCode",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2989,21 +2843,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getFilterChanges",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getFilterChanges",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3098,21 +2943,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getFilterLogs",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getFilterLogs",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3201,21 +3037,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getRawTransactionByHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getRawTransactionByHash",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3312,21 +3139,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getRawTransactionByBlockHashAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getRawTransactionByBlockHashAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3423,21 +3241,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getRawTransactionByBlockNumberAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getRawTransactionByBlockNumberAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3569,21 +3378,12 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getLogs",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getLogs",
-                "params": {
-                  "filter": {}
-                }
+                "filter": {}
               }
-=======
-              "filter": {}
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -3693,21 +3493,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getStorageAt",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getStorageAt",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3810,22 +3601,10 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionByBlockHashAndIndex",
-              "params": {
-                "blockHashExample": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-                "indexExample": "0x0"
-              }
+              "blockHashExample": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+              "indexExample": "0x0"
             }
-=======
-            "value": [
-              "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-              "0x0"
-            ]
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3932,21 +3711,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionByBlockNumberAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionByBlockNumberAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4038,21 +3808,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionByHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionByHash",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4154,21 +3915,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionCount",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionCount",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4260,21 +4012,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionReceipt",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionReceipt",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4371,21 +4114,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getUncleByBlockHashAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getUncleByBlockHashAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4483,22 +4217,10 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getUncleByBlockNumberAndIndex",
-              "params": {
-                "uncleBlockNumberExample": "0x0",
-                "uncleBlockNumberIndexExample": "0x0"
-              }
+              "uncleBlockNumberExample": "0x0",
+              "uncleBlockNumberIndexExample": "0x0"
             }
-=======
-            "value": [
-              "0x0",
-              "0x0"
-            ]
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4588,21 +4310,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getUncleCountByBlockHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getUncleCountByBlockHash",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4688,21 +4401,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getUncleCountByBlockNumber",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getUncleCountByBlockNumber",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4888,21 +4592,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getProof",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getProof",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4999,21 +4694,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getWork",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getWork",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5083,21 +4769,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_hashrate",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_hashrate",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5164,21 +4841,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_mining",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_mining",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5244,21 +4912,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_newBlockFilter",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_newBlockFilter",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5384,21 +5043,12 @@
           "requestBody": {
             "type": "json",
             "value": {
-<<<<<<< HEAD
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_newFilter",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_newFilter",
-                "params": {
-                  "filter": {}
-                }
+                "filter": {}
               }
-=======
-              "filter": {}
->>>>>>> 925716ed7 (fix)
             }
           },
           "responseStatusCode": 200,
@@ -5464,21 +5114,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_newPendingTransactionFilter",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_newPendingTransactionFilter",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5543,21 +5184,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_pendingTransactions",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_pendingTransactions",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5622,21 +5254,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_protocolVersion",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_protocolVersion",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5723,21 +5346,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_sendRawTransaction",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_sendRawTransaction",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5836,21 +5450,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_submitHashrate",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_submitHashrate",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5960,24 +5565,11 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_submitWork",
-              "params": {
-                "nonceExample": "0x0000000000000001",
-                "powHashExample": "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
-                "mixHashExample": "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
-              }
+              "nonceExample": "0x0000000000000001",
+              "powHashExample": "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+              "mixHashExample": "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
             }
-=======
-            "value": [
-              "0x0000000000000001",
-              "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
-              "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
-            ]
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -6101,21 +5693,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_syncing",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_syncing",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -6204,21 +5787,12 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-<<<<<<< HEAD
             "value": {
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_uninstallFilter",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_uninstallFilter",
-                "params": {}
-              }
+              "params": {}
             }
-=======
-            "value": {}
->>>>>>> 925716ed7 (fix)
           },
           "responseStatusCode": 200,
           "responseBody": {

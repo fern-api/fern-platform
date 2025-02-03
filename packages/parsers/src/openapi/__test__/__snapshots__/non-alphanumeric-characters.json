@@ -52,7 +52,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
