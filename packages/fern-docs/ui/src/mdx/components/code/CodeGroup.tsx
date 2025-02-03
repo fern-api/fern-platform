@@ -32,8 +32,8 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   useEffect(() => {
     if (selectedLanguage) {
       const matchingTab = items.find((item) => {
-        const cleanedItemLanguage = ApiDefinition.cleanLanguage(item.language);
-        return item.language && cleanedItemLanguage === selectedLanguage;
+        const normalizedLanguage = ApiDefinition.cleanLanguage(item.language);
+        return item.language && normalizedLanguage === selectedLanguage;
       });
 
       if (matchingTab) {
@@ -50,19 +50,19 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
         });
       }
     }
-  }, [selectedLanguage, items]);
+  }, [selectedLanguage]);
 
   const handleTabChange = (value: string) => {
     const newIndex = parseInt(value, 10);
     setSelectedTabIndex(newIndex);
 
     const tab = items[newIndex];
-    const cleanedLanguage = tab?.language
+    const normalizedLanguage = tab?.language
       ? ApiDefinition.cleanLanguage(tab.language)
       : undefined;
 
-    if (cleanedLanguage && cleanedLanguage !== selectedLanguage) {
-      setSelectedLanguage(cleanedLanguage);
+    if (normalizedLanguage && normalizedLanguage !== selectedLanguage) {
+      setSelectedLanguage(normalizedLanguage);
     }
   };
 
@@ -71,12 +71,13 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     items: CodeGroup.Item[],
     currentIndex: number
   ): string => {
-    const cleanedLanguage = ApiDefinition.cleanLanguage(language ?? "");
-    const displayName = getLanguageDisplayName(cleanedLanguage);
+    const normalizedLanguage = ApiDefinition.cleanLanguage(language ?? "");
+    const displayName = getLanguageDisplayName(normalizedLanguage);
     const sameLanguageCount = items
       .slice(0, currentIndex)
       .filter(
-        (i) => ApiDefinition.cleanLanguage(i.language ?? "") === cleanedLanguage
+        (i) =>
+          ApiDefinition.cleanLanguage(i.language ?? "") === normalizedLanguage
       ).length;
     return sameLanguageCount > 0
       ? `${displayName} ${sameLanguageCount}`
