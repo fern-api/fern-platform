@@ -38,7 +38,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.GetOrganizationUser": {
       "id": "endpoint_.GetOrganizationUser",
@@ -171,7 +174,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_organizations.Search": {
       "id": "endpoint_organizations.Search",
@@ -296,7 +302,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

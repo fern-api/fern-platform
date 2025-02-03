@@ -100,7 +100,10 @@
             "value": "string"
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
