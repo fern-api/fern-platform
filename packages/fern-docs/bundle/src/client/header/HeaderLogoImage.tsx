@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
+import { FernImage } from "../../components/image";
 import { DOCS_ATOM, LOGO_ATOM } from "../atoms";
-import { FernImage } from "../components/FernImage";
 
 export function HeaderLogoImage(): ReactElement | null {
   const title = useAtomValue(DOCS_ATOM).title ?? "Logo";

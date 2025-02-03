@@ -6,6 +6,7 @@ import { chunk } from "es-toolkit/array";
 import { atom, useAtomValue } from "jotai";
 import { Fragment, ReactElement, useEffect, useMemo } from "react";
 import { useMemoOne } from "use-memo-one";
+import { FernLink } from "../../components/link";
 import {
   IS_READY_ATOM,
   LOCATION_ATOM,
@@ -13,7 +14,6 @@ import {
   SIDEBAR_ROOT_NODE_ATOM,
 } from "../atoms";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
-import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { useToHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";

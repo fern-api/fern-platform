@@ -7,8 +7,7 @@ import "server-only";
 import { UnreachableCaseError } from "ts-essentials";
 
 export function createFindNode(docsLoader: DocsLoader): (
-  slug: FernNavigation.Slug,
-  fern_token: string | undefined
+  slug: FernNavigation.Slug
 ) => Promise<{
   node: FernNavigation.NavigationNodePage;
   parents: readonly FernNavigation.WithNodeMetadata[];
@@ -18,7 +17,7 @@ export function createFindNode(docsLoader: DocsLoader): (
   currentTab: Omit<FernNavigation.TabChild, "child" | "children"> | undefined;
   authState: AuthState;
 }> {
-  return async (slug: FernNavigation.Slug, fern_token: string | undefined) => {
+  return async (slug: FernNavigation.Slug) => {
     const baseUrl = await docsLoader.getBaseUrl();
     const config = await docsLoader.getConfig();
 
@@ -37,7 +36,7 @@ export function createFindNode(docsLoader: DocsLoader): (
       }
     }
 
-    const root = await docsLoader.getRoot(fern_token);
+    const root = await docsLoader.getRoot(docsLoader.fern_token);
 
     // this should not happen, but if it does, we should return a 404
     if (!root) {
@@ -60,7 +59,7 @@ export function createFindNode(docsLoader: DocsLoader): (
     const authState = await getAuthState(
       baseUrl.domain,
       docsLoader.host,
-      fern_token,
+      docsLoader.fern_token,
       addLeadingSlash(slug)
     );
 

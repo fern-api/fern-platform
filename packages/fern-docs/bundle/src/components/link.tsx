@@ -1,7 +1,10 @@
+"use client";
+
 import { atom, useAtomValue } from "jotai";
 import { ExternalLink } from "lucide-react";
 import Link, { LinkProps } from "next/link";
 import {
+  ComponentPropsWithoutRef,
   ReactElement,
   forwardRef,
   useEffect,
@@ -10,8 +13,8 @@ import {
 } from "react";
 import { format, parse, resolve, type UrlObject } from "url";
 import { useMemoOne } from "use-memo-one";
-import { SLUG_ATOM, useDomain } from "../atoms";
-import { selectHref } from "../hooks/useHref";
+import { SLUG_ATOM, useDomain } from "../client/atoms";
+import { selectHref } from "../client/hooks/useHref";
 
 interface FernLinkProps extends ComponentProps<typeof Link> {
   showExternalLinkIcon?: boolean;
@@ -30,22 +33,10 @@ export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
     }
 
     if (isExternalUrl) {
-      // strip out the next.js specific props
-      const {
-        href,
-        replace,
-        scroll,
-        shallow,
-        passHref,
-        prefetch,
-        locale,
-        legacyBehavior,
-        ...rest
-      } = props;
       return (
         <FernExternalLink
           ref={ref}
-          {...rest}
+          {...stripNextLinkProps(props)}
           showExternalLinkIcon={showExternalLinkIcon}
           url={url}
         />
@@ -186,4 +177,47 @@ export function checkIsRelativeUrl(url: UrlObject): boolean {
     url.href.startsWith("?") ||
     !url.href.startsWith("/")
   );
+}
+
+type MaybeFernLinkProps = Omit<
+  ComponentPropsWithoutRef<typeof FernLink>,
+  "href"
+> & {
+  href?: ComponentPropsWithoutRef<typeof FernLink>["href"];
+};
+
+export const MaybeFernLink = forwardRef<HTMLAnchorElement, MaybeFernLinkProps>(
+  ({ href, ...props }, ref) => {
+    if (href == null) {
+      return <span ref={ref} {...stripNextLinkProps(props)} />;
+    }
+    return <FernLink ref={ref} {...props} href={href} />;
+  }
+);
+
+function stripNextLinkProps<T extends MaybeFernLinkProps>(
+  props: T
+): Omit<
+  T,
+  | "href"
+  | "locale"
+  | "legacyBehavior"
+  | "prefetch"
+  | "replace"
+  | "scroll"
+  | "shallow"
+  | "passHref"
+> {
+  const {
+    href,
+    locale,
+    legacyBehavior,
+    prefetch,
+    replace,
+    scroll,
+    shallow,
+    passHref,
+    ...rest
+  } = props;
+  return rest;
 }

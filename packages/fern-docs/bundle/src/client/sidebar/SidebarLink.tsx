@@ -19,13 +19,13 @@ import {
   useRef,
 } from "react";
 import { useCallbackOne } from "use-memo-one";
+import { FernLink } from "../../components/link";
 import {
   IS_READY_ATOM,
   SIDEBAR_SCROLL_CONTAINER_ATOM,
   useAtomEffect,
   useCloseMobileSidebar,
 } from "../atoms";
-import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
 import { scrollToCenter } from "../util/scrollToCenter";

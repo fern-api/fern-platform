@@ -7,8 +7,8 @@ import {
   isValidElement,
   ReactElement,
 } from "react";
+import { FernLink } from "../../../../components/link";
 import { FernAnchor } from "../../../components/FernAnchor";
-import { FernLink } from "../../../components/FernLink";
 import { isImageElement, NoZoom } from "./image";
 
 export const HeadingRenderer = (

@@ -3,7 +3,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, Link2 } from "lucide-react";
 import { PropsWithChildren, ReactElement, useEffect, useState } from "react";
-import { FernLink } from "./FernLink";
+import { FernLink } from "../../components/link";
 
 interface FernAnchorProps {
   href: string;

@@ -4,8 +4,8 @@ import clsx from "clsx";
 import { useAtomValue } from "jotai";
 import { Lock } from "lucide-react";
 import { ReactElement } from "react";
+import { FernLink } from "../../components/link";
 import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms";
-import { FernLink } from "../components/FernLink";
 import { useSidebarTabHref } from "../hooks/useSidebarTabHref";
 
 export function HeaderTabs(): ReactElement {

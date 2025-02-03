@@ -8,8 +8,8 @@ import {
   useContext,
 } from "react";
 import Zoom from "react-medium-image-zoom";
+import { FernImage } from "../../../../components/image";
 import { useEdgeFlags } from "../../../atoms";
-import { FernImage } from "../../../components/FernImage";
 import { useFrontmatter } from "../../../contexts/frontmatter";
 import { toPixelValue } from "../../../util/to-pixel-value";
 

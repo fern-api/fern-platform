@@ -10,7 +10,7 @@ import {
   createElement,
   forwardRef,
 } from "react";
-import { FernLink } from "./FernLink";
+import { FernLink } from "../../components/link";
 
 interface FernLinkButtonProps
   extends ComponentProps<typeof Link>,

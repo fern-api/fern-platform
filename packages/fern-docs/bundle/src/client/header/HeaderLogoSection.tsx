@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { PropsWithChildren, ReactElement } from "react";
+import { FernLink } from "../../components/link";
 import { LOGO_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM } from "../atoms";
-import { FernLink } from "../components/FernLink";
 import { HeaderLogoImage } from "./HeaderLogoImage";
 import { VersionDropdown } from "./VersionDropdown";
 

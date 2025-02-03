@@ -3,8 +3,8 @@ import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import { useAtomValue } from "jotai";
 import { ArrowUpRight } from "lucide-react";
 import { ReactElement } from "react";
+import { FernLink } from "../../../components/link";
 import { CURRENT_NODE_ATOM, useClosePlayground } from "../../atoms";
-import { FernLink } from "../../components/FernLink";
 
 const USE_EXAMPLE_TEXT = "Use example";
 const CLEAR_FORM_TEXT = "Clear form";

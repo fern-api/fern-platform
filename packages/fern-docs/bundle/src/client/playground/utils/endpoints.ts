@@ -1,3 +1,4 @@
+import { omitNullable } from "@/utils/omit-nullable";
 import type {
   EndpointContext,
   ObjectProperty,
@@ -6,7 +7,7 @@ import { ExampleEndpointCall } from "@fern-api/fdr-sdk/api-definition";
 import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
 import { FernUser } from "@fern-docs/auth";
 import { compact } from "es-toolkit/array";
-import { mapValues, omitBy, pick } from "es-toolkit/object";
+import { mapValues, pick } from "es-toolkit/object";
 import type {
   PlaygroundEndpointRequestFormState,
   PlaygroundFormDataEntryValue,
@@ -74,7 +75,7 @@ export function getInitialEndpointRequestFormStateWithExample(
         ? exampleCall?.requestBody?.type === "form"
           ? {
               type: "form-data",
-              value: omitUndefinedValues(
+              value: omitNullable(
                 mapValues(
                   exampleCall.requestBody.value,
                   (exampleValue): PlaygroundFormDataEntryValue | undefined =>
@@ -102,15 +103,6 @@ export function getInitialEndpointRequestFormStateWithExample(
             context?.types ?? EMPTY_OBJECT
           ),
   };
-}
-
-function omitUndefinedValues<T>(
-  record: Record<string, T>
-): Record<string, NonNullable<T>> {
-  return omitBy(record, (value) => value == null) as Record<
-    string,
-    NonNullable<T>
-  >;
 }
 
 function filterParams(

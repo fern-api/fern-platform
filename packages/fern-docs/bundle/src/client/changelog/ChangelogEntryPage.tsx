@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { ReactElement } from "react";
+import { FernLink } from "../../components/link";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
-import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
 import { DocsContent } from "../resolver/DocsContent";

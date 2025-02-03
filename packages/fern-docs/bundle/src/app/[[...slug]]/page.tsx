@@ -5,7 +5,6 @@ import GlobalStyle from "@/components/global-style";
 import Preload, { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { createFindNode } from "@/server/find-node";
-import { withServerProps } from "@/server/withServerProps";
 import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FileIdOrUrl } from "@fern-api/fdr-sdk/docs";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
@@ -27,10 +26,9 @@ export default async function Page({
   params: { slug?: string[] };
 }) {
   const slug = FernNavigation.slugjoin(params.slug);
-  const { domain, host, fern_token } = await withServerProps();
-  const docsLoader = createCachedDocsLoader(domain, host);
+  const docsLoader = await createCachedDocsLoader();
   const findNode = createFindNode(docsLoader);
-  const { node, parents, tabs } = await findNode(slug, fern_token);
+  const { node, parents, tabs } = await findNode(slug);
   const config = await docsLoader.getConfig();
   const colors = {
     light:
@@ -56,7 +54,7 @@ export default async function Page({
     tabs.length > 0
   );
 
-  const edgeFlags = await getEdgeFlags(domain);
+  const edgeFlags = await getEdgeFlags(docsLoader.domain);
 
   return (
     <>
@@ -70,7 +68,7 @@ export default async function Page({
       />
       <Breadcrumb
         // TODO: add jsonld override from frontmatter
-        breadcrumbList={getBreadcrumbList(domain, parents, node)}
+        breadcrumbList={getBreadcrumbList(docsLoader.domain, parents, node)}
       />
     </>
   );
@@ -82,18 +80,19 @@ export async function generateMetadata({
   params: { slug?: string[] };
 }): Promise<Metadata> {
   const slug = FernNavigation.slugjoin(params.slug);
-  const { domain, host, fern_token } = await withServerProps();
-  const docsLoader = createCachedDocsLoader(domain, host);
+  const docsLoader = await createCachedDocsLoader();
   const findNode = createFindNode(docsLoader);
-  const files = await docsLoader.getFiles();
-  const { node } = await findNode(slug, fern_token);
-  const config = await docsLoader.getConfig();
-  const baseUrl = await docsLoader.getBaseUrl();
+  const [files, { node }, config, baseUrl, isSeoDisabled] = await Promise.all([
+    docsLoader.getFiles(),
+    findNode(slug),
+    docsLoader.getConfig(),
+    docsLoader.getBaseUrl(),
+    getSeoDisabled(docsLoader.domain),
+  ]);
   const pageId = FernNavigation.getPageId(node);
   const page = pageId ? await docsLoader.getPage(pageId) : undefined;
   const frontmatter = page ? getFrontmatter(page.markdown)?.data : undefined;
 
-  const isSeoDisabled = await getSeoDisabled(domain);
   const noindex =
     (FernNavigation.hasMarkdown(node) && node.noindex) ||
     isSeoDisabled ||
@@ -107,7 +106,10 @@ export async function generateMetadata({
     false;
 
   return {
-    metadataBase: new URL(baseUrl.basePath || "/", withDefaultProtocol(domain)),
+    metadataBase: new URL(
+      baseUrl.basePath || "/",
+      withDefaultProtocol(docsLoader.domain)
+    ),
     applicationName: config?.title,
     title:
       markdownToString(
