@@ -29,7 +29,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
   const itemsRef = useRef(items);
-  itemsRef.current = items; // Update ref on each render
+  itemsRef.current = items;
 
   useEffect(() => {
     if (selectedLanguage) {
