@@ -32,7 +32,12 @@ import {
   ApplicationProtocol,
   HttpCodeElb,
 } from "aws-cdk-lib/aws-elasticloadbalancingv2";
-import { PolicyStatement, ServicePrincipal } from "aws-cdk-lib/aws-iam";
+import {
+  ArnPrincipal,
+  Effect,
+  PolicyStatement,
+  ServicePrincipal,
+} from "aws-cdk-lib/aws-iam";
 import { LogGroup } from "aws-cdk-lib/aws-logs";
 import * as route53 from "aws-cdk-lib/aws-route53";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
@@ -421,6 +426,19 @@ export class FdrDeployStack extends Stack {
           ? "api"
           : `api-${environmentType.toLowerCase()}`,
     });
+
+    // give permissions to access the docs definition bucket
+    dbDocsDefinitionBucket.addToResourcePolicy(
+      new PolicyStatement({
+        effect: Effect.ALLOW,
+        actions: ["s3:GetObject"],
+        resources: [dbDocsDefinitionBucket.arnForObjects("*")],
+        principals: [
+          new ServicePrincipal("ecs-tasks.amazonaws.com"),
+          new ArnPrincipal(fargateService.taskDefinition.taskRole.roleArn),
+        ],
+      })
+    );
 
     const efsVolume: Volume = {
       name: "fdr-volume",
