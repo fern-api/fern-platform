@@ -1,8 +1,8 @@
 import type { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { APIKeyInjectionConfigEnabled } from "@fern-docs/auth";
 import { FernButton, FernCard } from "@fern-docs/components";
-import { Key, User } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Key, User } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 import urlJoin from "url-join";

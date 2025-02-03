@@ -4,9 +4,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import cn from "clsx";
 import { animate, motion, useMotionValue } from "framer-motion";
-import { Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
+import { X } from "lucide-react";
 import { ReactElement, memo, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
 import {
@@ -111,7 +111,7 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
           <FernButton
             variant="minimal"
             className="-mr-3"
-            icon={<Xmark />}
+            icon={<X />}
             rounded
           />
         </Dialog.Close>

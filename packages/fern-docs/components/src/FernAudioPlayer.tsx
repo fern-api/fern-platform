@@ -3,11 +3,11 @@ import {
   Forward,
   Pause,
   Play,
-  Restart,
   Rewind,
-  SoundHigh,
-  SoundOff,
-} from "iconoir-react";
+  RotateCcw,
+  Volume2,
+  VolumeOff,
+} from "lucide-react";
 import moment from "moment";
 import { ReactElement, createRef, useEffect, useState } from "react";
 import { FernButton, FernButtonGroup } from "./FernButton";
@@ -71,7 +71,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
               variant="minimal"
               size="normal"
               intent="none"
-              icon={<Restart />}
+              icon={<RotateCcw />}
               onClick={() => {
                 if (ref.current) {
                   ref.current.currentTime = 0;
@@ -129,7 +129,7 @@ export function FernAudioPlayer(props: FernAudioPlayerProps): ReactElement {
               variant="minimal"
               size="normal"
               intent="none"
-              icon={isMuted ? <SoundOff /> : <SoundHigh />}
+              icon={isMuted ? <VolumeOff /> : <Volume2 />}
               onClick={() => {
                 if (ref.current) {
                   ref.current.muted = !ref.current.muted;

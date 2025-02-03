@@ -1,4 +1,4 @@
-import { Edit } from "iconoir-react";
+import { Edit } from "lucide-react";
 import { ReactElement } from "react";
 import { FernLinkButton } from "../components/FernLinkButton";
 

@@ -2,8 +2,8 @@ import { FernButton } from "@fern-docs/components";
 import { useResizeObserver } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { Xmark } from "iconoir-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { X } from "lucide-react";
 import { ReactElement, forwardRef, useImperativeHandle, useRef } from "react";
 import {
   ANNOUNCEMENT_CONFIG_ATOM,
@@ -51,7 +51,7 @@ const AnnouncementInternal = forwardRef<
         <FernButton
           variant="minimal"
           className="absolute right-0"
-          icon={<Xmark className="!text-accent-contrast" />}
+          icon={<X className="!text-accent-contrast" />}
           onClick={dismiss}
         />
       </motion.div>

@@ -1,4 +1,4 @@
-import { NavArrowRight } from "iconoir-react";
+import { ChevronRight } from "lucide-react";
 import { Fragment, ReactElement } from "react";
 
 interface SearchHitBreadCrumbsV2Props {
@@ -13,7 +13,7 @@ export function SearchHitBreadCrumbsV2({
       {breadcrumb.map((part, index) => (
         <Fragment key={index}>
           {index > 0 && (
-            <NavArrowRight className="size-icon-sm mx-0.5 inline-block" />
+            <ChevronRight className="size-icon-sm mx-0.5 inline-block" />
           )}
           <span>{part}</span>
         </Fragment>

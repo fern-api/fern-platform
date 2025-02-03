@@ -2,8 +2,8 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import cn, { clsx } from "clsx";
-import { LongArrowDownLeft } from "iconoir-react";
 import type { Hit } from "instantsearch.js";
+import { CornerDownLeft } from "lucide-react";
 import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
@@ -105,7 +105,7 @@ export const EndpointRecordV4: React.FC<EndpointRecordV4.Props> = ({
           <SearchHitBreadCrumbsV3 breadcrumb={hit.breadcrumbs} />
         </span>
 
-        <LongArrowDownLeft
+        <CornerDownLeft
           className={cn("size-4", {
             "t-accent-aaa": isHovered,
             "t-muted": !isHovered,

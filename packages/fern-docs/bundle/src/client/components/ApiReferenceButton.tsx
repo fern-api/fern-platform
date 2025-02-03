@@ -1,6 +1,6 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
-import { ArrowUpRight } from "iconoir-react";
+import { ArrowUpRight } from "lucide-react";
 import { useHref } from "../hooks/useHref";
 import { FernLinkButton } from "./FernLinkButton";
 

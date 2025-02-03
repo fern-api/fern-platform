@@ -1,4 +1,4 @@
-import { ArrowLeft } from "iconoir-react";
+import { ArrowLeft } from "lucide-react";
 import { ReactElement } from "react";
 import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
 import { FernLink } from "../components/FernLink";

@@ -4,7 +4,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { isPlainObject, unknownToString } from "@fern-api/ui-core-utils";
 import { FernButton } from "@fern-docs/components";
-import { Plus, Xmark } from "iconoir-react";
+import { Plus, X } from "lucide-react";
 import { memo, useCallback, useEffect, useState } from "react";
 import { getEmptyValueForType } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
@@ -199,7 +199,7 @@ function PlaygroundMapItemForm({
       </div>
       <div>
         <FernButton
-          icon={<Xmark />}
+          icon={<X />}
           onClick={() => onRemoveItem(idx)}
           variant="minimal"
           size="small"

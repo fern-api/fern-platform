@@ -1,5 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ArrowLeft } from "iconoir-react";
+import { ArrowLeft } from "lucide-react";
 import { ReactElement } from "react";
 import { usePlaygroundNode } from "../atoms";
 import { PlaygroundEndpoint, PlaygroundEndpointSkeleton } from "./endpoint";

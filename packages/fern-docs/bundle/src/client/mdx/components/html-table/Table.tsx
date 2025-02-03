@@ -2,7 +2,7 @@ import { FernButton, FernScrollArea } from "@fern-docs/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import clsx from "clsx";
-import { Expand } from "iconoir-react";
+import { Expand } from "lucide-react";
 import { ComponentProps, FC, useState } from "react";
 
 export const Table: FC<ComponentProps<"table">> = ({ className, ...rest }) => {

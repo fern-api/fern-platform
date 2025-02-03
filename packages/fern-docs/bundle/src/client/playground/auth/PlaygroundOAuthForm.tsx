@@ -8,8 +8,8 @@ import {
   FernTooltip,
   FernTooltipProvider,
 } from "@fern-docs/components";
-import { HelpCircle, Key, User } from "iconoir-react";
 import { useAtom } from "jotai";
+import { HelpCircle, Key, User } from "lucide-react";
 import { ReactElement, useState } from "react";
 import {
   PLAYGROUND_AUTH_STATE_OAUTH_ATOM,

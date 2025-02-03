@@ -5,12 +5,12 @@ import {
   Bell,
   Check,
   CheckCircle,
-  InfoCircle,
+  Info,
   Pin,
   Rocket,
   Star,
-  WarningTriangle,
-} from "iconoir-react";
+  TriangleAlert,
+} from "lucide-react";
 import { FC, PropsWithChildren, ReactElement, isValidElement } from "react";
 
 type Intent =
@@ -81,9 +81,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
             <span className="callout-icon">{icon}</span>
           ) : (
             visitDiscriminatedUnion({ intent }, "intent")._visit({
-              info: () => (
-                <InfoCircle className="text-intent-default size-icon-md" />
-              ),
+              info: () => <Info className="text-intent-default size-icon-md" />,
               warning: () => (
                 <Bell className="size-icon-md text-intent-warning" />
               ),
@@ -91,7 +89,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                 <CheckCircle className="size-icon-md text-intent-success" />
               ),
               error: () => (
-                <WarningTriangle className="size-icon-md text-intent-danger" />
+                <TriangleAlert className="size-icon-md text-intent-danger" />
               ),
               note: () => <Pin className="size-icon-md text-intent-info" />,
               launch: () => <Rocket className="t-accent size-icon-md" />,
@@ -100,7 +98,7 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
                 <Check className="size-icon-md text-intent-success" />
               ),
               _other: () => (
-                <InfoCircle className="text-intent-default size-icon-md" />
+                <Info className="text-intent-default size-icon-md" />
               ),
             })
           )}

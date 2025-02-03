@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
-import { ThumbsDown, ThumbsUp } from "iconoir-react";
+import { ThumbsDown, ThumbsUp } from "lucide-react";
 import { Router } from "next/router";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { track } from "../analytics";

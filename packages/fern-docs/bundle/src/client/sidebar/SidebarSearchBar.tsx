@@ -1,9 +1,8 @@
-import { memo } from "react";
-
 import { DesktopSearchButton } from "@fern-docs/search-ui";
 import clsx from "clsx";
-import { Search } from "iconoir-react";
+import { Search } from "lucide-react";
 import dynamic from "next/dynamic";
+import { memo } from "react";
 import { useEdgeFlag, useOpenSearchDialog } from "../atoms";
 import { useSearchConfig } from "../services/useSearchService";
 

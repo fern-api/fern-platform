@@ -5,7 +5,7 @@ import {
   type SearchRecord,
 } from "@fern-docs/search-utils";
 import { useKeyboardPress } from "@fern-ui/react-commons";
-import { Minus, Xmark } from "iconoir-react";
+import { Minus, X } from "lucide-react";
 import { useRouter } from "next/router";
 import React, {
   PropsWithChildren,
@@ -43,7 +43,7 @@ const ExpandButton: React.FC<{
       className="text-left"
       variant="minimal"
       onClick={() => setExpanded(!expanded)}
-      icon={expanded ? <Minus /> : <Xmark className="rotate-45 transition" />}
+      icon={expanded ? <Minus /> : <X className="rotate-45 transition" />}
       size="small"
     >
       Show {expanded ? "Less" : "More"}

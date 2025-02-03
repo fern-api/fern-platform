@@ -5,7 +5,7 @@ import {
 } from "@fern-docs/components";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
-import { NavArrowDown, NavArrowUp } from "iconoir-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { FC, Fragment, PropsWithChildren, ReactNode, forwardRef } from "react";
 import { CodeExample } from "../examples/code-example";
 import { ExamplesByStatusCode, StatusCode } from "../types/EndpointContent";
@@ -54,7 +54,7 @@ export const ErrorExampleSelect: FC<
         <FernButton
           rightIcon={
             <Select.Icon>
-              <NavArrowDown className="size-icon" />
+              <ChevronDown className="size-icon" />
             </Select.Icon>
           }
           variant="minimal"
@@ -73,7 +73,7 @@ export const ErrorExampleSelect: FC<
       <Select.Portal>
         <Select.Content className="bg-card ring-default z-50 overflow-hidden rounded-md shadow-2xl ring-1 ring-inset backdrop-blur">
           <Select.ScrollUpButton className="t-accent bg-card flex h-8 cursor-default items-center justify-center">
-            <NavArrowUp className="size-icon" />
+            <ChevronUp className="size-icon" />
           </Select.ScrollUpButton>
           <Select.Viewport className="p-[5px]">
             {Object.entries(examplesByStatusCode).map(
@@ -100,7 +100,7 @@ export const ErrorExampleSelect: FC<
             )}
           </Select.Viewport>
           <Select.ScrollDownButton className="t-accent bg-card flex h-8 cursor-default items-center justify-center">
-            <NavArrowDown className="size-icon" />
+            <ChevronDown className="size-icon" />
           </Select.ScrollDownButton>
         </Select.Content>
       </Select.Portal>

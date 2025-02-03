@@ -7,7 +7,7 @@ import {
   FernTooltipProvider,
 } from "@fern-docs/components";
 import cn, { clsx } from "clsx";
-import { Search, Slash, Xmark } from "iconoir-react";
+import { Search, Slash, X } from "lucide-react";
 import {
   Fragment,
   forwardRef,
@@ -125,7 +125,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
             rightElement={
               filterValue.length > 0 && (
                 <FernButton
-                  icon={<Xmark />}
+                  icon={<X />}
                   variant="minimal"
                   onClick={() => setFilterValue("")}
                 />

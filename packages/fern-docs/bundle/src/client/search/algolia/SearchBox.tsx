@@ -1,8 +1,8 @@
 import { getPlatform } from "@fern-api/ui-core-utils";
 import { FernButton, FernInput } from "@fern-docs/components";
 import { useKeyboardCommand, useKeyboardPress } from "@fern-ui/react-commons";
-import { Search, Xmark } from "iconoir-react";
 import { atom, useSetAtom } from "jotai";
+import { Search, X } from "lucide-react";
 import {
   ReactElement,
   forwardRef,
@@ -196,7 +196,7 @@ export const SearchMobileBox = forwardRef<HTMLInputElement, SearchBoxProps>(
               inputValue.length > 0 && (
                 <FernButton
                   variant="minimal"
-                  icon={<Xmark className="t-muted" />}
+                  icon={<X className="t-muted" />}
                   onClick={() => {
                     setQuery("");
                     inputRef.current?.focus();

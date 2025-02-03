@@ -9,7 +9,7 @@ import { isPlainObject } from "@fern-api/ui-core-utils";
 import { FernButton, FernDropdown } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { PlusCircle } from "iconoir-react";
+import { PlusCircle } from "lucide-react";
 import dynamic from "next/dynamic";
 import { FC, memo, useCallback, useEffect, useMemo, useState } from "react";
 import { renderTypeShorthandRoot } from "../../type-shorthand";

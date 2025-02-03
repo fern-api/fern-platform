@@ -1,10 +1,4 @@
-import {
-  CheckCircle,
-  InfoCircle,
-  SystemRestart,
-  WarningCircle,
-  XmarkCircle,
-} from "iconoir-react";
+import { CheckCircle2, CircleAlert, CircleX, Info, Loader } from "lucide-react";
 import { Toaster as SonnerToaster } from "sonner";
 
 export { toast } from "sonner";
@@ -38,13 +32,11 @@ export const Toaster: React.FC<ToasterProps> = ({
         },
       }}
       icons={{
-        success: <CheckCircle className="size-icon text-text-muted" />,
-        info: <InfoCircle className="size-icon text-text-muted" />,
-        warning: <WarningCircle className="size-icon text-text-muted" />,
-        error: <XmarkCircle className="size-icon text-text-muted" />,
-        loading: (
-          <SystemRestart className="size-icon text-text-muted animate-spin" />
-        ),
+        success: <CheckCircle2 className="size-icon text-text-muted" />,
+        info: <Info className="size-icon text-text-muted" />,
+        warning: <CircleAlert className="size-icon text-text-muted" />,
+        error: <CircleX className="size-icon text-text-muted" />,
+        loading: <Loader className="size-icon text-text-muted animate-spin" />,
       }}
     />
   );

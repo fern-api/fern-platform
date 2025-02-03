@@ -5,7 +5,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { FernTooltipProvider } from "@fern-docs/components";
 import { usePrevious } from "@fern-ui/react-commons";
-import { Wifi, WifiOff } from "iconoir-react";
+import { Wifi, WifiOff } from "lucide-react";
 import {
   FC,
   ReactElement,

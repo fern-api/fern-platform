@@ -4,7 +4,7 @@ import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn, { clsx } from "clsx";
 import { range } from "es-toolkit/math";
-import { Lock, NavArrowDown } from "iconoir-react";
+import { ChevronRight, Lock } from "lucide-react";
 import { Url } from "next/dist/shared/lib/router/router";
 import {
   HTMLAttributeAnchorTarget,
@@ -160,7 +160,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
         data-state={showIndicator ? "active" : "inactive"}
         onClick={onClickIndicator}
       >
-        <NavArrowDown
+        <ChevronRight
           className={cn("size-icon-md lg:size-icon", {
             "-rotate-90": !expanded,
             "rotate-0": expanded,

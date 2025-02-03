@@ -5,7 +5,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { CopyToClipboardButton, FernScrollArea } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import cn from "clsx";
-import { ArrowDown, ArrowUp, Wifi } from "iconoir-react";
+import { ArrowDown, ArrowUp, Wifi } from "lucide-react";
 import {
   Children,
   FC,

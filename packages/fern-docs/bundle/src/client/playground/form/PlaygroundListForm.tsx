@@ -4,7 +4,7 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import { FernButton } from "@fern-docs/components";
 import { clsx } from "clsx";
-import { Plus, Xmark } from "iconoir-react";
+import { Plus, X } from "lucide-react";
 import { memo, useCallback } from "react";
 import { getEmptyValueForType, shouldRenderInline } from "../utils";
 import { PlaygroundTypeReferenceForm } from "./PlaygroundTypeReferenceForm";
@@ -148,7 +148,7 @@ function PlaygroundListItemForm({
         )}
 
         <FernButton
-          icon={<Xmark />}
+          icon={<X />}
           onClick={() => onRemove(idx)}
           variant="minimal"
           size="small"

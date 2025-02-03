@@ -4,8 +4,8 @@ import {
   FernTooltip,
   FernTooltipProvider,
 } from "@fern-docs/components";
-import { PlaySolid } from "iconoir-react";
 import { useAtomValue } from "jotai";
+import { Play } from "lucide-react";
 import { FC } from "react";
 import { IS_PLAYGROUND_ENABLED_ATOM, useOpenPlayground } from "../atoms";
 import { usePlaygroundSettings } from "../hooks/usePlaygroundSettings";
@@ -47,7 +47,7 @@ export const PlaygroundButton: FC<{
               void openPlayground(state);
             }
           }}
-          rightIcon={<PlaySolid />}
+          rightIcon={<Play />}
           variant="outlined"
           intent="primary"
           size="small"

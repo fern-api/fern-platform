@@ -2,8 +2,8 @@ import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import cn, { clsx } from "clsx";
 import { isEqual } from "es-toolkit/predicate";
-import { ArrowRight, Search } from "iconoir-react";
 import { useAtomValue } from "jotai";
+import { ArrowRight, Search } from "lucide-react";
 import { CSSProperties, PropsWithChildren, forwardRef, memo } from "react";
 import {
   NAVBAR_LINKS_ATOM,

@@ -3,7 +3,7 @@ import {
   FernDropdown,
   RemoteFontAwesomeIcon,
 } from "@fern-docs/components";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 import {
   getIconForClient,
   getLanguageDisplayName,
@@ -48,7 +48,7 @@ export const CodeExampleClientDropdown: React.FC<
               icon={getIconForClient(value)}
             />
           }
-          rightIcon={<NavArrowDown className="!size-icon" />}
+          rightIcon={<ChevronDown className="!size-icon" />}
           text={selectedOption?.label ?? getLanguageDisplayName(value)}
           size="small"
           variant="outlined"

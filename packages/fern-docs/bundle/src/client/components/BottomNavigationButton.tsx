@@ -1,6 +1,6 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
-import { NavArrowLeft, NavArrowRight } from "iconoir-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Markdown } from "../mdx/Markdown";
 import { FernLinkCard } from "./FernLinkCard";
 
@@ -33,7 +33,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     >
       {dir === "prev" && (
         <span className="sm-4 t-muted sm:border-default inline-flex items-center gap-2 py-2.5 text-sm sm:mr-6 sm:border-r sm:pr-6">
-          <NavArrowLeft className="size-icon" />
+          <ChevronLeft className="size-icon" />
           <span className="hidden leading-none sm:inline">
             {hint ?? "Go Back"}
           </span>
@@ -53,7 +53,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
           <span className="hidden leading-none sm:inline">
             {hint ?? "Up Next"}
           </span>
-          <NavArrowRight className="size-icon" />
+          <ChevronRight className="size-icon" />
         </span>
       )}
     </FernLinkCard>

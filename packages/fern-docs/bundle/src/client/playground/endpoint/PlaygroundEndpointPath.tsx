@@ -20,7 +20,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
-import { Xmark } from "iconoir-react";
+import { X } from "lucide-react";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
@@ -168,7 +168,7 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
       </div>
 
       <Dialog.Close asChild className="max-sm:hidden">
-        <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
+        <FernButton icon={<X />} size="large" rounded variant="outlined" />
       </Dialog.Close>
     </div>
   );

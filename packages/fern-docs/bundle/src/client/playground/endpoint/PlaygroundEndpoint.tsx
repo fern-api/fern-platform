@@ -11,8 +11,8 @@ import {
 } from "@fern-ui/loadable";
 import { useEventCallback } from "@fern-ui/react-commons";
 import { mapValues } from "es-toolkit/object";
-import { SendSolid } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { SendHorizontal } from "lucide-react";
 import { ReactElement, useCallback, useState } from "react";
 import { track } from "../../analytics";
 import {
@@ -218,7 +218,7 @@ export const PlaygroundEndpoint = ({
             path={endpoint.path}
             queryParameters={endpoint.queryParameters}
             sendRequestIcon={
-              <SendSolid className="transition-transform group-hover:translate-x-0.5" />
+              <SendHorizontal className="transition-transform group-hover:translate-x-0.5" />
             }
             types={context.types}
           />

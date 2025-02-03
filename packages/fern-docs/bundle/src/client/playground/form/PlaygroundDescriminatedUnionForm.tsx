@@ -9,7 +9,7 @@ import {
   FernDropdown,
   FernSegmentedControl,
 } from "@fern-docs/components";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 import dynamic from "next/dynamic";
 import { memo, useCallback, useMemo } from "react";
 import { castToRecord, getEmptyValueForObjectProperties } from "../utils";
@@ -131,7 +131,7 @@ export const PlaygroundDiscriminatedUnionForm =
                   <span className="t-muted">Select a variant...</span>
                 )
               }
-              rightIcon={<NavArrowDown />}
+              rightIcon={<ChevronDown />}
               className="w-full text-left"
               variant="outlined"
               mono={true}

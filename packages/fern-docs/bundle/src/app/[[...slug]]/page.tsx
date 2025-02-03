@@ -1,6 +1,6 @@
 "use server";
 
-import { renderThemeStylesheet } from "@/client";
+import { renderThemeStylesheet } from "@/client/themes/stylesheet/renderThemeStylesheet";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { withServerProps } from "@/server/withServerProps";
 import { DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";

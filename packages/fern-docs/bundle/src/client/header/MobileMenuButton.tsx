@@ -1,5 +1,5 @@
 import { FernButton } from "@fern-docs/components";
-import { Menu, Xmark } from "iconoir-react";
+import { Menu, X } from "lucide-react";
 import { ReactElement } from "react";
 import {
   useCloseMobileSidebar,
@@ -22,9 +22,7 @@ export function MobileMenuButton(): ReactElement {
           openMobileSidebar();
         }
       }}
-      icon={
-        isMobileSidebarOpen ? <Xmark /> : <Menu className="!size-icon-md" />
-      }
+      icon={isMobileSidebarOpen ? <X /> : <Menu className="!size-icon-md" />}
       intent={isMobileSidebarOpen ? "primary" : "none"}
       variant={isMobileSidebarOpen ? "filled" : "minimal"}
       rounded={true}

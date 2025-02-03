@@ -9,7 +9,7 @@ import {
 import { Loadable, visitLoadable } from "@fern-ui/loadable";
 import clsx from "clsx";
 import { round } from "es-toolkit/math";
-import { Download } from "iconoir-react";
+import { Download } from "lucide-react";
 import { ReactElement } from "react";
 import { useEdgeFlags } from "../../atoms";
 import { FernErrorTag } from "../../components/FernErrorBoundary";

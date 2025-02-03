@@ -1,7 +1,7 @@
 import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
 import { memoize } from "es-toolkit/function";
-import { RefreshDouble, WarningTriangle } from "iconoir-react";
+import { RefreshCcw, TriangleAlert } from "lucide-react";
 import { Router, useRouter } from "next/router";
 import React, {
   PropsWithChildren,
@@ -64,11 +64,11 @@ export function FernErrorTag({
     return (
       <div className={clsx(className ?? "my-4")}>
         <span className="t-danger bg-tag-danger inline-flex items-center gap-2 rounded-full px-2">
-          <WarningTriangle />
+          <TriangleAlert />
           <span>{stringifyError(error)}</span>
           {reset != null && (
             <FernButton
-              icon={<RefreshDouble />}
+              icon={<RefreshCcw />}
               variant="minimal"
               rounded
               onClick={() => {

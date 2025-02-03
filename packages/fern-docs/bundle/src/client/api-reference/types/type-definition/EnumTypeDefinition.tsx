@@ -5,7 +5,7 @@ import {
 } from "@fern-docs/components";
 import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
-import { Search, Xmark } from "iconoir-react";
+import { Search, X } from "lucide-react";
 import React, { ReactElement, useState } from "react";
 import {
   TypeDefinitionContext,
@@ -50,7 +50,7 @@ export const EnumTypeDefinition = ({
         rightElement={
           <FernButton
             icon={
-              <Xmark
+              <X
                 className={cn("transition", {
                   "rotate-45": isCollapsed,
                 })}

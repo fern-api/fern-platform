@@ -8,7 +8,7 @@ import {
 import { FernButton, FernTooltip } from "@fern-docs/components";
 import { AvailabilityBadge } from "@fern-docs/components/badges";
 import cn from "clsx";
-import { HelpCircle, Xmark } from "iconoir-react";
+import { HelpCircle, X } from "lucide-react";
 import { FC, PropsWithChildren, ReactNode } from "react";
 import { Markdown } from "../mdx/Markdown";
 import { renderTypeShorthandRoot } from "../type-shorthand";
@@ -132,7 +132,7 @@ export const WithLabelInternal: FC<
           <span className="inline-flex min-w-0 shrink items-center gap-1">
             {!isRequired && (
               <FernButton
-                icon={<Xmark />}
+                icon={<X />}
                 size="small"
                 variant="minimal"
                 className="-mr-3 opacity-50 transition-opacity hover:opacity-100"
@@ -154,7 +154,7 @@ export const WithLabelInternal: FC<
           <span className="inline-flex min-w-0 shrink items-center gap-1">
             {!isRequired && (
               <FernButton
-                icon={<Xmark />}
+                icon={<X />}
                 size="small"
                 variant="minimal"
                 className="-mr-3 ml-1 opacity-50 transition-opacity hover:opacity-100"

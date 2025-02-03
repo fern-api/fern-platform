@@ -1,9 +1,10 @@
 import clsx from "clsx";
-import { GitFork, GithubCircle, Star } from "iconoir-react";
+import { GitFork, Star } from "lucide-react";
 import React from "react";
 import useSWR from "swr";
 import { FernLinkButton } from "../components/FernLinkButton";
 import { GitHubInfo, getGitHubInfo } from "../util/github";
+import { GithubCircle } from "./GithubCircle";
 
 const GitHubStat: React.FC<{
   icon: React.ElementType;

@@ -1,7 +1,7 @@
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import clsx from "clsx";
 import { motion } from "framer-motion";
-import { Check, ThumbsDown, ThumbsUp } from "iconoir-react";
+import { Check, ThumbsDown, ThumbsUp } from "lucide-react";
 import { forwardRef, useCallback, useMemo, useState } from "react";
 import * as Selection from "selection-popover";
 import { track } from "../analytics";
@@ -61,7 +61,7 @@ type SelectionTextToolbarProps = {
 //                         </motion.span>
 //                     ) : (
 //                         <motion.span key="copy" variants={variants} initial="hidden" animate="visible" exit="hidden">
-//                             <Link className="h-4 w-4" />
+//                             <Link2 className="h-4 w-4" />
 //                         </motion.span>
 //                     )}
 //                 </AnimatePresence>

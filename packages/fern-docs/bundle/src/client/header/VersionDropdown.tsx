@@ -1,7 +1,7 @@
 import { FernButton } from "@fern-docs/components";
 import { getVersionAvailabilityLabel } from "@fern-platform/fdr-utils";
-import { Lock, NavArrowDown } from "iconoir-react";
 import { useAtomValue } from "jotai";
+import { ChevronDown, Lock } from "lucide-react";
 import { CURRENT_VERSION_ID_ATOM, VERSIONS_ATOM } from "../atoms";
 import { FernLinkDropdown } from "../components/FernLinkDropdown";
 import { useToHref } from "../hooks/useHref";
@@ -52,7 +52,7 @@ export const VersionDropdown: React.FC<VersionDropdown.Props> = () => {
           variant="outlined"
           text={currentVersion?.title ?? currentVersionId}
           rightIcon={
-            <NavArrowDown className="transition-transform data-[state=open]:rotate-180" />
+            <ChevronDown className="transition-transform data-[state=open]:rotate-180" />
           }
           disableAutomaticTooltip
         />

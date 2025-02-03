@@ -1,6 +1,6 @@
 import type { SearchRecord } from "@fern-docs/search-utils";
 import cn from "clsx";
-import { Page } from "iconoir-react";
+import { FileText } from "lucide-react";
 import { Snippet } from "react-instantsearch";
 
 export declare namespace PageRecord {
@@ -23,7 +23,7 @@ export const PageRecord: React.FC<PageRecord.Props> = ({ hit, isHovered }) => {
           }
         )}
       >
-        <Page
+        <FileText
           className={cn("size-4", {
             "!t-muted": !isHovered,
             "!t-accent": isHovered,

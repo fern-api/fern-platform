@@ -4,7 +4,7 @@ import {
   FernInput,
   FernInputProps,
 } from "@fern-docs/components";
-import { NavArrowDown } from "iconoir-react";
+import { ChevronDown } from "lucide-react";
 import { ReactElement, useEffect, useMemo, useState } from "react";
 
 interface Voice {
@@ -65,7 +65,7 @@ export function PlaygroundElevenLabsVoiceIdForm(
           )
         }
         variant="outlined"
-        rightIcon={<NavArrowDown />}
+        rightIcon={<ChevronDown />}
         className="w-full text-left"
         disabled={props.disabled}
       />

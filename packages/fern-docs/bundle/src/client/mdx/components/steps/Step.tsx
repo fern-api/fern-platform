@@ -1,7 +1,7 @@
 import { useCopyToClipboard } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, Link } from "iconoir-react";
+import { Check, Link2 } from "lucide-react";
 import { ComponentProps, ReactElement, useState } from "react";
 import { FernLink } from "../../../components/FernLink";
 
@@ -42,7 +42,7 @@ export function Step({
         tabIndex={-1}
       >
         <span className="fern-anchor-icon">
-          {hover ? <Link /> : <span>{index}</span>}
+          {hover ? <Link2 /> : <span>{index}</span>}
         </span>
         <AnimatePresence>
           {wasJustCopied && (

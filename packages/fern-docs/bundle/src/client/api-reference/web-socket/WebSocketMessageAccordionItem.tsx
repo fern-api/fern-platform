@@ -3,7 +3,7 @@ import { CopyToClipboardButton } from "@fern-docs/components";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";
 import * as Accordion from "@radix-ui/react-accordion";
 import cn from "clsx";
-import { ArrowDown, ArrowUp, NavArrowDown } from "iconoir-react";
+import { ArrowDown, ArrowUp, ChevronDown } from "lucide-react";
 import { FC } from "react";
 import { WebSocketMessage } from "./WebSocketMessages";
 
@@ -57,7 +57,7 @@ export const WebsocketMessageAccordionItem: FC<
           onClick={(e) => e.stopPropagation()}
         />
 
-        <NavArrowDown
+        <ChevronDown
           className="fern-web-socket-chevron group-data-[state=open]:rotate-180"
           aria-hidden
         />

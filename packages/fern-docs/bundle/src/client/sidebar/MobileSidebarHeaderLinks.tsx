@@ -1,6 +1,6 @@
 import cn from "clsx";
-import { ArrowRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
+import { ArrowRight } from "lucide-react";
 import { ReactElement } from "react";
 import {
   DOCS_LAYOUT_ATOM,

@@ -1,6 +1,6 @@
 import type { SearchRecord } from "@fern-docs/search-utils";
 import cn from "clsx";
-import { Code } from "iconoir-react";
+import { Code } from "lucide-react";
 import { Snippet } from "react-instantsearch";
 
 export declare namespace EndpointRecord {

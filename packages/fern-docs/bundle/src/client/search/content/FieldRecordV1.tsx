@@ -2,8 +2,8 @@ import type { Algolia } from "@fern-api/fdr-sdk/client/types";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import cn, { clsx } from "clsx";
-import { LongArrowDownLeft } from "iconoir-react";
 import type { BaseHit, Hit } from "instantsearch.js";
+import { CornerDownLeft } from "lucide-react";
 import { AlgoliaSnippet } from "../algolia/AlgoliaSnippet";
 import { SearchHitBreadCrumbsV3 } from "./SearchHitBreadCrumbsV3";
 
@@ -118,7 +118,7 @@ export const FieldRecordV1: React.FC<FieldRecordV1.Props> = ({
           />
         </span>
 
-        <LongArrowDownLeft
+        <CornerDownLeft
           className={cn("size-4", {
             "t-accent-aaa": isHovered,
             "t-muted": !isHovered,
