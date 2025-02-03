@@ -1,9 +1,12 @@
 "use server";
 
 import { renderThemeStylesheet } from "@/client/themes/stylesheet/renderThemeStylesheet";
+import GlobalStyle from "@/components/global-style";
+import Preload, { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
+import { createFindNode } from "@/server/find-node";
 import { withServerProps } from "@/server/withServerProps";
-import { DocsV2Read, FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { FileIdOrUrl } from "@fern-api/fdr-sdk/docs";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
@@ -17,9 +20,6 @@ import {
 } from "@fern-docs/utils";
 import { compact } from "es-toolkit/array";
 import { Metadata } from "next";
-import { createCachedFindNode } from "../find-node";
-import GlobalStyle from "./global-style";
-import Preload, { PreloadHref } from "./preload";
 
 export default async function Page({
   params,
@@ -28,11 +28,10 @@ export default async function Page({
 }) {
   const slug = FernNavigation.slugjoin(params.slug);
   const { domain, host, fern_token } = await withServerProps();
-  const findNode = createCachedFindNode(domain, host);
+  const docsLoader = createCachedDocsLoader(domain, host);
+  const findNode = createFindNode(docsLoader);
   const { node, parents, tabs } = await findNode(slug, fern_token);
-  const docs = createCachedDocsLoader(domain, host);
-  const config = await docs.getConfig();
-
+  const config = await docsLoader.getConfig();
   const colors = {
     light:
       config?.colorsV3?.type === "light"
@@ -53,7 +52,7 @@ export default async function Page({
     config?.typographyV2,
     config?.layout,
     config?.css,
-    await docs.getFiles(),
+    await docsLoader.getFiles(),
     tabs.length > 0
   );
 
@@ -65,7 +64,7 @@ export default async function Page({
       <Preload
         hrefs={generatePreloadHrefs(
           config?.typographyV2,
-          await docs.getFiles(),
+          await docsLoader.getFiles(),
           edgeFlags
         )}
       />
@@ -84,14 +83,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = FernNavigation.slugjoin(params.slug);
   const { domain, host, fern_token } = await withServerProps();
-  const findNode = createCachedFindNode(domain, host);
+  const docsLoader = createCachedDocsLoader(domain, host);
+  const findNode = createFindNode(docsLoader);
+  const files = await docsLoader.getFiles();
   const { node } = await findNode(slug, fern_token);
-  const docs = createCachedDocsLoader(domain, host);
-  const root = await docs.getRoot(fern_token);
-  const config = await docs.getConfig();
-  const baseUrl = await docs.getBaseUrl();
+  const config = await docsLoader.getConfig();
+  const baseUrl = await docsLoader.getBaseUrl();
   const pageId = FernNavigation.getPageId(node);
-  const page = pageId ? await docs.getPage(pageId) : undefined;
+  const page = pageId ? await docsLoader.getPage(pageId) : undefined;
   const frontmatter = page ? getFrontmatter(page.markdown)?.data : undefined;
 
   const isSeoDisabled = await getSeoDisabled(domain);
@@ -109,7 +108,7 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(baseUrl.basePath || "/", withDefaultProtocol(domain)),
-    applicationName: root?.title,
+    applicationName: config?.title,
     title:
       markdownToString(
         frontmatter?.headline || frontmatter?.title || node.title
@@ -137,11 +136,11 @@ export async function generateMetadata({
         frontmatter?.["og:site_name"] ?? config?.metadata?.["og:site_name"],
       images:
         toImageDescriptor(
-          docs,
+          files,
           frontmatter?.["og:image"],
           frontmatter?.["og:image:width"],
           frontmatter?.["og:image:height"]
-        ) ?? toImageDescriptor(docs, frontmatter?.image),
+        ) ?? toImageDescriptor(files, frontmatter?.image),
     },
     twitter: {
       site: frontmatter?.["twitter:site"] ?? config?.metadata?.["twitter:site"],
@@ -152,11 +151,11 @@ export async function generateMetadata({
       description:
         frontmatter?.["twitter:description"] ??
         config?.metadata?.["twitter:description"],
-      images: toImageDescriptor(docs, frontmatter?.["twitter:image"]),
+      images: toImageDescriptor(files, frontmatter?.["twitter:image"]),
     },
     icons: {
       icon: config?.favicon
-        ? toImageDescriptor(docs, {
+        ? toImageDescriptor(files, {
             type: "fileId",
             value: config.favicon,
           })?.url
@@ -167,7 +166,7 @@ export async function generateMetadata({
 
 function generatePreloadHrefs(
   typography: DocsV2Read.LoadDocsForUrlResponse["definition"]["config"]["typographyV2"],
-  files: Record<FernNavigation.FileId, FdrAPI.docs.v1.read.File_>,
+  files: Record<string, { url: string }>,
   edgeFlags: EdgeFlags
 ): PreloadHref[] {
   const toReturn: PreloadHref[] = [];
@@ -220,7 +219,10 @@ function getFontExtension(url: string): string {
 }
 
 function toImageDescriptor(
-  files: Record<FernNavigation.FileId, FdrAPI.docs.v1.read.File_>,
+  files: Record<
+    string,
+    { url: string; width?: number; height?: number; alt?: string }
+  >,
   image: FileIdOrUrl | undefined,
   width?: number,
   height?: number
@@ -239,8 +241,8 @@ function toImageDescriptor(
   }
   return {
     url: file.url,
-    width: width ?? (file.type === "image" ? file.width : undefined),
-    height: height ?? (file.type === "image" ? file.height : undefined),
-    alt: file.type === "image" ? file.alt : undefined,
+    width: width ?? file.width,
+    height: height ?? file.height,
+    alt: file.alt,
   };
 }

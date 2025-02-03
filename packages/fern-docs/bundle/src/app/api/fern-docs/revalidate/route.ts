@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
 
   if (req.nextUrl.searchParams.get("regenerate") === "true") {
     const docs = createCachedDocsLoader(domain, host);
-    const root = await docs.unsafe_getFullRoute();
+    const root = await docs.unsafe_getFullRoot();
     if (!root) {
       notFound();
     }

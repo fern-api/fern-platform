@@ -10,7 +10,7 @@ export default async function Layout({
   return (
     <>
       {children}
-      {markdown}
+      <main>{markdown}</main>
     </>
   );
 }

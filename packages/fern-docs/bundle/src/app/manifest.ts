@@ -1,6 +1,5 @@
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { getDocsDomainApp, getHostApp } from "@/server/xfernhost/app";
-import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-docs/utils";
 import type { MetadataRoute } from "next";
@@ -28,8 +27,8 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
 }
 
 function selectFile(
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
-  fileId: DocsV1Read.FileId | undefined
+  files: Record<string, { url: string }>,
+  fileId: string | undefined
 ) {
   if (!fileId) {
     return undefined;

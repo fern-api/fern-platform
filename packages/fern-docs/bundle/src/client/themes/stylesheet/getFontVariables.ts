@@ -23,7 +23,7 @@ const MONO_FONT_FALLBACK =
 function generateFontFace(
   variant: DocsV1Read.CustomFontConfigVariant,
   fontConfig: DocsV1Read.FontConfigV2,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  files: Record<string, { url: string }>
 ): string | undefined {
   const file = files[variant.fontFile];
   if (file == null) {
@@ -54,7 +54,7 @@ interface TypographyResult {
 
 export function getFontVariables(
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  files: Record<string, { url: string }>
 ): TypographyResult {
   const fontFaces: string[] = [];
   const cssVariables: Record<string, string> = {

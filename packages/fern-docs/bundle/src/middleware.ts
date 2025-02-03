@@ -1,6 +1,5 @@
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
-import { extractNextDataPathname } from "@/server/extractNextDataPathname";
-import { removeLeadingSlash, removeTrailingSlash } from "@fern-docs/utils";
+import { removeLeadingSlash } from "@fern-docs/utils";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withPathname } from "./server/withPathname";
@@ -8,13 +7,18 @@ import { withPathname } from "./server/withPathname";
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 
 export const middleware: NextMiddleware = async (request) => {
-  console.log("middleware", request.nextUrl.pathname);
+  let pathname = request.nextUrl.pathname;
+
+  /**
+   * Rewrite /.../_next/*
+   */
+  if (pathname.includes("/_next/")) {
+    const index = pathname.indexOf("/_next/");
+    pathname = pathname.slice(index);
+    return NextResponse.rewrite(withPathname(request, pathname));
+  }
+
   const headers = new Headers(request.headers);
-
-  let pathname = extractNextDataPathname(
-    removeTrailingSlash(request.nextUrl.pathname)
-  );
-
   headers.set("x-pathname", pathname);
 
   /**
@@ -60,7 +64,9 @@ export const middleware: NextMiddleware = async (request) => {
       API_FERN_DOCS_PATTERN,
       "/api/fern-docs/"
     );
-    return NextResponse.rewrite(withPathname(request, pathname));
+    return NextResponse.rewrite(withPathname(request, pathname), {
+      request: { headers },
+    });
   }
 
   /**
@@ -76,7 +82,8 @@ export const middleware: NextMiddleware = async (request) => {
             slug: removeLeadingSlash(pathname).replace(/\/llms\.txt$/, ""),
           })
         )
-      )
+      ),
+      { request: { headers } }
     );
   }
 
@@ -93,7 +100,8 @@ export const middleware: NextMiddleware = async (request) => {
             slug: removeLeadingSlash(pathname).replace(/\/llms-full\.txt$/, ""),
           })
         )
-      )
+      ),
+      { request: { headers } }
     );
   }
 
@@ -110,7 +118,8 @@ export const middleware: NextMiddleware = async (request) => {
             slug: removeLeadingSlash(pathname).replace(MARKDOWN_PATTERN, ""),
           })
         )
-      )
+      ),
+      { request: { headers } }
     );
   }
 
@@ -129,7 +138,8 @@ export const middleware: NextMiddleware = async (request) => {
             slug: removeLeadingSlash(pathname).replace(RSS_PATTERN, ""),
           })
         )
-      )
+      ),
+      { request: { headers } }
     );
   }
 
@@ -150,6 +160,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api/fern-docs|.well-known|_next/static|_next/image|_vercel|favicon.ico).*)",
+    "/((?!api/fern-docs|.well-known|_next|_vercel|favicon.ico).*)",
   ],
 };

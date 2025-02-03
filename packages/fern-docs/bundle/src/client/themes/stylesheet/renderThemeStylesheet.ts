@@ -10,7 +10,7 @@ export function renderThemeStylesheet(
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
   layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
   css: DocsV1Read.CssConfig | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+  files: Record<string, { url: string }>,
   hasTabs: boolean
 ): string {
   if (colorsConfig == null) {

@@ -1,8 +1,8 @@
 "use server";
 
 import "@/client/css/globals.scss";
+import StyledJsxRegistry from "@/components/registry";
 import { Metadata, Viewport } from "next";
-import StyledJsxRegistry from "./registry";
 
 export async function generateMetadata(): Promise<Metadata> {
   return { generator: "Fern Docs" };
@@ -21,19 +21,11 @@ export async function generateViewport(): Promise<Viewport> {
 
 export default async function RootLayout({
   children,
+  header,
 }: {
   children: React.ReactNode;
+  header: React.ReactNode;
 }) {
-  // const domain = getDocsDomainApp();
-  // const docs = await cachedLoadWithUrl(domain);
-
-  // const theme = !docs.ok
-  //   ? "default"
-  //   : // TODO: make this configurable
-  //     docs.body.baseUrl.domain.includes("cohere")
-  //     ? "cohere"
-  //     : "default";
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -44,7 +36,8 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen antialiased">
         <StyledJsxRegistry>
-          <main>{children}</main>
+          {header}
+          {children}
         </StyledJsxRegistry>
       </body>
     </html>

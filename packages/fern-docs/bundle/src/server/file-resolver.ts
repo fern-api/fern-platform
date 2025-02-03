@@ -1,10 +1,19 @@
 import type { FernNavigation } from "@fern-api/fdr-sdk";
-import type { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import type { ImageData } from "@fern-docs/utils";
 import { UnreachableCaseError } from "ts-essentials";
 
 export function createFileResolver(
-  files: DocsV2Read.LoadDocsForUrlResponse["definition"]["filesV2"]
+  files: Record<
+    string,
+    {
+      type: "url" | "image";
+      url: string;
+      width?: number;
+      height?: number;
+      blurDataUrl?: string;
+      alt?: string;
+    }
+  >
 ): (src: string) => ImageData | undefined {
   return (src) => {
     if (src == null) {
@@ -28,7 +37,7 @@ export function createFileResolver(
     } else if (file.type === "url") {
       return { src: file.url };
     } else {
-      throw new UnreachableCaseError(file);
+      throw new UnreachableCaseError(file.type);
     }
   };
 }

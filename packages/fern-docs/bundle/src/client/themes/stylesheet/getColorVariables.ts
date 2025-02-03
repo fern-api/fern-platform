@@ -156,7 +156,7 @@ function getColor2(
 
 export function getColorVariables(
   colorsV3: ColorsConfig,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  files: Record<string, { url: string }>
 ): {
   light: Record<string, string | undefined>;
   dark: Record<string, string | undefined>;
@@ -478,8 +478,8 @@ export function getColorVariables(
 }
 
 function getBackgroundImage(
-  id: DocsV1Read.FileId | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  id: string | undefined,
+  files: Record<string, { url: string }>
 ): string | undefined {
   if (id == null) {
     return undefined;

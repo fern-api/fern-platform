@@ -1,12 +1,12 @@
 "use server";
 
-import { createCachedFindNode } from "@/app/find-node";
 import {
   MdxBundlerComponent,
   serializeMdx,
 } from "@/client/mdx/bundlers/mdx-bundler";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
+import { createFindNode } from "@/server/find-node";
 import { withServerProps } from "@/server/withServerProps";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { getPageId } from "@fern-api/fdr-sdk/navigation";
@@ -19,8 +19,8 @@ export default async function Page({
 }) {
   const slug = FernNavigation.slugjoin(params.slug);
   const { domain, host, fern_token } = await withServerProps();
-  const findNode = createCachedFindNode(domain, host);
-  const docs = createCachedDocsLoader(domain, host);
+  const docsLoader = createCachedDocsLoader(domain, host);
+  const findNode = createFindNode(docsLoader);
   const { node, currentVersion, currentTab, authState } = await findNode(
     slug,
     fern_token
@@ -28,19 +28,21 @@ export default async function Page({
 
   const pageId = getPageId(node);
   if (!pageId) {
+    console.warn("pageId not found", slug);
     return notFound();
   }
 
-  const page = await docs.getPage(pageId);
+  const page = await docsLoader.getPage(pageId);
   if (!page) {
+    console.warn("page not found", pageId);
     return notFound();
   }
 
-  const resolveFileSrc = createFileResolver(await docs.getFiles());
+  const resolveFileSrc = createFileResolver(await docsLoader.getFiles());
 
   const mdx = await serializeMdx(page.markdown, {
     filename: pageId,
-    files: await docs.getMdxBundlerFiles(),
+    files: await docsLoader.getMdxBundlerFiles(),
     scope: {
       props: {
         authed: authState.authed,
