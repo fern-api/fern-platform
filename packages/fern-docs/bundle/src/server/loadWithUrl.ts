@@ -42,6 +42,6 @@ export async function loadWithUrl(
 function getDocsDefinitionBucketName() {
   return (
     process.env.NEXT_PUBLIC_DOCS_DEFINITION_S3_BUCKET_NAME ??
-    "fdr-dev-docs-definitions-public"
+    "fdr-dev2-docs-definitions-public"
   );
 }
