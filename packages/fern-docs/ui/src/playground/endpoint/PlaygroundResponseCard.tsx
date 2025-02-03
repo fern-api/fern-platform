@@ -141,6 +141,8 @@ export function PlaygroundResponseCard({
               title="PDF preview"
               allowFullScreen
             />
+          ) : response.response.status === 204 ? (
+            <PlaygroundResponsePreview response={response} />
           ) : (
             <FernErrorTag
               component="PlaygroundEndpointContent"
