@@ -1336,12 +1336,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "web3_clientVersion",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1581,12 +1576,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_peerCount",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1656,12 +1646,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_version",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1727,12 +1712,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_blockNumber",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1828,12 +1808,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_call",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1902,12 +1877,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_chainId",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -1973,12 +1943,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_coinbase",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2064,12 +2029,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_estimateGas",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2134,12 +2094,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_gasPrice",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2243,12 +2198,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getBalance",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2348,12 +2298,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getBlockByHash",
-              "params": {
-                "includeTransactions": false
-              }
+              "includeTransactions": false
             }
           },
           "responseStatusCode": 200,
@@ -2454,12 +2399,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getBlockByNumber",
-              "params": {
-                "includeTransactions": false
-              }
+              "includeTransactions": false
             }
           },
           "responseStatusCode": 200,
@@ -2546,12 +2486,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getBlockTransactionCountByHash",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2637,12 +2572,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getBlockTransactionCountByNumber",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2746,12 +2676,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getCode",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2843,12 +2768,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getFilterChanges",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -2943,12 +2863,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getFilterLogs",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3037,12 +2952,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getRawTransactionByHash",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3139,12 +3049,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getRawTransactionByBlockHashAndIndex",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3241,12 +3146,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getRawTransactionByBlockNumberAndIndex",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3378,12 +3278,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getLogs",
-              "params": {
-                "filter": {}
-              }
+              "filter": {}
             }
           },
           "responseStatusCode": 200,
@@ -3493,12 +3388,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getStorageAt",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3711,12 +3601,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionByBlockNumberAndIndex",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3808,12 +3693,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionByHash",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -3915,12 +3795,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionCount",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4012,12 +3887,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionReceipt",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4114,12 +3984,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getUncleByBlockHashAndIndex",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4310,12 +4175,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getUncleCountByBlockHash",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4401,12 +4261,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getUncleCountByBlockNumber",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4592,12 +4447,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getProof",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4694,12 +4544,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getWork",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4769,12 +4614,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_hashrate",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4841,12 +4681,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_mining",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -4912,12 +4747,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_newBlockFilter",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5043,12 +4873,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_newFilter",
-              "params": {
-                "filter": {}
-              }
+              "filter": {}
             }
           },
           "responseStatusCode": 200,
@@ -5114,12 +4939,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_newPendingTransactionFilter",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5184,12 +5004,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_pendingTransactions",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5254,12 +5069,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_protocolVersion",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5346,12 +5156,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_sendRawTransaction",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5450,12 +5255,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_submitHashrate",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5693,12 +5493,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_syncing",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
@@ -5787,12 +5582,7 @@
           "headers": {},
           "requestBody": {
             "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_uninstallFilter",
-              "params": {}
-            }
+            "value": {}
           },
           "responseStatusCode": 200,
           "responseBody": {
