@@ -38,6 +38,19 @@ types:
       errors: optional<list<ErrorResponse>>
       examples: optional<list<ExampleEndpointCall>>
       snippetTemplates: optional<EndpointSnippetTemplates>
+      protocol: optional<Protocol>
+
+  Protocol:
+    union:
+      rest: RestProtocol
+      openrpc: OpenRpcProtocol
+
+  RestProtocol:
+    properties: {}
+
+  OpenRpcProtocol:
+    properties:
+      methodName: string
 
   EndpointSnippetTemplates:
     properties:

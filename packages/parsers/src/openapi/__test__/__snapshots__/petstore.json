@@ -180,7 +180,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_pet.updatePet": {
       "id": "endpoint_pet.updatePet",
@@ -361,7 +364,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_pets.getPetById": {
       "id": "endpoint_pets.getPetById",
@@ -604,7 +610,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

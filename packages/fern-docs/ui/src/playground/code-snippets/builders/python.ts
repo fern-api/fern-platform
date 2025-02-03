@@ -35,7 +35,7 @@ ${this.#buildRequests({})}`;
     return visitDiscriminatedUnion(this.formState.body, "type")._visit<string>({
       json: ({ value }) => `${imports.map((pkg) => `import ${pkg}`).join("\n")}
 
-${this.#buildRequests({ json: JSON.stringify(value, undefined, 2) })}`,
+${this.#buildRequests({ json: JSON.stringify(this.maybeWrapJsonBody(value), undefined, 2) })}`,
       "form-data": ({ value }) => {
         const singleFiles = Object.entries(value)
           .filter(

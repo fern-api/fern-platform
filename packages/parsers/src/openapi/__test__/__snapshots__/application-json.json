@@ -41,7 +41,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.applicationJson": {
       "id": "endpoint_.applicationJson",
@@ -83,7 +86,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
