@@ -48,11 +48,7 @@ export default tseslint.config(
     ],
     settings: {
       next: {
-        rootDir: [
-          "packages/fern-docs/bundle",
-          "packages/fern-docs/local-preview-bundle",
-          "packages/fern-docs/search-ui",
-        ],
+        rootDir: ["packages/fern-docs/bundle", "packages/fern-docs/search-ui"],
       },
       react: {
         version: "18",
