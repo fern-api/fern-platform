@@ -20,7 +20,7 @@ export function HeaderLogoImage(): ReactElement | null {
           priority={true}
           loading="eager"
           quality={100}
-          style={{ height }}
+          style={{ height, width: "auto" }}
         />
         <FernImage
           alt={title}
@@ -32,7 +32,7 @@ export function HeaderLogoImage(): ReactElement | null {
           priority={true}
           loading="eager"
           quality={100}
-          style={{ height }}
+          style={{ height, width: "auto" }}
         />
       </>
     );
@@ -55,7 +55,7 @@ export function HeaderLogoImage(): ReactElement | null {
       priority={true}
       loading="eager"
       quality={100}
-      style={{ height }}
+      style={{ height, width: "auto" }}
     />
   );
 }

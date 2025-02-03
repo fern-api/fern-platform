@@ -1,8 +1,8 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
-  BaseOpenApiV3_1ConverterNodeWithExample,
+  BaseOpenApiV3_1ConverterNodeWithTracking,
+  BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { SchemaConverterNode } from "./SchemaConverter.node";
@@ -17,14 +17,14 @@ export declare namespace ArrayConverterNode {
   }
 }
 
-export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
+export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
   ArrayConverterNode.Input,
   ArrayConverterNode.Output[] | undefined
 > {
   item: SchemaConverterNode | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ArrayConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<ArrayConverterNode.Input>
   ) {
     super(args);
     this.safeParse();
@@ -36,6 +36,7 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
       context: this.context,
       accessPath: this.accessPath,
       pathId: "items",
+      seenSchemas: this.seenSchemas,
     });
 
     if (this.input.items == null) {

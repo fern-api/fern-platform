@@ -88,6 +88,7 @@ export class ApiTypeIdVisitor {
       fileDownload: noop,
       streamingText: noop,
       stream: (value) => ApiTypeIdVisitor.visitTypeShape(value.shape, visit),
+      empty: noop,
     });
   }
 

@@ -9,6 +9,7 @@
       "content",
       "application/json",
       "type",
+      "copiedFileURL",
     ],
   },
   {
@@ -21,6 +22,7 @@
       "content",
       "application/json",
       "type",
+      "copiedFileURL",
     ],
   },
   {

@@ -195,15 +195,17 @@ export class ApiDefinitionLoader {
       definition = await this.resolveDescriptions(definition);
     }
 
-    if (this.edgeFlags.isHttpSnippetsEnabled) {
-      definition = await this.resolveHttpCodeSnippets(definition);
-    }
+    definition = await this.resolveHttpCodeSnippets(
+      definition,
+      this.edgeFlags.isHttpSnippetsEnabled
+    );
 
     return definition;
   };
 
   private resolveHttpCodeSnippets = async (
-    apiDefinition: ApiDefinition
+    apiDefinition: ApiDefinition,
+    httpSnippetsEnabled: boolean
   ): Promise<ApiDefinition> => {
     // Collect all endpoints first, so that we can resolve descriptions in a single batch
     const collected: EndpointDefinition[] = [];
@@ -224,7 +226,12 @@ export class ApiDefinitionLoader {
 
           const examples = await Promise.all(
             endpoint.examples.map((example) =>
-              this.resolveExample(apiDefinition, endpoint, example)
+              this.resolveExample(
+                apiDefinition,
+                endpoint,
+                example,
+                httpSnippetsEnabled
+              )
             )
           );
 
@@ -243,7 +250,8 @@ export class ApiDefinitionLoader {
   private resolveExample = async (
     apiDefinition: ApiDefinition,
     endpoint: EndpointDefinition,
-    example: ExampleEndpointCall
+    example: ExampleEndpointCall,
+    httpSnippetsEnabled: boolean
   ): Promise<ExampleEndpointCall> => {
     const snippets = { ...example.snippets };
 
@@ -274,45 +282,52 @@ export class ApiDefinitionLoader {
       });
     }
 
-    const snippet = new HTTPSnippet(
-      getHarRequest(endpoint, example, apiDefinition.auths, example.requestBody)
-    );
-    for (const { clientId, targetId } of CLIENTS) {
-      /**
-       * If the snippet already exists, skip it
-       */
-      if (snippets[targetId]?.length) {
-        continue;
-      }
+    if (httpSnippetsEnabled) {
+      const snippet = new HTTPSnippet(
+        getHarRequest(
+          endpoint,
+          example,
+          apiDefinition.auths,
+          example.requestBody
+        )
+      );
+      for (const { clientId, targetId } of CLIENTS) {
+        /**
+         * If the snippet already exists, skip it
+         */
+        if (snippets[targetId]?.length) {
+          continue;
+        }
 
-      /**
-       * If alwaysEnableJavaScriptFetch is disabled, skip generating JavaScript snippets if TypeScript snippets are available
-       */
-      if (
-        targetId === "javascript" &&
-        snippets[APIV1Read.SupportedLanguage.Typescript]?.length &&
-        !this.edgeFlags.alwaysEnableJavaScriptFetch
-      ) {
-        continue;
-      }
+        /**
+         * If alwaysEnableJavaScriptFetch is disabled, skip generating JavaScript snippets if TypeScript snippets are available
+         */
+        if (
+          targetId === "javascript" &&
+          snippets[APIV1Read.SupportedLanguage.Typescript]?.length &&
+          !this.edgeFlags.alwaysEnableJavaScriptFetch
+        ) {
+          continue;
+        }
 
-      const convertedCode = await snippet.convert(targetId, clientId);
-      const code =
-        typeof convertedCode === "string"
-          ? convertedCode
-          : convertedCode != null
-            ? convertedCode[0]
-            : undefined;
+        const convertedCode = await snippet.convert(targetId, clientId);
+        const code =
+          typeof convertedCode === "string"
+            ? convertedCode
+            : convertedCode != null
+              ? convertedCode[0]
+              : undefined;
 
-      if (code != null) {
-        pushSnippet({
-          name: undefined,
-          language: targetId,
-          install: undefined,
-          code,
-          generated: true,
-          description: undefined,
-        });
+        if (code != null) {
+          pushSnippet({
+            name: undefined,
+            language: targetId,
+            install: undefined,
+            code,
+            generated: true,
+            description: undefined,
+          });
+        }
       }
     }
 

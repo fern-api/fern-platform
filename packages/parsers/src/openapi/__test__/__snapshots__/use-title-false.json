@@ -1,0 +1,18 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "UnionJob": {
+      "name": "UnionJob",
+      "shape": {
+        "type": "discriminatedUnion",
+        "discriminant": "type",
+        "variants": []
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

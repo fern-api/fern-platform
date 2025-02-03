@@ -2,6 +2,7 @@ import { NodeId } from "@fern-api/fdr-sdk/navigation";
 import { FernButton } from "@fern-docs/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import cn from "clsx";
 import { animate, motion, useMotionValue } from "framer-motion";
 import { Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
@@ -135,7 +136,9 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
       >
         <Dialog.Portal>
           <Dialog.Content
-            className="bg-background-translucent border-default data-[state=open]:animate-content-show-from-bottom fixed inset-x-0 bottom-0 border-t shadow-xl backdrop-blur-2xl max-sm:h-full"
+            className={cn(
+              "api-explorer data-[state=open]:animate-content-show-from-bottom fixed max-sm:h-full"
+            )}
             onInteractOutside={(e) => {
               e.preventDefault();
             }}

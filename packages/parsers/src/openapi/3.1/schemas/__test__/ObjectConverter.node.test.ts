@@ -19,6 +19,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.extends).toEqual([]);
       expect(node.properties).toEqual({});
@@ -38,6 +39,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(Object.keys(node.properties ?? {})).toEqual(["name", "age"]);
       expect(node.properties?.name).toBeInstanceOf(SchemaConverterNode);
@@ -58,6 +60,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.extraProperties).toBeDefined();
       const converted = node.convert()[0]?.extraProperties;
@@ -77,6 +80,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.extraProperties).toBeUndefined();
     });
@@ -91,6 +95,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.extraProperties).toBeInstanceOf(SchemaConverterNode);
     });
@@ -109,6 +114,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const converted = node.convert();
       expect(converted).toEqual([
@@ -139,6 +145,7 @@ describe("ObjectConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const converted = node.convert();
       expect(converted).toEqual([

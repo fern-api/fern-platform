@@ -50,97 +50,103 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
-                          },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "base58"
-                          },
-                          {
-                            "value": "base64"
-                          },
-                          {
-                            "value": "base64+zstd"
-                          },
-                          {
-                            "value": "jsonParsed"
-                          }
-                        ]
-                      },
-                      "description": "Encoding format for account data."
-                    },
-                    {
-                      "key": "dataSlice",
-                      "valueShape": {
-                        "type": "object",
-                        "extends": [],
-                        "properties": [
-                          {
-                            "key": "length",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
                               }
-                            },
-                            "description": "Number of bytes to return."
+                            ]
                           },
-                          {
-                            "key": "offset",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              },
+                              {
+                                "value": "base64+zstd"
+                              },
+                              {
+                                "value": "jsonParsed"
                               }
-                            },
-                            "description": "Byte offset from which to start reading."
+                            ]
+                          },
+                          "description": "Encoding format for account data."
+                        },
+                        {
+                          "key": "dataSlice",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "length",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Number of bytes to return."
+                              },
+                              {
+                                "key": "offset",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Byte offset from which to start reading."
+                              }
+                            ]
                           }
-                        ]
-                      }
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object for additional settings."
               }
@@ -258,15 +264,20 @@
               "jsonrpc": "2.0",
               "method": "getAccountInfo",
               "params": {
-                "Pubkey": "string",
-                "Configuration": {
-                  "commitment": "processed",
-                  "encoding": "base58",
-                  "dataSlice": {
-                    "length": 0,
-                    "offset": 0
-                  },
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getAccountInfo",
+                "params": {
+                  "Pubkey": "string",
+                  "Configuration": {
+                    "commitment": "processed",
+                    "encoding": "base58",
+                    "dataSlice": {
+                      "length": 0,
+                      "offset": 0
+                    },
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -341,41 +352,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -412,10 +429,15 @@
               "jsonrpc": "2.0",
               "method": "getBalance",
               "params": {
-                "Pubkey": "string",
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBalance",
+                "params": {
+                  "Pubkey": "string",
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -481,100 +503,106 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ],
+                            "default": "finalized"
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "json"
+                              },
+                              {
+                                "value": "jsonParsed"
+                              },
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              }
+                            ],
+                            "default": "json"
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ],
-                        "default": "finalized"
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "json"
+                          "description": "Encoding format for transactions."
+                        },
+                        {
+                          "key": "transactionDetails",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "full"
+                              },
+                              {
+                                "value": "accounts"
+                              },
+                              {
+                                "value": "signatures"
+                              },
+                              {
+                                "value": "none"
+                              }
+                            ],
+                            "default": "full"
                           },
-                          {
-                            "value": "jsonParsed"
+                          "description": "Level of transaction detail to return."
+                        },
+                        {
+                          "key": "maxSupportedTransactionVersion",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "base58"
+                          "description": "Max transaction version to return."
+                        },
+                        {
+                          "key": "rewards",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "default": true
+                              }
+                            }
                           },
-                          {
-                            "value": "base64"
-                          }
-                        ],
-                        "default": "json"
-                      },
-                      "description": "Encoding format for transactions."
-                    },
-                    {
-                      "key": "transactionDetails",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "full"
-                          },
-                          {
-                            "value": "accounts"
-                          },
-                          {
-                            "value": "signatures"
-                          },
-                          {
-                            "value": "none"
-                          }
-                        ],
-                        "default": "full"
-                      },
-                      "description": "Level of transaction detail to return."
-                    },
-                    {
-                      "key": "maxSupportedTransactionVersion",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "Include rewards array if true."
                         }
-                      },
-                      "description": "Max transaction version to return."
-                    },
-                    {
-                      "key": "rewards",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "default": true
-                          }
-                        }
-                      },
-                      "description": "Include rewards array if true."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -1514,13 +1542,18 @@
               "jsonrpc": "2.0",
               "method": "getBlock",
               "params": {
-                "slot": 0,
-                "Configuration": {
-                  "commitment": "processed",
-                  "encoding": "json",
-                  "transactionDetails": "full",
-                  "maxSupportedTransactionVersion": 0,
-                  "rewards": true
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlock",
+                "params": {
+                  "slot": 0,
+                  "Configuration": {
+                    "commitment": "processed",
+                    "encoding": "json",
+                    "transactionDetails": "full",
+                    "maxSupportedTransactionVersion": 0,
+                    "rewards": true
+                  }
                 }
               }
             }
@@ -1750,7 +1783,12 @@
               "jsonrpc": "2.0",
               "method": "getBlockCommitment",
               "params": {
-                "block": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlockCommitment",
+                "params": {
+                  "block": 0
+                }
               }
             }
           },
@@ -1807,41 +1845,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional request parameters."
               }
@@ -1878,9 +1922,14 @@
               "jsonrpc": "2.0",
               "method": "getBlockHeight",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlockHeight",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -1933,76 +1982,82 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "identity",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "identity",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
+                          "description": "Validator identity to filter results."
+                        },
+                        {
+                          "key": "range",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "firstSlot",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "First slot to return block production for."
+                              },
+                              {
+                                "key": "lastSlot",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Last slot to return block production for."
+                              }
+                            ]
                           }
                         }
-                      },
-                      "description": "Validator identity to filter results."
-                    },
-                    {
-                      "key": "range",
-                      "valueShape": {
-                        "type": "object",
-                        "extends": [],
-                        "properties": [
-                          {
-                            "key": "firstSlot",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "First slot to return block production for."
-                          },
-                          {
-                            "key": "lastSlot",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Last slot to return block production for."
-                          }
-                        ]
-                      }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -2105,12 +2160,17 @@
               "jsonrpc": "2.0",
               "method": "getBlockProduction",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "identity": "string",
-                  "range": {
-                    "firstSlot": 0,
-                    "lastSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlockProduction",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "identity": "string",
+                    "range": {
+                      "firstSlot": 0,
+                      "lastSlot": 0
+                    }
                   }
                 }
               }
@@ -2185,9 +2245,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 },
@@ -2196,29 +2262,35 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ],
+                            "default": "finalized"
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ],
-                        "default": "finalized"
-                      },
-                      "description": "Configures the state commitment for querying."
+                          "description": "Configures the state commitment for querying."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -2261,10 +2333,15 @@
               "jsonrpc": "2.0",
               "method": "getBlocks",
               "params": {
-                "start_slot": 0,
-                "end_slot": 0,
-                "Configuration": {
-                  "commitment": "processed"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlocks",
+                "params": {
+                  "start_slot": 0,
+                  "end_slot": 0,
+                  "Configuration": {
+                    "commitment": "processed"
+                  }
                 }
               }
             }
@@ -2345,29 +2422,35 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ],
+                            "default": "finalized"
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ],
-                        "default": "finalized"
-                      },
-                      "description": "Configures the state commitment for querying."
+                          "description": "Configures the state commitment for querying."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -2410,10 +2493,15 @@
               "jsonrpc": "2.0",
               "method": "getBlocksWithLimit",
               "params": {
-                "start_slot": 0,
-                "limit": 0,
-                "Configuration": {
-                  "commitment": "processed"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlocksWithLimit",
+                "params": {
+                  "start_slot": 0,
+                  "limit": 0,
+                  "Configuration": {
+                    "commitment": "processed"
+                  }
                 }
               }
             }
@@ -2521,8 +2609,13 @@
               "jsonrpc": "2.0",
               "method": "getBlockTime",
               "params": {
-                "block": {
-                  "block": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getBlockTime",
+                "params": {
+                  "block": {
+                    "block": 0
+                  }
                 }
               }
             }
@@ -2723,7 +2816,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getClusterNodes",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getClusterNodes",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -2784,41 +2882,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -2936,9 +3040,14 @@
               "jsonrpc": "2.0",
               "method": "getEpochInfo",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getEpochInfo",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -3078,7 +3187,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getEpochSchedule",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getEpochSchedule",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -3158,41 +3272,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -3235,12 +3355,17 @@
               "jsonrpc": "2.0",
               "method": "getFeeForMessage",
               "params": {
-                "Message": {
-                  "Message": "string"
-                },
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getFeeForMessage",
+                "params": {
+                  "Message": {
+                    "Message": "string"
+                  },
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -3311,7 +3436,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getFirstAvailableBlock",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getFirstAvailableBlock",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -3380,7 +3510,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getGenesisHash",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getGenesisHash",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -3449,7 +3584,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getHealth",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getHealth",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -3547,7 +3687,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getHighestSnapshotSlot",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getHighestSnapshotSlot",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -3629,7 +3774,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getIdentity",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getIdentity",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -3682,41 +3832,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -3815,9 +3971,14 @@
               "jsonrpc": "2.0",
               "method": "getInflationGovernor",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getInflationGovernor",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -3943,7 +4104,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getInflationRate",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getInflationRate",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -4182,13 +4348,18 @@
               "jsonrpc": "2.0",
               "method": "getInflationReward",
               "params": {
-                "Addresses": {
-                  "Addresses": [
-                    "string"
-                  ],
-                  "commitment": "processed",
-                  "epoch": 0,
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getInflationReward",
+                "params": {
+                  "Addresses": {
+                    "Addresses": [
+                      "string"
+                    ],
+                    "commitment": "processed",
+                    "epoch": 0,
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -4249,43 +4420,49 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "filter",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "circulating"
+                              },
+                              {
+                                "value": "nonCirculating"
+                              }
+                            ]
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "filter",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "circulating"
-                          },
-                          {
-                            "value": "nonCirculating"
-                          }
-                        ]
-                      },
-                      "description": "Filter results by account type."
+                          "description": "Filter results by account type."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -4351,9 +4528,14 @@
               "jsonrpc": "2.0",
               "method": "getLargestAccounts",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "filter": "circulating"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getLargestAccounts",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "filter": "circulating"
+                  }
                 }
               }
             }
@@ -4411,41 +4593,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "A configuration object with optional fields for specifying commitment and minimum context slot."
               }
@@ -4505,9 +4693,14 @@
               "jsonrpc": "2.0",
               "method": "getLatestBlockhash",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getLatestBlockhash",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -4581,7 +4774,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getMaxRetransmitSlot",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getMaxRetransmitSlot",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -4650,7 +4848,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getMaxShredInsertSlot",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getMaxShredInsertSlot",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -4724,28 +4927,34 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
+                          "description": "Configures the state commitment for querying."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -4782,11 +4991,16 @@
               "jsonrpc": "2.0",
               "method": "getMinimumBalanceForRentExemption",
               "params": {
-                "Account data length": {
-                  "dataLength": 0
-                },
-                "Configuration": {
-                  "commitment": "processed"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getMinimumBalanceForRentExemption",
+                "params": {
+                  "Account data length": {
+                    "dataLength": 0
+                  },
+                  "Configuration": {
+                    "commitment": "processed"
+                  }
                 }
               }
             }
@@ -4858,98 +5072,104 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
+                          "description": "The minimum slot that the request can be evaluated at."
+                        },
+                        {
+                          "key": "dataSlice",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "length",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Number of bytes to return."
+                              },
+                              {
+                                "key": "offset",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Byte offset from which to start reading."
+                              }
+                            ]
                           }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              },
+                              {
+                                "value": "base64+zstd"
+                              },
+                              {
+                                "value": "jsonParsed"
+                              }
+                            ],
+                            "default": "base64"
+                          },
+                          "description": "Encoding format for data."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
-                    },
-                    {
-                      "key": "dataSlice",
-                      "valueShape": {
-                        "type": "object",
-                        "extends": [],
-                        "properties": [
-                          {
-                            "key": "length",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Number of bytes to return."
-                          },
-                          {
-                            "key": "offset",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Byte offset from which to start reading."
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "base58"
-                          },
-                          {
-                            "value": "base64"
-                          },
-                          {
-                            "value": "base64+zstd"
-                          },
-                          {
-                            "value": "jsonParsed"
-                          }
-                        ],
-                        "default": "base64"
-                      },
-                      "description": "Encoding format for data."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -5073,17 +5293,22 @@
               "jsonrpc": "2.0",
               "method": "getMultipleAccounts",
               "params": {
-                "Pubkeys": [
-                  "string"
-                ],
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0,
-                  "dataSlice": {
-                    "length": 0,
-                    "offset": 0
-                  },
-                  "encoding": "base58"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getMultipleAccounts",
+                "params": {
+                  "Pubkeys": [
+                    "string"
+                  ],
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0,
+                    "dataSlice": {
+                      "length": 0,
+                      "offset": 0
+                    },
+                    "encoding": "base58"
+                  }
                 }
               }
             }
@@ -5160,111 +5385,117 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
+                          "description": "The minimum slot that the request can be evaluated at."
+                        },
+                        {
+                          "key": "withContext",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "description": "If set, wraps the result in an `RpcResponse` JSON object."
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              },
+                              {
+                                "value": "base64+zstd"
+                              },
+                              {
+                                "value": "jsonParsed"
+                              }
+                            ],
+                            "default": "json"
+                          },
+                          "description": "Encoding format for data."
+                        },
+                        {
+                          "key": "dataSlice",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "length",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Number of bytes to return."
+                              },
+                              {
+                                "key": "offset",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Byte offset from which to start reading."
+                              }
+                            ]
                           }
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
-                    },
-                    {
-                      "key": "withContext",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean"
-                          }
-                        }
-                      },
-                      "description": "If set, wraps the result in an `RpcResponse` JSON object."
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "base58"
-                          },
-                          {
-                            "value": "base64"
-                          },
-                          {
-                            "value": "base64+zstd"
-                          },
-                          {
-                            "value": "jsonParsed"
-                          }
-                        ],
-                        "default": "json"
-                      },
-                      "description": "Encoding format for data."
-                    },
-                    {
-                      "key": "dataSlice",
-                      "valueShape": {
-                        "type": "object",
-                        "extends": [],
-                        "properties": [
-                          {
-                            "key": "length",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Number of bytes to return."
-                          },
-                          {
-                            "key": "offset",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Byte offset from which to start reading."
-                          }
-                        ]
-                      }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -5410,17 +5641,22 @@
               "jsonrpc": "2.0",
               "method": "getProgramAccounts",
               "params": {
-                "Pubkey": "string",
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0,
-                  "withContext": false,
-                  "encoding": "base58",
-                  "dataSlice": {
-                    "length": 0,
-                    "offset": 0
-                  },
-                  "filters": []
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getProgramAccounts",
+                "params": {
+                  "Pubkey": "string",
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0,
+                    "withContext": false,
+                    "encoding": "base58",
+                    "dataSlice": {
+                      "length": 0,
+                      "offset": 0
+                    },
+                    "filters": []
+                  }
                 }
               }
             }
@@ -5489,9 +5725,15 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "integer"
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
                     }
                   }
                 },
@@ -5598,7 +5840,12 @@
               "jsonrpc": "2.0",
               "method": "getRecentPerformanceSamples",
               "params": {
-                "limit": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getRecentPerformanceSamples",
+                "params": {
+                  "limit": 0
+                }
               }
             }
           },
@@ -5660,13 +5907,19 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "list",
-                    "itemShape": {
+                    "type": "optional",
+                    "shape": {
                       "type": "alias",
                       "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                        "type": "list",
+                        "itemShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
                         }
                       }
                     }
@@ -5736,9 +5989,14 @@
               "jsonrpc": "2.0",
               "method": "getRecentPrioritizationFees",
               "params": {
-                "Account addresses": [
-                  "string"
-                ]
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getRecentPrioritizationFees",
+                "params": {
+                  "Account addresses": [
+                    "string"
+                  ]
+                }
               }
             }
           },
@@ -5808,81 +6066,87 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
+                        },
+                        {
+                          "key": "limit",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer",
+                                "default": 1000
+                              }
+                            }
+                          },
+                          "description": "The maximum number of transaction signatures to return (between 1 and 1,000)."
+                        },
+                        {
+                          "key": "before",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "Start searching backwards from this transaction signature."
+                        },
+                        {
+                          "key": "until",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "Search until this transaction signature, if found before the limit is reached."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
-                    },
-                    {
-                      "key": "limit",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer",
-                            "default": 1000
-                          }
-                        }
-                      },
-                      "description": "The maximum number of transaction signatures to return (between 1 and 1,000)."
-                    },
-                    {
-                      "key": "before",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "description": "Start searching backwards from this transaction signature."
-                    },
-                    {
-                      "key": "until",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "description": "Search until this transaction signature, if found before the limit is reached."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -6020,13 +6284,18 @@
               "jsonrpc": "2.0",
               "method": "getSignaturesForAddress",
               "params": {
-                "Account address": "string",
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0,
-                  "limit": 1000,
-                  "before": "string",
-                  "until": "string"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getSignaturesForAddress",
+                "params": {
+                  "Account address": "string",
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0,
+                    "limit": 1000,
+                    "before": "string",
+                    "until": "string"
+                  }
                 }
               }
             }
@@ -6107,23 +6376,29 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "searchTransactionHistory",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean"
-                          }
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "searchTransactionHistory",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "description": "If true, searches the ledger cache for any signatures not found in the recent status cache."
                         }
-                      },
-                      "description": "If true, searches the ledger cache for any signatures not found in the recent status cache."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -6238,11 +6513,16 @@
               "jsonrpc": "2.0",
               "method": "getSignatureStatuses",
               "params": {
-                "Signatures": [
-                  "string"
-                ],
-                "Configuration": {
-                  "searchTransactionHistory": false
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getSignatureStatuses",
+                "params": {
+                  "Signatures": [
+                    "string"
+                  ],
+                  "Configuration": {
+                    "searchTransactionHistory": false
+                  }
                 }
               }
             }
@@ -6303,41 +6583,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -6374,9 +6660,14 @@
               "jsonrpc": "2.0",
               "method": "getSlot",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getSlot",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -6429,41 +6720,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -6500,9 +6797,14 @@
               "jsonrpc": "2.0",
               "method": "getSlotLeader",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getSlotLeader",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -6617,8 +6919,13 @@
               "jsonrpc": "2.0",
               "method": "getSlotLeaders",
               "params": {
-                "Start slot": 0,
-                "Limit": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getSlotLeaders",
+                "params": {
+                  "Start slot": 0,
+                  "Limit": 0
+                }
               }
             }
           },
@@ -6672,41 +6979,47 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "excludeNonCirculatingAccountsList",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "excludeNonCirculatingAccountsList",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean"
-                          }
+                          "description": "Exclude non-circulating accounts list from the response."
                         }
-                      },
-                      "description": "Exclude non-circulating accounts list from the response."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -6798,9 +7111,14 @@
               "jsonrpc": "2.0",
               "method": "getSupply",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "excludeNonCirculatingAccountsList": false
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getSupply",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "excludeNonCirculatingAccountsList": false
+                  }
                 }
               }
             }
@@ -6873,28 +7191,34 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
+                          "description": "Configures the state commitment for querying."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -6986,9 +7310,14 @@
               "jsonrpc": "2.0",
               "method": "getTokenAccountBalance",
               "params": {
-                "Token account Pubkey": "string",
-                "Configuration": {
-                  "commitment": "processed"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getTokenAccountBalance",
+                "params": {
+                  "Token account Pubkey": "string",
+                  "Configuration": {
+                    "commitment": "processed"
+                  }
                 }
               }
             }
@@ -7059,133 +7388,145 @@
               {
                 "key": "Token filter",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "mint",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "mint",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "The Pubkey of the specific token Mint to limit accounts to."
+                        },
+                        {
+                          "key": "programId",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "description": "The Pubkey of the Token program that owns the accounts."
                         }
-                      },
-                      "description": "The Pubkey of the specific token Mint to limit accounts to."
-                    },
-                    {
-                      "key": "programId",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "description": "The Pubkey of the Token program that owns the accounts."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "A filter object containing either the Mint Pubkey or the Token program Pubkey."
               },
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
+                          "description": "The minimum slot that the request can be evaluated at."
+                        },
+                        {
+                          "key": "dataSlice",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "length",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Number of bytes to return."
+                              },
+                              {
+                                "key": "offset",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "integer"
+                                    }
+                                  }
+                                },
+                                "description": "Byte offset from which to start reading."
+                              }
+                            ]
                           }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              },
+                              {
+                                "value": "base64+zstd"
+                              },
+                              {
+                                "value": "jsonParsed"
+                              }
+                            ]
+                          },
+                          "description": "Encoding format for account data."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
-                    },
-                    {
-                      "key": "dataSlice",
-                      "valueShape": {
-                        "type": "object",
-                        "extends": [],
-                        "properties": [
-                          {
-                            "key": "length",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Number of bytes to return."
-                          },
-                          {
-                            "key": "offset",
-                            "valueShape": {
-                              "type": "alias",
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "integer"
-                                }
-                              }
-                            },
-                            "description": "Byte offset from which to start reading."
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "base58"
-                          },
-                          {
-                            "value": "base64"
-                          },
-                          {
-                            "value": "base64+zstd"
-                          },
-                          {
-                            "value": "jsonParsed"
-                          }
-                        ]
-                      },
-                      "description": "Encoding format for account data."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -7331,19 +7672,24 @@
               "jsonrpc": "2.0",
               "method": "getTokenAccountsByOwner",
               "params": {
-                "Token owner Pubkey": "string",
-                "Token filter": {
-                  "mint": "string",
-                  "programId": "string"
-                },
-                "Configuration": {
-                  "commitment": "processed",
-                  "minContextSlot": 0,
-                  "dataSlice": {
-                    "length": 0,
-                    "offset": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getTokenAccountsByOwner",
+                "params": {
+                  "Token owner Pubkey": "string",
+                  "Token filter": {
+                    "mint": "string",
+                    "programId": "string"
                   },
-                  "encoding": "base58"
+                  "Configuration": {
+                    "commitment": "processed",
+                    "minContextSlot": 0,
+                    "dataSlice": {
+                      "length": 0,
+                      "offset": 0
+                    },
+                    "encoding": "base58"
+                  }
                 }
               }
             }
@@ -7423,28 +7769,34 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
+                          "description": "Configures the state commitment for querying."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -7536,9 +7888,14 @@
               "jsonrpc": "2.0",
               "method": "getTokenSupply",
               "params": {
-                "Token Mint Pubkey": "string",
-                "Configuration": {
-                  "commitment": "processed"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getTokenSupply",
+                "params": {
+                  "Token Mint Pubkey": "string",
+                  "Configuration": {
+                    "commitment": "processed"
+                  }
                 }
               }
             }
@@ -7609,62 +7966,68 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Commitment level to use. `Processed` is not supported."
+                        },
+                        {
+                          "key": "maxSupportedTransactionVersion",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Commitment level to use. `Processed` is not supported."
-                    },
-                    {
-                      "key": "maxSupportedTransactionVersion",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "Sets the max transaction version to return."
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "json"
+                              },
+                              {
+                                "value": "jsonParsed"
+                              },
+                              {
+                                "value": "base64"
+                              },
+                              {
+                                "value": "base58"
+                              }
+                            ]
+                          },
+                          "description": "Encoding format for the returned transaction."
                         }
-                      },
-                      "description": "Sets the max transaction version to return."
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "json"
-                          },
-                          {
-                            "value": "jsonParsed"
-                          },
-                          {
-                            "value": "base64"
-                          },
-                          {
-                            "value": "base58"
-                          }
-                        ]
-                      },
-                      "description": "Encoding format for the returned transaction."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional settings."
               }
@@ -7773,11 +8136,16 @@
               "jsonrpc": "2.0",
               "method": "getTransaction",
               "params": {
-                "Transaction signature": "string",
-                "Configuration": {
-                  "commitment": "processed",
-                  "maxSupportedTransactionVersion": 0,
-                  "encoding": "json"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getTransaction",
+                "params": {
+                  "Transaction signature": "string",
+                  "Configuration": {
+                    "commitment": "processed",
+                    "maxSupportedTransactionVersion": 0,
+                    "encoding": "json"
+                  }
                 }
               }
             }
@@ -7877,7 +8245,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "getVersion",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getVersion",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -7931,67 +8304,73 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "votePubkey",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "votePubkey",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
+                          "description": "Return results for this validator vote address."
+                        },
+                        {
+                          "key": "keepUnstakedDelinquents",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean"
+                              }
+                            }
+                          },
+                          "description": "Do not filter out delinquent validators with no stake."
+                        },
+                        {
+                          "key": "delinquentSlotDistance",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "description": "Number of slots behind the tip for a validator to be considered delinquent."
                         }
-                      },
-                      "description": "Return results for this validator vote address."
-                    },
-                    {
-                      "key": "keepUnstakedDelinquents",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean"
-                          }
-                        }
-                      },
-                      "description": "Do not filter out delinquent validators with no stake."
-                    },
-                    {
-                      "key": "delinquentSlotDistance",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
-                        }
-                      },
-                      "description": "Number of slots behind the tip for a validator to be considered delinquent."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -8289,11 +8668,16 @@
               "jsonrpc": "2.0",
               "method": "getVoteAccounts",
               "params": {
-                "Configuration": {
-                  "commitment": "processed",
-                  "votePubkey": "string",
-                  "keepUnstakedDelinquents": false,
-                  "delinquentSlotDistance": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "getVoteAccounts",
+                "params": {
+                  "Configuration": {
+                    "commitment": "processed",
+                    "votePubkey": "string",
+                    "keepUnstakedDelinquents": false,
+                    "delinquentSlotDistance": 0
+                  }
                 }
               }
             }
@@ -8392,54 +8776,60 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "blockhash",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "description": "The blockhash to evaluate, as a base-58 encoded string."
-                    },
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "blockhash",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "The blockhash to evaluate, as a base-58 encoded string."
+                        },
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -8476,11 +8866,16 @@
               "jsonrpc": "2.0",
               "method": "isBlockhashValid",
               "params": {
-                "blockhash": "string",
-                "Configuration": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "isBlockhashValid",
+                "params": {
                   "blockhash": "string",
-                  "commitment": "processed",
-                  "minContextSlot": 0
+                  "Configuration": {
+                    "blockhash": "string",
+                    "commitment": "processed",
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -8551,7 +8946,12 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "minimumLedgerSlot",
-              "params": {}
+              "params": {
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "minimumLedgerSlot",
+                "params": {}
+              }
             }
           },
           "responseStatusCode": 200,
@@ -8628,28 +9028,34 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ]
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ]
-                      },
-                      "description": "Configures the state commitment for querying."
+                          "description": "Configures the state commitment for querying."
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -8686,10 +9092,15 @@
               "jsonrpc": "2.0",
               "method": "requestAirdrop",
               "params": {
-                "Pubkey": "string",
-                "Lamports": 0,
-                "Configuration": {
-                  "commitment": "processed"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "requestAirdrop",
+                "params": {
+                  "Pubkey": "string",
+                  "Lamports": 0,
+                  "Configuration": {
+                    "commitment": "processed"
+                  }
                 }
               }
             }
@@ -8755,85 +9166,91 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "base58"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              }
+                            ],
+                            "default": "base58"
                           },
-                          {
-                            "value": "base64"
-                          }
-                        ],
-                        "default": "base58"
-                      },
-                      "description": "Encoding used for the transaction data."
-                    },
-                    {
-                      "key": "skipPreflight",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "default": false
-                          }
-                        }
-                      },
-                      "description": "Skip preflight transaction checks if `true`."
-                    },
-                    {
-                      "key": "preflightCommitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                          "description": "Encoding used for the transaction data."
+                        },
+                        {
+                          "key": "skipPreflight",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            }
                           },
-                          {
-                            "value": "confirmed"
+                          "description": "Skip preflight transaction checks if `true`."
+                        },
+                        {
+                          "key": "preflightCommitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ],
+                            "default": "finalized"
                           },
-                          {
-                            "value": "finalized"
-                          }
-                        ],
-                        "default": "finalized"
-                      },
-                      "description": "Commitment level to use for preflight."
-                    },
-                    {
-                      "key": "maxRetries",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
+                          "description": "Commitment level to use for preflight."
+                        },
+                        {
+                          "key": "maxRetries",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "description": "Maximum retries for the RPC node to send the transaction."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "description": "The minimum slot that the request can be evaluated at."
                         }
-                      },
-                      "description": "Maximum retries for the RPC node to send the transaction."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
-                        }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object."
               }
@@ -8870,13 +9287,18 @@
               "jsonrpc": "2.0",
               "method": "sendTransaction",
               "params": {
-                "Transaction": "string",
-                "Configuration": {
-                  "encoding": "base58",
-                  "skipPreflight": false,
-                  "preflightCommitment": "processed",
-                  "maxRetries": 0,
-                  "minContextSlot": 0
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "sendTransaction",
+                "params": {
+                  "Transaction": "string",
+                  "Configuration": {
+                    "encoding": "base58",
+                    "skipPreflight": false,
+                    "preflightCommitment": "processed",
+                    "maxRetries": 0,
+                    "minContextSlot": 0
+                  }
                 }
               }
             }
@@ -8942,150 +9364,156 @@
               {
                 "key": "Configuration",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
-                    {
-                      "key": "commitment",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "processed"
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "commitment",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "processed"
+                              },
+                              {
+                                "value": "confirmed"
+                              },
+                              {
+                                "value": "finalized"
+                              }
+                            ],
+                            "default": "finalized"
                           },
-                          {
-                            "value": "confirmed"
-                          },
-                          {
-                            "value": "finalized"
-                          }
-                        ],
-                        "default": "finalized"
-                      },
-                      "description": "Configures the state commitment for querying."
-                    },
-                    {
-                      "key": "sigVerify",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "default": false
-                          }
-                        }
-                      },
-                      "description": "If true, the transaction signatures will be verified."
-                    },
-                    {
-                      "key": "replaceRecentBlockhash",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "default": false
-                          }
-                        }
-                      },
-                      "description": "If true, replaces recent blockhash with the most recent one."
-                    },
-                    {
-                      "key": "minContextSlot",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "integer"
-                          }
-                        }
-                      },
-                      "description": "The minimum slot that the request can be evaluated at."
-                    },
-                    {
-                      "key": "encoding",
-                      "valueShape": {
-                        "type": "enum",
-                        "values": [
-                          {
-                            "value": "base58"
-                          },
-                          {
-                            "value": "base64"
-                          }
-                        ],
-                        "default": "base58"
-                      },
-                      "description": "Encoding used for the transaction data."
-                    },
-                    {
-                      "key": "innerInstructions",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "default": false
-                          }
-                        }
-                      },
-                      "description": "If true, includes inner instructions in the response."
-                    },
-                    {
-                      "key": "accounts",
-                      "valueShape": {
-                        "type": "object",
-                        "extends": [],
-                        "properties": [
-                          {
-                            "key": "addresses",
-                            "valueShape": {
-                              "type": "alias",
+                          "description": "Configures the state commitment for querying."
+                        },
+                        {
+                          "key": "sigVerify",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
                               "value": {
-                                "type": "list",
-                                "itemShape": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            }
+                          },
+                          "description": "If true, the transaction signatures will be verified."
+                        },
+                        {
+                          "key": "replaceRecentBlockhash",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            }
+                          },
+                          "description": "If true, replaces recent blockhash with the most recent one."
+                        },
+                        {
+                          "key": "minContextSlot",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "integer"
+                              }
+                            }
+                          },
+                          "description": "The minimum slot that the request can be evaluated at."
+                        },
+                        {
+                          "key": "encoding",
+                          "valueShape": {
+                            "type": "enum",
+                            "values": [
+                              {
+                                "value": "base58"
+                              },
+                              {
+                                "value": "base64"
+                              }
+                            ],
+                            "default": "base58"
+                          },
+                          "description": "Encoding used for the transaction data."
+                        },
+                        {
+                          "key": "innerInstructions",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "default": false
+                              }
+                            }
+                          },
+                          "description": "If true, includes inner instructions in the response."
+                        },
+                        {
+                          "key": "accounts",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "addresses",
+                                "valueShape": {
                                   "type": "alias",
                                   "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string"
+                                    "type": "list",
+                                    "itemShape": {
+                                      "type": "alias",
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string"
+                                        }
+                                      }
                                     }
                                   }
-                                }
+                                },
+                                "description": "An array of account Pubkeys to return."
+                              },
+                              {
+                                "key": "encoding",
+                                "valueShape": {
+                                  "type": "enum",
+                                  "values": [
+                                    {
+                                      "value": "base58"
+                                    },
+                                    {
+                                      "value": "base64"
+                                    },
+                                    {
+                                      "value": "base64+zstd"
+                                    },
+                                    {
+                                      "value": "jsonParsed"
+                                    }
+                                  ],
+                                  "default": "base64"
+                                },
+                                "description": "Encoding for returned account data."
                               }
-                            },
-                            "description": "An array of account Pubkeys to return."
-                          },
-                          {
-                            "key": "encoding",
-                            "valueShape": {
-                              "type": "enum",
-                              "values": [
-                                {
-                                  "value": "base58"
-                                },
-                                {
-                                  "value": "base64"
-                                },
-                                {
-                                  "value": "base64+zstd"
-                                },
-                                {
-                                  "value": "jsonParsed"
-                                }
-                              ],
-                              "default": "base64"
-                            },
-                            "description": "Encoding for returned account data."
+                            ]
                           }
-                        ]
-                      }
+                        }
+                      ]
                     }
-                  ]
+                  }
                 },
                 "description": "Optional configuration object containing additional options."
               }
@@ -9332,19 +9760,24 @@
               "jsonrpc": "2.0",
               "method": "simulateTransaction",
               "params": {
-                "Transaction": "string",
-                "Configuration": {
-                  "commitment": "processed",
-                  "sigVerify": false,
-                  "replaceRecentBlockhash": false,
-                  "minContextSlot": 0,
-                  "encoding": "base58",
-                  "innerInstructions": false,
-                  "accounts": {
-                    "addresses": [
-                      "string"
-                    ],
-                    "encoding": "base58"
+                "id": 1,
+                "jsonrpc": "2.0",
+                "method": "simulateTransaction",
+                "params": {
+                  "Transaction": "string",
+                  "Configuration": {
+                    "commitment": "processed",
+                    "sigVerify": false,
+                    "replaceRecentBlockhash": false,
+                    "minContextSlot": 0,
+                    "encoding": "base58",
+                    "innerInstructions": false,
+                    "accounts": {
+                      "addresses": [
+                        "string"
+                      ],
+                      "encoding": "base58"
+                    }
                   }
                 }
               }

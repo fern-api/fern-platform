@@ -1,0 +1,53 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "Metadata": {
+      "name": "Metadata",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "map",
+          "keyShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "MetadataValue"
+            }
+          }
+        }
+      }
+    },
+    "MetadataValue": {
+      "name": "MetadataValue",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

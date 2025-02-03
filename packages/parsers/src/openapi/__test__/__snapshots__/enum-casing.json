@@ -1,0 +1,131 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.example": {
+      "id": "endpoint_.example",
+      "displayName": "Get Example",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "example"
+        }
+      ],
+      "environments": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "ExampleResponse"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/example",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "status": "success",
+              "message": "string",
+              "custom_fields": {}
+            }
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "ExampleResponse": {
+      "name": "ExampleResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "status",
+            "valueShape": {
+              "type": "enum",
+              "values": [
+                {
+                  "value": "success"
+                },
+                {
+                  "value": "failure"
+                }
+              ]
+            }
+          },
+          {
+            "key": "message",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "custom_fields",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "map",
+                "keyShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "GrantTypeEnum": {
+      "name": "GrantTypeEnum",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "urn:devrev:params:oauth:grant-type:token-issue"
+          },
+          {
+            "value": "urn:ietf:params:oauth:grant-type:token-exchange"
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

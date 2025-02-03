@@ -2,8 +2,8 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
-  BaseOpenApiV3_1ConverterNodeConstructorArgs,
-  BaseOpenApiV3_1ConverterNodeWithExample,
+  BaseOpenApiV3_1ConverterNodeWithTracking,
+  BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { convertToObjectProperties } from "../../utils/3.1/convertToObjectProperties";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
@@ -19,7 +19,7 @@ export declare namespace ObjectConverterNode {
   }
 }
 
-export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
+export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking<
   ObjectConverterNode.Input,
   (
     | FernRegistry.api.latest.TypeShape.Object_
@@ -33,7 +33,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   requiredProperties: string[] | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ObjectConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<ObjectConverterNode.Input>
   ) {
     super(args);
     this.safeParse();
@@ -52,6 +52,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
             context: this.context,
             accessPath: this.accessPath,
             pathId: this.pathId,
+            seenSchemas: this.seenSchemas,
           }),
         ];
       })
@@ -68,6 +69,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
               context: this.context,
               accessPath: this.accessPath,
               pathId: this.pathId,
+              seenSchemas: this.seenSchemas,
             })
         : undefined;
 
@@ -90,6 +92,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
                           context: this.context,
                           accessPath: this.accessPath,
                           pathId: this.pathId,
+                          seenSchemas: this.seenSchemas,
                         }),
                       ];
                     }
@@ -217,6 +220,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
                   context: this.context,
                   accessPath: this.accessPath,
                   pathId: this.pathId,
+                  seenSchemas: this.seenSchemas,
                 }),
               ];
             }
