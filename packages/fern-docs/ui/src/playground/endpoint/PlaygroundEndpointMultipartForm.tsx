@@ -4,7 +4,11 @@ import {
   TypeDefinition,
 } from "@fern-api/fdr-sdk/api-definition";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
+import { FernButton, FernDropdown } from "@fern-docs/components";
+import { PlusCircle } from "lucide-react";
 import { ReactElement, useCallback } from "react";
+import { Markdown } from "../../mdx/Markdown";
+import { renderTypeShorthandRoot } from "../../type-shorthand";
 import { PlaygroundFileUploadForm } from "../form/PlaygroundFileUploadForm";
 import { PlaygroundObjectPropertyForm } from "../form/PlaygroundObjectPropertyForm";
 import {
@@ -12,6 +16,7 @@ import {
   PlaygroundFormDataEntryValue,
   PlaygroundFormStateBody,
 } from "../types";
+import { formDataFieldIsRequired, getEmptyValueForField } from "../utils";
 
 interface PlaygroundEndpointMultipartFormProps {
   endpoint: EndpointDefinition;
@@ -27,6 +32,8 @@ interface PlaygroundEndpointMultipartFormProps {
       | undefined
   ) => void;
 }
+
+const ADD_ALL_KEY = "__FERN_ADD_ALL__";
 
 export function PlaygroundEndpointMultipartForm({
   endpoint,
@@ -106,24 +113,52 @@ export function PlaygroundEndpointMultipartForm({
 
   const handleFormDataJsonChange = useCallback(
     (key: string, value: unknown) => {
-      setFormDataEntry(
-        key,
-        value == null
-          ? undefined
-          : typeof value === "function"
-            ? (oldValue) => ({
-                type: "json",
-                value: value(oldValue?.value),
-              })
-            : { type: "json", value }
-      );
+      setFormDataEntry(key, (oldValue) => {
+        const newValue =
+          typeof value === "function" ? value(oldValue?.value) : value;
+        if (newValue === undefined) {
+          return undefined;
+        } else {
+          return { type: "json", value: newValue };
+        }
+      });
     },
     [setFormDataEntry]
   );
 
+  const shownFields = formData.fields.filter((field) => {
+    return (
+      formDataFieldIsRequired(field, types) || !!formDataFormValue[field.key]
+    );
+  });
+
+  const hiddenFields = formData.fields.filter(
+    (field) => !shownFields.includes(field)
+  );
+
+  const handleAddAdditionalFields = (key: string) => {
+    if (key === ADD_ALL_KEY) {
+      setBodyFormData((old) =>
+        hiddenFields.reduce(
+          (acc, field) => {
+            acc[field.key] = getEmptyValueForField(field, types);
+            return acc;
+          },
+          { ...old }
+        )
+      );
+    } else {
+      const field = formData.fields.find((f) => f.key === key);
+      if (field == null) {
+        return;
+      }
+      setFormDataEntry(key, getEmptyValueForField(field, types));
+    }
+  };
+
   return (
     <ul className="list-none space-y-8">
-      {formData.fields.map((field) =>
+      {shownFields.map((field) =>
         visitDiscriminatedUnion(field)._visit({
           file: (file) => {
             const currentValue = formDataFormValue[field.key];
@@ -181,6 +216,65 @@ export function PlaygroundEndpointMultipartForm({
             </li>
           ),
         })
+      )}
+      {hiddenFields.length > 0 && (
+        <li>
+          <FernDropdown
+            options={[
+              ...hiddenFields.map(
+                (field): FernDropdown.Option => ({
+                  type: "value",
+                  value: field.key,
+                  label: field.key,
+                  helperText:
+                    field.type === "property"
+                      ? renderTypeShorthandRoot(
+                          {
+                            type: "optional",
+                            shape: field.valueShape,
+                            default: undefined,
+                          },
+                          types,
+                          false,
+                          true
+                        )
+                      : field.type,
+                  labelClassName: "font-mono",
+                  tooltip:
+                    field.description != null ? (
+                      <Markdown size="xs" mdx={field.description} />
+                    ) : undefined,
+                })
+              ),
+              ...(hiddenFields.length > 1
+                ? [
+                    { type: "separator" as const },
+                    {
+                      type: "value" as const,
+                      value: ADD_ALL_KEY,
+                      label: "Add all optional properties",
+                      rightElement: <PlusCircle className="size-icon" />,
+                    },
+                  ]
+                : []),
+            ]}
+            onValueChange={handleAddAdditionalFields}
+          >
+            <FernButton
+              text={
+                <span>
+                  {`${hiddenFields.length} ${hiddenFields.length > 0 ? "more " : ""}optional field${hiddenFields.length > 1 ? "s" : ""}`}
+                  <span className="t-muted ml-2 font-mono text-xs opacity-50">
+                    {hiddenFields.map((field) => field.key).join(", ")}
+                  </span>
+                </span>
+              }
+              variant="outlined"
+              rightIcon={<PlusCircle />}
+              className="mt-8 w-full text-left first:mt-0"
+            />
+          </FernDropdown>
+        </li>
       )}
     </ul>
   );

@@ -17,6 +17,7 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      seenSchemas: new Set(),
     });
 
     expect(converter.multipartType).toBe("file");
@@ -38,6 +39,7 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      seenSchemas: new Set(),
     });
 
     expect(converter.multipartType).toBe("files");
@@ -55,6 +57,7 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      seenSchemas: new Set(),
     });
 
     expect(converter.multipartType).toBe("property");
@@ -80,6 +83,7 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      seenSchemas: new Set(),
     });
 
     expect(converter.multipartType).toBe("file");
@@ -99,6 +103,7 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      seenSchemas: new Set(),
     });
 
     expect(converter.multipartType).toBeUndefined();
@@ -118,6 +123,7 @@ describe("MultipartFormDataPropertySchemaConverterNode", () => {
       context: mockContext,
       accessPath: [],
       pathId: "test",
+      seenSchemas: new Set(),
     });
 
     const result = converter.convert();

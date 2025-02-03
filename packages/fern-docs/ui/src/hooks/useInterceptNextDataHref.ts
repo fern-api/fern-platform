@@ -20,7 +20,12 @@ function createPageLoaderGetDataHref(
     const buildId = window.__NEXT_DATA__.buildId;
     const { pathname: hrefPathname, query, search } = parseRelativeUrl(href);
     const { pathname: asPathname } = parseRelativeUrl(asPath);
-    const route = removeTrailingSlash(hrefPathname);
+    let route = removeTrailingSlash(hrefPathname);
+
+    if (route === "") {
+      route = "/index";
+    }
+
     if (!route.startsWith("/")) {
       throw new Error(`Route name should start with a "/", got "${route}"`);
     }
@@ -30,6 +35,7 @@ function createPageLoaderGetDataHref(
         removeTrailingSlash(addLocale(path, locale)),
         ".json"
       );
+      // ->> /_next/data/development/index.json
       return addPathPrefix(
         `/_next/data/${buildId}${dataRoute}${search}`,
         basePath

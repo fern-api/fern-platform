@@ -133,6 +133,7 @@ export function sortKeysByShape(
     fileDownload: () => obj,
     streamingText: () => obj,
     stream: () => obj,
+    empty: () => obj,
     _other: () => obj,
   });
 }
@@ -153,7 +154,6 @@ export function safeSortKeysByShape(
   try {
     return stripUndefines(sortKeysByShape(value, shape, types));
   } catch (e) {
-    // eslint-disable-next-line no-console
     console.error("Failed to sort JSON keys by type shape", e);
 
     return value;

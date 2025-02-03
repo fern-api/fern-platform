@@ -42,7 +42,7 @@
     "@next/bundle-analyzer": "14.2.9",
     "@types/node": "^18.7.18",
     "@types/react": "^18",
-    "depcheck": "^1.4.3",
+    "depcheck": "^1.4.7",
     "eslint": "^9",
     "next": "npm:@fern-api/next@14.2.9-fork.2",
     "prettier": "^3.4.2",

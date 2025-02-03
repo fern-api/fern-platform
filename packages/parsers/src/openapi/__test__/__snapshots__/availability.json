@@ -1,0 +1,654 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.xFernAvailabilityPathParam": {
+      "id": "endpoint_.xFernAvailabilityPathParam",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "collection"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "id"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "active_id"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "deprecated_ref_id"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "x-fern-availability_path_param"
+        }
+      ],
+      "environments": [],
+      "pathParameters": [
+        {
+          "key": "id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "collection id"
+        },
+        {
+          "key": "active_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "active header"
+        },
+        {
+          "key": "deprecated_ref_id",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "DeprecatedParam"
+            }
+          },
+          "availability": "Deprecated"
+        },
+        {
+          "key": "x-fern-availability_path_param",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "active beta header"
+        }
+      ],
+      "queryParameters": [
+        {
+          "key": "deprecated_lang",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "language code"
+        },
+        {
+          "key": "active_lang",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "language code"
+        },
+        {
+          "key": "deprecated_ref_lang",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "DeprecatedParam"
+                }
+              }
+            }
+          },
+          "availability": "Deprecated"
+        },
+        {
+          "key": "x-fern-availability_query_param",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "active beta query param"
+        }
+      ],
+      "requestHeaders": [
+        {
+          "key": "X-Deprecated-Header",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "deprecated header"
+        },
+        {
+          "key": "X-Active-Header",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "active header"
+        },
+        {
+          "key": "X-Deprecated-Ref-Header",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "DeprecatedParam"
+                }
+              }
+            }
+          },
+          "availability": "Deprecated"
+        },
+        {
+          "key": "x-fern-availability_header",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "active beta header"
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "WholeDeprecatedSettings"
+            }
+          },
+          "description": "OK"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "id": "string",
+            "active_id": "string",
+            "deprecated_ref_id": "string",
+            "x-fern-availability_path_param": "string"
+          },
+          "queryParameters": {
+            "deprecated_lang": "string",
+            "active_lang": "string",
+            "deprecated_ref_lang": "string",
+            "x-fern-availability_query_param": "string"
+          },
+          "headers": {
+            "X-Deprecated-Header": "string",
+            "X-Active-Header": "string",
+            "X-Deprecated-Ref-Header": "string",
+            "x-fern-availability_header": "string"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "fine_setting": false
+            }
+          }
+        }
+      ]
+    },
+    "endpoint_.successRef": {
+      "id": "endpoint_.successRef",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "success-ref"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Settings"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "NotDeprecatedSettings"
+            }
+          },
+          "description": "OK"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/success-ref",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "not_deprecated_setting": false
+            }
+          }
+        }
+      ]
+    },
+    "endpoint_.successInlinePropertyDeprecation": {
+      "id": "endpoint_.successInlinePropertyDeprecation",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "success-inline-property-deprecation"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "deprecated_setting",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "availability": "Deprecated"
+              },
+              {
+                "key": "new_setting",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "NotDeprecatedSettings"
+            }
+          },
+          "description": "OK"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/success-inline-property-deprecation",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "not_deprecated_setting": false
+            }
+          }
+        }
+      ]
+    },
+    "endpoint_.successInlineObjectDeprecation": {
+      "id": "endpoint_.successInlineObjectDeprecation",
+      "availability": "Deprecated",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "success-inline-object-deprecation"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "fine_setting",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "NotDeprecatedSettings"
+            }
+          },
+          "description": "OK"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/success-inline-object-deprecation",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "not_deprecated_setting": false
+            }
+          }
+        }
+      ]
+    },
+    "endpoint_.successInlineBetaBody": {
+      "id": "endpoint_.successInlineBetaBody",
+      "availability": "Beta",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "success-inline-beta-body"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "fine_setting",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "NotDeprecatedSettings"
+            }
+          },
+          "description": "OK"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/success-inline-beta-body",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "not_deprecated_setting": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "DeprecatedParam": {
+      "name": "DeprecatedParam",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "name": "Settings",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "deprecated_setting",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "availability": "Deprecated"
+          },
+          {
+            "key": "new_setting",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "WholeDeprecatedSettings": {
+      "name": "WholeDeprecatedSettings",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "fine_setting",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "NotDeprecatedSettings": {
+      "name": "NotDeprecatedSettings",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "not_deprecated_setting",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

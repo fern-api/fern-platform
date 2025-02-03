@@ -1,0 +1,100 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.users": {
+      "id": "endpoint_.users",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "v1"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "users"
+        }
+      ],
+      "defaultEnvironment": "production",
+      "environments": [
+        {
+          "id": "production",
+          "baseUrl": "https://api.com"
+        },
+        {
+          "id": "sandbox",
+          "baseUrl": "https://private.api.com"
+        }
+      ],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "public_property",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "private_property",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "BaseUser": {
+      "name": "BaseUser",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

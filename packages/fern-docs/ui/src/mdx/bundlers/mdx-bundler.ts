@@ -33,15 +33,15 @@ import type { FernSerializeMdxOptions } from "../types";
 /**
  * Should only be invoked server-side.
  */
-export async function serializeMdx(
+async function serializeMdxImpl(
   content: string,
   options?: FernSerializeMdxOptions
 ): Promise<FernDocs.MarkdownText>;
-export async function serializeMdx(
+async function serializeMdxImpl(
   content: string | undefined,
   options?: FernSerializeMdxOptions
 ): Promise<FernDocs.MarkdownText | undefined>;
-export async function serializeMdx(
+async function serializeMdxImpl(
   content: string | undefined,
   {
     options = {},
@@ -84,113 +84,135 @@ export async function serializeMdx(
     }
   }
 
-  try {
-    const bundled = await bundleMDX<FernDocs.Frontmatter>({
-      source: content,
-      files: mapKeys(files ?? {}, (_file, filename) => {
-        if (cwd != null) {
-          return path.relative(cwd, filename);
-        }
-        return filename;
-      }),
+  const bundled = await bundleMDX<FernDocs.Frontmatter>({
+    source: content,
+    files: mapKeys(files ?? {}, (_file, filename) => {
+      if (cwd != null) {
+        return path.relative(cwd, filename);
+      }
+      return filename;
+    }),
 
-      globals: {
-        "@mdx-js/react": {
-          varName: "MdxJsReact",
-          namedExports: ["useMDXComponents"],
-          defaultExport: false,
+    globals: {
+      "@mdx-js/react": {
+        varName: "MdxJsReact",
+        namedExports: ["useMDXComponents"],
+        defaultExport: false,
+      },
+    },
+
+    mdxOptions: (o: Options, frontmatter) => {
+      o.remarkRehypeOptions = {
+        ...o.remarkRehypeOptions,
+        ...options,
+        handlers: {
+          ...o.remarkRehypeOptions?.handlers,
+          heading: customHeadingHandler,
+          ...options?.remarkRehypeOptions?.handlers,
         },
-      },
+      };
 
-      mdxOptions: (o: Options, frontmatter) => {
-        o.remarkRehypeOptions = {
-          ...o.remarkRehypeOptions,
-          ...options,
-          handlers: {
-            ...o.remarkRehypeOptions?.handlers,
-            heading: customHeadingHandler,
-            ...options?.remarkRehypeOptions?.handlers,
-          },
-        };
+      o.providerImportSource = "@mdx-js/react";
 
-        o.providerImportSource = "@mdx-js/react";
+      const remarkPlugins: PluggableList = [
+        [remarkExtractTitle, { frontmatter }],
+        remarkSqueezeParagraphs,
+        remarkSanitizeAcorn,
+        remarkGfm,
+        remarkSmartypants,
+        remarkMath,
+        remarkGemoji,
+      ];
 
-        const remarkPlugins: PluggableList = [
-          [remarkExtractTitle, { frontmatter }],
-          remarkSqueezeParagraphs,
-          remarkSanitizeAcorn,
-          remarkGfm,
-          remarkSmartypants,
-          remarkMath,
-          remarkGemoji,
-        ];
+      if (options?.remarkPlugins != null) {
+        remarkPlugins.push(...options.remarkPlugins);
+      }
 
-        if (options?.remarkPlugins != null) {
-          remarkPlugins.push(...options.remarkPlugins);
-        }
+      o.remarkPlugins = [
+        ...(o.remarkPlugins ?? []),
+        ...remarkPlugins,
+        ...(options?.remarkPlugins ?? []),
+      ];
 
-        o.remarkPlugins = [
-          ...(o.remarkPlugins ?? []),
-          ...remarkPlugins,
-          ...(options?.remarkPlugins ?? []),
-        ];
+      const rehypePlugins: PluggableList = [
+        rehypeSqueezeParagraphs,
+        rehypeMdxClassStyle,
+        [rehypeFiles, { replaceSrc }],
+        rehypeAcornErrorBoundary,
+        rehypeSlug,
+        rehypeKatex,
+        rehypeFernCode,
+        rehypeFernComponents,
+        // always extract asides at the end
+        rehypeExtractAsides,
+      ];
 
-        const rehypePlugins: PluggableList = [
-          rehypeSqueezeParagraphs,
-          rehypeMdxClassStyle,
-          [rehypeFiles, { replaceSrc }],
-          rehypeAcornErrorBoundary,
-          rehypeSlug,
-          rehypeKatex,
-          rehypeFernCode,
-          rehypeFernComponents,
-          // always extract asides at the end
-          rehypeExtractAsides,
-        ];
+      if (options?.rehypePlugins != null) {
+        rehypePlugins.push(...options.rehypePlugins);
+      }
 
-        if (options?.rehypePlugins != null) {
-          rehypePlugins.push(...options.rehypePlugins);
-        }
+      o.rehypePlugins = [
+        ...(o.rehypePlugins ?? []),
+        ...rehypePlugins,
+        ...(options?.rehypePlugins ?? []),
+      ];
 
-        o.rehypePlugins = [
-          ...(o.rehypePlugins ?? []),
-          ...rehypePlugins,
-          ...(options?.rehypePlugins ?? []),
-        ];
+      o.recmaPlugins = [
+        ...(o.recmaPlugins ?? []),
+        ...(options?.recmaPlugins ?? []),
+      ];
 
-        o.recmaPlugins = [
-          ...(o.recmaPlugins ?? []),
-          ...(options?.recmaPlugins ?? []),
-        ];
+      o.development = options.development ?? o.development;
 
-        o.development = options.development ?? o.development;
+      return o;
+    },
 
-        return o;
-      },
+    esbuildOptions: (o) => {
+      o.minify = process.env.NODE_ENV === "production";
+      return o;
+    },
+  });
 
-      esbuildOptions: (o) => {
-        o.minify = process.env.NODE_ENV === "production";
-        return o;
-      },
+  if (bundled.errors.length > 0) {
+    bundled.errors.forEach((error) => {
+      console.error(error);
     });
-
-    if (bundled.errors.length > 0) {
-      bundled.errors.forEach((error) => {
-        console.error(error);
-      });
-    }
-
-    // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
-    const { jsxElements } = toTree(content, { sanitize: false });
-    return {
-      engine: "mdx-bundler",
-      code: bundled.code,
-      frontmatter: bundled.frontmatter,
-      scope,
-      jsxRefs: jsxElements,
-    };
-  } catch (e) {
-    console.error(e);
-    return content;
   }
+
+  // TODO: this is doing duplicate work; figure out how to combine it with the compiler above.
+  const { jsxElements } = toTree(content, { sanitize: false });
+  return {
+    engine: "mdx-bundler",
+    code: bundled.code,
+    frontmatter: bundled.frontmatter,
+    scope,
+    jsxRefs: jsxElements,
+  };
+}
+
+export async function serializeMdx(
+  content: string,
+  options?: FernSerializeMdxOptions
+): Promise<FernDocs.MarkdownText>;
+export async function serializeMdx(
+  content: string | undefined,
+  options?: FernSerializeMdxOptions
+): Promise<FernDocs.MarkdownText | undefined>;
+export async function serializeMdx(
+  content: string | undefined,
+  options?: FernSerializeMdxOptions
+): Promise<FernDocs.MarkdownText | undefined> {
+  let attempts = 0;
+  while (attempts < 3) {
+    try {
+      return await serializeMdxImpl(content, options);
+    } catch (e) {
+      // TODO: emit this error to Sentry
+      console.error(e);
+    }
+    attempts++;
+    // exponential backoff
+    await new Promise((resolve) => setTimeout(resolve, 1000 * attempts));
+  }
+  return content;
 }

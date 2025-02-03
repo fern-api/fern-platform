@@ -52,7 +52,10 @@ export const FernImage = forwardRef<
 
   // nextjs requires a strict allowlist of hosts for <Image>
   // so we'll fall back to <img> if the host is not in the allowlist (or if no custom loader is provided)
-  if ((!host || !NEXT_IMAGE_HOSTS.includes(host)) && !loader) {
+  if (
+    ((!host || !NEXT_IMAGE_HOSTS.includes(host)) && !loader) ||
+    (!width && !height)
+  ) {
     return (
       <img
         ref={ref}
@@ -67,8 +70,6 @@ export const FernImage = forwardRef<
         // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
         style={{
           aspectRatio,
-          width: props.style?.width == null ? "100%" : "auto",
-          height: "auto",
           ...props.style,
         }}
       />
@@ -107,8 +108,6 @@ export const FernImage = forwardRef<
       // which causes the image height to be ignored. we'll use the inline style prop to override this behavior:
       style={{
         aspectRatio,
-        width: props.style?.width == null ? "100%" : "auto",
-        height: "auto",
         ...props.style,
       }}
     />

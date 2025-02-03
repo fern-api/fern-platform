@@ -19,6 +19,7 @@ describe("ReferenceConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.schemaId).toBe("Pet");
     });
@@ -32,6 +33,7 @@ describe("ReferenceConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.schemaId).toBeUndefined();
       expect(mockContext.errors.error).toHaveBeenCalledWith({
@@ -51,6 +53,7 @@ describe("ReferenceConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.convert()).toEqual({
         type: "alias",
@@ -71,6 +74,7 @@ describe("ReferenceConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.convert()).toBeUndefined();
     });

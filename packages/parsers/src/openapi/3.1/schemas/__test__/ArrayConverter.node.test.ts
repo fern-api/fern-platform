@@ -21,6 +21,7 @@ describe("ArrayConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(node.item?.typeShapeNode).toBeInstanceOf(StringConverterNode);
     });
@@ -34,6 +35,7 @@ describe("ArrayConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       expect(mockContext.errors.error).toHaveBeenCalledWith({
         message:
@@ -54,6 +56,7 @@ describe("ArrayConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const converted = node.convert();
       expect(converted).toEqual([
@@ -85,6 +88,7 @@ describe("ArrayConverterNode", () => {
         context: mockContext,
         accessPath: [],
         pathId: "test",
+        seenSchemas: new Set(),
       });
       const converted = node.convert();
       expect(mockContext.errors.error).toHaveBeenCalledWith({
