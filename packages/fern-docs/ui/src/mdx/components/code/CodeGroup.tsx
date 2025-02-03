@@ -7,7 +7,7 @@ import {
 import * as Tabs from "@radix-ui/react-tabs";
 import clsx from "clsx";
 import { useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getLanguageDisplayName } from "../../../api-reference/examples/code-example";
 import { FERN_LANGUAGE_ATOM, useEdgeFlags } from "../../../atoms";
 import { HorizontalOverflowMask } from "../../../components/HorizontalOverflowMask";
@@ -28,18 +28,20 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
   const { isDarkCodeEnabled } = useEdgeFlags();
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
   const [selectedLanguage, setSelectedLanguage] = useAtom(FERN_LANGUAGE_ATOM);
+  const itemsRef = useRef(items);
+  itemsRef.current = items; // Update ref on each render
 
   useEffect(() => {
     if (selectedLanguage) {
-      const matchingTab = items.find((item) => {
+      const matchingTab = itemsRef.current.find((item) => {
         const normalizedLanguage = ApiDefinition.cleanLanguage(item.language);
         return item.language && normalizedLanguage === selectedLanguage;
       });
 
       if (matchingTab) {
-        const newIndex = items.indexOf(matchingTab);
+        const newIndex = itemsRef.current.indexOf(matchingTab);
         setSelectedTabIndex((prevIndex) => {
-          const prevTab = items[prevIndex];
+          const prevTab = itemsRef.current[prevIndex];
           if (
             prevTab?.language &&
             ApiDefinition.cleanLanguage(prevTab.language) === selectedLanguage
@@ -56,7 +58,7 @@ export const CodeGroup: React.FC<React.PropsWithChildren<CodeGroup.Props>> = ({
     const newIndex = parseInt(value, 10);
     setSelectedTabIndex(newIndex);
 
-    const tab = items[newIndex];
+    const tab = itemsRef.current[newIndex];
     const normalizedLanguage = tab?.language
       ? ApiDefinition.cleanLanguage(tab.language)
       : undefined;
