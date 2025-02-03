@@ -1,0 +1,39 @@
+[
+  {
+    "message": "Circular or deeply nested schema found, terminating",
+    "path": [
+      "paths",
+      "/test",
+      "post",
+      "requestBody",
+      "content",
+      "schema.metadata",
+    ],
+  },
+  {
+    "message": "Circular or deeply nested schema found, terminating",
+    "path": [
+      "paths",
+      "/test",
+      "post",
+      "requestBody",
+      "content",
+      "schema.filename",
+    ],
+  },
+  {
+    "message": "Circular or deeply nested schema found, terminating",
+    "path": [
+      "paths",
+      "/test",
+      "post",
+      "requestBody",
+      "content",
+      "schema.file",
+    ],
+  },
+  {
+    "message": "Expected 'components' property to be specified",
+    "path": [],
+  },
+]

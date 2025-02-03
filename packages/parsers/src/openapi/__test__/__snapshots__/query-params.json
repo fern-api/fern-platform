@@ -1,1 +1,261 @@
-undefined
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.search": {
+      "id": "endpoint_.search",
+      "operationId": "search",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "search"
+        }
+      ],
+      "environments": [],
+      "queryParameters": [
+        {
+          "key": "filter",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "name",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "age",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "location",
+                    "valueShape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "city",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "key": "country",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "key": "coordinates",
+                          "valueShape": {
+                            "type": "object",
+                            "extends": [],
+                            "properties": [
+                              {
+                                "key": "latitude",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double"
+                                    }
+                                  }
+                                }
+                              },
+                              {
+                                "key": "longitude",
+                                "valueShape": {
+                                  "type": "alias",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double"
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "key": "sort",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "enum",
+                "values": [
+                  {
+                    "value": "asc"
+                  },
+                  {
+                    "value": "desc"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "key": "limit",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "key": "tags",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "optional",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "list",
+                  "itemShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "results",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Successful response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/search",
+          "responseStatusCode": 200,
+          "queryParameters": {
+            "filter": {
+              "name": "string",
+              "age": 0,
+              "location": {
+                "city": "string",
+                "country": "string",
+                "coordinates": {
+                  "latitude": 0,
+                  "longitude": 0
+                }
+              }
+            },
+            "sort": "asc",
+            "limit": 0,
+            "tags": [
+              "string"
+            ]
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "results": [
+                "string"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {}
+}

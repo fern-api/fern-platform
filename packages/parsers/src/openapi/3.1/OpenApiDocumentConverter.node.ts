@@ -150,10 +150,6 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     const types = this.components?.convert();
 
-    if (types == null) {
-      return undefined;
-    }
-
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),
       endpoints: endpoints ?? {},
@@ -163,9 +159,12 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
         ...(this.webhooks?.convert() ?? {}),
         ...(webhookEndpoints ?? {}),
       },
-      types: Object.fromEntries(
-        Object.entries(types).map(([id, type]) => [id, type])
-      ),
+      types:
+        types != null
+          ? Object.fromEntries(
+              Object.entries(types).map(([id, type]) => [id, type])
+            )
+          : {},
       // This is not necessary and will be removed
       subpackages,
       auths: this.auth?.convert() ?? {},
