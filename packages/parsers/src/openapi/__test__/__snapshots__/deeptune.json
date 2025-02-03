@@ -546,7 +546,15 @@
           "description": "The ID of the voice to delete"
         }
       ],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 204,
+          "body": {
+            "type": "empty"
+          },
+          "description": "Successful deletion"
+        }
+      ],
       "errors": [],
       "examples": []
     }

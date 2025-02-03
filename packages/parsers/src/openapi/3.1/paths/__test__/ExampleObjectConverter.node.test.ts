@@ -51,7 +51,7 @@ describe("ExampleObjectConverterNode", () => {
             fields: {
               file: { multipartType: "file" },
             },
-          } as RequestMediaTypeObjectConverterNode,
+          } as unknown as RequestMediaTypeObjectConverterNode,
           responseBody: undefined,
         }
       );

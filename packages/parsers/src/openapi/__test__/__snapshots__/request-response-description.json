@@ -1,0 +1,64 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.example": {
+      "id": "endpoint_.example",
+      "displayName": "Get Example",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "example"
+        }
+      ],
+      "environments": [],
+      "responses": [],
+      "errors": [],
+      "examples": []
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "Schema1": {
+      "name": "Schema1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "key": "name",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "description": "Schema 1 description"
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}

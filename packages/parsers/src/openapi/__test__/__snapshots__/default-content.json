@@ -1,0 +1,106 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_generativelanguage.GenerateContent": {
+      "id": "endpoint_generativelanguage.GenerateContent",
+      "namespace": [
+        "generativelanguage"
+      ],
+      "operationId": "GenerateContent",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "generateContent"
+        }
+      ],
+      "defaultEnvironment": "https://ai.com",
+      "environments": [
+        {
+          "id": "https://ai.com",
+          "baseUrl": "https://ai.com"
+        }
+      ],
+      "pathParameters": [
+        {
+          "key": "model",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": null,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "GenerateContentResponse"
+            }
+          },
+          "description": "Successful operation"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/generateContent",
+          "responseStatusCode": null,
+          "pathParameters": {
+            "model": "string"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "bar": "string"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "GenerateContentResponse": {
+      "name": "GenerateContentResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "bar",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "generativelanguage": {
+      "id": "generativelanguage",
+      "name": "generativelanguage",
+      "displayName": "generativelanguage"
+    }
+  },
+  "auths": {}
+}

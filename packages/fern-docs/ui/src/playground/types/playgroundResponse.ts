@@ -10,6 +10,14 @@ export declare namespace PlaygroundResponse {
     time: number;
   }
 
+  export interface String {
+    type: "string";
+    response: ProxyResponse.SerializableBody;
+    contentType: string;
+    time: number;
+    size: string | null;
+  }
+
   export interface Json {
     type: "json";
     response: ProxyResponse.SerializableBody;
@@ -30,4 +38,5 @@ export declare namespace PlaygroundResponse {
 export type PlaygroundResponse =
   | PlaygroundResponse.Stream
   | PlaygroundResponse.Json
+  | PlaygroundResponse.String
   | PlaygroundResponse.File;

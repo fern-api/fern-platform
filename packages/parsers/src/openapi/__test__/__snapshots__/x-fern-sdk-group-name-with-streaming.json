@@ -1,0 +1,176 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_user.get": {
+      "id": "endpoint_user.get",
+      "namespace": [
+        "user"
+      ],
+      "operationId": "get",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "user"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "userId"
+        }
+      ],
+      "environments": [],
+      "pathParameters": [
+        {
+          "key": "userId",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "stream",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Success!"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/user/{userId}",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "userId": "string"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ]
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "User": {
+      "name": "User",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "streamed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "StreamUser": {
+      "name": "StreamUser",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "streamed",
+            "valueShape": {
+              "type": "alias",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "user": {
+      "id": "user",
+      "name": "user",
+      "displayName": "user"
+    }
+  },
+  "auths": {}
+}

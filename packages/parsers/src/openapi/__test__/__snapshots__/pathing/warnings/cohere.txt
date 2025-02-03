@@ -1,5 +1,27 @@
 [
   {
+    "message": "Circular or deeply nested schema found, terminating",
+    "path": [
+      "paths",
+      "/v1/datasets",
+      "post",
+      "requestBody",
+      "content",
+      "schema.data",
+    ],
+  },
+  {
+    "message": "Circular or deeply nested schema found, terminating",
+    "path": [
+      "paths",
+      "/v1/datasets",
+      "post",
+      "requestBody",
+      "content",
+      "schema.eval_data",
+    ],
+  },
+  {
     "message": "Expected format to be one of decimal, decimal128, double-int, double, float, sf-decimal. Received int64",
     "path": [
       "paths",
@@ -21,7 +43,9 @@
       "content",
       "application/json",
       "type",
+      "ListConnectorsResponse",
       "items",
+      "Connector",
     ],
   },
   {
@@ -34,6 +58,8 @@
       "content",
       "application/json",
       "type",
+      "CreateConnectorResponse",
+      "Connector",
     ],
   },
   {
@@ -46,6 +72,8 @@
       "content",
       "application/json",
       "type",
+      "GetConnectorResponse",
+      "Connector",
     ],
   },
   {
@@ -58,6 +86,8 @@
       "content",
       "application/json",
       "type",
+      "UpdateConnectorResponse",
+      "Connector",
     ],
   },
   {

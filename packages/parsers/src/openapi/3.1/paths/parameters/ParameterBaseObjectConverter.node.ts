@@ -77,6 +77,7 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
       context: this.context,
       accessPath: this.accessPath,
       pathId: "schema",
+      seenSchemas: new Set(),
     });
 
     // TODO: support multiple examples

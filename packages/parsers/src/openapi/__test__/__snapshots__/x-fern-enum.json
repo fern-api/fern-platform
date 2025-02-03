@@ -1,0 +1,22 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {
+    "SpeechModel": {
+      "name": "SpeechModel",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "nano"
+          }
+        ]
+      },
+      "description": "The speech model to use for the transcription."
+    }
+  },
+  "subpackages": {},
+  "auths": {}
+}
