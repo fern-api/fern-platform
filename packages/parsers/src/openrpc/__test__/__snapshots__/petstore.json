@@ -82,6 +82,10 @@
   },
   "endpoints": {
     "list_pets": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "list_pets"
+      },
       "id": "list_pets",
       "displayName": "list_pets",
       "method": "POST",
@@ -160,12 +164,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "list_pets",
-              "params": {
-                "limit": 1
-              }
+              "limit": 1
             }
           },
           "responseStatusCode": 200,
@@ -199,6 +198,10 @@
       ]
     },
     "create_pet": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "create_pet"
+      },
       "id": "create_pet",
       "displayName": "create_pet",
       "method": "POST",
@@ -289,13 +292,8 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "create_pet",
-              "params": {
-                "newPetName": "fluffy",
-                "tag": "poodle"
-              }
+              "newPetName": "fluffy",
+              "tag": "poodle"
             }
           },
           "responseStatusCode": 200,
@@ -323,6 +321,10 @@
       ]
     },
     "get_pet": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "get_pet"
+      },
       "id": "get_pet",
       "displayName": "get_pet",
       "method": "POST",
@@ -392,12 +394,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "get_pet",
-              "params": {
-                "petId": 7
-              }
+              "petId": 7
             }
           },
           "responseStatusCode": 200,

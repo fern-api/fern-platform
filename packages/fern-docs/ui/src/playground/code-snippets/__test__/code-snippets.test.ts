@@ -40,6 +40,7 @@ describe("PlaygroundCodeSnippetBuilder", () => {
   const endpoint: EndpointDefinition = {
     id: EndpointId(""),
     auth: undefined,
+    protocol: undefined,
     availability: undefined,
     defaultEnvironment: EnvironmentId("Prod"),
     environments: [

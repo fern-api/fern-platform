@@ -1283,6 +1283,10 @@
   },
   "endpoints": {
     "web3_clientVersion": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "web3_clientVersion"
+      },
       "id": "web3_clientVersion",
       "displayName": "web3_clientVersion",
       "method": "POST",
@@ -1336,12 +1340,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "web3_clientVersion",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "web3_clientVersion",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -1358,6 +1357,10 @@
       "responseHeaders": []
     },
     "web3_sha3": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "web3_sha3"
+      },
       "id": "web3_sha3",
       "displayName": "web3_sha3",
       "method": "POST",
@@ -1437,12 +1440,7 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "web3_sha3",
-              "params": {
-                "sha3ParamExample": "0x68656c6c6f20776f726c64"
-              }
+              "sha3ParamExample": "0x68656c6c6f20776f726c64"
             }
           },
           "responseStatusCode": 200,
@@ -1462,6 +1460,10 @@
       "responseHeaders": []
     },
     "net_listening": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "net_listening"
+      },
       "id": "net_listening",
       "displayName": "net_listening",
       "method": "POST",
@@ -1509,14 +1511,6 @@
           "pathParameters": {},
           "queryParameters": {},
           "headers": {},
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "net_listening"
-            }
-          },
           "responseStatusCode": 200,
           "responseBody": {
             "type": "json",
@@ -1534,6 +1528,10 @@
       "responseHeaders": []
     },
     "net_peerCount": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "net_peerCount"
+      },
       "id": "net_peerCount",
       "displayName": "net_peerCount",
       "method": "POST",
@@ -1587,12 +1585,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "net_peerCount",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "net_peerCount",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -1609,6 +1602,10 @@
       "responseHeaders": []
     },
     "net_version": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "net_version"
+      },
       "id": "net_version",
       "displayName": "net_version",
       "method": "POST",
@@ -1663,12 +1660,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "net_version",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "net_version",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -1685,6 +1677,10 @@
       "responseHeaders": []
     },
     "eth_blockNumber": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_blockNumber"
+      },
       "id": "eth_blockNumber",
       "displayName": "eth_blockNumber",
       "method": "POST",
@@ -1735,12 +1731,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_blockNumber",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_blockNumber",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -1756,6 +1747,10 @@
       "responseHeaders": []
     },
     "eth_call": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_call"
+      },
       "id": "eth_call",
       "displayName": "eth_call",
       "method": "POST",
@@ -1837,12 +1832,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_call",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_call",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -1858,6 +1848,10 @@
       "responseHeaders": []
     },
     "eth_chainId": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_chainId"
+      },
       "id": "eth_chainId",
       "displayName": "eth_chainId",
       "method": "POST",
@@ -1912,12 +1906,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_chainId",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_chainId",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -1934,6 +1923,10 @@
       "responseHeaders": []
     },
     "eth_coinbase": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_coinbase"
+      },
       "id": "eth_coinbase",
       "displayName": "eth_coinbase",
       "method": "POST",
@@ -1984,12 +1977,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_coinbase",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_coinbase",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2005,6 +1993,10 @@
       "responseHeaders": []
     },
     "eth_estimateGas": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_estimateGas"
+      },
       "id": "eth_estimateGas",
       "displayName": "eth_estimateGas",
       "method": "POST",
@@ -2076,12 +2068,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_estimateGas",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_estimateGas",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2097,6 +2084,10 @@
       "responseHeaders": []
     },
     "eth_gasPrice": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_gasPrice"
+      },
       "id": "eth_gasPrice",
       "displayName": "eth_gasPrice",
       "method": "POST",
@@ -2147,12 +2138,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_gasPrice",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_gasPrice",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2168,6 +2154,10 @@
       "responseHeaders": []
     },
     "eth_getBalance": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getBalance"
+      },
       "id": "eth_getBalance",
       "displayName": "eth_getBalance",
       "method": "POST",
@@ -2257,12 +2247,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBalance",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBalance",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2278,6 +2263,10 @@
       "responseHeaders": []
     },
     "eth_getBlockByHash": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getBlockByHash"
+      },
       "id": "eth_getBlockByHash",
       "displayName": "eth_getBlockByHash",
       "method": "POST",
@@ -2363,12 +2352,7 @@
               "jsonrpc": "2.0",
               "method": "eth_getBlockByHash",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockByHash",
-                "params": {
-                  "includeTransactions": false
-                }
+                "includeTransactions": false
               }
             }
           },
@@ -2385,6 +2369,10 @@
       "responseHeaders": []
     },
     "eth_getBlockByNumber": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getBlockByNumber"
+      },
       "id": "eth_getBlockByNumber",
       "displayName": "eth_getBlockByNumber",
       "method": "POST",
@@ -2470,12 +2458,7 @@
               "jsonrpc": "2.0",
               "method": "eth_getBlockByNumber",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockByNumber",
-                "params": {
-                  "includeTransactions": false
-                }
+                "includeTransactions": false
               }
             }
           },
@@ -2492,6 +2475,10 @@
       "responseHeaders": []
     },
     "eth_getBlockTransactionCountByHash": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getBlockTransactionCountByHash"
+      },
       "id": "eth_getBlockTransactionCountByHash",
       "displayName": "eth_getBlockTransactionCountByHash",
       "method": "POST",
@@ -2563,12 +2550,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBlockTransactionCountByHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockTransactionCountByHash",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2584,6 +2566,10 @@
       "responseHeaders": []
     },
     "eth_getBlockTransactionCountByNumber": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getBlockTransactionCountByNumber"
+      },
       "id": "eth_getBlockTransactionCountByNumber",
       "displayName": "eth_getBlockTransactionCountByNumber",
       "method": "POST",
@@ -2655,12 +2641,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getBlockTransactionCountByNumber",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getBlockTransactionCountByNumber",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2676,6 +2657,10 @@
       "responseHeaders": []
     },
     "eth_getCode": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getCode"
+      },
       "id": "eth_getCode",
       "displayName": "eth_getCode",
       "method": "POST",
@@ -2765,12 +2750,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getCode",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getCode",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2786,6 +2766,10 @@
       "responseHeaders": []
     },
     "eth_getFilterChanges": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getFilterChanges"
+      },
       "id": "eth_getFilterChanges",
       "displayName": "eth_getFilterChanges",
       "method": "POST",
@@ -2863,12 +2847,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getFilterChanges",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getFilterChanges",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2887,6 +2866,10 @@
       "responseHeaders": []
     },
     "eth_getFilterLogs": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getFilterLogs"
+      },
       "id": "eth_getFilterLogs",
       "displayName": "eth_getFilterLogs",
       "method": "POST",
@@ -2964,12 +2947,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getFilterLogs",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getFilterLogs",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -2988,6 +2966,10 @@
       "responseHeaders": []
     },
     "eth_getRawTransactionByHash": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getRawTransactionByHash"
+      },
       "id": "eth_getRawTransactionByHash",
       "displayName": "eth_getRawTransactionByHash",
       "method": "POST",
@@ -3059,12 +3041,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getRawTransactionByHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getRawTransactionByHash",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3080,6 +3057,10 @@
       "responseHeaders": []
     },
     "eth_getRawTransactionByBlockHashAndIndex": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getRawTransactionByBlockHashAndIndex"
+      },
       "id": "eth_getRawTransactionByBlockHashAndIndex",
       "displayName": "eth_getRawTransactionByBlockHashAndIndex",
       "method": "POST",
@@ -3162,12 +3143,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getRawTransactionByBlockHashAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getRawTransactionByBlockHashAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3183,6 +3159,10 @@
       "responseHeaders": []
     },
     "eth_getRawTransactionByBlockNumberAndIndex": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getRawTransactionByBlockNumberAndIndex"
+      },
       "id": "eth_getRawTransactionByBlockNumberAndIndex",
       "displayName": "eth_getRawTransactionByBlockNumberAndIndex",
       "method": "POST",
@@ -3265,12 +3245,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getRawTransactionByBlockNumberAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getRawTransactionByBlockNumberAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3286,6 +3261,10 @@
       "responseHeaders": []
     },
     "eth_getLogs": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getLogs"
+      },
       "id": "eth_getLogs",
       "displayName": "eth_getLogs",
       "method": "POST",
@@ -3403,12 +3382,7 @@
               "jsonrpc": "2.0",
               "method": "eth_getLogs",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getLogs",
-                "params": {
-                  "filter": {}
-                }
+                "filter": {}
               }
             }
           },
@@ -3428,6 +3402,10 @@
       "responseHeaders": []
     },
     "eth_getStorageAt": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getStorageAt"
+      },
       "id": "eth_getStorageAt",
       "displayName": "eth_getStorageAt",
       "method": "POST",
@@ -3519,12 +3497,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getStorageAt",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getStorageAt",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3540,6 +3513,10 @@
       "responseHeaders": []
     },
     "eth_getTransactionByBlockHashAndIndex": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getTransactionByBlockHashAndIndex"
+      },
       "id": "eth_getTransactionByBlockHashAndIndex",
       "displayName": "eth_getTransactionByBlockHashAndIndex",
       "method": "POST",
@@ -3625,13 +3602,8 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getTransactionByBlockHashAndIndex",
-              "params": {
-                "blockHashExample": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
-                "indexExample": "0x0"
-              }
+              "blockHashExample": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+              "indexExample": "0x0"
             }
           },
           "responseStatusCode": 200,
@@ -3651,6 +3623,10 @@
       "responseHeaders": []
     },
     "eth_getTransactionByBlockNumberAndIndex": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getTransactionByBlockNumberAndIndex"
+      },
       "id": "eth_getTransactionByBlockNumberAndIndex",
       "displayName": "eth_getTransactionByBlockNumberAndIndex",
       "method": "POST",
@@ -3739,12 +3715,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionByBlockNumberAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionByBlockNumberAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3760,6 +3731,10 @@
       "responseHeaders": []
     },
     "eth_getTransactionByHash": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getTransactionByHash"
+      },
       "id": "eth_getTransactionByHash",
       "displayName": "eth_getTransactionByHash",
       "method": "POST",
@@ -3837,12 +3812,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionByHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionByHash",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3858,6 +3828,10 @@
       "responseHeaders": []
     },
     "eth_getTransactionCount": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getTransactionCount"
+      },
       "id": "eth_getTransactionCount",
       "displayName": "eth_getTransactionCount",
       "method": "POST",
@@ -3945,12 +3919,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionCount",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionCount",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -3966,6 +3935,10 @@
       "responseHeaders": []
     },
     "eth_getTransactionReceipt": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getTransactionReceipt"
+      },
       "id": "eth_getTransactionReceipt",
       "displayName": "eth_getTransactionReceipt",
       "method": "POST",
@@ -4043,12 +4016,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getTransactionReceipt",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getTransactionReceipt",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4064,6 +4032,10 @@
       "responseHeaders": []
     },
     "eth_getUncleByBlockHashAndIndex": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getUncleByBlockHashAndIndex"
+      },
       "id": "eth_getUncleByBlockHashAndIndex",
       "displayName": "eth_getUncleByBlockHashAndIndex",
       "method": "POST",
@@ -4146,12 +4118,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getUncleByBlockHashAndIndex",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getUncleByBlockHashAndIndex",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4167,6 +4134,10 @@
       "responseHeaders": []
     },
     "eth_getUncleByBlockNumberAndIndex": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getUncleByBlockNumberAndIndex"
+      },
       "id": "eth_getUncleByBlockNumberAndIndex",
       "displayName": "eth_getUncleByBlockNumberAndIndex",
       "method": "POST",
@@ -4247,13 +4218,8 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_getUncleByBlockNumberAndIndex",
-              "params": {
-                "uncleBlockNumberExample": "0x0",
-                "uncleBlockNumberIndexExample": "0x0"
-              }
+              "uncleBlockNumberExample": "0x0",
+              "uncleBlockNumberIndexExample": "0x0"
             }
           },
           "responseStatusCode": 200,
@@ -4273,6 +4239,10 @@
       "responseHeaders": []
     },
     "eth_getUncleCountByBlockHash": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getUncleCountByBlockHash"
+      },
       "id": "eth_getUncleCountByBlockHash",
       "displayName": "eth_getUncleCountByBlockHash",
       "method": "POST",
@@ -4344,12 +4314,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getUncleCountByBlockHash",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getUncleCountByBlockHash",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4365,6 +4330,10 @@
       "responseHeaders": []
     },
     "eth_getUncleCountByBlockNumber": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getUncleCountByBlockNumber"
+      },
       "id": "eth_getUncleCountByBlockNumber",
       "displayName": "eth_getUncleCountByBlockNumber",
       "method": "POST",
@@ -4436,12 +4405,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getUncleCountByBlockNumber",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getUncleCountByBlockNumber",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4457,6 +4421,10 @@
       "responseHeaders": []
     },
     "eth_getProof": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getProof"
+      },
       "id": "eth_getProof",
       "displayName": "eth_getProof",
       "method": "POST",
@@ -4628,12 +4596,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getProof",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getProof",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4650,6 +4613,10 @@
       "responseHeaders": []
     },
     "eth_getWork": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_getWork"
+      },
       "id": "eth_getWork",
       "displayName": "eth_getWork",
       "method": "POST",
@@ -4731,12 +4698,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_getWork",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_getWork",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4757,6 +4719,10 @@
       "responseHeaders": []
     },
     "eth_hashrate": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_hashrate"
+      },
       "id": "eth_hashrate",
       "displayName": "eth_hashrate",
       "method": "POST",
@@ -4807,12 +4773,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_hashrate",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_hashrate",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4828,6 +4789,10 @@
       "responseHeaders": []
     },
     "eth_mining": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_mining"
+      },
       "id": "eth_mining",
       "displayName": "eth_mining",
       "method": "POST",
@@ -4880,12 +4845,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_mining",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_mining",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4902,6 +4862,10 @@
       "responseHeaders": []
     },
     "eth_newBlockFilter": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_newBlockFilter"
+      },
       "id": "eth_newBlockFilter",
       "displayName": "eth_newBlockFilter",
       "method": "POST",
@@ -4952,12 +4916,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_newBlockFilter",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_newBlockFilter",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -4973,6 +4932,10 @@
       "responseHeaders": []
     },
     "eth_newFilter": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_newFilter"
+      },
       "id": "eth_newFilter",
       "displayName": "eth_newFilter",
       "method": "POST",
@@ -5084,12 +5047,7 @@
               "jsonrpc": "2.0",
               "method": "eth_newFilter",
               "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_newFilter",
-                "params": {
-                  "filter": {}
-                }
+                "filter": {}
               }
             }
           },
@@ -5106,6 +5064,10 @@
       "responseHeaders": []
     },
     "eth_newPendingTransactionFilter": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_newPendingTransactionFilter"
+      },
       "id": "eth_newPendingTransactionFilter",
       "displayName": "eth_newPendingTransactionFilter",
       "method": "POST",
@@ -5156,12 +5118,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_newPendingTransactionFilter",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_newPendingTransactionFilter",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -5177,6 +5134,10 @@
       "responseHeaders": []
     },
     "eth_pendingTransactions": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_pendingTransactions"
+      },
       "id": "eth_pendingTransactions",
       "displayName": "eth_pendingTransactions",
       "method": "POST",
@@ -5227,12 +5188,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_pendingTransactions",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_pendingTransactions",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -5248,6 +5204,10 @@
       "responseHeaders": []
     },
     "eth_protocolVersion": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_protocolVersion"
+      },
       "id": "eth_protocolVersion",
       "displayName": "eth_protocolVersion",
       "method": "POST",
@@ -5298,12 +5258,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_protocolVersion",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_protocolVersion",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -5319,6 +5274,10 @@
       "responseHeaders": []
     },
     "eth_sendRawTransaction": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_sendRawTransaction"
+      },
       "id": "eth_sendRawTransaction",
       "displayName": "eth_sendRawTransaction",
       "method": "POST",
@@ -5391,12 +5350,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_sendRawTransaction",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_sendRawTransaction",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -5412,6 +5366,10 @@
       "responseHeaders": []
     },
     "eth_submitHashrate": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_submitHashrate"
+      },
       "id": "eth_submitHashrate",
       "displayName": "eth_submitHashrate",
       "method": "POST",
@@ -5496,12 +5454,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_submitHashrate",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_submitHashrate",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -5519,6 +5472,10 @@
       "responseHeaders": []
     },
     "eth_submitWork": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_submitWork"
+      },
       "id": "eth_submitWork",
       "displayName": "eth_submitWork",
       "method": "POST",
@@ -5609,14 +5566,9 @@
           "requestBody": {
             "type": "json",
             "value": {
-              "id": 1,
-              "jsonrpc": "2.0",
-              "method": "eth_submitWork",
-              "params": {
-                "nonceExample": "0x0000000000000001",
-                "powHashExample": "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
-                "mixHashExample": "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
-              }
+              "nonceExample": "0x0000000000000001",
+              "powHashExample": "0x6bf2cAE0dE3ec3ecA5E194a6C6e02cf42aADfe1C2c4Fff12E5D36C3Cf7297F22",
+              "mixHashExample": "0xD1FE5700000000000000000000000000D1FE5700000000000000000000000000"
             }
           },
           "responseStatusCode": 200,
@@ -5637,6 +5589,10 @@
       "responseHeaders": []
     },
     "eth_syncing": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_syncing"
+      },
       "id": "eth_syncing",
       "displayName": "eth_syncing",
       "method": "POST",
@@ -5741,12 +5697,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_syncing",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_syncing",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,
@@ -5763,6 +5714,10 @@
       "responseHeaders": []
     },
     "eth_uninstallFilter": {
+      "protocol": {
+        "type": "openrpc",
+        "methodName": "eth_uninstallFilter"
+      },
       "id": "eth_uninstallFilter",
       "displayName": "eth_uninstallFilter",
       "method": "POST",
@@ -5836,12 +5791,7 @@
               "id": 1,
               "jsonrpc": "2.0",
               "method": "eth_uninstallFilter",
-              "params": {
-                "id": 1,
-                "jsonrpc": "2.0",
-                "method": "eth_uninstallFilter",
-                "params": {}
-              }
+              "params": {}
             }
           },
           "responseStatusCode": 200,

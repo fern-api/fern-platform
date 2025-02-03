@@ -586,6 +586,9 @@ export class Register {
      *                             "key": "value"
      *                         }
      *                     },
+     *                     protocol: {
+     *                         type: "rest"
+     *                     },
      *                     description: "string",
      *                     availability: "Stable",
      *                     namespace: [{

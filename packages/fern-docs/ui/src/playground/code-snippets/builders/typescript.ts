@@ -27,7 +27,7 @@ console.log(body);`;
         this.#buildFetch(
           value != null
             ? indentAfter(
-                `JSON.stringify(${JSON.stringify(value, undefined, 2)})`,
+                `JSON.stringify(${JSON.stringify(this.maybeWrapJsonBody(value), undefined, 2)})`,
                 2,
                 0
               )

@@ -965,7 +965,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.storeFile": {
       "id": "endpoint_file.storeFile",
@@ -1621,7 +1624,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.deleteFileStorage": {
       "id": "endpoint_file.deleteFileStorage",
@@ -2394,7 +2400,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.fileInfo": {
       "id": "endpoint_file.fileInfo",
@@ -3378,7 +3387,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.filesStoring": {
       "id": "endpoint_file.filesStoring",
@@ -3846,7 +3858,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.filesDelete": {
       "id": "endpoint_file.filesDelete",
@@ -4314,7 +4329,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.createLocalCopy": {
       "id": "endpoint_file.createLocalCopy",
@@ -4709,7 +4727,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.createRemoteCopy": {
       "id": "endpoint_file.createRemoteCopy",
@@ -5179,7 +5200,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionExecute": {
       "id": "endpoint_addOns.awsRekognitionExecute",
@@ -5528,7 +5552,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionExecutionStatus": {
       "id": "endpoint_addOns.awsRekognitionExecutionStatus",
@@ -5822,7 +5849,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute": {
       "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute",
@@ -6171,7 +6201,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus": {
       "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
@@ -6465,7 +6498,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.ucClamavVirusScanExecute": {
       "id": "endpoint_addOns.ucClamavVirusScanExecute",
@@ -6851,7 +6887,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.ucClamavVirusScanExecutionStatus": {
       "id": "endpoint_addOns.ucClamavVirusScanExecutionStatus",
@@ -7153,7 +7192,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.removeBgExecute": {
       "id": "endpoint_addOns.removeBgExecute",
@@ -7672,7 +7714,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.removeBgExecutionStatus": {
       "id": "endpoint_addOns.removeBgExecutionStatus",
@@ -8034,7 +8079,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata._fileMetadata": {
       "id": "endpoint_fileMetadata._fileMetadata",
@@ -8374,7 +8422,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata.fileMetadataKey": {
       "id": "endpoint_fileMetadata.fileMetadataKey",
@@ -8737,7 +8788,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata.updateFileMetadataKey": {
       "id": "endpoint_fileMetadata.updateFileMetadataKey",
@@ -9242,7 +9296,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata.deleteFileMetadataKey": {
       "id": "endpoint_fileMetadata.deleteFileMetadataKey",
@@ -9470,7 +9527,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_group.groupsList": {
       "id": "endpoint_group.groupsList",
@@ -9991,7 +10051,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_group.groupInfo": {
       "id": "endpoint_group.groupInfo",
@@ -10329,7 +10392,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_group.deleteGroup": {
       "id": "endpoint_group.deleteGroup",
@@ -10589,7 +10655,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_project.projectInfo": {
       "id": "endpoint_project.projectInfo",
@@ -10915,7 +10984,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.webhooksList": {
       "id": "endpoint_webhook.webhooksList",
@@ -11212,7 +11284,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.webhookCreate": {
       "id": "endpoint_webhook.webhookCreate",
@@ -11582,7 +11657,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.updateWebhook": {
       "id": "endpoint_webhook.updateWebhook",
@@ -11969,7 +12047,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.webhookUnsubscribe": {
       "id": "endpoint_webhook.webhookUnsubscribe",
@@ -12200,7 +12281,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.documentConvertInfo": {
       "id": "endpoint_conversion.documentConvertInfo",
@@ -12657,7 +12741,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.documentConvert": {
       "id": "endpoint_conversion.documentConvert",
@@ -13122,7 +13209,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.documentConvertStatus": {
       "id": "endpoint_conversion.documentConvertStatus",
@@ -13639,7 +13729,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.videoConvert": {
       "id": "endpoint_conversion.videoConvert",
@@ -14121,7 +14214,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.videoConvertStatus": {
       "id": "endpoint_conversion.videoConvertStatus",
@@ -14653,7 +14749,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

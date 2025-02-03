@@ -31,7 +31,10 @@
         }
       ],
       "errors": [],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
