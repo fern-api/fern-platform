@@ -294,7 +294,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.successRef": {
       "id": "endpoint_.successRef",
@@ -347,7 +350,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.successInlinePropertyDeprecation": {
       "id": "endpoint_.successInlinePropertyDeprecation",
@@ -424,7 +430,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.successInlineObjectDeprecation": {
       "id": "endpoint_.successInlineObjectDeprecation",
@@ -489,7 +498,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.successInlineBetaBody": {
       "id": "endpoint_.successInlineBetaBody",
@@ -554,7 +566,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

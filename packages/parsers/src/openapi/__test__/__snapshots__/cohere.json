@@ -2300,7 +2300,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_v2.chat": {
       "id": "endpoint_v2.chat",
@@ -4539,7 +4542,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.generate": {
       "id": "endpoint_.generate",
@@ -6029,7 +6035,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.embed": {
       "id": "endpoint_.embed",
@@ -6581,7 +6590,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_v2.embed": {
       "id": "endpoint_v2.embed",
@@ -10451,7 +10463,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.list": {
       "id": "endpoint_embedJobs.list",
@@ -11002,7 +11017,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.create": {
       "id": "endpoint_embedJobs.create",
@@ -11556,7 +11574,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.get": {
       "id": "endpoint_embedJobs.get",
@@ -12129,7 +12150,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.cancel": {
       "id": "endpoint_embedJobs.cancel",
@@ -12636,7 +12660,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.rerank": {
       "id": "endpoint_.rerank",
@@ -13595,7 +13622,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_v2.rerank": {
       "id": "endpoint_v2.rerank",
@@ -14316,7 +14346,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.classify": {
       "id": "endpoint_.classify",
@@ -15250,7 +15283,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.list": {
       "id": "endpoint_datasets.list",
@@ -15917,7 +15953,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.create": {
       "id": "endpoint_datasets.create",
@@ -16638,7 +16677,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.getUsage": {
       "id": "endpoint_datasets.getUsage",
@@ -17179,7 +17221,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.get": {
       "id": "endpoint_datasets.get",
@@ -17742,7 +17787,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.delete": {
       "id": "endpoint_datasets.delete",
@@ -18277,7 +18325,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.summarize": {
       "id": "endpoint_.summarize",
@@ -19028,7 +19079,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.tokenize": {
       "id": "endpoint_.tokenize",
@@ -19786,7 +19840,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.detokenize": {
       "id": "endpoint_.detokenize",
@@ -20415,7 +20472,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.list": {
       "id": "endpoint_connectors.list",
@@ -20989,7 +21049,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.create": {
       "id": "endpoint_connectors.create",
@@ -21527,7 +21590,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.get": {
       "id": "endpoint_connectors.get",
@@ -22079,7 +22145,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.update": {
       "id": "endpoint_connectors.update",
@@ -22643,7 +22712,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.delete": {
       "id": "endpoint_connectors.delete",
@@ -23188,7 +23260,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.oAuthAuthorize": {
       "id": "endpoint_connectors.oAuthAuthorize",
@@ -23775,7 +23850,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_models.get": {
       "id": "endpoint_models.get",
@@ -24303,7 +24381,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_models.list": {
       "id": "endpoint_models.list",
@@ -24895,7 +24976,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.checkAPIKey": {
       "id": "endpoint_.checkAPIKey",
@@ -25412,7 +25496,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.ListFinetunedModels": {
       "id": "endpoint_finetuning.ListFinetunedModels",
@@ -25876,7 +25963,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.CreateFinetunedModel": {
       "id": "endpoint_finetuning.CreateFinetunedModel",
@@ -26172,7 +26262,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.GetFinetunedModel": {
       "id": "endpoint_finetuning.GetFinetunedModel",
@@ -26571,7 +26664,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.UpdateFinetunedModel": {
       "id": "endpoint_finetuning.UpdateFinetunedModel",
@@ -27051,7 +27147,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.DeleteFinetunedModel": {
       "id": "endpoint_finetuning.DeleteFinetunedModel",
@@ -27351,7 +27450,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.ListEvents": {
       "id": "endpoint_finetuning.ListEvents",
@@ -27823,7 +27925,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.ListTrainingStepMetrics": {
       "id": "endpoint_finetuning.ListTrainingStepMetrics",
@@ -28274,7 +28379,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

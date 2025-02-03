@@ -50,6 +50,7 @@ export interface SnippetHttpRequest {
     password: string;
   };
   body: SnippetHttpRequestBody | undefined;
+  protocol?: Latest.Protocol;
 }
 
 // TODO: validate that global headers are also included in the example by CLI or FDR
@@ -116,6 +117,7 @@ export function toSnippetHttpRequest(
     searchParams: example.queryParameters ?? {},
     headers: JSON.parse(JSON.stringify(headers)),
     basicAuth,
+    protocol: endpoint.protocol,
     body:
       body == null
         ? undefined

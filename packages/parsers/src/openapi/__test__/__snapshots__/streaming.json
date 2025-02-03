@@ -73,7 +73,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.user_v2": {
       "id": "endpoint_.user_v2",
@@ -147,7 +150,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.user_v3": {
       "id": "endpoint_.user_v3",
@@ -221,7 +227,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

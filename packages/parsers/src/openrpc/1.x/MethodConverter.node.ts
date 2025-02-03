@@ -202,12 +202,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
           headers: {},
           requestBody: {
             type: "json" as const,
-            value: {
-              id: 1,
-              jsonrpc: "2.0",
-              method: this.method.name,
-              params: requestBody,
-            },
+            value: requestBody,
           },
           responseStatusCode: 200,
           responseBody: {
@@ -225,25 +220,13 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
         examples.push(example);
       }
 
-      const examplesWithJsonRPCMetadata = examples.map((example) => {
-        const originalRequestBody = example.requestBody?.value;
-        return {
-          ...example,
-          requestBody: {
-            type: "json" as const,
-            value: {
-              id: 1,
-              jsonrpc: "2.0",
-              method: this.method.name,
-              params: originalRequestBody,
-            },
-          },
-        };
-      });
-
       // Convert method to HTTP endpoint
       // This is a basic implementation that needs to be expanded
       return {
+        protocol: {
+          type: "openrpc",
+          methodName: this.input.name,
+        },
         id: FernRegistry.EndpointId(this.input.name),
         displayName: this.input.name,
         method: "POST",
@@ -261,7 +244,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
               ].filter(isNonNullish)
             : [],
         errors: [],
-        examples: examplesWithJsonRPCMetadata,
+        examples,
         description: this.input.description ?? this.input.summary,
         operationId: this.input.name,
         defaultEnvironment: undefined,
