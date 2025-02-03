@@ -1,0 +1,56 @@
+{
+  "extends": "@fern-platform/configs/tsconfig/nextjs.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "strictNullChecks": true
+  },
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*", ".next/types/**/*.ts"],
+  "references": [
+    {
+      "path": "../../commons/core-utils"
+    },
+    {
+      "path": "../../commons/fdr-utils"
+    },
+    {
+      "path": "../../fdr-sdk/tsconfig.build.json"
+    },
+    {
+      "path": "../auth"
+    },
+    {
+      "path": "../cache"
+    },
+    {
+      "path": "../components"
+    },
+    {
+      "path": "../edge-config"
+    },
+    {
+      "path": "../mdx"
+    },
+    {
+      "path": "../search-server"
+    },
+    {
+      "path": "../search-utils"
+    },
+    {
+      "path": "../seo"
+    },
+    {
+      "path": "../syntax-highlighter"
+    },
+    {
+      "path": "../ui/tsconfig.build.json"
+    },
+    {
+      "path": "../utils"
+    }
+  ]
+}

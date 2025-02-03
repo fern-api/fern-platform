@@ -49,7 +49,8 @@ export default tseslint.config(
     settings: {
       next: {
         rootDir: [
-          "packages/fern-docs/bundle",
+          "packages/fern-docs/app-router-bundle",
+          "packages/fern-docs/pages-router-bundle",
           "packages/fern-docs/local-preview-bundle",
           "packages/fern-docs/search-ui",
         ],

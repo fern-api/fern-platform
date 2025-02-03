@@ -1,11 +1,11 @@
 {
-  "name": "@fern-docs/bundle",
+  "name": "@fern-docs/app-router-bundle",
   "version": "0.0.0",
   "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern-platform.git",
-    "directory": "packages/fern-docs/bundle"
+    "directory": "packages/fern-docs/app-router-bundle"
   },
   "sideEffects": false,
   "browser": {

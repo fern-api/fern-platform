@@ -57,7 +57,7 @@ const nextConfig = {
     /**
      * Monorepo packages that are not transpiled by default.
      *
-     * pnpm list --filter=@fern-docs/bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
+     * pnpm list --filter=@fern-docs/app-router-bundle --only-projects --prod --recursive --depth=Infinity --json | jq -r '[.. | objects | select(.version | .!=null) | select(.version | startswith("link:")) | .from] | unique'
      */
     "@fern-api/fdr-sdk",
     "@fern-api/template-resolver",

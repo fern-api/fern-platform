@@ -11,9 +11,9 @@
     "codegen": "turbo codegen",
     "compile": "turbo compile",
     "depcheck": "turbo depcheck",
-    "docs:build": "turbo docs:build",
-    "docs:dev": "turbo docs:dev",
-    "docs:start": "turbo docs:start",
+    "docs:build": "turbo --filter=@fern-docs/pages-router-bundle docs:build",
+    "docs:dev": "turbo --filter=@fern-docs/pages-router-bundle docs:dev",
+    "docs:start": "turbo --filter=@fern-docs/pages-router-bundle docs:start",
     "fdr:generate": "pnpm fern generate --api fdr --local && pnpm turbo --filter=@fern-api/fdr-sdk compile",
     "format": "prettier --write --ignore-unknown \"**\"",
     "format:check": "prettier --check --ignore-unknown \"**\"",
@@ -135,7 +135,7 @@
     "pnpm": "^9.4.0"
   },
   "nextBundleAnalysis": {
-    "buildOutputDirectory": "packages/fern-docs/bundle/.next",
+    "buildOutputDirectory": "packages/fern-docs/pages-router-bundle/.next",
     "budget": 358400,
     "budgetPercentIncreaseRed": 20,
     "minimumChangeThreshold": 500,

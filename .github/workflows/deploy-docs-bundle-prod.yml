@@ -1,4 +1,4 @@
-name: Deploy @fern-docs/bundle
+name: Deploy @fern-docs/pages-router-bundle (prod)
 
 on:
   workflow_dispatch:
