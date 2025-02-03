@@ -202,12 +202,7 @@ export class MethodConverterNode extends BaseOpenrpcConverterNode<
           headers: {},
           requestBody: {
             type: "json" as const,
-            value: {
-              id: 1,
-              jsonrpc: "2.0",
-              method: this.method.name,
-              params: requestBody,
-            },
+            value: requestBody,
           },
           responseStatusCode: 200,
           responseBody: {
