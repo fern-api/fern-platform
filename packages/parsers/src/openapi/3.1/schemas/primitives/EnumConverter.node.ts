@@ -16,7 +16,8 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
   values: string[] = [];
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>,
+    protected nullable: boolean | undefined
   ) {
     super(args);
     this.safeParse();
@@ -82,7 +83,8 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      this.values[0]
+      this.values[0] ??
+      (this.nullable ? "null" : undefined)
     );
   }
 }

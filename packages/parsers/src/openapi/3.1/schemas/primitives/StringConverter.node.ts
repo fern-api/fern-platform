@@ -46,7 +46,8 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   mimeType: string | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>,
+    protected nullable: boolean | undefined
   ) {
     super(args);
     this.safeParse();
@@ -131,12 +132,15 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     }
 
     if (this.input.enum != null) {
-      this.enum = new EnumConverterNode({
-        input: this.input,
-        context: this.context,
-        accessPath: this.accessPath,
-        pathId: "enum",
-      });
+      this.enum = new EnumConverterNode(
+        {
+          input: this.input,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: "enum",
+        },
+        this.nullable
+      );
     }
   }
 
@@ -178,7 +182,10 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
 
   example(): string | undefined {
     return (
-      this.input.example ?? this.input.examples?.[0] ?? this.default ?? "string"
+      this.input.example ??
+      this.input.examples?.[0] ??
+      this.default ??
+      (this.nullable ? "null" : "string")
     );
   }
 }

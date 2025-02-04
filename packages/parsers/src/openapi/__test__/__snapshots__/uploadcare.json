@@ -4661,13 +4661,13 @@
             "value": {
               "type": "file",
               "result": {
-                "datetime_removed": "string",
-                "datetime_stored": "string",
+                "datetime_removed": "null",
+                "datetime_stored": "null",
                 "datetime_uploaded": "string",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
-                "original_file_url": "string",
+                "original_file_url": "null",
                 "original_filename": "EU_4.jpg",
                 "size": 0,
                 "url": "string",
@@ -17700,8 +17700,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active",
-                "default": true
+                "id": "webhook_is_active"
               }
             }
           },
@@ -17801,8 +17800,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active",
-                "default": true
+                "id": "webhook_is_active"
               }
             }
           },
@@ -18032,8 +18030,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active",
-                "default": true
+                "id": "webhook_is_active"
               }
             }
           },
