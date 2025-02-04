@@ -204,7 +204,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     });
   }
 
-  example(): Record<string, unknown> | undefined {
+  example(includeOptionals: boolean): Record<string, unknown> | undefined {
     let objectWithAllProperties = {
       ...this.properties,
     };
@@ -236,10 +236,13 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     return (
       this.input.example ??
       this.input.examples?.[0] ??
-      (this.requiredProperties != null && this.requiredProperties.length > 0
+      (!includeOptionals &&
+      this.requiredProperties != null &&
+      this.requiredProperties.length > 0
         ? this.requiredProperties?.reduce<Record<string, unknown>>(
             (acc, property) => {
-              acc[property] = objectWithAllProperties?.[property]?.example();
+              acc[property] =
+                objectWithAllProperties?.[property]?.example(includeOptionals);
               return acc;
             },
             {}
@@ -247,7 +250,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         : Object.entries(objectWithAllProperties).reduce<
             Record<string, unknown>
           >((acc, [key, value]) => {
-            acc[key] = value?.example();
+            acc[key] = value?.example(includeOptionals);
             return acc;
           }, {}))
     );

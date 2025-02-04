@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.xFernAvailabilityPathParam": {
-      "id": "endpoint_.xFernAvailabilityPathParam",
+    "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
+      "id": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
       "method": "GET",
       "path": [
         {
@@ -267,7 +267,7 @@
       "errors": [],
       "examples": [
         {
-          "path": "/collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}",
+          "path": "/collection/string/string/string/{x-fern-availability_path_param}",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "string",
@@ -299,8 +299,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.successRef": {
-      "id": "endpoint_.successRef",
+    "endpoint_.postSuccessRef": {
+      "id": "endpoint_.postSuccessRef",
       "method": "POST",
       "path": [
         {
@@ -355,8 +355,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.successInlinePropertyDeprecation": {
-      "id": "endpoint_.successInlinePropertyDeprecation",
+    "endpoint_.postSuccessInlinePropertyDeprecation": {
+      "id": "endpoint_.postSuccessInlinePropertyDeprecation",
       "method": "POST",
       "path": [
         {
@@ -435,8 +435,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.successInlineObjectDeprecation": {
-      "id": "endpoint_.successInlineObjectDeprecation",
+    "endpoint_.postSuccessInlineObjectDeprecation": {
+      "id": "endpoint_.postSuccessInlineObjectDeprecation",
       "availability": "Deprecated",
       "method": "POST",
       "path": [
@@ -503,8 +503,8 @@
         "type": "rest"
       }
     },
-    "endpoint_.successInlineBetaBody": {
-      "id": "endpoint_.successInlineBetaBody",
+    "endpoint_.postSuccessInlineBetaBody": {
+      "id": "endpoint_.postSuccessInlineBetaBody",
       "availability": "Beta",
       "method": "POST",
       "path": [

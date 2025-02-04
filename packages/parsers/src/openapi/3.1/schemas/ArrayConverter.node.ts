@@ -59,9 +59,10 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     }));
   }
 
-  example(): unknown[] | undefined {
+  example(includeOptionals: boolean): unknown[] | undefined {
     return (
-      this.input.example ?? this.input.examples?.[0] ?? [this.item?.example()]
+      this.input.example ??
+      this.input.examples?.[0] ?? [this.item?.example(includeOptionals)]
     );
   }
 }

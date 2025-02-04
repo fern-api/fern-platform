@@ -237,9 +237,29 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             new UnreachableCaseError(this.input.type);
             break;
         }
+      } else if (
+        Array.isArray(this.input.type) &&
+        this.input.type.includes("null") &&
+        this.input.type.length === 2
+      ) {
+        this.nullable = true;
+        const newType = this.input.type.filter((t) => t !== "null")[0];
+
+        if (newType !== "array") {
+          this.typeShapeNode = new SchemaConverterNode({
+            input: {
+              ...this.input,
+              type: newType,
+            },
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: this.pathId,
+            seenSchemas: this.seenSchemas,
+          });
+        }
       } else if (this.input.properties != null) {
         this.typeShapeNode = new ObjectConverterNode({
-          input: this.input as ObjectConverterNode.Input,
+          input: { ...this.input, type: "object" },
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
@@ -279,7 +299,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       : mappedShapes?.[0];
   }
 
-  example(): unknown | undefined {
-    return this.typeShapeNode?.example();
+  example(includeOptionals: boolean): unknown | undefined {
+    return this.typeShapeNode?.example(includeOptionals);
   }
 }

@@ -143,7 +143,7 @@ describe("ExampleObjectConverterNode", () => {
       expect(result).toEqual({
         path: mockPath,
         responseStatusCode: mockResponseStatusCode,
-        name: "Test example",
+        name: "Test Example",
         description: "Test description",
         pathParameters: undefined,
         queryParameters: undefined,
@@ -207,7 +207,7 @@ describe("ExampleObjectConverterNode", () => {
       expect(result).toEqual({
         path: mockPath,
         responseStatusCode: mockResponseStatusCode,
-        name: "test",
+        name: "Test",
         description: "Test response description",
         pathParameters: undefined,
         queryParameters: undefined,

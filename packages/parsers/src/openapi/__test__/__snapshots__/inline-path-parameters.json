@@ -156,7 +156,7 @@
       "errors": [],
       "examples": [
         {
-          "path": "/organizations/{organization_id}/users/{user_id}",
+          "path": "/organizations/string/users/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "organization_id": "string",
