@@ -10,7 +10,12 @@ export function getEndpointId(
   if (path == null) {
     return undefined;
   }
-  const endpointName = `${method}/${path}`;
+  const endpointName =
+    method != null && path != null
+      ? `${method}/${path}`
+      : method != null
+        ? method
+        : path;
   if (endpointName == null) {
     return undefined;
   }

@@ -203,7 +203,7 @@ describe("SecuritySchemeConverterNode", () => {
           type: "clientCredentials",
           value: {
             type: "referencedEndpoint",
-            endpointId: "endpoint_post.undefinedHttpsApiExampleComOauthToken",
+            endpointId: "endpoint_.postHttpsApiExampleComOauthToken",
             accessTokenLocator: "$.body.access_token",
             headerName: "Authorization",
           },

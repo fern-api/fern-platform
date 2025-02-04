@@ -33,7 +33,7 @@ describe("getEndpointId", () => {
 
   it("falls back to path endpoint when no sdkMethodName or operationId", () => {
     expect(getEndpointId("pets", "/pets/get", undefined, undefined)).toBe(
-      "endpoint_pets.undefinedPetsGet"
+      "endpoint_pets.petsGet"
     );
   });
 
