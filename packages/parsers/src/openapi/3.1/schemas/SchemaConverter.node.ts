@@ -79,10 +79,13 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       accessPath: this.accessPath,
       pathId: "x-fern-availability",
     });
-    this.nullable =
-      isNonArraySchema(this.input) && isNullableSchema(this.input)
-        ? this.input.nullable
-        : undefined;
+    // only check if the schema is nullable if not already set, via nullable: true
+    if (!this.nullable) {
+      this.nullable =
+        isNonArraySchema(this.input) && isNullableSchema(this.input)
+          ? this.input.nullable
+          : undefined;
+    }
 
     // Check if the input is a reference object
     if (isReferenceObject(this.input)) {
