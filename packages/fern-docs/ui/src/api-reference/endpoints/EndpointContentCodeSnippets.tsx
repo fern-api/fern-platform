@@ -170,8 +170,6 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
       );
   }, [examplesByKeyAndStatusCode]);
 
-  console.log("a", segmentedControlExamples, selectedExample);
-
   // note: .fern-endpoint-code-snippets is used to detect clicks outside of the code snippets
   // this is used to clear the selected error when the user clicks outside of the error
   return (
