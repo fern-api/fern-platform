@@ -222,5 +222,40 @@ describe("SchemaConverterNode", () => {
         },
       });
     });
+
+    it("should overwrite nullable if set to false", () => {
+      const input: OpenAPIV3_1.NonArraySchemaObject = {
+        type: "string",
+        nullable: false,
+      };
+      const node = new SchemaConverterNode(
+        {
+          input,
+          context: mockContext,
+          accessPath: [],
+          pathId: "test",
+          seenSchemas: new Set(),
+        },
+        true
+      );
+      expect(node.nullable).toBe(false);
+    });
+
+    it("should not overwrite nullable if set to false", () => {
+      const input: OpenAPIV3_1.NonArraySchemaObject = {
+        type: "string",
+      };
+      const node = new SchemaConverterNode(
+        {
+          input,
+          context: mockContext,
+          accessPath: [],
+          pathId: "test",
+          seenSchemas: new Set(),
+        },
+        true
+      );
+      expect(node.nullable).toBe(true);
+    });
   });
 });

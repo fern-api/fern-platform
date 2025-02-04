@@ -65,7 +65,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<
       OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
     >,
-    protected nullable?: boolean | undefined
+    public nullable?: boolean | undefined
   ) {
     super(args);
     this.safeParse();
@@ -79,12 +79,11 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       accessPath: this.accessPath,
       pathId: "x-fern-availability",
     });
-    // only check if the schema is nullable if not already set, via nullable: true
-    if (!this.nullable) {
-      this.nullable =
-        isNonArraySchema(this.input) && isNullableSchema(this.input)
-          ? this.input.nullable
-          : undefined;
+    // check if nullable is set. If nullable is false, we will set it, otherwise we will ignore it
+    if (isNonArraySchema(this.input) && isNullableSchema(this.input)) {
+      this.nullable = !this.input.nullable
+        ? this.input.nullable
+        : this.nullable || this.input.nullable;
     }
 
     // Check if the input is a reference object
