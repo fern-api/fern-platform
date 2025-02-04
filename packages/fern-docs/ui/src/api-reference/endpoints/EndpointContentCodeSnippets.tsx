@@ -134,7 +134,10 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
   );
 
   const errorSelector =
-    showErrors && Object.keys(examplesByStatusCode).length > 1 ? (
+    showErrors &&
+    Object.values(examplesByStatusCode).some(
+      (examples) => examples.length > 1
+    ) ? (
       <ErrorExampleSelect
         examplesByStatusCode={examplesByStatusCode}
         selectedExample={selectedExample}
@@ -166,6 +169,8 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             examples[0]?.name != null)
       );
   }, [examplesByKeyAndStatusCode]);
+
+  console.log("a", segmentedControlExamples, selectedExample);
 
   // note: .fern-endpoint-code-snippets is used to detect clicks outside of the code snippets
   // this is used to clear the selected error when the user clicks outside of the error
