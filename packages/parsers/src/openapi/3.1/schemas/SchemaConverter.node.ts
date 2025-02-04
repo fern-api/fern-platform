@@ -321,6 +321,8 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
   }
 
   example(includeOptionals: boolean): unknown | undefined {
-    return this.typeShapeNode?.example(includeOptionals);
+    return this.availability?.availability !== "deprecated"
+      ? this.typeShapeNode?.example(includeOptionals)
+      : undefined;
   }
 }
