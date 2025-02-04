@@ -25,7 +25,8 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
   default: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input>,
+    protected nullable: boolean | undefined
   ) {
     super(args);
     this.safeParse();
@@ -54,9 +55,12 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
     };
   }
 
-  example(): boolean | undefined {
+  example(): string | boolean | undefined {
     return (
-      this.input.example ?? this.input.examples?.[0] ?? this.default ?? false
+      this.input.example ??
+      this.input.examples?.[0] ??
+      this.default ??
+      (this.nullable ? "null" : false)
     );
   }
 }

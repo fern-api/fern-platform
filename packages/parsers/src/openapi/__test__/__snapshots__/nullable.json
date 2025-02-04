@@ -52,15 +52,15 @@
               "id": "string",
               "name": "string",
               "email": "string",
-              "createdAt": "string",
+              "createdAt": "null",
               "settings": {
                 "theme": "string",
                 "notifications": false,
-                "lastModified": "string"
+                "lastModified": "null"
               },
               "stats": {
-                "totalLogins": 0,
-                "lastLoginTime": "string",
+                "totalLogins": "null",
+                "lastLoginTime": "null",
                 "accountStatus": "active"
               }
             }
@@ -122,15 +122,15 @@
               "id": "string",
               "name": "string",
               "email": "string",
-              "createdAt": "string",
+              "createdAt": "null",
               "settings": {
                 "theme": "string",
                 "notifications": false,
-                "lastModified": "string"
+                "lastModified": "null"
               },
               "stats": {
-                "totalLogins": 0,
-                "lastLoginTime": "string",
+                "totalLogins": "null",
+                "lastLoginTime": "null",
                 "accountStatus": "active"
               }
             }
@@ -241,15 +241,15 @@
               "id": "string",
               "name": "string",
               "email": "string",
-              "createdAt": "string",
+              "createdAt": "null",
               "settings": {
                 "theme": "string",
                 "notifications": false,
-                "lastModified": "string"
+                "lastModified": "null"
               },
               "stats": {
-                "totalLogins": 0,
-                "lastLoginTime": "string",
+                "totalLogins": "null",
+                "lastLoginTime": "null",
                 "accountStatus": "active"
               }
             }

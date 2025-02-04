@@ -50,7 +50,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -227,7 +230,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -606,7 +612,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -844,7 +853,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -1053,7 +1065,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -1281,7 +1296,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -1899,7 +1917,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -3003,7 +3024,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -3686,7 +3710,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -4835,7 +4862,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -5127,7 +5157,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -5798,7 +5831,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -6206,7 +6242,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -6844,7 +6883,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -7286,7 +7328,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -7957,7 +8002,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -8194,7 +8242,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -8416,7 +8467,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -8694,7 +8748,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -8999,7 +9056,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -9319,7 +9379,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -9608,7 +9671,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -9897,7 +9963,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -10135,7 +10204,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -10479,7 +10551,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -10760,7 +10835,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -11042,7 +11120,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -11319,7 +11400,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -11551,7 +11635,7 @@
               "pages": {
                 "type": "pages",
                 "page": 1,
-                "next": "string",
+                "next": "null",
                 "per_page": 50,
                 "total_pages": 1
               }
@@ -11644,7 +11728,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -12135,7 +12222,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -12451,7 +12541,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -12748,7 +12841,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -13143,7 +13239,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -13398,7 +13497,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -13699,7 +13801,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -14100,7 +14205,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -14388,7 +14496,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -14641,7 +14752,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -15018,7 +15132,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -15270,7 +15387,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -15627,7 +15747,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -16009,7 +16132,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -16179,7 +16305,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -16528,7 +16657,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -16802,7 +16934,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -17063,7 +17198,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -17445,7 +17583,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -17591,7 +17732,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -17738,7 +17882,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -18085,7 +18232,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -18455,7 +18605,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -18767,7 +18920,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -19078,7 +19234,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -19402,7 +19561,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -19628,7 +19787,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -19882,7 +20044,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -20091,7 +20253,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -20281,7 +20443,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -20477,7 +20642,7 @@
                         "height": 100
                       }
                     ],
-                    "url": "string",
+                    "url": "null",
                     "redacted": false
                   },
                   "contacts": {
@@ -20703,7 +20868,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -20954,7 +21122,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -21160,7 +21328,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -21366,7 +21534,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -21572,7 +21740,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -21785,7 +21953,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -22043,7 +22214,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -22257,7 +22428,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -22470,7 +22641,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -22685,7 +22856,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -22900,7 +23071,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -23113,7 +23284,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -23454,7 +23628,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -23667,7 +23841,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -23918,7 +24095,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -24124,7 +24301,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -24358,7 +24535,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -24672,7 +24852,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -24879,7 +25059,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -25086,7 +25266,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -25293,7 +25473,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -25483,7 +25663,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -25685,7 +25868,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -25888,7 +26071,7 @@
                     "height": 100
                   }
                 ],
-                "url": "string",
+                "url": "null",
                 "redacted": false
               },
               "contacts": {
@@ -26101,7 +26284,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -26645,7 +26831,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -27071,7 +27260,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -27537,7 +27729,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -28115,7 +28310,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -28298,7 +28496,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -28436,7 +28637,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -28582,7 +28786,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -28743,7 +28950,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -28889,7 +29099,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -29043,7 +29256,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -29114,7 +29330,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -29531,7 +29750,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -29778,7 +30000,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -30019,7 +30244,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -30296,7 +30524,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -30619,7 +30850,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -30864,7 +31098,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -31074,7 +31311,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -31316,7 +31556,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -31503,7 +31746,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -31770,7 +32016,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -31979,7 +32228,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -32192,7 +32444,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -32388,7 +32643,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -32598,7 +32856,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -32767,7 +33028,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -33149,7 +33413,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -33383,7 +33650,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -33593,7 +33863,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -33785,7 +34058,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -34034,7 +34310,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -34254,7 +34533,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -34423,7 +34705,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -34692,7 +34977,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -34897,7 +35185,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -35185,7 +35476,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -35400,7 +35694,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -35862,7 +36159,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -36209,7 +36509,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -36537,7 +36840,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -36823,7 +37129,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -37227,7 +37536,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -37763,7 +38075,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -38147,7 +38462,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -38510,7 +38828,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }
@@ -39016,7 +39337,10 @@
                 "value": {
                   "type": "id",
                   "id": "intercom_version",
-                  "default": "2.11"
+                  "default": {
+                    "type": "enum",
+                    "value": "2.11"
+                  }
                 }
               }
             }

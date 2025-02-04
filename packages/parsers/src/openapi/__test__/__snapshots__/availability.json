@@ -265,36 +265,7 @@
         }
       ],
       "errors": [],
-      "examples": [
-        {
-          "path": "/collection/string/string/string/{x-fern-availability_path_param}",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "id": "string",
-            "active_id": "string",
-            "deprecated_ref_id": "string",
-            "x-fern-availability_path_param": "string"
-          },
-          "queryParameters": {
-            "deprecated_lang": "string",
-            "active_lang": "string",
-            "deprecated_ref_lang": "string",
-            "x-fern-availability_query_param": "string"
-          },
-          "headers": {
-            "X-Deprecated-Header": "string",
-            "X-Active-Header": "string",
-            "X-Deprecated-Ref-Header": "string",
-            "x-fern-availability_header": "string"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "fine_setting": false
-            }
-          }
-        }
-      ],
+      "examples": [],
       "protocol": {
         "type": "rest"
       }
