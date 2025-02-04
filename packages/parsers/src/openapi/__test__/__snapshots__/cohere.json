@@ -27509,7 +27509,10 @@
                       "value": {
                         "type": "id",
                         "id": "Status",
-                        "default": "STATUS_UNSPECIFIED"
+                        "default": {
+                          "type": "enum",
+                          "value": "STATUS_UNSPECIFIED"
+                        }
                       }
                     }
                   }
@@ -37109,7 +37112,10 @@
               "value": {
                 "type": "id",
                 "id": "AuthTokenType",
-                "default": "noscheme"
+                "default": {
+                  "type": "enum",
+                  "value": "noscheme"
+                }
               }
             }
           },
@@ -38733,7 +38739,10 @@
               "value": {
                 "type": "id",
                 "id": "BaseType",
-                "default": "BASE_TYPE_UNSPECIFIED"
+                "default": {
+                  "type": "enum",
+                  "value": "BASE_TYPE_UNSPECIFIED"
+                }
               }
             },
             "description": "The type of the base model."
@@ -38749,7 +38758,10 @@
                   "value": {
                     "type": "id",
                     "id": "Strategy",
-                    "default": "STRATEGY_UNSPECIFIED"
+                    "default": {
+                      "type": "enum",
+                      "value": "STRATEGY_UNSPECIFIED"
+                    }
                   }
                 }
               }
@@ -38886,7 +38898,10 @@
               "value": {
                 "type": "id",
                 "id": "LoraTargetModules",
-                "default": "LORA_TARGET_MODULES_UNSPECIFIED"
+                "default": {
+                  "type": "enum",
+                  "value": "LORA_TARGET_MODULES_UNSPECIFIED"
+                }
               }
             },
             "description": "The combination of LoRA modules to target."
@@ -39172,7 +39187,10 @@
                   "value": {
                     "type": "id",
                     "id": "Status",
-                    "default": "STATUS_UNSPECIFIED"
+                    "default": {
+                      "type": "enum",
+                      "value": "STATUS_UNSPECIFIED"
+                    }
                   }
                 }
               }
@@ -39433,7 +39451,10 @@
               "value": {
                 "type": "id",
                 "id": "Status",
-                "default": "STATUS_UNSPECIFIED"
+                "default": {
+                  "type": "enum",
+                  "value": "STATUS_UNSPECIFIED"
+                }
               }
             },
             "description": "Status of the fine-tuned model."

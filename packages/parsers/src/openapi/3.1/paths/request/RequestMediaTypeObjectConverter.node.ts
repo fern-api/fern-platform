@@ -83,13 +83,16 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           this.context.document,
           undefined
         );
-        this.schema = new ReferenceConverterNode({
-          input: this.input.schema,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "schema",
-          seenSchemas: new Set(),
-        });
+        this.schema = new ReferenceConverterNode(
+          {
+            input: this.input.schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "schema",
+            seenSchemas: new Set(),
+          },
+          false
+        );
       } else if (isObjectSchema(this.input.schema)) {
         this.resolvedSchema = this.input.schema;
         const mediaType = MediaType.parse(contentType);
