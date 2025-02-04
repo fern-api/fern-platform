@@ -1,3 +1,4 @@
+import { RemoteIconClient } from "@fern-docs/components/remote-icon/client";
 import {
   ChevronsLeftRight,
   FileText,
@@ -6,7 +7,6 @@ import {
   Webhook,
 } from "lucide-react";
 import { SVGProps, forwardRef } from "react";
-import { RemoteIcon } from "./remote";
 
 export const PageIcon = forwardRef<
   SVGSVGElement,
@@ -17,7 +17,7 @@ export const PageIcon = forwardRef<
   }
 >(({ icon, type, isSubPage, ...props }, ref) => {
   if (icon) {
-    return <RemoteIcon icon={icon} ref={ref} {...props} />;
+    return <RemoteIconClient icon={icon} ref={ref} {...props} />;
   }
 
   if (type === "changelog") {

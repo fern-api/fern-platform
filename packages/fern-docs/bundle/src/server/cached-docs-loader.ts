@@ -44,9 +44,7 @@ export interface DocsLoader {
   /**
    * @returns the root node of the docs (aware of authentication)
    */
-  getRoot: (
-    fern_token: string | undefined
-  ) => Promise<FernNavigation.RootNode | undefined>;
+  getRoot: () => Promise<FernNavigation.RootNode | undefined>;
 
   /**
    * DO NOT USE THIS UNLESS YOU KNOW WHAT YOU ARE DOING.
@@ -175,21 +173,18 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getRoot = unstable_cache(
     async (): Promise<FernNavigation.RootNode | undefined> => {
-      const response = await loadWithUrl(this.domain);
-      if (!response.ok) {
+      let root = await this.unsafe_getFullRoot();
+
+      if (!root) {
         return undefined;
       }
-      const v1 = response.body.definition.config.root;
-
-      if (!v1) {
-        return undefined;
-      }
-
-      const root =
-        FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
 
       if (this.authConfig) {
-        return pruneWithAuthState(this.authState, this.authConfig, root);
+        root = pruneWithAuthState(this.authState, this.authConfig, root);
+      }
+
+      if (root) {
+        FernNavigation.utils.mutableUpdatePointsTo(root);
       }
 
       return root;

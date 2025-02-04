@@ -45,7 +45,6 @@
     "eslint": "9.17.0",
     "eslint-config-next": "14.2.23",
     "instantsearch.js": "4.75.4",
-    "jsonpath-plus": "10.0.7",
     "markdown-to-jsx": "7.4.0",
     "micromatch": "4.0.8",
     "postcss": "8.4.31",

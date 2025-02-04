@@ -15,7 +15,6 @@ overrides:
   eslint: 9.17.0
   eslint-config-next: 14.2.23
   instantsearch.js: 4.75.4
-  jsonpath-plus: 10.0.7
   markdown-to-jsx: 7.4.0
   micromatch: 4.0.8
   postcss: 8.4.31
@@ -899,20 +898,20 @@ importers:
         specifier: ^8.0.3
         version: 8.0.3
       jose:
-        specifier: ^5.2.3
+        specifier: ^5
         version: 5.6.3
       jotai:
-        specifier: ^2.10.4
-        version: 2.10.4(@types/react@18.3.3)(react@18.3.1)
+        specifier: ^2
+        version: 2.11.3(@types/react@18.3.3)(react@18.3.1)
       jotai-effect:
-        specifier: ^1.0.5
-        version: 1.0.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
+        specifier: ^1
+        version: 1.1.6(jotai@2.11.3(@types/react@18.3.3)(react@18.3.1))
       jotai-location:
         specifier: ^0.5.5
-        version: 0.5.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
+        version: 0.5.5(jotai@2.11.3(@types/react@18.3.3)(react@18.3.1))
       jsonpath-plus:
-        specifier: 10.0.7
-        version: 10.0.7
+        specifier: ^10
+        version: 10.2.0
       launchdarkly-react-client-sdk:
         specifier: ^3.6.0
         version: 3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1308,6 +1307,9 @@ importers:
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      swr:
+        specifier: ^2.3.0
+        version: 2.3.0(react@18.3.1)
       tailwind-merge:
         specifier: ^2.3.0
         version: 2.3.0
@@ -1854,8 +1856,8 @@ importers:
         specifier: 4.75.4
         version: 4.75.4(algoliasearch@5.13.0)
       jotai:
-        specifier: ^2.10.4
-        version: 2.10.4(@types/react@18.3.3)(react@18.3.1)
+        specifier: ^2
+        version: 2.11.3(@types/react@18.3.3)(react@18.3.1)
       lucide-react:
         specifier: ^0.474.0
         version: 0.474.0(react@18.3.1)
@@ -3025,8 +3027,8 @@ packages:
     peerDependencies:
       graphql: ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: 18.3.1
+      react-dom: 18.3.1
       subscriptions-transport-ws: ^0.9.0 || ^0.11.0
     peerDependenciesMeta:
       graphql-ws:
@@ -3047,8 +3049,8 @@ packages:
   '@ark-ui/react@0.15.0':
     resolution: {integrity: sha512-Y4vkTy969pAcWPKFvgHNoAJ0cv2VoES43/CMeWmJRUuT6WTSE8WcLbOzEQoZ6vuFcOXQh65Dk5le1CVXrVC2cQ==}
     peerDependencies:
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
+      react: 18.3.1
+      react-dom: 18.3.1
 
   '@asteasolutions/zod-to-openapi@6.4.0':
     resolution: {integrity: sha512-8cxfF7AHHx2PqnN4Cd8/O8CBu/nVYJP9DpnfVLW3BFb66VJDnqI/CczZnkqMc3SNh6J9GiX7JbJ5T4BSP4HZ2Q==}
@@ -3586,6 +3588,11 @@ packages:
 
   '@babel/parser@7.26.2':
     resolution: {integrity: sha512-DWMCZH9WA4Maitz2q21SRKHo9QXZxkDsbNZoVD62gusNtNBBqDg9i7uOhASfTfIGNzW+O+r7+jAlM8dwphcJKQ==}
+    engines: {node: '>=6.0.0'}
+    hasBin: true
+
+  '@babel/parser@7.26.7':
+    resolution: {integrity: sha512-kEvgGGgEjRUutvdVvZhbn/BxVt+5VSpwXz1j3WYXQbXDo8KzFOPNG2GQbdAiNq8g6wn1yKk7C/qrke03a84V+w==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -4172,6 +4179,10 @@ packages:
     resolution: {integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==}
     engines: {node: '>=6.9.0'}
 
+  '@babel/types@7.26.7':
+    resolution: {integrity: sha512-t8kDRGrKXyp6+tjUh7hw2RLyclsW4TRoRvRHtSyAX9Bb5ldlFh+90YAYY6awRXrlB4G5G2izNeGySpATlFzmOg==}
+    engines: {node: '>=6.9.0'}
+
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
@@ -4181,8 +4192,8 @@ packages:
   '@braintrust/core@0.0.76':
     resolution: {integrity: sha512-kCefHWOqxVtLhNS9DPW9itG99M1ivfRfkPAF8RIJMa1Wi13e6Yq7iNvOK//gdZr+ekj24VlyupaPn1B47NA+ng==}
 
-  '@cfworker/json-schema@4.0.3':
-    resolution: {integrity: sha512-ZykIcDTVv5UNmKWSTLAs3VukO6NDJkkSKxrgUTDPBkAlORVT3H9n5DbRjRl8xIotklscHdbLIa0b9+y3mQq73g==}
+  '@cfworker/json-schema@4.1.1':
+    resolution: {integrity: sha512-gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==}
 
   '@chevrotain/cst-dts-gen@11.0.3':
     resolution: {integrity: sha512-BvIKpRLeS/8UbfxXxgC33xOumsacaeCKAjAeLyOn7Pcp95HiRbrpl14S+9vaZLolnbssPIUuiUd8IvgkRyt6NQ==}
@@ -4987,14 +4998,14 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@jsep-plugin/assignment@1.2.1':
-    resolution: {integrity: sha512-gaHqbubTi29aZpVbBlECRpmdia+L5/lh2BwtIJTmtxdbecEyyX/ejAOg7eQDGNvGOUmPY7Z2Yxdy9ioyH/VJeA==}
+  '@jsep-plugin/assignment@1.3.0':
+    resolution: {integrity: sha512-VVgV+CXrhbMI3aSusQyclHkenWSAm95WaiKrMxRFam3JSUiIaQjoMIw2sEs/OX4XifnqeQUN4DYbJjlA8EfktQ==}
     engines: {node: '>= 10.16.0'}
     peerDependencies:
       jsep: ^0.4.0||^1.0.0
 
-  '@jsep-plugin/regex@1.0.3':
-    resolution: {integrity: sha512-XfZgry4DwEZvSFtS/6Y+R48D7qJYJK6R9/yJFyUFHCIUMEEHuJ4X95TDgJp5QkmzfLYvapMPzskV5HpIDrREug==}
+  '@jsep-plugin/regex@1.0.4':
+    resolution: {integrity: sha512-q7qL4Mgjs1vByCaTnDFcBnV9HS7GVPJX5vyVoCgZHNSC9rjwIlmbXG5sUuorR5ndfHAIlJ8pVStxvjXHbNvtUg==}
     engines: {node: '>= 10.16.0'}
     peerDependencies:
       jsep: ^0.4.0||^1.0.0
@@ -5725,8 +5736,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react: 18.3.1
+      react-dom: 18.3.1
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -5799,8 +5810,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react: 18.3.1
+      react-dom: 18.3.1
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -5818,8 +5829,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react: 18.3.1
+      react-dom: 18.3.1
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -5837,8 +5848,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react: 18.3.1
+      react-dom: 18.3.1
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -5895,8 +5906,8 @@ packages:
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
-      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
-      react-dom: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+      react: 18.3.1
+      react-dom: 18.3.1
     peerDependenciesMeta:
       '@types/react':
         optional: true
@@ -8446,7 +8457,7 @@ packages:
     resolution: {integrity: sha512-BTWzalLNE1LQphEka5xzJXDs5v4xXy1Uzr7dAVk+C/CnO3WNpuMBgrCymwUv0VrWaWc8xMQuh+OqsT7P7JyekQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      react: ^18 || ^19 || ^19.0.0-rc
+      react: 18.3.1
       zod: ^3.0.0
     peerDependenciesMeta:
       react:
@@ -12087,8 +12098,9 @@ packages:
   jose@5.6.3:
     resolution: {integrity: sha512-1Jh//hEEwMhNYPDDLwXHa2ePWgWiFNNUadVmguAAw2IJ6sj9mNxV5tGXJNqlMkJAybF6Lgw1mISDxTePP/187g==}
 
-  jotai-effect@1.0.5:
-    resolution: {integrity: sha512-/QlB7XOGTDVbcp7cjN2INttjxvx5Y8qiRO7mM+YwwwBCwVE48VG3fFHGxWIDxPP1l+P/sv1h8Z6BfNP66Wd4lQ==}
+  jotai-effect@1.1.6:
+    resolution: {integrity: sha512-ZPLNZgRSxuTjyzMqLE9ervx1YjH6FwcaEC0kw77W7sEpZLgqjRm6UZTHjsyAxUWUCSwKQ8A3ai3Vkz0tZxSPgw==}
+    engines: {node: '>=12.20.0'}
     peerDependencies:
       jotai: '>=2.5.0'
 
@@ -12097,8 +12109,8 @@ packages:
     peerDependencies:
       jotai: '>=1.11.0'
 
-  jotai@2.10.4:
-    resolution: {integrity: sha512-/T4ofyMSkAybEs2OvR8S4HACa+/ASUEPLz86SUjFXJqU9RdJKLvZDJrag398suvHC5CR0+Cs4P5m/gtVcryzlw==}
+  jotai@2.11.3:
+    resolution: {integrity: sha512-B/PsewAQ0UOS5e2+TTWegUPQ3SCLPCjPY24LYUjfn2EorGlluTA2dFjVLgF1+xHLjK9Jit3y5mKHyMG3Xq/GZg==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -12122,8 +12134,8 @@ packages:
   js-tiktoken@1.0.15:
     resolution: {integrity: sha512-65ruOWWXDEZHHbAo7EjOcNxOGasQKbL4Fq3jEr2xsCqSsoOo6VVSqzWQb6PRIqypFSDcma4jO90YP0w5X8qVXQ==}
 
-  js-tiktoken@1.0.16:
-    resolution: {integrity: sha512-nUVdO5k/M9llWpiaZlBBDdtmr6qWXwSD6fgaDu2zM8UP+OXxx9V37lFkI6w0/1IuaDx7WffZ37oYd9KvcWKElg==}
+  js-tiktoken@1.0.18:
+    resolution: {integrity: sha512-hFYx4xYf6URgcttcGvGuOBJhTxPYZ2R5eIesqCaNRJmYH8sNmsfTeWg4yu//7u1VD/qIUkgKJTpGom9oHXmB4g==}
 
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
@@ -12149,8 +12161,8 @@ packages:
       canvas:
         optional: true
 
-  jsep@1.3.9:
-    resolution: {integrity: sha512-i1rBX5N7VPl0eYb6+mHNp52sEuaS2Wi8CDYx1X5sn9naevL78+265XJqy1qENEk7mRKwS06NHpUqiBwR7qeodw==}
+  jsep@1.4.0:
+    resolution: {integrity: sha512-B7qPcEVE3NVkmSJbaYxvv4cHkVW7DQsZz13pUMrfS8z8Q/BuShN+gcTXrUlPiGqM2/t/EEaI030bpxMqY8gMlw==}
     engines: {node: '>= 10.16.0'}
 
   jsesc@2.5.2:
@@ -12215,10 +12227,14 @@ packages:
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
-  jsonpath-plus@10.0.7:
-    resolution: {integrity: sha512-GDA8d8fu9+s4QzAzo5LMGiLL/9YjecAX+ytlnqdeXYpU55qME57StDgaHt9R2pA7Dr8U31nwzxNJMJiHkrkRgw==}
+  jsonpath-plus@10.2.0:
+    resolution: {integrity: sha512-T9V+8iNYKFL2n2rF+w02LBOT2JjDnTjioaNFrxRy0Bv1y/hNsqR/EBK7Ojy2ythRHwmz2cRIls+9JitQGZC/sw==}
     engines: {node: '>=18.0.0'}
     hasBin: true
+
+  jsonpath-plus@7.2.0:
+    resolution: {integrity: sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==}
+    engines: {node: '>=12.0.0'}
 
   jsonwebtoken@9.0.2:
     resolution: {integrity: sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==}
@@ -12280,8 +12296,8 @@ packages:
     resolution: {integrity: sha512-+Ez9EoiByeoTu/2BXmEaZ06iPNXM6thWJp02KfBO/raSMyCJ4jw7AkWWa+zBCTm0+Tw1Fj9FOxdqSskyN5nAwg==}
     engines: {node: '>=16.0.0'}
 
-  langsmith@0.2.13:
-    resolution: {integrity: sha512-16EOM5nhU6GlMCKGm5sgBIAKOKzS2d30qcDZmF21kSLZJiUhUNTROwvYdqgZLrGfIIzmSMJHCKA7RFd5qf50uw==}
+  langsmith@0.2.15:
+    resolution: {integrity: sha512-homtJU41iitqIZVuuLW7iarCzD4f39KcfP9RTBWav9jifhrsDa1Ez89Ejr+4qi72iuBu8Y5xykchsGVgiEZ93w==}
     peerDependencies:
       openai: '*'
     peerDependenciesMeta:
@@ -12573,6 +12589,9 @@ packages:
 
   magic-string@0.30.12:
     resolution: {integrity: sha512-Ea8I3sQMVXr8JhN4z+H/d8zwo+tYDgHE9+5G4Wnrwhs0gaK9fXTKx0Tw5Xwsd/bCPTTZNRAdpyzvoeORe9LYpw==}
+
+  magic-string@0.30.17:
+    resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
   make-dir@1.3.0:
     resolution: {integrity: sha512-2w31R7SJtieJJnQtGc7RVL2StM2vGYVfqUOvUDxH6bC6aJTxPxTF0GnIgCyu7tjockiUWAYQRbxa7vKn34s5sQ==}
@@ -13050,6 +13069,9 @@ packages:
 
   mlly@1.7.3:
     resolution: {integrity: sha512-xUsx5n/mN0uQf4V548PKQ+YShA4/IW0KI1dZhrNrPCLG+xizETbHTkOa1f8/xut9JRPp8kQuMnz0oqwkTiLo/A==}
+
+  mlly@1.7.4:
+    resolution: {integrity: sha512-qmdSIPC4bDJXgZTCR7XosJiNKySV7O215tsPtDN9iEO/7q/76b/ijtgRu/+epFXSJhijtTCCGp3DWS549P3xKw==}
 
   module-details-from-path@1.0.3:
     resolution: {integrity: sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A==}
@@ -13559,6 +13581,9 @@ packages:
   pathe@1.1.2:
     resolution: {integrity: sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==}
 
+  pathe@2.0.2:
+    resolution: {integrity: sha512-15Ztpk+nov8DR524R4BF7uEuzESgzUEAV4Ah7CUMNGXdE5ELuvxElxGXndBl32vMSsWa1jpNf22Z+Er3sKwq+w==}
+
   pathval@2.0.0:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
@@ -13642,6 +13667,9 @@ packages:
 
   pkg-types@1.2.1:
     resolution: {integrity: sha512-sQoqa8alT3nHjGuTjuKgOnvjo4cljkufdtLMnO2LBP/wRwuDlo1tkaEdMxCRhyGRPacv/ztlZgDPm2b7FAmEvw==}
+
+  pkg-types@1.3.1:
+    resolution: {integrity: sha512-/Jm5M4RvtBFVkKWRu2BLUTNP8/M2a+UwuAX+ae4770q1qVGtfjG+WTCupoZixokjmHiry8uI+dlY8KXYV5HVVQ==}
 
   playwright-core@1.47.1:
     resolution: {integrity: sha512-i1iyJdLftqtt51mEk6AhYFaAJCDx0xQ/O5NU8EKaWFgMjItPVma542Nh/Aq8aLCjIJSzjaiEQGW/nyqLkGF1OQ==}
@@ -14275,7 +14303,7 @@ packages:
     resolution: {integrity: sha512-7Ypx4vz0+g8ECVxr88W9zhcQpbeujJAVqL14ZnXJ3I23mOI9/oBVTQ3dkJhUmB0D6XOtCZEM6N0Gm9PMngkORw==}
     engines: {node: '>=10.18'}
     peerDependencies:
-      react: ^16.3.0 || ^17.0.1 || ^18.0.0
+      react: 18.3.1
 
   react-docgen-typescript@2.2.2:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
@@ -14921,6 +14949,11 @@ packages:
 
   semver@7.6.3:
     resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
+    engines: {node: '>=10'}
+    hasBin: true
+
+  semver@7.7.1:
+    resolution: {integrity: sha512-hlq8tAfn0m/61p4BVRcPzIGr6LKiMwo4VM6dGi6pt4qcRkmNzTcWq6eCEjEh+qXjkMDvPlOFFSGwQjoEa6gyMA==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -18803,6 +18836,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.26.0
 
+  '@babel/parser@7.26.7':
+    dependencies:
+      '@babel/types': 7.26.7
+
   '@babel/plugin-bugfix-firefox-class-in-computed-class-key@7.25.9(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
@@ -19595,6 +19632,11 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
+  '@babel/types@7.26.7':
+    dependencies:
+      '@babel/helper-string-parser': 7.25.9
+      '@babel/helper-validator-identifier': 7.25.9
+
   '@bcoe/v8-coverage@0.2.3': {}
 
   '@braintree/sanitize-url@7.1.0': {}
@@ -19605,7 +19647,7 @@ snapshots:
       uuid: 9.0.1
       zod: 3.24.1
 
-  '@cfworker/json-schema@4.0.3': {}
+  '@cfworker/json-schema@4.1.1': {}
 
   '@chevrotain/cst-dts-gen@11.0.3':
     dependencies:
@@ -20600,13 +20642,13 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jsep-plugin/assignment@1.2.1(jsep@1.3.9)':
+  '@jsep-plugin/assignment@1.3.0(jsep@1.4.0)':
     dependencies:
-      jsep: 1.3.9
+      jsep: 1.4.0
 
-  '@jsep-plugin/regex@1.0.3(jsep@1.3.9)':
+  '@jsep-plugin/regex@1.0.4(jsep@1.4.0)':
     dependencies:
-      jsep: 1.3.9
+      jsep: 1.4.0
 
   '@kwsites/file-exists@1.1.1':
     dependencies:
@@ -20618,12 +20660,12 @@ snapshots:
 
   '@langchain/core@0.3.23':
     dependencies:
-      '@cfworker/json-schema': 4.0.3
+      '@cfworker/json-schema': 4.1.1
       ansi-styles: 5.2.0
       camelcase: 6.3.0
       decamelize: 1.2.0
-      js-tiktoken: 1.0.16
-      langsmith: 0.2.13
+      js-tiktoken: 1.0.18
+      langsmith: 0.2.15
       mustache: 4.2.0
       p-queue: 6.6.2
       p-retry: 4.6.2
@@ -21104,7 +21146,7 @@ snapshots:
       look-it-up: 2.1.0
       microdiff: 1.4.0
       outdent: 0.8.0
-      pathe: 1.1.2
+      pathe: 1.1.1
       pkg-types: 1.0.3
       pluralize: 8.0.0
       postcss: 8.4.31
@@ -24362,7 +24404,7 @@ snapshots:
   '@vitest/snapshot@2.1.8':
     dependencies:
       '@vitest/pretty-format': 2.1.8
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       pathe: 1.1.2
 
   '@vitest/spy@2.0.5':
@@ -24402,7 +24444,7 @@ snapshots:
 
   '@vue/compiler-core@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.2
+      '@babel/parser': 7.26.7
       '@vue/shared': 3.5.13
       entities: 4.5.0
       estree-walker: 2.0.2
@@ -24432,13 +24474,13 @@ snapshots:
 
   '@vue/compiler-sfc@3.5.13':
     dependencies:
-      '@babel/parser': 7.26.2
+      '@babel/parser': 7.26.7
       '@vue/compiler-core': 3.5.13
       '@vue/compiler-dom': 3.5.13
       '@vue/compiler-ssr': 3.5.13
       '@vue/shared': 3.5.13
       estree-walker: 2.0.2
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       postcss: 8.4.31
       source-map-js: 1.2.1
 
@@ -25898,14 +25940,14 @@ snapshots:
 
   asl-path-validator@0.12.0:
     dependencies:
-      jsonpath-plus: 10.0.7
+      jsonpath-plus: 7.2.0
 
   asl-validator@3.8.2:
     dependencies:
       ajv: 8.17.1
       asl-path-validator: 0.12.0
       commander: 10.0.1
-      jsonpath-plus: 10.0.7
+      jsonpath-plus: 7.2.0
       yaml: 2.4.2
 
   asn1.js@4.10.1:
@@ -30240,15 +30282,15 @@ snapshots:
 
   jose@5.6.3: {}
 
-  jotai-effect@1.0.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1)):
+  jotai-effect@1.1.6(jotai@2.11.3(@types/react@18.3.3)(react@18.3.1)):
     dependencies:
-      jotai: 2.10.4(@types/react@18.3.3)(react@18.3.1)
+      jotai: 2.11.3(@types/react@18.3.3)(react@18.3.1)
 
-  jotai-location@0.5.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1)):
+  jotai-location@0.5.5(jotai@2.11.3(@types/react@18.3.3)(react@18.3.1)):
     dependencies:
-      jotai: 2.10.4(@types/react@18.3.3)(react@18.3.1)
+      jotai: 2.11.3(@types/react@18.3.3)(react@18.3.1)
 
-  jotai@2.10.4(@types/react@18.3.3)(react@18.3.1):
+  jotai@2.11.3(@types/react@18.3.3)(react@18.3.1):
     optionalDependencies:
       '@types/react': 18.3.3
       react: 18.3.1
@@ -30263,7 +30305,7 @@ snapshots:
     dependencies:
       base64-js: 1.5.1
 
-  js-tiktoken@1.0.16:
+  js-tiktoken@1.0.18:
     dependencies:
       base64-js: 1.5.1
 
@@ -30308,7 +30350,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  jsep@1.3.9: {}
+  jsep@1.4.0: {}
 
   jsesc@2.5.2: {}
 
@@ -30360,11 +30402,13 @@ snapshots:
     optionalDependencies:
       graceful-fs: 4.2.11
 
-  jsonpath-plus@10.0.7:
+  jsonpath-plus@10.2.0:
     dependencies:
-      '@jsep-plugin/assignment': 1.2.1(jsep@1.3.9)
-      '@jsep-plugin/regex': 1.0.3(jsep@1.3.9)
-      jsep: 1.3.9
+      '@jsep-plugin/assignment': 1.3.0(jsep@1.4.0)
+      '@jsep-plugin/regex': 1.0.4(jsep@1.4.0)
+      jsep: 1.4.0
+
+  jsonpath-plus@7.2.0: {}
 
   jsonwebtoken@9.0.2:
     dependencies:
@@ -30433,13 +30477,13 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.12
       vscode-uri: 3.0.8
 
-  langsmith@0.2.13:
+  langsmith@0.2.15:
     dependencies:
       '@types/uuid': 10.0.0
       commander: 10.0.1
       p-queue: 6.6.2
       p-retry: 4.6.2
-      semver: 7.6.3
+      semver: 7.7.1
       uuid: 10.0.0
 
   language-subtag-registry@0.3.23: {}
@@ -30735,6 +30779,10 @@ snapshots:
       '@jridgewell/sourcemap-codec': 1.4.15
 
   magic-string@0.30.12:
+    dependencies:
+      '@jridgewell/sourcemap-codec': 1.5.0
+
+  magic-string@0.30.17:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
 
@@ -31630,6 +31678,13 @@ snapshots:
       pkg-types: 1.2.1
       ufo: 1.5.4
 
+  mlly@1.7.4:
+    dependencies:
+      acorn: 8.14.0
+      pathe: 2.0.2
+      pkg-types: 1.3.1
+      ufo: 1.5.4
+
   module-details-from-path@1.0.3: {}
 
   moment@2.30.1: {}
@@ -32204,6 +32259,8 @@ snapshots:
 
   pathe@1.1.2: {}
 
+  pathe@2.0.2: {}
+
   pathval@2.0.0: {}
 
   pause-stream@0.0.11:
@@ -32267,14 +32324,20 @@ snapshots:
   pkg-types@1.0.3:
     dependencies:
       jsonc-parser: 3.3.1
-      mlly: 1.7.3
-      pathe: 1.1.2
+      mlly: 1.7.4
+      pathe: 1.1.1
 
   pkg-types@1.2.1:
     dependencies:
       confbox: 0.1.8
       mlly: 1.7.3
       pathe: 1.1.2
+
+  pkg-types@1.3.1:
+    dependencies:
+      confbox: 0.1.8
+      mlly: 1.7.4
+      pathe: 2.0.2
 
   playwright-core@1.47.1: {}
 
@@ -32871,7 +32934,7 @@ snapshots:
       algoliasearch-helper: 3.22.5(algoliasearch@5.13.0)
       instantsearch.js: 4.75.4(algoliasearch@5.13.0)
       react: 18.3.1
-      use-sync-external-store: 1.2.2(react@18.3.1)
+      use-sync-external-store: 1.4.0(react@18.3.1)
 
   react-instantsearch-nextjs@0.3.17(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
@@ -33695,6 +33758,8 @@ snapshots:
 
   semver@7.6.3: {}
 
+  semver@7.7.1: {}
+
   send@0.19.0:
     dependencies:
       debug: 2.6.9
@@ -34421,7 +34486,7 @@ snapshots:
       esrap: 1.4.3
       is-reference: 3.0.3
       locate-character: 3.0.0
-      magic-string: 0.30.12
+      magic-string: 0.30.17
       zimmerframe: 1.1.2
 
   svg-tags@1.0.0: {}
@@ -35062,7 +35127,7 @@ snapshots:
   unenv-nightly@2.0.0-20241218-183400-5d6aec3:
     dependencies:
       defu: 6.1.4
-      mlly: 1.7.3
+      mlly: 1.7.4
       ohash: 1.1.4
       pathe: 1.1.2
       ufo: 1.5.4

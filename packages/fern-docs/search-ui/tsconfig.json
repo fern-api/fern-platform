@@ -43,7 +43,8 @@
     "**/*.ts",
     "**/*.tsx",
     "../components/src/kbd.tsx",
-    "../search-server/src/utils/system-prompt.ts"
+    "../search-server/src/utils/system-prompt.ts",
+    "../components/src/remote-icon/remote-icon-client.tsx"
   ],
   "exclude": ["node_modules", "src/server/**/*"]
 }

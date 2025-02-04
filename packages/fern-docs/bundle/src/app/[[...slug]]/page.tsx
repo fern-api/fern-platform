@@ -1,7 +1,6 @@
 "use server";
 
 import { renderThemeStylesheet } from "@/client/themes/stylesheet/renderThemeStylesheet";
-import GlobalStyle from "@/components/global-style";
 import Preload, { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/cached-docs-loader";
 import { createFindNode } from "@/server/find-node";
@@ -19,6 +18,8 @@ import {
 } from "@fern-docs/utils";
 import { compact } from "es-toolkit/array";
 import { Metadata } from "next";
+import ActiveTabIndex from "./active-tab-index";
+import GlobalStyle from "./global-style";
 
 export default async function Page({
   params,
@@ -28,7 +29,7 @@ export default async function Page({
   const slug = FernNavigation.slugjoin(params.slug);
   const docsLoader = await createCachedDocsLoader();
   const findNode = createFindNode(docsLoader);
-  const { node, parents, tabs } = await findNode(slug);
+  const { node, parents, tabs, currentTab } = await findNode(slug);
   const config = await docsLoader.getConfig();
   const colors = {
     light:
@@ -69,6 +70,9 @@ export default async function Page({
       <Breadcrumb
         // TODO: add jsonld override from frontmatter
         breadcrumbList={getBreadcrumbList(docsLoader.domain, parents, node)}
+      />
+      <ActiveTabIndex
+        tabIndex={tabs.findIndex((tab) => tab.id === currentTab?.id)}
       />
     </>
   );

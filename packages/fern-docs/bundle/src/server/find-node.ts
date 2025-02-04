@@ -36,7 +36,7 @@ export function createFindNode(docsLoader: DocsLoader): (
       }
     }
 
-    const root = await docsLoader.getRoot(docsLoader.fern_token);
+    const root = await docsLoader.getRoot();
 
     // this should not happen, but if it does, we should return a 404
     if (!root) {

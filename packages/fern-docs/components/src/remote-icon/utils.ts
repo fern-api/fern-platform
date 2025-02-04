@@ -1,66 +1,5 @@
-import { ElementType, SVGProps, forwardRef } from "react";
-import useSWRImmutable from "swr/immutable";
-
-export const RemoteIcon = forwardRef<
-  SVGSVGElement,
-  {
-    icon: string;
-    fallback?: ElementType<SVGProps<SVGSVGElement>>;
-  } & SVGProps<SVGSVGElement>
->(({ icon, fallback: Fallback = "svg", ...props }, ref) => {
-  const { data } = useSWRImmutable(icon, () =>
-    fetch(getIconUrl(icon)).then((res) => res.text())
-  );
-
-  if (data == null) {
-    return (
-      <Fallback
-        ref={ref}
-        aria-hidden="true"
-        focusable="false"
-        role="img"
-        {...props}
-      />
-    );
-  }
-
-  // parse the svg
-  const { props: svgProps, body } = parseSvg(data);
-
-  if (body == null) {
-    return (
-      <Fallback
-        ref={ref}
-        aria-hidden="true"
-        focusable="false"
-        role="img"
-        {...props}
-      />
-    );
-  }
-
-  delete svgProps.class;
-  delete svgProps.className;
-  delete svgProps.hidden;
-
-  return (
-    <svg
-      ref={ref}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-      {...svgProps}
-      aria-hidden="true"
-      focusable="false"
-      role="img"
-      dangerouslySetInnerHTML={{ __html: body }}
-    />
-  );
-});
-
-RemoteIcon.displayName = "RemoteIcon";
-
 // parse the svg
-function parseSvg(svg: string): {
+export function parseSvg(svg: string): {
   props: Record<string, string>;
   body: string | undefined;
 } {
@@ -85,7 +24,7 @@ function parseSvg(svg: string): {
   return { props, body };
 }
 
-function getIconUrl(icon: string | undefined): string {
+export function getIconUrl(icon: string | undefined): string {
   if (icon == null) {
     return "";
   }

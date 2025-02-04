@@ -25,7 +25,9 @@
     "./src/colors.css": "./src/colors.css",
     "./src/fern-accent.scss": "./src/fern-accent.scss",
     "./src/badges/index.scss": "./src/badges/index.scss",
-    "./src/kbd.scss": "./src/kbd.scss"
+    "./src/kbd.scss": "./src/kbd.scss",
+    "./remote-icon/client": "./src/remote-icon/client.tsx",
+    "./remote-icon/server": "./src/remote-icon/server.tsx"
   },
   "files": [
     "src"
@@ -83,6 +85,7 @@
     "react": "^18",
     "react-dom": "^18",
     "sonner": "^1.5.0",
+    "swr": "^2.3.0",
     "tailwind-merge": "^2.3.0",
     "ts-extras": "^0.11.0"
   },
