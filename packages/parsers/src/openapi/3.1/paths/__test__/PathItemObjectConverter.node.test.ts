@@ -59,7 +59,7 @@ describe("PathItemObjectConverterNode", () => {
         environments: [],
         errors: [],
         examples: [],
-        id: "endpoint_.petId",
+        id: "endpoint_.getPetsPetId",
         method: "GET",
         namespace: undefined,
         operationId: undefined,
@@ -129,7 +129,7 @@ describe("PathItemObjectConverterNode", () => {
       });
       expect(result?.[1]).toMatchObject({
         description: "Create a pet",
-        id: "endpoint_.petId",
+        id: "endpoint_.postPetsPetId",
         method: "POST",
         path: [
           {

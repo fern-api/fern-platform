@@ -84,7 +84,7 @@
       "errors": [],
       "examples": [
         {
-          "path": "/user/{userId}",
+          "path": "/user/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "userId": "string"

@@ -471,7 +471,7 @@
         {
           "path": "/files/",
           "responseStatusCode": 200,
-          "name": "with-appdata",
+          "name": "With Appdata",
           "queryParameters": {
             "removed": true,
             "stored": true,
@@ -614,7 +614,7 @@
         {
           "path": "/files/",
           "responseStatusCode": 200,
-          "name": "without-appdata",
+          "name": "Without Appdata",
           "queryParameters": {
             "removed": true,
             "stored": true,
@@ -1243,7 +1243,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -1434,7 +1434,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -1902,9 +1902,9 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
-          "name": "removed-file",
+          "name": "Removed File",
           "pathParameters": {
             "uuid": "test-uuid-replacement"
           },
@@ -2019,7 +2019,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -2210,7 +2210,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -2691,7 +2691,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "name": "Image",
           "pathParameters": {
@@ -2886,7 +2886,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "name": "Video",
           "pathParameters": {
@@ -3000,7 +3000,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -3194,7 +3194,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -4924,7 +4924,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -4933,7 +4933,7 @@
               }
             },
             {
-              "name": "copy-error",
+              "name": "Copy Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -8289,7 +8289,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/metadata/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -8356,7 +8356,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -8659,7 +8659,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -8724,7 +8724,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9037,7 +9037,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9102,7 +9102,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9167,7 +9167,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 201,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9232,7 +9232,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 201,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9886,7 +9886,7 @@
         {
           "path": "/groups/",
           "responseStatusCode": 200,
-          "name": "list",
+          "name": "List",
           "queryParameters": {
             "limit": 150,
             "from": "2015-01-02T10:00:00.463352Z",
@@ -10320,7 +10320,7 @@
       ],
       "examples": [
         {
-          "path": "/groups/{uuid}/",
+          "path": "/groups/badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12"
@@ -11077,7 +11077,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11086,7 +11086,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11372,7 +11372,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11381,7 +11381,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11390,7 +11390,7 @@
               }
             },
             {
-              "name": "target-url-error",
+              "name": "Target URL Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11900,7 +11900,7 @@
       ],
       "examples": [
         {
-          "path": "/webhooks/{id}/",
+          "path": "/webhooks/143/",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 143
@@ -11974,7 +11974,7 @@
           }
         },
         {
-          "path": "/webhooks/{id}/",
+          "path": "/webhooks/143/",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 143
@@ -12139,7 +12139,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12148,7 +12148,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12157,7 +12157,7 @@
               }
             },
             {
-              "name": "target-url-error",
+              "name": "Target URL Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12491,7 +12491,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12500,7 +12500,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12682,7 +12682,7 @@
       ],
       "examples": [
         {
-          "path": "/convert/document/{uuid}/",
+          "path": "/convert/document/86c91c35-58e1-41f7-9b23-2d7652cfcd17/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -12712,7 +12712,7 @@
           }
         },
         {
-          "path": "/convert/document/{uuid}/",
+          "path": "/convert/document/86c91c35-58e1-41f7-9b23-2d7652cfcd17/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -12951,7 +12951,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12960,7 +12960,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12969,7 +12969,7 @@
               }
             },
             {
-              "name": "json-parse-error",
+              "name": "JSON Parse Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12978,7 +12978,7 @@
               }
             },
             {
-              "name": "path-error",
+              "name": "Path Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13399,7 +13399,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13408,7 +13408,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13590,7 +13590,7 @@
       ],
       "examples": [
         {
-          "path": "/convert/document/status/{token}/",
+          "path": "/convert/document/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -13660,7 +13660,7 @@
           }
         },
         {
-          "path": "/convert/document/status/{token}/",
+          "path": "/convert/document/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -13952,7 +13952,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13961,7 +13961,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13970,7 +13970,7 @@
               }
             },
             {
-              "name": "json-parse-error",
+              "name": "JSON Parse Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13979,7 +13979,7 @@
               }
             },
             {
-              "name": "path-error",
+              "name": "Path Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14417,7 +14417,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14426,7 +14426,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14608,7 +14608,7 @@
       ],
       "examples": [
         {
-          "path": "/convert/video/status/{token}/",
+          "path": "/convert/video/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -14679,7 +14679,7 @@
           }
         },
         {
-          "path": "/convert/video/status/{token}/",
+          "path": "/convert/video/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -14809,7 +14809,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15008,7 +15009,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15207,7 +15209,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15406,7 +15409,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15605,7 +15609,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15846,7 +15851,8 @@
                 "uc_clamav_virus_scan": {
                   "version": "0.104.2",
                   "data": {
-                    "infected": false
+                    "infected": false,
+                    "infected_with": "string"
                   },
                   "datetime_created": "string",
                   "datetime_updated": "string"

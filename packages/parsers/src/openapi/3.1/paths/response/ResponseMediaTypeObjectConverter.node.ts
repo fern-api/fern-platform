@@ -167,7 +167,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
       responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
       responseExamples[GLOBAL_EXAMPLE_NAME]?.push({
-        value: this.schema?.example(),
+        value: this.schema?.example(true),
       });
     }
 

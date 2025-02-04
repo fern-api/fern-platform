@@ -44,7 +44,7 @@ describe("OperationObjectConverterNode", () => {
         environments: [],
         errors: undefined,
         examples: undefined,
-        id: "endpoint_.petId",
+        id: "endpoint_.getPetsPetId",
         method: "GET",
         namespace: undefined,
         operationId: undefined,

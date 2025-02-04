@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.example": {
-      "id": "endpoint_.example",
+    "endpoint_.getExample": {
+      "id": "endpoint_.getExample",
       "displayName": "Default and validation rules",
       "method": "GET",
       "path": [

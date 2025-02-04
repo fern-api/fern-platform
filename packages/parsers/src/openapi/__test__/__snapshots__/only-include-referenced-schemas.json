@@ -75,7 +75,7 @@
         {
           "path": "/me",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -320,9 +320,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -343,7 +346,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Admin not found",
+              "name": "Admin Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -363,9 +366,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -376,8 +382,9 @@
       ],
       "examples": [
         {
-          "path": "/admins/{id}/away",
+          "path": "/admins/0/away",
           "responseStatusCode": 200,
+          "name": "Successful Response",
           "pathParameters": {
             "id": 0
           },
@@ -418,8 +425,9 @@
           }
         },
         {
-          "path": "/admins/{id}/away",
+          "path": "/admins/0/away",
           "responseStatusCode": 200,
+          "name": "Admin Not Found",
           "pathParameters": {
             "id": 0
           },
@@ -460,8 +468,9 @@
           }
         },
         {
-          "path": "/admins/{id}/away",
+          "path": "/admins/0/away",
           "responseStatusCode": 200,
+          "name": "Unauthorized",
           "pathParameters": {
             "id": 0
           },
@@ -651,9 +660,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -666,7 +678,7 @@
         {
           "path": "/admins/activity_logs",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "queryParameters": {
             "created_at_after": "1677253093",
             "created_at_before": "1677861493"
@@ -886,9 +898,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -901,7 +916,7 @@
         {
           "path": "/admins",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -1092,9 +1107,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -1115,7 +1133,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Admin not found",
+              "name": "Admin Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -1135,9 +1153,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -1148,9 +1169,9 @@
       ],
       "examples": [
         {
-          "path": "/admins/{id}",
+          "path": "/admins/123",
           "responseStatusCode": 200,
-          "name": "Admin found",
+          "name": "Admin Found",
           "pathParameters": {
             "id": 123
           },
@@ -1172,7 +1193,7 @@
           }
         },
         {
-          "path": "/admins/{id}",
+          "path": "/admins/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -1314,9 +1335,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -1329,7 +1353,7 @@
         {
           "path": "/articles",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -1941,9 +1965,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -1984,9 +2011,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -1999,6 +2029,7 @@
         {
           "path": "/articles",
           "responseStatusCode": 200,
+          "name": "Article Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -2448,6 +2479,7 @@
         {
           "path": "/articles",
           "responseStatusCode": 200,
+          "name": "Bad Request",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -3025,9 +3057,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -3048,7 +3083,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Article not found",
+              "name": "Article Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -3068,9 +3103,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -3081,9 +3119,9 @@
       ],
       "examples": [
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
-          "name": "Article found",
+          "name": "Article Found",
           "pathParameters": {
             "id": 123
           },
@@ -3120,7 +3158,7 @@
           }
         },
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -3714,9 +3752,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -3757,9 +3798,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -3770,9 +3814,9 @@
       ],
       "examples": [
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -3809,8 +3853,9 @@
           }
         },
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -4261,8 +4306,9 @@
           }
         },
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
+          "name": "Article Not Found",
           "pathParameters": {
             "id": 123
           },
@@ -4843,9 +4889,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -4886,9 +4935,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -4899,9 +4951,9 @@
       ],
       "examples": [
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -4918,7 +4970,7 @@
           }
         },
         {
-          "path": "/articles/{id}",
+          "path": "/articles/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -5129,9 +5181,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -5144,7 +5199,7 @@
         {
           "path": "/articles/search",
           "responseStatusCode": 200,
-          "name": "Search successful",
+          "name": "Search Successful",
           "queryParameters": {
             "phrase": "Getting started",
             "state": "published",
@@ -5797,9 +5852,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -6214,9 +6272,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -6257,9 +6318,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -6272,6 +6336,7 @@
         {
           "path": "/help_center/collections",
           "responseStatusCode": 200,
+          "name": "Collection Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -6484,6 +6549,7 @@
         {
           "path": "/help_center/collections",
           "responseStatusCode": 200,
+          "name": "Bad Request",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -6832,9 +6898,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -6855,7 +6924,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Collection not found",
+              "name": "Collection Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -6875,9 +6944,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -6888,9 +6960,9 @@
       ],
       "examples": [
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
-          "name": "Collection found",
+          "name": "Collection Found",
           "pathParameters": {
             "id": 123
           },
@@ -6915,7 +6987,7 @@
           }
         },
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -7280,9 +7352,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -7323,9 +7398,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -7336,9 +7414,9 @@
       ],
       "examples": [
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -7363,8 +7441,9 @@
           }
         },
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -7578,8 +7657,9 @@
           }
         },
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
+          "name": "Collection Not Found",
           "pathParameters": {
             "id": 123
           },
@@ -7931,9 +8011,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -7954,7 +8037,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "collection Not Found",
+              "name": "Collection Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -7974,9 +8057,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -7987,9 +8073,9 @@
       ],
       "examples": [
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -8006,7 +8092,7 @@
           }
         },
         {
-          "path": "/help_center/collections/{id}",
+          "path": "/help_center/collections/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -8162,9 +8248,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -8185,7 +8274,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Collection not found",
+              "name": "Collection Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -8205,9 +8294,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -8218,9 +8310,9 @@
       ],
       "examples": [
         {
-          "path": "/help_center/help_centers/{id}",
+          "path": "/help_center/help_centers/123",
           "responseStatusCode": 200,
-          "name": "Collection found",
+          "name": "Collection Found",
           "pathParameters": {
             "id": 123
           },
@@ -8241,7 +8333,7 @@
           }
         },
         {
-          "path": "/help_center/help_centers/{id}",
+          "path": "/help_center/help_centers/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -8378,9 +8470,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -8393,7 +8488,7 @@
         {
           "path": "/help_center/help_centers",
           "responseStatusCode": 200,
-          "name": "Help Centers found",
+          "name": "Help Centers Found",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -8653,9 +8748,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -8696,9 +8794,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -8964,9 +9065,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9007,9 +9111,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9022,6 +9129,7 @@
         {
           "path": "/companies",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -9079,6 +9187,7 @@
         {
           "path": "/companies",
           "responseStatusCode": 200,
+          "name": "Bad Request",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -9264,9 +9373,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9307,9 +9419,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9320,7 +9435,7 @@
       ],
       "examples": [
         {
-          "path": "/companies/{id}",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -9357,7 +9472,7 @@
           }
         },
         {
-          "path": "/companies/{id}",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "test-uuid-replacement"
@@ -9547,9 +9662,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9590,9 +9708,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9603,7 +9724,7 @@
       ],
       "examples": [
         {
-          "path": "/companies/{id}",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -9640,7 +9761,7 @@
           }
         },
         {
-          "path": "/companies/{id}",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "test-uuid-replacement"
@@ -9830,9 +9951,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9873,9 +9997,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -9886,7 +10013,7 @@
       ],
       "examples": [
         {
-          "path": "/companies/{id}",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -9905,7 +10032,7 @@
           }
         },
         {
-          "path": "/companies/{id}",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "test-uuid-replacement"
@@ -10062,9 +10189,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -10105,9 +10235,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -10118,7 +10251,7 @@
       ],
       "examples": [
         {
-          "path": "/companies/{id}/contacts",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/contacts",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -10143,7 +10276,7 @@
           }
         },
         {
-          "path": "/companies/{id}/contacts",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/contacts",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "test-uuid-replacement"
@@ -10400,9 +10533,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -10443,9 +10579,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -10456,7 +10595,7 @@
       ],
       "examples": [
         {
-          "path": "/companies/{id}/segments",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/segments",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -10474,7 +10613,7 @@
           }
         },
         {
-          "path": "/companies/{id}/segments",
+          "path": "/companies/5f4d3c1c-7b1b-4d7d-a97e-6095715c6632/segments",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "test-uuid-replacement"
@@ -10675,9 +10814,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -10954,9 +11096,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -11228,9 +11373,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -11251,7 +11399,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11271,9 +11419,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -11284,9 +11435,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}/companies",
+          "path": "/contacts/63a07ddf05a32042dffac965/companies",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
@@ -11335,7 +11486,7 @@
           }
         },
         {
-          "path": "/contacts/{id}/companies",
+          "path": "/contacts/63a07ddf05a32042dffac965/companies",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
@@ -11571,9 +11722,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -11614,9 +11768,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -11657,9 +11814,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -11670,8 +11830,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}/companies",
+          "path": "/contacts/string/companies",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": "string"
           },
@@ -11736,8 +11897,9 @@
           }
         },
         {
-          "path": "/contacts/{id}/companies",
+          "path": "/contacts/string/companies",
           "responseStatusCode": 200,
+          "name": "Bad Request",
           "pathParameters": {
             "id": "string"
           },
@@ -11800,8 +11962,9 @@
           }
         },
         {
-          "path": "/contacts/{id}/companies",
+          "path": "/contacts/string/companies",
           "responseStatusCode": 200,
+          "name": "Company Not Found",
           "pathParameters": {
             "id": "string"
           },
@@ -12026,9 +12189,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -12085,9 +12251,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -12098,7 +12267,7 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/companies/{id}",
+          "path": "/contacts/58a430d35458202d41b1e65b/companies/58a430d35458202d41b1e65b",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -12136,7 +12305,7 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/companies/{id}",
+          "path": "/contacts/58a430d35458202d41b1e65b/companies/58a430d35458202d41b1e65b",
           "responseStatusCode": 200,
           "pathParameters": {
             "contact_id": "58a430d35458202d41b1e65b",
@@ -12316,7 +12485,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12336,9 +12505,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -12349,9 +12521,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}/notes",
+          "path": "/contacts/0/notes",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "pathParameters": {
             "id": 0
           },
@@ -12430,7 +12602,7 @@
           }
         },
         {
-          "path": "/contacts/{id}/notes",
+          "path": "/contacts/0/notes",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 0
@@ -12672,7 +12844,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Admin not found",
+              "name": "Admin Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12688,7 +12860,7 @@
               }
             },
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12708,9 +12880,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -12721,8 +12896,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}/notes",
+          "path": "/contacts/123/notes",
           "responseStatusCode": 200,
+          "name": "Successful Response",
           "pathParameters": {
             "id": "123"
           },
@@ -12774,8 +12950,9 @@
           }
         },
         {
-          "path": "/contacts/{id}/notes",
+          "path": "/contacts/123/notes",
           "responseStatusCode": 200,
+          "name": "Admin Not Found",
           "pathParameters": {
             "id": "123"
           },
@@ -12827,8 +13004,9 @@
           }
         },
         {
-          "path": "/contacts/{id}/notes",
+          "path": "/contacts/123/notes",
           "responseStatusCode": 200,
+          "name": "Contact Not Found",
           "pathParameters": {
             "id": "123"
           },
@@ -13019,9 +13197,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13042,7 +13223,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13062,9 +13243,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13075,9 +13259,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/segments",
+          "path": "/contacts/63a07ddf05a32042dffac965/segments",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -13102,7 +13286,7 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/segments",
+          "path": "/contacts/63a07ddf05a32042dffac965/segments",
           "responseStatusCode": 200,
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
@@ -13268,9 +13452,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13291,7 +13478,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13311,9 +13498,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13324,7 +13514,7 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/subscriptions",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -13385,7 +13575,7 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/subscriptions",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
           "responseStatusCode": 200,
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
@@ -13600,9 +13790,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13623,7 +13816,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13639,7 +13832,7 @@
               }
             },
             {
-              "name": "Resource not found",
+              "name": "Resource Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13659,9 +13852,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13672,8 +13868,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/subscriptions",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -13713,8 +13910,9 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/subscriptions",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
           "responseStatusCode": 200,
+          "name": "Contact Not Found",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -13754,8 +13952,9 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/subscriptions",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions",
           "responseStatusCode": 200,
+          "name": "Resource Not Found",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -13955,9 +14154,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -13978,7 +14180,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13994,7 +14196,7 @@
               }
             },
             {
-              "name": "Resource not found",
+              "name": "Resource Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14014,9 +14216,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14027,7 +14232,7 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/subscriptions/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions/37846",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
@@ -14063,7 +14268,7 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/subscriptions/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965/subscriptions/37846",
           "responseStatusCode": 200,
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965",
@@ -14237,9 +14442,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14260,7 +14468,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14280,9 +14488,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14293,9 +14504,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/tags",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -14317,7 +14528,7 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/tags",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags",
           "responseStatusCode": 200,
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
@@ -14508,9 +14719,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14531,7 +14745,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14547,7 +14761,7 @@
               }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14567,9 +14781,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14580,9 +14797,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/tags",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -14605,8 +14822,9 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/tags",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -14634,8 +14852,9 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/tags",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags",
           "responseStatusCode": 200,
+          "name": "Contact Not Found",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -14663,8 +14882,9 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/tags",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags",
           "responseStatusCode": 200,
+          "name": "Tag Not Found",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965"
           },
@@ -14852,9 +15072,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14875,7 +15098,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14891,7 +15114,7 @@
               }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14911,9 +15134,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -14924,9 +15150,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{contact_id}/tags/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags/7522907",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965",
             "id": "7522907"
@@ -14944,7 +15170,7 @@
           }
         },
         {
-          "path": "/contacts/{contact_id}/tags/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965/tags/7522907",
           "responseStatusCode": 200,
           "pathParameters": {
             "contact_id": "63a07ddf05a32042dffac965",
@@ -15098,9 +15324,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -15111,9 +15340,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
@@ -15219,7 +15448,7 @@
           }
         },
         {
-          "path": "/contacts/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
@@ -15462,9 +15691,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -15475,9 +15707,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
@@ -15590,8 +15822,9 @@
           }
         },
         {
-          "path": "/contacts/{id}",
+          "path": "/contacts/63a07ddf05a32042dffac965",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
@@ -15830,9 +16063,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -15843,9 +16079,9 @@
       ],
       "examples": [
         {
-          "path": "/contacts/{id}",
+          "path": "/contacts/string",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "string"
           },
@@ -15863,7 +16099,7 @@
           }
         },
         {
-          "path": "/contacts/{id}",
+          "path": "/contacts/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "string"
@@ -16009,9 +16245,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -16024,7 +16263,7 @@
         {
           "path": "/contacts/merge",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -16129,6 +16368,7 @@
         {
           "path": "/contacts/merge",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -16354,9 +16594,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -16369,7 +16612,7 @@
         {
           "path": "/contacts/search",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -16391,6 +16634,7 @@
         {
           "path": "/contacts/search",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -16612,9 +16856,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -16627,7 +16874,7 @@
         {
           "path": "/contacts",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -16880,9 +17127,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -16895,7 +17145,7 @@
         {
           "path": "/contacts",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -17006,6 +17256,7 @@
         {
           "path": "/contacts",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -17217,9 +17468,9 @@
       "errors": [],
       "examples": [
         {
-          "path": "/contacts/{id}/archive",
+          "path": "/contacts/63a07ddf05a32042dffac965/archive",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
@@ -17237,7 +17488,7 @@
           }
         },
         {
-          "path": "/contacts/{id}/archive",
+          "path": "/contacts/63a07ddf05a32042dffac965/archive",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
@@ -17363,9 +17614,9 @@
       "errors": [],
       "examples": [
         {
-          "path": "/contacts/{id}/unarchive",
+          "path": "/contacts/63a07ddf05a32042dffac965/unarchive",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
           },
@@ -17383,7 +17634,7 @@
           }
         },
         {
-          "path": "/contacts/{id}/unarchive",
+          "path": "/contacts/63a07ddf05a32042dffac965/unarchive",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "63a07ddf05a32042dffac965"
@@ -17578,9 +17829,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -17601,7 +17855,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Conversation not found",
+              "name": "Conversation Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -17621,9 +17875,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -17634,9 +17891,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{conversation_id}/tags",
+          "path": "/conversations/64619700005694/tags",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "conversation_id": "64619700005694"
           },
@@ -17660,8 +17917,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/tags",
+          "path": "/conversations/64619700005694/tags",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "conversation_id": "64619700005694"
           },
@@ -17690,8 +17948,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/tags",
+          "path": "/conversations/64619700005694/tags",
           "responseStatusCode": 200,
+          "name": "Conversation Not Found",
           "pathParameters": {
             "conversation_id": "64619700005694"
           },
@@ -17904,9 +18163,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -17927,7 +18189,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Conversation not found",
+              "name": "Conversation Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -17943,7 +18205,7 @@
               }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -17963,9 +18225,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -17976,9 +18241,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{conversation_id}/tags/{id}",
+          "path": "/conversations/64619700005694/tags/7522907",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "conversation_id": "64619700005694",
             "id": "7522907"
@@ -18002,8 +18267,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/tags/{id}",
+          "path": "/conversations/64619700005694/tags/7522907",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "conversation_id": "64619700005694",
             "id": "7522907"
@@ -18032,8 +18298,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/tags/{id}",
+          "path": "/conversations/64619700005694/tags/7522907",
           "responseStatusCode": 200,
+          "name": "Conversation Not Found",
           "pathParameters": {
             "conversation_id": "64619700005694",
             "id": "7522907"
@@ -18062,8 +18329,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/tags/{id}",
+          "path": "/conversations/64619700005694/tags/7522907",
           "responseStatusCode": 200,
+          "name": "Tag Not Found",
           "pathParameters": {
             "conversation_id": "64619700005694",
             "id": "7522907"
@@ -18241,9 +18509,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18264,7 +18535,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -18284,9 +18555,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18299,7 +18573,7 @@
         {
           "path": "/conversations",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "queryParameters": {
             "per_page": 20,
             "starting_after": "string"
@@ -18559,9 +18833,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18582,7 +18859,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -18602,9 +18879,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18645,9 +18925,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18660,6 +18943,7 @@
         {
           "path": "/conversations",
           "responseStatusCode": 200,
+          "name": "Conversation Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -18669,14 +18953,17 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         },
         {
           "path": "/conversations",
           "responseStatusCode": 200,
+          "name": "Contact Not Found",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -18686,8 +18973,10 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         }
@@ -18843,9 +19132,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18866,7 +19158,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -18886,9 +19178,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18909,7 +19204,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -18929,9 +19224,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -18942,9 +19240,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}",
+          "path": "/conversations/123",
           "responseStatusCode": 200,
-          "name": "conversation found",
+          "name": "Conversation Found",
           "pathParameters": {
             "id": 123
           },
@@ -19025,7 +19323,7 @@
           }
         },
         {
-          "path": "/conversations/{id}",
+          "path": "/conversations/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -19396,9 +19694,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -19419,7 +19720,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -19439,9 +19740,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -19462,7 +19766,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -19482,9 +19786,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -19495,8 +19802,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}",
+          "path": "/conversations/123",
           "responseStatusCode": 200,
+          "name": "Conversation Found",
           "pathParameters": {
             "id": 123
           },
@@ -19703,8 +20011,9 @@
           }
         },
         {
-          "path": "/conversations/{id}",
+          "path": "/conversations/123",
           "responseStatusCode": 200,
+          "name": "Not Found",
           "pathParameters": {
             "id": 123
           },
@@ -20009,7 +20318,7 @@
         {
           "path": "/conversations/search",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -20093,6 +20402,7 @@
         {
           "path": "/conversations/search",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -20459,9 +20769,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -20482,7 +20795,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -20502,9 +20815,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -20525,7 +20841,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -20545,9 +20861,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -20558,8 +20877,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}/reply",
+          "path": "/conversations/123 or \"last\"/reply",
           "responseStatusCode": 200,
+          "name": "User Reply",
           "pathParameters": {
             "id": "123 or \"last\""
           },
@@ -20763,8 +21083,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/reply",
+          "path": "/conversations/123 or \"last\"/reply",
           "responseStatusCode": 200,
+          "name": "Admin Note Reply",
           "pathParameters": {
             "id": "123 or \"last\""
           },
@@ -20968,8 +21289,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/reply",
+          "path": "/conversations/123 or \"last\"/reply",
           "responseStatusCode": 200,
+          "name": "User Last Conversation Reply",
           "pathParameters": {
             "id": "123 or \"last\""
           },
@@ -21173,8 +21495,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/reply",
+          "path": "/conversations/123 or \"last\"/reply",
           "responseStatusCode": 200,
+          "name": "Not Found",
           "pathParameters": {
             "id": "123 or \"last\""
           },
@@ -21526,9 +21849,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -21549,7 +21875,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -21569,9 +21895,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -21592,7 +21921,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -21612,9 +21941,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -21625,8 +21957,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}/parts",
+          "path": "/conversations/123/parts",
           "responseStatusCode": 200,
+          "name": "Close a Conversation",
           "pathParameters": {
             "id": "123"
           },
@@ -21839,8 +22172,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/parts",
+          "path": "/conversations/123/parts",
           "responseStatusCode": 200,
+          "name": "Snooze a Conversation",
           "pathParameters": {
             "id": "123"
           },
@@ -22052,8 +22386,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/parts",
+          "path": "/conversations/123/parts",
           "responseStatusCode": 200,
+          "name": "Open a Conversation",
           "pathParameters": {
             "id": "123"
           },
@@ -22264,8 +22599,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/parts",
+          "path": "/conversations/123/parts",
           "responseStatusCode": 200,
+          "name": "Assign a Conversation",
           "pathParameters": {
             "id": "123"
           },
@@ -22478,8 +22814,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/parts",
+          "path": "/conversations/123/parts",
           "responseStatusCode": 200,
+          "name": "Not Found",
           "pathParameters": {
             "id": "123"
           },
@@ -22830,9 +23167,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -22853,7 +23193,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -22873,9 +23213,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -22896,7 +23239,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -22916,9 +23259,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -22929,9 +23275,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}/run_assignment_rules",
+          "path": "/conversations/123/run_assignment_rules",
           "responseStatusCode": 200,
-          "name": "Assign a conversation using assignment rules",
+          "name": "Assign a Conversation Using Assignment Rules",
           "pathParameters": {
             "id": "123"
           },
@@ -23032,7 +23378,7 @@
           }
         },
         {
-          "path": "/conversations/{id}/run_assignment_rules",
+          "path": "/conversations/123/run_assignment_rules",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
@@ -23387,9 +23733,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -23410,7 +23759,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -23430,9 +23779,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -23453,7 +23805,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -23473,9 +23825,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -23486,8 +23841,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}/customers",
+          "path": "/conversations/123/customers",
           "responseStatusCode": 200,
+          "name": "Attach a Contact to a Conversation",
           "pathParameters": {
             "id": "123"
           },
@@ -23691,8 +24047,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/customers",
+          "path": "/conversations/123/customers",
           "responseStatusCode": 200,
+          "name": "Not Found",
           "pathParameters": {
             "id": "123"
           },
@@ -24067,9 +24424,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -24090,7 +24450,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -24110,9 +24470,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -24133,7 +24496,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Conversation not found",
+              "name": "Conversation Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -24149,7 +24512,7 @@
               }
             },
             {
-              "name": "Contact not found",
+              "name": "Contact Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -24169,9 +24532,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -24192,7 +24558,7 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
-              "name": "Last customer",
+              "name": "Last Customer",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -24212,9 +24578,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -24225,8 +24594,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{conversation_id}/customers/{contact_id}",
+          "path": "/conversations/123/customers/123",
           "responseStatusCode": 200,
+          "name": "Detach a Contact from a Group Conversation",
           "pathParameters": {
             "conversation_id": "123",
             "contact_id": "123"
@@ -24431,8 +24801,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/customers/{contact_id}",
+          "path": "/conversations/123/customers/123",
           "responseStatusCode": 200,
+          "name": "Conversation Not Found",
           "pathParameters": {
             "conversation_id": "123",
             "contact_id": "123"
@@ -24637,8 +25008,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/customers/{contact_id}",
+          "path": "/conversations/123/customers/123",
           "responseStatusCode": 200,
+          "name": "Contact Not Found",
           "pathParameters": {
             "conversation_id": "123",
             "contact_id": "123"
@@ -24843,8 +25215,9 @@
           }
         },
         {
-          "path": "/conversations/{conversation_id}/customers/{contact_id}",
+          "path": "/conversations/123/customers/123",
           "responseStatusCode": 200,
+          "name": "Last Customer",
           "pathParameters": {
             "conversation_id": "123",
             "contact_id": "123"
@@ -25176,9 +25549,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -25199,7 +25575,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -25219,9 +25595,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -25234,6 +25613,7 @@
         {
           "path": "/conversations/redact",
           "responseStatusCode": 200,
+          "name": "Redact a Conversation Part",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -25436,6 +25816,7 @@
         {
           "path": "/conversations/redact",
           "responseStatusCode": 200,
+          "name": "Not Found",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -25766,7 +26147,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "Bad request",
+              "name": "Bad Request",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -25786,9 +26167,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -25799,9 +26183,9 @@
       ],
       "examples": [
         {
-          "path": "/conversations/{id}/convert",
+          "path": "/conversations/123/convert",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -25901,8 +26285,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/convert",
+          "path": "/conversations/123/convert",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -26031,8 +26416,9 @@
           }
         },
         {
-          "path": "/conversations/{id}/convert",
+          "path": "/conversations/123/convert",
           "responseStatusCode": 200,
+          "name": "Bad Request",
           "pathParameters": {
             "id": 123
           },
@@ -26313,9 +26699,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -26328,7 +26717,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "queryParameters": {
             "model": "company",
             "include_archived": false
@@ -26728,7 +27117,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "Same name already exists",
+              "name": "Same Name Already Exists",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -26744,7 +27133,7 @@
               }
             },
             {
-              "name": "Invalid name",
+              "name": "Invalid Name",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -26760,7 +27149,7 @@
               }
             },
             {
-              "name": "Attribute already exists",
+              "name": "Attribute Already Exists",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -26792,7 +27181,7 @@
               }
             },
             {
-              "name": "Too few options for list",
+              "name": "Too Few Options for List",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -26812,9 +27201,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -26855,9 +27247,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -26870,6 +27265,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -26902,6 +27298,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
+          "name": "Same Name Already Exists",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -26934,6 +27331,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
+          "name": "Invalid Name",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -26966,6 +27364,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
+          "name": "Attribute Already Exists",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -26998,6 +27397,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
+          "name": "Invalid Data Type",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -27030,6 +27430,7 @@
         {
           "path": "/data_attributes",
           "responseStatusCode": 200,
+          "name": "Too Few Options for List",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -27182,7 +27583,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "Too few options in list",
+              "name": "Too Few Options IN List",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -27202,9 +27603,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -27245,9 +27649,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -27288,9 +27695,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -27331,9 +27741,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -27344,8 +27757,9 @@
       ],
       "examples": [
         {
-          "path": "/data_attributes/{id}",
+          "path": "/data_attributes/1",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": 1
           },
@@ -27379,8 +27793,9 @@
           }
         },
         {
-          "path": "/data_attributes/{id}",
+          "path": "/data_attributes/1",
           "responseStatusCode": 200,
+          "name": "Too Few Options IN List",
           "pathParameters": {
             "id": 1
           },
@@ -27414,8 +27829,9 @@
           }
         },
         {
-          "path": "/data_attributes/{id}",
+          "path": "/data_attributes/1",
           "responseStatusCode": 200,
+          "name": "Attribute Not Found",
           "pathParameters": {
             "id": 1
           },
@@ -27449,8 +27865,9 @@
           }
         },
         {
-          "path": "/data_attributes/{id}",
+          "path": "/data_attributes/1",
           "responseStatusCode": 200,
+          "name": "Has Dependant Object",
           "pathParameters": {
             "id": 1
           },
@@ -27752,9 +28169,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -27767,7 +28187,7 @@
         {
           "path": "/events",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "queryParameters": {
             "filter": {
               "user_id": "string"
@@ -27940,9 +28360,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -28075,9 +28498,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -28193,7 +28619,7 @@
         {
           "path": "/export/content/data",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28210,6 +28636,7 @@
         {
           "path": "/export/content/data",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28339,9 +28766,9 @@
       "errors": [],
       "examples": [
         {
-          "path": "/export/content/data/{job_identifier}",
+          "path": "/export/content/data/string",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "job_identifier": "string"
           },
@@ -28359,7 +28786,7 @@
           }
         },
         {
-          "path": "/export/content/data/{job_identifier}",
+          "path": "/export/content/data/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "job_identifier": "string"
@@ -28485,9 +28912,9 @@
       "errors": [],
       "examples": [
         {
-          "path": "/export/cancel/{job_identifier}",
+          "path": "/export/cancel/string",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "job_identifier": "string"
           },
@@ -28505,7 +28932,7 @@
           }
         },
         {
-          "path": "/export/cancel/{job_identifier}",
+          "path": "/export/cancel/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "job_identifier": "string"
@@ -28733,7 +29160,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "No body supplied for message",
+              "name": "No Body Supplied for Message",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -28749,7 +29176,7 @@
               }
             },
             {
-              "name": "No body supplied for email message",
+              "name": "No Body Supplied for Email Message",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -28769,9 +29196,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -28812,9 +29242,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -28835,7 +29268,7 @@
           "name": "Forbidden",
           "examples": [
             {
-              "name": "API plan restricted",
+              "name": "API Plan Restricted",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -28855,9 +29288,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -28878,7 +29314,7 @@
           "name": "Unprocessable Entity",
           "examples": [
             {
-              "name": "No subject supplied for email message",
+              "name": "No Subject Supplied for Email Message",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -28898,9 +29334,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -28913,6 +29352,7 @@
         {
           "path": "/messages",
           "responseStatusCode": 200,
+          "name": "User Message Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28922,14 +29362,17 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         },
         {
           "path": "/messages",
           "responseStatusCode": 200,
+          "name": "Lead Message Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28939,14 +29382,17 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         },
         {
           "path": "/messages",
           "responseStatusCode": 200,
+          "name": "Admin Message Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28956,14 +29402,17 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         },
         {
           "path": "/messages",
           "responseStatusCode": 200,
+          "name": "No Body Supplied for Message",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28973,14 +29422,17 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         },
         {
           "path": "/messages",
           "responseStatusCode": 200,
+          "name": "No Subject Supplied for Email Message",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -28990,14 +29442,17 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         },
         {
           "path": "/messages",
           "responseStatusCode": 200,
+          "name": "No Body Supplied for Email Message",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -29007,8 +29462,10 @@
               "type": "user_message",
               "id": "1488971108",
               "created_at": 1667560812,
+              "subject": "Greetings",
               "body": "Hello",
-              "message_type": "inapp"
+              "message_type": "inapp",
+              "conversation_id": "64619700005570"
             }
           }
         }
@@ -29128,9 +29585,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -29143,7 +29603,7 @@
         {
           "path": "/news/news_items",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -29384,9 +29844,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -29399,7 +29862,7 @@
         {
           "path": "/news/news_items",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -29438,6 +29901,7 @@
         {
           "path": "/news/news_items",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -29609,9 +30073,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -29652,9 +30119,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -29665,9 +30135,9 @@
       ],
       "examples": [
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -29705,7 +30175,7 @@
           }
         },
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -29892,9 +30362,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -29935,9 +30408,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -29948,9 +30424,9 @@
       ],
       "examples": [
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -29981,8 +30457,9 @@
           }
         },
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -30019,8 +30496,9 @@
           }
         },
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
+          "name": "News Item Not Found",
           "pathParameters": {
             "id": 123
           },
@@ -30195,9 +30673,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -30238,9 +30719,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -30251,9 +30735,9 @@
       ],
       "examples": [
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": 123
           },
@@ -30270,7 +30754,7 @@
           }
         },
         {
-          "path": "/news/news_items/{id}",
+          "path": "/news/news_items/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 123
@@ -30434,9 +30918,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -30447,9 +30934,9 @@
       ],
       "examples": [
         {
-          "path": "/news/newsfeeds/{id}/items",
+          "path": "/news/newsfeeds/123/items",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "123"
           },
@@ -30472,7 +30959,7 @@
           }
         },
         {
-          "path": "/news/newsfeeds/{id}/items",
+          "path": "/news/newsfeeds/123/items",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
@@ -30641,9 +31128,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -30656,7 +31146,7 @@
         {
           "path": "/news/newsfeeds",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -30880,9 +31370,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -30893,9 +31386,9 @@
       ],
       "examples": [
         {
-          "path": "/news/newsfeeds/{id}",
+          "path": "/news/newsfeeds/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "123"
           },
@@ -30914,7 +31407,7 @@
           }
         },
         {
-          "path": "/news/newsfeeds/{id}",
+          "path": "/news/newsfeeds/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
@@ -31064,9 +31557,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31087,7 +31583,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Note not found",
+              "name": "Note Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -31107,9 +31603,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31120,9 +31619,9 @@
       ],
       "examples": [
         {
-          "path": "/notes/{id}",
+          "path": "/notes/1",
           "responseStatusCode": 200,
-          "name": "Note found",
+          "name": "Note Found",
           "pathParameters": {
             "id": 1
           },
@@ -31152,7 +31651,7 @@
           }
         },
         {
-          "path": "/notes/{id}",
+          "path": "/notes/1",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 1
@@ -31325,9 +31824,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31340,7 +31842,7 @@
         {
           "path": "/segments",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "queryParameters": {
             "include_count": true
           },
@@ -31531,9 +32033,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31554,7 +32059,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Segment not found",
+              "name": "Segment Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -31574,9 +32079,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31587,9 +32095,9 @@
       ],
       "examples": [
         {
-          "path": "/segments/{id}",
+          "path": "/segments/123",
           "responseStatusCode": 200,
-          "name": "Successful response",
+          "name": "Successful Response",
           "pathParameters": {
             "id": "123"
           },
@@ -31609,7 +32117,7 @@
           }
         },
         {
-          "path": "/segments/{id}",
+          "path": "/segments/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
@@ -31738,9 +32246,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31943,9 +32454,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -31958,7 +32472,7 @@
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -31973,6 +32487,7 @@
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -31987,6 +32502,7 @@
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
+          "name": "Bad Request   Exception Sending Sms",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32001,6 +32517,7 @@
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
+          "name": "Bad Request   Invalid Number",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32015,6 +32532,7 @@
         {
           "path": "/phone_call_redirects",
           "responseStatusCode": 200,
+          "name": "Unprocessable Entity",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32134,9 +32652,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32149,7 +32670,7 @@
         {
           "path": "/tags",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32290,7 +32811,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "Invalid parameters",
+              "name": "Invalid Parameters",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -32310,9 +32831,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32353,9 +32877,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32376,7 +32903,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Company not found",
+              "name": "Company Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -32392,7 +32919,7 @@
               }
             },
             {
-              "name": "User  not found",
+              "name": "User  Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -32412,9 +32939,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32427,6 +32957,7 @@
         {
           "path": "/tags",
           "responseStatusCode": 200,
+          "name": "Action Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32453,6 +32984,7 @@
         {
           "path": "/tags",
           "responseStatusCode": 200,
+          "name": "Invalid Parameters",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32479,6 +33011,7 @@
         {
           "path": "/tags",
           "responseStatusCode": 200,
+          "name": "Company Not Found",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32510,6 +33043,7 @@
         {
           "path": "/tags",
           "responseStatusCode": 200,
+          "name": "User  Not Found",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -32669,9 +33203,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32692,7 +33229,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Tag not found",
+              "name": "Tag Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -32712,9 +33249,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32725,9 +33265,9 @@
       ],
       "examples": [
         {
-          "path": "/tags/{id}",
+          "path": "/tags/123",
           "responseStatusCode": 200,
-          "name": "Tag found",
+          "name": "Tag Found",
           "pathParameters": {
             "id": "123"
           },
@@ -32744,7 +33284,7 @@
           }
         },
         {
-          "path": "/tags/{id}",
+          "path": "/tags/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
@@ -32873,7 +33413,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "Tag has dependent objects",
+              "name": "Tag Has Dependent Objects",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -32893,9 +33433,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32936,9 +33479,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -32959,7 +33505,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Resource not found",
+              "name": "Resource Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -32979,9 +33525,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33098,9 +33647,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33113,7 +33665,7 @@
         {
           "path": "/teams",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -33287,9 +33839,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33310,7 +33865,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Team not found",
+              "name": "Team Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -33330,9 +33885,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33343,9 +33901,9 @@
       ],
       "examples": [
         {
-          "path": "/teams/{id}",
+          "path": "/teams/123",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "id": "123"
           },
@@ -33363,7 +33921,7 @@
           }
         },
         {
-          "path": "/teams/{id}",
+          "path": "/teams/123",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "123"
@@ -33542,9 +34100,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33555,8 +34116,9 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/{ticket_type_id}/attributes",
+          "path": "/ticket_types/string/attributes",
           "responseStatusCode": 200,
+          "name": "Ticket Type Attribute Created",
           "pathParameters": {
             "ticket_type_id": "string"
           },
@@ -33758,9 +34320,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33771,8 +34336,9 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/{ticket_type_id}/attributes/{id}",
+          "path": "/ticket_types/string/attributes/string",
           "responseStatusCode": 200,
+          "name": "Ticket Type Attribute Updated",
           "pathParameters": {
             "ticket_type_id": "string",
             "id": "string"
@@ -33911,9 +34477,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -33926,7 +34495,7 @@
         {
           "path": "/ticket_types",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -34189,9 +34758,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -34204,6 +34776,7 @@
         {
           "path": "/ticket_types",
           "responseStatusCode": 200,
+          "name": "Ticket Type Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -34378,9 +34951,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -34391,9 +34967,9 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/{id}",
+          "path": "/ticket_types/string",
           "responseStatusCode": 200,
-          "name": "Ticket type found",
+          "name": "Ticket Type Found",
           "pathParameters": {
             "id": "string"
           },
@@ -34484,7 +35060,7 @@
           }
         },
         {
-          "path": "/ticket_types/{id}",
+          "path": "/ticket_types/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "string"
@@ -34675,9 +35251,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -34688,8 +35267,9 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/{id}",
+          "path": "/ticket_types/string",
           "responseStatusCode": 200,
+          "name": "Ticket Type Updated",
           "pathParameters": {
             "id": "string"
           },
@@ -34864,7 +35444,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "User reply",
+              "name": "User Reply",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -34884,9 +35464,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -34927,9 +35510,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -34950,7 +35536,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Not found",
+              "name": "Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -34970,9 +35556,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -34983,8 +35572,9 @@
       ],
       "examples": [
         {
-          "path": "/tickets/{id}/reply",
+          "path": "/tickets/123/reply",
           "responseStatusCode": 200,
+          "name": "User Reply",
           "pathParameters": {
             "id": "123"
           },
@@ -35031,8 +35621,9 @@
           }
         },
         {
-          "path": "/tickets/{id}/reply",
+          "path": "/tickets/123/reply",
           "responseStatusCode": 200,
+          "name": "Admin Note Reply",
           "pathParameters": {
             "id": "123"
           },
@@ -35079,8 +35670,9 @@
           }
         },
         {
-          "path": "/tickets/{id}/reply",
+          "path": "/tickets/123/reply",
           "responseStatusCode": 200,
+          "name": "Admin Quick Reply Reply",
           "pathParameters": {
             "id": "123"
           },
@@ -35136,8 +35728,9 @@
           }
         },
         {
-          "path": "/tickets/{id}/reply",
+          "path": "/tickets/123/reply",
           "responseStatusCode": 200,
+          "name": "Not Found",
           "pathParameters": {
             "id": "123"
           },
@@ -35360,9 +35953,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -35383,7 +35979,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Ticket not found",
+              "name": "Ticket Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -35403,9 +35999,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -35416,9 +36015,9 @@
       ],
       "examples": [
         {
-          "path": "/tickets/{ticket_id}/tags",
+          "path": "/tickets/64619700005694/tags",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "ticket_id": "64619700005694"
           },
@@ -35442,8 +36041,9 @@
           }
         },
         {
-          "path": "/tickets/{ticket_id}/tags",
+          "path": "/tickets/64619700005694/tags",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "ticket_id": "64619700005694"
           },
@@ -35472,8 +36072,9 @@
           }
         },
         {
-          "path": "/tickets/{ticket_id}/tags",
+          "path": "/tickets/64619700005694/tags",
           "responseStatusCode": 200,
+          "name": "Ticket Not Found",
           "pathParameters": {
             "ticket_id": "64619700005694"
           },
@@ -35686,9 +36287,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -35709,7 +36313,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Ticket not found",
+              "name": "Ticket Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -35725,7 +36329,7 @@
               }
             },
             {
-              "name": "Tag not found",
+              "name": "Tag Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -35745,9 +36349,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -35758,9 +36365,9 @@
       ],
       "examples": [
         {
-          "path": "/tickets/{ticket_id}/tags/{id}",
+          "path": "/tickets/64619700005694/tags/7522907",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "pathParameters": {
             "ticket_id": "64619700005694",
             "id": "7522907"
@@ -35784,8 +36391,9 @@
           }
         },
         {
-          "path": "/tickets/{ticket_id}/tags/{id}",
+          "path": "/tickets/64619700005694/tags/7522907",
           "responseStatusCode": 200,
+          "name": "Successful",
           "pathParameters": {
             "ticket_id": "64619700005694",
             "id": "7522907"
@@ -35814,8 +36422,9 @@
           }
         },
         {
-          "path": "/tickets/{ticket_id}/tags/{id}",
+          "path": "/tickets/64619700005694/tags/7522907",
           "responseStatusCode": 200,
+          "name": "Ticket Not Found",
           "pathParameters": {
             "ticket_id": "64619700005694",
             "id": "7522907"
@@ -35844,8 +36453,9 @@
           }
         },
         {
-          "path": "/tickets/{ticket_id}/tags/{id}",
+          "path": "/tickets/64619700005694/tags/7522907",
           "responseStatusCode": 200,
+          "name": "Tag Not Found",
           "pathParameters": {
             "ticket_id": "64619700005694",
             "id": "7522907"
@@ -35993,9 +36603,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -36008,6 +36621,7 @@
         {
           "path": "/tickets",
           "responseStatusCode": 200,
+          "name": "Successful Response",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -36263,9 +36877,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -36276,9 +36893,9 @@
       ],
       "examples": [
         {
-          "path": "/tickets/{id}",
+          "path": "/tickets/string",
           "responseStatusCode": 200,
-          "name": "Ticket found",
+          "name": "Ticket Found",
           "pathParameters": {
             "id": "string"
           },
@@ -36404,7 +37021,7 @@
           }
         },
         {
-          "path": "/tickets/{id}",
+          "path": "/tickets/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": "string"
@@ -36676,9 +37293,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -36689,8 +37309,9 @@
       ],
       "examples": [
         {
-          "path": "/tickets/{id}",
+          "path": "/tickets/string",
           "responseStatusCode": 200,
+          "name": "Successful Response",
           "pathParameters": {
             "id": "string"
           },
@@ -36819,8 +37440,9 @@
           }
         },
         {
-          "path": "/tickets/{id}",
+          "path": "/tickets/string",
           "responseStatusCode": 200,
+          "name": "Admin Not Found",
           "pathParameters": {
             "id": "string"
           },
@@ -36949,8 +37571,9 @@
           }
         },
         {
-          "path": "/tickets/{id}",
+          "path": "/tickets/string",
           "responseStatusCode": 200,
+          "name": "Assignee Not Found",
           "pathParameters": {
             "id": "string"
           },
@@ -37177,7 +37800,7 @@
         {
           "path": "/tickets/search",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -37314,6 +37937,7 @@
         {
           "path": "/tickets/search",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -37577,9 +38201,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -37600,7 +38227,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "Visitor not found",
+              "name": "Visitor Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -37620,9 +38247,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -37635,7 +38265,7 @@
         {
           "path": "/visitors",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "queryParameters": {
             "user_id": "string"
           },
@@ -37946,9 +38576,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -37969,7 +38602,7 @@
           "name": "Not Found",
           "examples": [
             {
-              "name": "visitor Not Found",
+              "name": "Visitor Not Found",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -37989,9 +38622,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -38004,7 +38640,7 @@
         {
           "path": "/visitors",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -38065,6 +38701,7 @@
         {
           "path": "/visitors",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -38192,6 +38829,7 @@
         {
           "path": "/visitors",
           "responseStatusCode": 200,
+          "name": "Visitor Not Found",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -38444,9 +39082,12 @@
                 "type": "json",
                 "value": {
                   "type": "error.list",
+                  "request_id": "test-uuid-replacement",
                   "errors": [
                     {
-                      "code": "unauthorized"
+                      "code": "unauthorized",
+                      "message": "Access Token Invalid",
+                      "field": "email"
                     }
                   ]
                 }
@@ -38459,7 +39100,7 @@
         {
           "path": "/visitors/convert",
           "responseStatusCode": 200,
-          "name": "successful",
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -38564,6 +39205,7 @@
         {
           "path": "/visitors/convert",
           "responseStatusCode": 200,
+          "name": "Successful",
           "headers": {
             "Intercom-Version": "2.11"
           },

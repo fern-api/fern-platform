@@ -176,12 +176,14 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     return wrappedUnion != null ? [wrappedUnion] : undefined;
   }
 
-  example(): Record<string, unknown> | undefined {
+  example(includeOptionals: boolean): Record<string, unknown> | undefined {
     return (
       this.input.example ??
       this.input.examples?.[0] ??
-      this.undiscriminatedMapping?.[0]?.example() ??
-      Object.values(this.discriminatedMapping ?? {})[0]?.example()
+      this.undiscriminatedMapping?.[0]?.example(includeOptionals) ??
+      Object.values(this.discriminatedMapping ?? {})[0]?.example(
+        includeOptionals
+      )
     );
   }
 }

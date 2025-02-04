@@ -48,7 +48,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
     };
   }
 
-  example(): unknown | undefined {
+  example(includeOptionals: boolean): unknown | undefined {
     const schema = resolveSchemaReference(this.input, this.context.document);
     if (schema == null) {
       return undefined;
@@ -60,6 +60,6 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
       accessPath: this.accessPath,
       pathId: this.schemaId ?? "",
       seenSchemas: this.seenSchemas,
-    }).example();
+    }).example(includeOptionals);
   }
 }

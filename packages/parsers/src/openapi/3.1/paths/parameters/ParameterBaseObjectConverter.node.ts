@@ -97,7 +97,7 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     return this.schema?.convert();
   }
 
-  example(): unknown | undefined {
-    return this.inputExample ?? this.schema?.example();
+  example(includeOptionals: boolean): unknown | undefined {
+    return this.inputExample ?? this.schema?.example(includeOptionals);
   }
 }

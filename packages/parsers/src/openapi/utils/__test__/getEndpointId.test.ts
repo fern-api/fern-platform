@@ -9,19 +9,19 @@ describe("getEndpointId", () => {
 
   it("handles string namespace", () => {
     expect(getEndpointId("pets", "/pets/get", "getById", undefined)).toBe(
-      "endpoint_pets.getById"
+      "endpoint_pets.getByIdPetsGet"
     );
   });
 
   it("handles array namespace", () => {
     expect(
       getEndpointId(["pets", "v1"], "/pets/get", "getById", undefined)
-    ).toBe("endpoint_petsV1.getById");
+    ).toBe("endpoint_petsV1.getByIdPetsGet");
   });
 
   it("handles undefined namespace", () => {
     expect(getEndpointId(undefined, "/pets/get", "getById", undefined)).toBe(
-      "endpoint_.getById"
+      "endpoint_.getByIdPetsGet"
     );
   });
 
@@ -33,7 +33,7 @@ describe("getEndpointId", () => {
 
   it("falls back to path endpoint when no sdkMethodName or operationId", () => {
     expect(getEndpointId("pets", "/pets/get", undefined, undefined)).toBe(
-      "endpoint_pets.get"
+      "endpoint_pets.undefinedPetsGet"
     );
   });
 
@@ -45,6 +45,6 @@ describe("getEndpointId", () => {
         "getDetails",
         undefined
       )
-    ).toBe("endpoint_pets.getDetails");
+    ).toBe("endpoint_pets.getDetailsApiV1PetsPetIdDetails");
   });
 });

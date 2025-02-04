@@ -94,7 +94,7 @@ describe("ExampleObjectConverterNode", () => {
       expect(result).toEqual({
         path: "/test",
         responseStatusCode: 200,
-        name: "test example",
+        name: "Test Example",
         description: undefined,
         pathParameters: undefined,
         queryParameters: undefined,

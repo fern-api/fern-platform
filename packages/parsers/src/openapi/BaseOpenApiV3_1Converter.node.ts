@@ -73,7 +73,7 @@ export abstract class BaseOpenApiV3_1ConverterNodeWithExample<
   Input,
   Output,
 > extends BaseOpenApiV3_1ConverterNode<Input, Output> {
-  abstract example(): unknown | undefined;
+  abstract example(includeOptionals: boolean): unknown | undefined;
 }
 
 export type BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<Input> =

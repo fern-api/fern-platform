@@ -96,9 +96,9 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
   webhookExample(): FernRegistry.api.v1.read.ExampleWebhookPayload | undefined {
     return {
       payload:
-        this.requestBodiesByContentType?.[
-          "application/json"
-        ]?.schema?.example(),
+        this.requestBodiesByContentType?.["application/json"]?.schema?.example(
+          true
+        ),
     };
   }
 }

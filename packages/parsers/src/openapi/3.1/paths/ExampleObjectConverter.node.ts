@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
+import { isNonNullish, titleCase } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../client/generated";
@@ -7,6 +7,7 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
 import { resolveExampleReference } from "../../utils/3.1/resolveExampleReference";
+import { replacePathParameters } from "../../utils/replacePathParameters";
 import { isExampleSseEvent } from "../guards/isExampleSseEvent";
 import { isFileWithData } from "../guards/isFileWithData";
 import { ParameterBaseObjectConverterNode } from "./parameters";
@@ -43,6 +44,7 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 > {
   resolvedRequestInput: OpenAPIV3_1.ExampleObject | undefined;
   resolvedResponseInput: OpenAPIV3_1.ExampleObject | undefined;
+  summary: string | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<ExampleObjectConverterNode.Input>,
@@ -109,6 +111,10 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     //         path: this.accessPath,
     //     });
     // }
+
+    this.summary =
+      this.input?.requestExample?.summary ??
+      this.input?.responseExample?.summary;
 
     if (this.shapes.requestBody != null && this.resolvedRequestInput != null) {
       switch (this.shapes.requestBody?.contentType) {
@@ -409,26 +415,34 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     const pathParameters = Object.fromEntries(
       Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => {
-        return [key, value.example()];
+        return [key, value.example(false)];
       })
     );
 
     const queryParameters = Object.fromEntries(
       Object.entries(this.shapes.queryParameters ?? {}).map(([key, value]) => {
-        return [key, value.example()];
+        return [key, value.example(false)];
       })
     );
 
     const requestHeaders = Object.fromEntries(
       Object.entries(this.shapes.requestHeaders ?? {}).map(([key, value]) => {
-        return [key, value.example()];
+        return [key, value.example(false)];
       })
     );
 
     return {
-      path: this.path,
+      path: replacePathParameters(
+        this.path,
+        pathParameters as Record<string, string>
+      ),
       responseStatusCode: this.responseStatusCode,
-      name: this.name,
+      name:
+        this.name != null
+          ? titleCase(this.name)
+          : this.summary != null
+            ? titleCase(this.summary)
+            : undefined,
       description: this.convertDescription(),
       pathParameters:
         Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
