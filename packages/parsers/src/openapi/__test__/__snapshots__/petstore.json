@@ -82,10 +82,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -95,10 +107,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -108,10 +132,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -121,10 +157,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -134,10 +182,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -147,10 +207,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -160,10 +232,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -173,14 +257,29 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_pet.updatePet": {
       "id": "endpoint_pet.updatePet",
@@ -263,10 +362,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -276,10 +387,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -289,10 +412,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -302,10 +437,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -315,10 +462,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -328,10 +487,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -341,10 +512,22 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
@@ -354,14 +537,29 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_pets.getPetById": {
       "id": "endpoint_pets.getPetById",
@@ -454,10 +652,22 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "id": 10,
                   "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "string"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 0,
+                      "name": "string"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -479,10 +689,22 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "id": 10,
                   "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "string"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 0,
+                      "name": "string"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -504,10 +726,22 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "id": 10,
                   "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "string"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 0,
+                      "name": "string"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -529,10 +763,22 @@
               "responseBody": {
                 "type": "json",
                 "value": {
+                  "id": 10,
                   "name": "doggie",
+                  "category": {
+                    "id": 1,
+                    "name": "Dogs"
+                  },
                   "photoUrls": [
                     "string"
-                  ]
+                  ],
+                  "tags": [
+                    {
+                      "id": 0,
+                      "name": "string"
+                    }
+                  ],
+                  "status": "available"
                 }
               }
             }
@@ -541,7 +787,7 @@
       ],
       "examples": [
         {
-          "path": "/pet/{petId}",
+          "path": "/pet/0",
           "responseStatusCode": null,
           "pathParameters": {
             "petId": 0
@@ -549,15 +795,27 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
         {
-          "path": "/pet/{petId}",
+          "path": "/pet/0",
           "responseStatusCode": null,
           "pathParameters": {
             "petId": 0
@@ -565,15 +823,27 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
         {
-          "path": "/pet/{petId}",
+          "path": "/pet/0",
           "responseStatusCode": null,
           "pathParameters": {
             "petId": 0
@@ -581,15 +851,27 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         },
         {
-          "path": "/pet/{petId}",
+          "path": "/pet/0",
           "responseStatusCode": null,
           "pathParameters": {
             "petId": 0
@@ -597,14 +879,29 @@
           "responseBody": {
             "type": "json",
             "value": {
+              "id": 10,
               "name": "doggie",
+              "category": {
+                "id": 1,
+                "name": "Dogs"
+              },
               "photoUrls": [
                 "string"
-              ]
+              ],
+              "tags": [
+                {
+                  "id": 0,
+                  "name": "string"
+                }
+              ],
+              "status": "available"
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

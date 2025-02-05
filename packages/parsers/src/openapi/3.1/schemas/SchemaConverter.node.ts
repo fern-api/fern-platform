@@ -7,6 +7,7 @@ import {
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { maybeSingleValueToArray } from "../../utils/maybeSingleValueToArray";
 import { wrapNullable } from "../../utils/wrapNullable";
 import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
@@ -55,33 +56,23 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         | undefined
       >
     | undefined;
-  nullable: boolean | undefined;
   description: string | undefined;
   name: string | undefined;
   examples: unknown | undefined;
   availability: AvailabilityConverterNode | undefined;
+  nullable?: boolean | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<
       OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    >
+    > & { nullable?: boolean | undefined }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 
   parse(): void {
-    if (!isReferenceObject(this.input)) {
-      if (this.accessPath.length >= 100 || this.seenSchemas.has(this.input)) {
-        this.context.errors.warning({
-          message: "Circular or deeply nested schema found, terminating",
-          path: this.accessPath,
-        });
-        return;
-      }
-      this.seenSchemas.add(this.input);
-    }
-
     this.description = this.input.description;
     this.availability = new AvailabilityConverterNode({
       input: this.input,
@@ -89,19 +80,41 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       accessPath: this.accessPath,
       pathId: "x-fern-availability",
     });
-    this.nullable =
-      isNonArraySchema(this.input) && isNullableSchema(this.input)
-        ? this.input.nullable
-        : undefined;
+    // check if nullable is set. If nullable is false, we will set it, otherwise we will ignore it
+    if (isNonArraySchema(this.input) && isNullableSchema(this.input)) {
+      this.nullable =
+        this.input.nullable != null ? this.input.nullable : this.nullable;
+    }
 
     // Check if the input is a reference object
     if (isReferenceObject(this.input)) {
-      this.typeShapeNode = new ReferenceConverterNode({
-        input: this.input,
-        context: this.context,
-        accessPath: this.accessPath,
-        pathId: this.pathId,
-      });
+      const refPath = getSchemaIdFromReference(this.input);
+      if (refPath == null) {
+        this.context.errors.error({
+          message: "Reference object does not have a valid schema ID",
+          path: this.accessPath,
+        });
+        return;
+      }
+      if (this.seenSchemas.has(refPath)) {
+        this.context.errors.warning({
+          message: "Circular or deeply nested schema found, terminating",
+          path: this.accessPath,
+        });
+        return;
+      }
+      this.seenSchemas.add(refPath);
+
+      this.typeShapeNode = new ReferenceConverterNode(
+        {
+          input: this.input,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: refPath,
+          seenSchemas: this.seenSchemas,
+        },
+        this.nullable
+      );
     } else {
       // If the object is not a reference object, then it is a schema object, gather all appropriate variables
       this.name = this.input.title;
@@ -148,6 +161,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
+          nullable: this.nullable,
         });
       }
       // We assume that if one of is defined, it is an object node
@@ -182,6 +196,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: this.pathId,
+                nullable: this.nullable,
               });
             }
             break;
@@ -192,6 +207,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: this.pathId,
+                nullable: this.nullable,
               });
             }
             break;
@@ -202,6 +218,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: this.pathId,
+                nullable: this.nullable,
               });
             }
             break;
@@ -212,6 +229,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                 context: this.context,
                 accessPath: this.accessPath,
                 pathId: this.pathId,
+                nullable: this.nullable,
               });
             }
             break;
@@ -229,9 +247,29 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             new UnreachableCaseError(this.input.type);
             break;
         }
+      } else if (
+        Array.isArray(this.input.type) &&
+        this.input.type.includes("null") &&
+        this.input.type.length === 2
+      ) {
+        const newType = this.input.type.filter((t) => t !== "null")[0];
+
+        if (newType !== "array") {
+          this.typeShapeNode = new SchemaConverterNode({
+            input: {
+              ...this.input,
+              type: newType,
+            },
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: this.pathId,
+            seenSchemas: this.seenSchemas,
+            nullable: true,
+          });
+        }
       } else if (this.input.properties != null) {
         this.typeShapeNode = new ObjectConverterNode({
-          input: this.input as ObjectConverterNode.Input,
+          input: { ...this.input, type: "object" },
           context: this.context,
           accessPath: this.accessPath,
           pathId: this.pathId,
@@ -271,7 +309,9 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       : mappedShapes?.[0];
   }
 
-  example(): unknown | undefined {
-    return this.typeShapeNode?.example();
+  example(includeOptionals: boolean): unknown | undefined {
+    return this.availability?.availability !== "deprecated"
+      ? this.typeShapeNode?.example(includeOptionals)
+      : undefined;
   }
 }

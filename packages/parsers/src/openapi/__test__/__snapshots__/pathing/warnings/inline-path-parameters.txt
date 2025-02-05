@@ -1,0 +1,11 @@
+[
+  {
+    "message": "Path parameter not defined: organization_id",
+    "path": [
+      "paths",
+      "/organizations/{organization_id}/search",
+      "post",
+      "parameters",
+    ],
+  },
+]

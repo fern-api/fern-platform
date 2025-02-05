@@ -471,7 +471,7 @@
         {
           "path": "/files/",
           "responseStatusCode": 200,
-          "name": "with-appdata",
+          "name": "With Appdata",
           "queryParameters": {
             "removed": true,
             "stored": true,
@@ -614,7 +614,7 @@
         {
           "path": "/files/",
           "responseStatusCode": 200,
-          "name": "without-appdata",
+          "name": "Without Appdata",
           "queryParameters": {
             "removed": true,
             "stored": true,
@@ -965,7 +965,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.storeFile": {
       "id": "endpoint_file.storeFile",
@@ -1240,7 +1243,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -1431,7 +1434,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -1621,7 +1624,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.deleteFileStorage": {
       "id": "endpoint_file.deleteFileStorage",
@@ -1896,9 +1902,9 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
-          "name": "removed-file",
+          "name": "Removed File",
           "pathParameters": {
             "uuid": "test-uuid-replacement"
           },
@@ -2013,7 +2019,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -2204,7 +2210,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/storage/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/storage/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -2394,7 +2400,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.fileInfo": {
       "id": "endpoint_file.fileInfo",
@@ -2682,7 +2691,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "name": "Image",
           "pathParameters": {
@@ -2877,7 +2886,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "name": "Video",
           "pathParameters": {
@@ -2991,7 +3000,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -3185,7 +3194,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/",
+          "path": "/files/03ccf9ab-f266-43fb-973d-a6529c55c2ae/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -3378,7 +3387,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.filesStoring": {
       "id": "endpoint_file.filesStoring",
@@ -3846,7 +3858,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.filesDelete": {
       "id": "endpoint_file.filesDelete",
@@ -4314,7 +4329,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.createLocalCopy": {
       "id": "endpoint_file.createLocalCopy",
@@ -4643,13 +4661,13 @@
             "value": {
               "type": "file",
               "result": {
-                "datetime_removed": "string",
-                "datetime_stored": "string",
+                "datetime_removed": "null",
+                "datetime_stored": "null",
                 "datetime_uploaded": "string",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
-                "original_file_url": "string",
+                "original_file_url": "null",
                 "original_filename": "EU_4.jpg",
                 "size": 0,
                 "url": "string",
@@ -4709,7 +4727,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_file.createRemoteCopy": {
       "id": "endpoint_file.createRemoteCopy",
@@ -4903,7 +4924,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -4912,7 +4933,7 @@
               }
             },
             {
-              "name": "copy-error",
+              "name": "Copy Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -5179,7 +5200,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionExecute": {
       "id": "endpoint_addOns.awsRekognitionExecute",
@@ -5528,7 +5552,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionExecutionStatus": {
       "id": "endpoint_addOns.awsRekognitionExecutionStatus",
@@ -5822,7 +5849,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute": {
       "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecute",
@@ -6171,7 +6201,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus": {
       "id": "endpoint_addOns.awsRekognitionDetectModerationLabelsExecutionStatus",
@@ -6465,7 +6498,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.ucClamavVirusScanExecute": {
       "id": "endpoint_addOns.ucClamavVirusScanExecute",
@@ -6851,7 +6887,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.ucClamavVirusScanExecutionStatus": {
       "id": "endpoint_addOns.ucClamavVirusScanExecutionStatus",
@@ -7153,7 +7192,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.removeBgExecute": {
       "id": "endpoint_addOns.removeBgExecute",
@@ -7672,7 +7714,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_addOns.removeBgExecutionStatus": {
       "id": "endpoint_addOns.removeBgExecutionStatus",
@@ -8034,7 +8079,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata._fileMetadata": {
       "id": "endpoint_fileMetadata._fileMetadata",
@@ -8241,7 +8289,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/metadata/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -8308,7 +8356,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -8374,7 +8422,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata.fileMetadataKey": {
       "id": "endpoint_fileMetadata.fileMetadataKey",
@@ -8608,7 +8659,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -8673,7 +8724,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -8737,7 +8788,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata.updateFileMetadataKey": {
       "id": "endpoint_fileMetadata.updateFileMetadataKey",
@@ -8983,7 +9037,7 @@
       ],
       "examples": [
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9048,7 +9102,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9113,7 +9167,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 201,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9178,7 +9232,7 @@
           }
         },
         {
-          "path": "/files/{uuid}/metadata/{key}/",
+          "path": "/files/21975c81-7f57-4c7a-aef9-acfe28779f78/metadata/subsystem/",
           "responseStatusCode": 201,
           "pathParameters": {
             "uuid": "test-uuid-replacement",
@@ -9242,7 +9296,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_fileMetadata.deleteFileMetadataKey": {
       "id": "endpoint_fileMetadata.deleteFileMetadataKey",
@@ -9470,7 +9527,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_group.groupsList": {
       "id": "endpoint_group.groupsList",
@@ -9826,7 +9886,7 @@
         {
           "path": "/groups/",
           "responseStatusCode": 200,
-          "name": "list",
+          "name": "List",
           "queryParameters": {
             "limit": 150,
             "from": "2015-01-02T10:00:00.463352Z",
@@ -9991,7 +10051,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_group.groupInfo": {
       "id": "endpoint_group.groupInfo",
@@ -10257,7 +10320,7 @@
       ],
       "examples": [
         {
-          "path": "/groups/{uuid}/",
+          "path": "/groups/badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "badfc9f7-f88f-4921-9cc0-22e2c08aa2da~12"
@@ -10329,7 +10392,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_group.deleteGroup": {
       "id": "endpoint_group.deleteGroup",
@@ -10589,7 +10655,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_project.projectInfo": {
       "id": "endpoint_project.projectInfo",
@@ -10915,7 +10984,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.webhooksList": {
       "id": "endpoint_webhook.webhooksList",
@@ -11005,7 +11077,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11014,7 +11086,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11212,7 +11284,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.webhookCreate": {
       "id": "endpoint_webhook.webhookCreate",
@@ -11297,7 +11372,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11306,7 +11381,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11315,7 +11390,7 @@
               }
             },
             {
-              "name": "target-url-error",
+              "name": "Target URL Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -11582,7 +11657,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.updateWebhook": {
       "id": "endpoint_webhook.updateWebhook",
@@ -11822,7 +11900,7 @@
       ],
       "examples": [
         {
-          "path": "/webhooks/{id}/",
+          "path": "/webhooks/143/",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 143
@@ -11896,7 +11974,7 @@
           }
         },
         {
-          "path": "/webhooks/{id}/",
+          "path": "/webhooks/143/",
           "responseStatusCode": 200,
           "pathParameters": {
             "id": 143
@@ -11969,7 +12047,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_webhook.webhookUnsubscribe": {
       "id": "endpoint_webhook.webhookUnsubscribe",
@@ -12058,7 +12139,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12067,7 +12148,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12076,7 +12157,7 @@
               }
             },
             {
-              "name": "target-url-error",
+              "name": "Target URL Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12200,7 +12281,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.documentConvertInfo": {
       "id": "endpoint_conversion.documentConvertInfo",
@@ -12407,7 +12491,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12416,7 +12500,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12598,7 +12682,7 @@
       ],
       "examples": [
         {
-          "path": "/convert/document/{uuid}/",
+          "path": "/convert/document/86c91c35-58e1-41f7-9b23-2d7652cfcd17/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -12628,7 +12712,7 @@
           }
         },
         {
-          "path": "/convert/document/{uuid}/",
+          "path": "/convert/document/86c91c35-58e1-41f7-9b23-2d7652cfcd17/",
           "responseStatusCode": 200,
           "pathParameters": {
             "uuid": "test-uuid-replacement"
@@ -12657,7 +12741,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.documentConvert": {
       "id": "endpoint_conversion.documentConvert",
@@ -12864,7 +12951,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12873,7 +12960,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12882,7 +12969,7 @@
               }
             },
             {
-              "name": "json-parse-error",
+              "name": "JSON Parse Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -12891,7 +12978,7 @@
               }
             },
             {
-              "name": "path-error",
+              "name": "Path Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13122,7 +13209,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.documentConvertStatus": {
       "id": "endpoint_conversion.documentConvertStatus",
@@ -13309,7 +13399,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13318,7 +13408,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13500,7 +13590,7 @@
       ],
       "examples": [
         {
-          "path": "/convert/document/status/{token}/",
+          "path": "/convert/document/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -13570,7 +13660,7 @@
           }
         },
         {
-          "path": "/convert/document/status/{token}/",
+          "path": "/convert/document/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -13639,7 +13729,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.videoConvert": {
       "id": "endpoint_conversion.videoConvert",
@@ -13859,7 +13952,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13868,7 +13961,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13877,7 +13970,7 @@
               }
             },
             {
-              "name": "json-parse-error",
+              "name": "JSON Parse Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -13886,7 +13979,7 @@
               }
             },
             {
-              "name": "path-error",
+              "name": "Path Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14121,7 +14214,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_conversion.videoConvertStatus": {
       "id": "endpoint_conversion.videoConvertStatus",
@@ -14321,7 +14417,7 @@
           "name": "Bad Request",
           "examples": [
             {
-              "name": "auth-errors",
+              "name": "Auth Errors",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14330,7 +14426,7 @@
               }
             },
             {
-              "name": "permission-error",
+              "name": "Permission Error",
               "responseBody": {
                 "type": "json",
                 "value": {
@@ -14512,7 +14608,7 @@
       ],
       "examples": [
         {
-          "path": "/convert/video/status/{token}/",
+          "path": "/convert/video/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -14583,7 +14679,7 @@
           }
         },
         {
-          "path": "/convert/video/status/{token}/",
+          "path": "/convert/video/status/426339926/",
           "responseStatusCode": 200,
           "pathParameters": {
             "token": 426339926
@@ -14653,7 +14749,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
@@ -14710,7 +14809,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -14909,7 +15009,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15108,7 +15209,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15307,7 +15409,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15506,7 +15609,8 @@
               "type": "api",
               "detail": {
                 "request_id": "test-uuid-replacement",
-                "addon_name": "aws_rekognition_detect_labels"
+                "addon_name": "aws_rekognition_detect_labels",
+                "source_file_uuid": "test-uuid-replacement"
               }
             },
             "hook": {
@@ -15747,7 +15851,8 @@
                 "uc_clamav_virus_scan": {
                   "version": "0.104.2",
                   "data": {
-                    "infected": false
+                    "infected": false,
+                    "infected_with": "string"
                   },
                   "datetime_created": "string",
                   "datetime_updated": "string"
@@ -17595,8 +17700,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active",
-                "default": true
+                "id": "webhook_is_active"
               }
             }
           },
@@ -17696,8 +17800,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active",
-                "default": true
+                "id": "webhook_is_active"
               }
             }
           },
@@ -17927,8 +18030,7 @@
               "type": "alias",
               "value": {
                 "type": "id",
-                "id": "webhook_is_active",
-                "default": true
+                "id": "webhook_is_active"
               }
             }
           },

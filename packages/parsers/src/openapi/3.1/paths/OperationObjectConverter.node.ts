@@ -236,6 +236,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     this.endpointId = getEndpointId(
       this.namespace?.groupName,
       this.path,
+      this.method,
       sdkMethodName.sdkMethodName,
       this.input.operationId
     );
@@ -404,6 +405,9 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       errors,
       examples,
       snippetTemplates: undefined,
+      protocol: {
+        type: "rest",
+      },
     };
   }
 }

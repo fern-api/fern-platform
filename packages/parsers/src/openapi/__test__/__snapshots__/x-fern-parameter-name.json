@@ -1,1 +1,114 @@
-undefined
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.get_user": {
+      "id": "endpoint_.get_user",
+      "operationId": "get_user",
+      "method": "GET",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "user"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "pathParameter",
+          "value": "userId"
+        }
+      ],
+      "environments": [],
+      "pathParameters": [
+        {
+          "key": "userId",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "queryParameters": [
+        {
+          "key": "foo",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "requestHeaders": [
+        {
+          "key": "X-API-Version",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "Success!"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/user/string",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "userId": "string"
+          },
+          "queryParameters": {
+            "foo": "string"
+          },
+          "headers": {
+            "X-API-Version": "string"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {}
+}

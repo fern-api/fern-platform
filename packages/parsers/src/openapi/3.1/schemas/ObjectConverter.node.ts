@@ -51,7 +51,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             input: property,
             context: this.context,
             accessPath: this.accessPath,
-            pathId: this.pathId,
+            pathId: ["properties", key],
             seenSchemas: this.seenSchemas,
           }),
         ];
@@ -68,7 +68,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
               input: this.input.additionalProperties,
               context: this.context,
               accessPath: this.accessPath,
-              pathId: this.pathId,
+              pathId: ["additionalProperties"],
               seenSchemas: this.seenSchemas,
             })
         : undefined;
@@ -76,7 +76,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     if (this.input.allOf != null) {
       this.extends = this.extends.concat(
         this.input.allOf
-          .map((type) => {
+          .map((type, allOfIndex) => {
             if (isReferenceObject(type)) {
               return getSchemaIdFromReference(type);
             } else {
@@ -91,7 +91,12 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
                           input: property,
                           context: this.context,
                           accessPath: this.accessPath,
-                          pathId: this.pathId,
+                          pathId: [
+                            "allOf",
+                            allOfIndex.toString(),
+                            "properties",
+                            key,
+                          ],
                           seenSchemas: this.seenSchemas,
                         }),
                       ];
@@ -199,7 +204,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     });
   }
 
-  example(): Record<string, unknown> | undefined {
+  example(includeOptionals: boolean): Record<string, unknown> | undefined {
     let objectWithAllProperties = {
       ...this.properties,
     };
@@ -231,10 +236,13 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     return (
       this.input.example ??
       this.input.examples?.[0] ??
-      (this.requiredProperties != null && this.requiredProperties.length > 0
+      (!includeOptionals &&
+      this.requiredProperties != null &&
+      this.requiredProperties.length > 0
         ? this.requiredProperties?.reduce<Record<string, unknown>>(
             (acc, property) => {
-              acc[property] = objectWithAllProperties?.[property]?.example();
+              acc[property] =
+                objectWithAllProperties?.[property]?.example(includeOptionals);
               return acc;
             },
             {}
@@ -242,7 +250,7 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         : Object.entries(objectWithAllProperties).reduce<
             Record<string, unknown>
           >((acc, [key, value]) => {
-            acc[key] = value?.example();
+            acc[key] = value?.example(includeOptionals);
             return acc;
           }, {}))
     );

@@ -66,10 +66,10 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     // In order to create a consistent shape, we add a default string key for an example, which should be treated as a global example
     // If there is no global example, we try to generate an example from underlying schemas, which may have examples, or defaults or fallback values
     this.examples = {
-      ...(this.input.example != null || this.schema?.example() != null
+      ...(this.input.example != null || this.schema?.example(false) != null
         ? {
             [GLOBAL_EXAMPLE_NAME]: {
-              value: this.input.example ?? this.schema?.example(),
+              value: this.input.example ?? this.schema?.example(false),
             },
           }
         : {}),
@@ -83,12 +83,16 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           this.context.document,
           undefined
         );
-        this.schema = new ReferenceConverterNode({
-          input: this.input.schema,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "schema",
-        });
+        this.schema = new ReferenceConverterNode(
+          {
+            input: this.input.schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "schema",
+            seenSchemas: new Set(),
+          },
+          false
+        );
       } else if (isObjectSchema(this.input.schema)) {
         this.resolvedSchema = this.input.schema;
         const mediaType = MediaType.parse(contentType);

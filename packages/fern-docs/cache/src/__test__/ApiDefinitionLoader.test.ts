@@ -48,6 +48,7 @@ describe("curl snippet generation", () => {
       operationId: "testEndpoint",
       method: "POST",
       path: [{ type: "literal", value: "test" }],
+      protocol: undefined,
       requests: [
         {
           contentType: undefined,

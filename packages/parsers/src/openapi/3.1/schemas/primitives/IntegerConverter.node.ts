@@ -40,11 +40,15 @@ export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
   minimum: number | undefined;
   maximum: number | undefined;
   default: number | undefined;
+  nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<IntegerConverterNode.Input>
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<IntegerConverterNode.Input> & {
+      nullable: boolean | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 
@@ -105,7 +109,12 @@ export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
     };
   }
 
-  example(): number | undefined {
-    return this.input.example ?? this.input.examples?.[0] ?? this.default ?? 0;
+  example(): string | number | undefined {
+    return (
+      this.input.example ??
+      this.input.examples?.[0] ??
+      this.default ??
+      (this.nullable ? "null" : 0)
+    );
   }
 }

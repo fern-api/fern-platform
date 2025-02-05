@@ -1,1 +1,125 @@
-undefined
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.postTest": {
+      "id": "endpoint_.postTest",
+      "description": "Test multipart request with different content types.\n",
+      "displayName": "Test upload",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "test"
+        }
+      ],
+      "environments": [],
+      "pathParameters": [
+        {
+          "key": "corpus_key",
+          "valueShape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The unique key"
+        }
+      ],
+      "requests": [
+        {
+          "contentType": "multipart/form-data",
+          "body": {
+            "type": "formData",
+            "fields": [
+              {
+                "type": "property",
+                "key": "metadata",
+                "valueShape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": []
+                },
+                "description": "Arbitrary object that will be attached as document metadata to the extracted document."
+              },
+              {
+                "type": "property",
+                "key": "chunking_strategy",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "ChunkingStrategy"
+                  }
+                }
+              },
+              {
+                "type": "property",
+                "key": "filename",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "Optional multipart section to override the filename."
+              },
+              {
+                "type": "file",
+                "key": "file",
+                "isOptional": false,
+                "description": "Binary file contents. The file name of the file will be used as the document ID."
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 201,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          "description": "The sample response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/test",
+          "responseStatusCode": 201,
+          "pathParameters": {
+            "corpus_key": "string"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": "string"
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {}
+}

@@ -35,7 +35,7 @@ describe("OAuth2SecuritySchemeConverterNode", () => {
         type: "clientCredentials",
         value: {
           type: "referencedEndpoint",
-          endpointId: "endpoint_post.token",
+          endpointId: "endpoint_.postHttpsApiExampleComOauthToken",
           accessTokenLocator: "$.access_token",
           headerName: "Authorization",
           tokenPrefix: "Bearer",

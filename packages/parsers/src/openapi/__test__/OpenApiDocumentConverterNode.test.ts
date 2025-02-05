@@ -3,6 +3,7 @@ import yaml from "js-yaml";
 import { OpenAPIV3_1 } from "openapi-types";
 import * as path from "path";
 import { describe, expect, it } from "vitest";
+import { ApiDefinitionId } from "../../client/generated/api";
 import { ErrorCollector } from "../../ErrorCollector";
 import { OpenApiDocumentConverterNode } from "../3.1/OpenApiDocumentConverter.node";
 import { BaseOpenApiV3_1ConverterNodeContext } from "../BaseOpenApiV3_1Converter.node";
@@ -39,23 +40,20 @@ describe("OpenAPI snapshot tests", () => {
       };
 
       // Convert components if they exist
-      let converted;
       const errors = [];
       const warnings = [];
 
       // expect(parsed.components?.schemas).toBeDefined();
 
-      if (parsed.components?.schemas) {
-        const converter = new OpenApiDocumentConverterNode({
-          input: parsed,
-          context,
-          accessPath: [],
-          pathId: undefined,
-        });
-        errors.push(...converter.errors());
-        warnings.push(...converter.warnings());
-        converted = converter.convert();
-      }
+      const converter = new OpenApiDocumentConverterNode({
+        input: parsed,
+        context,
+        accessPath: [],
+        pathId: undefined,
+      });
+      errors.push(...converter.errors());
+      warnings.push(...converter.warnings());
+      const converted = converter.convert();
 
       if (errors.length > 0) {
         await expect(errors).toMatchFileSnapshot(
@@ -69,7 +67,7 @@ describe("OpenAPI snapshot tests", () => {
       }
 
       if (converted) {
-        converted.id = "test-uuid-replacement";
+        converted.id = ApiDefinitionId("test-uuid-replacement");
       }
       await expect(
         replaceEndpointUUIDs(JSON.stringify(converted, null, 2))

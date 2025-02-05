@@ -36,36 +36,61 @@ describe("OperationObjectConverterNode", () => {
       const result = node.convert();
 
       expect(result).toEqual({
+        auth: undefined,
+        availability: undefined,
+        defaultEnvironment: undefined,
         description: "Get a pet",
-        id: "endpoint_.petId",
+        displayName: undefined,
+        environments: [],
+        errors: undefined,
+        examples: undefined,
+        id: "endpoint_.getPetsPetId",
         method: "GET",
+        namespace: undefined,
+        operationId: undefined,
         path: [
           { type: "literal", value: "/" },
           { type: "literal", value: "pets" },
           { type: "literal", value: "/" },
           { type: "pathParameter", value: FernRegistry.PropertyKey("petId") },
         ],
-        environments: [],
         pathParameters: [
           {
+            availability: undefined,
+            description: undefined,
             key: FernRegistry.PropertyKey("petId"),
             valueShape: {
               type: "alias",
               value: {
-                type: "optional",
+                default: undefined,
                 shape: {
                   type: "alias",
                   value: {
                     type: "primitive",
                     value: {
+                      default: undefined,
+                      format: undefined,
+                      maxLength: undefined,
+                      minLength: undefined,
+                      regex: undefined,
                       type: "string",
                     },
                   },
                 },
+                type: "optional",
               },
             },
           },
         ],
+        protocol: {
+          type: "rest",
+        },
+        queryParameters: undefined,
+        requestHeaders: undefined,
+        requests: undefined,
+        responseHeaders: undefined,
+        responses: undefined,
+        snippetTemplates: undefined,
       });
     });
 

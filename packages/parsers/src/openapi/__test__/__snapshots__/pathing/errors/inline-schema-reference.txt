@@ -1,6 +1,6 @@
 [
   {
-    "message": "Unprocessable reference: #/components/responses/NotFound/content/application~1json/schema",
+    "message": "Reference object does not have a valid schema ID",
     "path": [
       "paths",
       "/example",

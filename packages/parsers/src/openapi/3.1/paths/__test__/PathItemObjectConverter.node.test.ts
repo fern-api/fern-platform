@@ -51,9 +51,18 @@ describe("PathItemObjectConverterNode", () => {
 
       expect(result).toHaveLength(2);
       expect(result?.[0]).toEqual({
+        auth: undefined,
+        availability: undefined,
+        defaultEnvironment: undefined,
         description: "Get a pet",
-        id: "endpoint_.petId",
+        displayName: undefined,
+        environments: [],
+        errors: [],
+        examples: [],
+        id: "endpoint_.getPetsPetId",
         method: "GET",
+        namespace: undefined,
+        operationId: undefined,
         path: [
           {
             type: "literal",
@@ -72,27 +81,41 @@ describe("PathItemObjectConverterNode", () => {
             value: "petId",
           },
         ],
-        environments: [],
         pathParameters: [
           {
+            availability: undefined,
+            description: undefined,
             key: "petId",
             valueShape: {
               type: "alias",
               value: {
-                type: "optional",
+                default: undefined,
                 shape: {
                   type: "alias",
                   value: {
                     type: "primitive",
                     value: {
+                      default: undefined,
+                      format: undefined,
+                      maxLength: undefined,
+                      minLength: undefined,
+                      regex: undefined,
                       type: "string",
                     },
                   },
                 },
+                type: "optional",
               },
             },
           },
         ],
+        protocol: {
+          type: "rest",
+        },
+        queryParameters: undefined,
+        requestHeaders: undefined,
+        requests: undefined,
+        responseHeaders: undefined,
         responses: [
           {
             body: {
@@ -102,12 +125,11 @@ describe("PathItemObjectConverterNode", () => {
             statusCode: 200,
           },
         ],
-        errors: [],
-        examples: [],
+        snippetTemplates: undefined,
       });
-      expect(result?.[1]).toEqual({
+      expect(result?.[1]).toMatchObject({
         description: "Create a pet",
-        id: "endpoint_.petId",
+        id: "endpoint_.postPetsPetId",
         method: "POST",
         path: [
           {

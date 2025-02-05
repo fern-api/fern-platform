@@ -31,7 +31,21 @@
         }
       ],
       "errors": [],
-      "examples": []
+      "examples": [
+        {
+          "path": "/tree",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "value": "root"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

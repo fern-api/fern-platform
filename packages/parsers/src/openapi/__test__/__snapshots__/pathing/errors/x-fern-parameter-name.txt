@@ -1,13 +1,15 @@
 [
   {
-    "message": "Error converting node. Please contact support if the error persists",
+    "message": "Invalid example, expected object for json",
     "path": [
       "paths",
-      "/tree",
+      "/user/{userId}",
       "get",
       "responses",
       "content",
       "application/json",
+      "examples",
+      "",
     ],
   },
 ]

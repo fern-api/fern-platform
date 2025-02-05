@@ -1911,7 +1911,87 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "text": "string"
+              "text": "string",
+              "generation_id": "string",
+              "response_id": "string",
+              "citations": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "text": "string",
+                  "document_ids": [
+                    "string"
+                  ]
+                }
+              ],
+              "documents": [
+                {
+                  "id": "string"
+                }
+              ],
+              "is_search_required": false,
+              "search_queries": [
+                {
+                  "text": "string",
+                  "generation_id": "string"
+                }
+              ],
+              "search_results": [
+                {
+                  "search_query": {
+                    "text": "string",
+                    "generation_id": "string"
+                  },
+                  "connector": {
+                    "id": "string"
+                  },
+                  "document_ids": [
+                    "string"
+                  ],
+                  "error_message": "string",
+                  "continue_on_failure": false
+                }
+              ],
+              "finish_reason": "COMPLETE",
+              "tool_calls": [
+                {
+                  "name": "string",
+                  "parameters": {}
+                }
+              ],
+              "chat_history": [
+                {
+                  "role": "CHATBOT",
+                  "message": "string",
+                  "tool_calls": [
+                    {
+                      "name": "string",
+                      "parameters": {}
+                    }
+                  ]
+                }
+              ],
+              "meta": {
+                "api_version": {
+                  "version": "string",
+                  "is_deprecated": false,
+                  "is_experimental": false
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
             }
           },
           "snippets": {
@@ -1974,7 +2054,87 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "text": "string"
+              "text": "string",
+              "generation_id": "string",
+              "response_id": "string",
+              "citations": [
+                {
+                  "start": 0,
+                  "end": 0,
+                  "text": "string",
+                  "document_ids": [
+                    "string"
+                  ]
+                }
+              ],
+              "documents": [
+                {
+                  "id": "string"
+                }
+              ],
+              "is_search_required": false,
+              "search_queries": [
+                {
+                  "text": "string",
+                  "generation_id": "string"
+                }
+              ],
+              "search_results": [
+                {
+                  "search_query": {
+                    "text": "string",
+                    "generation_id": "string"
+                  },
+                  "connector": {
+                    "id": "string"
+                  },
+                  "document_ids": [
+                    "string"
+                  ],
+                  "error_message": "string",
+                  "continue_on_failure": false
+                }
+              ],
+              "finish_reason": "COMPLETE",
+              "tool_calls": [
+                {
+                  "name": "string",
+                  "parameters": {}
+                }
+              ],
+              "chat_history": [
+                {
+                  "role": "CHATBOT",
+                  "message": "string",
+                  "tool_calls": [
+                    {
+                      "name": "string",
+                      "parameters": {}
+                    }
+                  ]
+                }
+              ],
+              "meta": {
+                "api_version": {
+                  "version": "string",
+                  "is_deprecated": false,
+                  "is_experimental": false
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
             }
           },
           "snippets": {
@@ -2300,7 +2460,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_v2.chat": {
       "id": "endpoint_v2.chat",
@@ -4170,8 +4333,61 @@
               "id": "string",
               "finish_reason": "COMPLETE",
               "message": {
-                "role": "assistant"
-              }
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "id": "string",
+                    "type": "function",
+                    "function": {
+                      "name": "string",
+                      "arguments": "string"
+                    }
+                  }
+                ],
+                "tool_plan": "string",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "string"
+                  }
+                ],
+                "citations": [
+                  {
+                    "start": 0,
+                    "end": 0,
+                    "text": "string",
+                    "sources": [
+                      {
+                        "id": "string",
+                        "tool_output": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "usage": {
+                "billed_units": {
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                }
+              },
+              "logprobs": [
+                {
+                  "text": "string",
+                  "token_ids": [
+                    0
+                  ],
+                  "logprobs": [
+                    0
+                  ]
+                }
+              ]
             }
           },
           "snippets": {
@@ -4234,8 +4450,61 @@
               "id": "string",
               "finish_reason": "COMPLETE",
               "message": {
-                "role": "assistant"
-              }
+                "role": "assistant",
+                "tool_calls": [
+                  {
+                    "id": "string",
+                    "type": "function",
+                    "function": {
+                      "name": "string",
+                      "arguments": "string"
+                    }
+                  }
+                ],
+                "tool_plan": "string",
+                "content": [
+                  {
+                    "type": "text",
+                    "text": "string"
+                  }
+                ],
+                "citations": [
+                  {
+                    "start": 0,
+                    "end": 0,
+                    "text": "string",
+                    "sources": [
+                      {
+                        "id": "string",
+                        "tool_output": {}
+                      }
+                    ]
+                  }
+                ]
+              },
+              "usage": {
+                "billed_units": {
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                }
+              },
+              "logprobs": [
+                {
+                  "text": "string",
+                  "token_ids": [
+                    0
+                  ],
+                  "logprobs": [
+                    0
+                  ]
+                }
+              ]
             }
           },
           "snippets": {
@@ -4539,7 +4808,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.generate": {
       "id": "endpoint_.generate",
@@ -5756,12 +6028,42 @@
             "type": "json",
             "value": {
               "id": "string",
+              "prompt": "string",
               "generations": [
                 {
+                  "id": "string",
                   "text": "string",
-                  "id": "string"
+                  "index": 0,
+                  "likelihood": 0,
+                  "token_likelihoods": [
+                    {
+                      "token": "string",
+                      "likelihood": 0
+                    }
+                  ]
                 }
-              ]
+              ],
+              "meta": {
+                "api_version": {
+                  "version": "string",
+                  "is_deprecated": false,
+                  "is_experimental": false
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
             }
           },
           "snippets": {
@@ -5901,12 +6203,42 @@
             "type": "json",
             "value": {
               "id": "string",
+              "prompt": "string",
               "generations": [
                 {
+                  "id": "string",
                   "text": "string",
-                  "id": "string"
+                  "index": 0,
+                  "likelihood": 0,
+                  "token_likelihoods": [
+                    {
+                      "token": "string",
+                      "likelihood": 0
+                    }
+                  ]
                 }
-              ]
+              ],
+              "meta": {
+                "api_version": {
+                  "version": "string",
+                  "is_deprecated": false,
+                  "is_experimental": false
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
             }
           },
           "snippets": {
@@ -6029,7 +6361,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.embed": {
       "id": "endpoint_.embed",
@@ -6581,7 +6916,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_v2.embed": {
       "id": "endpoint_v2.embed",
@@ -10451,7 +10789,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.list": {
       "id": "endpoint_embedJobs.list",
@@ -10944,11 +11285,34 @@
               "embed_jobs": [
                 {
                   "job_id": "string",
+                  "name": "string",
                   "status": "processing",
                   "created_at": "string",
                   "input_dataset_id": "string",
+                  "output_dataset_id": "string",
                   "model": "string",
-                  "truncate": "START"
+                  "truncate": "START",
+                  "meta": {
+                    "api_version": {
+                      "version": "string",
+                      "is_deprecated": false,
+                      "is_experimental": false
+                    },
+                    "billed_units": {
+                      "images": 0,
+                      "input_tokens": 0,
+                      "output_tokens": 0,
+                      "search_units": 0,
+                      "classifications": 0
+                    },
+                    "tokens": {
+                      "input_tokens": 0,
+                      "output_tokens": 0
+                    },
+                    "warnings": [
+                      "string"
+                    ]
+                  }
                 }
               ]
             }
@@ -11002,7 +11366,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.create": {
       "id": "endpoint_embedJobs.create",
@@ -11504,7 +11871,28 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "job_id": "string"
+              "job_id": "string",
+              "meta": {
+                "api_version": {
+                  "version": "string",
+                  "is_deprecated": false,
+                  "is_experimental": false
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
             }
           },
           "snippets": {
@@ -11556,7 +11944,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.get": {
       "id": "endpoint_embedJobs.get",
@@ -12073,11 +12464,34 @@
             "type": "json",
             "value": {
               "job_id": "string",
+              "name": "string",
               "status": "processing",
               "created_at": "string",
               "input_dataset_id": "string",
+              "output_dataset_id": "string",
               "model": "string",
-              "truncate": "START"
+              "truncate": "START",
+              "meta": {
+                "api_version": {
+                  "version": "string",
+                  "is_deprecated": false,
+                  "is_experimental": false
+                },
+                "billed_units": {
+                  "images": 0,
+                  "input_tokens": 0,
+                  "output_tokens": 0,
+                  "search_units": 0,
+                  "classifications": 0
+                },
+                "tokens": {
+                  "input_tokens": 0,
+                  "output_tokens": 0
+                },
+                "warnings": [
+                  "string"
+                ]
+              }
             }
           },
           "snippets": {
@@ -12129,7 +12543,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_embedJobs.cancel": {
       "id": "endpoint_embedJobs.cancel",
@@ -12636,7 +13053,10 @@
           ]
         }
       ],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.rerank": {
       "id": "endpoint_.rerank",
@@ -13595,7 +14015,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_v2.rerank": {
       "id": "endpoint_v2.rerank",
@@ -14316,7 +14739,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.classify": {
       "id": "endpoint_.classify",
@@ -15250,7 +15676,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.list": {
       "id": "endpoint_datasets.list",
@@ -15863,7 +16292,70 @@
                   "created_at": "string",
                   "updated_at": "string",
                   "dataset_type": "embed-input",
-                  "validation_status": "unknown"
+                  "validation_status": "unknown",
+                  "validation_error": "string",
+                  "schema": "string",
+                  "required_fields": [
+                    "string"
+                  ],
+                  "preserve_fields": [
+                    "string"
+                  ],
+                  "dataset_parts": [
+                    {
+                      "id": "string",
+                      "name": "string",
+                      "url": "string",
+                      "index": 0,
+                      "size_bytes": 0,
+                      "num_rows": 0,
+                      "original_url": "string",
+                      "samples": [
+                        "string"
+                      ]
+                    }
+                  ],
+                  "validation_warnings": [
+                    "string"
+                  ],
+                  "parse_info": {
+                    "separator": "string",
+                    "delimiter": "string"
+                  },
+                  "metrics": {
+                    "finetune_dataset_metrics": {
+                      "trainable_token_count": 0,
+                      "total_examples": 0,
+                      "train_examples": 0,
+                      "train_size_bytes": 0,
+                      "eval_examples": 0,
+                      "eval_size_bytes": 0,
+                      "reranker_data_metrics": {
+                        "num_train_queries": 0,
+                        "num_train_relevant_passages": 0,
+                        "num_train_hard_negatives": 0,
+                        "num_eval_queries": 0,
+                        "num_eval_relevant_passages": 0,
+                        "num_eval_hard_negatives": 0
+                      },
+                      "chat_data_metrics": {
+                        "num_train_turns": 0,
+                        "num_eval_turns": 0,
+                        "preamble": "string"
+                      },
+                      "classify_data_metrics": {
+                        "label_metrics": [
+                          {
+                            "total_examples": 0,
+                            "label": "string",
+                            "samples": [
+                              "string"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
                 }
               ]
             }
@@ -15917,7 +16409,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.create": {
       "id": "endpoint_datasets.create",
@@ -16638,7 +17133,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.getUsage": {
       "id": "endpoint_datasets.getUsage",
@@ -17179,7 +17677,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.get": {
       "id": "endpoint_datasets.get",
@@ -17689,7 +18190,70 @@
                 "created_at": "string",
                 "updated_at": "string",
                 "dataset_type": "embed-input",
-                "validation_status": "unknown"
+                "validation_status": "unknown",
+                "validation_error": "string",
+                "schema": "string",
+                "required_fields": [
+                  "string"
+                ],
+                "preserve_fields": [
+                  "string"
+                ],
+                "dataset_parts": [
+                  {
+                    "id": "string",
+                    "name": "string",
+                    "url": "string",
+                    "index": 0,
+                    "size_bytes": 0,
+                    "num_rows": 0,
+                    "original_url": "string",
+                    "samples": [
+                      "string"
+                    ]
+                  }
+                ],
+                "validation_warnings": [
+                  "string"
+                ],
+                "parse_info": {
+                  "separator": "string",
+                  "delimiter": "string"
+                },
+                "metrics": {
+                  "finetune_dataset_metrics": {
+                    "trainable_token_count": 0,
+                    "total_examples": 0,
+                    "train_examples": 0,
+                    "train_size_bytes": 0,
+                    "eval_examples": 0,
+                    "eval_size_bytes": 0,
+                    "reranker_data_metrics": {
+                      "num_train_queries": 0,
+                      "num_train_relevant_passages": 0,
+                      "num_train_hard_negatives": 0,
+                      "num_eval_queries": 0,
+                      "num_eval_relevant_passages": 0,
+                      "num_eval_hard_negatives": 0
+                    },
+                    "chat_data_metrics": {
+                      "num_train_turns": 0,
+                      "num_eval_turns": 0,
+                      "preamble": "string"
+                    },
+                    "classify_data_metrics": {
+                      "label_metrics": [
+                        {
+                          "total_examples": 0,
+                          "label": "string",
+                          "samples": [
+                            "string"
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                }
               }
             }
           },
@@ -17742,7 +18306,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_datasets.delete": {
       "id": "endpoint_datasets.delete",
@@ -18277,7 +18844,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.summarize": {
       "id": "endpoint_.summarize",
@@ -19028,7 +19598,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.tokenize": {
       "id": "endpoint_.tokenize",
@@ -19786,7 +20359,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.detokenize": {
       "id": "endpoint_.detokenize",
@@ -20415,7 +20991,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.list": {
       "id": "endpoint_connectors.list",
@@ -20933,11 +21512,29 @@
               "connectors": [
                 {
                   "id": "string",
+                  "organization_id": "string",
                   "name": "string",
+                  "description": "string",
+                  "url": "string",
                   "created_at": "string",
-                  "updated_at": "string"
+                  "updated_at": "string",
+                  "excludes": [
+                    "string"
+                  ],
+                  "auth_type": "string",
+                  "oauth": {
+                    "client_id": "string",
+                    "client_secret": "string",
+                    "authorize_url": "string",
+                    "token_url": "string",
+                    "scope": "string"
+                  },
+                  "auth_status": "valid",
+                  "active": false,
+                  "continue_on_failure": false
                 }
-              ]
+              ],
+              "total_count": 0
             }
           },
           "snippets": {
@@ -20989,7 +21586,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.create": {
       "id": "endpoint_connectors.create",
@@ -21472,9 +22072,26 @@
             "value": {
               "connector": {
                 "id": "string",
+                "organization_id": "string",
                 "name": "string",
+                "description": "string",
+                "url": "string",
                 "created_at": "string",
-                "updated_at": "string"
+                "updated_at": "string",
+                "excludes": [
+                  "string"
+                ],
+                "auth_type": "string",
+                "oauth": {
+                  "client_id": "string",
+                  "client_secret": "string",
+                  "authorize_url": "string",
+                  "token_url": "string",
+                  "scope": "string"
+                },
+                "auth_status": "valid",
+                "active": false,
+                "continue_on_failure": false
               }
             }
           },
@@ -21527,7 +22144,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.get": {
       "id": "endpoint_connectors.get",
@@ -22024,9 +22644,26 @@
             "value": {
               "connector": {
                 "id": "string",
+                "organization_id": "string",
                 "name": "string",
+                "description": "string",
+                "url": "string",
                 "created_at": "string",
-                "updated_at": "string"
+                "updated_at": "string",
+                "excludes": [
+                  "string"
+                ],
+                "auth_type": "string",
+                "oauth": {
+                  "client_id": "string",
+                  "client_secret": "string",
+                  "authorize_url": "string",
+                  "token_url": "string",
+                  "scope": "string"
+                },
+                "auth_status": "valid",
+                "active": false,
+                "continue_on_failure": false
               }
             }
           },
@@ -22079,7 +22716,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.update": {
       "id": "endpoint_connectors.update",
@@ -22588,9 +23228,26 @@
             "value": {
               "connector": {
                 "id": "string",
+                "organization_id": "string",
                 "name": "string",
+                "description": "string",
+                "url": "string",
                 "created_at": "string",
-                "updated_at": "string"
+                "updated_at": "string",
+                "excludes": [
+                  "string"
+                ],
+                "auth_type": "string",
+                "oauth": {
+                  "client_id": "string",
+                  "client_secret": "string",
+                  "authorize_url": "string",
+                  "token_url": "string",
+                  "scope": "string"
+                },
+                "auth_status": "valid",
+                "active": false,
+                "continue_on_failure": false
               }
             }
           },
@@ -22643,7 +23300,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.delete": {
       "id": "endpoint_connectors.delete",
@@ -23188,7 +23848,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_connectors.oAuthAuthorize": {
       "id": "endpoint_connectors.oAuthAuthorize",
@@ -23775,7 +24438,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_models.get": {
       "id": "endpoint_models.get",
@@ -24279,7 +24945,7 @@
       ],
       "examples": [
         {
-          "path": "/v1/models/{model}",
+          "path": "/v1/models/command-r",
           "responseStatusCode": 200,
           "pathParameters": {
             "model": "command-r"
@@ -24303,7 +24969,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_models.list": {
       "id": "endpoint_models.list",
@@ -24843,7 +25512,8 @@
                     "chat"
                   ]
                 }
-              ]
+              ],
+              "next_page_token": "string"
             }
           },
           "snippets": {
@@ -24895,7 +25565,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_.checkAPIKey": {
       "id": "endpoint_.checkAPIKey",
@@ -25408,11 +26081,16 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "valid": false
+              "valid": false,
+              "organization_id": "string",
+              "owner_id": "string"
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.ListFinetunedModels": {
       "id": "endpoint_finetuning.ListFinetunedModels",
@@ -25814,13 +26492,40 @@
             "value": {
               "finetuned_models": [
                 {
+                  "id": "string",
                   "name": "string",
+                  "creator_id": "string",
+                  "organization_id": "string",
                   "settings": {
                     "base_model": {
-                      "base_type": "BASE_TYPE_UNSPECIFIED"
+                      "name": "string",
+                      "version": "string",
+                      "base_type": "BASE_TYPE_UNSPECIFIED",
+                      "strategy": "STRATEGY_UNSPECIFIED"
                     },
-                    "dataset_id": "string"
-                  }
+                    "dataset_id": "string",
+                    "hyperparameters": {
+                      "early_stopping_patience": 0,
+                      "early_stopping_threshold": 0,
+                      "train_batch_size": 0,
+                      "train_epochs": 0,
+                      "learning_rate": 0,
+                      "lora_alpha": 0,
+                      "lora_rank": 0,
+                      "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
+                    },
+                    "multi_label": false,
+                    "wandb": {
+                      "project": "string",
+                      "api_key": "string",
+                      "entity": "string"
+                    }
+                  },
+                  "status": "STATUS_UNSPECIFIED",
+                  "created_at": "string",
+                  "updated_at": "string",
+                  "completed_at": "string",
+                  "last_used": "string"
                 }
               ],
               "next_page_token": "string",
@@ -25876,7 +26581,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.CreateFinetunedModel": {
       "id": "endpoint_finetuning.CreateFinetunedModel",
@@ -26113,13 +26821,40 @@
             "type": "json",
             "value": {
               "finetuned_model": {
+                "id": "string",
                 "name": "string",
+                "creator_id": "string",
+                "organization_id": "string",
                 "settings": {
                   "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
+                    "name": "string",
+                    "version": "string",
+                    "base_type": "BASE_TYPE_UNSPECIFIED",
+                    "strategy": "STRATEGY_UNSPECIFIED"
                   },
-                  "dataset_id": "string"
-                }
+                  "dataset_id": "string",
+                  "hyperparameters": {
+                    "early_stopping_patience": 0,
+                    "early_stopping_threshold": 0,
+                    "train_batch_size": 0,
+                    "train_epochs": 0,
+                    "learning_rate": 0,
+                    "lora_alpha": 0,
+                    "lora_rank": 0,
+                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
+                  },
+                  "multi_label": false,
+                  "wandb": {
+                    "project": "string",
+                    "api_key": "string",
+                    "entity": "string"
+                  }
+                },
+                "status": "STATUS_UNSPECIFIED",
+                "created_at": "string",
+                "updated_at": "string",
+                "completed_at": "string",
+                "last_used": "string"
               }
             }
           },
@@ -26172,7 +26907,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.GetFinetunedModel": {
       "id": "endpoint_finetuning.GetFinetunedModel",
@@ -26512,13 +27250,40 @@
             "type": "json",
             "value": {
               "finetuned_model": {
+                "id": "string",
                 "name": "string",
+                "creator_id": "string",
+                "organization_id": "string",
                 "settings": {
                   "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
+                    "name": "string",
+                    "version": "string",
+                    "base_type": "BASE_TYPE_UNSPECIFIED",
+                    "strategy": "STRATEGY_UNSPECIFIED"
                   },
-                  "dataset_id": "string"
-                }
+                  "dataset_id": "string",
+                  "hyperparameters": {
+                    "early_stopping_patience": 0,
+                    "early_stopping_threshold": 0,
+                    "train_batch_size": 0,
+                    "train_epochs": 0,
+                    "learning_rate": 0,
+                    "lora_alpha": 0,
+                    "lora_rank": 0,
+                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
+                  },
+                  "multi_label": false,
+                  "wandb": {
+                    "project": "string",
+                    "api_key": "string",
+                    "entity": "string"
+                  }
+                },
+                "status": "STATUS_UNSPECIFIED",
+                "created_at": "string",
+                "updated_at": "string",
+                "completed_at": "string",
+                "last_used": "string"
               }
             }
           },
@@ -26571,7 +27336,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.UpdateFinetunedModel": {
       "id": "endpoint_finetuning.UpdateFinetunedModel",
@@ -26741,7 +27509,10 @@
                       "value": {
                         "type": "id",
                         "id": "Status",
-                        "default": "STATUS_UNSPECIFIED"
+                        "default": {
+                          "type": "enum",
+                          "value": "STATUS_UNSPECIFIED"
+                        }
                       }
                     }
                   }
@@ -26992,13 +27763,40 @@
             "type": "json",
             "value": {
               "finetuned_model": {
+                "id": "string",
                 "name": "string",
+                "creator_id": "string",
+                "organization_id": "string",
                 "settings": {
                   "base_model": {
-                    "base_type": "BASE_TYPE_UNSPECIFIED"
+                    "name": "string",
+                    "version": "string",
+                    "base_type": "BASE_TYPE_UNSPECIFIED",
+                    "strategy": "STRATEGY_UNSPECIFIED"
                   },
-                  "dataset_id": "string"
-                }
+                  "dataset_id": "string",
+                  "hyperparameters": {
+                    "early_stopping_patience": 0,
+                    "early_stopping_threshold": 0,
+                    "train_batch_size": 0,
+                    "train_epochs": 0,
+                    "learning_rate": 0,
+                    "lora_alpha": 0,
+                    "lora_rank": 0,
+                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
+                  },
+                  "multi_label": false,
+                  "wandb": {
+                    "project": "string",
+                    "api_key": "string",
+                    "entity": "string"
+                  }
+                },
+                "status": "STATUS_UNSPECIFIED",
+                "created_at": "string",
+                "updated_at": "string",
+                "completed_at": "string",
+                "last_used": "string"
               }
             }
           },
@@ -27051,7 +27849,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.DeleteFinetunedModel": {
       "id": "endpoint_finetuning.DeleteFinetunedModel",
@@ -27351,7 +28152,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.ListEvents": {
       "id": "endpoint_finetuning.ListEvents",
@@ -27823,7 +28627,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
     "endpoint_finetuning.ListTrainingStepMetrics": {
       "id": "endpoint_finetuning.ListTrainingStepMetrics",
@@ -28274,7 +29081,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
@@ -36302,7 +37112,10 @@
               "value": {
                 "type": "id",
                 "id": "AuthTokenType",
-                "default": "noscheme"
+                "default": {
+                  "type": "enum",
+                  "value": "noscheme"
+                }
               }
             }
           },
@@ -37926,7 +38739,10 @@
               "value": {
                 "type": "id",
                 "id": "BaseType",
-                "default": "BASE_TYPE_UNSPECIFIED"
+                "default": {
+                  "type": "enum",
+                  "value": "BASE_TYPE_UNSPECIFIED"
+                }
               }
             },
             "description": "The type of the base model."
@@ -37942,7 +38758,10 @@
                   "value": {
                     "type": "id",
                     "id": "Strategy",
-                    "default": "STRATEGY_UNSPECIFIED"
+                    "default": {
+                      "type": "enum",
+                      "value": "STRATEGY_UNSPECIFIED"
+                    }
                   }
                 }
               }
@@ -38079,7 +38898,10 @@
               "value": {
                 "type": "id",
                 "id": "LoraTargetModules",
-                "default": "LORA_TARGET_MODULES_UNSPECIFIED"
+                "default": {
+                  "type": "enum",
+                  "value": "LORA_TARGET_MODULES_UNSPECIFIED"
+                }
               }
             },
             "description": "The combination of LoRA modules to target."
@@ -38365,7 +39187,10 @@
                   "value": {
                     "type": "id",
                     "id": "Status",
-                    "default": "STATUS_UNSPECIFIED"
+                    "default": {
+                      "type": "enum",
+                      "value": "STATUS_UNSPECIFIED"
+                    }
                   }
                 }
               }
@@ -38626,7 +39451,10 @@
               "value": {
                 "type": "id",
                 "id": "Status",
-                "default": "STATUS_UNSPECIFIED"
+                "default": {
+                  "type": "enum",
+                  "value": "STATUS_UNSPECIFIED"
+                }
               }
             },
             "description": "Status of the fine-tuned model."

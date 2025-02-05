@@ -1,1 +1,242 @@
-undefined
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_auth.getToken": {
+      "id": "endpoint_auth.getToken",
+      "description": "Exchange credentials or refresh token for an access token",
+      "namespace": [
+        "auth"
+      ],
+      "displayName": "Request an access token",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "oauth"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "token"
+        }
+      ],
+      "defaultEnvironment": "https://api.example.com/v1",
+      "environments": [
+        {
+          "id": "https://api.example.com/v1",
+          "baseUrl": "https://api.example.com/v1"
+        }
+      ],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "grant_type",
+                "valueShape": {
+                  "type": "enum",
+                  "values": [
+                    {
+                      "value": "password"
+                    },
+                    {
+                      "value": "refresh_token"
+                    },
+                    {
+                      "value": "client_credentials"
+                    }
+                  ]
+                },
+                "description": "The type of grant to request"
+              },
+              {
+                "key": "username",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Required for password grant type"
+              },
+              {
+                "key": "password",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Required for password grant type"
+              },
+              {
+                "key": "refresh_token",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "optional",
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "description": "Required for refresh_token grant type"
+              },
+              {
+                "key": "client_id",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The client identifier"
+              },
+              {
+                "key": "client_secret",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "description": "The client secret"
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "access_token",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "token_type",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "key": "expires_in",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "description": "Token expiration time in seconds"
+              },
+              {
+                "key": "refresh_token",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "Successful token response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/oauth/token",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "access_token": "string",
+              "token_type": "Bearer",
+              "expires_in": 0,
+              "refresh_token": "string"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {
+    "auth": {
+      "id": "auth",
+      "name": "auth",
+      "displayName": "auth"
+    }
+  },
+  "auths": {}
+}

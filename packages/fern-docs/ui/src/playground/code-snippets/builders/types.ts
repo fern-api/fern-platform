@@ -22,5 +22,17 @@ export abstract class PlaygroundCodeSnippetBuilder {
     });
   }
 
+  protected maybeWrapJsonBody(body: unknown): unknown {
+    if (this.context.endpoint.protocol?.type === "openrpc") {
+      return {
+        jsonrpc: "2.0",
+        method: this.context.endpoint.protocol.methodName,
+        params: body,
+        id: 1,
+      };
+    }
+    return body;
+  }
+
   public abstract build(): string;
 }

@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.example": {
-      "id": "endpoint_.example",
+    "endpoint_.getExample": {
+      "id": "endpoint_.getExample",
       "displayName": "Get Example",
       "method": "GET",
       "path": [
@@ -18,7 +18,10 @@
       "environments": [],
       "responses": [],
       "errors": [],
-      "examples": []
+      "examples": [],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

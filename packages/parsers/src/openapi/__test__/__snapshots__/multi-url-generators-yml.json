@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.users": {
-      "id": "endpoint_.users",
+    "endpoint_.getUsers": {
+      "id": "endpoint_.getUsers",
       "description": "List information about all users",
       "displayName": "List Users",
       "method": "GET",
@@ -51,10 +51,13 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
-    "endpoint_.userId": {
-      "id": "endpoint_.userId",
+    "endpoint_.getUsersUserId": {
+      "id": "endpoint_.getUsersUserId",
       "description": "Retrieve detailed information about a specific user",
       "displayName": "Get user information",
       "method": "GET",
@@ -113,7 +116,7 @@
       "errors": [],
       "examples": [
         {
-          "path": "/users/{userId}",
+          "path": "/users/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "userId": "string"
@@ -128,10 +131,13 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
-    "endpoint_.token": {
-      "id": "endpoint_.token",
+    "endpoint_.getToken": {
+      "id": "endpoint_.getToken",
       "description": "Retrieve an authentication token for the API",
       "displayName": "Get authentication token",
       "method": "GET",
@@ -179,7 +185,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

@@ -14,11 +14,15 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
 > {
   default: string | undefined;
   values: string[] = [];
+  nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject> & {
+      nullable: boolean | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 
@@ -82,7 +86,8 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      this.values[0]
+      this.values[0] ??
+      (this.nullable ? "null" : undefined)
     );
   }
 }

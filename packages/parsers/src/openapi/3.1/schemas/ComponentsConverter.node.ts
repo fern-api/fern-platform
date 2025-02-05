@@ -25,12 +25,7 @@ export class ComponentsConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   parse(): void {
-    if (this.input.schemas == null) {
-      this.context.errors.warning({
-        message: "Expected 'schemas' property to be specified",
-        path: this.accessPath,
-      });
-    } else {
+    if (this.input.schemas != null) {
       this.typeSchemas = Object.fromEntries(
         Object.entries(this.input.schemas).map(([key, value]) => {
           return [

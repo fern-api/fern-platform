@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.users": {
-      "id": "endpoint_.users",
+    "endpoint_.postV1Users": {
+      "id": "endpoint_.postV1Users",
       "method": "POST",
       "path": [
         {
@@ -67,7 +67,10 @@
             ]
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},

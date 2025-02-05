@@ -10,6 +10,8 @@
       "application/json",
       "type",
       "copiedFileURL",
+      "properties",
+      "result",
     ],
   },
   {
@@ -23,6 +25,8 @@
       "application/json",
       "type",
       "copiedFileURL",
+      "properties",
+      "result",
     ],
   },
   {
@@ -60,6 +64,8 @@
     "path": [
       "components",
       "copiedFileURL",
+      "properties",
+      "result",
     ],
   },
 ]

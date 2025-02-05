@@ -1,8 +1,8 @@
 {
   "id": "test-uuid-replacement",
   "endpoints": {
-    "endpoint_.users": {
-      "id": "endpoint_.users",
+    "endpoint_.postUsers": {
+      "id": "endpoint_.postUsers",
       "displayName": "Create a user",
       "method": "POST",
       "path": [
@@ -66,10 +66,13 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     },
-    "endpoint_.userId": {
-      "id": "endpoint_.userId",
+    "endpoint_.getUsersUserId": {
+      "id": "endpoint_.getUsersUserId",
       "displayName": "Get a user",
       "method": "GET",
       "path": [
@@ -121,7 +124,7 @@
       "errors": [],
       "examples": [
         {
-          "path": "/users/{userId}",
+          "path": "/users/string",
           "responseStatusCode": 200,
           "pathParameters": {
             "userId": "string"
@@ -146,7 +149,10 @@
             }
           }
         }
-      ]
+      ],
+      "protocol": {
+        "type": "rest"
+      }
     }
   },
   "websockets": {},
