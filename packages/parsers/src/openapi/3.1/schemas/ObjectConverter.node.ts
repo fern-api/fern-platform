@@ -244,7 +244,6 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       this.requiredProperties.length > 0
         ? this.requiredProperties?.reduce<Record<string, unknown>>(
             (acc, propertyKey) => {
-              console.log("b", propertyKey);
               const propertyNode = objectWithAllProperties?.[propertyKey];
               acc[propertyKey] = propertyNode?.example({
                 includeOptionals,
@@ -258,7 +257,6 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         : Object.entries(objectWithAllProperties).reduce<
             Record<string, unknown>
           >((acc, [key, value]) => {
-            console.log("c", key);
             acc[key] = value?.example({
               includeOptionals,
               override: key,

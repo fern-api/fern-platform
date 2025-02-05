@@ -8,11 +8,14 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import {
+  APPLICATION_JSON_CONTENT_TYPE,
+  APPLICATION_OCTET_STREAM_CONTENT_TYPE,
+} from "../../../constants";
+import {
   ConstArrayToType,
   SUPPORTED_RESPONSE_CONTENT_TYPES,
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
-import { resolveExampleReference } from "../../../utils/3.1/resolveExampleReference";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
@@ -68,15 +71,6 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     this.safeParse(contentType);
   }
 
-  private isExampleDefined(
-    example: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject | undefined
-  ): boolean {
-    return (
-      example != null &&
-      resolveExampleReference(example, this.context.document)?.value != null
-    );
-  }
-
   parse(contentType: string | undefined): void {
     if (contentType === "empty") {
       this.empty = true;
@@ -84,7 +78,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       const mediaType = MediaType.parse(contentType);
 
       if (mediaType?.isJSON() || mediaType?.isEventStream()) {
-        this.contentType = "application/json" as const;
+        this.contentType = APPLICATION_JSON_CONTENT_TYPE;
         if (this.input.schema == null) {
           if (this.streamingFormat == null || this.streamingFormat === "json") {
             this.context.errors.error({
@@ -102,7 +96,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           });
         }
       } else if (mediaType?.isOctetStream()) {
-        this.contentType = "application/octet-stream" as const;
+        this.contentType = APPLICATION_OCTET_STREAM_CONTENT_TYPE;
         this.contentSubtype = resolveSchemaReference(
           this.input.schema,
           this.context.document
@@ -146,7 +140,6 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       };
     }
 
-    // if (this.contentType != null || this.unsupportedContentType != null) {
     const resolvedSchema = resolveSchemaReference(
       this.input.schema,
       this.context.document
@@ -184,7 +177,6 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           : undefined
       );
     }
-    // }
 
     this.examples = singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap(
       (request) =>
@@ -195,10 +187,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             .flatMap(([exampleName, examples]) =>
               examples.map((responseExample) =>
                 matchExampleName(exampleName, requestExampleName)
-                  ? // &&
-                    //     (this.isExampleDefined(requestExample) ||
-                    //       this.isExampleDefined(responseExample))
-                    new ExampleObjectConverterNode(
+                  ? new ExampleObjectConverterNode(
                       {
                         input: {
                           requestExample,
