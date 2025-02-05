@@ -182,7 +182,7 @@ export async function withInitialProps({
     return { notFound: true };
   }
 
-  const content = await withResolvedDocsContent({
+  let content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,
     found,
     authState,
@@ -339,7 +339,7 @@ export async function withInitialProps({
     }
   }
 
-  const content = await withResolvedDocsContent({
+  content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,
     found,
     authState,
