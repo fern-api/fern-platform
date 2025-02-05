@@ -40,12 +40,15 @@ export class NumberConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   minimum: number | undefined;
   maximum: number | undefined;
   default: number | undefined;
+  nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<NumberConverterNode.Input>,
-    protected nullable: boolean | undefined
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<NumberConverterNode.Input> & {
+      nullable: boolean | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 

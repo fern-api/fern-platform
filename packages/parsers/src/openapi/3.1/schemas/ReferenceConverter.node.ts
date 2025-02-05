@@ -30,15 +30,13 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
 
     const maybeEnum = resolveSchemaReference(this.input, this.context.document);
     if (maybeEnum?.enum != null && isNonArraySchema(maybeEnum)) {
-      this.maybeEnumConverterNode = new EnumConverterNode(
-        {
-          input: maybeEnum,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: this.schemaId ?? "",
-        },
-        this.nullable
-      );
+      this.maybeEnumConverterNode = new EnumConverterNode({
+        input: maybeEnum,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: this.schemaId ?? "",
+        nullable: this.nullable,
+      });
     }
 
     if (this.schemaId == null) {
@@ -82,6 +80,7 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
       accessPath: this.accessPath,
       pathId: this.schemaId ?? "",
       seenSchemas: this.seenSchemas,
+      nullable: this.nullable,
     }).example(includeOptionals);
   }
 }

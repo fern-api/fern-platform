@@ -228,16 +228,14 @@ describe("SchemaConverterNode", () => {
         type: "string",
         nullable: false,
       };
-      const node = new SchemaConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-          seenSchemas: new Set(),
-        },
-        true
-      );
+      const node = new SchemaConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        seenSchemas: new Set(),
+        nullable: true,
+      });
       expect(node.nullable).toBe(false);
     });
 
@@ -245,16 +243,14 @@ describe("SchemaConverterNode", () => {
       const input: OpenAPIV3_1.NonArraySchemaObject = {
         type: "string",
       };
-      const node = new SchemaConverterNode(
-        {
-          input,
-          context: mockContext,
-          accessPath: [],
-          pathId: "test",
-          seenSchemas: new Set(),
-        },
-        true
-      );
+      const node = new SchemaConverterNode({
+        input,
+        context: mockContext,
+        accessPath: [],
+        pathId: "test",
+        seenSchemas: new Set(),
+        nullable: true,
+      });
       expect(node.nullable).toBe(true);
     });
   });

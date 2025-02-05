@@ -44,12 +44,15 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
   maxLength: number | undefined;
   enum: EnumConverterNode | undefined;
   mimeType: string | undefined;
+  nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input>,
-    protected nullable: boolean | undefined
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<StringConverterNode.Input> & {
+      nullable: boolean | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 
@@ -132,15 +135,13 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     }
 
     if (this.input.enum != null) {
-      this.enum = new EnumConverterNode(
-        {
-          input: this.input,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "enum",
-        },
-        this.nullable
-      );
+      this.enum = new EnumConverterNode({
+        input: this.input,
+        context: this.context,
+        accessPath: this.accessPath,
+        pathId: "enum",
+        nullable: this.nullable,
+      });
     }
   }
 

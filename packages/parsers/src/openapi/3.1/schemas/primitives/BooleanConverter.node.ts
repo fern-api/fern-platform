@@ -23,12 +23,15 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
   BooleanConverterNode.Output
 > {
   default: boolean | undefined;
+  nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input>,
-    protected nullable: boolean | undefined
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<BooleanConverterNode.Input> & {
+      nullable: boolean | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 
