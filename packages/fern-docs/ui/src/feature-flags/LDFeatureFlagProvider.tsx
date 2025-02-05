@@ -32,12 +32,6 @@ interface Props extends PropsWithChildren {
   };
 }
 
-const ANONYMOUS_CONTEXT: LDContext = {
-  kind: "user",
-  key: "anonymous",
-  anonymous: true,
-};
-
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
   contextEndpoint,
@@ -49,7 +43,7 @@ export const LDFeatureFlagProvider: FC<Props> = ({
   return (
     <LDProvider
       clientSideID={clientSideId}
-      context={defaultContext ?? ANONYMOUS_CONTEXT}
+      context={defaultContext}
       flags={defaultFlags}
       options={options}
     >
