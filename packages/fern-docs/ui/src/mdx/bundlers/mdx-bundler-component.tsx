@@ -7,7 +7,6 @@ import { createMdxComponents } from "../components";
 export const MdxBundlerComponent = ({
   code,
   scope,
-  frontmatter,
   jsxRefs,
 }: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
   const Component = useMemo(
