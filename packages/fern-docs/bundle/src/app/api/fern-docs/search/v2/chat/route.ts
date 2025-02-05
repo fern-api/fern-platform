@@ -21,7 +21,7 @@ import { z } from "zod";
 export const maxDuration = 60;
 export const revalidate = 0;
 
-export async function POST(req: NextRequest) {
+async function handleChatStream(domain: string, messages: any) {
   const _logger = initLogger({
     projectName: "Braintrust Evaluation",
     apiKey: process.env.BRAINTRUST_API_KEY,
@@ -39,9 +39,9 @@ export async function POST(req: NextRequest) {
   const openai = createOpenAI({ apiKey: openaiApiKey() });
   const embeddingModel = openai.embedding("text-embedding-3-small");
 
-  const domain = getDocsDomainEdge(req);
+  // const domain = getDocsDomainEdge(req);
   const namespace = `${withoutStaging(domain)}_${embeddingModel.modelId}`;
-  const { messages } = await req.json();
+  // const { messages } = await req.json();
 
   const orgMetadata = await getOrgMetadataForDomain(withoutStaging(domain));
   if (orgMetadata == null) {
@@ -137,12 +137,15 @@ export async function POST(req: NextRequest) {
   response.headers.set("Access-Control-Allow-Origin", "*");
   response.headers.set("Access-Control-Allow-Methods", "POST, OPTIONS");
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
-
-  const _ = wrapTraced(async (_lastMessage: string | undefined) => {
-    const url = new URL(req.url);
-    return url.host;
-  })(lastUserMessage);
   return response;
+}
+
+export async function POST(req: NextRequest) {
+  const domain = getDocsDomainEdge(req);
+  const { messages } = await req.json();
+  return await wrapTraced(async (domain, messages) => {
+    return handleChatStream(domain, messages);
+  })(domain, messages);
 }
 
 async function runQueryTurbopuffer(
