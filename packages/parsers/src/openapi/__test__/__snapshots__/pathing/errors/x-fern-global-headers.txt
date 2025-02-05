@@ -11,22 +11,4 @@
       "examples",
     ],
   },
-  {
-    "message": "Expected type declaration. Received: null",
-    "path": [
-      "x-fern-global-headers",
-    ],
-  },
-  {
-    "message": "Expected type declaration. Received: null",
-    "path": [
-      "x-fern-global-headers",
-    ],
-  },
-  {
-    "message": "Expected type declaration. Received: null",
-    "path": [
-      "x-fern-global-headers",
-    ],
-  },
 ]
