@@ -1,3 +1,5 @@
+"use client";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
 import { ReactNode } from "react";

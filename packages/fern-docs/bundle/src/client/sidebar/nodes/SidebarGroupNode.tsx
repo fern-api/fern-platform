@@ -1,3 +1,5 @@
+"use client";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ReactNode } from "react";
 import { SidebarNavigationChild } from "./SidebarNavigationChild";

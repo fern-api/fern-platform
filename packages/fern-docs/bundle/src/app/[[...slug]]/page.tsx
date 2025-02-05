@@ -1,25 +1,23 @@
 "use server";
 
-import { renderThemeStylesheet } from "@/client/themes/stylesheet/renderThemeStylesheet";
-import Preload, { PreloadHref } from "@/components/preload";
-import { createCachedDocsLoader } from "@/server/cached-docs-loader";
+import TableOfContentsServer from "@/client/components/table-of-contents/TableOfContentsServer";
+import {
+  createCachedDocsLoader,
+  DocsLoader,
+} from "@/server/cached-docs-loader";
 import { createFindNode } from "@/server/find-node";
-import { DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
-import { FileIdOrUrl } from "@fern-api/fdr-sdk/docs";
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
+import { toImageDescriptor } from "@/utils/to-image-descriptor";
+import { FernNavigation } from "@fern-api/fdr-sdk";
+import { getPageId } from "@fern-api/fdr-sdk/navigation";
+import { getSeoDisabled } from "@fern-docs/edge-config";
 import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import { getBreadcrumbList } from "@fern-docs/seo";
 import { Breadcrumb } from "@fern-docs/seo/src/jsonld";
-import {
-  addLeadingSlash,
-  conformTrailingSlash,
-  EdgeFlags,
-} from "@fern-docs/utils";
-import { compact } from "es-toolkit/array";
+import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
 import { Metadata } from "next";
-import ActiveTabIndex from "./active-tab-index";
-import GlobalStyle from "./global-style";
+import ActiveTabIndex from "../tabs/active-tab-index";
+import Article from "./article";
+import Main from "./main";
 
 export default async function Page({
   params,
@@ -29,53 +27,75 @@ export default async function Page({
   const slug = FernNavigation.slugjoin(params.slug);
   const docsLoader = await createCachedDocsLoader();
   const findNode = createFindNode(docsLoader);
-  const { node, parents, tabs, currentTab } = await findNode(slug);
-  const config = await docsLoader.getConfig();
-  const colors = {
-    light:
-      config?.colorsV3?.type === "light"
-        ? config?.colorsV3
-        : config?.colorsV3?.type === "darkAndLight"
-          ? config?.colorsV3.light
-          : undefined,
-    dark:
-      config?.colorsV3?.type === "dark"
-        ? config?.colorsV3
-        : config?.colorsV3?.type === "darkAndLight"
-          ? config?.colorsV3.dark
-          : undefined,
-  };
-
-  const stylesheet = renderThemeStylesheet(
-    colors,
-    config?.typographyV2,
-    config?.layout,
-    config?.css,
-    await docsLoader.getFiles(),
-    tabs.length > 0
-  );
-
-  const edgeFlags = await getEdgeFlags(docsLoader.domain);
-
+  const { node, parents, currentVersion, currentTab, authState } =
+    await findNode(slug);
+  const layout = await getLayout(docsLoader, node);
+  const { contentWidth, pageWidth, sidebarWidth } =
+    await docsLoader.getLayout();
   return (
     <>
-      <GlobalStyle>{stylesheet}</GlobalStyle>
-      <Preload
-        hrefs={generatePreloadHrefs(
-          config?.typographyV2,
-          await docsLoader.getFiles(),
-          edgeFlags
-        )}
-      />
       <Breadcrumb
         // TODO: add jsonld override from frontmatter
         breadcrumbList={getBreadcrumbList(docsLoader.domain, parents, node)}
       />
-      <ActiveTabIndex
-        tabIndex={tabs.findIndex((tab) => tab.id === currentTab?.id)}
-      />
+      <ActiveTabIndex tabId={currentTab?.id} />
+      <Main
+        layout={layout}
+        contentWidth={contentWidth}
+        pageWidth={pageWidth}
+        sidebarWidth={sidebarWidth}
+      >
+        <TableOfContentsServer
+          pageId={getPageId(node)}
+          sidebarWidth={sidebarWidth}
+          pageWidth={pageWidth}
+        />
+        <Article
+          node={node}
+          authState={authState}
+          currentVersionId={currentVersion?.id}
+          currentTabTitle={currentTab?.title}
+        />
+      </Main>
     </>
   );
+}
+
+const LAYOUTS = ["custom", "guide", "overview", "page", "reference"] as const;
+type Layout = (typeof LAYOUTS)[number];
+
+async function getLayout(
+  docsLoader: DocsLoader,
+  node: FernNavigation.NavigationNodePage
+): Promise<Layout> {
+  if (node.type === "changelogEntry") {
+    return "guide";
+  }
+
+  if (node.type === "changelog") {
+    return "reference";
+  }
+
+  const pageId = getPageId(node);
+  if (pageId) {
+    const page = await docsLoader.getPage(pageId);
+    if (page) {
+      const frontmatter = getFrontmatter(page.markdown)?.data;
+      return frontmatter?.layout && LAYOUTS.includes(frontmatter.layout)
+        ? frontmatter.layout
+        : "guide";
+    }
+  }
+
+  if (
+    FernNavigation.isApiLeaf(node) ||
+    FernNavigation.isApiReferenceNode(node) ||
+    node.type === "apiPackage"
+  ) {
+    return "reference";
+  }
+
+  return "guide";
 }
 
 export async function generateMetadata({
@@ -86,11 +106,10 @@ export async function generateMetadata({
   const slug = FernNavigation.slugjoin(params.slug);
   const docsLoader = await createCachedDocsLoader();
   const findNode = createFindNode(docsLoader);
-  const [files, { node }, config, baseUrl, isSeoDisabled] = await Promise.all([
+  const [files, { node }, config, isSeoDisabled] = await Promise.all([
     docsLoader.getFiles(),
     findNode(slug),
     docsLoader.getConfig(),
-    docsLoader.getBaseUrl(),
     getSeoDisabled(docsLoader.domain),
   ]);
   const pageId = FernNavigation.getPageId(node);
@@ -100,21 +119,11 @@ export async function generateMetadata({
   const noindex =
     (FernNavigation.hasMarkdown(node) && node.noindex) ||
     isSeoDisabled ||
-    config?.metadata?.noindex ||
     frontmatter?.noindex ||
     false;
-  const nofollow =
-    isSeoDisabled ||
-    config?.metadata?.nofollow ||
-    frontmatter?.nofollow ||
-    false;
+  const nofollow = isSeoDisabled || frontmatter?.nofollow || false;
 
   return {
-    metadataBase: new URL(
-      baseUrl.basePath || "/",
-      withDefaultProtocol(docsLoader.domain)
-    ),
-    applicationName: config?.title,
     title:
       markdownToString(
         frontmatter?.headline || frontmatter?.title || node.title
@@ -124,8 +133,8 @@ export async function generateMetadata({
     ),
     keywords: frontmatter?.keywords,
     robots: {
-      index: !noindex,
-      follow: !nofollow,
+      index: noindex ? false : undefined,
+      follow: nofollow ? false : undefined,
     },
     alternates: {
       canonical:
@@ -133,13 +142,11 @@ export async function generateMetadata({
         conformTrailingSlash(addLeadingSlash(node.canonicalSlug ?? node.slug)),
     },
     openGraph: {
-      title: frontmatter?.["og:title"] ?? config?.metadata?.["og:title"],
-      description:
-        frontmatter?.["og:description"] ?? config?.metadata?.["og:description"],
-      locale: frontmatter?.["og:locale"] ?? config?.metadata?.["og:locale"],
-      url: frontmatter?.["og:url"] ?? config?.metadata?.["og:url"],
-      siteName:
-        frontmatter?.["og:site_name"] ?? config?.metadata?.["og:site_name"],
+      title: frontmatter?.["og:title"],
+      description: frontmatter?.["og:description"],
+      locale: frontmatter?.["og:locale"],
+      url: frontmatter?.["og:url"],
+      siteName: frontmatter?.["og:site_name"],
       images:
         toImageDescriptor(
           files,
@@ -149,14 +156,10 @@ export async function generateMetadata({
         ) ?? toImageDescriptor(files, frontmatter?.image),
     },
     twitter: {
-      site: frontmatter?.["twitter:site"] ?? config?.metadata?.["twitter:site"],
-      creator:
-        frontmatter?.["twitter:handle"] ?? config?.metadata?.["twitter:handle"],
-      title:
-        frontmatter?.["twitter:title"] ?? config?.metadata?.["twitter:title"],
-      description:
-        frontmatter?.["twitter:description"] ??
-        config?.metadata?.["twitter:description"],
+      site: frontmatter?.["twitter:site"],
+      creator: frontmatter?.["twitter:handle"],
+      title: frontmatter?.["twitter:title"],
+      description: frontmatter?.["twitter:description"],
       images: toImageDescriptor(files, frontmatter?.["twitter:image"]),
     },
     icons: {
@@ -167,88 +170,5 @@ export async function generateMetadata({
           })?.url
         : undefined,
     },
-  };
-}
-
-function generatePreloadHrefs(
-  typography: DocsV2Read.LoadDocsForUrlResponse["definition"]["config"]["typographyV2"],
-  files: Record<string, { url: string }>,
-  edgeFlags: EdgeFlags
-): PreloadHref[] {
-  const toReturn: PreloadHref[] = [];
-
-  const fontVariants = compact([
-    typography?.bodyFont?.variants,
-    typography?.headingsFont?.variants,
-    typography?.codeFont?.variants,
-  ]).flat();
-
-  fontVariants.forEach((variant) => {
-    try {
-      const file = files[variant.fontFile];
-      if (file != null) {
-        toReturn.push({
-          href: file.url,
-          options: {
-            as: "font",
-            crossOrigin: "anonymous",
-            type: `font/${getFontExtension(file.url)}`,
-          },
-        });
-      }
-    } catch {}
-  });
-
-  if (edgeFlags.isApiPlaygroundEnabled) {
-    toReturn.push({
-      href: "/api/fern-docs/auth/api-key-injection",
-      options: { as: "fetch" },
-    });
-  }
-
-  toReturn.push({
-    href: edgeFlags.isSearchV2Enabled
-      ? "/api/fern-docs/search/v2/key"
-      : "/api/fern-docs/search/v1/key",
-    options: { as: "fetch" },
-  });
-
-  return toReturn;
-}
-
-function getFontExtension(url: string): string {
-  const ext = new URL(url).pathname.split(".").pop();
-  if (ext == null) {
-    throw new Error("No extension found for font: " + url);
-  }
-  return ext;
-}
-
-function toImageDescriptor(
-  files: Record<
-    string,
-    { url: string; width?: number; height?: number; alt?: string }
-  >,
-  image: FileIdOrUrl | undefined,
-  width?: number,
-  height?: number
-): { url: string; width?: number; height?: number; alt?: string } | undefined {
-  if (image == null) {
-    return undefined;
-  }
-
-  if (image.type === "url") {
-    return { url: image.value };
-  }
-
-  const file = files[image.value];
-  if (file == null) {
-    return undefined;
-  }
-  return {
-    url: file.url,
-    width: width ?? file.width,
-    height: height ?? file.height,
-    alt: file.alt,
   };
 }

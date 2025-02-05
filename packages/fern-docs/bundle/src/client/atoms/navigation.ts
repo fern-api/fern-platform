@@ -9,13 +9,8 @@ import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 import { NavbarLink } from "./types";
 
-export const DOMAIN_ATOM = atom<string>((get) => get(DOCS_ATOM).baseUrl.domain);
-DOMAIN_ATOM.debugLabel = "DOMAIN_ATOM";
-
-export const BASEPATH_ATOM = atom<string | undefined>(
-  (get) => get(DOCS_ATOM).baseUrl.basePath
-);
-BASEPATH_ATOM.debugLabel = "BASEPATH_ATOM";
+export const DOMAIN_ATOM = atom<string>("buildwithfern.com");
+export const BASEPATH_ATOM = atom<string | undefined>(undefined);
 
 export const TABS_ATOM = selectAtom(
   DOCS_ATOM,

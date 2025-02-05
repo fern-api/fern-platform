@@ -3,6 +3,7 @@ export * from "../../../client/generated/api/resources/navigation/resources/late
 export * from "./getChildren";
 export * from "./getPageId";
 export * from "./isApiReferenceNode";
+export * from "./isProductNode";
 export * from "./isSidebarRootNode";
 export * from "./isTabbedNode";
 export * from "./isUnversionedNode";

@@ -1,6 +1,6 @@
+import { useIsSelectedSidebarNode } from "@/state/sidebar-atom";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ReactNode } from "react";
-import { useIsSelectedSidebarNode } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarSlugLink } from "../SidebarLink";
 

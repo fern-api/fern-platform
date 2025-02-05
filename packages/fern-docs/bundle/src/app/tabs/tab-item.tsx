@@ -3,18 +3,21 @@
 import { FernLink } from "@/components/link";
 import { useAtomValue } from "jotai/react";
 import { ComponentPropsWithoutRef } from "react";
-import { activeTabAtom } from "../[[...slug]]/active-tab-index";
+import { activeTabAtom } from "./active-tab-index";
 
-export default function TabItem(
-  props: ComponentPropsWithoutRef<typeof FernLink> & {
-    index: number;
+export default function TabItem({
+  tabId,
+  defaultActive,
+  ...props
+}: ComponentPropsWithoutRef<typeof FernLink> & {
+  tabId: string;
+  defaultActive?: boolean;
+}) {
+  const activeTabId = useAtomValue(activeTabAtom);
+  let isActive = activeTabId === tabId;
+  if (!activeTabId && defaultActive) {
+    isActive = true;
   }
-) {
-  const activeTabIndex = useAtomValue(activeTabAtom);
-  return (
-    <FernLink
-      {...props}
-      data-state={props.index === activeTabIndex ? "active" : "inactive"}
-    />
-  );
+
+  return <FernLink {...props} data-state={isActive ? "active" : "inactive"} />;
 }

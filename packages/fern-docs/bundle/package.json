@@ -103,6 +103,7 @@
     "jotai": "^2",
     "jotai-effect": "^1",
     "jotai-location": "^0.5.5",
+    "jotai-scope": "^0.7.3",
     "jsonpath-plus": "^10",
     "launchdarkly-react-client-sdk": "^3.6.0",
     "lucide-react": "^0.474.0",

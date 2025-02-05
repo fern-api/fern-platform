@@ -16,13 +16,13 @@ import {
 import { THEME_ATOM } from "./theme";
 import { IS_MOBILE_SCREEN_ATOM, MOBILE_SIDEBAR_ENABLED_ATOM } from "./viewport";
 
-export const SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM = atom((get) => {
-  const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
+function getNavigationChildToParentsMap(
+  sidebar: FernNavigation.SidebarRootNode | undefined
+): ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]> {
   const childToParentsMap = new Map<
     FernNavigation.NodeId,
     FernNavigation.NodeId[]
   >();
-
   if (sidebar == null) {
     return childToParentsMap;
   }
@@ -35,27 +35,32 @@ export const SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM = atom((get) => {
   });
 
   return childToParentsMap;
-});
-SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM.debugLabel =
-  "SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM";
+}
 
-export const SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM = atom((get) => {
-  const childToParentsMap = get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM);
-  const parentToChildrenMap = new Map<
+function invertParentChildMap(
+  parentChildMap: ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]>
+): ReadonlyMap<FernNavigation.NodeId, FernNavigation.NodeId[]> {
+  const invertedParentChildMap = new Map<
     FernNavigation.NodeId,
     FernNavigation.NodeId[]
   >();
-  childToParentsMap.forEach((parents, child) => {
-    parents.forEach((parentId) => {
-      const children = parentToChildrenMap.get(parentId) ?? [];
-      children.push(child);
-      parentToChildrenMap.set(parentId, children);
+  parentChildMap.forEach((children, parent) => {
+    children.forEach((child) => {
+      const parents = invertedParentChildMap.get(child) ?? [];
+      parents.push(parent);
+      invertedParentChildMap.set(child, parents);
     });
   });
-  return parentToChildrenMap;
+  return invertedParentChildMap;
+}
+
+export const SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM = atom((get) => {
+  return getNavigationChildToParentsMap(get(SIDEBAR_ROOT_NODE_ATOM));
 });
-SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM.debugLabel =
-  "SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM";
+
+export const SIDEBAR_PARENT_TO_CHILDREN_MAP_ATOM = atom((get) => {
+  return invertParentChildMap(get(SIDEBAR_CHILD_TO_PARENTS_MAP_ATOM));
+});
 
 const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atomWithDefault<{
   sidebarRootId: FernNavigation.NodeId;
@@ -72,18 +77,6 @@ const INTERNAL_EXPANDED_SIDEBAR_NODES_ATOM = atomWithDefault<{
       expandedNodes.add(parent);
     });
   }
-
-  // TODO: compute default expanded nodes
-  // the following was commented out because FDR stores `collapsed: false` by default. Another solution is needed.
-  // const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
-  // if (sidebar != null) {
-  //     FernNavigation.traverseDF(sidebar, (node) => {
-  //         // TODO: check for api reference, etc.
-  //         if (node.type === "section" && node.collapsed === false) {
-  //             expandedNodes.add(node.id);
-  //         }
-  //     });
-  // }
 
   return {
     sidebarRootId: sidebar?.id ?? FernNavigation.NodeId(""),

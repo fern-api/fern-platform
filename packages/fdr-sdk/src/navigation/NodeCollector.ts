@@ -74,6 +74,7 @@ export class NodeCollector {
 
   private defaultVersion: FernNavigation.VersionNode | undefined;
   private versionNodes: FernNavigation.VersionNode[] = [];
+  private productNodes: FernNavigation.ProductNode[] = [];
   constructor(rootNode: FernNavigation.NavigationNode | undefined) {
     if (rootNode == null) {
       return;
@@ -82,6 +83,10 @@ export class NodeCollector {
       // if the node is the default version, make a copy of it and "prune" the version slug from all children nodes
       if (node.type === "version") {
         this.versionNodes.push(node);
+      }
+
+      if (node.type === "product") {
+        this.productNodes.push(node);
       }
 
       if (node.type === "version" && node.default && rootNode.type === "root") {
@@ -258,6 +263,10 @@ export class NodeCollector {
 
   public getVersionNodes = (): FernNavigation.VersionNode[] => {
     return this.versionNodes;
+  };
+
+  public getProductNodes = (): FernNavigation.ProductNode[] => {
+    return this.productNodes;
   };
 
   public getNodesInOrder = (): FernNavigation.NavigationNode[] => {

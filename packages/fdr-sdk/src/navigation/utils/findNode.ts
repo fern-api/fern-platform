@@ -1,6 +1,7 @@
 import { FernNavigation } from "../..";
 import { NodeCollector } from "../NodeCollector";
 import { isApiReferenceNode } from "../versions/latest/isApiReferenceNode";
+import { isProductNode } from "../versions/latest/isProductNode";
 import { isSidebarRootNode } from "../versions/latest/isSidebarRootNode";
 import { isTabbedNode } from "../versions/latest/isTabbedNode";
 import { isUnversionedNode } from "../versions/latest/isUnversionedNode";
@@ -17,7 +18,9 @@ export declare namespace Node {
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     root: FernNavigation.RootNode;
     versions: readonly FernNavigation.VersionNode[];
+    products: readonly FernNavigation.ProductNode[];
     currentVersion: FernNavigation.VersionNode | undefined;
+    currentProduct: FernNavigation.ProductNode | undefined;
     currentTab:
       | FernNavigation.TabNode
       | FernNavigation.ChangelogNode
@@ -79,6 +82,7 @@ export function findNode(
 
   const sidebar = found.parents.find(isSidebarRootNode);
   const currentVersion = found.parents.find(isVersionNode);
+  const currentProduct = found.parents.find(isProductNode);
   const unversionedNode = found.parents.find(isUnversionedNode);
   const versionChild = (currentVersion ?? unversionedNode)?.child;
   const landingPage = (currentVersion ?? unversionedNode)?.landingPage;
@@ -113,6 +117,7 @@ export function findNode(
       }
       return node;
     });
+    const products = collector.getProductNodes();
     const currentTab =
       currentTabNode?.type === "tab" || currentTabNode?.type === "changelog"
         ? currentTabNode
@@ -128,8 +133,10 @@ export function findNode(
       parents: found.parents,
       root,
       versions, // this is used to render the version switcher
+      products, // this is used to render the product switcher
       tabs: tabbedNode?.children ?? [],
       currentVersion,
+      currentProduct,
       currentTab,
       sidebar,
       apiReference,

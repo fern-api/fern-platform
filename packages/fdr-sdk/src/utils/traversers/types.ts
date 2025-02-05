@@ -1,4 +1,4 @@
-export const SKIP = "skip" as const;
+export const SKIP = "skip";
 export const STOP = false;
 export const CONTINUE = true;
 

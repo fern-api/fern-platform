@@ -1,11 +1,11 @@
-import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ReactNode, useCallback } from "react";
 import {
   useIsChildSelected,
   useIsExpandedSidebarNode,
   useIsSelectedSidebarNode,
   useToggleExpandedSidebarNode,
-} from "../../atoms";
+} from "@/state/sidebar-atom";
+import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { ReactNode, useCallback } from "react";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { CollapsibleSidebarGroup } from "../CollapsibleSidebarGroup";
 import { SidebarSlugLink } from "../SidebarLink";

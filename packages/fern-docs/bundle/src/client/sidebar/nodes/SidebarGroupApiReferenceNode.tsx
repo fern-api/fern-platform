@@ -1,6 +1,6 @@
+import { useIsApiReferenceShallowLink } from "@/state/sidebar-atom";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { ReactNode } from "react";
-import { useIsApiReferenceShallowLink } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarApiPackageChild } from "./SidebarApiPackageChild";
 

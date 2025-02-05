@@ -162,8 +162,8 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
       >
         <ChevronRight
           className={cn("size-icon-md lg:size-icon", {
-            "-rotate-90": !expanded,
-            "rotate-0": expanded,
+            "rotate-0": !expanded,
+            "rotate-90": expanded,
           })}
         />
       </span>

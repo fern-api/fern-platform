@@ -1,6 +1,6 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 @import "./rmiz";
 @import "./base";
 @import "@fern-docs/components/src/index.scss";
@@ -14,4 +14,4 @@
 @import "../changelog";
 @import "../themes";
 @import "../header";
-@import "../sidebar";
+@import "../sidebar/index.scss";

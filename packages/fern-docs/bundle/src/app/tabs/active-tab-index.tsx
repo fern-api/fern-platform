@@ -3,14 +3,14 @@
 import { atom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
 
-export const activeTabAtom = atom<number | undefined>(undefined);
+export const activeTabAtom = atom<string | undefined>(undefined);
 
 export default function ActiveTabIndex({
-  tabIndex,
+  tabId,
 }: {
-  tabIndex: number | undefined;
+  tabId: string | undefined;
 }) {
-  useHydrateAtoms([[activeTabAtom, tabIndex]], {
+  useHydrateAtoms([[activeTabAtom, tabId]], {
     dangerouslyForceHydrate: true,
   });
   return false;

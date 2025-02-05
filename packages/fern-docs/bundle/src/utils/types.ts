@@ -6,3 +6,14 @@ export type FileData = {
   blurDataUrl?: string;
   alt?: string;
 };
+
+export type ColorsThemeConfig = {
+  accentPrimary: RgbaColor;
+  logo?: FileData;
+  backgroundImage?: FileData;
+  background?: RgbaColor;
+  border?: RgbaColor;
+  sidebarBackground?: RgbaColor;
+  headerBackground?: RgbaColor;
+  cardBackground?: RgbaColor;
+};

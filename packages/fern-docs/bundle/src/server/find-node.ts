@@ -16,6 +16,7 @@ export function createFindNode(docsLoader: DocsLoader): (
   currentVersion: Omit<FernNavigation.VersionNode, "child"> | undefined;
   currentTab: Omit<FernNavigation.TabChild, "child" | "children"> | undefined;
   authState: AuthState;
+  root: FernNavigation.NavigationNode;
 }> {
   return async (slug: FernNavigation.Slug) => {
     const baseUrl = await docsLoader.getBaseUrl();
@@ -112,6 +113,7 @@ export function createFindNode(docsLoader: DocsLoader): (
         ? extractTabMetadata(found.currentTab)
         : undefined,
       authState,
+      root,
     };
   };
 }

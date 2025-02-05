@@ -1,44 +1,111 @@
 "use server";
 
-import { createCachedDocsLoader } from "@/server/cached-docs-loader";
-import { createFindNode } from "@/server/find-node";
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { RemoteIconServer } from "@fern-docs/components/remote-icon/server";
-import { Lock } from "lucide-react";
 import { headers } from "next/headers";
-import TabItem from "./tab-item";
-import { tabToHref } from "./utils";
+import IfProduct from "./if-product";
+import IfVersion from "./if-version";
+import SidebarTablist from "./sidebar-tablist";
 
-export default async function SidebarTabs() {
+export default async function SidebarTabs({
+  root,
+}: {
+  root: FernNavigation.RootNode;
+}) {
   const slug = FernNavigation.slugjoin(headers().get("x-pathname"));
-  const docsLoader = await createCachedDocsLoader();
-  const findNode = createFindNode(docsLoader);
-  const { tabs } = await findNode(slug);
+  const found = FernNavigation.utils.findNode(root, slug);
 
-  if (tabs.length === 0) {
-    return false;
+  const renderTabbedNode = (node: FernNavigation.TabbedNode) => {
+    if (node.children.length === 0) {
+      return false;
+    }
+    return (
+      <SidebarTablist
+        tabs={node.children}
+        defaultActiveTabId={
+          found.type === "found" ? found.currentTab?.id : undefined
+        }
+      />
+    );
+  };
+
+  const renderUnversionedNode = (node: FernNavigation.UnversionedNode) => {
+    if (node.child.type !== "tabbed") {
+      return false;
+    }
+    return renderTabbedNode(node.child);
+  };
+
+  const renderVersionedNode = (node: FernNavigation.VersionedNode) => {
+    if (node.children.length === 0) {
+      return false;
+    }
+    const currentVersion =
+      (found.type === "found" ? found.currentVersion : undefined) ??
+      node.children.find((version) => version.default) ??
+      node.children[0];
+    return (
+      <>
+        {node.children.map((versionNode) => {
+          if (versionNode.child.type !== "tabbed") {
+            return false;
+          }
+          return (
+            <IfVersion
+              key={versionNode.versionId}
+              equals={versionNode.versionId}
+              // this layout is computed only on the first render, so we need to use defaultTrue
+              // afterwards, the version will be updated client-side
+              defaultTrue={versionNode.id === currentVersion?.id}
+            >
+              <SidebarTablist tabs={versionNode.child.children} />
+            </IfVersion>
+          );
+        })}
+      </>
+    );
+  };
+
+  const renderProductGroupNode = (node: FernNavigation.ProductGroupNode) => {
+    if (node.children.length === 0) {
+      return false;
+    }
+    const currentProduct =
+      (found.type === "found" ? found.currentProduct : undefined) ??
+      node.children.find((product) => product.default) ??
+      node.children[0];
+    return (
+      <>
+        {node.children.map((productNode) => {
+          const child =
+            productNode.child.type === "versioned"
+              ? renderVersionedNode(productNode.child)
+              : productNode.child.type === "unversioned"
+                ? renderUnversionedNode(productNode.child)
+                : false;
+          if (!child) {
+            return false;
+          }
+          return (
+            <IfProduct
+              key={productNode.productId}
+              equals={productNode.productId}
+              defaultTrue={productNode.id === currentProduct?.id}
+            >
+              {child}
+            </IfProduct>
+          );
+        })}
+      </>
+    );
+  };
+
+  if (root.child.type === "unversioned") {
+    return renderUnversionedNode(root.child);
+  } else if (root.child.type === "versioned") {
+    return renderVersionedNode(root.child);
+  } else if (root.child.type === "productgroup") {
+    return renderProductGroupNode(root.child);
   }
 
-  return (
-    <div role="tablist" aria-label="tabs" className="my-6 list-none">
-      {tabs.map((tab, i) => (
-        <TabItem
-          index={i}
-          role="tab"
-          key={i}
-          href={tabToHref(tab)}
-          className="group flex min-h-8 items-center gap-4 text-sm font-medium text-[var(--grayscale-a11)] hover:text-[var(--accent-11)] data-[state=active]:font-semibold data-[state=active]:text-[var(--accent-11)] lg:min-h-9 lg:px-3"
-        >
-          <div className="bg-card-surface ring-border-default group-hover:bg-tag-primary text-faded group-data-[state=active]:text-background group-hover:group-data-[state=active]:text-background pointer-events-none size-6 shrink-0 rounded-md p-1 shadow-sm ring-1 group-hover:text-[var(--accent-11)] group-hover:ring-[var(--accent-11)] group-data-[state=active]:bg-[var(--accent-11)] group-data-[state=active]:ring-0 group-hover:group-data-[state=active]:bg-[var(--accent-11)] [&_svg]:size-4">
-            {FernNavigation.hasMetadata(tab) && tab.authed ? (
-              <Lock />
-            ) : (
-              <RemoteIconServer icon={tab.icon ?? "book-open"} />
-            )}
-          </div>
-          <span className="truncate">{tab.title}</span>
-        </TabItem>
-      ))}
-    </div>
-  );
+  return false;
 }

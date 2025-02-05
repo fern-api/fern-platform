@@ -1,5 +1,6 @@
 "use client";
 
+import SetLayoutAtom from "@/state/set-layout-atom";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { getMDXComponent } from "mdx-bundler/client";
@@ -11,7 +12,10 @@ export const MdxBundlerComponent = ({
   scope,
   frontmatter,
   jsxRefs,
-}: Exclude<FernDocs.MarkdownText, string>): ReactElement => {
+  dangerouslyForceHydrate = false,
+}: Exclude<FernDocs.MarkdownText, string> & {
+  dangerouslyForceHydrate?: boolean;
+}): ReactElement => {
   const Component = useMemo(
     () =>
       getMDXComponent(code, {
@@ -30,6 +34,10 @@ export const MdxBundlerComponent = ({
   );
   return (
     <MDXProvider components={createMdxComponents(jsxRefs ?? [])}>
+      <SetLayoutAtom
+        layout={frontmatter.layout ?? "guide"}
+        dangerouslyForceHydrate={dangerouslyForceHydrate}
+      />
       <Component />
     </MDXProvider>
   );

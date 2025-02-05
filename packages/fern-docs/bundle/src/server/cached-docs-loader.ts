@@ -1,4 +1,5 @@
-import { FileData, RgbaColor } from "@/utils/types";
+import { toPx } from "@/utils/to-px";
+import { ColorsThemeConfig, FileData, RgbaColor } from "@/utils/types";
 import {
   ApiDefinition,
   DocsV1Read,
@@ -6,9 +7,11 @@ import {
   FernNavigation,
 } from "@fern-api/fdr-sdk";
 import { ApiDefinitionId, PageId } from "@fern-api/fdr-sdk/navigation";
+import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { AuthEdgeConfig } from "@fern-docs/auth";
-import { getAuthEdgeConfig } from "@fern-docs/edge-config";
+import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
+import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 import { unstable_cache } from "next/cache";
 import { AuthState, DomainAndHost, getAuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
@@ -63,7 +66,7 @@ export interface DocsLoader {
   /**
    * @returns the markdown content for the given page id
    */
-  getPage: (pageId: PageId) => Promise<
+  getPage: (pageId: string) => Promise<
     | {
         markdown: string;
         editThisPageUrl?: string;
@@ -77,26 +80,17 @@ export interface DocsLoader {
   getMdxBundlerFiles: () => Promise<Record<string, string>>;
 
   getColors: () => Promise<{
-    light?: {
-      accentPrimary: RgbaColor;
-      logo?: FileData;
-      backgroundImage?: FileData;
-      background?: RgbaColor;
-      border?: RgbaColor;
-      sidebarBackground?: RgbaColor;
-      headerBackground?: RgbaColor;
-      cardBackground?: RgbaColor;
-    };
-    dark?: {
-      accentPrimary: RgbaColor;
-      logo?: FileData;
-      backgroundImage?: FileData;
-      background?: RgbaColor;
-      border?: RgbaColor;
-      sidebarBackground?: RgbaColor;
-      headerBackground?: RgbaColor;
-      cardBackground?: RgbaColor;
-    };
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  }>;
+
+  getLayout: () => Promise<{
+    logoHeight: number;
+    sidebarWidth: number;
+    headerHeight: number;
+    pageWidth: number | undefined;
+    contentWidth: number;
+    tabsPlacement: "SIDEBAR" | "HEADER";
   }>;
 }
 
@@ -215,7 +209,20 @@ class CachedDocsLoaderImpl implements DocsLoader {
         return undefined;
       }
 
-      return FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
+      const root =
+        FernNavigation.migrate.FernNavigationV1ToLatest.create().root(v1);
+
+      if ((await getEdgeFlags(this.domain)).isApiScrollingDisabled) {
+        FernNavigation.traverseBF(root, (node) => {
+          if (node.type === "apiReference") {
+            node.paginated = true;
+            return CONTINUE;
+          }
+          return SKIP;
+        });
+      }
+
+      return root;
     },
     ["docs-loader:full-root", this.domain],
     { tags: [this.domain], revalidate: false }
@@ -235,12 +242,12 @@ class CachedDocsLoaderImpl implements DocsLoader {
   );
 
   public getPage = unstable_cache(
-    async (pageId: PageId) => {
+    async (pageId: string) => {
       const response = await loadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
-      return response.body.definition.pages[pageId];
+      return response.body.definition.pages[pageId as PageId];
     },
     ["docs-loader:page", this.domain],
     { tags: [this.domain], revalidate: false }
@@ -314,6 +321,37 @@ class CachedDocsLoaderImpl implements DocsLoader {
             cardBackground: toRgbaColor(dark.cardBackground),
           }
         : undefined,
+    };
+  };
+
+  public getLayout = async () => {
+    const config = await this.getConfig();
+    if (!config) {
+      return {
+        logoHeight: DEFAULT_LOGO_HEIGHT,
+        sidebarWidth: 288,
+        headerHeight: 64,
+        pageWidth: 1_408,
+        contentWidth: 704,
+        tabsPlacement: "SIDEBAR" as const,
+      };
+    }
+    const logoHeight = config?.logoHeight ?? DEFAULT_LOGO_HEIGHT;
+    const sidebarWidth = toPx(config?.layout?.sidebarWidth) ?? 288;
+    const pageWidth =
+      config?.layout?.pageWidth?.type === "full"
+        ? undefined
+        : (toPx(config?.layout?.pageWidth) ?? 1_408);
+    const headerHeight = toPx(config?.layout?.headerHeight) ?? 64;
+    const contentWidth = toPx(config?.layout?.contentWidth) ?? 704;
+    const tabsPlacement = config?.layout?.tabsPlacement ?? "SIDEBAR";
+    return {
+      logoHeight,
+      sidebarWidth,
+      headerHeight,
+      pageWidth,
+      contentWidth,
+      tabsPlacement,
     };
   };
 

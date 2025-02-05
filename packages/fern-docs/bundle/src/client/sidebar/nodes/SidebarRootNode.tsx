@@ -1,20 +1,20 @@
+"use server";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { ReactElement, memo } from "react";
-import { SidebarRootChild, SidebarRootChildProps } from "./SidebarRootChild";
+import React from "react";
+import SidebarRootChild from "./SidebarRootChild";
 
-interface SidebarRootNodeProps {
-  node: FernNavigation.SidebarRootNode | undefined;
-}
-
-export const SidebarRootNode = memo(function SidebarRootNode({
+export default async function SidebarRootNode({
   node,
-}: SidebarRootNodeProps): ReactElement | null {
+}: {
+  node: FernNavigation.SidebarRootNode | undefined;
+}) {
   if (!node) {
     return null;
   }
 
   const children = node.children.flatMap(
-    (child): SidebarRootChildProps["node"][] => {
+    (child): React.ComponentProps<typeof SidebarRootChild>["node"][] => {
       if (child.type !== "apiReference" || !child.hideTitle) {
         return [child];
       }
@@ -66,4 +66,4 @@ export const SidebarRootNode = memo(function SidebarRootNode({
       ))}
     </ul>
   );
-});
+}

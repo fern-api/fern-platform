@@ -1,8 +1,8 @@
+import { useIsSelectedSidebarNode } from "@/state/sidebar-atom";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import clsx from "clsx";
 import { ReactNode } from "react";
-import { useIsSelectedSidebarNode } from "../../atoms";
 import { WithFeatureFlags } from "../../feature-flags/WithFeatureFlags";
 import { SidebarSlugLink } from "../SidebarLink";
 
