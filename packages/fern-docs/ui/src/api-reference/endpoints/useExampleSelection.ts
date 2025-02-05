@@ -49,7 +49,6 @@ export function useExampleSelection(
           responseIndex: undefined,
         };
       }
-      console.log("language: ", language);
       const allExamples = Object.values(
         examplesByLanguageKeyAndStatusCode[language] ??
           examplesByLanguageKeyAndStatusCode.curl ??
