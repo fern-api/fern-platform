@@ -139,7 +139,8 @@ export async function POST(req: NextRequest) {
   response.headers.set("Access-Control-Allow-Headers", "Content-Type");
 
   const _ = wrapTraced(async (_lastMessage: string | undefined) => {
-    return "";
+    const url = new URL(req.url);
+    return url.host;
   })(lastUserMessage);
   return response;
 }
