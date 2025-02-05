@@ -235,57 +235,10 @@ export class FdrDeployStack extends Stack {
       }
     );
 
-    const keyGroupId = "06e52e5a-38d5-4459-b623-babb2420ea77";
-    const dbDocsKeyGroup = cloudfront.KeyGroup.fromKeyGroupId(
-      this,
-      "DbDocsKeyGroup",
-      keyGroupId
-    );
-
-    const dbDocsDefinitionDomainName =
-      environmentType === "PROD"
-        ? "docs-definitions.buildwithfern.com"
-        : "docs-definitions-dev2.buildwithfern.com";
-    const dbDocsDefinitionDistribution = new cloudfront.Distribution(
-      this,
-      "DbDocsDefinitionDistribution",
-      {
-        defaultBehavior: {
-          origin: new origins.S3Origin(dbDocsDefinitionBucket),
-          viewerProtocolPolicy:
-            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
-          cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
-          trustedKeyGroups: [dbDocsKeyGroup],
-        },
-        domainNames: [dbDocsDefinitionDomainName],
-        certificate,
-      }
-    );
-
-    const dbDocsDefinitionBucketPolicy = new PolicyStatement({
-      actions: ["s3:GetObject"],
-      resources: [dbDocsDefinitionBucket.arnForObjects("*")],
-      principals: [new ServicePrincipal("cloudfront.amazonaws.com")],
-      conditions: {
-        StringEquals: {
-          "AWS:SourceArn": `arn:aws:cloudfront::${this.account}:distribution/${dbDocsDefinitionDistribution.distributionId}`,
-        },
-      },
-    });
-    dbDocsDefinitionBucket.addToResourcePolicy(dbDocsDefinitionBucketPolicy);
-
     new route53.ARecord(this, "PublicDocsFilesRecord", {
       recordName: publicDocsFilesDomainName,
       target: route53.RecordTarget.fromAlias(
         new targets.CloudFrontTarget(publicDocsFilesDistribution)
-      ),
-      zone: hostedZone,
-    });
-
-    new route53.ARecord(this, "DbDocsDefinitionRecord", {
-      recordName: dbDocsDefinitionDomainName,
-      target: route53.RecordTarget.fromAlias(
-        new targets.CloudFrontTarget(dbDocsDefinitionDistribution)
       ),
       zone: hostedZone,
     });
