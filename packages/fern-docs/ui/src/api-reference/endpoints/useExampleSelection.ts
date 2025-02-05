@@ -49,8 +49,11 @@ export function useExampleSelection(
           responseIndex: undefined,
         };
       }
+      console.log("language: ", language);
       const allExamples = Object.values(
-        examplesByLanguageKeyAndStatusCode[language] ?? {}
+        examplesByLanguageKeyAndStatusCode[language] ??
+          examplesByLanguageKeyAndStatusCode.curl ??
+          {}
       )
         .flatMap((e) => Object.values(e))
         .flat();
