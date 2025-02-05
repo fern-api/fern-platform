@@ -113,8 +113,8 @@
           "queryParameters": {
             "pageNumber": 0,
             "limit": 0,
-            "ignoredParam1": "string",
-            "ignoredParam2": "string"
+            "ignoredParam1": "ignoredParam1",
+            "ignoredParam2": "ignoredParam2"
           },
           "responseBody": {
             "type": "json",
@@ -124,9 +124,9 @@
               },
               "users": [
                 {
-                  "id": "string",
-                  "name": "string",
-                  "email": "string",
+                  "id": "id",
+                  "name": "name",
+                  "email": "email",
                   "age": 0
                 }
               ]

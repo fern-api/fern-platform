@@ -224,11 +224,11 @@
           "responseStatusCode": 200,
           "queryParameters": {
             "filter": {
-              "name": "string",
+              "name": "name",
               "age": 0,
               "location": {
-                "city": "string",
-                "country": "string",
+                "city": "city",
+                "country": "country",
                 "coordinates": {
                   "latitude": 0,
                   "longitude": 0
@@ -238,14 +238,14 @@
             "sort": "asc",
             "limit": 0,
             "tags": [
-              "string"
+              "tags"
             ]
           },
           "responseBody": {
             "type": "json",
             "value": {
               "results": [
-                "string"
+                "results"
               ]
             }
           }

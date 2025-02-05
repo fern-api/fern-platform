@@ -4055,14 +4055,14 @@
               "result": {
                 "datetime_removed": "null",
                 "datetime_stored": "null",
-                "datetime_uploaded": "string",
+                "datetime_uploaded": "datetime_uploaded",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
                 "original_file_url": "null",
                 "original_filename": "EU_4.jpg",
                 "size": 0,
-                "url": "string",
+                "url": "url",
                 "uuid": "test-uuid-replacement",
                 "metadata": {}
               }
@@ -5171,7 +5171,7 @@
           "path": "/addons/aws_rekognition_detect_labels/execute/status/",
           "responseStatusCode": 200,
           "queryParameters": {
-            "request_id": "string"
+            "request_id": "request_id"
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
@@ -5804,7 +5804,7 @@
           "path": "/addons/aws_rekognition_detect_moderation_labels/execute/status/",
           "responseStatusCode": 200,
           "queryParameters": {
-            "request_id": "string"
+            "request_id": "request_id"
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
@@ -6474,7 +6474,7 @@
           "path": "/addons/uc_clamav_virus_scan/execute/status/",
           "responseStatusCode": 200,
           "queryParameters": {
-            "request_id": "string"
+            "request_id": "request_id"
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
@@ -7289,7 +7289,7 @@
           "path": "/addons/remove_bg/execute/status/",
           "responseStatusCode": 200,
           "queryParameters": {
-            "request_id": "string"
+            "request_id": "request_id"
           },
           "headers": {
             "Accept": "application/vnd.uploadcare-v0.7+json"
@@ -9353,11 +9353,11 @@
               "files": [
                 null
               ],
-              "id": "string",
-              "datetime_created": "string",
+              "id": "id",
+              "datetime_created": "datetime_created",
               "files_count": 0,
-              "cdn_url": "string",
-              "url": "string"
+              "cdn_url": "cdn_url",
+              "url": "url"
             }
           },
           "snippets": {
@@ -13560,7 +13560,7 @@
                 }
               }
             },
-            "file": "string"
+            "file": "file"
           }
         }
       ]
@@ -13760,7 +13760,7 @@
                 }
               }
             },
-            "file": "string"
+            "file": "file"
           }
         }
       ]
@@ -13960,7 +13960,7 @@
                 }
               }
             },
-            "file": "string"
+            "file": "file"
           }
         }
       ]
@@ -14160,7 +14160,7 @@
                 }
               }
             },
-            "file": "string"
+            "file": "file"
           }
         }
       ]
@@ -14360,7 +14360,7 @@
                 }
               }
             },
-            "file": "string",
+            "file": "file",
             "previous_values": {
               "appdata": {
                 "aws_rekognition_detect_labels": {
@@ -14421,8 +14421,8 @@
                       }
                     }
                   },
-                  "datetime_created": "string",
-                  "datetime_updated": "string"
+                  "datetime_created": "datetime_created",
+                  "datetime_updated": "datetime_updated"
                 },
                 "aws_rekognition_detect_moderation_labels": {
                   "version": "2016-06-27",
@@ -14445,25 +14445,25 @@
                       }
                     }
                   },
-                  "datetime_created": "string",
-                  "datetime_updated": "string"
+                  "datetime_created": "datetime_created",
+                  "datetime_updated": "datetime_updated"
                 },
                 "remove_bg": {
                   "version": "1.0",
                   "data": {
-                    "foreground_type": "string"
+                    "foreground_type": "foreground_type"
                   },
-                  "datetime_created": "string",
-                  "datetime_updated": "string"
+                  "datetime_created": "datetime_created",
+                  "datetime_updated": "datetime_updated"
                 },
                 "uc_clamav_virus_scan": {
                   "version": "0.104.2",
                   "data": {
                     "infected": false,
-                    "infected_with": "string"
+                    "infected_with": "infected_with"
                   },
-                  "datetime_created": "string",
-                  "datetime_updated": "string"
+                  "datetime_created": "datetime_created",
+                  "datetime_updated": "datetime_updated"
                 }
               },
               "metadata": {}

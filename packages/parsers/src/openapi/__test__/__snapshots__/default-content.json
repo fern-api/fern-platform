@@ -58,12 +58,12 @@
           "path": "/generateContent",
           "responseStatusCode": null,
           "pathParameters": {
-            "model": "string"
+            "model": "model"
           },
           "responseBody": {
             "type": "json",
             "value": {
-              "bar": "string"
+              "bar": "bar"
             }
           }
         }

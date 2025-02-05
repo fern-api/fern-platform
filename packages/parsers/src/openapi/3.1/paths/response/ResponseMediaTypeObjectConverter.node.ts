@@ -172,7 +172,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
     responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
     if (responseExamples[GLOBAL_EXAMPLE_NAME]?.length === 0) {
-      const fallbackExample = this.schema?.example(true);
+      const fallbackExample = this.schema?.example({
+        includeOptionals: true,
+        override: undefined,
+      });
       responseExamples[GLOBAL_EXAMPLE_NAME]?.push(
         fallbackExample != null
           ? {

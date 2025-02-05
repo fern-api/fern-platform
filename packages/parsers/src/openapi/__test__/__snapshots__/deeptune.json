@@ -68,7 +68,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "file": "string"
+              "file": "file"
             }
           }
         }
@@ -152,7 +152,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "file": "string"
+              "file": "file"
             }
           }
         }
@@ -217,9 +217,9 @@
             "type": "json",
             "value": [
               {
-                "id": "string",
-                "name": "string",
-                "description": "string",
+                "id": "id",
+                "name": "name",
+                "description": "description",
                 "is_public": false
               }
             ]
@@ -297,9 +297,9 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "description": "string",
+              "id": "id",
+              "name": "name",
+              "description": "description",
               "is_public": false
             }
           }
@@ -382,17 +382,17 @@
       "errors": [],
       "examples": [
         {
-          "path": "/v1/voices/string",
+          "path": "/v1/voices/voice_id",
           "responseStatusCode": 200,
           "pathParameters": {
-            "voice_id": "string"
+            "voice_id": "voice_id"
           },
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "description": "string",
+              "id": "id",
+              "name": "name",
+              "description": "description",
               "is_public": false
             }
           }
@@ -487,17 +487,17 @@
       "errors": [],
       "examples": [
         {
-          "path": "/v1/voices/string",
+          "path": "/v1/voices/voice_id",
           "responseStatusCode": 200,
           "pathParameters": {
-            "voice_id": "string"
+            "voice_id": "voice_id"
           },
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "description": "string",
+              "id": "id",
+              "name": "name",
+              "description": "description",
               "is_public": false
             }
           }
@@ -576,10 +576,10 @@
       "errors": [],
       "examples": [
         {
-          "path": "/v1/voices/string",
+          "path": "/v1/voices/voice_id",
           "responseStatusCode": 204,
           "pathParameters": {
-            "voice_id": "string"
+            "voice_id": "voice_id"
           }
         }
       ],

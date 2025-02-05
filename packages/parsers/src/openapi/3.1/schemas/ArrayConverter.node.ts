@@ -1,6 +1,7 @@
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
@@ -59,10 +60,12 @@ export class ArrayConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     }));
   }
 
-  example(includeOptionals: boolean): unknown[] | undefined {
+  example(
+    exampleArgs: BaseOpenApiV3_1ConverterExampleArgs
+  ): unknown[] | undefined {
     return (
       this.input.example ??
-      this.input.examples?.[0] ?? [this.item?.example(includeOptionals)]
+      this.input.examples?.[0] ?? [this.item?.example(exampleArgs)]
     );
   }
 }

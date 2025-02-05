@@ -11197,7 +11197,7 @@
           "responseStatusCode": 200,
           "name": "Successful",
           "queryParameters": {
-            "scroll_param": "string"
+            "scroll_param": "scroll_param"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -11241,7 +11241,7 @@
           "path": "/companies/scroll",
           "responseStatusCode": 200,
           "queryParameters": {
-            "scroll_param": "string"
+            "scroll_param": "scroll_param"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -11917,11 +11917,11 @@
       ],
       "examples": [
         {
-          "path": "/contacts/string/companies",
+          "path": "/contacts/id/companies",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -11984,11 +11984,11 @@
           }
         },
         {
-          "path": "/contacts/string/companies",
+          "path": "/contacts/id/companies",
           "responseStatusCode": 200,
           "name": "Bad Request",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -12049,11 +12049,11 @@
           }
         },
         {
-          "path": "/contacts/string/companies",
+          "path": "/contacts/id/companies",
           "responseStatusCode": 200,
           "name": "Company Not Found",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -12713,7 +12713,7 @@
                   "id": "17495962",
                   "created_at": 1674589321,
                   "contact": {
-                    "type": "string",
+                    "type": "type",
                     "id": "214656d0c743eafcfde7f248"
                   },
                   "author": {
@@ -13016,7 +13016,7 @@
               "id": "17495962",
               "created_at": 1674589321,
               "contact": {
-                "type": "string",
+                "type": "type",
                 "id": "214656d0c743eafcfde7f248"
               },
               "author": {
@@ -13070,7 +13070,7 @@
               "id": "17495962",
               "created_at": 1674589321,
               "contact": {
-                "type": "string",
+                "type": "type",
                 "id": "214656d0c743eafcfde7f248"
               },
               "author": {
@@ -13124,7 +13124,7 @@
               "id": "17495962",
               "created_at": 1674589321,
               "contact": {
-                "type": "string",
+                "type": "type",
                 "id": "214656d0c743eafcfde7f248"
               },
               "author": {
@@ -16205,11 +16205,11 @@
       ],
       "examples": [
         {
-          "path": "/contacts/string",
+          "path": "/contacts/id",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -16225,10 +16225,10 @@
           }
         },
         {
-          "path": "/contacts/string",
+          "path": "/contacts/id",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -18729,7 +18729,7 @@
           "name": "Successful",
           "queryParameters": {
             "per_page": 20,
-            "starting_after": "string"
+            "starting_after": "starting_after"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -18816,7 +18816,7 @@
           "responseStatusCode": 200,
           "queryParameters": {
             "per_page": 20,
-            "starting_after": "string"
+            "starting_after": "starting_after"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -26501,7 +26501,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -26596,8 +26596,8 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         },
@@ -26632,7 +26632,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -26727,8 +26727,8 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         }
@@ -28388,9 +28388,9 @@
           "name": "Successful Response",
           "queryParameters": {
             "filter": {
-              "user_id": "string"
+              "user_id": "user_id"
             },
-            "type": "string",
+            "type": "type",
             "summary": false
           },
           "headers": {
@@ -28415,9 +28415,9 @@
           "responseStatusCode": 200,
           "queryParameters": {
             "filter": {
-              "user_id": "string"
+              "user_id": "user_id"
             },
-            "type": "string",
+            "type": "type",
             "summary": false
           },
           "headers": {
@@ -28992,11 +28992,11 @@
       "errors": [],
       "examples": [
         {
-          "path": "/export/content/data/string",
+          "path": "/export/content/data/job_identifier",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
-            "job_identifier": "string"
+            "job_identifier": "job_identifier"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -29012,10 +29012,10 @@
           }
         },
         {
-          "path": "/export/content/data/string",
+          "path": "/export/content/data/job_identifier",
           "responseStatusCode": 200,
           "pathParameters": {
-            "job_identifier": "string"
+            "job_identifier": "job_identifier"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -29141,11 +29141,11 @@
       "errors": [],
       "examples": [
         {
-          "path": "/export/cancel/string",
+          "path": "/export/cancel/job_identifier",
           "responseStatusCode": 200,
           "name": "Successful",
           "pathParameters": {
-            "job_identifier": "string"
+            "job_identifier": "job_identifier"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -29161,10 +29161,10 @@
           }
         },
         {
-          "path": "/export/cancel/string",
+          "path": "/export/cancel/job_identifier",
           "responseStatusCode": 200,
           "pathParameters": {
-            "job_identifier": "string"
+            "job_identifier": "job_identifier"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -29294,10 +29294,10 @@
       "errors": [],
       "examples": [
         {
-          "path": "/download/content/data/string",
+          "path": "/download/content/data/job_identifier",
           "responseStatusCode": 200,
           "pathParameters": {
-            "job_identifier": "string"
+            "job_identifier": "job_identifier"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -31939,7 +31939,7 @@
               "id": "17495962",
               "created_at": 1674589321,
               "contact": {
-                "type": "string",
+                "type": "type",
                 "id": "214656d0c743eafcfde7f248"
               },
               "author": {
@@ -34433,11 +34433,11 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/string/attributes",
+          "path": "/ticket_types/ticket_type_id/attributes",
           "responseStatusCode": 200,
           "name": "Ticket Type Attribute Created",
           "pathParameters": {
-            "ticket_type_id": "string"
+            "ticket_type_id": "ticket_type_id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -34656,12 +34656,12 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/string/attributes/string",
+          "path": "/ticket_types/ticket_type_id/attributes/id",
           "responseStatusCode": 200,
           "name": "Ticket Type Attribute Updated",
           "pathParameters": {
-            "ticket_type_id": "string",
-            "id": "string"
+            "ticket_type_id": "ticket_type_id",
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -34919,7 +34919,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "type": "string",
+              "type": "type",
               "ticket_types": [
                 {
                   "type": "ticket_type",
@@ -34930,7 +34930,7 @@
                   "icon": "🐞",
                   "workspace_id": "ecahpwf5",
                   "ticket_type_attributes": {
-                    "type": "string",
+                    "type": "type",
                     "ticket_type_attributes": [
                       {
                         "type": "ticket_type_attribute",
@@ -35117,7 +35117,7 @@
               "icon": "🐞",
               "workspace_id": "ecahpwf5",
               "ticket_type_attributes": {
-                "type": "string",
+                "type": "type",
                 "ticket_type_attributes": [
                   {
                     "type": "ticket_type_attribute",
@@ -35296,11 +35296,11 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/string",
+          "path": "/ticket_types/id",
           "responseStatusCode": 200,
           "name": "Ticket Type Found",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -35389,10 +35389,10 @@
           }
         },
         {
-          "path": "/ticket_types/string",
+          "path": "/ticket_types/id",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -35408,7 +35408,7 @@
               "icon": "🐞",
               "workspace_id": "ecahpwf5",
               "ticket_type_attributes": {
-                "type": "string",
+                "type": "type",
                 "ticket_type_attributes": [
                   {
                     "type": "ticket_type_attribute",
@@ -35599,11 +35599,11 @@
       ],
       "examples": [
         {
-          "path": "/ticket_types/string",
+          "path": "/ticket_types/id",
           "responseStatusCode": 200,
           "name": "Ticket Type Updated",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -35619,7 +35619,7 @@
               "icon": "🐞",
               "workspace_id": "ecahpwf5",
               "ticket_type_attributes": {
-                "type": "string",
+                "type": "type",
                 "ticket_type_attributes": [
                   {
                     "type": "ticket_type_attribute",
@@ -36990,7 +36990,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -37085,8 +37085,8 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         }
@@ -37240,11 +37240,11 @@
       ],
       "examples": [
         {
-          "path": "/tickets/string",
+          "path": "/tickets/id",
           "responseStatusCode": 200,
           "name": "Ticket Found",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -37368,10 +37368,10 @@
           }
         },
         {
-          "path": "/tickets/string",
+          "path": "/tickets/id",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -37397,7 +37397,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -37492,8 +37492,8 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         }
@@ -37659,11 +37659,11 @@
       ],
       "examples": [
         {
-          "path": "/tickets/string",
+          "path": "/tickets/id",
           "responseStatusCode": 200,
           "name": "Successful Response",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -37689,7 +37689,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -37784,17 +37784,17 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         },
         {
-          "path": "/tickets/string",
+          "path": "/tickets/id",
           "responseStatusCode": 200,
           "name": "Admin Not Found",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -37820,7 +37820,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -37915,17 +37915,17 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         },
         {
-          "path": "/tickets/string",
+          "path": "/tickets/id",
           "responseStatusCode": 200,
           "name": "Assignee Not Found",
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -37951,7 +37951,7 @@
                 "icon": "🐞",
                 "workspace_id": "ecahpwf5",
                 "ticket_type_attributes": {
-                  "type": "string",
+                  "type": "type",
                   "ticket_type_attributes": [
                     {
                       "type": "ticket_type_attribute",
@@ -38046,8 +38046,8 @@
                 "total_count": 2
               },
               "is_shared": true,
-              "ticket_state_internal_label": "string",
-              "ticket_state_external_label": "string"
+              "ticket_state_internal_label": "ticket_state_internal_label",
+              "ticket_state_external_label": "ticket_state_external_label"
             }
           }
         }
@@ -38318,7 +38318,7 @@
                     "icon": "🐞",
                     "workspace_id": "ecahpwf5",
                     "ticket_type_attributes": {
-                      "type": "string",
+                      "type": "type",
                       "ticket_type_attributes": [
                         {
                           "type": "ticket_type_attribute",
@@ -38413,8 +38413,8 @@
                     "total_count": 2
                   },
                   "is_shared": true,
-                  "ticket_state_internal_label": "string",
-                  "ticket_state_external_label": "string"
+                  "ticket_state_internal_label": "ticket_state_internal_label",
+                  "ticket_state_external_label": "ticket_state_external_label"
                 }
               ],
               "total_count": 12345,
@@ -38623,7 +38623,7 @@
           "responseStatusCode": 200,
           "name": "Successful",
           "queryParameters": {
-            "user_id": "string"
+            "user_id": "user_id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -38686,7 +38686,7 @@
           "path": "/visitors",
           "responseStatusCode": 200,
           "queryParameters": {
-            "user_id": "string"
+            "user_id": "user_id"
           },
           "headers": {
             "Intercom-Version": "2.11"
@@ -38778,7 +38778,7 @@
               "social_profiles": {
                 "type": "social_profile.list",
                 "social_profiles": [
-                  "string"
+                  "social_profiles"
                 ]
               },
               "owner_id": "5169261",
@@ -38798,7 +38798,7 @@
               "segments": {
                 "type": "segment.list",
                 "segments": [
-                  "string"
+                  "segments"
                 ]
               },
               "custom_attributes": {},
@@ -39151,7 +39151,7 @@
               "social_profiles": {
                 "type": "social_profile.list",
                 "social_profiles": [
-                  "string"
+                  "social_profiles"
                 ]
               },
               "owner_id": "5169261",
@@ -39171,7 +39171,7 @@
               "segments": {
                 "type": "segment.list",
                 "segments": [
-                  "string"
+                  "segments"
                 ]
               },
               "custom_attributes": {},
@@ -39279,7 +39279,7 @@
               "social_profiles": {
                 "type": "social_profile.list",
                 "social_profiles": [
-                  "string"
+                  "social_profiles"
                 ]
               },
               "owner_id": "5169261",
@@ -39299,7 +39299,7 @@
               "segments": {
                 "type": "segment.list",
                 "segments": [
-                  "string"
+                  "segments"
                 ]
               },
               "custom_attributes": {},

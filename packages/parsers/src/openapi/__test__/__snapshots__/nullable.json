@@ -49,12 +49,12 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "email": "string",
+              "id": "id",
+              "name": "name",
+              "email": "email",
               "createdAt": "null",
               "settings": {
-                "theme": "string",
+                "theme": "theme",
                 "notifications": false,
                 "lastModified": "null"
               },
@@ -119,12 +119,12 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "email": "string",
+              "id": "id",
+              "name": "name",
+              "email": "email",
               "createdAt": "null",
               "settings": {
-                "theme": "string",
+                "theme": "theme",
                 "notifications": false,
                 "lastModified": "null"
               },
@@ -226,24 +226,24 @@
       "errors": [],
       "examples": [
         {
-          "path": "/users/string",
+          "path": "/users/userId",
           "responseStatusCode": 200,
           "pathParameters": {
-            "userId": "string"
+            "userId": "userId"
           },
           "queryParameters": {
-            "activated": "string",
-            "email": "string"
+            "activated": "activated",
+            "email": "email"
           },
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "email": "string",
+              "id": "id",
+              "name": "name",
+              "email": "email",
               "createdAt": "null",
               "settings": {
-                "theme": "string",
+                "theme": "theme",
                 "notifications": false,
                 "lastModified": "null"
               },

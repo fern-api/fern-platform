@@ -89,12 +89,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -114,12 +114,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -139,12 +139,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -164,12 +164,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -189,12 +189,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -214,12 +214,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -239,12 +239,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -264,12 +264,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -369,12 +369,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -394,12 +394,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -419,12 +419,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -444,12 +444,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -469,12 +469,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -494,12 +494,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -519,12 +519,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -544,12 +544,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -659,12 +659,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "string"
+                    "photoUrls"
                   ],
                   "tags": [
                     {
                       "id": 0,
-                      "name": "string"
+                      "name": "name"
                     }
                   ],
                   "status": "available"
@@ -696,12 +696,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "string"
+                    "photoUrls"
                   ],
                   "tags": [
                     {
                       "id": 0,
-                      "name": "string"
+                      "name": "name"
                     }
                   ],
                   "status": "available"
@@ -733,12 +733,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "string"
+                    "photoUrls"
                   ],
                   "tags": [
                     {
                       "id": 0,
-                      "name": "string"
+                      "name": "name"
                     }
                   ],
                   "status": "available"
@@ -770,12 +770,12 @@
                     "name": "Dogs"
                   },
                   "photoUrls": [
-                    "string"
+                    "photoUrls"
                   ],
                   "tags": [
                     {
                       "id": 0,
-                      "name": "string"
+                      "name": "name"
                     }
                   ],
                   "status": "available"
@@ -802,12 +802,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -830,12 +830,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -858,12 +858,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"
@@ -886,12 +886,12 @@
                 "name": "Dogs"
               },
               "photoUrls": [
-                "string"
+                "photoUrls"
               ],
               "tags": [
                 {
                   "id": 0,
-                  "name": "string"
+                  "name": "name"
                 }
               ],
               "status": "available"

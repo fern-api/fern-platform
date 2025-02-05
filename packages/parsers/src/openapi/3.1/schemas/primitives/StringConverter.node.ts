@@ -3,6 +3,7 @@ import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
 import { FdrStringType } from "../../../../types/fdr.types";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
@@ -181,12 +182,14 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
     };
   }
 
-  example(): string | undefined {
+  example({
+    override,
+  }: BaseOpenApiV3_1ConverterExampleArgs): string | undefined {
     return (
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      (this.nullable ? "null" : "string")
+      (this.nullable ? "null" : (override ?? "string"))
     );
   }
 }

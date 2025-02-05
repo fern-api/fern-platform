@@ -69,7 +69,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string"
+              "id": "id"
             }
           }
         }
@@ -146,7 +146,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string"
+              "id": "id"
             }
           }
         }
@@ -223,7 +223,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string"
+              "id": "id"
             }
           }
         }

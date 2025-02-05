@@ -44,10 +44,10 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "username": "string",
-              "email": "string",
-              "createdAt": "string"
+              "id": "id",
+              "username": "username",
+              "email": "email",
+              "createdAt": "createdAt"
             }
           }
         }
@@ -116,18 +116,18 @@
       "errors": [],
       "examples": [
         {
-          "path": "/users/string",
+          "path": "/users/userId",
           "responseStatusCode": 200,
           "pathParameters": {
-            "userId": "string"
+            "userId": "userId"
           },
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "username": "string",
-              "email": "string",
-              "createdAt": "string"
+              "id": "id",
+              "username": "username",
+              "email": "email",
+              "createdAt": "createdAt"
             }
           }
         }
@@ -179,8 +179,8 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "accessToken": "string",
-              "tokenType": "string",
+              "accessToken": "accessToken",
+              "tokenType": "tokenType",
               "expiresIn": 0
             }
           }

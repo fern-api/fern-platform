@@ -60,9 +60,9 @@ describe("PathItemObjectConverterNode", () => {
         errors: [],
         examples: [
           {
-            path: "/pets/string",
+            path: "/pets/petId",
             pathParameters: {
-              petId: "string",
+              petId: "petId",
             },
             responseStatusCode: 200,
           },

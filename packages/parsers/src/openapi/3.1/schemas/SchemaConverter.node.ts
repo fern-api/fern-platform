@@ -3,6 +3,7 @@ import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
@@ -309,9 +310,11 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       : mappedShapes?.[0];
   }
 
-  example(includeOptionals: boolean): unknown | undefined {
+  example(
+    exampleArgs: BaseOpenApiV3_1ConverterExampleArgs
+  ): unknown | undefined {
     return this.availability?.availability !== "deprecated"
-      ? this.typeShapeNode?.example(includeOptionals)
+      ? this.typeShapeNode?.example(exampleArgs)
       : undefined;
   }
 }

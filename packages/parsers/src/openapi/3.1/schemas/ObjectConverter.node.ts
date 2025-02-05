@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
@@ -204,7 +205,9 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     });
   }
 
-  example(includeOptionals: boolean): Record<string, unknown> | undefined {
+  example({
+    includeOptionals,
+  }: BaseOpenApiV3_1ConverterExampleArgs): Record<string, unknown> | undefined {
     let objectWithAllProperties = {
       ...this.properties,
     };
@@ -240,9 +243,14 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       this.requiredProperties != null &&
       this.requiredProperties.length > 0
         ? this.requiredProperties?.reduce<Record<string, unknown>>(
-            (acc, property) => {
-              acc[property] =
-                objectWithAllProperties?.[property]?.example(includeOptionals);
+            (acc, propertyKey) => {
+              console.log("b", propertyKey);
+              const propertyNode = objectWithAllProperties?.[propertyKey];
+              acc[propertyKey] = propertyNode?.example({
+                includeOptionals,
+                override: propertyKey,
+              });
+
               return acc;
             },
             {}
@@ -250,7 +258,11 @@ export class ObjectConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         : Object.entries(objectWithAllProperties).reduce<
             Record<string, unknown>
           >((acc, [key, value]) => {
-            acc[key] = value?.example(includeOptionals);
+            console.log("c", key);
+            acc[key] = value?.example({
+              includeOptionals,
+              override: key,
+            });
             return acc;
           }, {}))
     );

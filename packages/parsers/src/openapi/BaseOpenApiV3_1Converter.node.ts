@@ -16,6 +16,11 @@ export type BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> = {
   readonly pathId: string | string[];
 };
 
+export type BaseOpenApiV3_1ConverterExampleArgs = {
+  includeOptionals: boolean;
+  override: unknown;
+};
+
 export abstract class BaseOpenApiV3_1ConverterNode<
   Input,
   Output,
@@ -73,7 +78,9 @@ export abstract class BaseOpenApiV3_1ConverterNodeWithExample<
   Input,
   Output,
 > extends BaseOpenApiV3_1ConverterNode<Input, Output> {
-  abstract example(includeOptionals: boolean): unknown | undefined;
+  abstract example(
+    args: BaseOpenApiV3_1ConverterExampleArgs
+  ): unknown | undefined;
 }
 
 export type BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<Input> =

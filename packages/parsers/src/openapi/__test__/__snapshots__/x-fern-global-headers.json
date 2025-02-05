@@ -132,16 +132,16 @@
       "errors": [],
       "examples": [
         {
-          "path": "/user/string",
+          "path": "/user/userId",
           "responseStatusCode": 200,
           "pathParameters": {
-            "userId": "string"
+            "userId": "userId"
           },
           "headers": {
-            "my-api-key": "string",
-            "another_header": "string",
-            "x-api-key": "string",
-            "my-api-version": "string"
+            "my-api-key": "my-api-key",
+            "another_header": "another_header",
+            "x-api-key": "x-api-key",
+            "my-api-version": "my-api-version"
           },
           "responseBody": {
             "type": "json",
