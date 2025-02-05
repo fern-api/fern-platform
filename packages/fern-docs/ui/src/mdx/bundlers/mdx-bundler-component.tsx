@@ -13,15 +13,12 @@ export const MdxBundlerComponent = ({
   const Component = useMemo(
     () =>
       getMDXComponent(code, {
-        // Note: do not override `props` from scope
-        ...scope,
-
         // allows us to use MDXProvider to pass components to children
         MdxJsReact: {
           useMDXComponents,
         },
       }),
-    [code, scope, frontmatter]
+    [code, scope]
   );
   return (
     <MDXProvider components={createMdxComponents(jsxRefs ?? [])}>
