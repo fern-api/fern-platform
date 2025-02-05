@@ -182,12 +182,23 @@ export async function withInitialProps({
     return { notFound: true };
   }
 
-  let content = await withResolvedDocsContent({
+  const content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,
     found,
     authState,
     definition: docs.definition,
     edgeFlags,
+    scope: {
+      props: {
+        authed: authState.authed,
+        user: authState.authed ? authState.user : undefined,
+        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
+        // note: do NOT override `props.components`
+        version: found?.currentVersion?.versionId,
+        tab: found?.currentTab?.title,
+      },
+    },
+    replaceSrc: resolveFileSrc,
   });
 
   if (content == null) {
@@ -338,30 +349,7 @@ export async function withInitialProps({
       throw new UnreachableCaseError(file);
     }
   }
-
-  content = await withResolvedDocsContent({
-    domain: docs.baseUrl.domain,
-    found,
-    authState,
-    definition: docs.definition,
-    edgeFlags,
-    scope: {
-      props: {
-        authed: authState.authed,
-        user: authState.authed ? authState.user : undefined,
-        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
-        // note: do NOT override `props.components`
-        version: found?.currentVersion?.versionId,
-        tab: found?.currentTab?.title,
-      },
-    },
-    replaceSrc: resolveFileSrc,
-  });
   const frontmatter = extractFrontmatterFromDocsContent(found.node.id, content);
-
-  if (content == null) {
-    return { notFound: true };
-  }
 
   const tabs = filteredTabs.map((tab, index) =>
     visitDiscriminatedUnion(tab)._visit<SidebarTab>({
