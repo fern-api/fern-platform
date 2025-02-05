@@ -10,6 +10,7 @@ import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
   rehypeSqueezeParagraphs,
+  remarkInjectEsm,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
 } from "@fern-docs/mdx/plugins";
@@ -117,13 +118,15 @@ async function serializeMdxImpl(
       const remarkPlugins: PluggableList = [
         [remarkExtractTitle, { frontmatter }],
         remarkSqueezeParagraphs,
-        remarkSanitizeAcorn,
+        [remarkInjectEsm, { scope }],
+        [remarkSanitizeAcorn],
         remarkGfm,
         remarkSmartypants,
         remarkMath,
         remarkGemoji,
       ];
 
+      // inject scope variables
       if (options?.remarkPlugins != null) {
         remarkPlugins.push(...options.remarkPlugins);
       }
@@ -185,7 +188,7 @@ async function serializeMdxImpl(
     engine: "mdx-bundler",
     code: bundled.code,
     frontmatter: bundled.frontmatter,
-    scope,
+    scope: {},
     jsxRefs: jsxElements,
   };
 }
