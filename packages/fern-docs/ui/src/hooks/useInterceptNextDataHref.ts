@@ -20,7 +20,7 @@ function createPageLoaderGetDataHref(
     const buildId = window.__NEXT_DATA__.buildId;
     const { pathname: hrefPathname, query, search } = parseRelativeUrl(href);
     const { pathname: asPathname } = parseRelativeUrl(asPath);
-    let route = addLeadingSlash(removeTrailingSlash(hrefPathname));
+    const route = addLeadingSlash(removeTrailingSlash(hrefPathname));
 
     const getHrefForSlug = (path: string) => {
       // note: getAsssetPathFromRoute will automatically turn `/` to `/index`
