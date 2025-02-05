@@ -2908,6 +2908,15 @@
             "variants": [
               {
                 "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
                   "type": "object",
                   "extends": [],
                   "properties": [
@@ -3377,6 +3386,15 @@
           "shape": {
             "type": "undiscriminatedUnion",
             "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
               {
                 "shape": {
                   "type": "object",
@@ -4310,7 +4328,17 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP auth. on HTTP or file copy errors.",
           "name": "Bad Request",
@@ -10077,7 +10105,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseWebhooksError"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP Auth or webhook permission errors.",
           "name": "Bad Request",
@@ -10372,7 +10419,35 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseWebhooksError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhookTargetUrlError"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP Auth or webhook permission or endpoint errors.",
           "name": "Bad Request",
@@ -10994,7 +11069,35 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseWebhooksError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "webhookTargetUrlError"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP Auth or webhook permission or endpoint errors.",
           "name": "Bad Request",
@@ -11404,7 +11507,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseDocsConversionError"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
@@ -11815,6 +11937,33 @@
             "variants": [
               {
                 "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseDocsConversionError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "jsonObjectParseError"
+                  }
+                }
+              },
+              {
+                "shape": {
                   "type": "object",
                   "extends": [],
                   "properties": [
@@ -12213,7 +12362,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseDocsConversionError"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP Auth or document conversion permission errors.",
           "name": "Bad Request",
@@ -12677,6 +12845,33 @@
             "variants": [
               {
                 "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseVideoConversionError"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "jsonObjectParseError"
+                  }
+                }
+              },
+              {
+                "shape": {
                   "type": "object",
                   "extends": [],
                   "properties": [
@@ -13090,7 +13285,26 @@
           "statusCode": 400,
           "shape": {
             "type": "undiscriminatedUnion",
-            "variants": []
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "simpleAuthHTTPForbidden"
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "cantUseVideoConversionError"
+                  }
+                }
+              }
+            ]
           },
           "description": "Simple HTTP Auth or video conversion permission errors.",
           "name": "Bad Request",

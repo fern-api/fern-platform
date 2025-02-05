@@ -17,7 +17,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
   | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
   | FernRegistry.api.latest.TypeShape[]
 > {
-  isUnionOfObjects: boolean | undefined;
+  isUnionOfContainers: boolean | undefined;
   isNullable: boolean | undefined;
   discriminated: boolean | undefined;
   discriminant: string | undefined;
@@ -34,10 +34,16 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
   parse(): void {
     if (this.input.oneOf != null || this.input.anyOf != null) {
-      this.isUnionOfObjects = (this.input.oneOf ?? this.input.anyOf)?.every(
-        (schema) =>
-          resolveSchemaReference(schema, this.context.document)?.type ===
-          "object"
+      this.isUnionOfContainers = (this.input.oneOf ?? this.input.anyOf)?.every(
+        (schema) => {
+          const resolvedSchema = resolveSchemaReference(
+            schema,
+            this.context.document
+          );
+          return (
+            resolvedSchema?.type === "object" || resolvedSchema?.enum != null
+          );
+        }
       );
       this.isNullable = (this.input.oneOf ?? this.input.anyOf)?.some(
         (schema) =>
@@ -99,7 +105,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
     | FernRegistry.api.latest.TypeShape[]
     | undefined {
-    if (!this.isUnionOfObjects && !this.discriminated) {
+    if (!this.isUnionOfContainers && !this.discriminated) {
       const convertedNodes = this.undiscriminatedMapping
         ?.flatMap((node) => node.convert())
         .filter(isNonNullish);
@@ -132,7 +138,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
                 return convertedShapes
                   ?.map((shape) => {
-                    if (shape == null || shape.type !== "object") {
+                    if (shape == null) {
                       return undefined;
                     }
                     return {
@@ -158,7 +164,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
                   return convertedShapes
                     ?.map((shape) => {
-                      if (shape == null || shape.type !== "object") {
+                      if (shape == null) {
                         return undefined;
                       }
                       return {

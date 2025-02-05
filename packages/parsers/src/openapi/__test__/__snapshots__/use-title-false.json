@@ -9,7 +9,36 @@
       "shape": {
         "type": "discriminatedUnion",
         "discriminant": "type",
-        "variants": []
+        "variants": [
+          {
+            "discriminantValue": "EMBEDDING_GENERATION",
+            "type": "alias",
+            "value": {
+              "type": "unknown"
+            }
+          },
+          {
+            "discriminantValue": "INFERENCE",
+            "type": "alias",
+            "value": {
+              "type": "unknown"
+            }
+          },
+          {
+            "discriminantValue": "TL_INFERENCE",
+            "type": "alias",
+            "value": {
+              "type": "unknown"
+            }
+          },
+          {
+            "discriminantValue": "TRAINING",
+            "type": "alias",
+            "value": {
+              "type": "unknown"
+            }
+          }
+        ]
       }
     }
   },

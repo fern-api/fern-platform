@@ -45047,7 +45047,35 @@
       "name": "Contact Reply",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_intercom_user_id_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_email_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_user_id_request"
+              }
+            }
+          }
+        ]
       }
     },
     "contact_reply_email_request": {
@@ -45200,7 +45228,35 @@
       "name": "Contact Reply on ticket",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_intercom_user_id_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_user_id_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_email_request"
+              }
+            }
+          }
+        ]
       }
     },
     "contact_reply_ticket_user_id_request": {
@@ -52061,7 +52117,26 @@
                 "type": "list",
                 "itemShape": {
                   "type": "undiscriminatedUnion",
-                  "variants": []
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "news_item"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "newsfeed"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
@@ -52380,7 +52455,26 @@
             "key": "query",
             "valueShape": {
               "type": "undiscriminatedUnion",
-              "variants": []
+              "variants": [
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "single_filter_search_request"
+                    }
+                  }
+                },
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "multiple_filter_search_request"
+                    }
+                  }
+                }
+              ]
             }
           },
           {
