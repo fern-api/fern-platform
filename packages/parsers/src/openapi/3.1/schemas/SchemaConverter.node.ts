@@ -83,9 +83,7 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
     // check if nullable is set. If nullable is false, we will set it, otherwise we will ignore it
     if (isNonArraySchema(this.input) && isNullableSchema(this.input)) {
       this.nullable =
-        this.input.nullable != null && !this.input.nullable
-          ? false
-          : (this.nullable ?? this.input.nullable);
+        this.input.nullable != null ? this.input.nullable : this.nullable;
     }
 
     // Check if the input is a reference object
