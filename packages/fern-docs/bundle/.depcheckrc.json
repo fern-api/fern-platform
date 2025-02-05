@@ -17,7 +17,8 @@
     "glslify-import",
     "glslify-loader",
     "raw-loader",
-    "@upstash/qstash"
+    "@upstash/qstash",
+    "@mdx-js/react"
   ],
   "ignore-patterns": ["dist"]
 }
