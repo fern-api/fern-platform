@@ -574,7 +574,15 @@
         }
       ],
       "errors": [],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/v1/voices/string",
+          "responseStatusCode": 204,
+          "pathParameters": {
+            "voice_id": "string"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }

@@ -58,7 +58,15 @@ describe("PathItemObjectConverterNode", () => {
         displayName: undefined,
         environments: [],
         errors: [],
-        examples: [],
+        examples: [
+          {
+            path: "/pets/string",
+            pathParameters: {
+              petId: "string",
+            },
+            responseStatusCode: 200,
+          },
+        ],
         id: "endpoint_.getPetsPetId",
         method: "GET",
         namespace: undefined,
@@ -160,7 +168,12 @@ describe("PathItemObjectConverterNode", () => {
           },
         ],
         errors: [],
-        examples: [],
+        examples: [
+          {
+            path: "/pets/{petId}",
+            responseStatusCode: 200,
+          },
+        ],
       });
     });
 

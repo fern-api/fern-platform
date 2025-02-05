@@ -13053,7 +13053,66 @@
           ]
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/v1/embed-jobs/{id}/cancel",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "id": "string"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\terr := co.EmbedJobs.Cancel(context.TODO(), \"embed_job_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# cancel an embed job\nco.embed_jobs.cancel(\"job_id\")\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    await co.embed_jobs.cancel(\"job_id\")\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\n\npublic class EmbedJobsCancel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    cohere.embedJobs().cancel(\"job_id\");\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const embedJob = await cohere.embedJobs.cancel('job_id');\n\n  console.log(embedJob);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/embed-jobs/id/cancel \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -26475,111 +26534,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models",
-          "responseStatusCode": 200,
-          "queryParameters": {
-            "page_size": 0,
-            "page_token": "string",
-            "order_by": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "finetuned_models": [
-                {
-                  "id": "string",
-                  "name": "string",
-                  "creator_id": "string",
-                  "organization_id": "string",
-                  "settings": {
-                    "base_model": {
-                      "name": "string",
-                      "version": "string",
-                      "base_type": "BASE_TYPE_UNSPECIFIED",
-                      "strategy": "STRATEGY_UNSPECIFIED"
-                    },
-                    "dataset_id": "string",
-                    "hyperparameters": {
-                      "early_stopping_patience": 0,
-                      "early_stopping_threshold": 0,
-                      "train_batch_size": 0,
-                      "train_epochs": 0,
-                      "learning_rate": 0,
-                      "lora_alpha": 0,
-                      "lora_rank": 0,
-                      "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
-                    },
-                    "multi_label": false,
-                    "wandb": {
-                      "project": "string",
-                      "api_key": "string",
-                      "entity": "string"
-                    }
-                  },
-                  "status": "STATUS_UNSPECIFIED",
-                  "created_at": "string",
-                  "updated_at": "string",
-                  "completed_at": "string",
-                  "last_used": "string"
-                }
-              ],
-              "next_page_token": "string",
-              "total_size": 0
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListFinetunedModelsResponse;\n\npublic class ListFinetunedModels {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListFinetunedModelsResponse response = cohere.finetuning().listFinetunedModels();\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListFinetunedModels(context.TODO(), nil)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModels)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModels = await cohere.finetuning.listFinetunedModels();\n\n  console.log(finetunedModels);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.list_finetuned_models()\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_finetuned_models()\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
         }
       ],
       "protocol": {
@@ -27185,105 +27139,6 @@
                 "created_at": "2024-01-17T20:11:42.907Z",
                 "updated_at": "2024-01-17T20:31:06.464Z",
                 "completed_at": "2024-01-17T20:31:05.047Z"
-              }
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.GetFinetunedModelResponse;\n\npublic class GetFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    GetFinetunedModelResponse response = cohere.finetuning().getFinetunedModel(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.GetFinetunedModel(context.TODO(), \"test-id\")\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.getFinetunedModel('test-id');\n\n  console.log(finetunedModel);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.get_finetuned_model(\"test-id\")\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.get_finetuned_model(\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models/{id}",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "id": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "finetuned_model": {
-                "id": "string",
-                "name": "string",
-                "creator_id": "string",
-                "organization_id": "string",
-                "settings": {
-                  "base_model": {
-                    "name": "string",
-                    "version": "string",
-                    "base_type": "BASE_TYPE_UNSPECIFIED",
-                    "strategy": "STRATEGY_UNSPECIFIED"
-                  },
-                  "dataset_id": "string",
-                  "hyperparameters": {
-                    "early_stopping_patience": 0,
-                    "early_stopping_threshold": 0,
-                    "train_batch_size": 0,
-                    "train_epochs": 0,
-                    "learning_rate": 0,
-                    "lora_alpha": 0,
-                    "lora_rank": 0,
-                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
-                  },
-                  "multi_label": false,
-                  "wandb": {
-                    "project": "string",
-                    "api_key": "string",
-                    "entity": "string"
-                  }
-                },
-                "status": "STATUS_UNSPECIFIED",
-                "created_at": "string",
-                "updated_at": "string",
-                "completed_at": "string",
-                "last_used": "string"
               }
             }
           },
@@ -28549,83 +28404,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "finetuned_model_id": "string"
-          },
-          "queryParameters": {
-            "page_size": 0,
-            "page_token": "string",
-            "order_by": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "events": [
-                {
-                  "user_id": "string",
-                  "status": "STATUS_UNSPECIFIED",
-                  "created_at": "string"
-                }
-              ],
-              "next_page_token": "string",
-              "total_size": 0
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListEventsResponse;\n\npublic class ListEvents {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListEventsResponse response = cohere.finetuning().listEvents(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListEvents(\n\t\tcontext.TODO(),\n\t\t\"test-finetuned-model-id\",\n\t\tnil,\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.Events)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const events = await cohere.finetuning.listEvents('test-finetuned-model-id');\n\n  console.log(events);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.list_events(finetuned_model_id=\"test-id\")\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_events(finetuned_model_id=\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id/events \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
         }
       ],
       "protocol": {
@@ -28955,81 +28733,6 @@
                   }
                 }
               ]
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListTrainingStepMetricsResponse;\n\npublic class ListTrainingStepMetrics {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListTrainingStepMetricsResponse response =\n        cohere.finetuning().listTrainingStepMetrics(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListTrainingStepMetrics(\n\t\tcontext.TODO(),\n\t\t\"test-finetuned-model-id\",\n\t\tnil,\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.StepMetrics)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const trainingStepMetrics = await cohere.finetuning.listTrainingStepMetrics(\n    'test-finetuned-model-id'\n  );\n\n  console.log(trainingStepMetrics);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\ntrain_step_metrics = co.finetuning.list_training_step_metrics(\n    finetuned_model_id=\"test-id\"\n)\nprint(train_step_metrics)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_train_step_metrics(finetuned_model_id=\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id/training-step-metrics \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "finetuned_model_id": "string"
-          },
-          "queryParameters": {
-            "page_size": 0,
-            "page_token": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "step_metrics": [
-                {
-                  "created_at": "string",
-                  "step_number": 0,
-                  "metrics": {}
-                }
-              ],
-              "next_page_token": "string"
             }
           },
           "snippets": {

@@ -28575,7 +28575,15 @@
           ]
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/events",
+          "responseStatusCode": 202,
+          "headers": {
+            "Intercom-Version": "2.11"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -28716,7 +28724,15 @@
           ]
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/events/summaries",
+          "responseStatusCode": 200,
+          "headers": {
+            "Intercom-Version": "2.11"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -29276,7 +29292,18 @@
         }
       ],
       "errors": [],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/download/content/data/string",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "job_identifier": "string"
+          },
+          "headers": {
+            "Intercom-Version": "2.11"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -33809,7 +33836,18 @@
           ]
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/tags/123",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "id": "123"
+          },
+          "headers": {
+            "Intercom-Version": "2.11"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
