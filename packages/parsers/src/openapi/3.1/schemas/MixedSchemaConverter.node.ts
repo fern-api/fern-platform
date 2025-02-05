@@ -94,6 +94,8 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTr
   }
 
   example(includeOptionals: boolean): unknown | undefined {
-    return this.typeNodes?.[0]?.example(includeOptionals);
+    return this.nullable
+      ? "null"
+      : this.typeNodes?.[0]?.example(includeOptionals);
   }
 }

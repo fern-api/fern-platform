@@ -14,12 +14,15 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
 > {
   default: string | undefined;
   values: string[] = [];
+  nullable: boolean | undefined;
 
   constructor(
-    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject>,
-    protected nullable: boolean | undefined
+    args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.NonArraySchemaObject> & {
+      nullable: boolean | undefined;
+    }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 

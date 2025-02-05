@@ -60,14 +60,15 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
   name: string | undefined;
   examples: unknown | undefined;
   availability: AvailabilityConverterNode | undefined;
+  nullable?: boolean | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<
       OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject
-    >,
-    protected nullable?: boolean | undefined
+    > & { nullable?: boolean | undefined }
   ) {
     super(args);
+    this.nullable = args.nullable;
     this.safeParse();
   }
 
@@ -79,10 +80,11 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
       accessPath: this.accessPath,
       pathId: "x-fern-availability",
     });
-    this.nullable =
-      isNonArraySchema(this.input) && isNullableSchema(this.input)
-        ? this.input.nullable
-        : undefined;
+    // check if nullable is set. If nullable is false, we will set it, otherwise we will ignore it
+    if (isNonArraySchema(this.input) && isNullableSchema(this.input)) {
+      this.nullable =
+        this.input.nullable != null ? this.input.nullable : this.nullable;
+    }
 
     // Check if the input is a reference object
     if (isReferenceObject(this.input)) {
@@ -154,15 +156,13 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           seenSchemas: this.seenSchemas,
         });
       } else if (isNonArraySchema(this.input) && this.input.enum != null) {
-        this.typeShapeNode = new EnumConverterNode(
-          {
-            input: this.input,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: this.pathId,
-          },
-          this.nullable
-        );
+        this.typeShapeNode = new EnumConverterNode({
+          input: this.input,
+          context: this.context,
+          accessPath: this.accessPath,
+          pathId: this.pathId,
+          nullable: this.nullable,
+        });
       }
       // We assume that if one of is defined, it is an object node
       else if (typeof this.input.type === "string") {
@@ -191,54 +191,46 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
             break;
           case "boolean":
             if (isBooleanSchema(this.input)) {
-              this.typeShapeNode = new BooleanConverterNode(
-                {
-                  input: this.input,
-                  context: this.context,
-                  accessPath: this.accessPath,
-                  pathId: this.pathId,
-                },
-                this.nullable
-              );
+              this.typeShapeNode = new BooleanConverterNode({
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: this.pathId,
+                nullable: this.nullable,
+              });
             }
             break;
           case "integer":
             if (isIntegerSchema(this.input)) {
-              this.typeShapeNode = new IntegerConverterNode(
-                {
-                  input: this.input,
-                  context: this.context,
-                  accessPath: this.accessPath,
-                  pathId: this.pathId,
-                },
-                this.nullable
-              );
+              this.typeShapeNode = new IntegerConverterNode({
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: this.pathId,
+                nullable: this.nullable,
+              });
             }
             break;
           case "number":
             if (isNumberSchema(this.input)) {
-              this.typeShapeNode = new NumberConverterNode(
-                {
-                  input: this.input,
-                  context: this.context,
-                  accessPath: this.accessPath,
-                  pathId: this.pathId,
-                },
-                this.nullable
-              );
+              this.typeShapeNode = new NumberConverterNode({
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: this.pathId,
+                nullable: this.nullable,
+              });
             }
             break;
           case "string":
             if (isStringSchema(this.input)) {
-              this.typeShapeNode = new StringConverterNode(
-                {
-                  input: this.input,
-                  context: this.context,
-                  accessPath: this.accessPath,
-                  pathId: this.pathId,
-                },
-                this.nullable
-              );
+              this.typeShapeNode = new StringConverterNode({
+                input: this.input,
+                context: this.context,
+                accessPath: this.accessPath,
+                pathId: this.pathId,
+                nullable: this.nullable,
+              });
             }
             break;
           case "null":
@@ -260,23 +252,20 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
         this.input.type.includes("null") &&
         this.input.type.length === 2
       ) {
-        this.nullable = true;
         const newType = this.input.type.filter((t) => t !== "null")[0];
 
         if (newType !== "array") {
-          this.typeShapeNode = new SchemaConverterNode(
-            {
-              input: {
-                ...this.input,
-                type: newType,
-              },
-              context: this.context,
-              accessPath: this.accessPath,
-              pathId: this.pathId,
-              seenSchemas: this.seenSchemas,
+          this.typeShapeNode = new SchemaConverterNode({
+            input: {
+              ...this.input,
+              type: newType,
             },
-            this.nullable
-          );
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: this.pathId,
+            seenSchemas: this.seenSchemas,
+            nullable: true,
+          });
         }
       } else if (this.input.properties != null) {
         this.typeShapeNode = new ObjectConverterNode({
