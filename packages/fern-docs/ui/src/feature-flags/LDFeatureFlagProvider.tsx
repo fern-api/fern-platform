@@ -32,12 +32,6 @@ interface Props extends PropsWithChildren {
   };
 }
 
-const ANONYMOUS_CONTEXT: LDContext = {
-  kind: "user",
-  key: "anonymous",
-  anonymous: true,
-};
-
 export const LDFeatureFlagProvider: FC<Props> = ({
   clientSideId,
   contextEndpoint,
@@ -49,10 +43,11 @@ export const LDFeatureFlagProvider: FC<Props> = ({
   return (
     <LDProvider
       clientSideID={clientSideId}
-      context={defaultContext ?? ANONYMOUS_CONTEXT}
+      context={defaultContext}
       flags={defaultFlags}
       options={options}
     >
+      <LDClientWindow />
       {contextEndpoint ? (
         <IdentifyWrapper
           contextEndpoint={contextEndpoint}
@@ -138,3 +133,37 @@ function withParams(
     return endpoint;
   }
 }
+
+/**
+ * This component is used to attach the LDClient to the window object,
+ * which allows the LDClient to be accessed in custom/injected javascript script.
+ *
+ * Two custom events are implemented to exchange a "handshake" with the client-side code:
+ * - `ld:attached` is dispatched when the LDClient is attached to the window object.
+ * - `ld:attached:status` will be used to request another `ld:attached` event from the client-side code.
+ *
+ * The handshake helps guard against asynchronously loading code, where the custom script needs
+ * to wait until the LDClient is attached to the window object before accessing it.
+ */
+const LDClientWindow = () => {
+  const ldClient = useLDClient();
+  useEffect(() => {
+    window.ldClient = ldClient;
+    if (ldClient) {
+      window.dispatchEvent(new CustomEvent("ld:attached"));
+    }
+
+    const handleAttachStatus = () => {
+      if (ldClient) {
+        window.dispatchEvent(new CustomEvent("ld:attached"));
+      }
+    };
+
+    window.addEventListener("ld:attached:status", handleAttachStatus);
+    return () => {
+      window.removeEventListener("ld:attached:status", handleAttachStatus);
+    };
+  }, [ldClient]);
+
+  return null;
+};
