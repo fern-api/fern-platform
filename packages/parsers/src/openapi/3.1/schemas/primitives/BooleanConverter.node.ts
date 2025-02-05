@@ -63,7 +63,7 @@ export class BooleanConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      (this.nullable ? "null" : false)
+      (this.nullable ? null : false)
     );
   }
 }
