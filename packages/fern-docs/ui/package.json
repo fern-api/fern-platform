@@ -17,6 +17,7 @@
   ],
   "type": "module",
   "exports": {
+    "./bundlers": "./src/mdx/bundlers/index.ts",
     "./bundlers/mdx-bundler": "./src/mdx/bundlers/mdx-bundler.ts",
     "./bundlers/next-mdx-remote": "./src/mdx/bundlers/next-mdx-remote.ts",
     ".": "./src/index.ts"
