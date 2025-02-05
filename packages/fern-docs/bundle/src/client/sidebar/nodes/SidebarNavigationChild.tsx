@@ -1,6 +1,7 @@
+"use client";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import clsx from "clsx";
-import { ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import { SidebarApiPackageNode } from "./SidebarApiPackageNode";
 import { SidebarChangelogNode } from "./SidebarChangelogNode";
@@ -18,7 +19,7 @@ export function SidebarNavigationChild({
   node,
   depth,
   root,
-}: SidebarNavigationChildProps): ReactNode {
+}: SidebarNavigationChildProps) {
   switch (node.type) {
     case "apiReference":
       return <SidebarApiPackageNode node={node} depth={depth} />;

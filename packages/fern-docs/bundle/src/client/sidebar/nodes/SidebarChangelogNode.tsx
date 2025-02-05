@@ -1,3 +1,5 @@
+"use client";
+
 import { useIsSelectedSidebarNode } from "@/state/sidebar-atom";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { History } from "lucide-react";

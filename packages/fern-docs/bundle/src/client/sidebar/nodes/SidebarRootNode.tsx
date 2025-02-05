@@ -2,7 +2,7 @@
 
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import React from "react";
-import SidebarRootChild from "./SidebarRootChild";
+import { SidebarRootChild } from "./SidebarRootChild";
 
 export default async function SidebarRootNode({
   node,

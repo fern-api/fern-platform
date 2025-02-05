@@ -1,3 +1,5 @@
+"use client";
+
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { ExternalLink } from "lucide-react";
 import { ReactNode } from "react";
