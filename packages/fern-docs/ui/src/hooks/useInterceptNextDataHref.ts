@@ -1,4 +1,4 @@
-import { removeTrailingSlash } from "@fern-docs/utils";
+import { addLeadingSlash, removeTrailingSlash } from "@fern-docs/utils";
 import { addLocale } from "next/dist/client/add-locale";
 import type PageLoader from "next/dist/client/page-loader";
 import { addPathPrefix } from "next/dist/shared/lib/router/utils/add-path-prefix";
@@ -20,17 +20,10 @@ function createPageLoaderGetDataHref(
     const buildId = window.__NEXT_DATA__.buildId;
     const { pathname: hrefPathname, query, search } = parseRelativeUrl(href);
     const { pathname: asPathname } = parseRelativeUrl(asPath);
-    let route = removeTrailingSlash(hrefPathname);
-
-    if (route === "") {
-      route = "/index";
-    }
-
-    if (!route.startsWith("/")) {
-      throw new Error(`Route name should start with a "/", got "${route}"`);
-    }
+    const route = addLeadingSlash(removeTrailingSlash(hrefPathname));
 
     const getHrefForSlug = (path: string) => {
+      // note: getAsssetPathFromRoute will automatically turn `/` to `/index`
       const dataRoute = getAssetPathFromRoute(
         removeTrailingSlash(addLocale(path, locale)),
         ".json"
