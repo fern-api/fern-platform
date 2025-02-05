@@ -4,11 +4,11 @@
  * Inspired by https://github.com/remcohaszing/remark-mdx-frontmatter/blob/main/src/remark-mdx-frontmatter.ts
  */
 
-import { Statement } from "estree";
+import type { Statement } from "estree";
 import { name as isIdentifierName } from "estree-util-is-identifier-name";
 import { valueToEstree } from "estree-util-value-to-estree";
-import { type Root } from "mdast";
-import { type Plugin } from "unified";
+import type { Root } from "mdast";
+import type { Plugin } from "unified";
 
 export interface RemarkInjectEsmOptions {
   scope: Record<string, unknown>;
