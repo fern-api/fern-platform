@@ -7,9 +7,6 @@ import {
   type DocsContent,
   type ImageData,
 } from "@fern-docs/ui";
-import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
-import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
 import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import { EdgeFlags } from "@fern-docs/utils";
 import { AuthState } from "./auth/getAuthState";
