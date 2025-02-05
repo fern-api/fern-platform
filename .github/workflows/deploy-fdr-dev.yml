@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - dd/delete-cloudfront
+      - dd/remove-cloudfront
     paths:
       - "fern/apis/fdr/**"
       - "fern/fern.config.json"
