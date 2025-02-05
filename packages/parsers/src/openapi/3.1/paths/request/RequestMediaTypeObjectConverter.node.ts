@@ -14,9 +14,8 @@ import { resolveReference } from "../../../utils/3.1/resolveReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
-import { isObjectSchema } from "../../guards/isObjectSchema";
 import { isReferenceObject } from "../../guards/isReferenceObject";
-import { ObjectConverterNode } from "../../schemas/ObjectConverter.node";
+import { SchemaConverterNode } from "../../schemas";
 import { ReferenceConverterNode } from "../../schemas/ReferenceConverter.node";
 import { GLOBAL_EXAMPLE_NAME } from "../ExampleObjectConverter.node";
 import { MultipartFormDataPropertySchemaConverterNode } from "./MultipartFormDataPropertySchemaConverter.node";
@@ -33,7 +32,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
   description: string | undefined;
 
   // application/json
-  schema: ReferenceConverterNode | ObjectConverterNode | undefined;
+  schema: ReferenceConverterNode | SchemaConverterNode | undefined;
 
   // application/octet-stream
   isOptional: boolean | undefined;
@@ -102,13 +101,13 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           },
           false
         );
-      } else if (isObjectSchema(this.input.schema)) {
+      } else {
         this.resolvedSchema = this.input.schema;
         const mediaType = MediaType.parse(contentType);
         // An exhaustive switch cannot be used here, because contentType is an unbounded string
         if (mediaType?.containsJSON()) {
           this.contentType = "json" as const;
-          this.schema = new ObjectConverterNode({
+          this.schema = new SchemaConverterNode({
             input: this.input.schema,
             context: this.context,
             accessPath: this.accessPath,
@@ -168,8 +167,23 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     | FernRegistry.api.latest.HttpRequestBodyShape[]
     | undefined {
     switch (this.contentType) {
-      case "json":
-        return this.schema?.convert();
+      case "json": {
+        const convertedJsonSchema = this.schema?.convert();
+        if (convertedJsonSchema == null) {
+          return undefined;
+        }
+        const convertedJsonSchemaArray =
+          maybeSingleValueToArray(convertedJsonSchema);
+
+        return convertedJsonSchemaArray
+          ?.map((convertedJsonSchema) =>
+            convertedJsonSchema.type === "object" ||
+            convertedJsonSchema.type === "alias"
+              ? convertedJsonSchema
+              : undefined
+          )
+          .filter(isNonNullish);
+      }
       case "bytes":
         return {
           type: "bytes",
@@ -243,8 +257,23 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
           description: this.description,
         }));
       }
-      case undefined:
-        return this.schema?.convert();
+      case undefined: {
+        const convertedJsonSchema = this.schema?.convert();
+        if (convertedJsonSchema == null) {
+          return undefined;
+        }
+        const convertedJsonSchemaArray =
+          maybeSingleValueToArray(convertedJsonSchema);
+
+        return convertedJsonSchemaArray
+          ?.map((convertedJsonSchema) =>
+            convertedJsonSchema.type === "object" ||
+            convertedJsonSchema.type === "alias"
+              ? convertedJsonSchema
+              : undefined
+          )
+          .filter(isNonNullish);
+      }
       default:
         return undefined;
     }

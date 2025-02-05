@@ -15757,16 +15757,7 @@
           }
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -17208,16 +17199,7 @@
           }
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -21963,16 +21945,7 @@
           }
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -33065,16 +33038,7 @@
           }
         }
       ],
-      "requests": [
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
-          }
-        }
-      ],
+      "requests": [],
       "responses": [
         {
           "statusCode": 200,
@@ -35746,9 +35710,21 @@
         {
           "contentType": "application/json",
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "contact_reply_ticket_request"
+            }
+          }
+        },
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "admin_reply_ticket_request"
+            }
           }
         }
       ],
