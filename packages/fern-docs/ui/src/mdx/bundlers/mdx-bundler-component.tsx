@@ -20,9 +20,6 @@ export const MdxBundlerComponent = ({
         MdxJsReact: {
           useMDXComponents,
         },
-
-        // allows us to use frontmatter in the MDX
-        frontmatter,
       }),
     [code, scope, frontmatter]
   );

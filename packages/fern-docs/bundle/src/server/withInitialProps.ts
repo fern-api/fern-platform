@@ -334,14 +334,13 @@ export async function withInitialProps({
     definition: docs.definition,
     edgeFlags,
     scope: {
-      props: {
-        authed: authState.authed,
-        user: authState.authed ? authState.user : undefined,
-        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
-        // note: do NOT override `props.components`
-        version: found?.currentVersion?.versionId,
-        tab: found?.currentTab?.title,
-      },
+      authed: authState.authed,
+      user: authState.authed ? authState.user : undefined,
+      // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
+      // note: do NOT override `props.components`
+      version: found?.currentVersion?.versionId,
+      tab: found?.currentTab?.title,
+      slug: slug,
     },
     replaceSrc: resolveFileSrc,
   });

@@ -146,12 +146,10 @@ export async function getDocsPageProps(
       files: docs.definition.jsFiles,
       scope: {
         env: "development",
-        props: {
-          authed: false,
-          user: undefined,
-          version: node.currentVersion?.versionId,
-          tab: node.currentTab?.title,
-        },
+        authed: false,
+        user: undefined,
+        version: node.currentVersion?.versionId,
+        tab: node.currentTab?.title,
       },
 
       // inject the file url and dimensions for images and other embeddable files
