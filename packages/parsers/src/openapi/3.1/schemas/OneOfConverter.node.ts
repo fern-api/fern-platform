@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
@@ -176,14 +177,14 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     return wrappedUnion != null ? [wrappedUnion] : undefined;
   }
 
-  example(includeOptionals: boolean): Record<string, unknown> | undefined {
+  example(
+    exampleArgs: BaseOpenApiV3_1ConverterExampleArgs
+  ): Record<string, unknown> | undefined {
     return (
       this.input.example ??
       this.input.examples?.[0] ??
-      this.undiscriminatedMapping?.[0]?.example(includeOptionals) ??
-      Object.values(this.discriminatedMapping ?? {})[0]?.example(
-        includeOptionals
-      )
+      this.undiscriminatedMapping?.[0]?.example(exampleArgs) ??
+      Object.values(this.discriminatedMapping ?? {})[0]?.example(exampleArgs)
     );
   }
 }

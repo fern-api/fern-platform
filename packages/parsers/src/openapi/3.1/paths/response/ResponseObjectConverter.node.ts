@@ -22,7 +22,6 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   headers: Record<string, ParameterBaseObjectConverterNode> | undefined;
   responses: ResponseMediaTypeObjectConverterNode[] | undefined;
   description: string | undefined;
-  emptyResponse: boolean | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
@@ -62,7 +61,23 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     });
 
     if (input.content == null) {
-      this.emptyResponse = true;
+      this.responses ??= [];
+      this.responses.push(
+        new ResponseMediaTypeObjectConverterNode(
+          {
+            input: {},
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: ["content"],
+          },
+          "empty",
+          streamingFormat,
+          this.path,
+          this.statusCode,
+          this.requests,
+          this.shapes
+        )
+      );
     } else {
       Object.entries(input.content ?? {}).forEach(
         ([contentType, contentTypeObject]) => {
@@ -90,10 +105,8 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   }
 
   convert(): FernRegistry.api.latest.HttpResponseBodyShape[] | undefined {
-    return this.emptyResponse
-      ? [{ type: "empty" }]
-      : this.responses
-          ?.flatMap((response) => response.convert())
-          .filter(isNonNullish);
+    return this.responses
+      ?.flatMap((response) => response.convert())
+      .filter(isNonNullish);
   }
 }

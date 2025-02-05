@@ -654,7 +654,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -686,7 +686,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -718,7 +718,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -750,7 +750,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -782,7 +782,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -814,7 +814,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -846,7 +846,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -878,7 +878,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -910,7 +910,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -942,7 +942,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -974,7 +974,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -1006,7 +1006,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -1911,61 +1911,61 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "text": "string",
-              "generation_id": "string",
-              "response_id": "string",
+              "text": "text",
+              "generation_id": "generation_id",
+              "response_id": "response_id",
               "citations": [
                 {
                   "start": 0,
                   "end": 0,
-                  "text": "string",
+                  "text": "text",
                   "document_ids": [
-                    "string"
+                    "document_ids"
                   ]
                 }
               ],
               "documents": [
                 {
-                  "id": "string"
+                  "id": "id"
                 }
               ],
               "is_search_required": false,
               "search_queries": [
                 {
-                  "text": "string",
-                  "generation_id": "string"
+                  "text": "text",
+                  "generation_id": "generation_id"
                 }
               ],
               "search_results": [
                 {
                   "search_query": {
-                    "text": "string",
-                    "generation_id": "string"
+                    "text": "text",
+                    "generation_id": "generation_id"
                   },
                   "connector": {
-                    "id": "string"
+                    "id": "id"
                   },
                   "document_ids": [
-                    "string"
+                    "document_ids"
                   ],
-                  "error_message": "string",
+                  "error_message": "error_message",
                   "continue_on_failure": false
                 }
               ],
               "finish_reason": "COMPLETE",
               "tool_calls": [
                 {
-                  "name": "string",
+                  "name": "name",
                   "parameters": {}
                 }
               ],
               "chat_history": [
                 {
                   "role": "CHATBOT",
-                  "message": "string",
+                  "message": "message",
                   "tool_calls": [
                     {
-                      "name": "string",
+                      "name": "name",
                       "parameters": {}
                     }
                   ]
@@ -1973,7 +1973,7 @@
               ],
               "meta": {
                 "api_version": {
-                  "version": "string",
+                  "version": "version",
                   "is_deprecated": false,
                   "is_experimental": false
                 },
@@ -1989,7 +1989,7 @@
                   "output_tokens": 0
                 },
                 "warnings": [
-                  "string"
+                  "warnings"
                 ]
               }
             }
@@ -2054,61 +2054,61 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "text": "string",
-              "generation_id": "string",
-              "response_id": "string",
+              "text": "text",
+              "generation_id": "generation_id",
+              "response_id": "response_id",
               "citations": [
                 {
                   "start": 0,
                   "end": 0,
-                  "text": "string",
+                  "text": "text",
                   "document_ids": [
-                    "string"
+                    "document_ids"
                   ]
                 }
               ],
               "documents": [
                 {
-                  "id": "string"
+                  "id": "id"
                 }
               ],
               "is_search_required": false,
               "search_queries": [
                 {
-                  "text": "string",
-                  "generation_id": "string"
+                  "text": "text",
+                  "generation_id": "generation_id"
                 }
               ],
               "search_results": [
                 {
                   "search_query": {
-                    "text": "string",
-                    "generation_id": "string"
+                    "text": "text",
+                    "generation_id": "generation_id"
                   },
                   "connector": {
-                    "id": "string"
+                    "id": "id"
                   },
                   "document_ids": [
-                    "string"
+                    "document_ids"
                   ],
-                  "error_message": "string",
+                  "error_message": "error_message",
                   "continue_on_failure": false
                 }
               ],
               "finish_reason": "COMPLETE",
               "tool_calls": [
                 {
-                  "name": "string",
+                  "name": "name",
                   "parameters": {}
                 }
               ],
               "chat_history": [
                 {
                   "role": "CHATBOT",
-                  "message": "string",
+                  "message": "message",
                   "tool_calls": [
                     {
-                      "name": "string",
+                      "name": "name",
                       "parameters": {}
                     }
                   ]
@@ -2116,7 +2116,7 @@
               ],
               "meta": {
                 "api_version": {
-                  "version": "string",
+                  "version": "version",
                   "is_deprecated": false,
                   "is_experimental": false
                 },
@@ -2132,7 +2132,7 @@
                   "output_tokens": 0
                 },
                 "warnings": [
-                  "string"
+                  "warnings"
                 ]
               }
             }
@@ -3260,7 +3260,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3292,7 +3292,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3324,7 +3324,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3356,7 +3356,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3388,7 +3388,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3420,7 +3420,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3452,7 +3452,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3484,7 +3484,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3516,7 +3516,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3548,7 +3548,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3580,7 +3580,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -3612,7 +3612,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -4330,35 +4330,35 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
+              "id": "id",
               "finish_reason": "COMPLETE",
               "message": {
                 "role": "assistant",
                 "tool_calls": [
                   {
-                    "id": "string",
+                    "id": "id",
                     "type": "function",
                     "function": {
-                      "name": "string",
-                      "arguments": "string"
+                      "name": "name",
+                      "arguments": "arguments"
                     }
                   }
                 ],
-                "tool_plan": "string",
+                "tool_plan": "tool_plan",
                 "content": [
                   {
                     "type": "text",
-                    "text": "string"
+                    "text": "text"
                   }
                 ],
                 "citations": [
                   {
                     "start": 0,
                     "end": 0,
-                    "text": "string",
+                    "text": "text",
                     "sources": [
                       {
-                        "id": "string",
+                        "id": "id",
                         "tool_output": {}
                       }
                     ]
@@ -4379,7 +4379,7 @@
               },
               "logprobs": [
                 {
-                  "text": "string",
+                  "text": "text",
                   "token_ids": [
                     0
                   ],
@@ -4447,35 +4447,35 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
+              "id": "id",
               "finish_reason": "COMPLETE",
               "message": {
                 "role": "assistant",
                 "tool_calls": [
                   {
-                    "id": "string",
+                    "id": "id",
                     "type": "function",
                     "function": {
-                      "name": "string",
-                      "arguments": "string"
+                      "name": "name",
+                      "arguments": "arguments"
                     }
                   }
                 ],
-                "tool_plan": "string",
+                "tool_plan": "tool_plan",
                 "content": [
                   {
                     "type": "text",
-                    "text": "string"
+                    "text": "text"
                   }
                 ],
                 "citations": [
                   {
                     "start": 0,
                     "end": 0,
-                    "text": "string",
+                    "text": "text",
                     "sources": [
                       {
-                        "id": "string",
+                        "id": "id",
                         "tool_output": {}
                       }
                     ]
@@ -4496,7 +4496,7 @@
               },
               "logprobs": [
                 {
-                  "text": "string",
+                  "text": "text",
                   "token_ids": [
                     0
                   ],
@@ -5315,7 +5315,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5347,7 +5347,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5379,7 +5379,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5411,7 +5411,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5443,7 +5443,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5475,7 +5475,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5507,7 +5507,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5539,7 +5539,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5571,7 +5571,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5603,7 +5603,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5635,7 +5635,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -5667,7 +5667,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6027,17 +6027,17 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "prompt": "string",
+              "id": "id",
+              "prompt": "prompt",
               "generations": [
                 {
-                  "id": "string",
-                  "text": "string",
+                  "id": "id",
+                  "text": "text",
                   "index": 0,
                   "likelihood": 0,
                   "token_likelihoods": [
                     {
-                      "token": "string",
+                      "token": "token",
                       "likelihood": 0
                     }
                   ]
@@ -6045,7 +6045,7 @@
               ],
               "meta": {
                 "api_version": {
-                  "version": "string",
+                  "version": "version",
                   "is_deprecated": false,
                   "is_experimental": false
                 },
@@ -6061,7 +6061,7 @@
                   "output_tokens": 0
                 },
                 "warnings": [
-                  "string"
+                  "warnings"
                 ]
               }
             }
@@ -6131,7 +6131,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "text": "string",
+              "text": "text",
               "index": 0,
               "is_finished": false,
               "event_type": "text-generation"
@@ -6202,17 +6202,17 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "prompt": "string",
+              "id": "id",
+              "prompt": "prompt",
               "generations": [
                 {
-                  "id": "string",
-                  "text": "string",
+                  "id": "id",
+                  "text": "text",
                   "index": 0,
                   "likelihood": 0,
                   "token_likelihoods": [
                     {
-                      "token": "string",
+                      "token": "token",
                       "likelihood": 0
                     }
                   ]
@@ -6220,7 +6220,7 @@
               ],
               "meta": {
                 "api_version": {
-                  "version": "string",
+                  "version": "version",
                   "is_deprecated": false,
                   "is_experimental": false
                 },
@@ -6236,7 +6236,7 @@
                   "output_tokens": 0
                 },
                 "warnings": [
-                  "string"
+                  "warnings"
                 ]
               }
             }
@@ -6306,7 +6306,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "text": "string",
+              "text": "text",
               "index": 0,
               "is_finished": false,
               "event_type": "text-generation"
@@ -6557,7 +6557,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6589,7 +6589,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6621,7 +6621,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6653,7 +6653,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6685,7 +6685,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6717,7 +6717,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6749,7 +6749,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6781,7 +6781,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6813,7 +6813,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6845,7 +6845,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6877,7 +6877,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -6909,7 +6909,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7167,7 +7167,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7199,7 +7199,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7231,7 +7231,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7263,7 +7263,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7295,7 +7295,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7327,7 +7327,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7359,7 +7359,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7391,7 +7391,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7423,7 +7423,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7455,7 +7455,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7487,7 +7487,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -7519,7 +7519,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -10913,7 +10913,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -10945,7 +10945,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -10977,7 +10977,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11009,7 +11009,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11041,7 +11041,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11073,7 +11073,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11105,7 +11105,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11137,7 +11137,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11169,7 +11169,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11201,7 +11201,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11233,7 +11233,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11265,7 +11265,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11284,17 +11284,17 @@
             "value": {
               "embed_jobs": [
                 {
-                  "job_id": "string",
-                  "name": "string",
+                  "job_id": "job_id",
+                  "name": "name",
                   "status": "processing",
-                  "created_at": "string",
-                  "input_dataset_id": "string",
-                  "output_dataset_id": "string",
-                  "model": "string",
+                  "created_at": "created_at",
+                  "input_dataset_id": "input_dataset_id",
+                  "output_dataset_id": "output_dataset_id",
+                  "model": "model",
                   "truncate": "START",
                   "meta": {
                     "api_version": {
-                      "version": "string",
+                      "version": "version",
                       "is_deprecated": false,
                       "is_experimental": false
                     },
@@ -11310,7 +11310,7 @@
                       "output_tokens": 0
                     },
                     "warnings": [
-                      "string"
+                      "warnings"
                     ]
                   }
                 }
@@ -11502,7 +11502,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11534,7 +11534,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11566,7 +11566,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11598,7 +11598,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11630,7 +11630,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11662,7 +11662,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11694,7 +11694,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11726,7 +11726,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11758,7 +11758,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11790,7 +11790,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11822,7 +11822,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11854,7 +11854,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -11871,10 +11871,10 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "job_id": "string",
+              "job_id": "job_id",
               "meta": {
                 "api_version": {
-                  "version": "string",
+                  "version": "version",
                   "is_deprecated": false,
                   "is_experimental": false
                 },
@@ -11890,7 +11890,7 @@
                   "output_tokens": 0
                 },
                 "warnings": [
-                  "string"
+                  "warnings"
                 ]
               }
             }
@@ -12091,7 +12091,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12123,7 +12123,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12155,7 +12155,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12187,7 +12187,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12219,7 +12219,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12251,7 +12251,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12283,7 +12283,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12315,7 +12315,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12347,7 +12347,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12379,7 +12379,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12411,7 +12411,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12443,7 +12443,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12455,7 +12455,7 @@
           "path": "/v1/embed-jobs/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -12463,17 +12463,17 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "job_id": "string",
-              "name": "string",
+              "job_id": "job_id",
+              "name": "name",
               "status": "processing",
-              "created_at": "string",
-              "input_dataset_id": "string",
-              "output_dataset_id": "string",
-              "model": "string",
+              "created_at": "created_at",
+              "input_dataset_id": "input_dataset_id",
+              "output_dataset_id": "output_dataset_id",
+              "model": "model",
               "truncate": "START",
               "meta": {
                 "api_version": {
-                  "version": "string",
+                  "version": "version",
                   "is_deprecated": false,
                   "is_experimental": false
                 },
@@ -12489,7 +12489,7 @@
                   "output_tokens": 0
                 },
                 "warnings": [
-                  "string"
+                  "warnings"
                 ]
               }
             }
@@ -12694,7 +12694,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12726,7 +12726,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12758,7 +12758,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12790,7 +12790,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12822,7 +12822,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12854,7 +12854,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12886,7 +12886,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12918,7 +12918,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12950,7 +12950,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -12982,7 +12982,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13014,7 +13014,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13046,14 +13046,73 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
           ]
         }
       ],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/v1/embed-jobs/{id}/cancel",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "id": "id"
+          },
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "snippets": {
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\terr := co.EmbedJobs.Cancel(context.TODO(), \"embed_job_id\")\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n}\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "import cohere\n\nco = cohere.Client()\n\n# cancel an embed job\nco.embed_jobs.cancel(\"job_id\")\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    await co.embed_jobs.cancel(\"job_id\")\n",
+                "generated": false
+              }
+            ],
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\n\npublic class EmbedJobsCancel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    cohere.embedJobs().cancel(\"job_id\");\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const embedJob = await cohere.embedJobs.cancel('job_id');\n\n  console.log(embedJob);\n})();\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/embed-jobs/id/cancel \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"",
+                "generated": false
+              }
+            ]
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -13547,7 +13606,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13579,7 +13638,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13611,7 +13670,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13643,7 +13702,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13675,7 +13734,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13707,7 +13766,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13739,7 +13798,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13771,7 +13830,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13803,7 +13862,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13835,7 +13894,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13867,7 +13926,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -13899,7 +13958,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14288,7 +14347,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14320,7 +14379,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14352,7 +14411,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14384,7 +14443,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14416,7 +14475,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14448,7 +14507,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14480,7 +14539,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14512,7 +14571,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14544,7 +14603,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14576,7 +14635,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14608,7 +14667,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -14640,7 +14699,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15152,7 +15211,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15184,7 +15243,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15216,7 +15275,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15248,7 +15307,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15280,7 +15339,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15312,7 +15371,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15344,7 +15403,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15376,7 +15435,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15408,7 +15467,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15440,7 +15499,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15472,7 +15531,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15504,7 +15563,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15908,7 +15967,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15940,7 +15999,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -15972,7 +16031,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16004,7 +16063,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16036,7 +16095,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16068,7 +16127,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16100,7 +16159,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16132,7 +16191,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16164,7 +16223,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16196,7 +16255,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16228,7 +16287,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16260,7 +16319,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16272,9 +16331,9 @@
           "path": "/v1/datasets",
           "responseStatusCode": 200,
           "queryParameters": {
-            "datasetType": "string",
-            "before": "string",
-            "after": "string",
+            "datasetType": "datasetType",
+            "before": "before",
+            "after": "after",
             "limit": 0,
             "offset": 0,
             "validationStatus": "unknown"
@@ -16287,40 +16346,40 @@
             "value": {
               "datasets": [
                 {
-                  "id": "string",
-                  "name": "string",
-                  "created_at": "string",
-                  "updated_at": "string",
+                  "id": "id",
+                  "name": "name",
+                  "created_at": "created_at",
+                  "updated_at": "updated_at",
                   "dataset_type": "embed-input",
                   "validation_status": "unknown",
-                  "validation_error": "string",
-                  "schema": "string",
+                  "validation_error": "validation_error",
+                  "schema": "schema",
                   "required_fields": [
-                    "string"
+                    "required_fields"
                   ],
                   "preserve_fields": [
-                    "string"
+                    "preserve_fields"
                   ],
                   "dataset_parts": [
                     {
-                      "id": "string",
-                      "name": "string",
-                      "url": "string",
+                      "id": "id",
+                      "name": "name",
+                      "url": "url",
                       "index": 0,
                       "size_bytes": 0,
                       "num_rows": 0,
-                      "original_url": "string",
+                      "original_url": "original_url",
                       "samples": [
-                        "string"
+                        "samples"
                       ]
                     }
                   ],
                   "validation_warnings": [
-                    "string"
+                    "validation_warnings"
                   ],
                   "parse_info": {
-                    "separator": "string",
-                    "delimiter": "string"
+                    "separator": "separator",
+                    "delimiter": "delimiter"
                   },
                   "metrics": {
                     "finetune_dataset_metrics": {
@@ -16341,15 +16400,15 @@
                       "chat_data_metrics": {
                         "num_train_turns": 0,
                         "num_eval_turns": 0,
-                        "preamble": "string"
+                        "preamble": "preamble"
                       },
                       "classify_data_metrics": {
                         "label_metrics": [
                           {
                             "total_examples": 0,
-                            "label": "string",
+                            "label": "label",
                             "samples": [
-                              "string"
+                              "samples"
                             ]
                           }
                         ]
@@ -16698,7 +16757,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16730,7 +16789,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16762,7 +16821,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16794,7 +16853,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16826,7 +16885,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16858,7 +16917,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16890,7 +16949,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16922,7 +16981,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16954,7 +17013,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -16986,7 +17045,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17018,7 +17077,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17050,7 +17109,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17062,18 +17121,18 @@
           "path": "/v1/datasets",
           "responseStatusCode": 200,
           "queryParameters": {
-            "name": "string",
+            "name": "name",
             "type": "embed-input",
             "keep_original_file": false,
             "skip_malformed_input": false,
             "keep_fields": [
-              "string"
+              "keep_fields"
             ],
             "optional_fields": [
-              "string"
+              "optional_fields"
             ],
-            "text_separator": "string",
-            "csv_delimiter": "string"
+            "text_separator": "text_separator",
+            "csv_delimiter": "csv_delimiter"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -17081,7 +17140,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string"
+              "id": "id"
             }
           },
           "snippets": {
@@ -17256,7 +17315,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17288,7 +17347,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17320,7 +17379,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17352,7 +17411,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17384,7 +17443,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17416,7 +17475,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17448,7 +17507,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17480,7 +17539,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17512,7 +17571,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17544,7 +17603,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17576,7 +17635,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17608,7 +17667,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17812,7 +17871,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17844,7 +17903,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17876,7 +17935,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17908,7 +17967,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17940,7 +17999,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -17972,7 +18031,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18004,7 +18063,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18036,7 +18095,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18068,7 +18127,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18100,7 +18159,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18132,7 +18191,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18164,7 +18223,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18176,7 +18235,7 @@
           "path": "/v1/datasets/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -18185,40 +18244,40 @@
             "type": "json",
             "value": {
               "dataset": {
-                "id": "string",
-                "name": "string",
-                "created_at": "string",
-                "updated_at": "string",
+                "id": "id",
+                "name": "name",
+                "created_at": "created_at",
+                "updated_at": "updated_at",
                 "dataset_type": "embed-input",
                 "validation_status": "unknown",
-                "validation_error": "string",
-                "schema": "string",
+                "validation_error": "validation_error",
+                "schema": "schema",
                 "required_fields": [
-                  "string"
+                  "required_fields"
                 ],
                 "preserve_fields": [
-                  "string"
+                  "preserve_fields"
                 ],
                 "dataset_parts": [
                   {
-                    "id": "string",
-                    "name": "string",
-                    "url": "string",
+                    "id": "id",
+                    "name": "name",
+                    "url": "url",
                     "index": 0,
                     "size_bytes": 0,
                     "num_rows": 0,
-                    "original_url": "string",
+                    "original_url": "original_url",
                     "samples": [
-                      "string"
+                      "samples"
                     ]
                   }
                 ],
                 "validation_warnings": [
-                  "string"
+                  "validation_warnings"
                 ],
                 "parse_info": {
-                  "separator": "string",
-                  "delimiter": "string"
+                  "separator": "separator",
+                  "delimiter": "delimiter"
                 },
                 "metrics": {
                   "finetune_dataset_metrics": {
@@ -18239,15 +18298,15 @@
                     "chat_data_metrics": {
                       "num_train_turns": 0,
                       "num_eval_turns": 0,
-                      "preamble": "string"
+                      "preamble": "preamble"
                     },
                     "classify_data_metrics": {
                       "label_metrics": [
                         {
                           "total_examples": 0,
-                          "label": "string",
+                          "label": "label",
                           "samples": [
-                            "string"
+                            "samples"
                           ]
                         }
                       ]
@@ -18430,7 +18489,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18462,7 +18521,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18494,7 +18553,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18526,7 +18585,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18558,7 +18617,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18590,7 +18649,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18622,7 +18681,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18654,7 +18713,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18686,7 +18745,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18718,7 +18777,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18750,7 +18809,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18782,7 +18841,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -18794,7 +18853,7 @@
           "path": "/v1/datasets/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -19161,7 +19220,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19193,7 +19252,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19225,7 +19284,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19257,7 +19316,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19289,7 +19348,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19321,7 +19380,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19353,7 +19412,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19385,7 +19444,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19417,7 +19476,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19449,7 +19508,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19481,7 +19540,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19513,7 +19572,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19810,7 +19869,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19842,7 +19901,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19874,7 +19933,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19906,7 +19965,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19938,7 +19997,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -19970,7 +20029,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20002,7 +20061,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20034,7 +20093,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20066,7 +20125,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20098,7 +20157,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20130,7 +20189,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20162,7 +20221,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20551,7 +20610,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20583,7 +20642,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20615,7 +20674,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20647,7 +20706,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20679,7 +20738,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20711,7 +20770,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20743,7 +20802,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20775,7 +20834,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20807,7 +20866,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20839,7 +20898,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20871,7 +20930,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -20903,7 +20962,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21136,7 +21195,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21168,7 +21227,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21200,7 +21259,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21232,7 +21291,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21264,7 +21323,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21296,7 +21355,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21328,7 +21387,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21360,7 +21419,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21392,7 +21451,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21424,7 +21483,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21456,7 +21515,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21488,7 +21547,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21511,23 +21570,23 @@
             "value": {
               "connectors": [
                 {
-                  "id": "string",
-                  "organization_id": "string",
-                  "name": "string",
-                  "description": "string",
-                  "url": "string",
-                  "created_at": "string",
-                  "updated_at": "string",
+                  "id": "id",
+                  "organization_id": "organization_id",
+                  "name": "name",
+                  "description": "description",
+                  "url": "url",
+                  "created_at": "created_at",
+                  "updated_at": "updated_at",
                   "excludes": [
-                    "string"
+                    "excludes"
                   ],
-                  "auth_type": "string",
+                  "auth_type": "auth_type",
                   "oauth": {
-                    "client_id": "string",
-                    "client_secret": "string",
-                    "authorize_url": "string",
-                    "token_url": "string",
-                    "scope": "string"
+                    "client_id": "client_id",
+                    "client_secret": "client_secret",
+                    "authorize_url": "authorize_url",
+                    "token_url": "token_url",
+                    "scope": "scope"
                   },
                   "auth_status": "valid",
                   "active": false,
@@ -21701,7 +21760,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21733,7 +21792,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21765,7 +21824,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21797,7 +21856,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21829,7 +21888,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21861,7 +21920,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21893,7 +21952,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21925,7 +21984,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21957,7 +22016,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -21989,7 +22048,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22021,7 +22080,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22053,7 +22112,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22071,23 +22130,23 @@
             "type": "json",
             "value": {
               "connector": {
-                "id": "string",
-                "organization_id": "string",
-                "name": "string",
-                "description": "string",
-                "url": "string",
-                "created_at": "string",
-                "updated_at": "string",
+                "id": "id",
+                "organization_id": "organization_id",
+                "name": "name",
+                "description": "description",
+                "url": "url",
+                "created_at": "created_at",
+                "updated_at": "updated_at",
                 "excludes": [
-                  "string"
+                  "excludes"
                 ],
-                "auth_type": "string",
+                "auth_type": "auth_type",
                 "oauth": {
-                  "client_id": "string",
-                  "client_secret": "string",
-                  "authorize_url": "string",
-                  "token_url": "string",
-                  "scope": "string"
+                  "client_id": "client_id",
+                  "client_secret": "client_secret",
+                  "authorize_url": "authorize_url",
+                  "token_url": "token_url",
+                  "scope": "scope"
                 },
                 "auth_status": "valid",
                 "active": false,
@@ -22270,7 +22329,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22302,7 +22361,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22334,7 +22393,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22366,7 +22425,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22398,7 +22457,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22430,7 +22489,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22462,7 +22521,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22494,7 +22553,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22526,7 +22585,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22558,7 +22617,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22590,7 +22649,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22622,7 +22681,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22634,7 +22693,7 @@
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -22643,23 +22702,23 @@
             "type": "json",
             "value": {
               "connector": {
-                "id": "string",
-                "organization_id": "string",
-                "name": "string",
-                "description": "string",
-                "url": "string",
-                "created_at": "string",
-                "updated_at": "string",
+                "id": "id",
+                "organization_id": "organization_id",
+                "name": "name",
+                "description": "description",
+                "url": "url",
+                "created_at": "created_at",
+                "updated_at": "updated_at",
                 "excludes": [
-                  "string"
+                  "excludes"
                 ],
-                "auth_type": "string",
+                "auth_type": "auth_type",
                 "oauth": {
-                  "client_id": "string",
-                  "client_secret": "string",
-                  "authorize_url": "string",
-                  "token_url": "string",
-                  "scope": "string"
+                  "client_id": "client_id",
+                  "client_secret": "client_secret",
+                  "authorize_url": "authorize_url",
+                  "token_url": "token_url",
+                  "scope": "scope"
                 },
                 "auth_status": "valid",
                 "active": false,
@@ -22854,7 +22913,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22886,7 +22945,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22918,7 +22977,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22950,7 +23009,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -22982,7 +23041,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23014,7 +23073,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23046,7 +23105,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23078,7 +23137,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23110,7 +23169,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23142,7 +23201,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23174,7 +23233,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23206,7 +23265,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23218,7 +23277,7 @@
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -23227,23 +23286,23 @@
             "type": "json",
             "value": {
               "connector": {
-                "id": "string",
-                "organization_id": "string",
-                "name": "string",
-                "description": "string",
-                "url": "string",
-                "created_at": "string",
-                "updated_at": "string",
+                "id": "id",
+                "organization_id": "organization_id",
+                "name": "name",
+                "description": "description",
+                "url": "url",
+                "created_at": "created_at",
+                "updated_at": "updated_at",
                 "excludes": [
-                  "string"
+                  "excludes"
                 ],
-                "auth_type": "string",
+                "auth_type": "auth_type",
                 "oauth": {
-                  "client_id": "string",
-                  "client_secret": "string",
-                  "authorize_url": "string",
-                  "token_url": "string",
-                  "scope": "string"
+                  "client_id": "client_id",
+                  "client_secret": "client_secret",
+                  "authorize_url": "authorize_url",
+                  "token_url": "token_url",
+                  "scope": "scope"
                 },
                 "auth_status": "valid",
                 "active": false,
@@ -23426,7 +23485,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23458,7 +23517,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23490,7 +23549,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23522,7 +23581,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23554,7 +23613,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23586,7 +23645,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23618,7 +23677,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23650,7 +23709,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23682,7 +23741,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23714,7 +23773,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23746,7 +23805,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23778,7 +23837,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -23790,7 +23849,7 @@
           "path": "/v1/connectors/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -24011,7 +24070,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24043,7 +24102,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24075,7 +24134,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24107,7 +24166,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24139,7 +24198,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24171,7 +24230,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24203,7 +24262,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24235,7 +24294,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24267,7 +24326,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24299,7 +24358,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24331,7 +24390,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24363,7 +24422,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24375,10 +24434,10 @@
           "path": "/v1/connectors/{id}/oauth/authorize",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "queryParameters": {
-            "after_token_redirect": "string"
+            "after_token_redirect": "after_token_redirect"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -24386,7 +24445,7 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "redirect_url": "string"
+              "redirect_url": "redirect_url"
             }
           },
           "snippets": {
@@ -24584,7 +24643,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24616,7 +24675,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24648,7 +24707,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24680,7 +24739,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24712,7 +24771,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24744,7 +24803,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24776,7 +24835,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24808,7 +24867,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24840,7 +24899,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24872,7 +24931,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24904,7 +24963,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24936,7 +24995,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -24956,13 +25015,13 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "name": "string",
+              "name": "name",
               "endpoints": [
                 "chat"
               ],
               "finetuned": false,
               "context_length": 0,
-              "tokenizer_url": "string",
+              "tokenizer_url": "tokenizer_url",
               "default_endpoints": [
                 "chat"
               ]
@@ -25127,7 +25186,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25159,7 +25218,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25191,7 +25250,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25223,7 +25282,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25255,7 +25314,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25287,7 +25346,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25319,7 +25378,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25351,7 +25410,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25383,7 +25442,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25415,7 +25474,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25447,7 +25506,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25479,7 +25538,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25492,7 +25551,7 @@
           "responseStatusCode": 200,
           "queryParameters": {
             "page_size": 0,
-            "page_token": "string",
+            "page_token": "page_token",
             "endpoint": "chat",
             "default_only": false
           },
@@ -25501,19 +25560,19 @@
             "value": {
               "models": [
                 {
-                  "name": "string",
+                  "name": "name",
                   "endpoints": [
                     "chat"
                   ],
                   "finetuned": false,
                   "context_length": 0,
-                  "tokenizer_url": "string",
+                  "tokenizer_url": "tokenizer_url",
                   "default_endpoints": [
                     "chat"
                   ]
                 }
               ],
-              "next_page_token": "string"
+              "next_page_token": "next_page_token"
             }
           },
           "snippets": {
@@ -25712,7 +25771,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25744,7 +25803,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25776,7 +25835,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25808,7 +25867,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25840,7 +25899,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25872,7 +25931,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25904,7 +25963,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25936,7 +25995,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -25968,7 +26027,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -26000,7 +26059,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -26032,7 +26091,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -26064,7 +26123,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "data": "string"
+                  "data": "data"
                 }
               }
             }
@@ -26082,8 +26141,8 @@
             "type": "json",
             "value": {
               "valid": false,
-              "organization_id": "string",
-              "owner_id": "string"
+              "organization_id": "organization_id",
+              "owner_id": "owner_id"
             }
           }
         }
@@ -26246,7 +26305,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26268,7 +26327,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26290,7 +26349,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26312,7 +26371,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26334,7 +26393,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26356,7 +26415,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26369,8 +26428,8 @@
           "responseStatusCode": 200,
           "queryParameters": {
             "page_size": 0,
-            "page_token": "string",
-            "order_by": "string"
+            "page_token": "page_token",
+            "order_by": "order_by"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -26425,111 +26484,6 @@
                   "completed_at": "2024-01-17T20:42:55.821Z"
                 }
               ]
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListFinetunedModelsResponse;\n\npublic class ListFinetunedModels {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListFinetunedModelsResponse response = cohere.finetuning().listFinetunedModels();\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListFinetunedModels(context.TODO(), nil)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModels)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModels = await cohere.finetuning.listFinetunedModels();\n\n  console.log(finetunedModels);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.list_finetuned_models()\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_finetuned_models()\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models",
-          "responseStatusCode": 200,
-          "queryParameters": {
-            "page_size": 0,
-            "page_token": "string",
-            "order_by": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "finetuned_models": [
-                {
-                  "id": "string",
-                  "name": "string",
-                  "creator_id": "string",
-                  "organization_id": "string",
-                  "settings": {
-                    "base_model": {
-                      "name": "string",
-                      "version": "string",
-                      "base_type": "BASE_TYPE_UNSPECIFIED",
-                      "strategy": "STRATEGY_UNSPECIFIED"
-                    },
-                    "dataset_id": "string",
-                    "hyperparameters": {
-                      "early_stopping_patience": 0,
-                      "early_stopping_threshold": 0,
-                      "train_batch_size": 0,
-                      "train_epochs": 0,
-                      "learning_rate": 0,
-                      "lora_alpha": 0,
-                      "lora_rank": 0,
-                      "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
-                    },
-                    "multi_label": false,
-                    "wandb": {
-                      "project": "string",
-                      "api_key": "string",
-                      "entity": "string"
-                    }
-                  },
-                  "status": "STATUS_UNSPECIFIED",
-                  "created_at": "string",
-                  "updated_at": "string",
-                  "completed_at": "string",
-                  "last_used": "string"
-                }
-              ],
-              "next_page_token": "string",
-              "total_size": 0
             }
           },
           "snippets": {
@@ -26693,7 +26647,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26715,7 +26669,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26737,7 +26691,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26759,7 +26713,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26781,7 +26735,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26803,7 +26757,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -26821,18 +26775,18 @@
             "type": "json",
             "value": {
               "finetuned_model": {
-                "id": "string",
-                "name": "string",
-                "creator_id": "string",
-                "organization_id": "string",
+                "id": "id",
+                "name": "name",
+                "creator_id": "creator_id",
+                "organization_id": "organization_id",
                 "settings": {
                   "base_model": {
-                    "name": "string",
-                    "version": "string",
+                    "name": "name",
+                    "version": "version",
                     "base_type": "BASE_TYPE_UNSPECIFIED",
                     "strategy": "STRATEGY_UNSPECIFIED"
                   },
-                  "dataset_id": "string",
+                  "dataset_id": "dataset_id",
                   "hyperparameters": {
                     "early_stopping_patience": 0,
                     "early_stopping_threshold": 0,
@@ -26845,16 +26799,16 @@
                   },
                   "multi_label": false,
                   "wandb": {
-                    "project": "string",
-                    "api_key": "string",
-                    "entity": "string"
+                    "project": "project",
+                    "api_key": "api_key",
+                    "entity": "entity"
                   }
                 },
                 "status": "STATUS_UNSPECIFIED",
-                "created_at": "string",
-                "updated_at": "string",
-                "completed_at": "string",
-                "last_used": "string"
+                "created_at": "created_at",
+                "updated_at": "updated_at",
+                "completed_at": "completed_at",
+                "last_used": "last_used"
               }
             }
           },
@@ -27030,7 +26984,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27052,7 +27006,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27074,7 +27028,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27096,7 +27050,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27118,7 +27072,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27140,7 +27094,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27152,7 +27106,7 @@
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -27185,105 +27139,6 @@
                 "created_at": "2024-01-17T20:11:42.907Z",
                 "updated_at": "2024-01-17T20:31:06.464Z",
                 "completed_at": "2024-01-17T20:31:05.047Z"
-              }
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.GetFinetunedModelResponse;\n\npublic class GetFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    GetFinetunedModelResponse response = cohere.finetuning().getFinetunedModel(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.GetFinetunedModel(context.TODO(), \"test-id\")\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.getFinetunedModel('test-id');\n\n  console.log(finetunedModel);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.get_finetuned_model(\"test-id\")\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.get_finetuned_model(\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models/{id}",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "id": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "finetuned_model": {
-                "id": "string",
-                "name": "string",
-                "creator_id": "string",
-                "organization_id": "string",
-                "settings": {
-                  "base_model": {
-                    "name": "string",
-                    "version": "string",
-                    "base_type": "BASE_TYPE_UNSPECIFIED",
-                    "strategy": "STRATEGY_UNSPECIFIED"
-                  },
-                  "dataset_id": "string",
-                  "hyperparameters": {
-                    "early_stopping_patience": 0,
-                    "early_stopping_threshold": 0,
-                    "train_batch_size": 0,
-                    "train_epochs": 0,
-                    "learning_rate": 0,
-                    "lora_alpha": 0,
-                    "lora_rank": 0,
-                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
-                  },
-                  "multi_label": false,
-                  "wandb": {
-                    "project": "string",
-                    "api_key": "string",
-                    "entity": "string"
-                  }
-                },
-                "status": "STATUS_UNSPECIFIED",
-                "created_at": "string",
-                "updated_at": "string",
-                "completed_at": "string",
-                "last_used": "string"
               }
             }
           },
@@ -27629,7 +27484,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27651,7 +27506,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27673,7 +27528,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27695,7 +27550,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27717,7 +27572,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27739,7 +27594,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27751,7 +27606,7 @@
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -27763,18 +27618,18 @@
             "type": "json",
             "value": {
               "finetuned_model": {
-                "id": "string",
-                "name": "string",
-                "creator_id": "string",
-                "organization_id": "string",
+                "id": "id",
+                "name": "name",
+                "creator_id": "creator_id",
+                "organization_id": "organization_id",
                 "settings": {
                   "base_model": {
-                    "name": "string",
-                    "version": "string",
+                    "name": "name",
+                    "version": "version",
                     "base_type": "BASE_TYPE_UNSPECIFIED",
                     "strategy": "STRATEGY_UNSPECIFIED"
                   },
-                  "dataset_id": "string",
+                  "dataset_id": "dataset_id",
                   "hyperparameters": {
                     "early_stopping_patience": 0,
                     "early_stopping_threshold": 0,
@@ -27787,16 +27642,16 @@
                   },
                   "multi_label": false,
                   "wandb": {
-                    "project": "string",
-                    "api_key": "string",
-                    "entity": "string"
+                    "project": "project",
+                    "api_key": "api_key",
+                    "entity": "entity"
                   }
                 },
                 "status": "STATUS_UNSPECIFIED",
-                "created_at": "string",
-                "updated_at": "string",
-                "completed_at": "string",
-                "last_used": "string"
+                "created_at": "created_at",
+                "updated_at": "updated_at",
+                "completed_at": "completed_at",
+                "last_used": "last_used"
               }
             }
           },
@@ -27972,7 +27827,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -27994,7 +27849,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28016,7 +27871,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28038,7 +27893,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28060,7 +27915,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28082,7 +27937,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28094,7 +27949,7 @@
           "path": "/v1/finetuning/finetuned-models/{id}",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -28342,7 +28197,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28364,7 +28219,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28386,7 +28241,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28408,7 +28263,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28430,7 +28285,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28452,7 +28307,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28464,12 +28319,12 @@
           "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
           "responseStatusCode": 200,
           "pathParameters": {
-            "finetuned_model_id": "string"
+            "finetuned_model_id": "finetuned_model_id"
           },
           "queryParameters": {
             "page_size": 0,
-            "page_token": "string",
-            "order_by": "string"
+            "page_token": "page_token",
+            "order_by": "order_by"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -28499,83 +28354,6 @@
                 }
               ],
               "total_size": 5
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListEventsResponse;\n\npublic class ListEvents {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListEventsResponse response = cohere.finetuning().listEvents(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListEvents(\n\t\tcontext.TODO(),\n\t\t\"test-finetuned-model-id\",\n\t\tnil,\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.Events)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const events = await cohere.finetuning.listEvents('test-finetuned-model-id');\n\n  console.log(events);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\nresponse = co.finetuning.list_events(finetuned_model_id=\"test-id\")\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_events(finetuned_model_id=\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id/events \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/events",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "finetuned_model_id": "string"
-          },
-          "queryParameters": {
-            "page_size": 0,
-            "page_token": "string",
-            "order_by": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "events": [
-                {
-                  "user_id": "string",
-                  "status": "STATUS_UNSPECIFIED",
-                  "created_at": "string"
-                }
-              ],
-              "next_page_token": "string",
-              "total_size": 0
             }
           },
           "snippets": {
@@ -28798,7 +28576,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28820,7 +28598,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28842,7 +28620,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28864,7 +28642,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28886,7 +28664,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28908,7 +28686,7 @@
               "responseBody": {
                 "type": "json",
                 "value": {
-                  "message": "string"
+                  "message": "message"
                 }
               }
             }
@@ -28920,11 +28698,11 @@
           "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
           "responseStatusCode": 200,
           "pathParameters": {
-            "finetuned_model_id": "string"
+            "finetuned_model_id": "finetuned_model_id"
           },
           "queryParameters": {
             "page_size": 0,
-            "page_token": "string"
+            "page_token": "page_token"
           },
           "headers": {
             "X-Client-Name": "my-cool-project"
@@ -28955,81 +28733,6 @@
                   }
                 }
               ]
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.ListTrainingStepMetricsResponse;\n\npublic class ListTrainingStepMetrics {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    ListTrainingStepMetricsResponse response =\n        cohere.finetuning().listTrainingStepMetrics(\"test-id\");\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.ListTrainingStepMetrics(\n\t\tcontext.TODO(),\n\t\t\"test-finetuned-model-id\",\n\t\tnil,\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.StepMetrics)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const trainingStepMetrics = await cohere.finetuning.listTrainingStepMetrics(\n    'test-finetuned-model-id'\n  );\n\n  console.log(trainingStepMetrics);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\ntrain_step_metrics = co.finetuning.list_training_step_metrics(\n    finetuned_model_id=\"test-id\"\n)\nprint(train_step_metrics)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.list_train_step_metrics(finetuned_model_id=\"test-id\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request GET \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models/test-id/training-step-metrics \\\n  --header 'accept: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\"\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models/{finetuned_model_id}/training-step-metrics",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "finetuned_model_id": "string"
-          },
-          "queryParameters": {
-            "page_size": 0,
-            "page_token": "string"
-          },
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "step_metrics": [
-                {
-                  "created_at": "string",
-                  "step_number": 0,
-                  "metrics": {}
-                }
-              ],
-              "next_page_token": "string"
             }
           },
           "snippets": {

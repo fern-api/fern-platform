@@ -156,11 +156,11 @@
       "errors": [],
       "examples": [
         {
-          "path": "/organizations/string/users/string",
+          "path": "/organizations/organization_id/users/user_id",
           "responseStatusCode": 200,
           "pathParameters": {
-            "organization_id": "string",
-            "user_id": "string"
+            "organization_id": "organization_id",
+            "user_id": "user_id"
           },
           "queryParameters": {
             "limit": 0
@@ -169,7 +169,7 @@
             "type": "json",
             "value": {
               "results": [
-                "string"
+                "results"
               ]
             }
           }
@@ -291,13 +291,13 @@
           "path": "/organizations/{organization_id}/search",
           "responseStatusCode": 200,
           "pathParameters": {
-            "id": "string"
+            "id": "id"
           },
           "responseBody": {
             "type": "json",
             "value": {
               "results": [
-                "string"
+                "results"
               ]
             }
           }

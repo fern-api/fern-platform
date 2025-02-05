@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeWithTracking,
   BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
@@ -93,9 +94,9 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTr
       : unions;
   }
 
-  example(includeOptionals: boolean): unknown | undefined {
-    return this.nullable
-      ? "null"
-      : this.typeNodes?.[0]?.example(includeOptionals);
+  example(
+    exampleArgs: BaseOpenApiV3_1ConverterExampleArgs
+  ): unknown | undefined {
+    return this.nullable ? "null" : this.typeNodes?.[0]?.example(exampleArgs);
   }
 }

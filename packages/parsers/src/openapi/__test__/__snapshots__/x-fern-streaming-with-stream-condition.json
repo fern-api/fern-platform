@@ -125,9 +125,9 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "chat_id": "string",
-              "turn_id": "string",
-              "answer": "string"
+              "chat_id": "chat_id",
+              "turn_id": "turn_id",
+              "answer": "answer"
             }
           }
         },
@@ -155,9 +155,9 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "chat_id": "string",
-              "turn_id": "string",
-              "answer": "string"
+              "chat_id": "chat_id",
+              "turn_id": "turn_id",
+              "answer": "answer"
             }
           }
         },

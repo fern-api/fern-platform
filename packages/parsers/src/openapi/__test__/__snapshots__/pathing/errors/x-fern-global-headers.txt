@@ -9,7 +9,6 @@
       "content",
       "application/json",
       "examples",
-      "",
     ],
   },
   {

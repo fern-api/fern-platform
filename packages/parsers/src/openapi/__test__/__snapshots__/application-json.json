@@ -36,8 +36,8 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "foo": "string",
-              "bar": "string"
+              "foo": "foo",
+              "bar": "bar"
             }
           }
         }
@@ -81,8 +81,8 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "foo": "string",
-              "bar": "string"
+              "foo": "foo",
+              "bar": "bar"
             }
           }
         }

@@ -415,19 +415,37 @@ export class ExampleObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     const pathParameters = Object.fromEntries(
       Object.entries(this.shapes.pathParameters ?? {}).map(([key, value]) => {
-        return [key, value.example(false)];
+        return [
+          key,
+          value.example({
+            includeOptionals: false,
+            override: key,
+          }),
+        ];
       })
     );
 
     const queryParameters = Object.fromEntries(
       Object.entries(this.shapes.queryParameters ?? {}).map(([key, value]) => {
-        return [key, value.example(false)];
+        return [
+          key,
+          value.example({
+            includeOptionals: false,
+            override: key,
+          }),
+        ];
       })
     );
 
     const requestHeaders = Object.fromEntries(
       Object.entries(this.shapes.requestHeaders ?? {}).map(([key, value]) => {
-        return [key, value.example(false)];
+        return [
+          key,
+          value.example({
+            includeOptionals: false,
+            override: key,
+          }),
+        ];
       })
     );
 

@@ -82,10 +82,10 @@
       "errors": [],
       "examples": [
         {
-          "path": "/user/string",
+          "path": "/user/userId",
           "responseStatusCode": 200,
           "pathParameters": {
-            "userId": "string"
+            "userId": "userId"
           },
           "responseBody": {
             "type": "json",

@@ -8,11 +8,14 @@ import {
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
 import {
+  APPLICATION_JSON_CONTENT_TYPE,
+  APPLICATION_OCTET_STREAM_CONTENT_TYPE,
+} from "../../../constants";
+import {
   ConstArrayToType,
   SUPPORTED_RESPONSE_CONTENT_TYPES,
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
-import { resolveExampleReference } from "../../../utils/3.1/resolveExampleReference";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
@@ -53,6 +56,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
   unsupportedContentType: string | undefined;
   contentSubtype: string | undefined;
   examples: ExampleObjectConverterNode[] | undefined;
+  empty: boolean | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
@@ -67,65 +71,60 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     this.safeParse(contentType);
   }
 
-  private isExampleDefined(
-    example: OpenAPIV3_1.ExampleObject | OpenAPIV3_1.ReferenceObject | undefined
-  ): boolean {
-    return (
-      example != null &&
-      resolveExampleReference(example, this.context.document)?.value != null
-    );
-  }
-
   parse(contentType: string | undefined): void {
-    const mediaType = MediaType.parse(contentType);
+    if (contentType === "empty") {
+      this.empty = true;
+    } else {
+      const mediaType = MediaType.parse(contentType);
 
-    if (mediaType?.isJSON() || mediaType?.isEventStream()) {
-      this.contentType = "application/json" as const;
-      if (this.input.schema == null) {
-        if (this.streamingFormat == null || this.streamingFormat === "json") {
-          this.context.errors.error({
-            message: "Expected schema for JSON response body. Received null",
-            path: this.accessPath,
+      if (mediaType?.isJSON() || mediaType?.isEventStream()) {
+        this.contentType = APPLICATION_JSON_CONTENT_TYPE;
+        if (this.input.schema == null) {
+          if (this.streamingFormat == null || this.streamingFormat === "json") {
+            this.context.errors.error({
+              message: "Expected schema for JSON response body. Received null",
+              path: this.accessPath,
+            });
+          }
+        } else {
+          this.schema = new SchemaConverterNode({
+            input: this.input.schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "type",
+            seenSchemas: new Set(),
           });
         }
+      } else if (mediaType?.isOctetStream()) {
+        this.contentType = APPLICATION_OCTET_STREAM_CONTENT_TYPE;
+        this.contentSubtype = resolveSchemaReference(
+          this.input.schema,
+          this.context.document
+        )?.contentMediaType;
       } else {
-        this.schema = new SchemaConverterNode({
-          input: this.input.schema,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: "type",
-          seenSchemas: new Set(),
-        });
-      }
-    } else if (mediaType?.isOctetStream()) {
-      this.contentType = "application/octet-stream" as const;
-      this.contentSubtype = resolveSchemaReference(
-        this.input.schema,
-        this.context.document
-      )?.contentMediaType;
-    } else {
-      this.unsupportedContentType = contentType;
-      if (this.input.schema == null) {
-        this.context.errors.error({
-          message:
-            "Expected schema for plain text response body. Received null",
-          path: this.accessPath,
-        });
-        return;
-      } else {
-        this.schema = new SchemaConverterNode({
-          input: this.input.schema,
-          context: this.context,
-          accessPath: this.accessPath,
-          pathId: this.pathId,
-          seenSchemas: new Set(),
-        });
+        this.unsupportedContentType = contentType;
+        if (this.input.schema == null) {
+          this.context.errors.error({
+            message:
+              "Expected schema for plain text response body. Received null",
+            path: this.accessPath,
+          });
+          return;
+        } else {
+          this.schema = new SchemaConverterNode({
+            input: this.input.schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: this.pathId,
+            seenSchemas: new Set(),
+          });
+        }
       }
     }
 
     let responseExamples: Record<
       string | symbol,
-      (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject)[]
+      (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
     > = {};
     if (this.input.example != null) {
       responseExamples[GLOBAL_EXAMPLE_NAME] = [
@@ -141,34 +140,42 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       };
     }
 
-    if (this.contentType != null || this.unsupportedContentType != null) {
-      const resolvedSchema = resolveSchemaReference(
-        this.input.schema,
-        this.context.document
-      );
+    const resolvedSchema = resolveSchemaReference(
+      this.input.schema,
+      this.context.document
+    );
 
-      if (resolvedSchema != null) {
-        if (resolvedSchema.example != null) {
-          responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
-          responseExamples[GLOBAL_EXAMPLE_NAME]?.push({
-            value: resolvedSchema.example,
-          });
-        }
-
-        if (resolvedSchema.examples != null) {
-          responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
-          responseExamples[GLOBAL_EXAMPLE_NAME]?.push(
-            ...resolvedSchema.examples.map((v) => ({
-              value: v,
-            }))
-          );
-        }
+    if (resolvedSchema != null) {
+      if (resolvedSchema.example != null) {
+        responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
+        responseExamples[GLOBAL_EXAMPLE_NAME]?.push({
+          value: resolvedSchema.example,
+        });
       }
 
-      responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
-      responseExamples[GLOBAL_EXAMPLE_NAME]?.push({
-        value: this.schema?.example(true),
+      if (resolvedSchema.examples != null) {
+        responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
+        responseExamples[GLOBAL_EXAMPLE_NAME]?.push(
+          ...resolvedSchema.examples.map((v) => ({
+            value: v,
+          }))
+        );
+      }
+    }
+
+    responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
+    if (responseExamples[GLOBAL_EXAMPLE_NAME]?.length === 0) {
+      const fallbackExample = this.schema?.example({
+        includeOptionals: true,
+        override: undefined,
       });
+      responseExamples[GLOBAL_EXAMPLE_NAME]?.push(
+        fallbackExample != null
+          ? {
+              value: fallbackExample,
+            }
+          : undefined
+      );
     }
 
     this.examples = singleUndefinedArrayIfNullOrEmpty(this.requests).flatMap(
@@ -179,9 +186,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           Object.entries(responseExamples)
             .flatMap(([exampleName, examples]) =>
               examples.map((responseExample) =>
-                matchExampleName(exampleName, requestExampleName) &&
-                (this.isExampleDefined(requestExample) ||
-                  this.isExampleDefined(responseExample))
+                matchExampleName(exampleName, requestExampleName)
                   ? new ExampleObjectConverterNode(
                       {
                         input: {
@@ -190,7 +195,10 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
                         },
                         context: this.context,
                         accessPath: this.accessPath,
-                        pathId: ["examples", ""],
+                        pathId:
+                          exampleName != null && exampleName !== ""
+                            ? ["examples", exampleName]
+                            : "examples",
                       },
                       this.path,
                       this.statusCode,
@@ -240,6 +248,12 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     | FernRegistry.api.latest.HttpResponseBodyShape
     | FernRegistry.api.latest.HttpResponseBodyShape[]
     | undefined {
+    if (this.empty) {
+      return {
+        type: "empty",
+      };
+    }
+
     if (this.contentType != null) {
       switch (this.contentType) {
         case "application/json":

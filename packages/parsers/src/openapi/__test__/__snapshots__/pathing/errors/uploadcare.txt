@@ -79,20 +79,6 @@
       "content",
       "application/json",
       "examples",
-      "",
-    ],
-  },
-  {
-    "message": "Invalid example, expected object for json",
-    "path": [
-      "paths",
-      "/files/{uuid}/metadata/{key}/",
-      "get",
-      "responses",
-      "content",
-      "application/json",
-      "examples",
-      "",
     ],
   },
   {
@@ -105,7 +91,6 @@
       "content",
       "application/json",
       "examples",
-      "",
     ],
   },
   {
@@ -118,33 +103,6 @@
       "content",
       "application/json",
       "examples",
-      "",
-    ],
-  },
-  {
-    "message": "Invalid example, expected object for json",
-    "path": [
-      "paths",
-      "/files/{uuid}/metadata/{key}/",
-      "put",
-      "responses",
-      "content",
-      "application/json",
-      "examples",
-      "",
-    ],
-  },
-  {
-    "message": "Invalid example, expected object for json",
-    "path": [
-      "paths",
-      "/files/{uuid}/metadata/{key}/",
-      "put",
-      "responses",
-      "content",
-      "application/json",
-      "examples",
-      "",
     ],
   },
   {

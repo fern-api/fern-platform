@@ -49,18 +49,18 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "email": "string",
-              "createdAt": "string",
+              "id": "id",
+              "name": "name",
+              "email": "email",
+              "createdAt": "createdAt",
               "settings": {
-                "theme": "string",
+                "theme": "theme",
                 "notifications": false,
-                "lastModified": "string"
+                "lastModified": "lastModified"
               },
               "stats": {
                 "totalLogins": 0,
-                "lastLoginTime": "string",
+                "lastLoginTime": "lastLoginTime",
                 "accountStatus": "active"
               }
             }
@@ -124,26 +124,26 @@
       "errors": [],
       "examples": [
         {
-          "path": "/users/string",
+          "path": "/users/userId",
           "responseStatusCode": 200,
           "pathParameters": {
-            "userId": "string"
+            "userId": "userId"
           },
           "responseBody": {
             "type": "json",
             "value": {
-              "id": "string",
-              "name": "string",
-              "email": "string",
-              "createdAt": "string",
+              "id": "id",
+              "name": "name",
+              "email": "email",
+              "createdAt": "createdAt",
               "settings": {
-                "theme": "string",
+                "theme": "theme",
                 "notifications": false,
-                "lastModified": "string"
+                "lastModified": "lastModified"
               },
               "stats": {
                 "totalLogins": 0,
-                "lastLoginTime": "string",
+                "lastLoginTime": "lastLoginTime",
                 "accountStatus": "active"
               }
             }

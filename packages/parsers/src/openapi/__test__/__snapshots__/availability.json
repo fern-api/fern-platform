@@ -265,7 +265,27 @@
         }
       ],
       "errors": [],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/collection/id/active_id/{deprecated_ref_id}/{x-fern-availability_path_param}",
+          "responseStatusCode": 200,
+          "pathParameters": {
+            "id": "id",
+            "active_id": "active_id",
+            "x-fern-availability_path_param": "x-fern-availability_path_param"
+          },
+          "queryParameters": {
+            "deprecated_lang": "deprecated_lang",
+            "active_lang": "active_lang",
+            "x-fern-availability_query_param": "x-fern-availability_query_param"
+          },
+          "headers": {
+            "X-Deprecated-Header": "X-Deprecated-Header",
+            "X-Active-Header": "X-Active-Header",
+            "x-fern-availability_header": "x-fern-availability_header"
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }

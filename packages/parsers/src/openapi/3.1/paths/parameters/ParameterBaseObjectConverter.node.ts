@@ -2,6 +2,7 @@ import { isNonNullish } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../../client/generated";
 import {
+  BaseOpenApiV3_1ConverterExampleArgs,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
   BaseOpenApiV3_1ConverterNodeWithExample,
 } from "../../../BaseOpenApiV3_1Converter.node";
@@ -97,7 +98,9 @@ export class ParameterBaseObjectConverterNode extends BaseOpenApiV3_1ConverterNo
     return this.schema?.convert();
   }
 
-  example(includeOptionals: boolean): unknown | undefined {
-    return this.inputExample ?? this.schema?.example(includeOptionals);
+  example(
+    exampleArgs: BaseOpenApiV3_1ConverterExampleArgs
+  ): unknown | undefined {
+    return this.inputExample ?? this.schema?.example(exampleArgs);
   }
 }

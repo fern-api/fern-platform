@@ -104,7 +104,7 @@
           "path": "/test",
           "responseStatusCode": 201,
           "pathParameters": {
-            "corpus_key": "string"
+            "corpus_key": "corpus_key"
           },
           "responseBody": {
             "type": "json",

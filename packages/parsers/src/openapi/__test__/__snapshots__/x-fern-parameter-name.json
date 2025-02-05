@@ -84,16 +84,16 @@
       "errors": [],
       "examples": [
         {
-          "path": "/user/string",
+          "path": "/user/userId",
           "responseStatusCode": 200,
           "pathParameters": {
-            "userId": "string"
+            "userId": "userId"
           },
           "queryParameters": {
-            "foo": "string"
+            "foo": "foo"
           },
           "headers": {
-            "X-API-Version": "string"
+            "X-API-Version": "X-API-Version"
           },
           "responseBody": {
             "type": "json",

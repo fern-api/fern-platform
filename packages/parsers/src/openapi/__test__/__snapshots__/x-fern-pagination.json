@@ -86,9 +86,9 @@
               },
               "users": [
                 {
-                  "id": "string",
-                  "name": "string",
-                  "email": "string",
+                  "id": "id",
+                  "name": "name",
+                  "email": "email",
                   "age": 0
                 }
               ]
