@@ -1,0 +1,58 @@
+{
+  "name": "@fern-docs/auth",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern-platform.git",
+    "directory": "packages/fern-docs/auth"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "depcheck": "depcheck",
+    "dev": "tsc --watch",
+    "docs:dev": "pnpm dev",
+    "format": "prettier --write --ignore-unknown \"**\"",
+    "format:check": "prettier --check --ignore-unknown \"**\"",
+    "lint:eslint": "eslint --max-warnings 0 .",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
+    "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
+    "lint:style:fix": "pnpm lint:style --fix",
+    "test": "vitest --run --passWithNoTests --globals"
+  },
+  "dependencies": {
+    "@esbuild-plugins/node-resolve": "^0.2.2",
+    "@fal-works/esbuild-plugin-global-externals": "^2.1.2",
+    "@mdx-js/esbuild": "^3.1.0",
+    "esbuild": "0.24.2",
+    "gray-matter": "^4.0.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^5.0.0",
+    "uuid": "^9.0.0",
+    "vfile": "^6.0.3"
+  },
+  "devDependencies": {
+    "@fern-platform/configs": "workspace:*",
+    "@types/node": "^18.7.18",
+    "depcheck": "^1.4.7",
+    "eslint": "^9",
+    "prettier": "^3.4.2",
+    "stylelint": "^16.1.0",
+    "typescript": "^5",
+    "vitest": "^2.1.4"
+  }
+}
