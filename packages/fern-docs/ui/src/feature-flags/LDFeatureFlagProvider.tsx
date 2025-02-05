@@ -149,12 +149,12 @@ const LDClientWindow = () => {
   const ldClient = useLDClient();
   useEffect(() => {
     window.ldClient = ldClient;
-    if (!!ldClient) {
+    if (ldClient) {
       window.dispatchEvent(new CustomEvent("ld:attached"));
     }
 
     const handleAttachStatus = () => {
-      if (!!ldClient) {
+      if (ldClient) {
         window.dispatchEvent(new CustomEvent("ld:attached"));
       }
     };
