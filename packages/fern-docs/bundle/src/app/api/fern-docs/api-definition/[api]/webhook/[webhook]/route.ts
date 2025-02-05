@@ -2,7 +2,7 @@ import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getEdgeFlags } from "@fern-docs/edge-config";
-import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
+import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -21,13 +21,15 @@ export async function GET(
   }
 
   const flags = await getEdgeFlags(authState.domain);
+  const engine = flags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+  const serializeMdx = await getMdxBundler(engine);
 
   const apiDefinition = await ApiDefinitionLoader.create(
     authState.domain,
     ApiDefinition.ApiDefinitionId(api)
   )
     .withEdgeFlags(flags)
-    .withMdxBundler(serializeMdx, "mdx-bundler")
+    .withMdxBundler(serializeMdx, engine)
     .withPrune({
       type: "webhook",
       webhookId: ApiDefinition.WebhookId(webhook),

@@ -19,7 +19,7 @@ import {
   withCustomJavascript,
   withLogo,
 } from "@fern-docs/ui";
-import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
+import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import {
   addLeadingSlash,
   getRedirectForPath,
@@ -179,6 +179,18 @@ export async function withInitialProps({
       .filter(FernNavigation.hasMetadata)
       .every((node) => flagPredicate(node))
   ) {
+    return { notFound: true };
+  }
+
+  const content = await withResolvedDocsContent({
+    domain: docs.baseUrl.domain,
+    found,
+    authState,
+    definition: docs.definition,
+    edgeFlags,
+  });
+
+  if (content == null) {
     return { notFound: true };
   }
 
@@ -386,6 +398,9 @@ export async function withInitialProps({
     found.currentTab == null
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
+
+  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+  const serializeMdx = await getMdxBundler(engine);
 
   const props: ComponentProps<typeof DocsPage> = {
     baseUrl: docs.baseUrl,

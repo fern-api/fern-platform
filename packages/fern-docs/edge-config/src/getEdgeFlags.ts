@@ -24,6 +24,7 @@ const EDGE_FLAGS = [
   "use-javascript-as-typescript" as const,
   "always-enable-javascript-fetch" as const,
   "scroll-in-container-enabled" as const,
+  "use-mdx-bundler" as const,
   "batch-stream-toggle-disabled" as const,
   "enabled-auth-in-generated-docs" as const,
   "ask-ai-enabled" as const,
@@ -106,6 +107,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       domain,
       config["scroll-in-container-enabled"]
     );
+    const useMdxBundler = checkDomainMatchesCustomers(
+      domain,
+      config["use-mdx-bundler"]
+    );
     const isBatchStreamToggleDisabled = checkDomainMatchesCustomers(
       domain,
       config["batch-stream-toggle-disabled"]
@@ -184,6 +189,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       useJavaScriptAsTypeScript,
       alwaysEnableJavaScriptFetch,
       scrollInContainerEnabled,
+      useMdxBundler,
       isBatchStreamToggleDisabled,
       isAuthEnabledInDocs,
       isAskAiEnabled,
@@ -218,6 +224,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       useJavaScriptAsTypeScript: false,
       alwaysEnableJavaScriptFetch: false,
       scrollInContainerEnabled: false,
+      useMdxBundler: false,
       isBatchStreamToggleDisabled: false,
       isAuthEnabledInDocs: false,
       isAskAiEnabled: false,

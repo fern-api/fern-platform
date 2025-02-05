@@ -8,6 +8,9 @@ import {
   type ImageData,
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/mdx-bundler";
+import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { resolveDocsContent, type DocsContent } from "@fern-docs/ui";
+import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import { EdgeFlags } from "@fern-docs/utils";
 import { AuthState } from "./auth/getAuthState";
 import { withPrunedNavigation } from "./withPrunedNavigation";
@@ -46,6 +49,9 @@ export async function withResolvedDocsContent({
     authed: authState.authed,
   });
 
+  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
+  const serializeMdx = await getMdxBundler(engine);
+
   return resolveDocsContent({
     node,
     apiReference,
@@ -81,7 +87,7 @@ export async function withResolvedDocsContent({
     },
     serializeMdx,
     domain,
-    engine: "mdx-bundler",
+    engine,
   });
 }
 
