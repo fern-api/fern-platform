@@ -204,6 +204,7 @@ types:
     extends: ObjectProperty
     properties:
       contentType: optional<ContentType>
+      exploded: optional<boolean>
 
   FormDataFileProperty:
     union:
