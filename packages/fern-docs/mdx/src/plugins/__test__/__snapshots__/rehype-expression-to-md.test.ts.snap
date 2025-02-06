@@ -685,3 +685,339 @@ exports[`rehype-expression-to-md > should convert markdown inside of attributes 
   "type": "root",
 }
 `;
+
+exports[`rehype-expression-to-md > should does not convert markdown inside of attributes if the element is not in the allowlist 1`] = `
+{
+  "children": [
+    {
+      "data": {
+        "estree": {
+          "body": [
+            {
+              "end": 62,
+              "expression": {
+                "children": [
+                  {
+                    "children": [],
+                    "closingElement": null,
+                    "data": {
+                      "_mdxExplicitJsx": true,
+                    },
+                    "end": 54,
+                    "loc": {
+                      "end": {
+                        "column": 54,
+                        "line": 1,
+                        "offset": 54,
+                      },
+                      "start": {
+                        "column": 47,
+                        "line": 1,
+                        "offset": 47,
+                      },
+                    },
+                    "openingElement": {
+                      "attributes": [],
+                      "end": 54,
+                      "loc": {
+                        "end": {
+                          "column": 54,
+                          "line": 1,
+                          "offset": 54,
+                        },
+                        "start": {
+                          "column": 47,
+                          "line": 1,
+                          "offset": 47,
+                        },
+                      },
+                      "name": {
+                        "end": 51,
+                        "loc": {
+                          "end": {
+                            "column": 51,
+                            "line": 1,
+                            "offset": 51,
+                          },
+                          "start": {
+                            "column": 48,
+                            "line": 1,
+                            "offset": 48,
+                          },
+                        },
+                        "name": "img",
+                        "range": [
+                          48,
+                          51,
+                        ],
+                        "start": 48,
+                        "type": "JSXIdentifier",
+                      },
+                      "range": [
+                        47,
+                        54,
+                      ],
+                      "selfClosing": true,
+                      "start": 47,
+                      "type": "JSXOpeningElement",
+                    },
+                    "range": [
+                      47,
+                      54,
+                    ],
+                    "start": 47,
+                    "type": "JSXElement",
+                  },
+                ],
+                "closingElement": {
+                  "end": 62,
+                  "loc": {
+                    "end": {
+                      "column": 62,
+                      "line": 1,
+                      "offset": 62,
+                    },
+                    "start": {
+                      "column": 54,
+                      "line": 1,
+                      "offset": 54,
+                    },
+                  },
+                  "name": {
+                    "end": 61,
+                    "loc": {
+                      "end": {
+                        "column": 61,
+                        "line": 1,
+                        "offset": 61,
+                      },
+                      "start": {
+                        "column": 56,
+                        "line": 1,
+                        "offset": 56,
+                      },
+                    },
+                    "name": "Frame",
+                    "range": [
+                      56,
+                      61,
+                    ],
+                    "start": 56,
+                    "type": "JSXIdentifier",
+                  },
+                  "range": [
+                    54,
+                    62,
+                  ],
+                  "start": 54,
+                  "type": "JSXClosingElement",
+                },
+                "data": {
+                  "_mdxExplicitJsx": true,
+                },
+                "end": 62,
+                "loc": {
+                  "end": {
+                    "column": 62,
+                    "line": 1,
+                    "offset": 62,
+                  },
+                  "start": {
+                    "column": 1,
+                    "line": 1,
+                    "offset": 1,
+                  },
+                },
+                "openingElement": {
+                  "attributes": [
+                    {
+                      "end": 46,
+                      "loc": {
+                        "end": {
+                          "column": 46,
+                          "line": 1,
+                          "offset": 46,
+                        },
+                        "start": {
+                          "column": 8,
+                          "line": 1,
+                          "offset": 8,
+                        },
+                      },
+                      "name": {
+                        "end": 15,
+                        "loc": {
+                          "end": {
+                            "column": 15,
+                            "line": 1,
+                            "offset": 15,
+                          },
+                          "start": {
+                            "column": 8,
+                            "line": 1,
+                            "offset": 8,
+                          },
+                        },
+                        "name": "caption",
+                        "range": [
+                          8,
+                          15,
+                        ],
+                        "start": 8,
+                        "type": "JSXIdentifier",
+                      },
+                      "range": [
+                        8,
+                        46,
+                      ],
+                      "start": 8,
+                      "type": "JSXAttribute",
+                      "value": {
+                        "end": 46,
+                        "loc": {
+                          "end": {
+                            "column": 46,
+                            "line": 1,
+                            "offset": 46,
+                          },
+                          "start": {
+                            "column": 16,
+                            "line": 1,
+                            "offset": 16,
+                          },
+                        },
+                        "range": [
+                          16,
+                          46,
+                        ],
+                        "raw": ""[Hello](https://example.com)"",
+                        "start": 16,
+                        "type": "Literal",
+                        "value": "[Hello](https://example.com)",
+                      },
+                    },
+                  ],
+                  "end": 47,
+                  "loc": {
+                    "end": {
+                      "column": 47,
+                      "line": 1,
+                      "offset": 47,
+                    },
+                    "start": {
+                      "column": 1,
+                      "line": 1,
+                      "offset": 1,
+                    },
+                  },
+                  "name": {
+                    "end": 7,
+                    "loc": {
+                      "end": {
+                        "column": 7,
+                        "line": 1,
+                        "offset": 7,
+                      },
+                      "start": {
+                        "column": 2,
+                        "line": 1,
+                        "offset": 2,
+                      },
+                    },
+                    "name": "Frame",
+                    "range": [
+                      2,
+                      7,
+                    ],
+                    "start": 2,
+                    "type": "JSXIdentifier",
+                  },
+                  "range": [
+                    1,
+                    47,
+                  ],
+                  "selfClosing": false,
+                  "start": 1,
+                  "type": "JSXOpeningElement",
+                },
+                "range": [
+                  1,
+                  62,
+                ],
+                "start": 1,
+                "type": "JSXElement",
+              },
+              "loc": {
+                "end": {
+                  "column": 62,
+                  "line": 1,
+                  "offset": 62,
+                },
+                "start": {
+                  "column": 1,
+                  "line": 1,
+                  "offset": 1,
+                },
+              },
+              "range": [
+                1,
+                62,
+              ],
+              "start": 1,
+              "type": "ExpressionStatement",
+            },
+          ],
+          "comments": [],
+          "end": 62,
+          "loc": {
+            "end": {
+              "column": 62,
+              "line": 1,
+              "offset": 62,
+            },
+            "start": {
+              "column": 1,
+              "line": 1,
+              "offset": 1,
+            },
+          },
+          "range": [
+            1,
+            62,
+          ],
+          "sourceType": "module",
+          "start": 1,
+          "type": "Program",
+        },
+      },
+      "position": {
+        "end": {
+          "column": 64,
+          "line": 1,
+          "offset": 63,
+        },
+        "start": {
+          "column": 1,
+          "line": 1,
+          "offset": 0,
+        },
+      },
+      "type": "mdxFlowExpression",
+      "value": "<Frame caption="[Hello](https://example.com)"><img /></Frame>",
+    },
+  ],
+  "position": {
+    "end": {
+      "column": 64,
+      "line": 1,
+      "offset": 63,
+    },
+    "start": {
+      "column": 1,
+      "line": 1,
+      "offset": 0,
+    },
+  },
+  "type": "root",
+}
+`;
