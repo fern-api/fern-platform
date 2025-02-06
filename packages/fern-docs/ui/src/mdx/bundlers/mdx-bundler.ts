@@ -140,7 +140,19 @@ async function serializeMdxImpl(
 
       const rehypePlugins: PluggableList = [
         rehypeSqueezeParagraphs,
-        rehypeExpressionToMd,
+        [
+          rehypeExpressionToMd,
+          {
+            mdxJsxElementAllowlist: {
+              Frame: ["caption"],
+              Tab: ["title"],
+              Card: ["title", "icon"],
+              Callout: ["title", "icon"],
+              Step: ["title"],
+              Accordion: ["title"],
+            },
+          },
+        ],
         rehypeMdxClassStyle,
         [rehypeFiles, { replaceSrc }],
         rehypeAcornErrorBoundary,

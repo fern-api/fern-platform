@@ -12,43 +12,53 @@ import {
 } from "../mdx-utils";
 import { Hast, Mdast } from "../types";
 
-export const rehypeExpressionToMd: Plugin<[], Hast.Root> = () => (ast) => {
-  visit(ast, (node) => {
-    /**
-     * Example:
-     * {<div>[Hello](https://example.com)</div>} -> {<div><a href="https://example.com">Hello</a></div>}
-     */
-    if (isMdxExpression(node)) {
-      const estree = node.data?.estree;
-      if (!estree) {
-        return;
-      }
-      replaceJsxTextToMarkdown(estree);
-    }
-
-    /**
-     * Example:
-     * <Frame caption="[Hello](https://example.com)" /> -> <Frame caption={<a href="https://example.com">Hello</a>} />
-     */
-    if (isMdxJsxElementHast(node)) {
-      node.attributes.forEach((attribute) => {
-        if (
-          isMdxJsxAttribute(attribute) &&
-          typeof attribute.value === "string"
-        ) {
-          const expression = mdToEstree(attribute.value);
-          if (expression) {
-            attribute.value = {
-              type: "mdxJsxAttributeValueExpression",
-              value: attribute.value,
-              data: { estree: expression },
-            };
-          }
+export const rehypeExpressionToMd: Plugin<
+  [{ mdxJsxElementAllowlist?: Record<string, string[]> }?],
+  Hast.Root
+> =
+  ({ mdxJsxElementAllowlist = {} } = {}) =>
+  (ast) => {
+    visit(ast, (node) => {
+      /**
+       * Example:
+       * {<div>[Hello](https://example.com)</div>} -> {<div><a href="https://example.com">Hello</a></div>}
+       */
+      if (isMdxExpression(node)) {
+        const estree = node.data?.estree;
+        if (!estree) {
+          return;
         }
-      });
-    }
-  });
-};
+        replaceJsxTextToMarkdown(estree);
+      }
+
+      /**
+       * Example:
+       * <Frame caption="[Hello](https://example.com)" /> -> <Frame caption={<a href="https://example.com">Hello</a>} />
+       */
+      if (isMdxJsxElementHast(node)) {
+        const allowlist = mdxJsxElementAllowlist[node.name ?? "Fragment"];
+        if (allowlist == null) {
+          return;
+        }
+        node.attributes.forEach((attribute) => {
+          if (
+            isMdxJsxAttribute(attribute) &&
+            allowlist.includes(attribute.name) &&
+            typeof attribute.value === "string"
+          ) {
+            const expression = mdToEstree(attribute.value);
+            if (expression) {
+              attribute.value = {
+                type: "mdxJsxAttributeValueExpression",
+                value: attribute.value,
+                data: { estree: expression },
+              };
+            }
+          }
+        });
+      }
+    });
+  };
 
 function replaceJsxTextToMarkdown(estree: Program) {
   walk(estree, {
