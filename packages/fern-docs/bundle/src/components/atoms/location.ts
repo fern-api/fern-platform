@@ -5,9 +5,8 @@ import { atomWithLocation } from "jotai-location";
 import { useAtomCallback } from "jotai/utils";
 import { useCallback } from "react";
 import { useCallbackOne } from "use-memo-one";
-import { selectHref, useHref } from "../hooks/useHref";
+import { useHref } from "../hooks/useHref";
 import { useAtomEffect } from "./hooks";
-import { RESOLVED_PATH_ATOM } from "./navigation";
 
 export const LOCATION_ATOM = atomWithLocation();
 
@@ -24,34 +23,10 @@ export const ANCHOR_ATOM = atom(
 );
 ANCHOR_ATOM.debugLabel = "ANCHOR_ATOM";
 
-export const SLUG_ATOM = atom(
-  (get) => {
-    const location = get(LOCATION_ATOM);
-    if (location.pathname == null) {
-      return get(RESOLVED_PATH_ATOM).slug;
-    }
-    return FernNavigation.Slug(
-      location.pathname?.replace(/^\/|\/$/g, "") ?? ""
-    );
-  },
-  (get, set, slug: FernNavigation.Slug) => {
-    const location = get(LOCATION_ATOM);
-    const pathname = selectHref(get, slug);
-    if (location.pathname === pathname) {
-      return;
-    }
-
-    console.debug("setting location to in slug atom", pathname);
-
-    // replaces the current location with the new slug, and removes any hash (from an anchor) that may be present
-    set(
-      LOCATION_ATOM,
-      { pathname, searchParams: location.searchParams, hash: "" },
-      { replace: true }
-    );
-  }
-);
-SLUG_ATOM.debugLabel = "SLUG_ATOM";
+export const SLUG_ATOM = atom((get) => {
+  const location = get(LOCATION_ATOM);
+  return FernNavigation.slugjoin(location.pathname);
+});
 
 export function useRouteListener(
   slug: FernNavigation.Slug,

@@ -10,6 +10,10 @@ export type FernSerializeMdxOptions = {
   files?: Record<string, string>;
   scope?: Record<string, unknown>;
   replaceSrc?: RehypeFilesOptions["replaceSrc"];
+  /**
+   * @default false
+   */
+  toc?: boolean;
 };
 
 export type SerializeMdxFunc =

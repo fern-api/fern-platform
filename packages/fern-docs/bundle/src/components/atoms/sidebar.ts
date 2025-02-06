@@ -9,7 +9,6 @@ import { DOCS_LAYOUT_ATOM } from "./layout";
 import {
   CURRENT_NODE_ID_ATOM,
   NAVIGATION_NODES_ATOM,
-  RESOLVED_PATH_ATOM,
   SIDEBAR_ROOT_NODE_ATOM,
   TABS_ATOM,
 } from "./navigation";
@@ -352,6 +351,10 @@ export const DISABLE_SIDEBAR_ATOM = atom((get) => {
   return false;
 });
 
+export const PAGE_LAYOUT_ATOM = atom<
+  "guide" | "overview" | "reference" | "page" | "custom"
+>("guide");
+
 // in certain cases, the sidebar should be completely removed from the DOM.
 export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
   // sidebar is always enabled on mobile, because of search + tabs
@@ -370,19 +373,10 @@ export const SIDEBAR_DISMISSABLE_ATOM = atom((get) => {
     return true;
   }
 
-  // always hide sidebar on changelog entries
-  // this may be a bit too aggressive, but it's a good starting point
-  const content = get(RESOLVED_PATH_ATOM);
-  if (content.type === "changelog-entry") {
+  const layout = get(PAGE_LAYOUT_ATOM);
+
+  if (layout === "page" || layout === "custom") {
     return true;
-  }
-
-  if (content.type === "markdown-page" && typeof content.content !== "string") {
-    const layout = content.content.frontmatter.layout;
-
-    if (layout === "page" || layout === "custom") {
-      return true;
-    }
   }
 
   return false;

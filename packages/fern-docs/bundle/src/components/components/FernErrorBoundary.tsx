@@ -4,7 +4,7 @@ import { FernButton } from "@fern-docs/components";
 import clsx from "clsx";
 import { memoize } from "es-toolkit/function";
 import { RefreshDouble, WarningTriangle } from "iconoir-react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, {
   PropsWithChildren,
   ReactElement,
@@ -20,7 +20,6 @@ export declare interface FernErrorBoundaryProps {
   className?: string;
   resetErrorBoundary?: () => void;
   reset?: () => void;
-  refreshOnError?: boolean;
   showError?: boolean;
   fallback?: ReactNode;
 }
@@ -103,23 +102,9 @@ const FernErrorBoundaryInternal: React.FC<FernErrorBoundaryProps> = ({
   error,
   resetErrorBoundary,
   reset,
-  refreshOnError,
   showError,
   fallback,
 }) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    if (refreshOnError) {
-      // TODO: sentry
-
-      console.error(
-        "Fern Docs crashed. Reloading the page might fix the issue."
-      );
-      router.refresh();
-    }
-  }, [refreshOnError, router]);
-
   // if path changes, reset the error boundary
   const pathname = usePathname();
   useEffect(() => {

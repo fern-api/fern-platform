@@ -7,8 +7,7 @@ import { useEffect } from "react";
 import { useMemoOne } from "use-memo-one";
 import { useIsLocalPreview } from "../contexts/local-preview";
 import { DOCS_ATOM } from "./docs";
-import { EDGE_FLAGS_ATOM } from "./flags";
-import { RESOLVED_API_DEFINITION_ATOM, RESOLVED_PATH_ATOM } from "./navigation";
+import { RESOLVED_API_DEFINITION_ATOM } from "./navigation";
 
 const SETTABLE_APIS_ATOM = atom<
   Record<ApiDefinition.ApiDefinitionId, ApiDefinition.ApiDefinition>
@@ -67,16 +66,9 @@ export const getApiDefinitionAtom = atomFamily(
     )
 );
 
-const IS_API_REFERENCE_PAGINATED = atom<boolean>((get) => {
-  const content = get(RESOLVED_PATH_ATOM);
-  if (content.type === "api-endpoint-page") {
-    return true;
-  }
-  return get(EDGE_FLAGS_ATOM).isApiScrollingDisabled;
-});
-
 export function useIsApiReferencePaginated(): boolean {
-  return useAtomValue(IS_API_REFERENCE_PAGINATED);
+  // return useAtomValue(IS_API_REFERENCE_PAGINATED);
+  return true;
 }
 
 export function useIsApiReferenceShallowLink(
@@ -86,7 +78,7 @@ export function useIsApiReferenceShallowLink(
     useMemoOne(
       () =>
         atom((get) => {
-          const isPaginated = get(IS_API_REFERENCE_PAGINATED);
+          const isPaginated = true;
           const resolvedApi = get(RESOLVED_API_DEFINITION_ATOM);
           return !isPaginated && resolvedApi?.id === node.apiDefinitionId;
         }),

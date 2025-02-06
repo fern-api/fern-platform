@@ -24,10 +24,7 @@ export function NextApp({
         <CustomerAnalytics />
         <Toaster />
         <SWRConfig value={{ fallback: pageProps?.fallback }}>
-          <FernErrorBoundary
-            className="flex h-screen items-center justify-center"
-            refreshOnError
-          >
+          <FernErrorBoundary className="flex h-screen items-center justify-center">
             <SyntaxHighlighterEdgeFlagsProvider
               isDarkCodeEnabled={
                 pageProps?.edgeFlags?.isDarkCodeEnabled ?? false

@@ -8,18 +8,18 @@ import { notFound } from "next/navigation";
 // import ApiReferencePage from "../api-reference/ApiReferencePage";
 import ChangelogEntryPage from "../changelog/ChangelogEntryPage";
 // import ChangelogPage from "../changelog/ChangelogPage";
+import React from "react";
+import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
 import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "../resolver/DocsContent";
-import { resolveMarkdownPage } from "../resolver/resolveMarkdownPage";
-import MarkdownPage from "./MarkdownPage";
 
 export async function DocsMainContent({
   node,
   parents,
   neighbors,
   breadcrumb,
-  apiReferenceNodes,
+  // apiReferenceNodes,
   scope,
 }: {
   node: FernNavigation.NavigationNodePage;
@@ -36,6 +36,7 @@ export async function DocsMainContent({
     files: mdxBundlerFiles,
     scope,
     replaceSrc: fileResolver,
+    toc: true,
   };
 
   // if (node.type === "changelog") {
@@ -84,9 +85,18 @@ export async function DocsMainContent({
       notFound();
     }
 
-    const page = await serializeMdx(content.markdown, mdxOptions);
+    const mdx = await serializeMdx(content.markdown, mdxOptions);
 
-    return <MarkdownPage content={resolveMarkdownPage()} />;
+    return (
+      <React.Suspense fallback={<div>Loading...</div>}>
+        <LayoutEvaluator
+          fallbackTitle={node.title}
+          mdx={mdx}
+          breadcrumb={breadcrumb}
+          hasAside={false}
+        />
+      </React.Suspense>
+    );
   }
 
   notFound();

@@ -10,6 +10,7 @@ import {
   rehypeAcornErrorBoundary,
   rehypeMdxClassStyle,
   rehypeSqueezeParagraphs,
+  rehypeToc,
   remarkInjectEsm,
   remarkSanitizeAcorn,
   remarkSqueezeParagraphs,
@@ -50,6 +51,7 @@ async function serializeMdxImpl(
     filename,
     scope = {},
     replaceSrc,
+    toc = false,
   }: FernSerializeMdxOptions = {}
 ): Promise<FernDocs.MarkdownText | undefined> {
   if (content == null) {
@@ -149,6 +151,10 @@ async function serializeMdxImpl(
         // always extract asides at the end
         rehypeExtractAsides,
       ];
+
+      if (toc) {
+        rehypePlugins.unshift(rehypeToc);
+      }
 
       if (options?.rehypePlugins != null) {
         rehypePlugins.push(...options.rehypePlugins);

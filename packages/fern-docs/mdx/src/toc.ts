@@ -209,3 +209,17 @@ function makeTree(
 
   return tree;
 }
+
+export function isToc(unknown: unknown): unknown is TableOfContentsItem[] {
+  return (
+    Array.isArray(unknown) &&
+    unknown.every(
+      (item) =>
+        typeof item === "object" &&
+        "simpleString" in item &&
+        "anchorString" in item &&
+        "children" in item &&
+        Array.isArray(item.children)
+    )
+  );
+}

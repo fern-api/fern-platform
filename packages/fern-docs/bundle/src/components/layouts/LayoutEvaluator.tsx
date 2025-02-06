@@ -1,38 +1,62 @@
+"use server";
+
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import type { TableOfContentsItem } from "@fern-docs/mdx";
-import { ReactElement } from "react";
+import { isToc, TableOfContentsItem } from "@fern-docs/mdx";
+import { getMDXExport } from "mdx-bundler/client";
+import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import { MdxContent } from "../mdx/MdxContent";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export interface LayoutEvaluatorProps {
-  title: FernDocs.MarkdownText;
-  subtitle: FernDocs.MarkdownText | undefined;
-  content: FernDocs.MarkdownText;
+  fallbackTitle: string;
+  mdx: FernDocs.MarkdownText;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-  tableOfContents: TableOfContentsItem[];
   hasAside: boolean;
 }
 
-export function LayoutEvaluator({
-  title,
-  subtitle,
-  content,
+export async function LayoutEvaluator({
+  fallbackTitle,
+  mdx,
+  breadcrumb,
   hasAside,
-  ...props
-}: LayoutEvaluatorProps): ReactElement {
+}: LayoutEvaluatorProps) {
+  const exports =
+    typeof mdx !== "string"
+      ? getMDXExport(mdx.code, {
+          // allows us to use MDXProvider to pass components to children
+          MdxJsReact: {
+            useMDXComponents: () => ({}),
+          },
+        })
+      : undefined;
+  const toc = asToc(exports?.toc);
+  const frontmatter: FernDocs.Frontmatter =
+    typeof mdx === "string" ? EMPTY_FRONTMATTER : mdx.frontmatter;
+
+  const [title, subtitle] = await Promise.all([
+    serializeMdx(frontmatter.title ?? fallbackTitle),
+    serializeMdx(frontmatter.subtitle),
+  ]);
+
   return (
     <LayoutEvaluatorContent
-      {...props}
       title={<MdxContent mdx={title} />}
       subtitle={subtitle ? <MdxContent mdx={subtitle} /> : undefined}
-      frontmatter={
-        typeof content === "string" ? EMPTY_FRONTMATTER : content.frontmatter
-      }
+      frontmatter={frontmatter}
+      breadcrumb={breadcrumb}
+      tableOfContents={toc}
       hasAside={hasAside}
     >
-      <MdxContent mdx={content} />
+      <MdxContent mdx={mdx} />
     </LayoutEvaluatorContent>
   );
+}
+
+function asToc(unknown: unknown): TableOfContentsItem[] {
+  if (isToc(unknown)) {
+    return unknown;
+  }
+  return [];
 }

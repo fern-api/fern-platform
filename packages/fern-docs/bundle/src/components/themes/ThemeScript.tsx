@@ -1,4 +1,4 @@
-import type { ColorsConfig } from "@fern-platform/fdr-utils";
+import { ColorsThemeConfig } from "@/server/types";
 import Script from "next/script";
 import type { ReactElement } from "react";
 import type { AvailableThemes } from "../atoms";
@@ -34,7 +34,10 @@ const script = (themes: AvailableThemes): void => {
 };
 
 const getAvailableThemes = (
-  colors: Partial<ColorsConfig> = {}
+  colors: {
+    dark?: ColorsThemeConfig;
+    light?: ColorsThemeConfig;
+  } = {}
 ): AvailableThemes => {
   if (Boolean(colors.dark) === Boolean(colors.light)) {
     return ["light", "dark"];
@@ -46,7 +49,10 @@ const getAvailableThemes = (
 export function ThemeScript({
   colors,
 }: {
-  colors?: ColorsConfig;
+  colors?: {
+    dark?: ColorsThemeConfig;
+    light?: ColorsThemeConfig;
+  };
 }): ReactElement {
   const args = getAvailableThemes(colors);
   return (

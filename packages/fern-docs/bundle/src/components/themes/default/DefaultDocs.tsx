@@ -53,7 +53,7 @@ function UnmemoizedDefaultDocs({ children }: { children: React.ReactNode }) {
       <DefaultDocsStyle />
       {showHeader && <HeaderContainer />}
 
-      <style jsx>
+      <style jsx global>
         {`
           .fern-sidebar-container {
             border-right-width: ${colors.light?.sidebarBackground == null

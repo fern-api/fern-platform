@@ -1,6 +1,5 @@
 "use server";
 
-import { store } from "@/components/atoms";
 import Preload, { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
@@ -42,7 +41,7 @@ export default async function DashboardLayout({
         />
       </head>
       <body className="antialiased">
-        <JotaiProvider store={store}>
+        <JotaiProvider>
           <StyledJsxRegistry>
             <FernTooltipProvider>{children}</FernTooltipProvider>
           </StyledJsxRegistry>

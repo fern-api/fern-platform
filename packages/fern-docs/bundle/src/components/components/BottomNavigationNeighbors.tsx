@@ -1,6 +1,4 @@
-import { useAtomValue } from "jotai";
 import { FC, useMemo } from "react";
-import { NEIGHBORS_ATOM } from "../atoms/navigation";
 import { useToHref } from "../hooks/useHref";
 import { DocsContent } from "../resolver/DocsContent";
 import { BottomNavigationButtons } from "./BottomNavigationButtons";
@@ -13,8 +11,7 @@ export const BottomNavigationNeighbors: FC<BottomNavigationNeighborsProps> = (
   props
 ) => {
   const toHref = useToHref();
-  const neighborsFromAtom = useAtomValue(NEIGHBORS_ATOM);
-  const neighbors = props.neighbors ?? neighborsFromAtom;
+  const neighbors = props.neighbors;
 
   // TODO: Uncomment this when we improve the UI for the previous button
 
@@ -30,7 +27,7 @@ export const BottomNavigationNeighbors: FC<BottomNavigationNeighborsProps> = (
   // }, [neighbors.prev, toHref]);
 
   const next = useMemo(() => {
-    if (neighbors.next == null) {
+    if (neighbors?.next == null) {
       return undefined;
     }
     return {
@@ -38,7 +35,7 @@ export const BottomNavigationNeighbors: FC<BottomNavigationNeighborsProps> = (
       excerpt: neighbors.next.excerpt,
       href: toHref(neighbors.next.slug),
     };
-  }, [neighbors.next, toHref]);
+  }, [neighbors?.next, toHref]);
 
   return <BottomNavigationButtons next={next} />;
 };

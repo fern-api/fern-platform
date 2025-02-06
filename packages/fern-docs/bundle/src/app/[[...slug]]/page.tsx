@@ -359,9 +359,9 @@ export default async function Page({
 
   // note: we start from the version node because endpoint Ids can be duplicated across versions
   // if we introduce versioned sections, and versioned api references, this logic will need to change
-  const apiReferenceNodes = FernNavigation.utils.collectApiReferences(
-    found.currentVersion ?? found.node
-  );
+  // const apiReferenceNodes = FernNavigation.utils.collectApiReferences(
+  //   found.currentVersion ?? found.node
+  // );
 
   const FeedbackPopoverProvider = edgeFlags.isInlineFeedbackEnabled
     ? FeedbackPopover
@@ -379,7 +379,7 @@ export default async function Page({
               loader
             )}
             breadcrumb={found.breadcrumb}
-            apiReferenceNodes={apiReferenceNodes}
+            // apiReferenceNodes={apiReferenceNodes}
             scope={{
               authed: authState.authed,
               user: authState.authed ? authState.user : undefined,

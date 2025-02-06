@@ -1,8 +1,8 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { addLeadingSlash } from "@fern-docs/utils";
 import { useInView } from "framer-motion";
-import { RefObject } from "react";
-import { useCallbackOne } from "use-memo-one";
-import { JUST_NAVIGATED_ATOM, SLUG_ATOM, useAtomEffect } from "../atoms";
+import { useRouter } from "next/navigation";
+import { RefObject, useEffect } from "react";
 
 export function useApiPageCenterElement(
   ref: RefObject<HTMLDivElement>,
@@ -15,15 +15,12 @@ export function useApiPageCenterElement(
   });
 
   const shouldUpdateSlug = !skip && isInView;
+  const router = useRouter();
 
-  useAtomEffect(
-    useCallbackOne(
-      (get, set) => {
-        if (shouldUpdateSlug && !get.peek(JUST_NAVIGATED_ATOM)) {
-          set(SLUG_ATOM, slug);
-        }
-      },
-      [shouldUpdateSlug, slug]
-    )
-  );
+  useEffect(() => {
+    if (shouldUpdateSlug) {
+      router.replace(addLeadingSlash(slug), { scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldUpdateSlug, slug]);
 }

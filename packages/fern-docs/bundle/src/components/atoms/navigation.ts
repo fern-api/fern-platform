@@ -1,10 +1,8 @@
-import type { ApiDefinition } from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import { isEqual } from "es-toolkit/predicate";
 import { atom, useAtomValue } from "jotai";
 import { selectAtom } from "jotai/utils";
-import { DocsContent } from "../resolver/DocsContent";
 import { DOCS_ATOM } from "./docs";
 import { SLUG_ATOM } from "./location";
 import { NavbarLink } from "./types";
@@ -77,33 +75,6 @@ export const SIDEBAR_ROOT_NODE_ATOM = selectAtom(
 );
 SIDEBAR_ROOT_NODE_ATOM.debugLabel = "SIDEBAR_ROOT_NODE_ATOM";
 
-// the initial path that was hard-navigated to
-export const RESOLVED_PATH_ATOM = atom<DocsContent>(
-  (get) => get(DOCS_ATOM).content
-);
-RESOLVED_PATH_ATOM.debugLabel = "RESOLVED_PATH_ATOM";
-
-export const NEIGHBORS_ATOM = atom((get) => {
-  const content = get(RESOLVED_PATH_ATOM);
-  if (content.type === "api-reference-page" || content.type === "changelog") {
-    return {
-      prev: null,
-      next: null,
-    };
-  }
-  return content.neighbors;
-});
-
-export const RESOLVED_API_DEFINITION_ATOM = atom<ApiDefinition | undefined>(
-  (get) => {
-    const content = get(RESOLVED_PATH_ATOM);
-    return content.type === "api-endpoint-page" ||
-      content.type === "api-reference-page"
-      ? content.apiDefinition
-      : undefined;
-  }
-);
-
 export const NAVIGATION_NODES_ATOM = atom<FernNavigation.NodeCollector>(
   (get) => {
     const sidebar = get(SIDEBAR_ROOT_NODE_ATOM);
@@ -143,10 +114,6 @@ CURRENT_NODE_ID_ATOM.debugLabel = "CURRENT_NODE_ID_ATOM";
 
 export function useCurrentNodeId(): FernNavigation.NodeId | undefined {
   return useAtomValue(CURRENT_NODE_ID_ATOM);
-}
-
-export function useDocsContent(): DocsContent {
-  return useAtomValue(RESOLVED_PATH_ATOM);
 }
 
 export function useDomain(): string {
