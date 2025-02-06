@@ -56,7 +56,7 @@ describe("serializeFormStateBody", () => {
       type: "form-data",
       value: {
         tags: {
-          type: "json",
+          type: "exploded",
           value: ["tag1", "tag2", "tag3"],
           contentType: "application/json",
         },
@@ -98,7 +98,7 @@ describe("serializeFormStateBody", () => {
       type: "form-data",
       value: {
         tag: {
-          type: "json",
+          type: "exploded",
           value: ["single-tag"],
           contentType: "application/json",
         },

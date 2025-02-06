@@ -65,7 +65,7 @@ export async function serializeFormStateBody(
                 ? value.value
                 : [value.value];
               formDataValue[key] = {
-                type: "json",
+                type: "exploded",
                 value: arrayValue,
                 contentType,
               };

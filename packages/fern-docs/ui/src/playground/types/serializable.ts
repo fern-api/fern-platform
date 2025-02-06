@@ -33,10 +33,17 @@ export const SerializableJsonSchema = z.object({
     .optional(),
 });
 
+export const SerializableExplodedJsonSchema = z.object({
+  type: z.literal("exploded"),
+  value: z.array(z.unknown()),
+  contentType: z.string().optional(),
+});
+
 export const SerializableFormDataEntryValueSchema = z.union([
   SerializableSingleFileSchema,
   SerializableMultipleFilesSchema,
   SerializableJsonSchema,
+  SerializableExplodedJsonSchema,
 ]);
 
 export type SerializableFormDataEntryValue = z.infer<
