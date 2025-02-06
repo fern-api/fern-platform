@@ -8,8 +8,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { track } from "@/server/analytics/posthog";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import {
-  adminFernToken,
   fdrEnvironment,
+  fernToken_admin,
   openaiApiKey,
   turbopufferApiKey,
 } from "@/server/env-variables";
@@ -62,7 +62,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       namespace,
       payload: {
         environment: fdrEnvironment(),
-        fernToken: adminFernToken(),
+        fernToken: fernToken_admin(),
         domain: withoutStaging(domain),
         ...edgeFlags,
       },

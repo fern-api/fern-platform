@@ -1,10 +1,10 @@
 import { track } from "@/server/analytics/posthog";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import {
-  adminFernToken,
   algoliaAppId,
   algoliaWriteApiKey,
   fdrEnvironment,
+  fernToken_admin,
 } from "@/server/env-variables";
 import { Gate, withBasicTokenAnonymous } from "@/server/withRbac";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
@@ -56,7 +56,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       writeApiKey: algoliaWriteApiKey(),
       indexName: SEARCH_INDEX,
       environment: fdrEnvironment(),
-      fernToken: adminFernToken(),
+      fernToken: fernToken_admin(),
       domain: withoutStaging(domain),
       authed: (node) => {
         if (authEdgeConfig == null) {
