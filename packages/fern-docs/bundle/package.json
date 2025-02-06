@@ -93,6 +93,7 @@
     "cssnano": "^6.0.3",
     "es-toolkit": "^1.27.0",
     "esbuild": "0.24.2",
+    "escape-string-regexp": "^5.0.0",
     "estree-walker": "^3.0.3",
     "fastdom": "^1.0.12",
     "feed": "^4.2.2",

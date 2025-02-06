@@ -13,6 +13,7 @@ import {
   conformTrailingSlash,
   DEFAULT_LOGO_HEIGHT,
 } from "@fern-docs/utils";
+import { Undo2 } from "lucide-react";
 
 export default async function NotFound() {
   const loader = await createCachedDocsLoader(getDocsDomainApp());
@@ -45,6 +46,7 @@ export default async function NotFound() {
             )}
             variant="filled"
             intent="primary"
+            rightIcon={<Undo2 />}
           >
             Return Home
           </FernLinkButton>

@@ -8,18 +8,20 @@ import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
 import { getApiDefinitionAtom } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
+import { conformExplorerRoute } from "../utils/explorer-route";
 
 interface PlaygroundEndpointSelectorLeafNodeProps {
   node: FernNavigation.EndpointNode | FernNavigation.WebSocketNode;
   filterValue: string;
   active: boolean;
   shallow?: boolean;
+  rootslug: FernNavigation.Slug;
 }
 
 export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   HTMLLIElement,
   PlaygroundEndpointSelectorLeafNodeProps
->(({ node, filterValue, active, shallow }, ref) => {
+>(({ node, filterValue, active, shallow, rootslug }, ref) => {
   const text = renderTextWithHighlight(node.title, filterValue);
 
   const description = useAtomValue(
@@ -49,7 +51,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
       <li ref={ref}>
         <FernTooltip content={tooltipContent} side="right">
           <FernLinkButton
-            href={`/~/api-explorer/${node.slug}`}
+            href={conformExplorerRoute(node.slug, rootslug)}
             shallow={shallow}
             text={text}
             className="w-full text-left"
@@ -77,7 +79,7 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
       <li ref={ref}>
         <FernTooltip content={tooltipContent} side="right">
           <FernLinkButton
-            href={`/~/api-explorer/${node.slug}`}
+            href={conformExplorerRoute(node.slug, rootslug)}
             shallow={shallow}
             text={text}
             className="w-full text-left"

@@ -1,27 +1,41 @@
 "use server";
 
 import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
+import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { createFindNode } from "@/server/find-node";
 import { getDocsDomainApp } from "@/server/xfernhost/app";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   createEndpointContext,
   createWebSocketContext,
 } from "@fern-api/fdr-sdk/api-definition";
-import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
-import { cookies } from "next/headers";
-import { notFound } from "next/navigation";
+import { conformTrailingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { cookies, headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string[] } }) {
-  const slug = FernNavigation.slugjoin(params.slug);
+  const slug = FernNavigation.slugjoin(
+    headers().get("x-basepath"),
+    params.slug
+  );
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(getDocsDomainApp(), fern_token);
-  const node = await createFindNode(loader)(slug);
-  if (node == null) {
+  const root = await loader.getRoot();
+  if (root == null) {
     notFound();
   }
+  const found = FernNavigation.utils.findNode(root, slug);
+  if (found.type !== "found") {
+    if (found.redirect) {
+      // follows the route path hierarchy
+      // e.g. /docs/foo/bar -> /docs/~/api-explorer/foo/bar
+      redirect(conformTrailingSlash(conformExplorerRoute(slug, root.slug)));
+    }
+
+    notFound();
+  }
+  const node = found.node;
   if (!FernNavigation.isApiLeaf(node)) {
     notFound();
   }

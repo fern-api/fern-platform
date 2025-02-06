@@ -12,15 +12,9 @@ import { removeTrailingSlash } from "@fern-docs/utils";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
 import { usePathname } from "next/navigation";
-import {
-  Fragment,
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from "react";
+import { Fragment, forwardRef, useEffect, useRef, useState } from "react";
 import { BuiltWithFern } from "../../sidebar/BuiltWithFern";
+import { conformExplorerRoute } from "../utils/explorer-route";
 import { ApiGroup } from "../utils/flatten-apis";
 import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelectorLeafNode";
 
@@ -28,6 +22,7 @@ export interface PlaygroundEndpointSelectorContentProps {
   apiGroups: ApiGroup[];
   className?: string;
   shallow?: boolean;
+  rootslug: FernNavigation.Slug;
 }
 
 function matchesEndpoint(
@@ -49,11 +44,8 @@ function matchesEndpoint(
 export const PlaygroundEndpointSelectorContent = forwardRef<
   HTMLDivElement,
   PlaygroundEndpointSelectorContentProps
->(({ apiGroups, className, shallow }, ref) => {
+>(({ apiGroups, className, shallow, rootslug }, forwardedRef) => {
   const pathname = usePathname();
-  const scrollRef = useRef<HTMLDivElement>(null);
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  useImperativeHandle(ref, () => scrollRef.current!);
 
   const [filterValue, setFilterValue] = useState<string>("");
 
@@ -94,7 +86,8 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         <ul className="relative z-0 list-none">
           {apiLeafNodes.map((node) => {
             const active =
-              removeTrailingSlash(pathname) === `/~/api-explorer/${node.slug}`;
+              removeTrailingSlash(pathname) ===
+              conformExplorerRoute(node.slug, rootslug);
             return (
               <PlaygroundEndpointSelectorLeafNode
                 key={node.id}
@@ -103,6 +96,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 ref={active ? selectedItemRef : undefined}
                 filterValue={filterValue}
                 shallow={shallow}
+                rootslug={rootslug}
               />
             );
           })}
@@ -118,7 +112,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
     <FernTooltipProvider>
       <div
         className={clsx("relative flex size-full flex-col", className)}
-        ref={scrollRef}
+        ref={forwardedRef}
       >
         <div className={cn("relative z-20 px-3 pb-0 pt-3")}>
           <FernInput
@@ -144,7 +138,6 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
           className="mask-grad-y-6 !flex w-full"
           scrollbars="vertical"
           asChild
-          ref={ref}
         >
           <ul className="flex h-fit w-full list-none flex-col gap-4 p-3">
             {renderedListItems}

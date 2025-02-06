@@ -146,6 +146,19 @@ export const middleware: NextMiddleware = async (request) => {
     );
   }
 
+  /**
+   * Rewrite .../~/... to /~/...
+   */
+  if (!pathname.startsWith("/~") && pathname.includes("/~/")) {
+    const index = pathname.indexOf("/~/");
+    pathname = pathname.slice(index);
+    const basepath = pathname.slice(0, index);
+    headers.set("x-basepath", basepath);
+    return NextResponse.rewrite(withPathname(request, pathname), {
+      request: { headers },
+    });
+  }
+
   return NextResponse.next({
     request: { headers },
   });
