@@ -2633,7 +2633,26 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -3113,7 +3132,26 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "alias",
+                "value": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -8229,7 +8267,22 @@
           "description": "Version header."
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 512
+              }
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
