@@ -192,21 +192,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Block"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "Block"
         }
       }
     },
@@ -215,21 +202,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "Integer"
         }
       }
     },
@@ -238,21 +212,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Address"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "Address"
         }
       }
     },
@@ -585,21 +546,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "BlockNumber"
         }
       },
       "description": "The block number or null when its the pending block"
@@ -620,21 +568,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Nonce"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "Nonce"
         }
       },
       "description": "Randomly selected number to satisfy the proof-of-work or null when its the pending block"
@@ -655,21 +590,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Address"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "Address"
         }
       },
       "description": "Destination address of the transaction. Null if it was a contract create."
@@ -1199,21 +1121,8 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "nullable",
-          "shape": {
-            "type": "undiscriminatedUnion",
-            "variants": [
-              {
-                "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Keccak"
-                  }
-                }
-              }
-            ]
-          }
+          "type": "id",
+          "id": "Keccak"
         }
       }
     },
@@ -3619,21 +3528,8 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "undiscriminatedUnion",
-                "variants": [
-                  {
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Transaction"
-                      }
-                    }
-                  }
-                ]
-              }
+              "type": "id",
+              "id": "Transaction"
             }
           }
         }
@@ -3752,21 +3648,8 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "undiscriminatedUnion",
-                "variants": [
-                  {
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Transaction"
-                      }
-                    }
-                  }
-                ]
-              }
+              "type": "id",
+              "id": "Transaction"
             }
           }
         }
@@ -3851,21 +3734,8 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "undiscriminatedUnion",
-                "variants": [
-                  {
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Transaction"
-                      }
-                    }
-                  }
-                ]
-              }
+              "type": "id",
+              "id": "Transaction"
             }
           }
         }
@@ -3976,21 +3846,8 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "undiscriminatedUnion",
-                "variants": [
-                  {
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Nonce"
-                      }
-                    }
-                  }
-                ]
-              }
+              "type": "id",
+              "id": "Nonce"
             }
           }
         }
@@ -4075,21 +3932,8 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "undiscriminatedUnion",
-                "variants": [
-                  {
-                    "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Receipt"
-                      }
-                    }
-                  }
-                ]
-              }
+              "type": "id",
+              "id": "Receipt"
             }
           }
         }
@@ -4598,100 +4442,85 @@
         {
           "statusCode": 200,
           "body": {
-            "type": "alias",
-            "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "undiscriminatedUnion",
-                "variants": [
-                  {
-                    "displayName": "proofAccount",
-                    "shape": {
-                      "type": "object",
-                      "extends": [],
-                      "properties": [
-                        {
-                          "key": "address",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "Address"
-                            }
-                          },
-                          "description": "The address of the account or contract of the request"
-                        },
-                        {
-                          "key": "accountProof",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "ProofNodes"
-                            }
-                          }
-                        },
-                        {
-                          "key": "balance",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "Integer"
-                            }
-                          },
-                          "description": "The Ether balance of the account or contract of the request"
-                        },
-                        {
-                          "key": "codeHash",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "Keccak"
-                            }
-                          },
-                          "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
-                        },
-                        {
-                          "key": "nonce",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "Nonce"
-                            }
-                          },
-                          "description": "The transaction count of the account or contract of the request"
-                        },
-                        {
-                          "key": "storageHash",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "Keccak"
-                            }
-                          },
-                          "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
-                        },
-                        {
-                          "key": "storageProof",
-                          "valueShape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "id",
-                              "id": "StorageProof"
-                            }
-                          }
-                        }
-                      ]
-                    },
-                    "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified"
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "address",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
                   }
-                ]
+                },
+                "description": "The address of the account or contract of the request"
+              },
+              {
+                "key": "accountProof",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "ProofNodes"
+                  }
+                }
+              },
+              {
+                "key": "balance",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                },
+                "description": "The Ether balance of the account or contract of the request"
+              },
+              {
+                "key": "codeHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                },
+                "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
+              },
+              {
+                "key": "nonce",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Nonce"
+                  }
+                },
+                "description": "The transaction count of the account or contract of the request"
+              },
+              {
+                "key": "storageHash",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                },
+                "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
+              },
+              {
+                "key": "storageProof",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "StorageProof"
+                  }
+                }
               }
-            }
+            ]
           }
         }
       ],

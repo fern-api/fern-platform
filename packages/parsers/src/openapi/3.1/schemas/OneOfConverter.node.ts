@@ -46,6 +46,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
       //     );
       //   }
       // );
+
       this.isNullable = (this.input.oneOf ?? this.input.anyOf)?.some(
         (schema) =>
           resolveSchemaReference(schema, this.context.document)?.type === "null"
@@ -116,17 +117,10 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     //     : convertedNodes;
     // }
 
-    if (
-      // If no decision has been made, bail
-      this.discriminated == null ||
-      // If the union is discriminated, we need to have a discriminant and mapping
-      (this.discriminated &&
-        (this.discriminant == null || this.discriminatedMapping == null)) ||
-      // If the union is undiscriminated, we should not have a discriminant or mapping
-      (!this.discriminated && this.undiscriminatedMapping == null)
-    ) {
-      return undefined;
+    if (!this.discriminated && this.undiscriminatedMapping?.length === 1) {
+      return maybeSingleValueToArray(this.undiscriminatedMapping[0]?.convert());
     }
+
     const union =
       this.discriminated &&
       this.discriminant != null &&

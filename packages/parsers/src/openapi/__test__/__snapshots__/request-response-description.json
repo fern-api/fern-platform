@@ -23,7 +23,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "getExample200Response"
+              "id": "Schema1"
             }
           },
           "description": "Successful response"
@@ -84,23 +84,6 @@
         ]
       },
       "description": "Schema 1 description"
-    },
-    "getExample200Response": {
-      "name": "getExample200Response",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "shape": {
-              "type": "alias",
-              "value": {
-                "type": "id",
-                "id": "Schema1"
-              }
-            }
-          }
-        ]
-      }
     }
   },
   "subpackages": {},

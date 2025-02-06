@@ -73,22 +73,9 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
-                "shape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
-                          }
-                        }
-                      }
-                    }
-                  ]
+                "type": "primitive",
+                "value": {
+                  "type": "string"
                 }
               }
             },
@@ -109,22 +96,9 @@
             "valueShape": {
               "type": "alias",
               "value": {
-                "type": "nullable",
-                "shape": {
-                  "type": "undiscriminatedUnion",
-                  "variants": [
-                    {
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double"
-                          }
-                        }
-                      }
-                    }
-                  ]
+                "type": "primitive",
+                "value": {
+                  "type": "double"
                 }
               }
             },
@@ -152,22 +126,9 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "nullable",
-                    "shape": {
-                      "type": "undiscriminatedUnion",
-                      "variants": [
-                        {
-                          "shape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string"
-                              }
-                            }
-                          }
-                        }
-                      ]
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
                     }
                   }
                 },
@@ -187,22 +148,9 @@
                 "valueShape": {
                   "type": "alias",
                   "value": {
-                    "type": "nullable",
-                    "shape": {
-                      "type": "undiscriminatedUnion",
-                      "variants": [
-                        {
-                          "shape": {
-                            "type": "alias",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "double"
-                              }
-                            }
-                          }
-                        }
-                      ]
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
                     }
                   }
                 },
