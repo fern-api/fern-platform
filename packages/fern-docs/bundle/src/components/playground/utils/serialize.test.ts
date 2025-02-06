@@ -3,9 +3,14 @@ import {
   PropertyKey,
   TypeShape,
 } from "@fern-api/fdr-sdk/api-definition";
+<<<<<<< HEAD:packages/fern-docs/bundle/src/components/playground/utils/serialize.test.ts
 
 import { PlaygroundFormStateBody } from "../types";
 import { serializeFormStateBody } from "./serialize";
+=======
+import { PlaygroundFormStateBody } from "../../types";
+import { serializeFormStateBody } from "../serialize";
+>>>>>>> ea157dd38 (feat: support exploded form parameters in docs (#2130)):packages/fern-docs/ui/src/playground/utils/__test__/serialize.test.ts
 
 const STRING_VALUE_SHAPE: TypeShape = {
   type: "alias",

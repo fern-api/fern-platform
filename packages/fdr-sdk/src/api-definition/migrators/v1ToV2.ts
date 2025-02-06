@@ -690,7 +690,11 @@ export class ApiDefinitionV1ToLatest {
           contentType: bodyProp.contentType,
           description: bodyProp.description,
           availability: bodyProp.availability,
+<<<<<<< HEAD
           exploded: bodyProp.exploded,
+=======
+          exploded: undefined,
+>>>>>>> ea157dd38 (feat: support exploded form parameters in docs (#2130))
           valueShape: {
             type: "alias",
             value: this.migrateTypeReference(bodyProp.valueType),
