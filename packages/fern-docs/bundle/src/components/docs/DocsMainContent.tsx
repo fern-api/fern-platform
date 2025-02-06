@@ -4,16 +4,16 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { notFound } from "next/navigation";
-// import ApiEndpointPage from "../api-reference/ApiEndpointPage";
-// import ApiReferencePage from "../api-reference/ApiReferencePage";
+import ApiEndpointPage from "../api-reference/ApiEndpointPage";
 import ChangelogEntryPage from "../changelog/ChangelogEntryPage";
-// import ChangelogPage from "../changelog/ChangelogPage";
+import ChangelogPage from "../changelog/ChangelogPage";
 import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
 import { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "../resolver/DocsContent";
 
 export async function DocsMainContent({
   domain,
+  rootslug,
   node,
   parents,
   neighbors,
@@ -22,6 +22,7 @@ export async function DocsMainContent({
   scope,
 }: {
   domain: string;
+  rootslug: FernNavigation.Slug;
   node: FernNavigation.NavigationNodePage;
   // apiReference: FernNavigation.ApiReferenceNode | undefined;
   parents: readonly FernNavigation.NavigationNodeParent[];
@@ -37,56 +38,48 @@ export async function DocsMainContent({
     toc: true,
   };
 
-  // if (node.type === "changelog") {
-  //   return <ChangelogPage node={node} parents={parents} />;
-  // }
-
-  if (node.type === "changelogEntry") {
-    const changelogNode = [...parents]
-      .reverse()
-      .find((n): n is FernNavigation.ChangelogNode => n.type === "changelog");
-    if (changelogNode == null) {
-      notFound();
-    }
-    const page = await docsLoader.getSerializedPage(node.pageId, mdxOptions);
-    if (page == null) {
-      notFound();
-    }
+  if (node.type === "changelog") {
     return (
-      <ChangelogEntryPage
-        content={{
-          ...node,
-          type: "changelog-entry",
-          changelogTitle: changelogNode.title,
-          changelogSlug: changelogNode.slug,
-          page,
-          breadcrumb,
-          neighbors,
-        }}
+      <ChangelogPage
+        domain={domain}
+        node={node}
+        breadcrumb={breadcrumb}
+        mdxOptions={mdxOptions}
       />
     );
   }
 
-  // if (apiReference.type === "apiReference" && !node.paginated) {
-  //   return <ApiReferencePage node={node} />;
-  // }
+  if (node.type === "changelogEntry") {
+    return (
+      <ChangelogEntryPage
+        node={node}
+        parents={parents}
+        domain={domain}
+        mdxOptions={mdxOptions}
+        breadcrumb={breadcrumb}
+        neighbors={neighbors}
+      />
+    );
+  }
 
-  // if (FernNavigation.isApiLeaf(node)) {
-  //   return <ApiEndpointPage node={node} />;
-  // }
+  if (FernNavigation.isApiLeaf(node)) {
+    return (
+      <ApiEndpointPage
+        node={node}
+        domain={domain}
+        breadcrumb={breadcrumb}
+        rootslug={rootslug}
+      />
+    );
+  }
 
   const pageId = FernNavigation.getPageId(node);
   if (pageId != null) {
-    const page = await docsLoader.getSerializedPage(pageId, mdxOptions);
-    if (page == null) {
-      notFound();
-    }
-
     return (
       <LayoutEvaluator
         domain={domain}
         fallbackTitle={node.title}
-        mdx={page}
+        pageId={pageId}
         breadcrumb={breadcrumb}
         hasAside={false}
       />

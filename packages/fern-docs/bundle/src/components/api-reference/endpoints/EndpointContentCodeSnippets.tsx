@@ -49,6 +49,7 @@ export declare namespace EndpointContentCodeSnippets {
   export interface Props {
     node: FernNavigation.EndpointNode;
     endpoint: ApiDefinition.EndpointDefinition;
+    rootslug: FernNavigation.Slug;
     languages: string[];
     examplesByKeyAndStatusCode: ExamplesByKeyAndStatusCode;
     examplesByStatusCode: ExamplesByStatusCode;
@@ -73,6 +74,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
 > = ({
   node,
   endpoint,
+  rootslug,
   examplesByKeyAndStatusCode,
   examplesByStatusCode,
   selectedExample,
@@ -205,6 +207,7 @@ const UnmemoizedEndpointContentCodeSnippets: React.FC<
             {node != null && (
               <PlaygroundButton
                 state={node}
+                rootslug={rootslug}
                 // example={selectedExample?.exampleCall}
               />
             )}

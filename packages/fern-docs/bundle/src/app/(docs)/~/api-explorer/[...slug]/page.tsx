@@ -19,6 +19,7 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
     headers().get("x-basepath"),
     params.slug
   );
+  console.log("slug", headers().get("x-basepath"), params.slug, slug);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(getDocsDomainApp(), fern_token);
   const root = await loader.getRoot();
@@ -30,7 +31,9 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
     if (found.redirect) {
       // follows the route path hierarchy
       // e.g. /docs/foo/bar -> /docs/~/api-explorer/foo/bar
-      redirect(conformTrailingSlash(conformExplorerRoute(slug, root.slug)));
+      redirect(
+        conformTrailingSlash(conformExplorerRoute(found.redirect, root.slug))
+      );
     }
 
     notFound();

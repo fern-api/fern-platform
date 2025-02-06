@@ -1,3 +1,5 @@
+"use client";
+
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type { ReactElement, ReactNode } from "react";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";

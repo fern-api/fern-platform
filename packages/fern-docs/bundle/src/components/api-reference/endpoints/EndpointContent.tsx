@@ -1,3 +1,6 @@
+"use client";
+
+import { WithAside } from "@/components/contexts/api-page";
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
@@ -44,6 +47,7 @@ export declare namespace EndpointContent {
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     streamToggle?: React.ReactElement;
     last?: boolean;
+    rootslug: FernNavigation.Slug;
   }
 }
 
@@ -79,7 +83,7 @@ function maybeGetErrorStatusCodeOrNameFromAnchor(
 const paddingAtom = atom((get) => (get(MOBILE_SIDEBAR_ENABLED_ATOM) ? 0 : 26));
 
 export const EndpointContent = memo<EndpointContent.Props>((props) => {
-  const { showErrors, context, breadcrumb, last = false } = props;
+  const { showErrors, context, breadcrumb, last = false, rootslug } = props;
   const { node, endpoint } = context;
   const ref = useRef<HTMLDivElement>(null);
   useApiPageCenterElement(ref, node.slug);
@@ -296,8 +300,8 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialExampleHeight]);
 
-  return (
-    <section
+  const article = (
+    <article
       className="fern-endpoint-content"
       ref={ref}
       id={useHref(node.slug)}
@@ -343,6 +347,7 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
           >
             {isInViewport && (
               <EndpointContentCodeSnippets
+                rootslug={rootslug}
                 endpoint={endpoint}
                 examplesByStatusCode={examplesByStatusCode}
                 examplesByKeyAndStatusCode={examplesByKeyAndStatusCode}
@@ -364,8 +369,10 @@ export const EndpointContent = memo<EndpointContent.Props>((props) => {
           </aside>
         </div>
       </div>
-    </section>
+    </article>
   );
+
+  return <WithAside.Provider value={true}>{article}</WithAside.Provider>;
 });
 
 EndpointContent.displayName = "EndpointContent";

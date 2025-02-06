@@ -22,7 +22,10 @@ const Webhook = dynamic(
   { ssr: true }
 );
 const WebSocket = dynamic(
-  () => import("./web-socket/WebSocket").then(({ WebSocket }) => WebSocket),
+  () =>
+    import("./web-socket/WebSocket").then(
+      ({ WebSocketContent }) => WebSocketContent
+    ),
   { ssr: true }
 );
 const EndpointPair = dynamic(

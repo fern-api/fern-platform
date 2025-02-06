@@ -4,15 +4,15 @@ import { createCachedDocsLoader } from "@/server/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { isToc, TableOfContentsItem } from "@fern-docs/mdx";
-import { getMDXExport } from "mdx-bundler/client";
+import { notFound } from "next/navigation";
+import { asToc, getMDXExport } from "../mdx/get-mdx-export";
 import { MdxContent } from "../mdx/MdxContent";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export interface LayoutEvaluatorProps {
   domain: string;
   fallbackTitle: string;
-  mdx: FernDocs.MarkdownText;
+  pageId: FernNavigation.PageId;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   hasAside: boolean;
 }
@@ -20,32 +20,28 @@ export interface LayoutEvaluatorProps {
 export async function LayoutEvaluator({
   domain,
   fallbackTitle,
-  mdx,
+  pageId,
   breadcrumb,
   hasAside,
 }: LayoutEvaluatorProps) {
   const docsLoader = await createCachedDocsLoader(domain);
-  const exports =
-    typeof mdx !== "string"
-      ? getMDXExport(mdx.code, {
-          // allows us to use MDXProvider to pass components to children
-          MdxJsReact: {
-            useMDXComponents: () => ({}),
-          },
-        })
-      : undefined;
+  const mdx = await docsLoader.getSerializedPage(pageId);
+  if (mdx == null) {
+    notFound();
+  }
+  const exports = getMDXExport(mdx);
   const toc = asToc(exports?.toc);
   const frontmatter: FernDocs.Frontmatter =
     typeof mdx === "string" ? EMPTY_FRONTMATTER : mdx.frontmatter;
 
   const [title, subtitle] = await Promise.all([
-    docsLoader.serializeMdx(frontmatter.title) ?? fallbackTitle,
+    docsLoader.serializeMdx(frontmatter.title),
     docsLoader.serializeMdx(frontmatter.subtitle),
   ]);
 
   return (
     <LayoutEvaluatorContent
-      title={<MdxContent mdx={title} />}
+      title={<MdxContent mdx={title} fallback={fallbackTitle} />}
       subtitle={subtitle ? <MdxContent mdx={subtitle} /> : undefined}
       frontmatter={frontmatter}
       breadcrumb={breadcrumb}
@@ -55,11 +51,4 @@ export async function LayoutEvaluator({
       <MdxContent mdx={mdx} />
     </LayoutEvaluatorContent>
   );
-}
-
-function asToc(unknown: unknown): TableOfContentsItem[] {
-  if (isToc(unknown)) {
-    return unknown;
-  }
-  return [];
 }

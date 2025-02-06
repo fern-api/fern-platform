@@ -107,6 +107,10 @@ export interface DocsLoader {
   getAuthState: (pathname?: string) => Promise<AuthState>;
 }
 
+const cachedGetAuthEdgeConfig = cache(getAuthEdgeConfig);
+const cachedGetAuthState = cache(createGetAuthState);
+const cachedLoadWithUrl = cache(loadWithUrl);
+
 /**
  * Force cache the loadWithUrl call, so that `JSON.parse()` is called only once.
  */
@@ -114,8 +118,8 @@ export const createCachedDocsLoader = async (
   domain: string,
   fern_token?: string
 ): Promise<DocsLoader> => {
-  const authConfig = await getAuthEdgeConfig(domain);
-  const { getAuthState } = await createGetAuthState(
+  const authConfig = await cachedGetAuthEdgeConfig(domain);
+  const { getAuthState } = await cachedGetAuthState(
     domain,
     fern_token,
     authConfig
@@ -146,13 +150,9 @@ class CachedDocsLoaderImpl implements DocsLoader {
     return this._fern_token;
   }
 
-  // this reduces the number of times we call loadWithUrl to render the same page
-  // unlike unstable_cache, this does _not_ interact with the data cache.
-  private loadWithUrl = cache(loadWithUrl);
-
   public getBaseUrl = unstable_cache(
     async (): Promise<DocsV2Read.BaseUrl> => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return { domain: this.domain, basePath: undefined };
       }
@@ -164,7 +164,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getFiles = unstable_cache(
     async (): Promise<Record<string, FileData>> => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return {};
       }
@@ -191,7 +191,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getApi = unstable_cache(
     async (id: string): Promise<ApiDefinition.ApiDefinition | undefined> => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -240,7 +240,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
    */
   public unsafe_getFullRoot = unstable_cache(
     async () => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -271,7 +271,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getConfig = unstable_cache(
     async () => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -284,7 +284,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getPage = unstable_cache(
     async (pageId: string) => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -324,6 +324,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       async () => {
         const serialized = await serializeMdx(page.markdown, {
           ...options,
+          filename: pageId,
           files: await this.getMdxBundlerFiles(),
         });
         return serialized;
@@ -342,7 +343,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getMdxBundlerFiles = unstable_cache(
     async () => {
-      const response = await this.loadWithUrl(this.domain);
+      const response = await cachedLoadWithUrl(this.domain);
       if (!response.ok) {
         return {};
       }

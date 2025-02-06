@@ -1,3 +1,5 @@
+"use client";
+
 import { OpenNewWindow } from "iconoir-react";
 import { atom, useAtomValue } from "jotai";
 import Link, { LinkProps } from "next/link";

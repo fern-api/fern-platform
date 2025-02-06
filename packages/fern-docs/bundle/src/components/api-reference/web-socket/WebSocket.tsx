@@ -1,3 +1,5 @@
+"use client";
+
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
@@ -38,37 +40,39 @@ export interface WebSocketProps {
   last?: boolean;
 }
 
-export const WebSocket: FC<WebSocketProps> = (props) => {
-  const context = useMemo(
-    () => ApiDefinition.createWebSocketContext(props.node, props.apiDefinition),
-    [props.node, props.apiDefinition]
-  );
+// export const WebSocket: FC<WebSocketProps> = (props) => {
+//   const context = useMemo(
+//     () => ApiDefinition.createWebSocketContext(props.node, props.apiDefinition),
+//     [props.node, props.apiDefinition]
+//   );
 
-  if (!context) {
-    console.error("Could not create context for websocket", props.node);
-    return null;
-  }
+//   if (!context) {
+//     console.error("Could not create context for websocket", props.node);
+//     return null;
+//   }
 
-  return (
-    <WithAside.Provider value={true}>
-      <WebhookContent
-        context={context}
-        breadcrumb={props.breadcrumb}
-        last={props.last}
-      />
-    </WithAside.Provider>
-  );
-};
+//   return (
+//     <WithAside.Provider value={true}>
+//       <WebSocketContent
+//         context={context}
+//         breadcrumb={props.breadcrumb}
+//         last={props.last}
+//       />
+//     </WithAside.Provider>
+//   );
+// };
 
-interface WebhookContentProps {
+interface WebSocketContentProps {
   context: WebSocketContext;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   last?: boolean;
+  rootslug: FernNavigation.Slug;
 }
 
-const WebhookContent: FC<WebhookContentProps> = ({
+export const WebSocketContent: FC<WebSocketContentProps> = ({
   context,
   breadcrumb,
+  rootslug,
   last,
 }) => {
   const { channel, node, types, globalHeaders } = context;
@@ -133,7 +137,7 @@ const WebhookContent: FC<WebhookContentProps> = ({
     [channel.requestHeaders, globalHeaders]
   );
 
-  return (
+  const article = (
     <div className="fern-endpoint-content" ref={ref} id={useHref(node.slug)}>
       <article
         className={cn(
@@ -368,7 +372,9 @@ const WebhookContent: FC<WebhookContentProps> = ({
                 <TitledExample
                   title={"Handshake"}
                   actions={
-                    node != null ? <PlaygroundButton state={node} /> : undefined
+                    node != null ? (
+                      <PlaygroundButton state={node} rootslug={rootslug} />
+                    ) : undefined
                   }
                   disableClipboard={true}
                 >
@@ -411,6 +417,8 @@ const WebhookContent: FC<WebhookContentProps> = ({
       </article>
     </div>
   );
+
+  return <WithAside.Provider value={true}>{article}</WithAside.Provider>;
 };
 
 function CardedSection({

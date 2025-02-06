@@ -1,3 +1,6 @@
+"use client";
+
+import { WithAside } from "@/components/contexts/api-page";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import cn from "clsx";
@@ -12,6 +15,7 @@ import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
+import { WebhookContextProvider } from "./webhook-context/WebhookContextProvider";
 import { useWebhookContext } from "./webhook-context/useWebhookContext";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 
@@ -45,9 +49,9 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
 
   const webhookExample = example ? <WebhookExample example={example} /> : null;
 
-  return (
+  const article = (
     <div className="fern-endpoint-content">
-      <div
+      <article
         className={cn(
           "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
           {
@@ -148,8 +152,14 @@ export const WebhookContent = memo<WebhookContent.Props>((props) => {
         <div className="mt-10 flex max-h-[150vh] md:mt-0 md:hidden">
           {webhookExample}
         </div>
-      </div>
+      </article>
     </div>
+  );
+
+  return (
+    <WithAside.Provider value={true}>
+      <WebhookContextProvider>{article}</WebhookContextProvider>
+    </WithAside.Provider>
   );
 });
 

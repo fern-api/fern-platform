@@ -151,9 +151,9 @@ export const middleware: NextMiddleware = async (request) => {
    */
   if (!pathname.startsWith("/~") && pathname.includes("/~/")) {
     const index = pathname.indexOf("/~/");
-    pathname = pathname.slice(index);
     const basepath = pathname.slice(0, index);
     headers.set("x-basepath", basepath);
+    pathname = pathname.slice(index);
     return NextResponse.rewrite(withPathname(request, pathname), {
       request: { headers },
     });

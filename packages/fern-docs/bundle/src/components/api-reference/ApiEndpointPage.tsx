@@ -1,75 +1,95 @@
-"use client";
+"use server";
 
+import { createCachedDocsLoader } from "@/server/docs-loader";
+import {
+  ApiDefinition,
+  createEndpointContext,
+  createWebhookContext,
+  createWebSocketContext,
+} from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { EMPTY_OBJECT } from "@fern-api/ui-core-utils";
-import { useSetAtom } from "jotai";
-import { ReactNode, useEffect } from "react";
-import { useNavigationNodes, useWriteApiDefinitionAtom } from "../atoms";
-import { ALL_ENVIRONMENTS_ATOM } from "../atoms/environment";
-import { BottomNavigationNeighbors } from "../components/BottomNavigationNeighbors";
-import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { DocsContent } from "../resolver/DocsContent";
-import {
-  BuiltWithFern,
-  HideBuiltWithFernContext,
-} from "../sidebar/BuiltWithFern";
-import {
-  ApiPackageContent,
-  isApiPackageContentNode,
-} from "./ApiPackageContent";
+import { notFound } from "next/navigation";
+import ApiEndpointLayout from "./ApiEndpointPageClient";
+import { EndpointContent } from "./endpoints/EndpointContent";
+import { WebSocketContent } from "./web-socket/WebSocket";
+import { WebhookContent } from "./webhooks/WebhookContent";
 
-export default function ApiEndpointPage({
-  content,
+export default async function ApiEndpointPage({
+  domain,
+  node,
+  breadcrumb,
+  rootslug,
 }: {
-  content: DocsContent.ApiEndpointPage;
-}): ReactNode {
-  useWriteApiDefinitionAtom(content.apiDefinition);
-
-  // TODO: Why are we doing this here?
-  const setEnvironmentIds = useSetAtom(ALL_ENVIRONMENTS_ATOM);
-  useEffect(() => {
-    const ids: FernNavigation.EnvironmentId[] = [];
-    Object.values(content.apiDefinition.endpoints).forEach((endpoint) => {
-      endpoint.environments?.forEach((env) => {
-        ids.push(env.id);
-      });
-    });
-    Object.values(content.apiDefinition.websockets).forEach((endpoint) => {
-      endpoint.environments?.forEach((env) => {
-        ids.push(env.id);
-      });
-    });
-  }, [
-    content.apiDefinition.endpoints,
-    content.apiDefinition.websockets,
-    setEnvironmentIds,
-  ]);
-
-  const node = useNavigationNodes().get(content.nodeId);
-  if (!node || !isApiPackageContentNode(node)) {
-    // TODO: sentry
-
-    console.error("Expected node to be an api reference node");
-    return null;
+  domain: string;
+  node: FernNavigation.NavigationNodeApiLeaf;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  rootslug: FernNavigation.Slug;
+}) {
+  const docsLoader = await createCachedDocsLoader(domain);
+  const apiDefinition = await docsLoader.getApi(node.apiDefinitionId);
+  if (!apiDefinition) {
+    notFound();
   }
 
   return (
-    <>
-      <FernErrorBoundary component="ApiEndpointPage">
-        <HideBuiltWithFernContext.Provider value={true}>
-          <ApiPackageContent
-            node={node}
-            apiDefinition={content.apiDefinition}
-            breadcrumb={content.breadcrumb}
-            mdxs={EMPTY_OBJECT}
-            showErrors={content.showErrors}
-          />
-        </HideBuiltWithFernContext.Provider>
-      </FernErrorBoundary>
-      <div className="px-4 md:px-6 lg:hidden lg:px-8">
-        <BottomNavigationNeighbors />
-      </div>
-      <BuiltWithFern className="mx-auto my-8 w-fit" />
-    </>
+    <ApiEndpointLayout>
+      <ApiEndpointContent
+        node={node}
+        apiDefinition={apiDefinition}
+        breadcrumb={breadcrumb}
+        rootslug={rootslug}
+      />
+    </ApiEndpointLayout>
   );
+}
+
+function ApiEndpointContent({
+  node,
+  apiDefinition,
+  breadcrumb,
+  rootslug,
+}: {
+  node: FernNavigation.NavigationNodeApiLeaf;
+  apiDefinition: ApiDefinition;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  rootslug: FernNavigation.Slug;
+}) {
+  switch (node.type) {
+    case "endpoint": {
+      const context = createEndpointContext(node, apiDefinition);
+      if (!context) {
+        notFound();
+      }
+      return (
+        <EndpointContent
+          breadcrumb={breadcrumb}
+          context={context}
+          showErrors
+          rootslug={rootslug}
+        />
+      );
+    }
+    case "webSocket": {
+      const context = createWebSocketContext(node, apiDefinition);
+      if (!context) {
+        notFound();
+      }
+      return (
+        <WebSocketContent
+          breadcrumb={breadcrumb}
+          context={context}
+          rootslug={rootslug}
+        />
+      );
+    }
+    case "webhook": {
+      const context = createWebhookContext(node, apiDefinition);
+      if (!context) {
+        notFound();
+      }
+      return <WebhookContent breadcrumb={breadcrumb} context={context} />;
+    }
+    default:
+      return null;
+  }
 }

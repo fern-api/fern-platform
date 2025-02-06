@@ -39,7 +39,6 @@ export async function loadDocsDefinitionFromS3({
     });
 
     const response = await fetch(signedUrl, {
-      cache: "force-cache",
       next: { tags: [domain] },
     });
     if (response.ok) {

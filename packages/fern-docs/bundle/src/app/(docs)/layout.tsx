@@ -21,10 +21,10 @@ import { GlobalStyles } from "./global-styles";
 
 export default async function Layout({
   children,
-  explorer,
+  header,
 }: {
   children: React.ReactNode;
-  explorer: React.ReactNode;
+  header: React.ReactNode;
 }) {
   const domain = getDocsDomainApp();
   const docsLoader = await createCachedDocsLoader(domain);
@@ -49,6 +49,7 @@ export default async function Layout({
   );
   return (
     <>
+      {header}
       <GlobalStyles>{stylesheet}</GlobalStyles>
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />
@@ -56,7 +57,6 @@ export default async function Layout({
       <ThemeScript colors={colors} />
       <Toaster />
       {children}
-      {explorer}
       <CustomerAnalytics />
     </>
   );

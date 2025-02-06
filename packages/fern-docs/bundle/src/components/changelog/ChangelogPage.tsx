@@ -1,219 +1,168 @@
-"use client";
+"use server";
 
-import type { FernNavigation } from "@fern-api/fdr-sdk";
-import type * as FernDocs from "@fern-api/fdr-sdk/docs";
-import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
-import clsx from "clsx";
-import { chunk } from "es-toolkit/array";
-import { atom, useAtomValue } from "jotai";
-import { Fragment, ReactElement, useEffect, useMemo } from "react";
-import { useMemoOne } from "use-memo-one";
-import {
-  IS_READY_ATOM,
-  LOCATION_ATOM,
-  SCROLL_BODY_ATOM,
-  SIDEBAR_ROOT_NODE_ATOM,
-} from "../atoms";
-import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
+import ChangelogPageClient from "./ChangelogPageClient";
+
+import { createCachedDocsLoader } from "@/server/docs-loader";
+import { FernDocs, FernNavigation } from "@fern-api/fdr-sdk";
+import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
+import { isNonNullish } from "@fern-api/ui-core-utils";
+import { makeToc, TableOfContentsItem, toTree } from "@fern-docs/mdx";
+import { compact } from "es-toolkit/compat";
 import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
-import { useToHref } from "../hooks/useHref";
 import { Markdown } from "../mdx/Markdown";
-import { DocsContent } from "../resolver/DocsContent";
-import {
-  BuiltWithFern,
-  HideBuiltWithFernContext,
-} from "../sidebar/BuiltWithFern";
-import { ChangelogContentLayout } from "./ChangelogContentLayout";
+import { MdxContent } from "../mdx/MdxContent";
+import type { FernSerializeMdxOptions } from "../mdx/types";
 
-function flattenChangelogEntries(
-  page: DocsContent.ChangelogPage
-): FernNavigation.ChangelogEntryNode[] {
-  return page.node.children.flatMap((year) =>
-    year.children.flatMap((month) => month.children)
-  );
-}
-
-const CHANGELOG_PAGE_SIZE = 10;
-
-function getOverviewMdx(
-  page: DocsContent.ChangelogPage
-): FernDocs.MarkdownText | undefined {
-  return page.node.overviewPageId != null
-    ? page.pages[page.node.overviewPageId]
-    : undefined;
-}
-
-export default function ChangelogPage({
-  content,
+export default async function ChangelogPage({
+  domain,
+  node,
+  mdxOptions,
+  breadcrumb,
 }: {
-  content: DocsContent.ChangelogPage;
-}): ReactElement {
-  const flattenedEntries = useMemo(
-    () => flattenChangelogEntries(content),
-    [content]
-  );
-  const chunkedEntries = useMemo(
-    () => chunk(flattenedEntries, CHANGELOG_PAGE_SIZE),
-    [flattenedEntries]
-  );
-  const page = useAtomValue(
-    useMemoOne(() => {
-      const pageAtom = atom((get) => {
-        if (!get(IS_READY_ATOM)) {
-          return 1;
+  domain: string;
+  node: FernNavigation.ChangelogNode;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+}) {
+  const docsLoader = await createCachedDocsLoader(domain);
+  const entries: FernNavigation.ChangelogEntryNode[] = [];
+  FernNavigation.traverseDF(node, (n) => {
+    if (n.type === "changelogEntry") {
+      entries.push(n);
+    }
+  });
+  const pageIds = entries.map((e) => e.pageId);
+  const pages = (
+    await Promise.all(
+      compact([node.overviewPageId, ...pageIds]).map(async (pageId) => {
+        const markdown = await docsLoader.getPage(pageId);
+        if (markdown == null) {
+          return;
         }
-
-        const hash = get(LOCATION_ATOM).hash;
-        if (hash == null) {
-          return 1;
-        }
-
-        /**
-         * if the hash appears on an entry, navigate to page where the entry is located
-         */
-        const entryPageId = content.anchorIds[hash.slice(1)];
-        if (entryPageId != null) {
-          const entry = flattenedEntries.findIndex(
-            (entry) => entry.pageId === entryPageId
-          );
-          if (entry !== -1) {
-            return Math.floor(entry / CHANGELOG_PAGE_SIZE) + 1;
-          }
-        }
-
-        const match = hash.match(/^#page-(\d+)$/)?.[1];
-        if (match == null) {
-          return 1;
-        }
-        /**
-         * Ensure the page number is within the bounds of the changelog entries
-         */
-        return Math.min(
-          Math.max(parseInt(match, 10), 1),
-          chunkedEntries.length
-        );
-      });
-      return pageAtom;
-    }, [content.anchorIds, flattenedEntries, chunkedEntries.length])
-  );
-
-  const overview = getOverviewMdx(content);
-
-  const toHref = useToHref();
-  const fullWidth = useAtomValue(SIDEBAR_ROOT_NODE_ATOM) == null;
+        return {
+          pageId,
+          anchors: getAnchorIds(makeToc(toTree(markdown.markdown).hast)),
+        };
+      })
+    )
+  ).filter(isNonNullish);
 
   /**
-   * Scroll to the top of the page when navigating to a new page of the changelog
+   * if there are duplicate anchor tags, the anchor from the first page where it appears will be used
    */
-  const scrollBody = useAtomValue(SCROLL_BODY_ATOM);
-  useEffect(() => {
-    const element = document.getElementById(window.location.hash.slice(1));
-
-    if (element != null) {
-      element.scrollIntoView();
-      return;
-    }
-
-    if (scrollBody instanceof Document) {
-      window.scrollTo(0, 0);
-    } else {
-      scrollBody?.scrollTo(0, 0);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  const entries = chunkedEntries[page - 1] ?? EMPTY_ARRAY;
-
-  const prev = useMemo(() => {
-    if (page === 1) {
-      return undefined;
-    }
-
-    return {
-      title: "Newer posts",
-      hint: "Next",
-      href: `#page-${page - 1}`,
-    };
-  }, [page]);
-
-  const next = useMemo(() => {
-    if (page >= chunkedEntries.length) {
-      return undefined;
-    }
-
-    return {
-      title: "Older posts",
-      hint: "Previous",
-      href: `#page-${page + 1}`,
-    };
-  }, [chunkedEntries.length, page]);
+  const anchorIds: Record<string, FernNavigation.PageId> = {};
+  pages.forEach(({ anchors, pageId }) => {
+    anchors.forEach((anchorId) => {
+      if (anchorId && !anchorIds[anchorId]) {
+        anchorIds[anchorId] = pageId;
+      }
+    });
+  });
 
   return (
-    <div
-      className={clsx("fern-changelog", {
-        "full-width": fullWidth,
-      })}
-    >
-      <main>
-        <HideBuiltWithFernContext.Provider value={true}>
-          <ChangelogContentLayout as="section" className="pb-8">
-            <PageHeader
-              title={content.node.title}
-              breadcrumb={content.breadcrumb}
-              subtitle={
-                typeof overview !== "string"
-                  ? overview?.frontmatter.excerpt
-                  : undefined
-              }
-            />
-            <Markdown mdx={overview} />
-          </ChangelogContentLayout>
-
-          {entries.map((entry) => {
-            const page = content.pages[entry.pageId];
-            const title =
-              typeof page !== "string" ? page?.frontmatter.title : undefined;
-            return (
-              <Fragment key={entry.id}>
-                <hr />
-                <ChangelogContentLayout
-                  as="article"
-                  id={entry.date}
-                  stickyContent={
-                    <FernLink href={toHref(entry.slug)}>{entry.title}</FernLink>
-                  }
-                >
-                  <Markdown
-                    title={
-                      title != null ? (
-                        <h2>
-                          <FernLink
-                            href={toHref(entry.slug)}
-                            className="not-prose"
-                          >
-                            {title}
-                          </FernLink>
-                        </h2>
-                      ) : undefined
-                    }
-                    mdx={page}
-                  />
-                </ChangelogContentLayout>
-              </Fragment>
-            );
-          })}
-
-          {(prev != null || next != null) && (
-            <ChangelogContentLayout as="div">
-              <BottomNavigationButtons prev={prev} next={next} alwaysShowGrid />
-            </ChangelogContentLayout>
-          )}
-        </HideBuiltWithFernContext.Provider>
-
-        <div className="h-48" />
-        <BuiltWithFern className="mx-auto my-8 w-fit" />
-      </main>
-    </div>
+    <ChangelogPageClient
+      node={node}
+      anchorIds={anchorIds}
+      overview={
+        <ChangelogPageOverview
+          domain={domain}
+          node={node}
+          mdxOptions={mdxOptions}
+          breadcrumb={breadcrumb}
+        />
+      }
+      entries={Object.fromEntries(
+        entries.map((entry) => {
+          return [
+            entry.pageId,
+            <ChangelogPageEntry
+              key={entry.pageId}
+              node={entry}
+              domain={domain}
+              mdxOptions={mdxOptions}
+            />,
+          ] as const;
+        })
+      )}
+    />
   );
+}
+
+async function ChangelogPageOverview({
+  domain,
+  node,
+  mdxOptions,
+  breadcrumb,
+}: {
+  domain: string;
+  node: FernNavigation.ChangelogNode;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+}) {
+  const docsLoader = await createCachedDocsLoader(domain);
+  const mdx =
+    node.overviewPageId != null
+      ? await docsLoader.getSerializedPage(node.overviewPageId, mdxOptions)
+      : undefined;
+
+  const frontmatter: FernDocs.Frontmatter =
+    (typeof mdx !== "string" ? mdx?.frontmatter : undefined) ??
+    EMPTY_FRONTMATTER;
+
+  const [title, subtitle] = await Promise.all([
+    docsLoader.serializeMdx(frontmatter.title),
+    docsLoader.serializeMdx(frontmatter.subtitle),
+  ]);
+
+  return (
+    <>
+      <PageHeader
+        title={<MdxContent mdx={title} fallback={node.title} />}
+        subtitle={<MdxContent mdx={subtitle} />}
+        breadcrumb={breadcrumb}
+      />
+      <Markdown mdx={mdx} />
+    </>
+  );
+}
+
+async function ChangelogPageEntry({
+  domain,
+  node,
+  mdxOptions,
+}: {
+  domain: string;
+  node: FernNavigation.ChangelogEntryNode;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+}) {
+  const docsLoader = await createCachedDocsLoader(domain);
+  const mdx = await docsLoader.getSerializedPage(node.pageId, mdxOptions);
+
+  const frontmatter: FernDocs.Frontmatter =
+    (typeof mdx !== "string" ? mdx?.frontmatter : undefined) ??
+    EMPTY_FRONTMATTER;
+
+  const title = await docsLoader.serializeMdx(frontmatter.title);
+
+  return (
+    <Markdown
+      mdx={mdx}
+      title={
+        title != null ? (
+          <h2>
+            <FernLink href={node.slug} className="not-prose">
+              <MdxContent mdx={title} />
+            </FernLink>
+          </h2>
+        ) : undefined
+      }
+    />
+  );
+}
+
+function getAnchorIds(toc: TableOfContentsItem[]): string[] {
+  return toc.flatMap((item) => {
+    return [item.anchorString, ...getAnchorIds(item.children ?? [])];
+  });
 }

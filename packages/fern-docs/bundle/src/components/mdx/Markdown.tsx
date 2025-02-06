@@ -1,3 +1,5 @@
+"use client";
+
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import clsx from "clsx";
 import { memo, type ReactNode } from "react";
