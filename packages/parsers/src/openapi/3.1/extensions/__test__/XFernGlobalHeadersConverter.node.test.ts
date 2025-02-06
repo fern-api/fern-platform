@@ -30,8 +30,10 @@ describe("XFernGlobalHeadersConverterNode", () => {
     });
 
     expect(converter.globalHeaders).toBeDefined();
-    expect(converter.globalHeaders?.length).toBe(1);
-    expect(converter.globalHeaders?.[0][0]).toBe("X-API-Key");
+    expect(Object.keys(converter.globalHeaders)[0]).toEqual("X-API-Key");
+    expect(converter.globalHeaders?.["X-API-Key"].description).toEqual(
+      "API Key for authentication"
+    );
   });
 
   it("should handle empty input", () => {
