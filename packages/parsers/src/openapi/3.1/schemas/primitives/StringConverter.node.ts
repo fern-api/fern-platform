@@ -189,7 +189,7 @@ export class StringConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      (this.nullable ? "null" : (override ?? "string"))
+      (this.nullable ? null : (override ?? "string"))
     );
   }
 }
