@@ -688,7 +688,7 @@ export class ApiDefinitionV1ToLatest {
           contentType: bodyProp.contentType,
           description: bodyProp.description,
           availability: bodyProp.availability,
-          exploded: undefined,
+          exploded: bodyProp.exploded,
           valueShape: {
             type: "alias",
             value: this.migrateTypeReference(bodyProp.valueType),
