@@ -172,9 +172,13 @@ function getBodyFormValueString(
       return getBodyFormValueFilenameString(value, key);
     case "filenames":
       return getBodyFormValueFilenamesStrings(value, key);
-    case "exploded": 
+    case "exploded":
       return (value.value ?? []).flatMap((item) =>
-        getBodyFormValueJsonString(item, key, usesApplicationJsonInFormDataValue)
+        getBodyFormValueJsonString(
+          item,
+          key,
+          usesApplicationJsonInFormDataValue
+        )
       );
     default:
       throw new UnreachableCaseError(value);
