@@ -114,7 +114,7 @@ export class IntegerConverterNode extends BaseOpenApiV3_1ConverterNodeWithExampl
       this.input.example ??
       this.input.examples?.[0] ??
       this.default ??
-      (this.nullable ? "null" : 0)
+      (this.nullable ? null : 0)
     );
   }
 }

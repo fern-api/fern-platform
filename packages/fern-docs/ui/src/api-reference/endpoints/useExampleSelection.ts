@@ -50,7 +50,9 @@ export function useExampleSelection(
         };
       }
       const allExamples = Object.values(
-        examplesByLanguageKeyAndStatusCode[language] ?? {}
+        examplesByLanguageKeyAndStatusCode[language] ??
+          examplesByLanguageKeyAndStatusCode.curl ??
+          {}
       )
         .flatMap((e) => Object.values(e))
         .flat();

@@ -3470,20 +3470,7 @@
         }
       ],
       "queryParameters": [],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      ],
+      "responses": [],
       "errors": [],
       "examples": [
         {
@@ -7828,9 +7815,29 @@
               {
                 "key": "transaction",
                 "valueShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": []
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "object",
+                        "extends": [],
+                        "properties": []
+                      },
+                      "description": "The transaction details in JSON format."
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The transaction details as encoded binary data."
+                    }
+                  ]
                 },
                 "description": "The transaction details, either in JSON format or encoded binary data."
               },
@@ -7875,13 +7882,31 @@
                   "value": {
                     "type": "nullable",
                     "shape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string"
+                      "type": "undiscriminatedUnion",
+                      "variants": [
+                        {
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        },
+                        {
+                          "shape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "double"
+                              }
+                            }
+                          }
                         }
-                      }
+                      ]
                     }
                   }
                 },

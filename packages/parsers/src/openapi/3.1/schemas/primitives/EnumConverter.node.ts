@@ -87,7 +87,7 @@ export class EnumConverterNode extends BaseOpenApiV3_1ConverterNodeWithExample<
       this.input.examples?.[0] ??
       this.default ??
       this.values[0] ??
-      (this.nullable ? "null" : undefined)
+      (this.nullable ? null : undefined)
     );
   }
 }

@@ -37,6 +37,7 @@ describe("OpenAPI snapshot tests", () => {
           log: () => undefined,
         },
         errors: new ErrorCollector(),
+        generatedTypes: {},
       };
 
       // Convert components if they exist

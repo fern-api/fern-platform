@@ -17,7 +17,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
   | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
   | FernRegistry.api.latest.TypeShape[]
 > {
-  isUnionOfObjects: boolean | undefined;
+  isUnionOfContainers: boolean | undefined;
   isNullable: boolean | undefined;
   discriminated: boolean | undefined;
   discriminant: string | undefined;
@@ -34,11 +34,19 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
   parse(): void {
     if (this.input.oneOf != null || this.input.anyOf != null) {
-      this.isUnionOfObjects = (this.input.oneOf ?? this.input.anyOf)?.every(
-        (schema) =>
-          resolveSchemaReference(schema, this.context.document)?.type ===
-          "object"
-      );
+      // COMMENTED OUT FOR NOW, CONSIDER BRINGING BACK IF MULTIPLE RESPONSES ARE SUPPORTED
+      // this.isUnionOfContainers = (this.input.oneOf ?? this.input.anyOf)?.every(
+      //   (schema) => {
+      //     const resolvedSchema = resolveSchemaReference(
+      //       schema,
+      //       this.context.document
+      //     );
+      //     return (
+      //       resolvedSchema?.type === "object" || resolvedSchema?.enum != null
+      //     );
+      //   }
+      // );
+
       this.isNullable = (this.input.oneOf ?? this.input.anyOf)?.some(
         (schema) =>
           resolveSchemaReference(schema, this.context.document)?.type === "null"
@@ -99,7 +107,9 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
     | FernRegistry.api.latest.TypeShape[]
     | undefined {
-    if (!this.isUnionOfObjects && !this.discriminated) {
+    // COMMENTED OUT FOR NOW, CONSIDER BRINGING BACK IF MULTIPLE RESPONSES ARE SUPPORTED
+    // if (!this.isUnionOfContainers && !this.discriminated) {
+    if (!this.discriminated && this.undiscriminatedMapping?.length === 1) {
       const convertedNodes = this.undiscriminatedMapping
         ?.flatMap((node) => node.convert())
         .filter(isNonNullish);
@@ -108,17 +118,6 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
         : convertedNodes;
     }
 
-    if (
-      // If no decision has been made, bail
-      this.discriminated == null ||
-      // If the union is discriminated, we need to have a discriminant and mapping
-      (this.discriminated &&
-        (this.discriminant == null || this.discriminatedMapping == null)) ||
-      // If the union is undiscriminated, we should not have a discriminant or mapping
-      (!this.discriminated && this.undiscriminatedMapping == null)
-    ) {
-      return undefined;
-    }
     const union =
       this.discriminated &&
       this.discriminant != null &&
@@ -158,7 +157,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
                   return convertedShapes
                     ?.map((shape) => {
-                      if (shape == null || shape.type !== "object") {
+                      if (shape == null) {
                         return undefined;
                       }
                       return {
