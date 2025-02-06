@@ -60,13 +60,14 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     this.safeParse(contentType);
   }
 
-  matchExamplesByName(
+  matchRequestResponseExamplesByName(
+    requests: RequestMediaTypeObjectConverterNode[],
     responseExamples: Record<
       string,
       (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
-    >
+    >,
+    matchedExampleNames: Set<string>
   ) {
-    const foundExampleNames = new Set<string>();
     for (const request of this.requests) {
       for (const [requestExampleName, requestExample] of Object.entries(
         request?.examples ?? {}
@@ -76,7 +77,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         )) {
           for (const responseExample of responseExampleList) {
             if (matchExampleName(responseExampleName, requestExampleName)) {
-              foundExampleNames.add(responseExampleName);
+              matchedExampleNames.add(responseExampleName);
               this.examples?.push(
                 new ExampleObjectConverterNode(
                   {
@@ -108,71 +109,41 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         }
       }
     }
-
-    return foundExampleNames;
   }
 
   matchExamplesByIndex(
-    foundExampleNames: Set<string>,
-    responseExamples: Record<
-      string,
-      (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
-    >
-  ) {
-    const filteredRequestExamples: (
+    requestExamples: (
       | [
           RequestMediaTypeObjectConverterNode,
           string,
           OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject,
         ]
       | undefined
-    )[] = [];
-    for (const request of this.requests) {
-      filteredRequestExamples.push(
-        ...Object.entries(request.examples ?? {})
-          .filter(([exampleName]) => !foundExampleNames.has(exampleName))
-          .map<
-            [
-              RequestMediaTypeObjectConverterNode,
-              string,
-              OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject,
-            ]
-          >(([exampleName, example]) => [request, exampleName, example])
-      );
-    }
-
-    if (filteredRequestExamples.length === 0) {
-      filteredRequestExamples.push(undefined);
-    }
-
-    const filteredResponseExamples = Object.entries(responseExamples).filter(
-      ([exampleName, examples]) =>
-        !foundExampleNames.has(exampleName) && isNonNullish(examples)
-    );
-
-    if (filteredResponseExamples.length === 0) {
-      filteredResponseExamples.push(["", [undefined]]);
-    }
-
+    )[],
+    responseExamples: [
+      string,
+      (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[],
+    ][]
+  ) {
     const requestExampleIndex = 0;
     const responseExampleIndex = 0;
-    for (const maybeRequest of filteredRequestExamples) {
+    for (const maybeRequestContainer of requestExamples) {
       for (const [
         responseExampleName,
-        responseExamples,
-      ] of filteredResponseExamples) {
+        responseExampleList,
+      ] of responseExamples) {
         if (
           responseExampleIndex === requestExampleIndex ||
-          (requestExampleIndex === filteredResponseExamples.length - 1 &&
+          (requestExampleIndex === responseExamples.length - 1 &&
             responseExampleIndex >= requestExampleIndex) ||
-          (responseExampleIndex === filteredResponseExamples.length - 1 &&
+          (responseExampleIndex === responseExamples.length - 1 &&
             requestExampleIndex >= responseExampleIndex)
         ) {
           const [request, requestExampleName, requestExample] =
-            maybeRequest ?? [undefined, undefined, undefined];
+            maybeRequestContainer ?? [undefined, undefined, undefined];
 
           this.examples?.push(
-            ...responseExamples.map(
+            ...responseExampleList.map(
               (responseExample) =>
                 new ExampleObjectConverterNode(
                   {
@@ -206,12 +177,13 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
   }
 
   addGlobalFallbackExample(
+    requests: RequestMediaTypeObjectConverterNode[],
     responseExamples: Record<
       string,
       (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
     >
   ) {
-    for (const request of this.requests) {
+    for (const request of requests) {
       for (const [requestExampleName, requestExample] of Object.entries(
         request?.examples ?? {}
       )) {
@@ -362,9 +334,57 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
 
     this.examples ??= [];
 
-    const foundExampleNames = this.matchExamplesByName(responseExamples);
-    this.matchExamplesByIndex(foundExampleNames, responseExamples);
-    this.addGlobalFallbackExample(responseExamples);
+    const matchedExampleNames = new Set<string>();
+
+    // match examples based on name given
+    this.matchRequestResponseExamplesByName(
+      this.requests,
+      responseExamples,
+      matchedExampleNames
+    );
+
+    // Filter out examples that have already been matched
+    const filteredRequestExamples: (
+      | [
+          RequestMediaTypeObjectConverterNode,
+          string,
+          OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject,
+        ]
+      | undefined
+    )[] = [];
+    for (const request of this.requests) {
+      filteredRequestExamples.push(
+        ...Object.entries(request.examples ?? {})
+          .filter(([exampleName]) => !matchedExampleNames.has(exampleName))
+          .map<
+            [
+              RequestMediaTypeObjectConverterNode,
+              string,
+              OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject,
+            ]
+          >(([exampleName, example]) => [request, exampleName, example])
+      );
+    }
+
+    if (filteredRequestExamples.length === 0) {
+      filteredRequestExamples.push(undefined);
+    }
+
+    const filteredResponseExamples = Object.entries(responseExamples).filter(
+      ([exampleName, examples]) =>
+        !matchedExampleNames.has(exampleName) && isNonNullish(examples)
+    );
+
+    if (filteredResponseExamples.length === 0) {
+      filteredResponseExamples.push(["", [undefined]]);
+    }
+
+    // Match based on index, saturating examples at the end of lists if mismatched
+    this.matchExamplesByIndex(
+      filteredRequestExamples,
+      filteredResponseExamples
+    );
+    this.addGlobalFallbackExample(this.requests, responseExamples);
 
     if (this.examples.length === 0) {
       this.examples = undefined;
