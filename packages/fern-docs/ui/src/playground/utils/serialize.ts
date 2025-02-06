@@ -53,6 +53,25 @@ export async function serializeFormStateBody(
                 p.key === key && p.type === "property"
             );
 
+            const contentType =
+              compact(flatten([property?.contentType]))[0] ??
+              (usesApplicationJsonInFormDataValue
+                ? "application/json"
+                : undefined);
+
+            if (property?.exploded) {
+              // For exploded form fields, convert value to array if not already
+              const arrayValue = Array.isArray(value.value)
+                ? value.value
+                : [value.value];
+              formDataValue[key] = {
+                type: "exploded",
+                value: arrayValue,
+                contentType,
+              };
+              break;
+            }
+
             // check if the json value is a string and performa a safe parse operation to check if the json is stringified
             if (typeof value.value === "string") {
               value.value = safeParse(value.value);
@@ -62,11 +81,7 @@ export async function serializeFormStateBody(
               ...value,
               // this is a hack to allow the API Playground to send JSON blobs in form data
               // revert this once we have a better solution
-              contentType:
-                compact(flatten([property?.contentType]))[0] ??
-                (usesApplicationJsonInFormDataValue
-                  ? "application/json"
-                  : undefined),
+              contentType,
             };
             break;
           }

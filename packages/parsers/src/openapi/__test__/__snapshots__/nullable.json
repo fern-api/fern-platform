@@ -52,15 +52,15 @@
               "id": "id",
               "name": "name",
               "email": "email",
-              "createdAt": "null",
+              "createdAt": null,
               "settings": {
                 "theme": "theme",
                 "notifications": false,
-                "lastModified": "null"
+                "lastModified": null
               },
               "stats": {
-                "totalLogins": "null",
-                "lastLoginTime": "null",
+                "totalLogins": null,
+                "lastLoginTime": null,
                 "accountStatus": "active"
               }
             }
@@ -122,15 +122,15 @@
               "id": "id",
               "name": "name",
               "email": "email",
-              "createdAt": "null",
+              "createdAt": null,
               "settings": {
                 "theme": "theme",
                 "notifications": false,
-                "lastModified": "null"
+                "lastModified": null
               },
               "stats": {
-                "totalLogins": "null",
-                "lastLoginTime": "null",
+                "totalLogins": null,
+                "lastLoginTime": null,
                 "accountStatus": "active"
               }
             }
@@ -241,15 +241,15 @@
               "id": "id",
               "name": "name",
               "email": "email",
-              "createdAt": "null",
+              "createdAt": null,
               "settings": {
                 "theme": "theme",
                 "notifications": false,
-                "lastModified": "null"
+                "lastModified": null
               },
               "stats": {
-                "totalLogins": "null",
-                "lastLoginTime": "null",
+                "totalLogins": null,
+                "lastLoginTime": null,
                 "accountStatus": "active"
               }
             }

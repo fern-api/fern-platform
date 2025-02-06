@@ -12,6 +12,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
           type: "primitive",
           value: {
             type: "string",
+            format: undefined,
             regex: undefined,
             default: undefined,
             minLength: undefined,
@@ -44,6 +45,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,
@@ -85,6 +87,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,
@@ -100,6 +103,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,
@@ -141,6 +145,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,
@@ -156,6 +161,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,
@@ -194,6 +200,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,
@@ -256,6 +263,7 @@ export const IMDB_API_DEFINITION: FernRegistry.api.v1.read.ApiDefinition = {
               type: "primitive",
               value: {
                 type: "string",
+                format: undefined,
                 regex: undefined,
                 default: undefined,
                 minLength: undefined,

@@ -9,6 +9,11 @@ interface SnippetHttpRequestBodyJson {
   value?: unknown;
 }
 
+interface SnippetHttpRequestBodyJsonExploded {
+  type: "exploded";
+  value?: unknown[];
+}
+
 export interface SnippetHttpRequestBodyForm {
   type: "form";
   value: Record<string, SnippetHttpRequestBodyFormValue>;
@@ -27,6 +32,7 @@ export interface SnippetHttpRequestBodyFormValueFilenames {
 
 export type SnippetHttpRequestBodyFormValue =
   | SnippetHttpRequestBodyJson
+  | SnippetHttpRequestBodyJsonExploded
   | SnippetHttpRequestBodyFormValueFilename
   | SnippetHttpRequestBodyFormValueFilenames;
 
@@ -131,6 +137,7 @@ export function toSnippetHttpRequest(
                 toRet[key] = visitDiscriminatedUnion(
                   val
                 )._visit<SnippetHttpRequestBodyFormValue>({
+                  exploded: (value) => value,
                   json: (value) => value,
                   filename: (value) => ({
                     type: "filename",

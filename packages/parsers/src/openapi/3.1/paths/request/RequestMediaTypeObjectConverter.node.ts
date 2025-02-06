@@ -213,6 +213,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
                     type,
                     key: FernRegistry.PropertyKey(key),
                     contentType: field.contentType,
+                    exploded: undefined,
                     valueShape,
                     description: field.description,
                     availability: field.availability?.convert(),

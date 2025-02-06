@@ -320,4 +320,35 @@ describe("curl", () => {
           }'"
         `);
   });
+
+  it("generates request with exploded form parameters", () => {
+    expect(
+      convertToCurl(
+        {
+          method: "POST",
+          url: "https://api.example.com/upload",
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          searchParams: {},
+          body: {
+            type: "form",
+            value: {
+              tags: {
+                type: "exploded",
+                value: ["tag1", "tag2", "tag3"],
+              },
+            },
+          },
+        },
+        { usesApplicationJsonInFormDataValue: false }
+      )
+    ).toMatchInlineSnapshot(`
+          "curl -X POST https://api.example.com/upload \\
+               -H "Content-Type: multipart/form-data" \\
+               -F tags="tag1" \\
+               -F tags="tag2" \\
+               -F tags="tag3""
+        `);
+  });
 });

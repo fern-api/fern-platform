@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { HttpMethod } from "../../../constants";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { singleUndefinedArrayIfNullOrEmpty } from "../../../utils/singleUndefinedArrayIfNullOrEmpty";
 import { STATUS_CODE_MESSAGES } from "../../../utils/statusCodes";
@@ -36,6 +37,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.ResponsesObject>,
     protected path: string,
+    protected method: HttpMethod,
     protected requests: RequestMediaTypeObjectConverterNode[],
     protected shapes: ExampleObjectConverterNode.Shapes
   ) {
@@ -59,6 +61,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
             pathId: "errors",
           },
           this.path,
+          this.method,
           parseInt(statusCode),
           [],
           this.shapes
@@ -77,6 +80,7 @@ export class ResponsesObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               pathId: "responses",
             },
             this.path,
+            this.method,
             parseInt(statusCode),
             this.requests,
             this.shapes

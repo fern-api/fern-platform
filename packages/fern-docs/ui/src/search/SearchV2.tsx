@@ -32,6 +32,7 @@ import {
   CURRENT_VERSION_ATOM,
   DOMAIN_ATOM,
   HAS_API_PLAYGROUND,
+  SEARCH_DIALOG_OPEN_ATOM,
   THEME_SWITCH_ENABLED_ATOM,
   atomWithStorageString,
   useClosePlayground,
@@ -240,7 +241,7 @@ function CommandTheme({ onClose }: { onClose: () => void }) {
 }
 
 function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useAtom(SEARCH_DIALOG_OPEN_ATOM);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -281,6 +282,6 @@ function useCommandTrigger(): [boolean, Dispatch<SetStateAction<boolean>>] {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isMobile]);
+  }, [isMobile, setOpen]);
   return [open, setOpen];
 }

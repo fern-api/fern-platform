@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../BaseOpenApiV3_1Converter.node";
+import { HttpMethod } from "../../constants";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
 import { getEndpointId } from "../../utils/getEndpointId";
@@ -52,7 +53,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
     protected servers: ServerObjectConverterNode[] | undefined,
     protected globalAuth: SecurityRequirementObjectConverterNode | undefined,
     protected path: string,
-    protected method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE",
+    protected method: HttpMethod,
     protected basePath: XFernBasePathConverterNode | undefined,
     protected isWebhook?: boolean
   ) {
@@ -183,6 +184,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               pathId: "responses",
             },
             this.path,
+            this.method,
             Object.values(this.requests?.requestBodiesByContentType ?? {}),
             {
               pathParameters: this.pathParameters,

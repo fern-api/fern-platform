@@ -36,13 +36,57 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "double"
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double"
+                    }
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              },
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "list",
+                    "itemShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Value"
+                      }
+                    }
+                  }
+                }
               }
-            }
+            ]
           }
         }
       }
