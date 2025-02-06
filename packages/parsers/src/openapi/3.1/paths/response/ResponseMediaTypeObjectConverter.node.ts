@@ -484,19 +484,6 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
         case "application/json":
           if (this.streamingFormat == null) {
             return this.convertJsonLike();
-            // const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
-
-            // return maybeShapes
-            //   ?.map((shape) => {
-            //     if (
-            //       shape == null ||
-            //       (shape.type !== "object" && shape.type !== "alias")
-            //     ) {
-            //       return undefined;
-            //     }
-            //     return shape;
-            //   })
-            //   .filter(isNonNullish);
           } else {
             return this.convertStreamingFormat();
           }

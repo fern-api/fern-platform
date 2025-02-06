@@ -7,6 +7,7 @@ import {
 } from "../../BaseOpenApiV3_1Converter.node";
 import { getSchemaIdFromReference } from "../../utils/3.1/getSchemaIdFromReference";
 import { resolveSchemaReference } from "../../utils/3.1/resolveSchemaReference";
+import { AvailabilityConverterNode } from "../extensions/AvailabilityConverter.node";
 import { isNonArraySchema } from "../guards/isNonArraySchema";
 import { SchemaConverterNode } from "./SchemaConverter.node";
 import { EnumConverterNode } from "./primitives/EnumConverter.node";
@@ -20,7 +21,9 @@ export class ReferenceConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrac
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeWithTrackingConstructorArgs<OpenAPIV3_1.ReferenceObject>,
-    protected nullable: boolean | undefined
+    protected nullable: boolean | undefined,
+    public description: string | undefined,
+    public availability: AvailabilityConverterNode | undefined
   ) {
     super(args);
     this.safeParse();

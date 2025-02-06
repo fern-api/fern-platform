@@ -1,7 +1,9 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
+import { camelCase } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
+import { HttpMethod } from "../../../../client/generated/api";
 import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
@@ -11,6 +13,7 @@ import {
   SUPPORTED_REQUEST_CONTENT_TYPES,
 } from "../../../types/format.types";
 import { resolveReference } from "../../../utils/3.1/resolveReference";
+import { createTypeDefinition } from "../../../utils/createTypeDefinition";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { MediaType } from "../../../utils/MediaType";
 import { AvailabilityConverterNode } from "../../extensions/AvailabilityConverter.node";
@@ -52,7 +55,9 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.MediaTypeObject>,
-    contentType: string | undefined
+    contentType: string | undefined,
+    protected method: HttpMethod,
+    protected path: string
   ) {
     super(args);
     this.safeParse(contentType);
@@ -99,7 +104,14 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
             pathId: "schema",
             seenSchemas: new Set(),
           },
-          false
+          false,
+          this.input.schema.description,
+          new AvailabilityConverterNode({
+            input: this.input.schema,
+            context: this.context,
+            accessPath: this.accessPath,
+            pathId: "availability",
+          })
         );
       } else {
         this.resolvedSchema = this.input.schema;
@@ -162,27 +174,70 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
     }
   }
 
+  convertJsonLike():
+    | FernRegistry.api.latest.HttpRequestBodyShape
+    | FernRegistry.api.latest.HttpRequestBodyShape[]
+    | undefined {
+    const convertedJsonSchema = this.schema?.convert();
+    if (convertedJsonSchema == null) {
+      return undefined;
+    }
+    const convertedJsonSchemaArray =
+      maybeSingleValueToArray(convertedJsonSchema);
+
+    return convertedJsonSchemaArray
+      ?.map((convertedJsonSchema) => {
+        const type = convertedJsonSchema.type;
+        switch (type) {
+          case "object":
+          case "alias":
+            return convertedJsonSchema;
+          case "enum":
+          case "undiscriminatedUnion":
+          case "discriminatedUnion": {
+            const uniqueId = camelCase(
+              [this.method, this.path, this.contentType, "request"].join("_")
+            );
+            createTypeDefinition({
+              uniqueId,
+              type: convertedJsonSchema,
+              contextTypes: this.context.generatedTypes,
+              description: this.schema?.description,
+              availability: this.schema?.availability?.convert(),
+            });
+            return {
+              type: "alias" as const,
+              value: {
+                type: "id" as const,
+                id: FernRegistry.TypeId(uniqueId),
+                default:
+                  convertedJsonSchema.type === "enum" &&
+                  convertedJsonSchema.default != null
+                    ? {
+                        type: "enum" as const,
+                        value: convertedJsonSchema.default,
+                      }
+                    : undefined,
+              },
+            };
+          }
+          case undefined:
+            return undefined;
+          default:
+            new UnreachableCaseError(type);
+            return undefined;
+        }
+      })
+      .filter(isNonNullish);
+  }
+
   convert():
     | FernRegistry.api.latest.HttpRequestBodyShape
     | FernRegistry.api.latest.HttpRequestBodyShape[]
     | undefined {
     switch (this.contentType) {
       case "json": {
-        const convertedJsonSchema = this.schema?.convert();
-        if (convertedJsonSchema == null) {
-          return undefined;
-        }
-        const convertedJsonSchemaArray =
-          maybeSingleValueToArray(convertedJsonSchema);
-
-        return convertedJsonSchemaArray
-          ?.map((convertedJsonSchema) =>
-            convertedJsonSchema.type === "object" ||
-            convertedJsonSchema.type === "alias"
-              ? convertedJsonSchema
-              : undefined
-          )
-          .filter(isNonNullish);
+        return this.convertJsonLike();
       }
       case "bytes":
         return {
@@ -259,21 +314,7 @@ export class RequestMediaTypeObjectConverterNode extends BaseOpenApiV3_1Converte
         }));
       }
       case undefined: {
-        const convertedJsonSchema = this.schema?.convert();
-        if (convertedJsonSchema == null) {
-          return undefined;
-        }
-        const convertedJsonSchemaArray =
-          maybeSingleValueToArray(convertedJsonSchema);
-
-        return convertedJsonSchemaArray
-          ?.map((convertedJsonSchema) =>
-            convertedJsonSchema.type === "object" ||
-            convertedJsonSchema.type === "alias"
-              ? convertedJsonSchema
-              : undefined
-          )
-          .filter(isNonNullish);
+        return this.convertJsonLike();
       }
       default:
         return undefined;

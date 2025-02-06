@@ -8840,7 +8840,18 @@
           }
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "update_contact_request"
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -9762,7 +9773,18 @@
           }
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "create_contact_request"
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -13728,7 +13750,18 @@
           }
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "postConversationsIdPartsJsonRequest"
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -22927,7 +22960,18 @@
           }
         }
       ],
-      "requests": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "postTagsJsonRequest"
+            }
+          }
+        }
+      ],
       "responses": [
         {
           "statusCode": 200,
@@ -25195,17 +25239,7 @@
             "type": "alias",
             "value": {
               "type": "id",
-              "id": "contact_reply_ticket_request"
-            }
-          }
-        },
-        {
-          "contentType": "application/json",
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "admin_reply_ticket_request"
+              "id": "postTicketsIdReplyJsonRequest"
             }
           }
         }
@@ -45771,6 +45805,120 @@
         ]
       },
       "description": "Response returned when an object is deleted"
+    },
+    "postConversationsIdPartsJsonRequest": {
+      "name": "postConversationsIdPartsJsonRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "close_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "snooze_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "open_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "assign_conversation_request"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "postTagsJsonRequest": {
+      "name": "postTagsJsonRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "create_or_update_tag_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "tag_company_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "untag_company_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "tag_multiple_users_request"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "postTicketsIdReplyJsonRequest": {
+      "name": "postTicketsIdReplyJsonRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "admin_reply_ticket_request"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
