@@ -143,7 +143,10 @@ export class OpenApiDocumentConverterNode extends BaseOpenApiV3_1ConverterNode<
       FernRegistry.api.latest.SubpackageMetadata
     > = computeSubpackages({ endpoints, webhookEndpoints });
 
-    const types = this.components?.convert();
+    const types = {
+      ...this.components?.convert(),
+      ...this.context.generatedTypes,
+    };
 
     return {
       id: FernRegistry.ApiDefinitionId(apiDefinitionId),
