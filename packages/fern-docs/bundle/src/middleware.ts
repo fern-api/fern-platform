@@ -146,10 +146,9 @@ export const middleware: NextMiddleware = async (request) => {
     );
   }
 
-  return NextResponse.rewrite(
-    withPathname(request, `/${domain}/~static${pathname}`),
-    { request: { headers } }
-  );
+  return NextResponse.next({
+    request: { headers },
+  });
 };
 
 export const config = {

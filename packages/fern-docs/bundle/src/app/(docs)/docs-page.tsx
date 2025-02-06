@@ -8,7 +8,6 @@ import { NextApp } from "@/components/docs/NextApp";
 import FeedbackPopover from "@/components/feedback/FeedbackPopover";
 import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import { DocsContent } from "@/components/resolver/DocsContent";
-import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
 import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
@@ -55,15 +54,13 @@ export async function DocsPageComponent({
 }) {
   const slug = FernNavigation.slugjoin(params.slug);
   const loader = await createCachedDocsLoader(params.domain, fern_token);
-  const [baseUrl, config, authState, edgeFlags, files, colors] =
-    await Promise.all([
-      loader.getBaseUrl(),
-      loader.getConfig(),
-      loader.getAuthState(addLeadingSlash(slug)),
-      getEdgeFlags(loader.domain),
-      loader.getFiles(),
-      loader.getColors(),
-    ]);
+  const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
+    loader.getBaseUrl(),
+    loader.getConfig(),
+    loader.getAuthState(addLeadingSlash(slug)),
+    getEdgeFlags(loader.domain),
+    loader.getColors(),
+  ]);
 
   // check for redirects
   const configuredRedirect = getRedirectForPath(
@@ -334,14 +331,6 @@ export async function DocsPageComponent({
     theme: edgeFlags.isCohereTheme ? "cohere" : "default",
     analyticsConfig: config?.analyticsConfig,
     defaultLang: config?.defaultLanguage ?? "curl",
-    stylesheet: renderThemeStylesheet(
-      colors,
-      config?.typographyV2,
-      config?.layout,
-      config?.css,
-      files,
-      found.tabs.length > 0
-    ),
     featureFlagsConfig: {
       launchDarkly,
     },

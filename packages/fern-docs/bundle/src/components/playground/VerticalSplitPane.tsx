@@ -1,3 +1,5 @@
+"use client";
+
 import cn, { clsx } from "clsx";
 import {
   Children,

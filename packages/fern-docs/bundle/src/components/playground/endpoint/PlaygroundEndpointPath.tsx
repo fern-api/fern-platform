@@ -13,14 +13,12 @@ import {
 } from "@fern-api/fdr-sdk/api-definition";
 import unknownToString from "@fern-api/ui-core-utils/unknownToString";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
-import { CopyToClipboardButton, FernButton } from "@fern-docs/components";
+import { CopyToClipboardButton } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import { useBooleanState } from "@fern-ui/react-commons";
-import * as Dialog from "@radix-ui/react-dialog";
 import cn from "clsx";
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
-import { Xmark } from "iconoir-react";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
@@ -167,9 +165,9 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
         />
       </div>
 
-      <Dialog.Close asChild className="max-sm:hidden">
+      {/* <Dialog.Close asChild className="max-sm:hidden">
         <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
-      </Dialog.Close>
+      </Dialog.Close> */}
     </div>
   );
 };

@@ -83,7 +83,6 @@ export interface DocsProps {
   theme: FernTheme;
   user: FernUser | undefined;
   defaultLang: DocsV1Read.ProgrammingLanguage;
-  stylesheet: string;
   featureFlagsConfig: FeatureFlagsConfig | undefined;
 }
 

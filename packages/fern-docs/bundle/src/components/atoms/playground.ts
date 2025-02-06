@@ -36,6 +36,7 @@ import {
   getInitialEndpointRequestFormStateWithExample,
   getInitialWebSocketRequestFormState,
 } from "../playground/utils";
+import { flattenApiSection } from "../playground/utils/flatten-apis";
 import { pascalCaseHeaderKeys } from "../playground/utils/header-key-case";
 import { FERN_USER_ATOM } from "./auth";
 import { EDGE_FLAGS_ATOM } from "./flags";
@@ -46,6 +47,7 @@ import {
   CURRENT_NODE_ATOM,
   DOMAIN_ATOM,
   NAVIGATION_NODES_ATOM,
+  SIDEBAR_ROOT_NODE_ATOM,
 } from "./navigation";
 import { atomWithStorageValidation } from "./utils/atomWithStorageValidation";
 import { IS_MOBILE_SCREEN_ATOM } from "./viewport";
@@ -634,3 +636,7 @@ export const PLAYGROUND_ENVIRONMENT_ATOM = atom<string | undefined>(undefined);
 export const usePlaygroundEnvironment = (): string | undefined => {
   return useAtomValue(PLAYGROUND_ENVIRONMENT_ATOM);
 };
+
+export const PLAYGROUND_API_GROUPS_ATOM = atom((get) => {
+  return flattenApiSection(get(SIDEBAR_ROOT_NODE_ATOM));
+});

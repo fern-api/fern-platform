@@ -1,10 +1,8 @@
 import { NodeId } from "@fern-api/fdr-sdk/navigation";
-import { FernButton } from "@fern-docs/components";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import cn from "clsx";
 import { animate, motion, useMotionValue } from "framer-motion";
-import { Xmark } from "iconoir-react";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useAtomCallback } from "jotai/utils";
 import { ReactElement, memo, useEffect } from "react";
@@ -14,6 +12,7 @@ import {
   IS_MOBILE_SCREEN_ATOM,
   MAX_PLAYGROUND_HEIGHT_ATOM,
   MOBILE_SIDEBAR_ENABLED_ATOM,
+  PLAYGROUND_API_GROUPS_ATOM,
   PLAYGROUND_NODE_ID,
   VIEWPORT_HEIGHT_ATOM,
   useAtomEffect,
@@ -27,7 +26,6 @@ import { PlaygroundContent } from "./PlaygroundContent";
 import { HorizontalSplitPane } from "./VerticalSplitPane";
 import { PlaygroundEndpointSelectorContent } from "./endpoint";
 import { useResizeY } from "./useSplitPlane";
-import { PLAYGROUND_API_GROUPS_ATOM } from "./utils/flatten-apis";
 
 export const PlaygroundDrawer = memo((): ReactElement | null => {
   const selectionState = usePlaygroundNode();
@@ -107,14 +105,14 @@ export const PlaygroundDrawer = memo((): ReactElement | null => {
       </div>
 
       <div className="flex items-center justify-end">
-        <Dialog.Close asChild>
+        {/* <Dialog.Close asChild>
           <FernButton
             variant="minimal"
             className="-mr-3"
             icon={<Xmark />}
             rounded
           />
-        </Dialog.Close>
+        </Dialog.Close> */}
       </div>
     </div>
   );

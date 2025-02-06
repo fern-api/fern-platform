@@ -1,11 +1,12 @@
+import { FernLinkButton } from "@/components/components/FernLinkButton";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FernButton, FernTooltip } from "@fern-docs/components";
+import { FernTooltip } from "@fern-docs/components";
 import { HttpMethodBadge } from "@fern-docs/components/badges";
 import clsx from "clsx";
 import { atom, useAtomValue } from "jotai";
 import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
-import { getApiDefinitionAtom, useOpenPlayground } from "../../atoms";
+import { getApiDefinitionAtom } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
 import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
 
@@ -13,13 +14,13 @@ interface PlaygroundEndpointSelectorLeafNodeProps {
   node: FernNavigation.EndpointNode | FernNavigation.WebSocketNode;
   filterValue: string;
   active: boolean;
-  closeDropdown: (() => void) | undefined;
+  shallow?: boolean;
 }
 
 export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   HTMLLIElement,
   PlaygroundEndpointSelectorLeafNodeProps
->(({ node, filterValue, active, closeDropdown }, ref) => {
+>(({ node, filterValue, active, shallow }, ref) => {
   const preload = usePreloadApiLeaf();
   const text = renderTextWithHighlight(node.title, filterValue);
 
@@ -42,14 +43,6 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
     )
   );
 
-  const setSelectionStateAndOpen = useOpenPlayground();
-
-  const createSelectEndpoint =
-    (endpoint: FernNavigation.NavigationNodeApiLeaf) => () => {
-      void setSelectionStateAndOpen(endpoint);
-      closeDropdown?.();
-    };
-
   const tooltipContent =
     description != null ? <Markdown mdx={description} size="xs" /> : undefined;
 
@@ -57,13 +50,14 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
     return (
       <li ref={ref}>
         <FernTooltip content={tooltipContent} side="right">
-          <FernButton
+          <FernLinkButton
+            href={`/~/api-explorer/${node.slug}`}
+            shallow={shallow}
             text={text}
             className="w-full text-left"
             variant="minimal"
             intent={active ? "primary" : "none"}
             active={active}
-            onClick={createSelectEndpoint(node)}
             icon={
               <HttpMethodBadge
                 method={node.method}
@@ -85,13 +79,14 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
     return (
       <li ref={ref}>
         <FernTooltip content={tooltipContent} side="right">
-          <FernButton
+          <FernLinkButton
+            href={`/~/api-explorer/${node.slug}`}
+            shallow={shallow}
             text={text}
             className="w-full text-left"
             variant="minimal"
             intent={active ? "primary" : "none"}
             active={active}
-            onClick={createSelectEndpoint(node)}
             icon={
               <HttpMethodBadge
                 method="GET"

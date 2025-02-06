@@ -1,8 +1,8 @@
-import { ReactElement } from "react";
-import { useInitializeTheme } from "../atoms";
-import { ThemeStylesheet } from "./stylesheet";
+"use client";
 
-export function InitializeTheme(): ReactElement {
+import { useInitializeTheme } from "../atoms";
+
+export function InitializeTheme() {
   useInitializeTheme();
-  return <ThemeStylesheet />;
+  return false;
 }

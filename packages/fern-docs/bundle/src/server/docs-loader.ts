@@ -7,6 +7,7 @@ import {
   FernDocs,
   FernNavigation,
 } from "@fern-api/fdr-sdk";
+import { ApiDefinitionV1ToLatest } from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionId, PageId } from "@fern-api/fdr-sdk/navigation";
 import { CONTINUE, SKIP } from "@fern-api/fdr-sdk/traversers";
 import { isPlainObject } from "@fern-api/ui-core-utils";
@@ -15,6 +16,7 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
 import { unstable_cache } from "next/cache";
+import { cache } from "react";
 import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
@@ -42,10 +44,7 @@ export interface DocsLoader {
   /**
    * @returns the api definition for the given id
    */
-  getApi: (
-    id: string,
-    endpointId: string | undefined
-  ) => Promise<ApiDefinition.ApiDefinition | undefined>;
+  getApi: (id: string) => Promise<ApiDefinition.ApiDefinition | undefined>;
 
   /**
    * @returns the root node of the docs (aware of authentication)
@@ -124,6 +123,13 @@ export const createCachedDocsLoader = async (
   return new CachedDocsLoaderImpl(domain, fern_token, authConfig, getAuthState);
 };
 
+/**
+ * This class implements the DocsLoader interface using loadWithUrl + unstable_cache.
+ * The unstable_cache helps us speed up rendering specific parts of the page that are static.
+ * It has a hard-limit of 2MB which is why we cannot use it to cache the entire response.
+ * The expectation is that moving forward, we'll update the underlying API to be more cache-friendly
+ * in a piece-meal fashion, and eventually remove all use of loadWithUrl.
+ */
 class CachedDocsLoaderImpl implements DocsLoader {
   constructor(
     private _domain: string,
@@ -140,9 +146,13 @@ class CachedDocsLoaderImpl implements DocsLoader {
     return this._fern_token;
   }
 
+  // this reduces the number of times we call loadWithUrl to render the same page
+  // unlike unstable_cache, this does _not_ interact with the data cache.
+  private loadWithUrl = cache(loadWithUrl);
+
   public getBaseUrl = unstable_cache(
     async (): Promise<DocsV2Read.BaseUrl> => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return { domain: this.domain, basePath: undefined };
       }
@@ -154,7 +164,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getFiles = unstable_cache(
     async (): Promise<Record<string, FileData>> => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return {};
       }
@@ -181,11 +191,22 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getApi = unstable_cache(
     async (id: string): Promise<ApiDefinition.ApiDefinition | undefined> => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
-      return response.body.definition.apisV2[ApiDefinitionId(id)];
+      const latest = response.body.definition.apisV2[ApiDefinitionId(id)];
+      if (latest != null) {
+        return latest;
+      }
+      const v1 = response.body.definition.apis[ApiDefinitionId(id)];
+      if (v1 == null) {
+        return undefined;
+      }
+      return ApiDefinitionV1ToLatest.from(
+        v1,
+        await getEdgeFlags(this.domain)
+      ).migrate();
     },
     ["docs-loader:api", this.domain],
     { tags: [this.domain], revalidate: false }
@@ -219,7 +240,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
    */
   public unsafe_getFullRoot = unstable_cache(
     async () => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -250,7 +271,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getConfig = unstable_cache(
     async () => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -263,7 +284,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getPage = unstable_cache(
     async (pageId: string) => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return undefined;
       }
@@ -321,7 +342,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getMdxBundlerFiles = unstable_cache(
     async () => {
-      const response = await loadWithUrl(this.domain);
+      const response = await this.loadWithUrl(this.domain);
       if (!response.ok) {
         return {};
       }
@@ -361,9 +382,9 @@ class CachedDocsLoaderImpl implements DocsLoader {
     return {
       light: light
         ? {
-            logo: light.logo ? toFile(files[light.logo]) : undefined,
+            logo: light.logo ? files[light.logo] : undefined,
             backgroundImage: light.backgroundImage
-              ? toFile(files[light.backgroundImage])
+              ? files[light.backgroundImage]
               : undefined,
             accentPrimary: toRgbaColor(light.accentPrimary),
             background: toRgbaColor(light.background),
@@ -375,9 +396,9 @@ class CachedDocsLoaderImpl implements DocsLoader {
         : undefined,
       dark: dark
         ? {
-            logo: dark.logo ? toFile(files[dark.logo]) : undefined,
+            logo: dark.logo ? files[dark.logo] : undefined,
             backgroundImage: dark.backgroundImage
-              ? toFile(files[dark.backgroundImage])
+              ? files[dark.backgroundImage]
               : undefined,
             accentPrimary: toRgbaColor(dark.accentPrimary),
             background: toRgbaColor(dark.background),
@@ -452,20 +473,6 @@ function toRgbaColor(color: object | undefined): RgbaColor | undefined {
     };
   }
   return undefined;
-}
-
-function toFile(file: object | undefined): FileData | undefined {
-  if (!file || !isPlainObject(file) || typeof file.url !== "string") {
-    return undefined;
-  }
-  return {
-    src: file.url,
-    width: typeof file.width === "number" ? file.width : undefined,
-    height: typeof file.height === "number" ? file.height : undefined,
-    blurDataURL:
-      typeof file.blurDataUrl === "string" ? file.blurDataUrl : undefined,
-    alt: typeof file.alt === "string" ? file.alt : undefined,
-  };
 }
 
 export function toPx(

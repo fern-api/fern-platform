@@ -1,17 +1,26 @@
-import { useAtomValue } from "jotai";
-import { ReactElement } from "react";
-import { DOCS_ATOM, LOGO_ATOM } from "../atoms";
+"use client";
+
+import { FileData } from "@/server/types";
+import { PropsWithChildren } from "react";
 import { FernImage } from "../components/FernImage";
+import { FernLink } from "../components/FernLink";
 
-export function HeaderLogoImage(): ReactElement | null {
-  const title = useAtomValue(DOCS_ATOM).title ?? "Logo";
-  const { light, dark, height } = useAtomValue(LOGO_ATOM);
-
+export function HeaderLogoImage({
+  light,
+  dark,
+  alt,
+  height,
+}: {
+  light?: FileData;
+  dark?: FileData;
+  alt: string;
+  height: number;
+}) {
   if (light != null && dark != null) {
     return (
       <>
         <FernImage
-          alt={title}
+          alt={alt}
           src={light.src}
           className="fern-logo-light"
           height={light.height}
@@ -23,7 +32,7 @@ export function HeaderLogoImage(): ReactElement | null {
           style={{ height, width: "auto" }}
         />
         <FernImage
-          alt={title}
+          alt={alt}
           src={dark.src}
           className="fern-logo-dark"
           height={dark.height}
@@ -46,7 +55,7 @@ export function HeaderLogoImage(): ReactElement | null {
 
   return (
     <FernImage
-      alt={title}
+      alt={alt}
       src={logoFile.src}
       className="fern-logo"
       height={logoFile.height}
@@ -57,5 +66,17 @@ export function HeaderLogoImage(): ReactElement | null {
       quality={100}
       style={{ height, width: "auto" }}
     />
+  );
+}
+
+export function HeaderLogoContainer({
+  children,
+  href,
+}: PropsWithChildren<{ href: string | undefined }>) {
+  const container = <div className="fern-logo-container">{children}</div>;
+  return href != null ? (
+    <FernLink href={href}>{container}</FernLink>
+  ) : (
+    container
   );
 }

@@ -1,7 +1,4 @@
-import { FernButton } from "@fern-docs/components";
 import { Badge } from "@fern-docs/components/badges";
-import * as Dialog from "@radix-ui/react-dialog";
-import { Xmark } from "iconoir-react";
 import { ReactElement } from "react";
 import { noop } from "ts-essentials";
 import { PlaygroundSendRequestButton } from "../PlaygroundSendRequestButton";
@@ -22,9 +19,9 @@ function PlaygroundEndpointPath() {
         <PlaygroundSendRequestButton />
       </div>
 
-      <Dialog.Close asChild className="max-sm:hidden">
+      {/* <Dialog.Close asChild className="max-sm:hidden">
         <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
-      </Dialog.Close>
+      </Dialog.Close> */}
     </div>
   );
 }

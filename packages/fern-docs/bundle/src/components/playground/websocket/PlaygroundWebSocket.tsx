@@ -1,3 +1,5 @@
+"use client";
+
 import type { WebSocketContext } from "@fern-api/fdr-sdk/api-definition";
 import {
   WebSocketMessage,

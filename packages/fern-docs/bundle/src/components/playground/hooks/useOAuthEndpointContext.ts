@@ -1,8 +1,8 @@
+import { PLAYGROUND_API_GROUPS_ATOM } from "@/components/atoms";
 import type { APIV1Read } from "@fern-api/fdr-sdk";
 import { EndpointNode } from "@fern-api/fdr-sdk/navigation";
 import { atom, useAtomValue } from "jotai";
 import { useMemoOne } from "use-memo-one";
-import { PLAYGROUND_API_GROUPS_ATOM } from "../utils/flatten-apis";
 import { useEndpointContext } from "./useEndpointContext";
 
 export function useOAuthEndpointContext(

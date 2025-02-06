@@ -8,7 +8,6 @@ import { BgImageGradient } from "../components/BgImageGradient";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { JavascriptProvider } from "../components/JavascriptProvider";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
-import { PlaygroundContextProvider } from "../playground/PlaygroundContext";
 import { InitializeTheme } from "../themes";
 import { scrollToRoute } from "../util/anchor";
 
@@ -56,7 +55,7 @@ export function DocsPage({
       <SearchDialog />
       <BgImageGradient />
       <FernErrorBoundary>{children}</FernErrorBoundary>
-      <PlaygroundContextProvider />
+      {/* <PlaygroundContextProvider /> */}
       <JavascriptProvider />
     </>
   );

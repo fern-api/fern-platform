@@ -2,6 +2,7 @@
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import Preload, { PreloadHref } from "@/components/preload";
+import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { ThemeScript } from "@/components/themes/ThemeScript";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
@@ -12,23 +13,24 @@ import { Toaster } from "@fern-docs/components";
 import { getEdgeFlags } from "@fern-docs/edge-config";
 import { EdgeFlags } from "@fern-docs/utils";
 import { compact, uniqBy } from "es-toolkit/array";
+import { cookies } from "next/headers";
 import { Metadata, Viewport } from "next/types";
 import tinycolor from "tinycolor2";
 import { toImageDescriptor } from "../seo";
+import { GlobalStyles } from "./global-styles";
 
 export default async function Layout({
   children,
-  params,
+  explorer,
 }: {
   children: React.ReactNode;
-  params: {
-    domain: string;
-  };
+  explorer: React.ReactNode;
 }) {
-  const docsLoader = await createCachedDocsLoader(params.domain);
+  const domain = getDocsDomainApp();
+  const docsLoader = await createCachedDocsLoader(domain);
   const [config, edgeFlags, files, colors] = await Promise.all([
     docsLoader.getConfig(),
-    getEdgeFlags(params.domain),
+    getEdgeFlags(domain),
     docsLoader.getFiles(),
     docsLoader.getColors(),
   ]);
@@ -37,14 +39,24 @@ export default async function Layout({
     files,
     edgeFlags
   );
+  const stylesheet = renderThemeStylesheet(
+    colors,
+    config?.typographyV2,
+    config?.layout,
+    config?.css,
+    files,
+    true // todo: fix this
+  );
   return (
     <>
+      <GlobalStyles>{stylesheet}</GlobalStyles>
       {preloadHrefs.map((href) => (
         <Preload key={href.href} href={href.href} options={href.options} />
       ))}
       <ThemeScript colors={colors} />
       <Toaster />
       {children}
+      {explorer}
       <CustomerAnalytics />
     </>
   );
@@ -77,14 +89,10 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
   return tinycolor(color).toHexString();
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: {
-    domain: string;
-  };
-}): Promise<Metadata> {
-  const docsLoader = await createCachedDocsLoader(params.domain, params.domain);
+export async function generateMetadata(): Promise<Metadata> {
+  const domain = getDocsDomainApp();
+  const fern_token = cookies().get("fern_token")?.value;
+  const docsLoader = await createCachedDocsLoader(domain, fern_token);
   const [files, config, baseUrl] = await Promise.all([
     docsLoader.getFiles(),
     docsLoader.getConfig(),

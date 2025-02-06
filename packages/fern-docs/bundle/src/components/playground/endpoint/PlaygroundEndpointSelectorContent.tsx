@@ -1,3 +1,5 @@
+"use client";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import {
@@ -6,8 +8,10 @@ import {
   FernScrollArea,
   FernTooltipProvider,
 } from "@fern-docs/components";
+import { removeTrailingSlash } from "@fern-docs/utils";
 import cn, { clsx } from "clsx";
 import { Search, Slash, Xmark } from "iconoir-react";
+import { usePathname } from "next/navigation";
 import {
   Fragment,
   forwardRef,
@@ -22,9 +26,8 @@ import { PlaygroundEndpointSelectorLeafNode } from "./PlaygroundEndpointSelector
 
 export interface PlaygroundEndpointSelectorContentProps {
   apiGroups: ApiGroup[];
-  closeDropdown?: () => void;
-  selectedEndpoint?: FernNavigation.NavigationNodeApiLeaf;
   className?: string;
+  shallow?: boolean;
 }
 
 function matchesEndpoint(
@@ -46,7 +49,8 @@ function matchesEndpoint(
 export const PlaygroundEndpointSelectorContent = forwardRef<
   HTMLDivElement,
   PlaygroundEndpointSelectorContentProps
->(({ apiGroups, closeDropdown, selectedEndpoint, className }, ref) => {
+>(({ apiGroups, className, shallow }, ref) => {
+  const pathname = usePathname();
   const scrollRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   useImperativeHandle(ref, () => scrollRef.current!);
@@ -89,7 +93,8 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
         )}
         <ul className="relative z-0 list-none">
           {apiLeafNodes.map((node) => {
-            const active = node.id === selectedEndpoint?.id;
+            const active =
+              removeTrailingSlash(pathname) === `/~/api-explorer/${node.slug}`;
             return (
               <PlaygroundEndpointSelectorLeafNode
                 key={node.id}
@@ -97,7 +102,7 @@ export const PlaygroundEndpointSelectorContent = forwardRef<
                 active={active}
                 ref={active ? selectedItemRef : undefined}
                 filterValue={filterValue}
-                closeDropdown={closeDropdown}
+                shallow={shallow}
               />
             );
           })}

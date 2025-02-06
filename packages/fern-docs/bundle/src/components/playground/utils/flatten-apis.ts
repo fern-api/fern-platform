@@ -1,6 +1,4 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { atom } from "jotai";
-import { SIDEBAR_ROOT_NODE_ATOM } from "../../atoms";
 import { createBreadcrumbSlicer } from "./breadcrumb";
 
 export interface ApiGroup {
@@ -16,7 +14,7 @@ const trimBreadcrumbs = createBreadcrumbSlicer<ApiGroup>({
 });
 
 export function flattenApiSection(
-  root: FernNavigation.SidebarRootNode | undefined
+  root: FernNavigation.NavigationNode | undefined
 ): ApiGroup[] {
   if (root == null) {
     return [];
@@ -52,7 +50,3 @@ export function flattenApiSection(
 
   return trimBreadcrumbs(result);
 }
-
-export const PLAYGROUND_API_GROUPS_ATOM = atom((get) => {
-  return flattenApiSection(get(SIDEBAR_ROOT_NODE_ATOM));
-});
