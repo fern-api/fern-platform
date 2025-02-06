@@ -1,6 +1,6 @@
 import { FdrClient } from "@fern-api/fdr-sdk/client";
 import { once } from "es-toolkit/function";
-import { fernToken } from "./env-variables";
+import { fernToken_admin } from "./env-variables";
 
 function getEnvironment() {
   return (
@@ -9,5 +9,6 @@ function getEnvironment() {
 }
 
 export const provideRegistryService = once(
-  () => new FdrClient({ environment: getEnvironment(), token: fernToken() })
+  () =>
+    new FdrClient({ environment: getEnvironment(), token: fernToken_admin() })
 );

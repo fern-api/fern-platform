@@ -10,7 +10,7 @@ export function algoliaSearchApikey(): string {
   return getEnvVariable("ALGOLIA_SEARCH_API_KEY");
 }
 
-export function fernToken(): string {
+export function fernToken_admin(): string {
   return getEnvVariable("FERN_TOKEN");
 }
 

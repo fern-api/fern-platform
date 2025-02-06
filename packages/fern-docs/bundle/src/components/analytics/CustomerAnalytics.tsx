@@ -1,3 +1,5 @@
+"use client";
+
 import { DocsV1Read } from "@fern-api/fdr-sdk";
 import { isEqual } from "es-toolkit/predicate";
 import { useAtomValue } from "jotai";

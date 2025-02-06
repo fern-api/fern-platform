@@ -2,7 +2,7 @@ import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { OryOAuth2Client, getOryAuthorizationUrl } from "@/server/auth/ory";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { withSecureCookie } from "@/server/auth/with-secure-cookie";
-import { fernToken } from "@/server/env-variables";
+import { fernToken_admin } from "@/server/env-variables";
 import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { APIKeyInjectionConfig, OryAccessTokenSchema } from "@fern-docs/auth";
@@ -27,7 +27,7 @@ export async function GET(
 
   const returnToQueryParam = getReturnToQueryParam(edgeConfig);
 
-  const fern_token = fernToken();
+  const fern_token = fernToken_admin();
   const access_token = cookieJar.get("access_token")?.value;
   const refresh_token = cookieJar.get("refresh_token")?.value;
   const fernUser = await safeVerifyFernJWTConfig(fern_token, edgeConfig);

@@ -8,13 +8,13 @@ import { notFound } from "next/navigation";
 // import ApiReferencePage from "../api-reference/ApiReferencePage";
 import ChangelogEntryPage from "../changelog/ChangelogEntryPage";
 // import ChangelogPage from "../changelog/ChangelogPage";
-import React from "react";
 import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
 import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "../resolver/DocsContent";
 
 export async function DocsMainContent({
+  domain,
   node,
   parents,
   neighbors,
@@ -22,6 +22,7 @@ export async function DocsMainContent({
   // apiReferenceNodes,
   scope,
 }: {
+  domain: string;
   node: FernNavigation.NavigationNodePage;
   // apiReference: FernNavigation.ApiReferenceNode | undefined;
   parents: readonly FernNavigation.NavigationNodeParent[];
@@ -29,7 +30,7 @@ export async function DocsMainContent({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   scope?: Record<string, unknown>;
 }) {
-  const docsLoader = await createCachedDocsLoader();
+  const docsLoader = await createCachedDocsLoader(domain);
   const mdxBundlerFiles = await docsLoader.getMdxBundlerFiles();
   const fileResolver = await createFileResolver(docsLoader);
   const mdxOptions: FernSerializeMdxOptions = {
@@ -88,14 +89,12 @@ export async function DocsMainContent({
     const mdx = await serializeMdx(content.markdown, mdxOptions);
 
     return (
-      <React.Suspense fallback={<div>Loading...</div>}>
-        <LayoutEvaluator
-          fallbackTitle={node.title}
-          mdx={mdx}
-          breadcrumb={breadcrumb}
-          hasAside={false}
-        />
-      </React.Suspense>
+      <LayoutEvaluator
+        fallbackTitle={node.title}
+        mdx={mdx}
+        breadcrumb={breadcrumb}
+        hasAside={false}
+      />
     );
   }
 

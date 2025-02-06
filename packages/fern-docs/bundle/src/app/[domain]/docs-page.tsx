@@ -9,8 +9,10 @@ import FeedbackPopover from "@/components/feedback/FeedbackPopover";
 import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import { DocsContent } from "@/components/resolver/DocsContent";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
+import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
 import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
+import { getOrigin } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { createCachedDocsLoader, DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
@@ -44,13 +46,15 @@ import React from "react";
 import urlJoin from "url-join";
 import { toImageDescriptor } from "../seo";
 
-export default async function Page({
+export async function DocsPageComponent({
   params,
+  fern_token,
 }: {
-  params: { slug?: string[] };
+  params: { slug?: string[]; domain: string };
+  fern_token?: string;
 }) {
   const slug = FernNavigation.slugjoin(params.slug);
-  const loader = await createCachedDocsLoader();
+  const loader = await createCachedDocsLoader(params.domain, fern_token);
   const [baseUrl, config, authState, edgeFlags, files, colors] =
     await Promise.all([
       loader.getBaseUrl(),
@@ -187,7 +191,7 @@ export default async function Page({
     const redirect = new URL(withDefaultProtocol(loader.authConfig.redirect));
     redirect.searchParams.set(
       getReturnToQueryParam(loader.authConfig),
-      urlJoin(withDefaultProtocol(loader.host), slug)
+      urlJoin(getOrigin(), slug)
     );
 
     navbarLinks.push({
@@ -206,11 +210,11 @@ export default async function Page({
   if (authState.authed) {
     const logout = new URL(
       getApiRoute("/api/fern-docs/auth/logout"),
-      withDefaultProtocol(loader.host)
+      withDefaultProtocol(getOrigin())
     );
     logout.searchParams.set(
       getReturnToQueryParam(loader.authConfig),
-      urlJoin(withDefaultProtocol(loader.host), slug)
+      urlJoin(withDefaultProtocol(getOrigin()), slug)
     );
 
     navbarLinks.push({
@@ -369,38 +373,43 @@ export default async function Page({
 
   return (
     <NextApp pageProps={props}>
-      <DocsPage theme={props.theme}>
-        <FeedbackPopoverProvider>
-          <DocsMainContent
-            node={found.node}
-            parents={found.parents}
-            neighbors={await getNeighbors(
-              { prev: found.prev, next: found.next },
-              loader
-            )}
-            breadcrumb={found.breadcrumb}
-            // apiReferenceNodes={apiReferenceNodes}
-            scope={{
-              authed: authState.authed,
-              user: authState.authed ? authState.user : undefined,
-              version: found?.currentVersion?.versionId,
-              tab: found?.currentTab?.title,
-              slug: slug,
-            }}
-          />
-        </FeedbackPopoverProvider>
+      <DocsPage>
+        <ThemedDocs theme={props.theme}>
+          <FeedbackPopoverProvider>
+            <DocsMainContent
+              domain={params.domain}
+              node={found.node}
+              parents={found.parents}
+              neighbors={await getNeighbors(
+                { prev: found.prev, next: found.next },
+                loader
+              )}
+              breadcrumb={found.breadcrumb}
+              // apiReferenceNodes={apiReferenceNodes}
+              scope={{
+                authed: authState.authed,
+                user: authState.authed ? authState.user : undefined,
+                version: found?.currentVersion?.versionId,
+                tab: found?.currentTab?.title,
+                slug: slug,
+              }}
+            />
+          </FeedbackPopoverProvider>
+        </ThemedDocs>
       </DocsPage>
     </NextApp>
   );
 }
 
-export async function generateMetadata({
+export async function generateDocsPageMetadata({
   params,
+  fern_token,
 }: {
-  params: { slug?: string[] };
+  params: { slug?: string[]; domain: string };
+  fern_token?: string;
 }): Promise<Metadata> {
   const slug = FernNavigation.slugjoin(params.slug);
-  const docsLoader = await createCachedDocsLoader();
+  const docsLoader = await createCachedDocsLoader(params.domain, fern_token);
   const findNode = createFindNode(docsLoader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
     docsLoader.getFiles(),

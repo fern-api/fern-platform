@@ -1,5 +1,5 @@
 import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
-import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
+import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getEdgeFlags } from "@fern-docs/edge-config";
@@ -11,7 +11,11 @@ export async function GET(
 ): Promise<NextResponse> {
   const { api, endpoint } = params;
 
-  const authState = await getAuthStateEdge(req);
+  const { getAuthState, domain } = await createGetAuthStateEdge(req);
+  const [authState, flags] = await Promise.all([
+    getAuthState(),
+    getEdgeFlags(domain),
+  ]);
 
   if (!authState.ok) {
     return NextResponse.json(
@@ -20,10 +24,8 @@ export async function GET(
     );
   }
 
-  const flags = await getEdgeFlags(authState.domain);
-
   const apiDefinition = await ApiDefinitionLoader.create(
-    authState.domain,
+    domain,
     ApiDefinition.ApiDefinitionId(api)
   )
     .withEdgeFlags(flags)

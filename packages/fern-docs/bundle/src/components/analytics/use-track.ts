@@ -51,7 +51,7 @@ export function useSafeListenTrackEvents(
         console.warn("Error emitting track event", error, event);
       }
     };
-    window.addEventListener(TRACK_EVENT_NAME, handler);
+    window.addEventListener(TRACK_EVENT_NAME, handler, { passive: true });
     return () => window.removeEventListener(TRACK_EVENT_NAME, handler);
   }, [allowInternal]);
 }

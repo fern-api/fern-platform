@@ -100,7 +100,7 @@ export const CURRENT_NODE_ATOM = atom((get) => {
   // this sets the document title to the current node's title when shallow routing
   // (this will use the navigation node title rather than the page's actual title)
   if (node && typeof window !== "undefined") {
-    window.document.title = node.title;
+    // window.document.title = node.title;
   }
   return node;
 });

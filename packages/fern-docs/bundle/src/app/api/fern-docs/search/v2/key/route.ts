@@ -3,7 +3,7 @@ import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
 import {
   algoliaAppId,
   algoliaSearchApikey,
-  fernToken,
+  fernToken_admin,
 } from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
   }
 
-  const fern_token = await fernToken();
+  const fern_token = await fernToken_admin();
   const user = await safeVerifyFernJWTConfig(
     fern_token,
     await getAuthEdgeConfig(domain)

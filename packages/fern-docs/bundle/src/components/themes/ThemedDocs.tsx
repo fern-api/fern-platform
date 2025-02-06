@@ -1,24 +1,20 @@
-import dynamic from "next/dynamic";
+"use server";
+
+import { CohereDocs } from "./cohere/CohereDocs";
+import { DefaultDocs } from "./default/DefaultDocs";
 
 const THEMES = {
-  default: dynamic(
-    () =>
-      import("./default/DefaultDocs").then(({ DefaultDocs }) => DefaultDocs),
-    { ssr: true }
-  ),
-  cohere: dynamic(
-    () => import("./cohere/CohereDocs").then(({ CohereDocs }) => CohereDocs),
-    { ssr: true }
-  ),
+  default: DefaultDocs,
+  cohere: CohereDocs,
 };
 
 export type FernTheme = keyof typeof THEMES;
 
-export function ThemedDocs({
-  theme,
+export async function ThemedDocs({
+  theme = "default",
   children,
 }: {
-  theme: FernTheme;
+  theme: FernTheme | undefined;
   children: React.ReactNode;
 }) {
   const Docs = THEMES[theme];

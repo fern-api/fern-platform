@@ -17,10 +17,8 @@ import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
-import { withServerProps } from "./withServerProps";
 
 export interface DocsLoader {
-  host: string;
   domain: string;
   fern_token: string | undefined;
   authConfig: AuthEdgeConfig | undefined;
@@ -101,28 +99,22 @@ export interface DocsLoader {
 /**
  * Force cache the loadWithUrl call, so that `JSON.parse()` is called only once.
  */
-export const createCachedDocsLoader = async (): Promise<DocsLoader> => {
-  const { domain, host, fern_token } = withServerProps();
+export const createCachedDocsLoader = async (
+  domain: string,
+  fern_token?: string
+): Promise<DocsLoader> => {
   const authConfig = await getAuthEdgeConfig(domain);
   const { getAuthState } = await createGetAuthState(
     domain,
-    host,
     fern_token,
     authConfig
   );
-  return new CachedDocsLoaderImpl(
-    domain,
-    host,
-    fern_token,
-    authConfig,
-    getAuthState
-  );
+  return new CachedDocsLoaderImpl(domain, fern_token, authConfig, getAuthState);
 };
 
 class CachedDocsLoaderImpl implements DocsLoader {
   constructor(
     private _domain: string,
-    private _host: string,
     private _fern_token: string | undefined,
     private _authConfig: AuthEdgeConfig | undefined,
     private _getAuthState: (pathname?: string) => AsyncOrSync<AuthState>
@@ -130,10 +122,6 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public get domain() {
     return this._domain;
-  }
-
-  public get host() {
-    return this._host;
   }
 
   public get fern_token() {

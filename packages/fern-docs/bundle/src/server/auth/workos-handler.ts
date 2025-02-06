@@ -1,7 +1,7 @@
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { removeTrailingSlash } from "@fern-docs/utils";
 import urlJoin from "url-join";
 import { AuthState, getWorkosRbacRoles } from "./getAuthState";
+import { getOrigin } from "./origin";
 import { getWorkosSSOAuthorizationUrl } from "./workos";
 import {
   encryptSession,
@@ -14,7 +14,6 @@ import { toFernUser } from "./workos-user-to-fern-user";
 interface WorkosAuthParams {
   fernToken: string | undefined;
   organization: string;
-  host: string;
   pathname?: string;
   setFernToken?: (token: string) => void;
   authorizationUrl?: {
@@ -28,15 +27,12 @@ interface WorkosAuthParams {
 export async function handleWorkosAuth({
   fernToken,
   organization,
-  host,
   pathname,
   setFernToken,
   authorizationUrl,
 }: WorkosAuthParams): Promise<AuthState> {
-  const state = urlJoin(
-    removeTrailingSlash(withDefaultProtocol(host)),
-    pathname ?? ""
-  );
+  const origin = getOrigin();
+  const state = urlJoin(removeTrailingSlash(origin), pathname ?? "");
   const session =
     fernToken != null ? await getSessionFromToken(fernToken) : undefined;
   const workosUserInfo = await toSessionUserInfo(session);
@@ -74,10 +70,7 @@ export async function handleWorkosAuth({
   }
 
   const redirectUri = String(
-    new URL(
-      "/api/fern-docs/auth/sso/callback",
-      withDefaultProtocol(process.env.NEXT_PUBLIC_CDN_URI ?? host)
-    )
+    new URL("/api/fern-docs/auth/sso/callback", origin)
   );
   const authorizationUrlParams = getWorkosSSOAuthorizationUrl({
     redirectUri,

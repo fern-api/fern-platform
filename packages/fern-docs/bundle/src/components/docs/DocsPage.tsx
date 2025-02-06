@@ -3,15 +3,13 @@
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ReactElement, useEffect } from "react";
-import { useEdgeFlag, useMessageHandler, useSetJustNavigated } from "../atoms";
+import { useMessageHandler, useSetJustNavigated } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { JavascriptProvider } from "../components/JavascriptProvider";
-import { LinkPreloadApiRoute } from "../components/LinkPreload";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { PlaygroundContextProvider } from "../playground/PlaygroundContext";
 import { InitializeTheme } from "../themes";
-import { FernTheme, ThemedDocs } from "../themes/ThemedDocs";
 import { scrollToRoute } from "../util/anchor";
 
 const SearchDialog = dynamic(
@@ -26,10 +24,8 @@ let timer: number;
 
 export function DocsPage({
   children,
-  theme,
 }: {
   children: React.ReactNode;
-  theme: FernTheme;
 }): ReactElement | null {
   useConsoleMessage();
   useMessageHandler();
@@ -54,27 +50,12 @@ export function DocsPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const isSearchV2Enabled = useEdgeFlag("isSearchV2Enabled");
-  const isApiPlaygroundEnabled = useEdgeFlag("isApiPlaygroundEnabled");
-
   return (
     <>
-      <LinkPreloadApiRoute
-        href={
-          isSearchV2Enabled
-            ? "/api/fern-docs/search/v2/key"
-            : "/api/fern-docs/search/v1/key"
-        }
-      />
-      {isApiPlaygroundEnabled && (
-        <LinkPreloadApiRoute href="/api/fern-docs/auth/api-key-injection" />
-      )}
       <InitializeTheme />
       <SearchDialog />
       <BgImageGradient />
-      <ThemedDocs theme={theme}>
-        <FernErrorBoundary>{children}</FernErrorBoundary>
-      </ThemedDocs>
+      <FernErrorBoundary>{children}</FernErrorBoundary>
       <PlaygroundContextProvider />
       <JavascriptProvider />
     </>

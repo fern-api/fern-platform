@@ -1,13 +1,10 @@
 import type * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { joiner } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { atom, useAtomValue, useSetAtom } from "jotai";
+import { atom, useSetAtom } from "jotai";
 import { atomFamily } from "jotai/utils";
 import { useEffect } from "react";
-import { useMemoOne } from "use-memo-one";
 import { useIsLocalPreview } from "../contexts/local-preview";
-import { DOCS_ATOM } from "./docs";
-import { RESOLVED_API_DEFINITION_ATOM } from "./navigation";
 
 const SETTABLE_APIS_ATOM = atom<
   Record<ApiDefinition.ApiDefinitionId, ApiDefinition.ApiDefinition>
@@ -72,27 +69,17 @@ export function useIsApiReferencePaginated(): boolean {
 }
 
 export function useIsApiReferenceShallowLink(
-  node: FernNavigation.WithApiDefinitionId
+  _node: FernNavigation.WithApiDefinitionId
 ): boolean {
-  return useAtomValue(
-    useMemoOne(
-      () =>
-        atom((get) => {
-          const isPaginated = true;
-          const resolvedApi = get(RESOLVED_API_DEFINITION_ATOM);
-          return !isPaginated && resolvedApi?.id === node.apiDefinitionId;
-        }),
-      [node.apiDefinitionId]
-    )
-  );
+  return false;
 }
 
 export const ENDPOINT_ID_TO_SLUG_ATOM = atom<
   Record<FernNavigation.EndpointId, FernNavigation.Slug>
->((get) => {
-  const { content } = get(DOCS_ATOM);
-  if (content.type === "markdown-page") {
-    return content.endpointIdsToSlugs;
-  }
+>((_get) => {
+  // const { content } = get(DOCS_ATOM);
+  // if (content.type === "markdown-page") {
+  //   return content.endpointIdsToSlugs;
+  // }
   return {};
 });

@@ -21,6 +21,10 @@ export function withDefaultProtocol(
     return undefined;
   }
 
+  if (endpoint === "") {
+    throw new Error(`URL is empty`);
+  }
+
   // matches any protocol scheme at the beginning of the string (e.g., "http://", "https://", "ftp://")
   const protocolRegex = /^[a-z]+:\/\//i;
 

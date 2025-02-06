@@ -3,7 +3,7 @@ import { FernUser } from "@fern-docs/auth";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { NextRequest, NextResponse } from "next/server";
 import { FernNextResponse } from "./FernNextResponse";
-import { getAuthStateEdge } from "./auth/getAuthStateEdge";
+import { createGetAuthStateEdge } from "./auth/getAuthStateEdge";
 import { withSecureCookie } from "./auth/with-secure-cookie";
 import { getHostEdge } from "./xfernhost/edge";
 
@@ -18,9 +18,14 @@ export async function withMiddlewareAuth(
   next: (isLoggedIn: boolean, user: FernUser | undefined) => NextResponse
 ): Promise<NextResponse> {
   let fernToken: string | undefined;
-  const res = await getAuthStateEdge(request, pathname, (token: string) => {
-    fernToken = token;
-  });
+  const { getAuthState, allowedDestinations } = await createGetAuthStateEdge(
+    request,
+    (token: string) => {
+      fernToken = token;
+    }
+  );
+
+  const res = await getAuthState(pathname);
 
   if (res.authed) {
     const response = next(true, res.user);
@@ -44,7 +49,7 @@ export async function withMiddlewareAuth(
   if (res.authorizationUrl) {
     return FernNextResponse.redirect(request, {
       destination: res.authorizationUrl,
-      allowedDestinations: res.allowedDestinations,
+      allowedDestinations,
     });
   }
 

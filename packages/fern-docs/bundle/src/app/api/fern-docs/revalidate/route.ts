@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   revalidateTag(domain);
 
   if (req.nextUrl.searchParams.get("regenerate") === "true") {
-    const docs = await createCachedDocsLoader();
+    const docs = await createCachedDocsLoader(domain);
     const root = await docs.unsafe_getFullRoot();
     if (!root) {
       notFound();

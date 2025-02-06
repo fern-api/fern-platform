@@ -42,7 +42,7 @@ VIEWPORT_SIZE_ATOM.onMount = (set) => {
       set([window.innerWidth, window.innerHeight]);
     });
   };
-  window.addEventListener("resize", handleResize);
+  window.addEventListener("resize", handleResize, { passive: true });
   return () => {
     window.removeEventListener("resize", handleResize);
   };

@@ -1,3 +1,5 @@
+"use client";
+
 import { ColorsThemeConfig } from "@/server/types";
 import Script from "next/script";
 import type { ReactElement } from "react";

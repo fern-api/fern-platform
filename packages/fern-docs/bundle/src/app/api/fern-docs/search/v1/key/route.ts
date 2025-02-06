@@ -1,4 +1,4 @@
-import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
+import { createGetAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import { loadWithUrl } from "@/server/loadWithUrl";
 import { provideRegistryService } from "@/server/registry";
 import { getInkeepSettings } from "@fern-docs/edge-config";
@@ -10,7 +10,8 @@ export const runtime = "nodejs";
 export async function GET(
   req: NextRequest
 ): Promise<NextResponse<SearchConfig>> {
-  const authState = await getAuthStateEdge(req, req.nextUrl.pathname);
+  const { getAuthState, domain } = await createGetAuthStateEdge(req);
+  const authState = await getAuthState();
 
   if (!authState.ok) {
     return NextResponse.json(
@@ -19,13 +20,13 @@ export async function GET(
     );
   }
 
-  const docs = await loadWithUrl(authState.domain);
+  const docs = await loadWithUrl(domain);
 
   if (!docs.ok) {
     return NextResponse.json({ isAvailable: false }, { status: 503 });
   }
 
-  const inkeepSettings = await getInkeepSettings(authState.domain);
+  const inkeepSettings = await getInkeepSettings(domain);
   const searchInfo = docs.body.definition.search;
   const config = await getSearchConfig(
     provideRegistryService(),

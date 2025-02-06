@@ -21,13 +21,13 @@ export function useIsScrolled(ref?: RefObject<HTMLElement>): boolean {
 
     if (ref?.current) {
       const element = ref.current;
-      ref.current.addEventListener("scroll", handleScroll);
+      ref.current.addEventListener("scroll", handleScroll, { passive: true });
 
       return () => {
         element.removeEventListener("scroll", handleScroll);
       };
     } else if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleScroll);
+      window.addEventListener("scroll", handleScroll, { passive: true });
 
       return () => {
         window.removeEventListener("scroll", handleScroll);

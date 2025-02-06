@@ -8,13 +8,12 @@ import {
   algoliaAppId,
   algoliaWriteApiKey,
   fdrEnvironment,
-  fernToken,
+  fernToken_admin,
 } from "./env-variables";
 
 export const runReindexAlgolia = async (
   domain: string
 ): Promise<AlgoliaIndexerTaskResponse> => {
-  // eslint-disable-next-line no-console
   console.time("reindexing");
 
   await algoliaIndexSettingsTask({
@@ -28,11 +27,10 @@ export const runReindexAlgolia = async (
     writeApiKey: algoliaWriteApiKey(),
     indexName: SEARCH_INDEX,
     environment: fdrEnvironment(),
-    fernToken: fernToken(),
+    fernToken: fernToken_admin(),
     domain,
   });
 
-  // eslint-disable-next-line no-console
   console.timeEnd("reindexing");
 
   return response;

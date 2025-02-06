@@ -7,7 +7,7 @@ import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { AuthEdgeConfig } from "@fern-docs/auth";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
-import { getAuthState, type AuthState } from "./auth/getAuthState";
+import { createGetAuthState, type AuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { pruneWithAuthState } from "./withRbac";
 
@@ -65,13 +65,12 @@ export class DocsLoader {
       return [this.authState, this.authConfig];
     }
     return [
-      await getAuthState(
+      await createGetAuthState(
         this.domain,
         this.host,
         this.fernToken,
-        undefined,
         this.authConfig
-      ),
+      ).then(({ getAuthState }) => getAuthState()),
       this.authConfig,
     ];
   }
