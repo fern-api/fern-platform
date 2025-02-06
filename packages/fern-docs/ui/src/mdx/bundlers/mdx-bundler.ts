@@ -8,6 +8,7 @@ import {
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
+  rehypeExpressionToMd,
   rehypeMdxClassStyle,
   rehypeSqueezeParagraphs,
   remarkInjectEsm,
@@ -139,6 +140,7 @@ async function serializeMdxImpl(
 
       const rehypePlugins: PluggableList = [
         rehypeSqueezeParagraphs,
+        rehypeExpressionToMd,
         rehypeMdxClassStyle,
         [rehypeFiles, { replaceSrc }],
         rehypeAcornErrorBoundary,
