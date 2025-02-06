@@ -16,7 +16,6 @@ import {
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { useCallbackOne } from "use-memo-one";
 import { selectHref } from "../hooks/useHref";
-import { usePreloadApiLeaf } from "../playground/hooks/usePreloadApiLeaf";
 import {
   PLAYGROUND_AUTH_STATE_BASIC_AUTH_INITIAL,
   PLAYGROUND_AUTH_STATE_BEARER_TOKEN_INITIAL,
@@ -438,8 +437,6 @@ export const HAS_API_PLAYGROUND = atom(
 export function useOpenPlayground(): (
   node?: FernNavigation.NavigationNodeApiLeaf
 ) => Promise<void> {
-  const preload = usePreloadApiLeaf();
-
   return useAtomCallback(
     useCallbackOne(
       async (get, set, node?: FernNavigation.NavigationNodeApiLeaf) => {
@@ -478,8 +475,6 @@ export function useOpenPlayground(): (
         const formStateAtom = playgroundFormStateFamily(node.id);
         set(PLAYGROUND_NODE_ID, node.id);
 
-        const definition = await preload(node);
-
         const formState = get(formStateAtom);
         if (formState != null) {
           playgroundFormStateFamily.remove(node.id);
@@ -490,7 +485,7 @@ export function useOpenPlayground(): (
           get(FERN_USER_ATOM)?.playground?.initial_state;
 
         if (node.type === "endpoint") {
-          const context = createEndpointContext(node, definition);
+          const context = createEndpointContext(node, undefined);
 
           if (context == null) {
             // TODO: sentry
@@ -513,7 +508,7 @@ export function useOpenPlayground(): (
             )
           );
         } else if (node.type === "webSocket") {
-          const context = createWebSocketContext(node, definition);
+          const context = createWebSocketContext(node, undefined);
 
           if (context == null) {
             // TODO: sentry
@@ -532,7 +527,7 @@ export function useOpenPlayground(): (
         }
         playgroundFormStateFamily.remove(node.id);
       },
-      [preload]
+      []
     )
   );
 }

@@ -8,7 +8,6 @@ import { ReactElement, forwardRef } from "react";
 import { useMemoOne } from "use-memo-one";
 import { getApiDefinitionAtom } from "../../atoms";
 import { Markdown } from "../../mdx/Markdown";
-import { usePreloadApiLeaf } from "../hooks/usePreloadApiLeaf";
 
 interface PlaygroundEndpointSelectorLeafNodeProps {
   node: FernNavigation.EndpointNode | FernNavigation.WebSocketNode;
@@ -21,7 +20,6 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
   HTMLLIElement,
   PlaygroundEndpointSelectorLeafNodeProps
 >(({ node, filterValue, active, shallow }, ref) => {
-  const preload = usePreloadApiLeaf();
   const text = renderTextWithHighlight(node.title, filterValue);
 
   const description = useAtomValue(
@@ -70,7 +68,6 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
                 {node.isResponseStream ? "STREAM" : undefined}
               </HttpMethodBadge>
             }
-            onMouseEnter={() => void preload(node)}
           />
         </FernTooltip>
       </li>
@@ -97,7 +94,6 @@ export const PlaygroundEndpointSelectorLeafNode = forwardRef<
                 WSS
               </HttpMethodBadge>
             }
-            onMouseEnter={() => void preload(node)}
           />
         </FernTooltip>
       </li>

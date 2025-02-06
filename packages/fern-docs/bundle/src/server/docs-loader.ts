@@ -159,7 +159,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       return response.body.baseUrl;
     },
     ["docs-loader:base-url", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "base-url"], revalidate: false }
   );
 
   public getFiles = unstable_cache(
@@ -186,7 +186,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       });
     },
     ["docs-loader:files", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "files"], revalidate: false }
   );
 
   public getApi = unstable_cache(
@@ -209,7 +209,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       ).migrate();
     },
     ["docs-loader:api", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "api"], revalidate: false }
   );
 
   public getRoot = async () => {
@@ -266,7 +266,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       return root;
     },
     ["docs-loader:full-root", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "root"], revalidate: false }
   );
 
   public getConfig = unstable_cache(
@@ -279,7 +279,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       return config;
     },
     ["docs-loader:config", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "config"], revalidate: false }
   );
 
   public getPage = unstable_cache(
@@ -291,7 +291,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       return response.body.definition.pages[pageId as PageId];
     },
     ["docs-loader:page", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "page"], revalidate: false }
   );
 
   public serializeMdx = unstable_cache(
@@ -308,7 +308,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       });
     },
     ["docs-loader:serialize-mdx", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "serialize-mdx"], revalidate: false }
   );
 
   public getSerializedPage = async (
@@ -335,7 +335,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
         String(options?.showError),
         String(options?.toc),
       ],
-      { tags: [this.domain], revalidate }
+      { tags: [this.domain, "serialized-page"], revalidate }
     );
     return cachedSerializeMdx();
   };
@@ -349,7 +349,7 @@ class CachedDocsLoaderImpl implements DocsLoader {
       return response.body.definition.jsFiles ?? {};
     },
     ["docs-loader:mdx-bundler-files", this.domain],
-    { tags: [this.domain], revalidate: false }
+    { tags: [this.domain, "mdx-bundler-files"], revalidate: false }
   );
 
   public getColors = async () => {
