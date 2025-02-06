@@ -51,6 +51,26 @@ export async function toBodyInit(
               }
             }
             break;
+          case "exploded":
+            for (const item of value.value) {
+              if (item === undefined) {
+                continue;
+              }
+              if (value.contentType === "application/json") {
+                formData.append(
+                  key,
+                  new Blob([JSON.stringify(item)], {
+                    type: "application/json",
+                  })
+                );
+              } else {
+                const finalValue =
+                  typeof item === "string" ? item : JSON.stringify(item);
+
+                formData.append(key, finalValue);
+              }
+            }
+            break;
           default:
             console.error(new UnreachableCaseError(value));
             break;

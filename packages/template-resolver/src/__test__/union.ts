@@ -46,6 +46,7 @@ export const UNIONS_SNIPPET: FernRegistry.EndpointSnippetTemplate = {
                         type: "primitive",
                         value: {
                           type: "string",
+                          format: undefined,
                           regex: undefined,
                           minLength: undefined,
                           maxLength: undefined,

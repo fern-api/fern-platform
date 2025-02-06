@@ -97,6 +97,6 @@ export class MixedSchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTr
   example(
     exampleArgs: BaseOpenApiV3_1ConverterExampleArgs
   ): unknown | undefined {
-    return this.nullable ? "null" : this.typeNodes?.[0]?.example(exampleArgs);
+    return this.nullable ? null : this.typeNodes?.[0]?.example(exampleArgs);
   }
 }
