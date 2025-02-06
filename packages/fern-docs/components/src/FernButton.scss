@@ -430,6 +430,12 @@
     }
   }
 
+  #fern-search-desktop-command {
+    .fern-copy-button {
+      top: 0.1rem !important;
+    }
+  }
+
   .fern-copy-button {
     @apply size-fit backdrop-blur;
   }

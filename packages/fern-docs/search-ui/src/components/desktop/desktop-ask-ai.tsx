@@ -643,12 +643,6 @@ const AskAICommandItems = memo<{
                     message.assistant?.id ?? message.user?.id
                   }
                   value={message.assistant?.id ?? message.user?.id}
-                  onSelect={() => {
-                    const content = message.assistant?.content;
-                    if (content) {
-                      void navigator.clipboard.writeText(content);
-                    }
-                  }}
                   asChild
                   scrollLogicalPosition="start"
                 >
