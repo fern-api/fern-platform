@@ -10,13 +10,14 @@ import {
   type AlgoliaRecord,
 } from "@fern-docs/search-server/algolia";
 import { COOKIE_FERN_TOKEN } from "@fern-docs/utils";
+import { getEnv } from "@vercel/functions";
 import { kv } from "@vercel/kv";
 import { streamObject } from "ai";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-const DEPLOYMENT_ID = process.env.VERCEL_DEPLOYMENT_ID ?? "development";
+const DEPLOYMENT_ID = getEnv().VERCEL_DEPLOYMENT_ID ?? "development";
 const PREFIX = `docs:${DEPLOYMENT_ID}`;
 
 // Allow streaming responses up to 30 seconds

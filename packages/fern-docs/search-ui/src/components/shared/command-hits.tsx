@@ -24,7 +24,7 @@ export const CommandSearchHits = ({
 }: {
   domain: string;
   onSelect: (path: string) => void;
-  prefetch?: (path: string) => Promise<void>;
+  prefetch?: (path: string) => void | Promise<void>;
 }): ReactNode => {
   const isQueryEmpty = Command.useCommandState(
     (state) => state.search.trimStart().length === 0
@@ -62,7 +62,7 @@ const MemoizedCommandSearchHits = memo(
     domain: string;
     items: AlgoliaRecordHit[];
     onSelect: (path: string) => void;
-    prefetch?: (path: string) => Promise<void>;
+    prefetch?: (path: string) => void | Promise<void>;
   }) => {
     const groups = generateHits(items);
 
@@ -102,7 +102,7 @@ function CommandHit({
    * @param path - the path to navigate to via nextjs router
    */
   onSelect: (path: string) => void;
-  prefetch?: (path: string) => Promise<void>;
+  prefetch?: (path: string) => void | Promise<void>;
 }) {
   if (!hit.record) {
     return false;

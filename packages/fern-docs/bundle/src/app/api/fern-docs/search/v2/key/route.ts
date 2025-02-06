@@ -1,6 +1,10 @@
 import { safeVerifyFernJWTConfig } from "@/server/auth/FernJWT";
 import { getOrgMetadataForDomain } from "@/server/auth/metadata-for-url";
-import { algoliaAppId, algoliaSearchApikey } from "@/server/env-variables";
+import {
+  algoliaAppId,
+  algoliaSearchApikey,
+  fernToken,
+} from "@/server/env-variables";
 import { selectFirst } from "@/server/utils/selectFirst";
 import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { getAuthEdgeConfig } from "@fern-docs/edge-config";
@@ -9,8 +13,7 @@ import {
   SEARCH_INDEX,
   getSearchApiKey,
 } from "@fern-docs/search-server/algolia/edge";
-import { COOKIE_FERN_TOKEN, withoutStaging } from "@fern-docs/utils";
-import { cookies } from "next/headers";
+import { withoutStaging } from "@fern-docs/utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export const runtime = "edge";
@@ -31,7 +34,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     });
   }
 
-  const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
+  const fern_token = await fernToken();
   const user = await safeVerifyFernJWTConfig(
     fern_token,
     await getAuthEdgeConfig(domain)

@@ -4,6 +4,7 @@ import {
 } from "@/server/auth/with-secure-cookie";
 import { redirectResponse } from "@/server/serverResponse";
 import { COOKIE_FERN_DOCS_PREVIEW } from "@fern-docs/utils";
+import { getEnv } from "@vercel/functions";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { NextRequest, NextResponse } from "next/server";
@@ -11,8 +12,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const runtime = "edge";
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
+  const { VERCEL_ENV } = getEnv();
+
   // Only allow preview in dev and preview deployments
-  if (process.env.VERCEL_ENV === "production") {
+  if (VERCEL_ENV === "production") {
     return notFound();
   }
 

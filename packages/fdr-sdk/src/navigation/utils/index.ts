@@ -8,3 +8,4 @@ export * from "./toApis";
 export * from "./toPages";
 export * from "./toRootNode";
 export * from "./toUnversionedSlug";
+export * from "./updatePointsTo";

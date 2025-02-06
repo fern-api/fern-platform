@@ -1,3 +1,11 @@
+import { withCustomJavascript } from "@/components/atoms/docs";
+import type { NavbarLink } from "@/components/atoms/types";
+import type { DocsPage } from "@/components/docs/DocsPage";
+import { getMdxBundler } from "@/components/mdx/bundlers";
+import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
+import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
+import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
+import { withLogo } from "@/server/withLogo";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -8,18 +16,6 @@ import {
   getSeoDisabled,
 } from "@fern-docs/edge-config";
 import { withSeo } from "@fern-docs/seo";
-import {
-  type DocsPage,
-  type ImageData,
-  type NavbarLink,
-  getApiRouteSupplier,
-  getGitHubInfo,
-  getGitHubRepo,
-  renderThemeStylesheet,
-  withCustomJavascript,
-  withLogo,
-} from "@fern-docs/ui";
-import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import {
   addLeadingSlash,
   getRedirectForPath,
@@ -36,6 +32,7 @@ import { getReturnToQueryParam } from "./auth/return-to";
 import { handleLoadDocsError } from "./handleLoadDocsError";
 import { withLaunchDarkly } from "./ld-adapter";
 import type { LoadWithUrlResponse } from "./loadWithUrl";
+import { FileData } from "./types";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
@@ -299,7 +296,7 @@ export async function withInitialProps({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
-  function resolveFileSrc(src: string | undefined): ImageData | undefined {
+  function resolveFileSrc(src: string | undefined): FileData | undefined {
     if (src == null) {
       return undefined;
     }

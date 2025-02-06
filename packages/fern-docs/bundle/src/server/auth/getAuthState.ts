@@ -18,7 +18,7 @@ import { handleWorkosAuth } from "./workos-handler";
 
 export type AuthPartner = "workos" | "ory" | "webflow" | "custom";
 
-interface DomainAndHost {
+export interface DomainAndHost {
   /**
    * x-fern-host (NOT the host of the request)
    */

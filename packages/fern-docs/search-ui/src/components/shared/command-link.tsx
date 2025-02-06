@@ -17,7 +17,7 @@ export const CommandLink = forwardRef<
     href: string;
     target?: string;
     rel?: string;
-    prefetch?: (href: string) => Promise<void>;
+    prefetch?: (href: string) => void | Promise<void>;
   }
 >(
   (

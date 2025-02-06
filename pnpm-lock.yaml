@@ -705,9 +705,15 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.685.0
         version: 3.685.0
+      '@emotion/is-prop-valid':
+        specifier: ^1.2.2
+        version: 1.2.2
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
+      '@fern-api/template-resolver':
+        specifier: workspace:*
+        version: link:../../template-resolver
       '@fern-api/ui-core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
@@ -741,9 +747,6 @@ importers:
       '@fern-docs/syntax-highlighter':
         specifier: workspace:*
         version: link:../syntax-highlighter
-      '@fern-docs/ui':
-        specifier: workspace:*
-        version: link:../ui
       '@fern-docs/utils':
         specifier: workspace:*
         version: link:../utils
@@ -753,6 +756,15 @@ importers:
       '@fern-platform/fdr-utils':
         specifier: workspace:*
         version: link:../../commons/fdr-utils
+      '@fern-ui/loadable':
+        specifier: workspace:*
+        version: link:../../commons/loadable
+      '@fern-ui/react-commons':
+        specifier: workspace:*
+        version: link:../../commons/react-commons
+      '@inkeep/widgets':
+        specifier: ^0.2.288
+        version: 0.2.288(@internationalized/date@3.5.4)(@types/react@18.3.3)(jsdom@24.0.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
       '@launchdarkly/node-server-sdk':
         specifier: ^9.7.2
         version: 9.7.2
@@ -771,6 +783,51 @@ importers:
       '@opentelemetry/sdk-logs':
         specifier: ^0.57.0
         version: 0.57.0(@opentelemetry/api@1.9.0)
+      '@radix-ui/colors':
+        specifier: ^3.0.0
+        version: 3.0.0
+      '@radix-ui/primitive':
+        specifier: ^1.1.1
+        version: 1.1.1
+      '@radix-ui/react-accordion':
+        specifier: ^1.2.2
+        version: 1.2.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-collapsible':
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-compose-refs':
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react@18.3.3)(react@18.3.1)
+      '@radix-ui/react-dialog':
+        specifier: ^1.1.4
+        version: 1.1.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-popover':
+        specifier: ^1.1.4
+        version: 1.1.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-select':
+        specifier: ^2.1.4
+        version: 2.1.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-separator':
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-tabs':
+        specifier: ^1.1.2
+        version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-tooltip':
+        specifier: ^1.1.6
+        version: 1.1.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-visually-hidden':
+        specifier: ^1.1.1
+        version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@react-three/drei':
+        specifier: ^9.120.4
+        version: 9.120.4(@react-three/fiber@8.17.10(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0))(@types/react@18.3.3)(@types/three@0.170.0)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0)(use-sync-external-store@1.2.2(react@18.3.1))
+      '@react-three/fiber':
+        specifier: ^8.17.10
+        version: 8.17.10(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0)
+      '@segment/snippet':
+        specifier: ^5.2.1
+        version: 5.2.1
       '@types/qs':
         specifier: 6.9.14
         version: 6.9.14
@@ -785,16 +842,25 @@ importers:
         version: 1.10.0(@opentelemetry/api-logs@0.57.0)(@opentelemetry/api@1.9.0)(@opentelemetry/instrumentation@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/resources@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-logs@0.57.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-metrics@1.30.0(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.30.0(@opentelemetry/api@1.9.0))
       '@workos-inc/node':
         specifier: ^7.31.0
-        version: 7.31.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)
+        version: 7.31.0(express@4.21.2)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))
       ai:
         specifier: ^4.0.18
         version: 4.0.18(react@18.3.1)(zod@3.23.8)
       algoliasearch:
         specifier: ^5.13.0
         version: 5.13.0
+      bezier-easing:
+        specifier: ^2.1.0
+        version: 2.1.0
       braintrust:
         specifier: ^0.0.182
         version: 0.0.182(@aws-sdk/credential-provider-web-identity@3.723.0(@aws-sdk/client-sts@3.682.0))(react@18.3.1)(sswr@2.1.0(svelte@5.19.2))(svelte@5.19.2)(vue@3.5.13(typescript@5.7.2))(zod@3.23.8)
+      clsx:
+        specifier: ^2.1.0
+        version: 2.1.1
+      colorjs.io:
+        specifier: ^0.5.2
+        version: 0.5.2
       cssnano:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
@@ -804,24 +870,78 @@ importers:
       esbuild:
         specifier: 0.24.2
         version: 0.24.2
+      estree-walker:
+        specifier: ^3.0.3
+        version: 3.0.3
+      fastdom:
+        specifier: ^1.0.12
+        version: 1.0.12
       feed:
         specifier: ^4.2.2
         version: 4.2.2
+      framer-motion:
+        specifier: ^11.2.4
+        version: 11.2.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      github-slugger:
+        specifier: ^2.0.0
+        version: 2.0.0
+      iconoir-react:
+        specifier: ^7.7.0
+        version: 7.7.0(react@18.3.1)
       iron-session:
         specifier: ^8.0.3
         version: 8.0.3
       jose:
         specifier: ^5.2.3
         version: 5.6.3
+      jotai:
+        specifier: ^2.10.4
+        version: 2.10.4(@types/react@18.3.3)(react@18.3.1)
+      jotai-effect:
+        specifier: ^1.0.5
+        version: 1.0.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
+      jotai-location:
+        specifier: ^0.5.5
+        version: 0.5.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
       jsonpath:
         specifier: ^1.1.1
         version: 1.1.1
+      jsonpath-plus:
+        specifier: 10.0.7
+        version: 10.0.7
+      launchdarkly-react-client-sdk:
+        specifier: ^3.6.0
+        version: 3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      lucide-react:
+        specifier: ^0.460.0
+        version: 0.460.0(react@18.3.1)
+      mdx-bundler:
+        specifier: ^10.0.3
+        version: 10.0.3(esbuild@0.24.2)
+      mermaid:
+        specifier: ^11.2.1
+        version: 11.3.0
+      moment:
+        specifier: ^2.30.1
+        version: 2.30.1
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: 14.2.23
+        version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
+      next-mdx-remote:
+        specifier: ^5.0.0
+        version: 5.0.0(@types/react@18.3.3)(react@18.3.1)
+      numeral:
+        specifier: ^2.0.6
+        version: 2.0.6
+      parse-numeric-range:
+        specifier: ^1.3.0
+        version: 1.3.0
       postcss-import:
         specifier: ^16.0.1
         version: 16.1.0(postcss@8.4.31)
+      posthog-js:
+        specifier: ^1.154.5
+        version: 1.154.5
       posthog-node:
         specifier: ^4.2.1
         version: 4.2.1
@@ -834,71 +954,194 @@ importers:
       react-dom:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
+      react-error-boundary:
+        specifier: ^4.0.10
+        version: 4.0.13(react@18.3.1)
+      react-feather:
+        specifier: ^2.0.10
+        version: 2.0.10(react@18.3.1)
+      react-instantsearch:
+        specifier: ^7.13.7
+        version: 7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-medium-image-zoom:
+        specifier: ^5.1.10
+        version: 5.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
+      react-virtuoso:
+        specifier: ^4.7.7
+        version: 4.7.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rehype-katex:
+        specifier: ^7.0.0
+        version: 7.0.0
+      rehype-slug:
+        specifier: ^6.0.0
+        version: 6.0.0
+      remark-gemoji:
+        specifier: ^8.0.0
+        version: 8.0.0
+      remark-gfm:
+        specifier: ^4.0.0
+        version: 4.0.0
+      remark-math:
+        specifier: ^6.0.0
+        version: 6.0.0
+      remark-smartypants:
+        specifier: ^2.1.0
+        version: 2.1.0
+      selection-popover:
+        specifier: ^0.3.0
+        version: 0.3.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       sharp:
         specifier: ^0.33.3
         version: 0.33.3
+      swr:
+        specifier: ^2.2.5
+        version: 2.2.5(react@18.3.1)
+      three:
+        specifier: ^0.171.0
+        version: 0.171.0
+      tinycolor2:
+        specifier: ^1.6.0
+        version: 1.6.0
       ts-essentials:
         specifier: ^10.0.1
         version: 10.0.1(typescript@5.7.2)
       url-join:
         specifier: 5.0.0
         version: 5.0.0
+      use-memo-one:
+        specifier: ^1.1.3
+        version: 1.1.3(react@18.3.1)
       webflow-api:
         specifier: ^2.4.2
         version: 2.4.2
+      webm-duration-fix:
+        specifier: ^1.0.4
+        version: 1.0.4
       zod:
         specifier: ^3.23.8
         version: 3.23.8
     optionalDependencies:
       '@next/swc-darwin-arm64':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@next/swc-darwin-x64':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@next/swc-linux-x64-gnu':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@next/swc-win32-x64-msvc':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
     devDependencies:
+      '@chromatic-com/storybook':
+        specifier: ^1.3.5
+        version: 1.4.0(react@18.3.1)
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@mdx-js/esbuild':
+        specifier: ^3.1.0
+        version: 3.1.0(esbuild@0.24.2)
       '@next/bundle-analyzer':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
+      '@storybook/addon-essentials':
+        specifier: ^8.4.4
+        version: 8.4.4(@types/react@18.3.3)(storybook@8.4.4(prettier@3.4.2))(webpack-sources@3.2.3)
+      '@storybook/addon-interactions':
+        specifier: ^8.4.4
+        version: 8.4.4(storybook@8.4.4(prettier@3.4.2))
+      '@storybook/addon-links':
+        specifier: ^8.4.4
+        version: 8.4.4(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
+      '@storybook/addon-onboarding':
+        specifier: ^8.4.4
+        version: 8.4.4(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
+      '@storybook/addon-themes':
+        specifier: ^8.4.4
+        version: 8.4.4(storybook@8.4.4(prettier@3.4.2))
+      '@storybook/blocks':
+        specifier: ^8.4.4
+        version: 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
+      '@storybook/nextjs':
+        specifier: ^8.4.4
+        version: 8.4.4(@swc/core@1.5.7)(esbuild@0.24.2)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.24.2))
+      '@storybook/react':
+        specifier: ^8.4.4
+        version: 8.4.4(@storybook/test@8.4.4(storybook@8.4.4(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))(typescript@5.7.2)
+      '@storybook/test':
+        specifier: ^8.4.4
+        version: 8.4.4(storybook@8.4.4(prettier@3.4.2))
       '@tailwindcss/forms':
         specifier: ^0.5.7
         version: 0.5.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.13(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
+      '@testing-library/jest-dom':
+        specifier: ^6.4.2
+        version: 6.5.0
+      '@testing-library/react':
+        specifier: ^14.3.1
+        version: 14.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/jsonpath':
+        specifier: ^0.2.4
+        version: 0.2.4
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
+      '@types/numeral':
+        specifier: ^2.0.5
+        version: 2.0.5
       '@types/react':
         specifier: ^18
         version: 18.3.3
       '@types/react-dom':
         specifier: ^18
         version: 18.3.0
+      '@types/three':
+        specifier: ^0.170.0
+        version: 0.170.0
+      '@types/tinycolor2':
+        specifier: ^1.4.6
+        version: 1.4.6
+      '@vitejs/plugin-react':
+        specifier: ^4.2.1
+        version: 4.2.1(vite@5.4.10(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0))
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.19(postcss@8.4.31)
+      chromatic:
+        specifier: ^11.3.0
+        version: 11.18.1
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
       eslint:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
+      eslint-plugin-storybook:
+        specifier: ^0.8.0
+        version: 0.8.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2)
+      express:
+        specifier: ^4.21.2
+        version: 4.21.2
       glslify-import:
         specifier: ^3.1.0
         version: 3.1.0
       glslify-loader:
         specifier: ^2.0.0
         version: 2.0.0
+      instantsearch.js:
+        specifier: 4.75.4
+        version: 4.75.4(algoliasearch@5.13.0)
+      jsdom:
+        specifier: ^24.0.0
+        version: 24.0.0
+      next-router-mock:
+        specifier: ^0.9.13
+        version: 0.9.13(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -911,6 +1154,9 @@ importers:
       sass:
         specifier: ^1.74.1
         version: 1.77.0
+      storybook:
+        specifier: ^8.4.4
+        version: 8.4.4(prettier@3.4.2)
       stylelint:
         specifier: ^16.1.0
         version: 16.5.0(typescript@5.7.2)
@@ -920,6 +1166,9 @@ importers:
       typescript:
         specifier: 5.7.2
         version: 5.7.2
+      vite:
+        specifier: ^5.4.10
+        version: 5.4.10(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
@@ -1279,24 +1528,24 @@ importers:
         version: 18.3.1(react@18.3.1)
     optionalDependencies:
       '@next/swc-darwin-arm64':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@next/swc-darwin-x64':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@next/swc-linux-x64-gnu':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@next/swc-win32-x64-msvc':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
     devDependencies:
       '@fern-platform/configs':
         specifier: workspace:*
         version: link:../../configs
       '@next/bundle-analyzer':
-        specifier: 14.2.9
-        version: 14.2.9
+        specifier: 14.2.23
+        version: 14.2.23
       '@types/node':
         specifier: ^18.7.18
         version: 18.19.33
@@ -1310,8 +1559,8 @@ importers:
         specifier: 9.17.0
         version: 9.17.0(jiti@1.21.7)
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: 14.2.23
+        version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       prettier:
         specifier: ^3.4.2
         version: 3.4.2
@@ -1324,152 +1573,6 @@ importers:
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-
-  packages/fern-docs/local-preview-bundle:
-    dependencies:
-      '@emotion/is-prop-valid':
-        specifier: ^1.2.2
-        version: 1.2.2
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
-      '@fern-api/ui-core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
-      '@fern-docs/components':
-        specifier: workspace:*
-        version: link:../components
-      '@fern-docs/mdx':
-        specifier: workspace:*
-        version: link:../mdx
-      '@fern-docs/seo':
-        specifier: workspace:*
-        version: link:../seo
-      '@fern-docs/syntax-highlighter':
-        specifier: workspace:*
-        version: link:../syntax-highlighter
-      '@fern-docs/ui':
-        specifier: workspace:*
-        version: link:../ui
-      '@fern-docs/utils':
-        specifier: workspace:*
-        version: link:../utils
-      '@fern-platform/fdr-utils':
-        specifier: workspace:*
-        version: link:../../commons/fdr-utils
-      cssnano:
-        specifier: ^6.0.3
-        version: 6.1.2(postcss@8.4.31)
-      jsonpath:
-        specifier: ^1.1.1
-        version: 1.1.1
-      next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
-      node-fetch:
-        specifier: 2.7.0
-        version: 2.7.0
-      postcss-import:
-        specifier: ^16.0.1
-        version: 16.1.0(postcss@8.4.31)
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
-      styled-jsx:
-        specifier: ^5.1.2
-        version: 5.1.6(@babel/core@7.26.0)(react@18.3.1)
-      ts-essentials:
-        specifier: ^10.0.1
-        version: 10.0.1(typescript@5.7.2)
-      url-join:
-        specifier: 5.0.0
-        version: 5.0.0
-    optionalDependencies:
-      '@next/swc-darwin-arm64':
-        specifier: 14.2.9
-        version: 14.2.9
-      '@next/swc-darwin-x64':
-        specifier: 14.2.9
-        version: 14.2.9
-      '@next/swc-linux-x64-gnu':
-        specifier: 14.2.9
-        version: 14.2.9
-      '@next/swc-win32-x64-msvc':
-        specifier: 14.2.9
-        version: 14.2.9
-    devDependencies:
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@next/bundle-analyzer':
-        specifier: 14.2.9
-        version: 14.2.9
-      '@tailwindcss/forms':
-        specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
-      '@tailwindcss/typography':
-        specifier: ^0.5.10
-        version: 0.5.13(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.19.33
-      '@types/node-fetch':
-        specifier: 2.6.9
-        version: 2.6.9
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.3.0
-      autoprefixer:
-        specifier: ^10.4.16
-        version: 10.4.19(postcss@8.4.31)
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: 9.17.0
-        version: 9.17.0(jiti@1.21.7)
-      express:
-        specifier: ^4.21.2
-        version: 4.21.2
-      glslify-import:
-        specifier: ^3.1.0
-        version: 3.1.0
-      glslify-loader:
-        specifier: ^2.0.0
-        version: 2.0.0
-      postcss:
-        specifier: 8.4.31
-        version: 8.4.31
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      raw-loader:
-        specifier: ^4.0.2
-        version: 4.0.2(webpack@5.94.0(@swc/core@1.5.7))
-      sass:
-        specifier: ^1.74.1
-        version: 1.77.0
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.7.2)
-      tailwindcss:
-        specifier: 3.4.17
-        version: 3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2))
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-      ws:
-        specifier: ^8.17.1
-        version: 8.18.0
 
   packages/fern-docs/mdx:
     dependencies:
@@ -1795,7 +1898,7 @@ importers:
         version: 7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-instantsearch-nextjs:
         specifier: ^0.3.17
-        version: 0.3.17(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 0.3.17(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@18.3.3)(react@18.3.1)
@@ -1838,7 +1941,7 @@ importers:
         version: 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
       '@storybook/nextjs':
         specifier: ^8.4.4
-        version: 8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))
+        version: 8.4.4(@swc/core@1.5.7)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))
       '@storybook/react':
         specifier: ^8.4.4
         version: 8.4.4(@storybook/test@8.4.4(storybook@8.4.4(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))(typescript@5.7.2)
@@ -1870,8 +1973,8 @@ importers:
         specifier: ^6.0.3
         version: 6.1.2(postcss@8.4.31)
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: 14.2.23
+        version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       postcss:
         specifier: 8.4.31
         version: 8.4.31
@@ -1955,8 +2058,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: 14.2.23
+        version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -2038,393 +2141,14 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
 
-  packages/fern-docs/ui:
-    dependencies:
-      '@emotion/is-prop-valid':
-        specifier: ^1.2.2
-        version: 1.2.2
-      '@fern-api/fdr-sdk':
-        specifier: workspace:*
-        version: link:../../fdr-sdk
-      '@fern-api/template-resolver':
-        specifier: workspace:*
-        version: link:../../template-resolver
-      '@fern-api/ui-core-utils':
-        specifier: workspace:*
-        version: link:../../commons/core-utils
-      '@fern-docs/cache':
-        specifier: workspace:*
-        version: link:../cache
-      '@fern-docs/components':
-        specifier: workspace:*
-        version: link:../components
-      '@fern-docs/mdx':
-        specifier: workspace:*
-        version: link:../mdx
-      '@fern-docs/search-ui':
-        specifier: workspace:*
-        version: link:../search-ui
-      '@fern-docs/search-utils':
-        specifier: workspace:*
-        version: link:../search-utils
-      '@fern-docs/seo':
-        specifier: workspace:*
-        version: link:../seo
-      '@fern-docs/syntax-highlighter':
-        specifier: workspace:*
-        version: link:../syntax-highlighter
-      '@fern-docs/utils':
-        specifier: workspace:*
-        version: link:../utils
-      '@fern-platform/fdr-utils':
-        specifier: workspace:*
-        version: link:../../commons/fdr-utils
-      '@fern-ui/loadable':
-        specifier: workspace:*
-        version: link:../../commons/loadable
-      '@fern-ui/react-commons':
-        specifier: workspace:*
-        version: link:../../commons/react-commons
-      '@inkeep/widgets':
-        specifier: ^0.2.288
-        version: 0.2.288(@internationalized/date@3.5.4)(@types/react@18.3.3)(jsdom@24.0.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.7.2)
-      '@mdx-js/react':
-        specifier: ^3.1.0
-        version: 3.1.0(@types/react@18.3.3)(react@18.3.1)
-      '@radix-ui/colors':
-        specifier: ^3.0.0
-        version: 3.0.0
-      '@radix-ui/primitive':
-        specifier: ^1.1.1
-        version: 1.1.1
-      '@radix-ui/react-accordion':
-        specifier: ^1.2.2
-        version: 1.2.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-collapsible':
-        specifier: ^1.1.2
-        version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-compose-refs':
-        specifier: ^1.1.1
-        version: 1.1.1(@types/react@18.3.3)(react@18.3.1)
-      '@radix-ui/react-dialog':
-        specifier: ^1.1.4
-        version: 1.1.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-popover':
-        specifier: ^1.1.4
-        version: 1.1.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-select':
-        specifier: ^2.1.4
-        version: 2.1.4(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-separator':
-        specifier: ^1.1.1
-        version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-tabs':
-        specifier: ^1.1.2
-        version: 1.1.2(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-tooltip':
-        specifier: ^1.1.6
-        version: 1.1.6(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-visually-hidden':
-        specifier: ^1.1.1
-        version: 1.1.1(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@react-three/drei':
-        specifier: ^9.120.4
-        version: 9.120.4(@react-three/fiber@8.17.10(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0))(@types/react@18.3.3)(@types/three@0.170.0)(immer@9.0.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0)(use-sync-external-store@1.2.2(react@18.3.1))
-      '@react-three/fiber':
-        specifier: ^8.17.10
-        version: 8.17.10(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.171.0)
-      '@segment/snippet':
-        specifier: ^5.2.1
-        version: 5.2.1
-      '@types/nprogress':
-        specifier: ^0.2.3
-        version: 0.2.3
-      algoliasearch:
-        specifier: ^5.13.0
-        version: 5.13.0
-      bezier-easing:
-        specifier: ^2.1.0
-        version: 2.1.0
-      clsx:
-        specifier: ^2.1.0
-        version: 2.1.1
-      colorjs.io:
-        specifier: ^0.5.2
-        version: 0.5.2
-      es-toolkit:
-        specifier: ^1.27.0
-        version: 1.30.0
-      esbuild:
-        specifier: 0.24.2
-        version: 0.24.2
-      estree-walker:
-        specifier: ^3.0.3
-        version: 3.0.3
-      fastdom:
-        specifier: ^1.0.12
-        version: 1.0.12
-      framer-motion:
-        specifier: ^11.2.4
-        version: 11.2.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      github-slugger:
-        specifier: ^2.0.0
-        version: 2.0.0
-      iconoir-react:
-        specifier: ^7.7.0
-        version: 7.7.0(react@18.3.1)
-      jose:
-        specifier: ^5.2.3
-        version: 5.6.3
-      jotai:
-        specifier: ^2.10.4
-        version: 2.10.4(@types/react@18.3.3)(react@18.3.1)
-      jotai-effect:
-        specifier: ^1.0.5
-        version: 1.0.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
-      jotai-location:
-        specifier: ^0.5.5
-        version: 0.5.5(jotai@2.10.4(@types/react@18.3.3)(react@18.3.1))
-      jsonpath:
-        specifier: ^1.1.1
-        version: 1.1.1
-      launchdarkly-react-client-sdk:
-        specifier: ^3.6.0
-        version: 3.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      lucide-react:
-        specifier: ^0.460.0
-        version: 0.460.0(react@18.3.1)
-      mdx-bundler:
-        specifier: ^10.0.3
-        version: 10.0.3(esbuild@0.24.2)
-      mermaid:
-        specifier: ^11.2.1
-        version: 11.3.0
-      moment:
-        specifier: ^2.30.1
-        version: 2.30.1
-      next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
-      next-mdx-remote:
-        specifier: ^5.0.0
-        version: 5.0.0(@types/react@18.3.3)(react@18.3.1)
-      nprogress:
-        specifier: ^0.2.0
-        version: 0.2.0
-      numeral:
-        specifier: ^2.0.6
-        version: 2.0.6
-      parse-numeric-range:
-        specifier: ^1.3.0
-        version: 1.3.0
-      posthog-js:
-        specifier: ^1.154.5
-        version: 1.154.5
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
-      react-error-boundary:
-        specifier: ^4.0.10
-        version: 4.0.13(react@18.3.1)
-      react-feather:
-        specifier: ^2.0.10
-        version: 2.0.10(react@18.3.1)
-      react-instantsearch:
-        specifier: ^7.13.7
-        version: 7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-medium-image-zoom:
-        specifier: ^5.1.10
-        version: 5.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
-      react-virtuoso:
-        specifier: ^4.7.7
-        version: 4.7.10(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rehype-katex:
-        specifier: ^7.0.0
-        version: 7.0.0
-      rehype-slug:
-        specifier: ^6.0.0
-        version: 6.0.0
-      remark-gemoji:
-        specifier: ^8.0.0
-        version: 8.0.0
-      remark-gfm:
-        specifier: ^4.0.0
-        version: 4.0.0
-      remark-math:
-        specifier: ^6.0.0
-        version: 6.0.0
-      remark-smartypants:
-        specifier: ^2.1.0
-        version: 2.1.0
-      selection-popover:
-        specifier: ^0.3.0
-        version: 0.3.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      swr:
-        specifier: ^2.2.5
-        version: 2.2.5(react@18.3.1)
-      three:
-        specifier: ^0.171.0
-        version: 0.171.0
-      tinycolor2:
-        specifier: ^1.6.0
-        version: 1.6.0
-      url-join:
-        specifier: 5.0.0
-        version: 5.0.0
-      use-memo-one:
-        specifier: ^1.1.3
-        version: 1.1.3(react@18.3.1)
-      webm-duration-fix:
-        specifier: ^1.0.4
-        version: 1.0.4
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      '@chromatic-com/storybook':
-        specifier: ^1.3.5
-        version: 1.4.0(react@18.3.1)
-      '@fern-docs/auth':
-        specifier: workspace:*
-        version: link:../auth
-      '@fern-platform/configs':
-        specifier: workspace:*
-        version: link:../../configs
-      '@mdx-js/esbuild':
-        specifier: ^3.1.0
-        version: 3.1.0(esbuild@0.24.2)
-      '@storybook/addon-essentials':
-        specifier: ^8.4.4
-        version: 8.4.4(@types/react@18.3.3)(storybook@8.4.4(prettier@3.4.2))(webpack-sources@3.2.3)
-      '@storybook/addon-interactions':
-        specifier: ^8.4.4
-        version: 8.4.4(storybook@8.4.4(prettier@3.4.2))
-      '@storybook/addon-links':
-        specifier: ^8.4.4
-        version: 8.4.4(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
-      '@storybook/addon-onboarding':
-        specifier: ^8.4.4
-        version: 8.4.4(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
-      '@storybook/addon-themes':
-        specifier: ^8.4.4
-        version: 8.4.4(storybook@8.4.4(prettier@3.4.2))
-      '@storybook/blocks':
-        specifier: ^8.4.4
-        version: 8.4.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))
-      '@storybook/nextjs':
-        specifier: ^8.4.4
-        version: 8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.24.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.24.2))
-      '@storybook/react':
-        specifier: ^8.4.4
-        version: 8.4.4(@storybook/test@8.4.4(storybook@8.4.4(prettier@3.4.2)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.4.4(prettier@3.4.2))(typescript@5.7.2)
-      '@storybook/test':
-        specifier: ^8.4.4
-        version: 8.4.4(storybook@8.4.4(prettier@3.4.2))
-      '@tailwindcss/forms':
-        specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
-      '@tailwindcss/typography':
-        specifier: ^0.5.10
-        version: 0.5.13(tailwindcss@3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2)))
-      '@testing-library/jest-dom':
-        specifier: ^6.4.2
-        version: 6.5.0
-      '@testing-library/react':
-        specifier: ^14.3.1
-        version: 14.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@types/jsonpath':
-        specifier: ^0.2.4
-        version: 0.2.4
-      '@types/node':
-        specifier: ^18.7.18
-        version: 18.19.33
-      '@types/numeral':
-        specifier: ^2.0.5
-        version: 2.0.5
-      '@types/react':
-        specifier: ^18
-        version: 18.3.3
-      '@types/react-dom':
-        specifier: ^18
-        version: 18.3.0
-      '@types/three':
-        specifier: ^0.170.0
-        version: 0.170.0
-      '@types/tinycolor2':
-        specifier: ^1.4.6
-        version: 1.4.6
-      '@vitejs/plugin-react':
-        specifier: ^4.2.1
-        version: 4.2.1(vite@5.4.10(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0))
-      autoprefixer:
-        specifier: ^10.4.16
-        version: 10.4.19(postcss@8.4.31)
-      chromatic:
-        specifier: ^11.3.0
-        version: 11.18.1
-      depcheck:
-        specifier: ^1.4.7
-        version: 1.4.7
-      eslint:
-        specifier: 9.17.0
-        version: 9.17.0(jiti@1.21.7)
-      eslint-plugin-storybook:
-        specifier: ^0.8.0
-        version: 0.8.0(eslint@9.17.0(jiti@1.21.7))(typescript@5.7.2)
-      express:
-        specifier: ^4.21.2
-        version: 4.21.2
-      instantsearch.js:
-        specifier: 4.75.4
-        version: 4.75.4(algoliasearch@5.13.0)
-      jsdom:
-        specifier: ^24.0.0
-        version: 24.0.0
-      next-router-mock:
-        specifier: ^0.9.13
-        version: 0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1)
-      postcss-import:
-        specifier: ^16.0.1
-        version: 16.1.0(postcss@8.4.31)
-      prettier:
-        specifier: ^3.4.2
-        version: 3.4.2
-      sass:
-        specifier: ^1.74.1
-        version: 1.77.0
-      storybook:
-        specifier: ^8.4.4
-        version: 8.4.4(prettier@3.4.2)
-      stylelint:
-        specifier: ^16.1.0
-        version: 16.5.0(typescript@5.7.2)
-      tailwindcss:
-        specifier: 3.4.17
-        version: 3.4.17(ts-node@10.9.2(@swc/core@1.5.7)(@types/node@18.19.33)(typescript@5.7.2))
-      ts-essentials:
-        specifier: ^10.0.1
-        version: 10.0.1(typescript@5.7.2)
-      typescript:
-        specifier: 5.7.2
-        version: 5.7.2
-      vite:
-        specifier: ^5.4.10
-        version: 5.4.10(@types/node@18.19.33)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-      vitest:
-        specifier: ^2.1.4
-        version: 2.1.4(@edge-runtime/vm@5.0.0)(@types/node@18.19.33)(jsdom@24.0.0)(less@4.2.0)(sass@1.77.0)(stylus@0.62.0)(terser@5.31.0)
-
   packages/fern-docs/utils:
     dependencies:
       '@fern-api/fdr-sdk':
         specifier: workspace:*
         version: link:../../fdr-sdk
       next:
-        specifier: npm:@fern-api/next@14.2.9-fork.2
-        version: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+        specifier: 14.2.23
+        version: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       path-to-regexp:
         specifier: 6.3.0
         version: 6.3.0
@@ -4835,24 +4559,6 @@ packages:
   '@fern-api/logger@0.4.24-rc1':
     resolution: {integrity: sha512-yh0E2F3K3IPnJZcE4dv+u8I51iKgTgv/reinKo4K5YmYEG1iLtw5vBEYMOPkQmsYFPAKIh++OMB/6TrsahMWew==}
 
-  '@fern-api/next@14.2.9-fork.2':
-    resolution: {integrity: sha512-6Xg8PDelm0aFqkIttXzyM2aQLDkp1EiKMISc5DmHQ7yTMJOVEmeJNMeuBCeNNWnZee+gRQUO7NVhwLXbwTiK4A==}
-    engines: {node: '>=18.17.0'}
-    hasBin: true
-    peerDependencies:
-      '@opentelemetry/api': ^1.1.0
-      '@playwright/test': ^1.41.2
-      react: 18.3.1
-      react-dom: 18.3.1
-      sass: ^1.3.0
-    peerDependenciesMeta:
-      '@opentelemetry/api':
-        optional: true
-      '@playwright/test':
-        optional: true
-      sass:
-        optional: true
-
   '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
     resolution: {integrity: sha512-36tR/u4IO1C7OU1gmKwO05OrNV1noY+SrPzsC085QkbHI+WLEZQv4l6V9qCQ7Vi7KAYJ1hWkrzg8eRa62PqxeQ==}
 
@@ -4894,9 +4600,6 @@ packages:
 
   '@floating-ui/dom@1.6.12':
     resolution: {integrity: sha512-NP83c0HjokcGVEMeoStg317VD9W7eDlGK7457dMBANbKA6GJZdc7rjujdgqzTaz93jkGgc5P/jeWbaCHnMNc+w==}
-
-  '@floating-ui/dom@1.6.5':
-    resolution: {integrity: sha512-Nsdud2X65Dz+1RHjAIP0t8z5e2ff/IRbei6BqFrl1urT8sDVzM1HMQ+R0XcU5ceRfyO3I6ayeqIfh+6Wb8LGTw==}
 
   '@floating-ui/react-dom@1.3.0':
     resolution: {integrity: sha512-htwHm67Ji5E/pROEAr7f8IKFShuiCKHwUC/UY4vC3I5jiSvGFAYnSYiZO5MlGmads+QqvUkR9ANHEguGrDv72g==}
@@ -5444,8 +5147,11 @@ packages:
   '@ndhoule/map@2.0.1':
     resolution: {integrity: sha512-WOEf2An9mL4DVY6NHgaRmFC82pZGrmzW4I0hpPPdczDP4Gp5+Q1Nny77x3w0qzENA8+cbgd9+Lx2ClSTLvkB0g==}
 
-  '@next/bundle-analyzer@14.2.9':
-    resolution: {integrity: sha512-r+h5vdrx3+tZoMysJmDsfy3OXPqwuTTiQYytCPl5qfngHqeusV3im8Bjbmm4ZsOsIcqh/BQrChO8u7wFXavHKA==}
+  '@next/bundle-analyzer@14.2.23':
+    resolution: {integrity: sha512-BZJTrSZY1kemDMl8hOEu5Vj7Oy5rCa5ZPJ/bSAFPoaOQS21YVwX4xbZCEteCKu6FiXnTwnprxbGgEOmyhH0aoA==}
+
+  '@next/env@14.2.23':
+    resolution: {integrity: sha512-CysUC9IO+2Bh0omJ3qrb47S8DtsTKbFidGm6ow4gXIG6reZybqxbkH2nhdEm1tC8SmgzDdpq3BIML0PWsmyUYA==}
 
   '@next/env@14.2.9':
     resolution: {integrity: sha512-hnDAoDPMii31V0ivibI8p6b023jOF1XblWTVjsDUoZKwnZlaBtJFZKDwFqi22R8r9i6W08dThUWU7Bsh2Rg8Ww==}
@@ -5456,8 +5162,8 @@ packages:
   '@next/eslint-plugin-next@15.1.2':
     resolution: {integrity: sha512-sgfw3+WdaYOGPKCvM1L+UucBmRfh8V2Ygefp7ELON0+0vY7uohQwXXnVWg3rY7mXDKharQR3o7uedpfvnU2hlQ==}
 
-  '@next/swc-darwin-arm64@14.2.9':
-    resolution: {integrity: sha512-/kfQifl3uLYi3DlwFlzCkgxe6fprJNLzzTUFknq3M5wGYicDIbdGlxUl6oHpVLJpBB/CBY3Y//gO6alz/K4NWA==}
+  '@next/swc-darwin-arm64@14.2.23':
+    resolution: {integrity: sha512-WhtEntt6NcbABA8ypEoFd3uzq5iAnrl9AnZt9dXdO+PZLACE32z3a3qA5OoV20JrbJfSJ6Sd6EqGZTrlRnGxQQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
@@ -5468,8 +5174,8 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@14.2.9':
-    resolution: {integrity: sha512-tK/RyhCmOCiXQ9IVdFrBbZOf4/1+0RSuJkebXU2uMEsusS51TjIJO4l8ZmEijH9gZa0pJClvmApRHi7JuBqsRw==}
+  '@next/swc-darwin-x64@14.2.23':
+    resolution: {integrity: sha512-vwLw0HN2gVclT/ikO6EcE+LcIN+0mddJ53yG4eZd0rXkuEr/RnOaMH8wg/sYl5iz5AYYRo/l6XX7FIo6kwbw1Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
@@ -5480,8 +5186,20 @@ packages:
     cpu: [x64]
     os: [darwin]
 
+  '@next/swc-linux-arm64-gnu@14.2.23':
+    resolution: {integrity: sha512-uuAYwD3At2fu5CH1wD7FpP87mnjAv4+DNvLaR9kiIi8DLStWSW304kF09p1EQfhcbUI1Py2vZlBO2VaVqMRtpg==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
   '@next/swc-linux-arm64-gnu@15.1.2':
     resolution: {integrity: sha512-fHHXBusURjBmN6VBUtu6/5s7cCeEkuGAb/ZZiGHBLVBXMBy4D5QpM8P33Or8JD1nlOjm/ZT9sEE5HouQ0F+hUA==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [linux]
+
+  '@next/swc-linux-arm64-musl@14.2.23':
+    resolution: {integrity: sha512-Mm5KHd7nGgeJ4EETvVgFuqKOyDh+UMXHXxye6wRRFDr4FdVRI6YTxajoV2aHE8jqC14xeAMVZvLqYqS7isHL+g==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
@@ -5492,8 +5210,8 @@ packages:
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@14.2.9':
-    resolution: {integrity: sha512-0HNulLWpKTB7H5BhHCkEhcRAnWUHeAYCftrrGw3QC18+ZywTdAoPv/zEqKy/0adqt+ks4JDdlgSQ1lNKOKjo0A==}
+  '@next/swc-linux-x64-gnu@14.2.23':
+    resolution: {integrity: sha512-Ybfqlyzm4sMSEQO6lDksggAIxnvWSG2cDWnG2jgd+MLbHYn2pvFA8DQ4pT2Vjk3Cwrv+HIg7vXJ8lCiLz79qoQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
@@ -5504,11 +5222,23 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@next/swc-linux-x64-musl@14.2.23':
+    resolution: {integrity: sha512-OSQX94sxd1gOUz3jhhdocnKsy4/peG8zV1HVaW6DLEbEmRRtUCUQZcKxUD9atLYa3RZA+YJx+WZdOnTkDuNDNA==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+
   '@next/swc-linux-x64-musl@15.1.2':
     resolution: {integrity: sha512-jf2IseC4WRsGkzeUw/cK3wci9pxR53GlLAt30+y+B+2qAQxMw6WAC3QrANIKxkcoPU3JFh/10uFfmoMDF9JXKg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+
+  '@next/swc-win32-arm64-msvc@14.2.23':
+    resolution: {integrity: sha512-ezmbgZy++XpIMTcTNd0L4k7+cNI4ET5vMv/oqNfTuSXkZtSA9BURElPFyarjjGtRgZ9/zuKDHoMdZwDZIY3ehQ==}
+    engines: {node: '>= 10'}
+    cpu: [arm64]
+    os: [win32]
 
   '@next/swc-win32-arm64-msvc@15.1.2':
     resolution: {integrity: sha512-wvg7MlfnaociP7k8lxLX4s2iBJm4BrNiNFhVUY+Yur5yhAJHfkS8qPPeDEUH8rQiY0PX3u/P7Q/wcg6Mv6GSAA==}
@@ -5516,8 +5246,14 @@ packages:
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@14.2.9':
-    resolution: {integrity: sha512-gcbpoXyWZdVOBgNa5BRzynrL5UR1nb2ZT38yKgnphYU9UHjeecnylMHntrQiMg/QtONDcJPFC/PmsS47xIRYoA==}
+  '@next/swc-win32-ia32-msvc@14.2.23':
+    resolution: {integrity: sha512-zfHZOGguFCqAJ7zldTKg4tJHPJyJCOFhpoJcVxKL9BSUHScVDnMdDuOU1zPPGdOzr/GWxbhYTjyiEgLEpAoFPA==}
+    engines: {node: '>= 10'}
+    cpu: [ia32]
+    os: [win32]
+
+  '@next/swc-win32-x64-msvc@14.2.23':
+    resolution: {integrity: sha512-xCtq5BD553SzOgSZ7UH5LH+OATQihydObTrCTvVzOro8QiWYKdBVwcB2Mn2MLMo6DGW9yH1LSPw7jS7HhgJgjw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -7939,9 +7675,6 @@ packages:
 
   '@types/node@22.5.5':
     resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
-
-  '@types/nprogress@0.2.3':
-    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
 
   '@types/numeral@2.0.5':
     resolution: {integrity: sha512-kH8I7OSSwQu9DS9JYdFWbuvhVzvFRoCPCkGxNwoGgaPeDfEPJlcxNvEOypZhQ3XXHsGbfIuYcxcJxKUfJHnRfw==}
@@ -12235,9 +11968,6 @@ packages:
   is-promise@2.2.2:
     resolution: {integrity: sha512-+lP4/6lKUBfQjZ2pdxThZvLUAafmZb8OAxFb8XXtiQmS35INgr85hdOGoEs124ez1FCnZJt6jau/T+alh58QFQ==}
 
-  is-reference@3.0.2:
-    resolution: {integrity: sha512-v3rht/LgVcsdZa3O2Nqs+NMowLOxeOm7Ay9+/ARQ2F+qEoANRcqrjAZKGN0v8ymUetZGgkp26LTnGT7H0Qo9Pg==}
-
   is-reference@3.0.3:
     resolution: {integrity: sha512-ixkJoqQvAP88E6wLydLGGqCJsrFUnqoH6HnaczB8XmDH1oaWU+xxdptvikTgaEhtZ53Ky6YXiBuUI2WXLMCwjw==}
 
@@ -13517,9 +13247,6 @@ packages:
     engines: {node: '>=10'}
     hasBin: true
 
-  mlly@1.7.2:
-    resolution: {integrity: sha512-tN3dvVHYVz4DhSXinXIk7u9syPYaJvio118uomkovAtWBT+RdbP6Lfh/5Lvo519YMmwBafwlh20IPTXIStscpA==}
-
   mlly@1.7.3:
     resolution: {integrity: sha512-xUsx5n/mN0uQf4V548PKQ+YShA4/IW0KI1dZhrNrPCLG+xizETbHTkOa1f8/xut9JRPp8kQuMnz0oqwkTiLo/A==}
 
@@ -13613,6 +13340,24 @@ packages:
 
   next-tick@1.1.0:
     resolution: {integrity: sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==}
+
+  next@14.2.23:
+    resolution: {integrity: sha512-mjN3fE6u/tynneLiEg56XnthzuYw+kD7mCujgVqioxyPqbmiotUCGJpIZGS/VaPg3ZDT1tvWxiVyRzeqJFm/kw==}
+    engines: {node: '>=18.17.0'}
+    hasBin: true
+    peerDependencies:
+      '@opentelemetry/api': ^1.1.0
+      '@playwright/test': ^1.41.2
+      react: 18.3.1
+      react-dom: 18.3.1
+      sass: ^1.3.0
+    peerDependenciesMeta:
+      '@opentelemetry/api':
+        optional: true
+      '@playwright/test':
+        optional: true
+      sass:
+        optional: true
 
   next@15.1.2:
     resolution: {integrity: sha512-nLJDV7peNy+0oHlmY2JZjzMfJ8Aj0/dd3jCwSZS8ZiO5nkQfcZRqDrRN3U5rJtqVTQneIOGZzb6LCNrk7trMCQ==}
@@ -13727,9 +13472,6 @@ packages:
   npm-run-path@6.0.0:
     resolution: {integrity: sha512-9qny7Z9DsQU8Ou39ERsPU4OZQlSTP47ShQzuKZ6PRXpYLtIFgl/DEBYEXKlvcEa+9tHVcK8CF81Y2V72qaZhWA==}
     engines: {node: '>=18'}
-
-  nprogress@0.2.0:
-    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
 
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
@@ -20337,25 +20079,6 @@ snapshots:
       '@fern-api/core-utils': 0.4.24-rc1
       chalk: 5.3.0
 
-  '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)':
-    dependencies:
-      '@next/env': 14.2.9
-      '@swc/helpers': 0.5.5
-      busboy: 1.6.0
-      caniuse-lite: 1.0.30001677
-      graceful-fs: 4.2.11
-      postcss: 8.4.31
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-      styled-jsx: 5.1.1(@babel/core@7.26.0)(react@18.3.1)
-    optionalDependencies:
-      '@opentelemetry/api': 1.9.0
-      '@playwright/test': 1.47.1
-      sass: 1.77.0
-    transitivePeerDependencies:
-      - '@babel/core'
-      - babel-plugin-macros
-
   '@fern-api/venus-api-sdk@0.10.1-5-ged06d22':
     dependencies:
       form-data: 4.0.0
@@ -20475,14 +20198,9 @@ snapshots:
       '@floating-ui/core': 1.6.8
       '@floating-ui/utils': 0.2.8
 
-  '@floating-ui/dom@1.6.5':
-    dependencies:
-      '@floating-ui/core': 1.6.8
-      '@floating-ui/utils': 0.2.8
-
   '@floating-ui/react-dom@1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@floating-ui/dom': 1.6.5
+      '@floating-ui/dom': 1.6.12
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -20575,7 +20293,7 @@ snapshots:
       debug: 4.3.7
       kolorist: 1.8.0
       local-pkg: 0.5.0
-      mlly: 1.7.2
+      mlly: 1.7.3
     transitivePeerDependencies:
       - supports-color
 
@@ -21197,12 +20915,14 @@ snapshots:
     dependencies:
       '@ndhoule/each': 2.0.1
 
-  '@next/bundle-analyzer@14.2.9':
+  '@next/bundle-analyzer@14.2.23':
     dependencies:
       webpack-bundle-analyzer: 4.10.1
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  '@next/env@14.2.23': {}
 
   '@next/env@14.2.9': {}
 
@@ -21212,37 +20932,52 @@ snapshots:
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/swc-darwin-arm64@14.2.9':
+  '@next/swc-darwin-arm64@14.2.23':
     optional: true
 
   '@next/swc-darwin-arm64@15.1.2':
     optional: true
 
-  '@next/swc-darwin-x64@14.2.9':
+  '@next/swc-darwin-x64@14.2.23':
     optional: true
 
   '@next/swc-darwin-x64@15.1.2':
     optional: true
 
+  '@next/swc-linux-arm64-gnu@14.2.23':
+    optional: true
+
   '@next/swc-linux-arm64-gnu@15.1.2':
+    optional: true
+
+  '@next/swc-linux-arm64-musl@14.2.23':
     optional: true
 
   '@next/swc-linux-arm64-musl@15.1.2':
     optional: true
 
-  '@next/swc-linux-x64-gnu@14.2.9':
+  '@next/swc-linux-x64-gnu@14.2.23':
     optional: true
 
   '@next/swc-linux-x64-gnu@15.1.2':
     optional: true
 
+  '@next/swc-linux-x64-musl@14.2.23':
+    optional: true
+
   '@next/swc-linux-x64-musl@15.1.2':
+    optional: true
+
+  '@next/swc-win32-arm64-msvc@14.2.23':
     optional: true
 
   '@next/swc-win32-arm64-msvc@15.1.2':
     optional: true
 
-  '@next/swc-win32-x64-msvc@14.2.9':
+  '@next/swc-win32-ia32-msvc@14.2.23':
+    optional: true
+
+  '@next/swc-win32-x64-msvc@14.2.23':
     optional: true
 
   '@next/swc-win32-x64-msvc@15.1.2':
@@ -23784,7 +23519,7 @@ snapshots:
     dependencies:
       storybook: 8.4.4(prettier@3.4.2)
 
-  '@storybook/nextjs@8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(esbuild@0.24.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.24.2))':
+  '@storybook/nextjs@8.4.4(@swc/core@1.5.7)(esbuild@0.24.2)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.24.2))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -23811,7 +23546,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.24.2))
       pnp-webpack-plugin: 1.7.0(typescript@5.7.2)
       postcss: 8.4.31
@@ -23829,7 +23564,7 @@ snapshots:
       tsconfig-paths: 4.2.0
       tsconfig-paths-webpack-plugin: 4.1.0
     optionalDependencies:
-      sharp: 0.33.3
+      sharp: 0.33.5
       typescript: 5.7.2
       webpack: 5.94.0(@swc/core@1.5.7)(esbuild@0.24.2)
     transitivePeerDependencies:
@@ -23851,7 +23586,7 @@ snapshots:
       - webpack-hot-middleware
       - webpack-plugin-serve
 
-  '@storybook/nextjs@8.4.4(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(@swc/core@1.5.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))':
+  '@storybook/nextjs@8.4.4(@swc/core@1.5.7)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)(storybook@8.4.4(prettier@3.4.2))(type-fest@4.21.0)(typescript@5.7.2)(webpack-hot-middleware@2.26.1)(webpack@5.94.0(@swc/core@1.5.7))':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/plugin-syntax-bigint': 7.8.3(@babel/core@7.26.0)
@@ -23878,7 +23613,7 @@ snapshots:
       find-up: 5.0.0
       image-size: 1.1.1
       loader-utils: 3.2.1
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       node-polyfill-webpack-plugin: 2.0.1(webpack@5.94.0(@swc/core@1.5.7))
       pnp-webpack-plugin: 1.7.0(typescript@5.7.2)
       postcss: 8.4.31
@@ -23896,7 +23631,7 @@ snapshots:
       tsconfig-paths: 4.2.0
       tsconfig-paths-webpack-plugin: 4.1.0
     optionalDependencies:
-      sharp: 0.33.3
+      sharp: 0.33.5
       typescript: 5.7.2
       webpack: 5.94.0(@swc/core@1.5.7)
     transitivePeerDependencies:
@@ -24513,8 +24248,6 @@ snapshots:
     dependencies:
       undici-types: 6.19.8
 
-  '@types/nprogress@0.2.3': {}
-
   '@types/numeral@2.0.5': {}
 
   '@types/offscreencanvas@2019.7.3': {}
@@ -25114,9 +24847,9 @@ snapshots:
 
   '@webgpu/types@0.1.51': {}
 
-  '@workos-inc/node@7.31.0(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)':
+  '@workos-inc/node@7.31.0(express@4.21.2)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))':
     dependencies:
-      iron-session: 6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2)
+      iron-session: 6.3.1(express@4.21.2)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))
       jose: 5.6.3
       pluralize: 8.0.0
     transitivePeerDependencies:
@@ -26480,7 +26213,7 @@ snapshots:
 
   assert@2.1.0:
     dependencies:
-      call-bind: 1.0.7
+      call-bind: 1.0.8
       is-nan: 1.3.2
       object-is: 1.1.6
       object.assign: 4.1.5
@@ -29211,7 +28944,7 @@ snapshots:
 
   framer-motion@11.2.4(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      tslib: 2.8.0
+      tslib: 2.8.1
     optionalDependencies:
       '@emotion/is-prop-valid': 1.2.2
       react: 18.3.1
@@ -30130,7 +29863,7 @@ snapshots:
 
   ipaddr.js@1.9.1: {}
 
-  iron-session@6.3.1(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(express@4.21.2):
+  iron-session@6.3.1(express@4.21.2)(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)):
     dependencies:
       '@peculiar/webcrypto': 1.5.0
       '@types/cookie': 0.5.4
@@ -30141,7 +29874,7 @@ snapshots:
       iron-webcrypto: 0.2.8
     optionalDependencies:
       express: 4.21.2
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
 
   iron-session@8.0.3:
     dependencies:
@@ -30283,7 +30016,7 @@ snapshots:
 
   is-nan@1.3.2:
     dependencies:
-      call-bind: 1.0.7
+      call-bind: 1.0.8
       define-properties: 1.2.1
 
   is-natural-number@4.0.1: {}
@@ -30312,10 +30045,6 @@ snapshots:
   is-potential-custom-element-name@1.0.1: {}
 
   is-promise@2.2.2: {}
-
-  is-reference@3.0.2:
-    dependencies:
-      '@types/estree': 1.0.6
 
   is-reference@3.0.3:
     dependencies:
@@ -32242,13 +31971,6 @@ snapshots:
 
   mkdirp@2.1.6: {}
 
-  mlly@1.7.2:
-    dependencies:
-      acorn: 8.14.0
-      pathe: 1.1.2
-      pkg-types: 1.2.1
-      ufo: 1.5.4
-
   mlly@1.7.3:
     dependencies:
       acorn: 8.14.0
@@ -32332,9 +32054,9 @@ snapshots:
       - '@types/react'
       - supports-color
 
-  next-router-mock@0.9.13(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1):
+  next-router-mock@0.9.13(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react@18.3.1):
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       react: 18.3.1
 
   next-themes@0.4.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -32343,6 +32065,34 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
 
   next-tick@1.1.0: {}
+
+  next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0):
+    dependencies:
+      '@next/env': 14.2.23
+      '@swc/helpers': 0.5.5
+      busboy: 1.6.0
+      caniuse-lite: 1.0.30001677
+      graceful-fs: 4.2.11
+      postcss: 8.4.31
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      styled-jsx: 5.1.1(@babel/core@7.26.0)(react@18.3.1)
+    optionalDependencies:
+      '@next/swc-darwin-arm64': 14.2.23
+      '@next/swc-darwin-x64': 14.2.23
+      '@next/swc-linux-arm64-gnu': 14.2.23
+      '@next/swc-linux-arm64-musl': 14.2.23
+      '@next/swc-linux-x64-gnu': 14.2.23
+      '@next/swc-linux-x64-musl': 14.2.23
+      '@next/swc-win32-arm64-msvc': 14.2.23
+      '@next/swc-win32-ia32-msvc': 14.2.23
+      '@next/swc-win32-x64-msvc': 14.2.23
+      '@opentelemetry/api': 1.9.0
+      '@playwright/test': 1.47.1
+      sass: 1.77.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - babel-plugin-macros
 
   next@15.1.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0):
     dependencies:
@@ -32514,8 +32264,6 @@ snapshots:
     dependencies:
       path-key: 4.0.0
       unicorn-magic: 0.3.0
-
-  nprogress@0.2.0: {}
 
   nth-check@2.1.1:
     dependencies:
@@ -32872,7 +32620,7 @@ snapshots:
     dependencies:
       '@types/estree': 1.0.6
       estree-walker: 3.0.3
-      is-reference: 3.0.2
+      is-reference: 3.0.3
 
   picocolors@1.0.0: {}
 
@@ -33036,7 +32784,7 @@ snapshots:
   postcss-loader@8.1.1(postcss@8.4.31)(typescript@5.7.2)(webpack@5.94.0(@swc/core@1.5.7)(esbuild@0.24.2)):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.7.2)
-      jiti: 1.21.0
+      jiti: 1.21.7
       postcss: 8.4.31
       semver: 7.6.3
     optionalDependencies:
@@ -33047,7 +32795,7 @@ snapshots:
   postcss-loader@8.1.1(postcss@8.4.31)(typescript@5.7.2)(webpack@5.94.0(@swc/core@1.5.7)):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.7.2)
-      jiti: 1.21.0
+      jiti: 1.21.7
       postcss: 8.4.31
       semver: 7.6.3
     optionalDependencies:
@@ -33448,12 +33196,6 @@ snapshots:
       schema-utils: 3.3.0
       webpack: 5.94.0(@swc/core@1.5.7)(esbuild@0.24.2)
 
-  raw-loader@4.0.2(webpack@5.94.0(@swc/core@1.5.7)):
-    dependencies:
-      loader-utils: 2.0.4
-      schema-utils: 3.3.0
-      webpack: 5.94.0(@swc/core@1.5.7)
-
   rc@1.2.8:
     dependencies:
       deep-extend: 0.6.0
@@ -33528,9 +33270,9 @@ snapshots:
       react: 18.3.1
       use-sync-external-store: 1.2.2(react@18.3.1)
 
-  react-instantsearch-nextjs@0.3.17(@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  react-instantsearch-nextjs@0.3.17(next@14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0))(react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
-      next: '@fern-api/next@14.2.9-fork.2(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)'
+      next: 14.2.23(@babel/core@7.26.0)(@opentelemetry/api@1.9.0)(@playwright/test@1.47.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.77.0)
       react-instantsearch: 7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   react-instantsearch@7.13.7(algoliasearch@5.13.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
@@ -36028,7 +35770,7 @@ snapshots:
   vfile-matter@5.0.0:
     dependencies:
       vfile: 6.0.1
-      yaml: 2.4.2
+      yaml: 2.7.0
 
   vfile-message@3.1.4:
     dependencies:

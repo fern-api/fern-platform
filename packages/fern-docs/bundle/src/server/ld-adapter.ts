@@ -66,7 +66,7 @@ export async function withLaunchDarkly(
   domain: string,
   authState: AuthState,
   node: FernNavigation.utils.Node,
-  rawCookie: string | undefined
+  rawCookie?: string
 ): Promise<
   [
     LaunchDarklyInfo | undefined,

@@ -10,7 +10,6 @@
     "@tailwindcss/typography",
     "@tailwindcss/forms",
     "tailwindcss",
-    "jsonpath",
     "cssnano",
     "sharp",
     "esbuild",

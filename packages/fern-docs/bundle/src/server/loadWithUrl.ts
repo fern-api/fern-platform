@@ -1,5 +1,5 @@
+import { provideRegistryService } from "@/server/registry";
 import { APIResponse, FdrAPI } from "@fern-api/fdr-sdk/client/types";
-import { provideRegistryService } from "@fern-docs/ui";
 import { withoutStaging } from "@fern-docs/utils";
 import { loadDocsDefinitionFromS3 } from "./loadDocsDefinitionFromS3";
 

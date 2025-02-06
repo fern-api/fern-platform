@@ -29,3 +29,12 @@ export const FERN_DOCS_STAGING_BUILDWITHFERN_COM =
   "docs.staging.buildwithfern.com";
 export const FERN_DOCS_DEV_BUILDWITHFERN_COM = "docs.dev.buildwithfern.com";
 export const FERN_DOCS_BUILDWITHFERN_COM = "docs.buildwithfern.com";
+
+/**
+ * Layout constants
+ */
+export const DEFAULT_LOGO_HEIGHT = 20;
+export const DEFAULT_SIDEBAR_WIDTH = 288;
+export const DEFAULT_HEADER_HEIGHT = 64;
+export const DEFAULT_PAGE_WIDTH = 1_408;
+export const DEFAULT_CONTENT_WIDTH = 704;
