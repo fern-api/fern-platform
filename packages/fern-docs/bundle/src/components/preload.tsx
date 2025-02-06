@@ -8,6 +8,22 @@ export interface PreloadHref {
 }
 
 export default function Preload({ href, options }: PreloadHref) {
-  ReactDOM.preload(href, options);
-  return false;
+  // useEffect(() => {
+  //   ReactDOM.preload(href, options);
+  // }, [href]);
+  return (
+    <link
+      rel="preload"
+      href={href}
+      as={options.as}
+      crossOrigin={options.crossOrigin}
+      fetchPriority={options.fetchPriority}
+      imageSizes={options.imageSizes}
+      imageSrcSet={options.imageSrcSet}
+      integrity={options.integrity}
+      nonce={options.nonce}
+      referrerPolicy={options.referrerPolicy}
+      type={options.type}
+    />
+  );
 }

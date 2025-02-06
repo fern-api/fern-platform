@@ -1,7 +1,10 @@
+import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { FernSerializeMdxOptions } from "@/components/mdx/types";
 import {
   ApiDefinition,
   DocsV1Read,
   DocsV2Read,
+  FernDocs,
   FernNavigation,
 } from "@fern-api/fdr-sdk";
 import { ApiDefinitionId, PageId } from "@fern-api/fdr-sdk/navigation";
@@ -75,9 +78,18 @@ export interface DocsLoader {
   >;
 
   /**
-   * @returns a map of file names to their contents
+   * @returns the serialized page for the given page id
    */
-  getMdxBundlerFiles: () => Promise<Record<string, string>>;
+  getSerializedPage: (
+    pageId: string,
+    options?: Omit<FernSerializeMdxOptions, "files">,
+    revalidate?: number | false
+  ) => Promise<FernDocs.MarkdownText | undefined>;
+
+  serializeMdx: (
+    content: string,
+    options?: Omit<FernSerializeMdxOptions, "files">
+  ) => Promise<FernDocs.MarkdownText>;
 
   getColors: () => Promise<{
     light?: ColorsThemeConfig;
@@ -260,6 +272,49 @@ class CachedDocsLoaderImpl implements DocsLoader {
     ["docs-loader:page", this.domain],
     { tags: [this.domain], revalidate: false }
   );
+
+  public serializeMdx = unstable_cache(
+    async (
+      content: string,
+      options?: Omit<FernSerializeMdxOptions, "files">
+    ) => {
+      return serializeMdx(content, {
+        ...options,
+        files: await this.getMdxBundlerFiles(),
+      });
+    },
+    ["docs-loader:serialize-mdx", this.domain],
+    { tags: [this.domain], revalidate: false }
+  );
+
+  public getSerializedPage = async (
+    pageId: string,
+    options?: Omit<FernSerializeMdxOptions, "files">,
+    revalidate?: number | false
+  ) => {
+    const page = await this.getPage(pageId);
+    if (!page) {
+      return undefined;
+    }
+    const cachedSerializeMdx = unstable_cache(
+      async () => {
+        const serialized = await serializeMdx(page.markdown, {
+          ...options,
+          files: await this.getMdxBundlerFiles(),
+        });
+        return serialized;
+      },
+      [
+        "docs-loader:serialized-page",
+        pageId,
+        JSON.stringify(options?.scope),
+        String(options?.showError),
+        String(options?.toc),
+      ],
+      { tags: [this.domain], revalidate }
+    );
+    return cachedSerializeMdx();
+  };
 
   public getMdxBundlerFiles = unstable_cache(
     async () => {

@@ -9,7 +9,6 @@ import { notFound } from "next/navigation";
 import ChangelogEntryPage from "../changelog/ChangelogEntryPage";
 // import ChangelogPage from "../changelog/ChangelogPage";
 import { LayoutEvaluator } from "../layouts/LayoutEvaluator";
-import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import { FernSerializeMdxOptions } from "../mdx/types";
 import type { DocsContent } from "../resolver/DocsContent";
 
@@ -31,10 +30,8 @@ export async function DocsMainContent({
   scope?: Record<string, unknown>;
 }) {
   const docsLoader = await createCachedDocsLoader(domain);
-  const mdxBundlerFiles = await docsLoader.getMdxBundlerFiles();
   const fileResolver = await createFileResolver(docsLoader);
-  const mdxOptions: FernSerializeMdxOptions = {
-    files: mdxBundlerFiles,
+  const mdxOptions: Omit<FernSerializeMdxOptions, "files"> = {
     scope,
     replaceSrc: fileResolver,
     toc: true,
@@ -51,11 +48,10 @@ export async function DocsMainContent({
     if (changelogNode == null) {
       notFound();
     }
-    const loadedPage = await docsLoader.getPage(node.pageId);
-    if (!loadedPage) {
+    const page = await docsLoader.getSerializedPage(node.pageId, mdxOptions);
+    if (page == null) {
       notFound();
     }
-    const page = await serializeMdx(loadedPage.markdown, mdxOptions);
     return (
       <ChangelogEntryPage
         content={{
@@ -81,17 +77,15 @@ export async function DocsMainContent({
 
   const pageId = FernNavigation.getPageId(node);
   if (pageId != null) {
-    const content = await docsLoader.getPage(pageId);
-    if (!content) {
+    const page = await docsLoader.getSerializedPage(pageId, mdxOptions);
+    if (page == null) {
       notFound();
     }
-
-    const mdx = await serializeMdx(content.markdown, mdxOptions);
 
     return (
       <LayoutEvaluator
         fallbackTitle={node.title}
-        mdx={mdx}
+        mdx={page}
         breadcrumb={breadcrumb}
         hasAside={false}
       />
