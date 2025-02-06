@@ -8844,9 +8844,11 @@
         {
           "contentType": "application/json",
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "update_contact_request"
+            }
           }
         }
       ],
@@ -9775,9 +9777,11 @@
         {
           "contentType": "application/json",
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "create_contact_request"
+            }
           }
         }
       ],
@@ -13750,9 +13754,11 @@
         {
           "contentType": "application/json",
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "postConversationsIdPartsJsonRequest"
+            }
           }
         }
       ],
@@ -18832,125 +18838,69 @@
         {
           "key": "filter",
           "valueShape": {
-            "type": "object",
-            "extends": [],
-            "properties": [
+            "type": "undiscriminatedUnion",
+            "variants": [
               {
-                "key": "user_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                "displayName": "user_id query parameter",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "user_id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
-              }
-            ]
-          }
-        },
-        {
-          "key": "type",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "description": "The value must be user"
-        },
-        {
-          "key": "summary",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          },
-          "description": "summary flag"
-        },
-        {
-          "key": "filter",
-          "valueShape": {
-            "type": "object",
-            "extends": [],
-            "properties": [
+              },
               {
-                "key": "intercom_user_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                "displayName": "intercom_user_id query parameter",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "intercom_user_id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
-              }
-            ]
-          }
-        },
-        {
-          "key": "type",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "description": "The value must be user"
-        },
-        {
-          "key": "summary",
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "optional",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean"
-                  }
-                }
-              }
-            }
-          },
-          "description": "summary flag"
-        },
-        {
-          "key": "filter",
-          "valueShape": {
-            "type": "object",
-            "extends": [],
-            "properties": [
+              },
               {
-                "key": "email",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                "displayName": "email query parameter",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "email",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
               }
             ]
@@ -23014,9 +22964,11 @@
         {
           "contentType": "application/json",
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "postTagsJsonRequest"
+            }
           }
         }
       ],
@@ -25284,9 +25236,11 @@
         {
           "contentType": "application/json",
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": []
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "postTicketsIdReplyJsonRequest"
+            }
           }
         }
       ],
@@ -31479,36 +31433,120 @@
           {
             "key": "customer",
             "valueShape": {
-              "type": "object",
-              "extends": [],
-              "properties": [
+              "type": "undiscriminatedUnion",
+              "variants": [
                 {
-                  "key": "intercom_user_id",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "description": "The identifier for the contact as given by Intercom."
-                },
-                {
-                  "key": "customer",
-                  "valueShape": {
-                    "type": "alias",
-                    "value": {
-                      "type": "optional",
-                      "shape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "customer_request"
+                  "displayName": "Intercom User ID",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "intercom_user_id",
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "description": "The identifier for the contact as given by Intercom."
+                      },
+                      {
+                        "key": "customer",
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "optional",
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "customer_request"
+                              }
+                            }
+                          }
                         }
                       }
-                    }
+                    ]
+                  }
+                },
+                {
+                  "displayName": "User ID",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "user_id",
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "description": "The external_id you have defined for the contact who is being added as a participant."
+                      },
+                      {
+                        "key": "customer",
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "optional",
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "customer_request"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "displayName": "Email",
+                  "shape": {
+                    "type": "object",
+                    "extends": [],
+                    "properties": [
+                      {
+                        "key": "email",
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "description": "The email you have defined for the contact who is being added as a participant."
+                      },
+                      {
+                        "key": "customer",
+                        "valueShape": {
+                          "type": "alias",
+                          "value": {
+                            "type": "optional",
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "customer_request"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
                   }
                 }
               ]
@@ -33860,7 +33898,35 @@
       "name": "Contact Reply",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_intercom_user_id_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_email_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_user_id_request"
+              }
+            }
+          }
+        ]
       }
     },
     "contact_reply_email_request": {
@@ -34013,7 +34079,35 @@
       "name": "Contact Reply on ticket",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_intercom_user_id_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_user_id_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_email_request"
+              }
+            }
+          }
+        ]
       }
     },
     "contact_reply_ticket_user_id_request": {
@@ -35928,20 +36022,58 @@
           {
             "key": "user",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                },
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              ]
             },
             "description": "The unique identifiers retained after converting or merging."
           },
           {
             "key": "visitor",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "unknown"
-              }
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                },
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                },
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "unknown"
+                    }
+                  }
+                }
+              ]
             },
             "description": "The unique identifiers to convert a single Visitor."
           }
@@ -36221,10 +36353,36 @@
     "create_contact_request": {
       "name": "Create Contact Request Payload",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "displayName": "Create contact with email",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "displayName": "Create contact with external_id",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "displayName": "Create contact with role",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          }
+        ]
       },
       "description": "Payload to create a contact"
     },
@@ -36424,10 +36582,36 @@
     "create_data_event_request": {
       "name": "Create Data Event Request",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "displayName": "id required",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "displayName": "user_id required",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "displayName": "email required",
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          }
+        ]
       },
       "description": ""
     },
@@ -36559,10 +36743,27 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "unknown"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "displayName": "message_type: `email`.",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
+              },
+              {
+                "displayName": "message_type: `inapp`.",
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "unknown"
+                  }
+                }
+              }
+            ]
           }
         }
       },
@@ -36806,11 +37007,27 @@
     "create_ticket_reply_with_comment_request": {
       "name": "Create Ticket Reply Request Payload",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "contact_reply_ticket_request"
-        }
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "admin_reply_ticket_request"
+              }
+            }
+          }
+        ]
       }
     },
     "create_ticket_request": {
@@ -36839,21 +37056,73 @@
               "value": {
                 "type": "list",
                 "itemShape": {
-                  "type": "object",
-                  "extends": [],
-                  "properties": [
+                  "type": "undiscriminatedUnion",
+                  "variants": [
                     {
-                      "key": "id",
-                      "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string"
+                      "displayName": "ID",
+                      "shape": {
+                        "type": "object",
+                        "extends": [],
+                        "properties": [
+                          {
+                            "key": "id",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "description": "The identifier for the contact as given by Intercom."
                           }
-                        }
-                      },
-                      "description": "The identifier for the contact as given by Intercom."
+                        ]
+                      }
+                    },
+                    {
+                      "displayName": "External ID",
+                      "shape": {
+                        "type": "object",
+                        "extends": [],
+                        "properties": [
+                          {
+                            "key": "external_id",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "description": "The external_id you have defined for the contact who is being added as a participant."
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "displayName": "Email",
+                      "shape": {
+                        "type": "object",
+                        "extends": [],
+                        "properties": [
+                          {
+                            "key": "email",
+                            "valueShape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string"
+                                }
+                              }
+                            },
+                            "description": "The email you have defined for the contact who is being added as a participant. If a contact with this email does not exist, one will be created."
+                          }
+                        ]
+                      }
                     }
                   ]
                 }
@@ -37314,28 +37583,9 @@
     "custom_attributes": {
       "name": "Custom Attributes",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "map",
-          "keyShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        }
+        "type": "object",
+        "extends": [],
+        "properties": []
       },
       "description": "An object containing the different custom attributes associated to the conversation as key-value pairs. For relationship attributes the value will be a list of custom object instance models."
     },
@@ -37429,21 +37679,73 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "object",
-            "extends": [],
-            "properties": [
+            "type": "undiscriminatedUnion",
+            "variants": [
               {
-                "key": "intercom_user_id",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                "displayName": "Intercom User ID",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "intercom_user_id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The identifier for the contact as given by Intercom."
                     }
-                  }
-                },
-                "description": "The identifier for the contact as given by Intercom."
+                  ]
+                }
+              },
+              {
+                "displayName": "User ID",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "user_id",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The external_id you have defined for the contact who is being added as a participant."
+                    }
+                  ]
+                }
+              },
+              {
+                "displayName": "Email",
+                "shape": {
+                  "type": "object",
+                  "extends": [],
+                  "properties": [
+                    {
+                      "key": "email",
+                      "valueShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "description": "The email you have defined for the contact who is being added as a participant."
+                    }
+                  ]
+                }
               }
             ]
           }
@@ -40004,17 +40306,43 @@
           {
             "key": "value",
             "valueShape": {
-              "type": "alias",
-              "value": {
-                "type": "list",
-                "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "multiple_filter_search_request"
-                  }
+              "type": "undiscriminatedUnion",
+              "variants": [
+                {
+                  "displayName": "multiple filter search request",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "multiple_filter_search_request"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Add mutiple filters."
+                },
+                {
+                  "displayName": "single filter search request",
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "list",
+                      "itemShape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "single_filter_search_request"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Add a single filter field."
                 }
-              }
+              ]
             }
           }
         ]
@@ -40874,7 +41202,26 @@
                 "type": "list",
                 "itemShape": {
                   "type": "undiscriminatedUnion",
-                  "variants": []
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "news_item"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "newsfeed"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
@@ -41176,11 +41523,27 @@
     "reply_conversation_request": {
       "name": "reply_conversation_request",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "id",
-          "id": "contact_reply_conversation_request"
-        }
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "admin_reply_conversation_request"
+              }
+            }
+          }
+        ]
       }
     },
     "search_request": {
@@ -41193,7 +41556,26 @@
             "key": "query",
             "valueShape": {
               "type": "undiscriminatedUnion",
-              "variants": []
+              "variants": [
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "single_filter_search_request"
+                    }
+                  }
+                },
+                {
+                  "shape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "id",
+                      "id": "multiple_filter_search_request"
+                    }
+                  }
+                }
+              ]
             }
           },
           {
@@ -42550,34 +42932,9 @@
     "ticket_custom_attributes": {
       "name": "Ticket Attributes",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "map",
-          "keyShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
+        "type": "object",
+        "extends": [],
+        "properties": []
       },
       "description": "An object containing the different attributes associated to the ticket as key-value pairs. For the default title and description attributes, the keys are `_default_title_` and `_default_description_`."
     },
@@ -43125,34 +43482,9 @@
     "ticket_request_custom_attributes": {
       "name": "Ticket Attributes",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "map",
-          "keyShape": {
-            "type": "alias",
-            "value": {
-              "type": "primitive",
-              "value": {
-                "type": "string"
-              }
-            }
-          },
-          "valueShape": {
-            "type": "alias",
-            "value": {
-              "type": "nullable",
-              "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        }
+        "type": "object",
+        "extends": [],
+        "properties": []
       },
       "description": "The attributes set on the ticket. When setting the default title and description attributes, the attribute keys that should be used are `_default_title_` and `_default_description_`. When setting ticket type attributes of the list attribute type, the key should be the attribute name and the value of the attribute should be the list item id, obtainable by [listing the ticket type](ref:get_ticket-types). For example, if the ticket type has an attribute called `priority` of type `list`, the key should be `priority` and the value of the attribute should be the guid of the list item (e.g. `de1825a0-0164-4070-8ca6-13e22462fa7e`)."
     },
@@ -44608,10 +44940,25 @@
     "update_visitor_request": {
       "name": "Update Visitor Request Payload",
       "shape": {
-        "type": "alias",
-        "value": {
-          "type": "unknown"
-        }
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "unknown"
+              }
+            }
+          }
+        ]
       },
       "description": "Update an existing visitor."
     },
@@ -45458,6 +45805,120 @@
         ]
       },
       "description": "Response returned when an object is deleted"
+    },
+    "postConversationsIdPartsJsonRequest": {
+      "name": "postConversationsIdPartsJsonRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "close_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "snooze_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "open_conversation_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "assign_conversation_request"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "postTagsJsonRequest": {
+      "name": "postTagsJsonRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "create_or_update_tag_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "tag_company_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "untag_company_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "tag_multiple_users_request"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "postTicketsIdReplyJsonRequest": {
+      "name": "postTicketsIdReplyJsonRequest",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "contact_reply_ticket_request"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "admin_reply_ticket_request"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {

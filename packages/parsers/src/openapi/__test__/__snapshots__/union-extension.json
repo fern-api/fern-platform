@@ -8,7 +8,26 @@
       "name": "PartyAccount",
       "shape": {
         "type": "undiscriminatedUnion",
-        "variants": []
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "IbanField"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "OtherField"
+              }
+            }
+          }
+        ]
       },
       "description": "PartyAccount with excluded currency in response"
     },

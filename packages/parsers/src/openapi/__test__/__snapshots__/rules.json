@@ -16,9 +16,35 @@
         }
       ],
       "environments": [],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "getExample200Response"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
       "errors": [],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/example",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": 50,
+              "age": 50,
+              "name": "type",
+              "value": 1.1
+            }
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -113,6 +139,43 @@
               }
             },
             "description": "The value of the type."
+          }
+        ]
+      }
+    },
+    "getExample200Response": {
+      "name": "getExample200Response",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Schema"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "message",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
+            }
           }
         ]
       }

@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { HttpMethod } from "../../../constants";
 import { resolveRequestReference } from "../../../utils/3.1/resolveRequestReference";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
 import { RequestMediaTypeObjectConverterNode } from "./RequestMediaTypeObjectConverter.node";
@@ -21,7 +22,9 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<
       OpenAPIV3_1.RequestBodyObject | OpenAPIV3_1.ReferenceObject
-    >
+    >,
+    protected method: HttpMethod,
+    protected path: string
   ) {
     super(args);
     this.safeParse();
@@ -52,7 +55,9 @@ export class RequestBodyObjectConverterNode extends BaseOpenApiV3_1ConverterNode
               accessPath: this.accessPath,
               pathId: "content",
             },
-            contentType
+            contentType,
+            this.method,
+            this.path
           );
       }
     );

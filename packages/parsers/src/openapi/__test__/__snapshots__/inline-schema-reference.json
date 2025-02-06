@@ -16,9 +16,26 @@
         }
       ],
       "environments": [],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "getExample200Response"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
       "errors": [],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/example",
+          "responseStatusCode": 200
+        }
+      ],
       "protocol": {
         "type": "rest"
       }
@@ -88,6 +105,52 @@
                   "type": "integer"
                 }
               }
+            }
+          }
+        ]
+      }
+    },
+    "getExample200Response": {
+      "name": "getExample200Response",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Schema1"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "alias",
+              "value": {
+                "type": "id",
+                "id": "Schema2"
+              }
+            }
+          },
+          {
+            "shape": {
+              "type": "object",
+              "extends": [],
+              "properties": [
+                {
+                  "key": "message",
+                  "valueShape": {
+                    "type": "alias",
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              ]
             }
           }
         ]
