@@ -217,7 +217,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
                     },
                     context: this.context,
                     accessPath: this.accessPath,
-                    pathId: "x-fern-examples",
+                    pathId: "examples",
                   },
                   this.path,
                   0,
