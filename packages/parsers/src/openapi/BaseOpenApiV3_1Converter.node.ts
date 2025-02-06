@@ -3,10 +3,15 @@ import {
   BaseApiConverterNode,
   BaseApiConverterNodeContext,
 } from "../BaseApiConverter.node";
+import { FernRegistry } from "../client/generated";
 import { toOpenApiPath } from "./utils/toOpenApiPath";
 
 export abstract class BaseOpenApiV3_1ConverterNodeContext extends BaseApiConverterNodeContext {
   public abstract document: OpenAPIV3_1.Document;
+  public abstract generatedTypes: Record<
+    FernRegistry.TypeId,
+    FernRegistry.api.latest.TypeDefinition
+  >;
 }
 
 export type BaseOpenApiV3_1ConverterNodeConstructorArgs<Input> = {

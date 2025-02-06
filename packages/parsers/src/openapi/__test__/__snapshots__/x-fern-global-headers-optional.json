@@ -1,0 +1,56 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {},
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {},
+  "globalHeaders": [
+    {
+      "key": "RequiredGlobalHeader1",
+      "valueShape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "required global header 1"
+    },
+    {
+      "key": "RequiredGlobalHeader2",
+      "valueShape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "required global header 2"
+    },
+    {
+      "key": "OptionalGlobalHeader 2",
+      "valueShape": {
+        "type": "alias",
+        "value": {
+          "type": "optional",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "description": "optional global header 2"
+    }
+  ]
+}

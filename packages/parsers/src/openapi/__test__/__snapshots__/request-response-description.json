@@ -16,9 +16,33 @@
         }
       ],
       "environments": [],
-      "responses": [],
+      "responses": [
+        {
+          "statusCode": 200,
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Schema1"
+            }
+          },
+          "description": "Successful response"
+        }
+      ],
       "errors": [],
-      "examples": [],
+      "examples": [
+        {
+          "path": "/example",
+          "responseStatusCode": 200,
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "id": 0,
+              "name": "name"
+            }
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }

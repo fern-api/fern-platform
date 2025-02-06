@@ -1,5 +1,5 @@
 import { isNonNullish } from "@fern-api/ui-core-utils";
-import { mapValues } from "es-toolkit";
+import { camelCase, mapValues } from "es-toolkit";
 import { OpenAPIV3_1 } from "openapi-types";
 import { UnreachableCaseError } from "ts-essentials";
 import { FernRegistry } from "../../../../client/generated";
@@ -10,6 +10,7 @@ import {
 import {
   APPLICATION_JSON_CONTENT_TYPE,
   APPLICATION_OCTET_STREAM_CONTENT_TYPE,
+  HttpMethod,
 } from "../../../constants";
 import {
   ConstArrayToType,
@@ -17,6 +18,7 @@ import {
   SUPPORTED_STREAMING_FORMATS,
 } from "../../../types/format.types";
 import { resolveSchemaReference } from "../../../utils/3.1/resolveSchemaReference";
+import { createTypeDefinition } from "../../../utils/createTypeDefinition";
 import { getExampleName } from "../../../utils/getExampleName";
 import { matchExampleName } from "../../../utils/matchExampleNames";
 import { maybeSingleValueToArray } from "../../../utils/maybeSingleValueToArray";
@@ -52,6 +54,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     contentType: string | undefined,
     protected streamingFormat: ResponseStreamingFormat | undefined,
     protected path: string,
+    protected method: HttpMethod,
     protected statusCode: number,
     protected requests: RequestMediaTypeObjectConverterNode[],
     protected shapes: ExampleObjectConverterNode.Shapes
@@ -416,6 +419,56 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
     }
   }
 
+  convertJsonLike():
+    | FernRegistry.api.latest.HttpResponseBodyShape
+    | FernRegistry.api.latest.HttpResponseBodyShape[]
+    | undefined {
+    const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+
+    return maybeShapes
+      ?.map((shape) => {
+        const type = shape.type;
+        switch (type) {
+          case "alias":
+            return shape;
+          case "discriminatedUnion":
+          case "undiscriminatedUnion":
+          case "enum": {
+            const uniqueId = camelCase(
+              [this.method, this.path, this.statusCode, "response"].join("_")
+            );
+            createTypeDefinition({
+              uniqueId,
+              type: shape,
+              contextTypes: this.context.generatedTypes,
+              description: this.schema?.description,
+              availability: this.schema?.availability?.convert(),
+            });
+            return {
+              type: "alias" as const,
+              value: {
+                type: "id" as const,
+                id: FernRegistry.TypeId(uniqueId),
+                default:
+                  shape.type === "enum" && shape.default != null
+                    ? {
+                        type: "enum" as const,
+                        value: shape.default,
+                      }
+                    : undefined,
+              },
+            };
+          }
+          case "object":
+            return shape;
+          default:
+            new UnreachableCaseError(type);
+            return undefined;
+        }
+      })
+      .filter(isNonNullish);
+  }
+
   convert():
     | FernRegistry.api.latest.HttpResponseBodyShape
     | FernRegistry.api.latest.HttpResponseBodyShape[]
@@ -430,19 +483,20 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       switch (this.contentType) {
         case "application/json":
           if (this.streamingFormat == null) {
-            const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
+            return this.convertJsonLike();
+            // const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
 
-            return maybeShapes
-              ?.map((shape) => {
-                if (
-                  shape == null ||
-                  (shape.type !== "object" && shape.type !== "alias")
-                ) {
-                  return undefined;
-                }
-                return shape;
-              })
-              .filter(isNonNullish);
+            // return maybeShapes
+            //   ?.map((shape) => {
+            //     if (
+            //       shape == null ||
+            //       (shape.type !== "object" && shape.type !== "alias")
+            //     ) {
+            //       return undefined;
+            //     }
+            //     return shape;
+            //   })
+            //   .filter(isNonNullish);
           } else {
             return this.convertStreamingFormat();
           }
@@ -457,26 +511,7 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
           return undefined;
       }
     } else if (this.unsupportedContentType != null) {
-      const maybeShapes = maybeSingleValueToArray(this.schema?.convert());
-
-      return maybeShapes
-        ?.map((shape) => {
-          const type = shape.type;
-          switch (type) {
-            case "alias":
-              return shape;
-            case "discriminatedUnion":
-            case "undiscriminatedUnion":
-            case "enum":
-              return undefined;
-            case "object":
-              return shape;
-            default:
-              new UnreachableCaseError(type);
-              return undefined;
-          }
-        })
-        .filter(isNonNullish);
+      return this.convertJsonLike();
     } else {
       return undefined;
     }
