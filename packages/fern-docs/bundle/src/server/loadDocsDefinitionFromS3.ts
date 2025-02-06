@@ -38,7 +38,10 @@ export async function loadDocsDefinitionFromS3({
       expiresIn: 60 * 60, // 1 hour
     });
 
-    const response = await fetch(signedUrl);
+    const response = await fetch(signedUrl, {
+      cache: "force-cache",
+      next: { tags: [domain] },
+    });
     if (response.ok) {
       console.log("Successfully loaded docs definition from S3: ", signedUrl);
       const json = await response.json();

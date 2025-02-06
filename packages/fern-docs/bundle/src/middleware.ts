@@ -166,6 +166,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api/fern-docs|.well-known|_next|_vercel|favicon.ico).*)",
+    "/((?!api/fern-docs|.well-known|_next|_vercel|favicon.ico|manifest.webmanifest).*)",
   ],
 };
