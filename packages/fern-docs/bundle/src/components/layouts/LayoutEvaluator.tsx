@@ -1,15 +1,16 @@
 "use server";
 
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { isToc, TableOfContentsItem } from "@fern-docs/mdx";
 import { getMDXExport } from "mdx-bundler/client";
-import { serializeMdx } from "../mdx/bundlers/mdx-bundler";
 import { MdxContent } from "../mdx/MdxContent";
 import { LayoutEvaluatorContent } from "./LayoutEvaluatorContent";
 
 export interface LayoutEvaluatorProps {
+  domain: string;
   fallbackTitle: string;
   mdx: FernDocs.MarkdownText;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
@@ -17,11 +18,13 @@ export interface LayoutEvaluatorProps {
 }
 
 export async function LayoutEvaluator({
+  domain,
   fallbackTitle,
   mdx,
   breadcrumb,
   hasAside,
 }: LayoutEvaluatorProps) {
+  const docsLoader = await createCachedDocsLoader(domain);
   const exports =
     typeof mdx !== "string"
       ? getMDXExport(mdx.code, {
@@ -36,8 +39,8 @@ export async function LayoutEvaluator({
     typeof mdx === "string" ? EMPTY_FRONTMATTER : mdx.frontmatter;
 
   const [title, subtitle] = await Promise.all([
-    serializeMdx(frontmatter.title ?? fallbackTitle),
-    serializeMdx(frontmatter.subtitle),
+    docsLoader.serializeMdx(frontmatter.title) ?? fallbackTitle,
+    docsLoader.serializeMdx(frontmatter.subtitle),
   ]);
 
   return (

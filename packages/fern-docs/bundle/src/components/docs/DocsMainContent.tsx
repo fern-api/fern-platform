@@ -84,6 +84,7 @@ export async function DocsMainContent({
 
     return (
       <LayoutEvaluator
+        domain={domain}
         fallbackTitle={node.title}
         mdx={page}
         breadcrumb={breadcrumb}

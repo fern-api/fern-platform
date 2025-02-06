@@ -87,9 +87,9 @@ export interface DocsLoader {
   ) => Promise<FernDocs.MarkdownText | undefined>;
 
   serializeMdx: (
-    content: string,
+    content: string | undefined,
     options?: Omit<FernSerializeMdxOptions, "files">
-  ) => Promise<FernDocs.MarkdownText>;
+  ) => Promise<FernDocs.MarkdownText | undefined>;
 
   getColors: () => Promise<{
     light?: ColorsThemeConfig;
@@ -275,9 +275,12 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public serializeMdx = unstable_cache(
     async (
-      content: string,
+      content: string | undefined,
       options?: Omit<FernSerializeMdxOptions, "files">
     ) => {
+      if (content == null) {
+        return undefined;
+      }
       return serializeMdx(content, {
         ...options,
         files: await this.getMdxBundlerFiles(),
