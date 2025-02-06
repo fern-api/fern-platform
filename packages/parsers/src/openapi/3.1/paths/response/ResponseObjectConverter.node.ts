@@ -5,6 +5,7 @@ import {
   BaseOpenApiV3_1ConverterNode,
   BaseOpenApiV3_1ConverterNodeConstructorArgs,
 } from "../../../BaseOpenApiV3_1Converter.node";
+import { HttpMethod } from "../../../constants";
 import { resolveResponseReference } from "../../../utils/3.1/resolveResponseReference";
 import { isReferenceObject } from "../../guards/isReferenceObject";
 import { ExampleObjectConverterNode } from "../ExampleObjectConverter.node";
@@ -28,6 +29,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       OpenAPIV3_1.ResponseObject | OpenAPIV3_1.ReferenceObject
     >,
     protected path: string,
+    protected method: HttpMethod,
     protected statusCode: number,
     protected requests: RequestMediaTypeObjectConverterNode[],
     protected shapes: ExampleObjectConverterNode.Shapes
@@ -73,6 +75,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           "empty",
           streamingFormat,
           this.path,
+          this.method,
           this.statusCode,
           this.requests,
           this.shapes
@@ -93,6 +96,7 @@ export class ResponseObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
               contentType,
               streamingFormat,
               this.path,
+              this.method,
               this.statusCode,
               this.requests,
               // TODO: add response headers, but this needs to be added to FDR shape
