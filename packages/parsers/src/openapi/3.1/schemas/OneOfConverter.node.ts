@@ -138,7 +138,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
                 return convertedShapes
                   ?.map((shape) => {
-                    if (shape == null) {
+                    if (shape == null || shape.type !== "object") {
                       return undefined;
                     }
                     return {
