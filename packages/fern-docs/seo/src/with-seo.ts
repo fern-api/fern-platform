@@ -166,19 +166,19 @@ export function withSeo(
         endpoint: ({ endpointId }) => {
           const endpoint = api.endpoints.get(endpointId);
           if (endpoint?.description != null) {
-            seo.description ??= endpoint.description;
+            seo.description ??= markdownToString(endpoint.description);
           }
         },
         webSocket: ({ webSocketId }) => {
           const webSocket = api.webSockets.get(webSocketId);
           if (webSocket?.description != null) {
-            seo.description ??= webSocket.description;
+            seo.description ??= markdownToString(webSocket.description);
           }
         },
         webhook: ({ webhookId }) => {
           const webhook = api.webhooks.get(webhookId);
           if (webhook?.description != null) {
-            seo.description ??= webhook.description;
+            seo.description ??= markdownToString(webhook.description);
           }
         },
       });
