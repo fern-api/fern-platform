@@ -192,8 +192,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "Block"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Block"
+            }
+          }
         }
       }
     },
@@ -202,8 +208,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "Integer"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Integer"
+            }
+          }
         }
       }
     },
@@ -212,8 +224,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "Address"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Address"
+            }
+          }
         }
       }
     },
@@ -546,8 +564,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "BlockNumber"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "BlockNumber"
+            }
+          }
         }
       },
       "description": "The block number or null when its the pending block"
@@ -568,8 +592,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "Nonce"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Nonce"
+            }
+          }
         }
       },
       "description": "Randomly selected number to satisfy the proof-of-work or null when its the pending block"
@@ -590,8 +620,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "Address"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Address"
+            }
+          }
         }
       },
       "description": "Destination address of the transaction. Null if it was a contract create."
@@ -1121,8 +1157,14 @@
       "shape": {
         "type": "alias",
         "value": {
-          "type": "id",
-          "id": "Keccak"
+          "type": "nullable",
+          "shape": {
+            "type": "alias",
+            "value": {
+              "type": "id",
+              "id": "Keccak"
+            }
+          }
         }
       }
     },
@@ -3528,8 +3570,14 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "id",
-              "id": "Transaction"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Transaction"
+                }
+              }
             }
           }
         }
@@ -3648,8 +3696,14 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "id",
-              "id": "Transaction"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Transaction"
+                }
+              }
             }
           }
         }
@@ -3734,8 +3788,14 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "id",
-              "id": "Transaction"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Transaction"
+                }
+              }
             }
           }
         }
@@ -3846,8 +3906,14 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "id",
-              "id": "Nonce"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Nonce"
+                }
+              }
             }
           }
         }
@@ -3932,8 +3998,14 @@
           "body": {
             "type": "alias",
             "value": {
-              "type": "id",
-              "id": "Receipt"
+              "type": "nullable",
+              "shape": {
+                "type": "alias",
+                "value": {
+                  "type": "id",
+                  "id": "Receipt"
+                }
+              }
             }
           }
         }
@@ -4442,85 +4514,91 @@
         {
           "statusCode": 200,
           "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "address",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Address"
+            "type": "alias",
+            "value": {
+              "type": "nullable",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "address",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Address"
+                      }
+                    },
+                    "description": "The address of the account or contract of the request"
+                  },
+                  {
+                    "key": "accountProof",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "ProofNodes"
+                      }
+                    }
+                  },
+                  {
+                    "key": "balance",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Integer"
+                      }
+                    },
+                    "description": "The Ether balance of the account or contract of the request"
+                  },
+                  {
+                    "key": "codeHash",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Keccak"
+                      }
+                    },
+                    "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
+                  },
+                  {
+                    "key": "nonce",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Nonce"
+                      }
+                    },
+                    "description": "The transaction count of the account or contract of the request"
+                  },
+                  {
+                    "key": "storageHash",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Keccak"
+                      }
+                    },
+                    "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
+                  },
+                  {
+                    "key": "storageProof",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "StorageProof"
+                      }
+                    }
                   }
-                },
-                "description": "The address of the account or contract of the request"
-              },
-              {
-                "key": "accountProof",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "ProofNodes"
-                  }
-                }
-              },
-              {
-                "key": "balance",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                },
-                "description": "The Ether balance of the account or contract of the request"
-              },
-              {
-                "key": "codeHash",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Keccak"
-                  }
-                },
-                "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
-              },
-              {
-                "key": "nonce",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Nonce"
-                  }
-                },
-                "description": "The transaction count of the account or contract of the request"
-              },
-              {
-                "key": "storageHash",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Keccak"
-                  }
-                },
-                "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
-              },
-              {
-                "key": "storageProof",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "StorageProof"
-                  }
-                }
+                ]
               }
-            ]
+            }
           }
         }
       ],

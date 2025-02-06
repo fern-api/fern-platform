@@ -109,16 +109,13 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     | undefined {
     // COMMENTED OUT FOR NOW, CONSIDER BRINGING BACK IF MULTIPLE RESPONSES ARE SUPPORTED
     // if (!this.isUnionOfContainers && !this.discriminated) {
-    //   const convertedNodes = this.undiscriminatedMapping
-    //     ?.flatMap((node) => node.convert())
-    //     .filter(isNonNullish);
-    //   return this.isNullable && convertedNodes != null
-    //     ? convertedNodes.map(wrapNullable).filter(isNonNullish)
-    //     : convertedNodes;
-    // }
-
     if (!this.discriminated && this.undiscriminatedMapping?.length === 1) {
-      return maybeSingleValueToArray(this.undiscriminatedMapping[0]?.convert());
+      const convertedNodes = this.undiscriminatedMapping
+        ?.flatMap((node) => node.convert())
+        .filter(isNonNullish);
+      return this.isNullable && convertedNodes != null
+        ? convertedNodes.map(wrapNullable).filter(isNonNullish)
+        : convertedNodes;
     }
 
     const union =
