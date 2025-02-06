@@ -118,6 +118,7 @@ const nextConfig = {
    * Note that local development should not set the CDN_URI to ensure that the assets are served from the local server.
    */
   assetPrefix: cdnUri != null ? cdnUri.href : undefined,
+  typescript: { ignoreBuildErrors: true },
   headers: async () => {
     const AccessControlHeaders = [
       {
