@@ -114,7 +114,9 @@ export class SchemaConverterNode extends BaseOpenApiV3_1ConverterNodeWithTrackin
           pathId: refPath,
           seenSchemas: this.seenSchemas,
         },
-        this.nullable
+        this.nullable,
+        this.description,
+        this.availability
       );
     } else {
       // If the object is not a reference object, then it is a schema object, gather all appropriate variables

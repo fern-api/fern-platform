@@ -166,12 +166,16 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
 
     this.requests =
       this.input.requestBody != null
-        ? new RequestBodyObjectConverterNode({
-            input: this.input.requestBody,
-            context: this.context,
-            accessPath: this.accessPath,
-            pathId: "requestBody",
-          })
+        ? new RequestBodyObjectConverterNode(
+            {
+              input: this.input.requestBody,
+              context: this.context,
+              accessPath: this.accessPath,
+              pathId: "requestBody",
+            },
+            this.method,
+            this.path
+          )
         : undefined;
 
     this.responses =

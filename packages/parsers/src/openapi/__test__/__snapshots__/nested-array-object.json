@@ -1,0 +1,85 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.postTestNestedArrayObject": {
+      "id": "endpoint_.postTestNestedArrayObject",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "test"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "nested"
+        },
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "array-object"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "alias",
+            "value": {
+              "type": "list",
+              "itemShape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "key": "a",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "key": "b",
+                    "valueShape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {}
+}

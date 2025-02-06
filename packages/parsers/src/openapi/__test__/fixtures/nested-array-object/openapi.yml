@@ -1,0 +1,27 @@
+openapi: 3.1.0
+info:
+  title: nested-array-object
+  version: 1.0.0
+
+paths:
+  /test/nested/array-object:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  a:
+                    type: string
+                  b:
+                    type: string
+                required:
+                  - a
+                  - b
+            example:
+              - a: "a"
+                b: "b"
