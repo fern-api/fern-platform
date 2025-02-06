@@ -739,223 +739,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/files/",
-          "responseStatusCode": 200,
-          "queryParameters": {
-            "removed": true,
-            "stored": true,
-            "limit": 100,
-            "ordering": "-datetime_uploaded",
-            "from": "2015-09-10T10:00:00Z",
-            "include": "appdata"
-          },
-          "headers": {
-            "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "next": "https://api.uploadcare.com/files/?from=2018-11-27T01%3A00%3A24.296613%2B00%3A00&limit=3&offset=0",
-              "previous": "https://api.uploadcare.com/files/?limit=3&to=2018-11-27T01%3A00%3A36.436838%2B00%3A00&offset=0",
-              "total": 26,
-              "totals": {
-                "removed": 0,
-                "stored": 25,
-                "unstored": 1
-              },
-              "per_page": 100,
-              "results": [
-                {
-                  "datetime_removed": null,
-                  "datetime_stored": "2018-11-26T12:49:10.477888Z",
-                  "datetime_uploaded": "2018-11-26T12:49:09.945335Z",
-                  "variations": null,
-                  "is_image": true,
-                  "is_ready": true,
-                  "mime_type": "image/jpeg",
-                  "original_file_url": "https://ucarecdn.com/22240276-2f06-41f8-9411-755c8ce926ed/pineapple.jpg",
-                  "original_filename": "pineapple.jpg",
-                  "size": 642,
-                  "url": "https://api.uploadcare.com/files/22240276-2f06-41f8-9411-755c8ce926ed/",
-                  "uuid": "test-uuid-replacement",
-                  "content_info": {
-                    "mime": {
-                      "mime": "image/jpeg",
-                      "type": "image",
-                      "subtype": "jpeg"
-                    },
-                    "image": {
-                      "format": "JPEG",
-                      "width": 500,
-                      "height": 500,
-                      "sequence": false,
-                      "color_mode": "RGB",
-                      "orientation": 6,
-                      "geo_location": {
-                        "latitude": 55.62013611111111,
-                        "longitude": 37.66299166666666
-                      },
-                      "datetime_original": "2018-08-20T08:59:50",
-                      "dpi": [
-                        72,
-                        72
-                      ]
-                    }
-                  },
-                  "metadata": {
-                    "subsystem": "uploader",
-                    "pet": "cat"
-                  },
-                  "appdata": {
-                    "aws_rekognition_detect_labels": {
-                      "data": {
-                        "LabelModelVersion": "2.0",
-                        "Labels": [
-                          {
-                            "Confidence": 93.41645812988281,
-                            "Instances": [],
-                            "Name": "Home Decor",
-                            "Parents": []
-                          },
-                          {
-                            "Confidence": 70.75951385498047,
-                            "Instances": [],
-                            "Name": "Linen",
-                            "Parents": [
-                              {
-                                "Name": "Home Decor"
-                              }
-                            ]
-                          },
-                          {
-                            "Confidence": 64.7123794555664,
-                            "Instances": [],
-                            "Name": "Sunlight",
-                            "Parents": []
-                          },
-                          {
-                            "Confidence": 56.264793395996094,
-                            "Instances": [],
-                            "Name": "Flare",
-                            "Parents": [
-                              {
-                                "Name": "Light"
-                              }
-                            ]
-                          },
-                          {
-                            "Confidence": 50.47153854370117,
-                            "Instances": [],
-                            "Name": "Tree",
-                            "Parents": [
-                              {
-                                "Name": "Plant"
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      "version": "2016-06-27",
-                      "datetime_created": "2021-09-21T11:25:31.259763Z",
-                      "datetime_updated": "2021-09-21T11:27:33.359763Z"
-                    },
-                    "aws_rekognition_detect_moderation_labels": {
-                      "data": {
-                        "ModerationModelVersion": "6.0",
-                        "ModerationLabels": [
-                          {
-                            "Confidence": 93.41645812988281,
-                            "Name": "Weapons",
-                            "ParentName": "Violence"
-                          }
-                        ]
-                      },
-                      "version": "2016-06-27",
-                      "datetime_created": "2023-02-21T11:25:31.259763Z",
-                      "datetime_updated": "2023-02-21T11:27:33.359763Z"
-                    },
-                    "remove_bg": {
-                      "data": {
-                        "foreground_type": "person"
-                      },
-                      "version": "1.0",
-                      "datetime_created": "2021-07-25T12:24:33.159663Z",
-                      "datetime_updated": "2021-07-25T12:24:33.159663Z"
-                    },
-                    "uc_clamav_virus_scan": {
-                      "data": {
-                        "infected": true,
-                        "infected_with": "Win.Test.EICAR_HDB-1"
-                      },
-                      "version": "0.104.2",
-                      "datetime_created": "2021-09-21T11:24:33.159663Z",
-                      "datetime_updated": "2021-09-21T11:24:33.159663Z"
-                    }
-                  }
-                }
-              ]
-            }
-          },
-          "snippets": {
-            "curl": [
-              {
-                "name": "curl",
-                "language": "curl",
-                "code": "curl -X GET 'https://api.uploadcare.com/files/?limit=10&ordering=-datetime_uploaded&stored=true' -H 'Authorization: Api-Key YOUR_API_KEY'",
-                "generated": false
-              }
-            ],
-            "javascript": [
-              {
-                "name": "JS",
-                "language": "JavaScript",
-                "code": "import {\n  listOfFiles,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await listOfFiles(\n  {},\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
-                "generated": false
-              }
-            ],
-            "php": [
-              {
-                "name": "PHP",
-                "language": "PHP",
-                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$list = $api->listFiles();\nforeach ($list->getResults() as $result) {\n    echo \\sprintf('URL: %s', $result->getUrl());\n}\nwhile (($next = $api->nextPage($list)) !== null) {\n    foreach ($next->getResults() as $result) {\n        echo \\sprintf('URL: %s', $result->getUrl());\n    }\n}\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Python",
-                "language": "Python",
-                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfiles = uploadcare.list_files(stored=True, limit=10)\nfor file in files:\n    print(file.info)\n",
-                "generated": false
-              }
-            ],
-            "ruby": [
-              {
-                "name": "Ruby",
-                "language": "Ruby",
-                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nlist = Uploadcare::FileList.file_list(stored: true, removed: false, limit: 100)\nlist.each { |file| puts file.inspect }\n",
-                "generated": false
-              }
-            ],
-            "swift": [
-              {
-                "name": "Swift",
-                "language": "Swift",
-                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet query = PaginationQuery()\n  .stored(true)\n  .ordering(.dateTimeUploadedDESC)\n  .limit(10)\nvar list = uploadcare.listOfFiles()\n\ntry await list.get(withQuery: query)\nprint(list)\n\n// Next page\nif list.next != nil {\n  try await list.nextPage()\n  print(list)\n}\n\n// Previous page\nif list.previous != nil {\n  try await filesList.previousPage()\n  print(list)\n}\n",
-                "generated": false
-              }
-            ],
-            "kotlin": [
-              {
-                "name": "Kotlin",
-                "language": "Kotlin",
-                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval filesQueryBuilder = uploadcare.getFiles()\nval files = filesQueryBuilder\n    .stored(true)\n    .ordering(Order.UPLOAD_TIME_DESC)\n    .asList()\nLog.d(\"TAG\", files.toString())\n",
-                "generated": false
-              }
-            ]
-          }
         }
       ],
       "protocol": {
@@ -4071,13 +3854,158 @@
             "value": {
               "type": "file",
               "result": {
-                "datetime_removed": "null",
-                "datetime_stored": "null",
+                "datetime_removed": null,
+                "datetime_stored": null,
                 "datetime_uploaded": "datetime_uploaded",
                 "is_image": true,
                 "is_ready": true,
                 "mime_type": "image/jpeg",
-                "original_file_url": "null",
+                "original_file_url": null,
+                "original_filename": "EU_4.jpg",
+                "size": 0,
+                "url": "url",
+                "uuid": "test-uuid-replacement",
+                "metadata": {}
+              }
+            }
+          },
+          "snippets": {
+            "javascript": [
+              {
+                "name": "JS",
+                "language": "JavaScript",
+                "code": "import {\n  copyFileToLocalStorage,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await copyFileToLocalStorage(\n  {\n    source: '1bac376c-aa7e-4356-861b-dd2657b5bfd2',\n    store: true,\n  },\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
+                "generated": false
+              }
+            ],
+            "php": [
+              {
+                "name": "PHP",
+                "language": "PHP",
+                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$fileInfo = $api->copyToLocalStorage('03ccf9ab-f266-43fb-973d-a6529c55c2ae', true);\necho \\sprintf('File \\'%s\\' copied to local storage', $fileInfo->getUuid());\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Python",
+                "language": "Python",
+                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfile = uploadcare.file(\"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\ncopied_file = file.create_local_copy(store=True)\n",
+                "generated": false
+              }
+            ],
+            "ruby": [
+              {
+                "name": "Ruby",
+                "language": "Ruby",
+                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nsource = '1bac376c-aa7e-4356-861b-dd2657b5bfd2'\ncopied_file = Uploadcare::File.local_copy(source, store: true)\nputs copied_file.uuid\n",
+                "generated": false
+              }
+            ],
+            "swift": [
+              {
+                "name": "Swift",
+                "language": "Swift",
+                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet response = try await uploadcare.copyFileToLocalStorage(source: \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nprint(response)\n",
+                "generated": false
+              }
+            ],
+            "kotlin": [
+              {
+                "name": "Kotlin",
+                "language": "Kotlin",
+                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval copyFile = uploadcare.copyFileLocalStorage(source = \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nLog.d(\"TAG\", copyFile.toString())\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/files/local_copy/",
+          "responseStatusCode": 201,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "snippets": {
+            "javascript": [
+              {
+                "name": "JS",
+                "language": "JavaScript",
+                "code": "import {\n  copyFileToLocalStorage,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await copyFileToLocalStorage(\n  {\n    source: '1bac376c-aa7e-4356-861b-dd2657b5bfd2',\n    store: true,\n  },\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
+                "generated": false
+              }
+            ],
+            "php": [
+              {
+                "name": "PHP",
+                "language": "PHP",
+                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$fileInfo = $api->copyToLocalStorage('03ccf9ab-f266-43fb-973d-a6529c55c2ae', true);\necho \\sprintf('File \\'%s\\' copied to local storage', $fileInfo->getUuid());\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Python",
+                "language": "Python",
+                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfile = uploadcare.file(\"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\ncopied_file = file.create_local_copy(store=True)\n",
+                "generated": false
+              }
+            ],
+            "ruby": [
+              {
+                "name": "Ruby",
+                "language": "Ruby",
+                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nsource = '1bac376c-aa7e-4356-861b-dd2657b5bfd2'\ncopied_file = Uploadcare::File.local_copy(source, store: true)\nputs copied_file.uuid\n",
+                "generated": false
+              }
+            ],
+            "swift": [
+              {
+                "name": "Swift",
+                "language": "Swift",
+                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet response = try await uploadcare.copyFileToLocalStorage(source: \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nprint(response)\n",
+                "generated": false
+              }
+            ],
+            "kotlin": [
+              {
+                "name": "Kotlin",
+                "language": "Kotlin",
+                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval copyFile = uploadcare.copyFileLocalStorage(source = \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nLog.d(\"TAG\", copyFile.toString())\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/files/local_copy/",
+          "responseStatusCode": 201,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "source": "test-uuid-replacement",
+              "store": "true",
+              "metadata": {
+                "subsystem": "uploader",
+                "pet": "cat"
+              }
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "file",
+              "result": {
+                "datetime_removed": null,
+                "datetime_stored": null,
+                "datetime_uploaded": "datetime_uploaded",
+                "is_image": true,
+                "is_ready": true,
+                "mime_type": "image/jpeg",
+                "original_file_url": null,
                 "original_filename": "EU_4.jpg",
                 "size": 0,
                 "url": "url",
@@ -4360,14 +4288,6 @@
                   "detail": "Bad `source` parameter. Use UUID or CDN URL."
                 }
               }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
-                }
-              }
             }
           ]
         },
@@ -4497,6 +4417,262 @@
               "type": "url",
               "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
             }
+          },
+          "snippets": {
+            "javascript": [
+              {
+                "name": "JS",
+                "language": "JavaScript",
+                "code": "import {\n  copyFileToRemoteStorage,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await copyFileToRemoteStorage(\n  {\n    source: '1bac376c-aa7e-4356-861b-dd2657b5bfd2',\n    target: 'custom_storage_connected_to_the_project',\n  },\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
+                "generated": false
+              }
+            ],
+            "php": [
+              {
+                "name": "PHP",
+                "language": "PHP",
+                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$result = $api->copyToRemoteStorage('03ccf9ab-f266-43fb-973d-a6529c55c2ae', true);\necho \\sprintf('File \\'%s\\' copied to local storage', $result);\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Python",
+                "language": "Python",
+                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfile = uploadcare.file(\"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nr_copied_file = file.create_remote_copy(\n    target='custom_storage_connected_to_the_project',\n    make_public=True,\n    pattern='${uuid}/${filename}${ext}',\n)\n",
+                "generated": false
+              }
+            ],
+            "ruby": [
+              {
+                "name": "Ruby",
+                "language": "Ruby",
+                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nsource_object = '1bac376c-aa7e-4356-861b-dd2657b5bfd2'\ntarget = 'custom_storage_connected_to_the_project'\ncopied_file_url = Uploadcare::File.remote_copy(source_object, target, make_public: true)\nputs copied_file_url\n",
+                "generated": false
+              }
+            ],
+            "swift": [
+              {
+                "name": "Swift",
+                "language": "Swift",
+                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet response = try await uploadcare.copyFileToRemoteStorage(source: \"03ccf9ab-f266-43fb-973d-a6529c55c2ae\", target: \"mytarget\", pattern: .uuid)\nprint(response)\n",
+                "generated": false
+              }
+            ],
+            "kotlin": [
+              {
+                "name": "Kotlin",
+                "language": "Kotlin",
+                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval copyFile = uploadcare.copyFileRemoteStorage(\n    source = \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\",\n    target = \"custom_storage_connected_to_the_project\"\n)\nLog.d(\"TAG\", copyFile.toString())\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/files/remote_copy/",
+          "responseStatusCode": 200,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "snippets": {
+            "javascript": [
+              {
+                "name": "JS",
+                "language": "JavaScript",
+                "code": "import {\n  copyFileToRemoteStorage,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await copyFileToRemoteStorage(\n  {\n    source: '1bac376c-aa7e-4356-861b-dd2657b5bfd2',\n    target: 'custom_storage_connected_to_the_project',\n  },\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
+                "generated": false
+              }
+            ],
+            "php": [
+              {
+                "name": "PHP",
+                "language": "PHP",
+                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$result = $api->copyToRemoteStorage('03ccf9ab-f266-43fb-973d-a6529c55c2ae', true);\necho \\sprintf('File \\'%s\\' copied to local storage', $result);\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Python",
+                "language": "Python",
+                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfile = uploadcare.file(\"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nr_copied_file = file.create_remote_copy(\n    target='custom_storage_connected_to_the_project',\n    make_public=True,\n    pattern='${uuid}/${filename}${ext}',\n)\n",
+                "generated": false
+              }
+            ],
+            "ruby": [
+              {
+                "name": "Ruby",
+                "language": "Ruby",
+                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nsource_object = '1bac376c-aa7e-4356-861b-dd2657b5bfd2'\ntarget = 'custom_storage_connected_to_the_project'\ncopied_file_url = Uploadcare::File.remote_copy(source_object, target, make_public: true)\nputs copied_file_url\n",
+                "generated": false
+              }
+            ],
+            "swift": [
+              {
+                "name": "Swift",
+                "language": "Swift",
+                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet response = try await uploadcare.copyFileToRemoteStorage(source: \"03ccf9ab-f266-43fb-973d-a6529c55c2ae\", target: \"mytarget\", pattern: .uuid)\nprint(response)\n",
+                "generated": false
+              }
+            ],
+            "kotlin": [
+              {
+                "name": "Kotlin",
+                "language": "Kotlin",
+                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval copyFile = uploadcare.copyFileRemoteStorage(\n    source = \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\",\n    target = \"custom_storage_connected_to_the_project\"\n)\nLog.d(\"TAG\", copyFile.toString())\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/files/remote_copy/",
+          "responseStatusCode": 200,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "source": "test-uuid-replacement",
+              "target": "mytarget"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "url",
+              "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
+            }
+          },
+          "snippets": {
+            "javascript": [
+              {
+                "name": "JS",
+                "language": "JavaScript",
+                "code": "import {\n  copyFileToRemoteStorage,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await copyFileToRemoteStorage(\n  {\n    source: '1bac376c-aa7e-4356-861b-dd2657b5bfd2',\n    target: 'custom_storage_connected_to_the_project',\n  },\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
+                "generated": false
+              }
+            ],
+            "php": [
+              {
+                "name": "PHP",
+                "language": "PHP",
+                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$result = $api->copyToRemoteStorage('03ccf9ab-f266-43fb-973d-a6529c55c2ae', true);\necho \\sprintf('File \\'%s\\' copied to local storage', $result);\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Python",
+                "language": "Python",
+                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfile = uploadcare.file(\"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nr_copied_file = file.create_remote_copy(\n    target='custom_storage_connected_to_the_project',\n    make_public=True,\n    pattern='${uuid}/${filename}${ext}',\n)\n",
+                "generated": false
+              }
+            ],
+            "ruby": [
+              {
+                "name": "Ruby",
+                "language": "Ruby",
+                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nsource_object = '1bac376c-aa7e-4356-861b-dd2657b5bfd2'\ntarget = 'custom_storage_connected_to_the_project'\ncopied_file_url = Uploadcare::File.remote_copy(source_object, target, make_public: true)\nputs copied_file_url\n",
+                "generated": false
+              }
+            ],
+            "swift": [
+              {
+                "name": "Swift",
+                "language": "Swift",
+                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet response = try await uploadcare.copyFileToRemoteStorage(source: \"03ccf9ab-f266-43fb-973d-a6529c55c2ae\", target: \"mytarget\", pattern: .uuid)\nprint(response)\n",
+                "generated": false
+              }
+            ],
+            "kotlin": [
+              {
+                "name": "Kotlin",
+                "language": "Kotlin",
+                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval copyFile = uploadcare.copyFileRemoteStorage(\n    source = \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\",\n    target = \"custom_storage_connected_to_the_project\"\n)\nLog.d(\"TAG\", copyFile.toString())\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/files/remote_copy/",
+          "responseStatusCode": 201,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
+          },
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "source": "test-uuid-replacement",
+              "target": "mytarget"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "type": "url",
+              "result": "s3://mybucket/03ccf9ab-f266-43fb-973d-a6529c55c2ae/image.png"
+            }
+          },
+          "snippets": {
+            "javascript": [
+              {
+                "name": "JS",
+                "language": "JavaScript",
+                "code": "import {\n  copyFileToRemoteStorage,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await copyFileToRemoteStorage(\n  {\n    source: '1bac376c-aa7e-4356-861b-dd2657b5bfd2',\n    target: 'custom_storage_connected_to_the_project',\n  },\n  { authSchema: uploadcareSimpleAuthSchema }\n)\n",
+                "generated": false
+              }
+            ],
+            "php": [
+              {
+                "name": "PHP",
+                "language": "PHP",
+                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->file();\n$result = $api->copyToRemoteStorage('03ccf9ab-f266-43fb-973d-a6529c55c2ae', true);\necho \\sprintf('File \\'%s\\' copied to local storage', $result);\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Python",
+                "language": "Python",
+                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\nfile = uploadcare.file(\"1bac376c-aa7e-4356-861b-dd2657b5bfd2\")\nr_copied_file = file.create_remote_copy(\n    target='custom_storage_connected_to_the_project',\n    make_public=True,\n    pattern='${uuid}/${filename}${ext}',\n)\n",
+                "generated": false
+              }
+            ],
+            "ruby": [
+              {
+                "name": "Ruby",
+                "language": "Ruby",
+                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\nsource_object = '1bac376c-aa7e-4356-861b-dd2657b5bfd2'\ntarget = 'custom_storage_connected_to_the_project'\ncopied_file_url = Uploadcare::File.remote_copy(source_object, target, make_public: true)\nputs copied_file_url\n",
+                "generated": false
+              }
+            ],
+            "swift": [
+              {
+                "name": "Swift",
+                "language": "Swift",
+                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet response = try await uploadcare.copyFileToRemoteStorage(source: \"03ccf9ab-f266-43fb-973d-a6529c55c2ae\", target: \"mytarget\", pattern: .uuid)\nprint(response)\n",
+                "generated": false
+              }
+            ],
+            "kotlin": [
+              {
+                "name": "Kotlin",
+                "language": "Kotlin",
+                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval copyFile = uploadcare.copyFileRemoteStorage(\n    source = \"1bac376c-aa7e-4356-861b-dd2657b5bfd2\",\n    target = \"custom_storage_connected_to_the_project\"\n)\nLog.d(\"TAG\", copyFile.toString())\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/files/remote_copy/",
+          "responseStatusCode": 201,
+          "headers": {
+            "Accept": "application/vnd.uploadcare-v0.7+json"
           },
           "snippets": {
             "javascript": [
@@ -9025,86 +9201,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/groups/",
-          "responseStatusCode": 200,
-          "queryParameters": {
-            "limit": 150,
-            "from": "2015-01-02T10:00:00.463352Z",
-            "ordering": "-datetime_created"
-          },
-          "headers": {
-            "Accept": "application/vnd.uploadcare-v0.7+json"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "next": "https://api.uploadcare.com/groups/?limit=3&from=2018-11-27T01%3A00%3A24.296613%2B00%3A00&offset=0",
-              "previous": "https://api.uploadcare.com/groups/?limit=3&to=2018-11-27T01%3A00%3A36.436838%2B00%3A00&offset=0",
-              "total": 26,
-              "per_page": 100,
-              "results": [
-                {
-                  "id": "dd43982b-5447-44b2-86f6-1c3b52afa0ff~1",
-                  "datetime_created": "2018-11-27T14:14:37.583654Z",
-                  "files_count": 1,
-                  "cdn_url": "https://ucarecdn.com/dd43982b-5447-44b2-86f6-1c3b52afa0ff~1/",
-                  "url": "https://api.uploadcare.com/groups/dd43982b-5447-44b2-86f6-1c3b52afa0ff~1/"
-                }
-              ]
-            }
-          },
-          "snippets": {
-            "javascript": [
-              {
-                "name": "JS",
-                "language": "JavaScript",
-                "code": "import {\n  listOfGroups,\n  UploadcareSimpleAuthSchema,\n} from '@uploadcare/rest-client';\n\nconst uploadcareSimpleAuthSchema = new UploadcareSimpleAuthSchema({\n  publicKey: 'YOUR_PUBLIC_KEY',\n  secretKey: 'YOUR_SECRET_KEY',\n});\n\nconst result = await listOfGroups({}, { authSchema: uploadcareSimpleAuthSchema })\n",
-                "generated": false
-              }
-            ],
-            "php": [
-              {
-                "name": "PHP",
-                "language": "PHP",
-                "code": "<?php\n$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);\n\n$api = (new Uploadcare\\Api($configuration))->group();\n$list = $api->listGroups();\nforeach ($list->getResults() as $group) {\n    \\sprintf('Group URL: %s, ID: %s', $group->getUrl(), $group->getUuid());\n}\nwhile (($next = $api->nextPage($list)) !== null) {\n    foreach ($next->getResults() as $group) {\n        \\sprintf('Group URL: %s, ID: %s', $group->getUrl(), $group->getUuid());\n    }\n}\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Python",
-                "language": "Python",
-                "code": "from pyuploadcare import Uploadcare\nuploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')\n\ngroups_list = uploadcare.list_file_groups()\nprint('Number of groups is', groups_list.count())\n",
-                "generated": false
-              }
-            ],
-            "ruby": [
-              {
-                "name": "Ruby",
-                "language": "Ruby",
-                "code": "require 'uploadcare'\nUploadcare.config.public_key = 'YOUR_PUBLIC_KEY'\nUploadcare.config.secret_key = 'YOUR_SECRET_KEY'\n\ngroups = Uploadcare::GroupList.list(limit: 10)\ngroups.each { |group| puts group.inspect }\n",
-                "generated": false
-              }
-            ],
-            "swift": [
-              {
-                "name": "Swift",
-                "language": "Swift",
-                "code": "import Uploadcare\n\nlet uploadcare = Uploadcare(withPublicKey: \"YOUR_PUBLIC_KEY\", secretKey: \"YOUR_SECRET_KEY\")\n\nlet query = GroupsListQuery()\n  .limit(10)\n  .ordering(.datetimeCreatedDESC)\n  \nlet groupsList = uploadcare.listOfGroups()\n\nlet list = try await groupsList.get(withQuery: query)\nprint(list)\n\n// Next page\nlet next = try await groupsList.nextPage()\nprint(list)\n\n// Previous page\nlet previous = try await groupsList.previousPage()\nprint(list)\n",
-                "generated": false
-              }
-            ],
-            "kotlin": [
-              {
-                "name": "Kotlin",
-                "language": "Kotlin",
-                "code": "import com.uploadcare.android.library.api.UploadcareClient\n\nval uploadcare = UploadcareClient(publicKey = \"YOUR_PUBLIC_KEY\", secretKey = \"YOUR_SECRET_KEY\")\n\nval groupsQueryBuilder = uploadcare.getGroups()\nval groups = groupsQueryBuilder\n    .ordering(Order.UPLOAD_TIME_DESC)\n    .asList()\nLog.d(\"TAG\", groups.toString())\n",
-                "generated": false
-              }
-            ]
-          }
         }
       ],
       "protocol": {
@@ -10146,14 +10242,6 @@
                   "detail": "You can't use webhooks"
                 }
               }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
-                }
-              }
             }
           ]
         },
@@ -10476,14 +10564,6 @@
                 "type": "json",
                 "value": {
                   "detail": "`target_url` is missing."
-                }
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
                 }
               }
             }
@@ -11128,14 +11208,6 @@
                   "detail": "`target_url` is missing."
                 }
               }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
-                }
-              }
             }
           ]
         },
@@ -11546,14 +11618,6 @@
                 "type": "json",
                 "value": {
                   "detail": "Document conversion feature is not available for this project."
-                }
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
                 }
               }
             }
@@ -12023,14 +12087,6 @@
                   "detail": "“paths” parameter is required."
                 }
               }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
-                }
-              }
             }
           ]
         },
@@ -12401,14 +12457,6 @@
                 "type": "json",
                 "value": {
                   "detail": "Document conversion feature is not available for this project."
-                }
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
                 }
               }
             }
@@ -12931,14 +12979,6 @@
                   "detail": "“paths” parameter is required."
                 }
               }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
-                }
-              }
             }
           ]
         },
@@ -13324,14 +13364,6 @@
                 "type": "json",
                 "value": {
                   "detail": "Video conversion feature is not available for this project."
-                }
-              }
-            },
-            {
-              "responseBody": {
-                "type": "json",
-                "value": {
-                  "detail": "Simple authentication over HTTP is forbidden. Please, use HTTPS or signed requests instead."
                 }
               }
             }

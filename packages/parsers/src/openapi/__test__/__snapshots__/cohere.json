@@ -26860,6 +26860,157 @@
               }
             ]
           }
+        },
+        {
+          "path": "/v1/finetuning/finetuned-models",
+          "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.*;\n\npublic class CreateFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    CreateFinetunedModelResponse response =\n        cohere\n            .finetuning()\n            .createFinetunedModel(\n                FinetunedModel.builder()\n                    .name(\"test-finetuned-model\")\n                    .settings(\n                        Settings.builder()\n                            .baseModel(\n                                BaseModel.builder().baseType(BaseType.BASE_TYPE_CHAT).build())\n                            .datasetId(\"my-dataset-id\")\n                            .build())\n                    .build());\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n\t\"github.com/cohere-ai/cohere-go/v2/finetuning\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.CreateFinetunedModel(\n\t\tcontext.TODO(),\n\t\t&finetuning.FinetunedModel{\n\t\t\tName: \"test-finetuned-model\",\n\t\t\tSettings: &finetuning.Settings{\n\t\t\t\tDatasetId: \"my-dataset-id\",\n\t\t\t\tBaseModel: &finetuning.BaseModel{\n\t\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeChat,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { Cohere, CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.createFinetunedModel({\n    name: 'test-finetuned-model',\n    settings: {\n      base_model: {\n        base_type: Cohere.Finetuning.BaseType.BaseTypeChat,\n      },\n      dataset_id: 'test-dataset-id',\n    },\n  });\n\n  console.log(finetunedModel);\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Hyperparameters,\n    Settings,\n    WandbConfig,\n)\nimport cohere\n\nco = cohere.Client()\nhp = Hyperparameters(\n    early_stopping_patience=10,\n    early_stopping_threshold=0.001,\n    train_batch_size=16,\n    train_epoch=1,\n    learning_rate=0.01,\n)\nwnb_config = WandbConfig(\n    project=\"test-project\",\n    api_key=\"<<wandbApiKey>>\",\n    entity=\"test-entity\",\n)\nfinetuned_model = co.finetuning.create_finetuned_model(\n    request=FinetunedModel(\n        name=\"test-finetuned-model\",\n        settings=Settings(\n            base_model=BaseModel(\n                base_type=\"BASE_TYPE_CHAT\",\n            ),\n            dataset_id=\"my-dataset-id\",\n            hyperparameters=hp,\n            wandb=wnb_config,\n        ),\n    )\n)\nprint(finetuned_model)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Settings,\n)\nimport cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.create_finetuned_model(\n        request=FinetunedModel(\n            name=\"test-finetuned-model\",\n            settings=Settings(\n                base_model=BaseModel(\n                    base_type=\"BASE_TYPE_CHAT\",\n                ),\n                dataset_id=\"my-dataset-id\",\n            ),\n        )\n    )\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\" \\\n  --data '{\n      \"name\": \"test-finetuned-model\",\n      \"settings\": {\n        \"base_model\": {\n          \"base_type\": \"BASE_TYPE_CHAT\",\n        },\n        \"dataset_id\": \"test-dataset-id\"\n      }\n  }'\n",
+                "generated": false
+              }
+            ]
+          }
+        },
+        {
+          "path": "/v1/finetuning/finetuned-models",
+          "responseStatusCode": 200,
+          "headers": {
+            "X-Client-Name": "my-cool-project"
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "finetuned_model": {
+                "id": "id",
+                "name": "name",
+                "creator_id": "creator_id",
+                "organization_id": "organization_id",
+                "settings": {
+                  "base_model": {
+                    "name": "name",
+                    "version": "version",
+                    "base_type": "BASE_TYPE_UNSPECIFIED",
+                    "strategy": "STRATEGY_UNSPECIFIED"
+                  },
+                  "dataset_id": "dataset_id",
+                  "hyperparameters": {
+                    "early_stopping_patience": 0,
+                    "early_stopping_threshold": 0,
+                    "train_batch_size": 0,
+                    "train_epochs": 0,
+                    "learning_rate": 0,
+                    "lora_alpha": 0,
+                    "lora_rank": 0,
+                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
+                  },
+                  "multi_label": false,
+                  "wandb": {
+                    "project": "project",
+                    "api_key": "api_key",
+                    "entity": "entity"
+                  }
+                },
+                "status": "STATUS_UNSPECIFIED",
+                "created_at": "created_at",
+                "updated_at": "updated_at",
+                "completed_at": "completed_at",
+                "last_used": "last_used"
+              }
+            }
+          },
+          "snippets": {
+            "java": [
+              {
+                "name": "Cohere java SDK",
+                "language": "java",
+                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.*;\n\npublic class CreateFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    CreateFinetunedModelResponse response =\n        cohere\n            .finetuning()\n            .createFinetunedModel(\n                FinetunedModel.builder()\n                    .name(\"test-finetuned-model\")\n                    .settings(\n                        Settings.builder()\n                            .baseModel(\n                                BaseModel.builder().baseType(BaseType.BASE_TYPE_CHAT).build())\n                            .datasetId(\"my-dataset-id\")\n                            .build())\n                    .build());\n\n    System.out.println(response);\n  }\n}\n",
+                "generated": false
+              }
+            ],
+            "go": [
+              {
+                "name": "Cohere Go SDK",
+                "language": "go",
+                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n\t\"github.com/cohere-ai/cohere-go/v2/finetuning\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.CreateFinetunedModel(\n\t\tcontext.TODO(),\n\t\t&finetuning.FinetunedModel{\n\t\t\tName: \"test-finetuned-model\",\n\t\t\tSettings: &finetuning.Settings{\n\t\t\t\tDatasetId: \"my-dataset-id\",\n\t\t\t\tBaseModel: &finetuning.BaseModel{\n\t\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeChat,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
+                "generated": false
+              }
+            ],
+            "typescript": [
+              {
+                "name": "Cohere TypeScript SDK",
+                "language": "typescript",
+                "code": "const { Cohere, CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.createFinetunedModel({\n    name: 'test-finetuned-model',\n    settings: {\n      base_model: {\n        base_type: Cohere.Finetuning.BaseType.BaseTypeChat,\n      },\n      dataset_id: 'test-dataset-id',\n    },\n  });\n\n  console.log(finetunedModel);\n})();\n",
+                "generated": false
+              }
+            ],
+            "python": [
+              {
+                "name": "Sync",
+                "language": "python",
+                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Hyperparameters,\n    Settings,\n    WandbConfig,\n)\nimport cohere\n\nco = cohere.Client()\nhp = Hyperparameters(\n    early_stopping_patience=10,\n    early_stopping_threshold=0.001,\n    train_batch_size=16,\n    train_epoch=1,\n    learning_rate=0.01,\n)\nwnb_config = WandbConfig(\n    project=\"test-project\",\n    api_key=\"<<wandbApiKey>>\",\n    entity=\"test-entity\",\n)\nfinetuned_model = co.finetuning.create_finetuned_model(\n    request=FinetunedModel(\n        name=\"test-finetuned-model\",\n        settings=Settings(\n            base_model=BaseModel(\n                base_type=\"BASE_TYPE_CHAT\",\n            ),\n            dataset_id=\"my-dataset-id\",\n            hyperparameters=hp,\n            wandb=wnb_config,\n        ),\n    )\n)\nprint(finetuned_model)\n",
+                "generated": false
+              },
+              {
+                "name": "Async",
+                "language": "python",
+                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Settings,\n)\nimport cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.create_finetuned_model(\n        request=FinetunedModel(\n            name=\"test-finetuned-model\",\n            settings=Settings(\n                base_model=BaseModel(\n                    base_type=\"BASE_TYPE_CHAT\",\n                ),\n                dataset_id=\"my-dataset-id\",\n            ),\n        )\n    )\n    print(response)\n\n\nasyncio.run(main())\n",
+                "generated": false
+              }
+            ],
+            "curl": [
+              {
+                "name": "cURL",
+                "language": "curl",
+                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\" \\\n  --data '{\n      \"name\": \"test-finetuned-model\",\n      \"settings\": {\n        \"base_model\": {\n          \"base_type\": \"BASE_TYPE_CHAT\",\n        },\n        \"dataset_id\": \"test-dataset-id\"\n      }\n  }'\n",
+                "generated": false
+              }
+            ]
+          }
         }
       ],
       "protocol": {
