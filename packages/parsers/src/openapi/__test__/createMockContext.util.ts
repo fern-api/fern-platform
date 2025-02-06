@@ -20,5 +20,6 @@ export function createMockContext(
       warnings: [],
       errors: [],
     },
+    generatedTypes: {},
   };
 }

@@ -194,11 +194,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Block"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Block"
+                  }
+                }
+              }
+            ]
           }
         }
       }
@@ -210,11 +217,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Integer"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Integer"
+                  }
+                }
+              }
+            ]
           }
         }
       }
@@ -226,11 +240,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Address"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                }
+              }
+            ]
           }
         }
       }
@@ -566,11 +587,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "BlockNumber"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "BlockNumber"
+                  }
+                }
+              }
+            ]
           }
         }
       },
@@ -594,11 +622,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Nonce"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Nonce"
+                  }
+                }
+              }
+            ]
           }
         }
       },
@@ -622,11 +657,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Address"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Address"
+                  }
+                }
+              }
+            ]
           }
         }
       },
@@ -842,11 +884,27 @@
               "value": {
                 "type": "list",
                 "itemShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Transaction"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "Transaction"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "TransactionHash"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             },
@@ -1143,11 +1201,18 @@
         "value": {
           "type": "nullable",
           "shape": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "Keccak"
-            }
+            "type": "undiscriminatedUnion",
+            "variants": [
+              {
+                "shape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "id",
+                    "id": "Keccak"
+                  }
+                }
+              }
+            ]
           }
         }
       }
@@ -1690,18 +1755,7 @@
         }
       ],
       "queryParameters": [],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "alias",
-            "value": {
-              "type": "id",
-              "id": "BlockNumber"
-            }
-          }
-        }
-      ],
+      "responses": [],
       "errors": [],
       "examples": [
         {
@@ -1775,11 +1829,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -2352,11 +2422,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -2539,11 +2625,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -3102,11 +3204,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -3225,11 +3343,27 @@
                     {
                       "key": "address",
                       "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "Address"
-                        }
+                        "type": "undiscriminatedUnion",
+                        "variants": [
+                          {
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "Address"
+                              }
+                            }
+                          },
+                          {
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "Addresses"
+                              }
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -3355,11 +3489,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -3471,11 +3621,18 @@
             "value": {
               "type": "nullable",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "Transaction"
-                }
+                "type": "undiscriminatedUnion",
+                "variants": [
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Transaction"
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -3551,11 +3708,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -3581,11 +3754,18 @@
             "value": {
               "type": "nullable",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "Transaction"
-                }
+                "type": "undiscriminatedUnion",
+                "variants": [
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Transaction"
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -3673,11 +3853,18 @@
             "value": {
               "type": "nullable",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "Transaction"
-                }
+                "type": "undiscriminatedUnion",
+                "variants": [
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Transaction"
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -3756,11 +3943,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -3775,11 +3978,18 @@
             "value": {
               "type": "nullable",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "Nonce"
-                }
+                "type": "undiscriminatedUnion",
+                "variants": [
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Nonce"
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -3867,11 +4077,18 @@
             "value": {
               "type": "nullable",
               "shape": {
-                "type": "alias",
-                "value": {
-                  "type": "id",
-                  "id": "Receipt"
-                }
+                "type": "undiscriminatedUnion",
+                "variants": [
+                  {
+                    "shape": {
+                      "type": "alias",
+                      "value": {
+                        "type": "id",
+                        "id": "Receipt"
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -4228,11 +4445,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -4334,11 +4567,27 @@
               {
                 "key": "blockNumber",
                 "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "BlockNumber"
-                  }
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumber"
+                        }
+                      }
+                    },
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "id",
+                          "id": "BlockNumberTag"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -4353,83 +4602,92 @@
             "value": {
               "type": "nullable",
               "shape": {
-                "type": "object",
-                "extends": [],
-                "properties": [
+                "type": "undiscriminatedUnion",
+                "variants": [
                   {
-                    "key": "address",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Address"
-                      }
+                    "displayName": "proofAccount",
+                    "shape": {
+                      "type": "object",
+                      "extends": [],
+                      "properties": [
+                        {
+                          "key": "address",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Address"
+                            }
+                          },
+                          "description": "The address of the account or contract of the request"
+                        },
+                        {
+                          "key": "accountProof",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "ProofNodes"
+                            }
+                          }
+                        },
+                        {
+                          "key": "balance",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Integer"
+                            }
+                          },
+                          "description": "The Ether balance of the account or contract of the request"
+                        },
+                        {
+                          "key": "codeHash",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Keccak"
+                            }
+                          },
+                          "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
+                        },
+                        {
+                          "key": "nonce",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Nonce"
+                            }
+                          },
+                          "description": "The transaction count of the account or contract of the request"
+                        },
+                        {
+                          "key": "storageHash",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "Keccak"
+                            }
+                          },
+                          "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
+                        },
+                        {
+                          "key": "storageProof",
+                          "valueShape": {
+                            "type": "alias",
+                            "value": {
+                              "type": "id",
+                              "id": "StorageProof"
+                            }
+                          }
+                        }
+                      ]
                     },
-                    "description": "The address of the account or contract of the request"
-                  },
-                  {
-                    "key": "accountProof",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "ProofNodes"
-                      }
-                    }
-                  },
-                  {
-                    "key": "balance",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Integer"
-                      }
-                    },
-                    "description": "The Ether balance of the account or contract of the request"
-                  },
-                  {
-                    "key": "codeHash",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Keccak"
-                      }
-                    },
-                    "description": "The code hash of the contract of the request (keccak(NULL) if external account)"
-                  },
-                  {
-                    "key": "nonce",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Nonce"
-                      }
-                    },
-                    "description": "The transaction count of the account or contract of the request"
-                  },
-                  {
-                    "key": "storageHash",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "Keccak"
-                      }
-                    },
-                    "description": "The storage hash of the contract of the request (keccak(rlp(NULL)) if external account)"
-                  },
-                  {
-                    "key": "storageProof",
-                    "valueShape": {
-                      "type": "alias",
-                      "value": {
-                        "type": "id",
-                        "id": "StorageProof"
-                      }
-                    }
+                    "description": "The merkle proofs of the specified account connecting them to the blockhash of the block specified"
                   }
                 ]
               }
@@ -4826,11 +5084,27 @@
                     {
                       "key": "address",
                       "valueShape": {
-                        "type": "alias",
-                        "value": {
-                          "type": "id",
-                          "id": "Address"
-                        }
+                        "type": "undiscriminatedUnion",
+                        "variants": [
+                          {
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "Address"
+                              }
+                            }
+                          },
+                          {
+                            "shape": {
+                              "type": "alias",
+                              "value": {
+                                "type": "id",
+                                "id": "Addresses"
+                              }
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -5417,72 +5691,7 @@
         }
       ],
       "queryParameters": [],
-      "responses": [
-        {
-          "statusCode": 200,
-          "body": {
-            "type": "object",
-            "extends": [],
-            "properties": [
-              {
-                "key": "startingBlock",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                },
-                "description": "Block at which the import started (will only be reset, after the sync reached his head)"
-              },
-              {
-                "key": "currentBlock",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                },
-                "description": "The current block, same as eth_blockNumber"
-              },
-              {
-                "key": "highestBlock",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                },
-                "description": "The estimated highest block"
-              },
-              {
-                "key": "knownStates",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                },
-                "description": "The known states"
-              },
-              {
-                "key": "pulledStates",
-                "valueShape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "id",
-                    "id": "Integer"
-                  }
-                },
-                "description": "The pulled states"
-              }
-            ]
-          }
-        }
-      ],
+      "responses": [],
       "errors": [],
       "examples": [
         {

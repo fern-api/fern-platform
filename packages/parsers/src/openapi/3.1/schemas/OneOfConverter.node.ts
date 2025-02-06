@@ -34,17 +34,18 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
 
   parse(): void {
     if (this.input.oneOf != null || this.input.anyOf != null) {
-      this.isUnionOfContainers = (this.input.oneOf ?? this.input.anyOf)?.every(
-        (schema) => {
-          const resolvedSchema = resolveSchemaReference(
-            schema,
-            this.context.document
-          );
-          return (
-            resolvedSchema?.type === "object" || resolvedSchema?.enum != null
-          );
-        }
-      );
+      // COMMENTED OUT FOR NOW, CONSIDER BRINGING BACK IF MULTIPLE RESPONSES ARE SUPPORTED
+      // this.isUnionOfContainers = (this.input.oneOf ?? this.input.anyOf)?.every(
+      //   (schema) => {
+      //     const resolvedSchema = resolveSchemaReference(
+      //       schema,
+      //       this.context.document
+      //     );
+      //     return (
+      //       resolvedSchema?.type === "object" || resolvedSchema?.enum != null
+      //     );
+      //   }
+      // );
       this.isNullable = (this.input.oneOf ?? this.input.anyOf)?.some(
         (schema) =>
           resolveSchemaReference(schema, this.context.document)?.type === "null"
@@ -105,14 +106,15 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
     | [FernRegistry.api.latest.TypeShape.UndiscriminatedUnion]
     | FernRegistry.api.latest.TypeShape[]
     | undefined {
-    if (!this.isUnionOfContainers && !this.discriminated) {
-      const convertedNodes = this.undiscriminatedMapping
-        ?.flatMap((node) => node.convert())
-        .filter(isNonNullish);
-      return this.isNullable && convertedNodes != null
-        ? convertedNodes.map(wrapNullable).filter(isNonNullish)
-        : convertedNodes;
-    }
+    // COMMENTED OUT FOR NOW, CONSIDER BRINGING BACK IF MULTIPLE RESPONSES ARE SUPPORTED
+    // if (!this.isUnionOfContainers && !this.discriminated) {
+    //   const convertedNodes = this.undiscriminatedMapping
+    //     ?.flatMap((node) => node.convert())
+    //     .filter(isNonNullish);
+    //   return this.isNullable && convertedNodes != null
+    //     ? convertedNodes.map(wrapNullable).filter(isNonNullish)
+    //     : convertedNodes;
+    // }
 
     if (
       // If no decision has been made, bail

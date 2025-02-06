@@ -75,13 +75,20 @@
               "value": {
                 "type": "nullable",
                 "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string"
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string"
+                          }
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
               }
             },
@@ -104,13 +111,20 @@
               "value": {
                 "type": "nullable",
                 "shape": {
-                  "type": "alias",
-                  "value": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double"
+                  "type": "undiscriminatedUnion",
+                  "variants": [
+                    {
+                      "shape": {
+                        "type": "alias",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double"
+                          }
+                        }
+                      }
                     }
-                  }
+                  ]
                 }
               }
             },
