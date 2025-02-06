@@ -1,22 +1,12 @@
-import { FileData } from "@/server/types";
-import type {
-  DocsV1Read,
-  DocsV2Read,
-  FdrAPI,
-} from "@fern-api/fdr-sdk/client/types";
+import { ColorsThemeConfig, FileData } from "@/server/types";
+import type { DocsV1Read, DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import type { FernUser } from "@fern-docs/auth";
-import { NextSeoProps } from "@fern-docs/seo";
 import type { EdgeFlags } from "@fern-docs/utils";
-import {
-  ColorsConfig,
-  SidebarTab,
-  VersionSwitcherInfo,
-} from "@fern-platform/fdr-utils";
+import { SidebarTab, VersionSwitcherInfo } from "@fern-platform/fdr-utils";
 import type { LDContext } from "launchdarkly-react-client-sdk";
 import { CustomerAnalytics } from "../analytics/types";
-import { DocsContent } from "../resolver/DocsContent";
 import { FernTheme } from "../themes/ThemedDocs";
 
 export interface NavigationProps {
@@ -77,16 +67,16 @@ export interface DocsProps {
   navigation: NavigationProps;
   title: string | undefined;
   favicon: string | undefined;
-  colors: ColorsConfig;
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  };
   announcement: AnnouncementConfig | undefined;
   layout: DocsV1Read.DocsLayoutConfig | undefined;
   js: JsConfig | undefined;
   navbarLinks: NavbarLink[];
   logo: LogoConfiguration;
-  content: DocsContent;
   edgeFlags: EdgeFlags;
-  apis: FdrAPI.ApiDefinitionId[];
-  seo: NextSeoProps;
   analytics: CustomerAnalytics | undefined; // deprecated
   analyticsConfig: DocsV1Read.AnalyticsConfig | undefined;
   fallback: Record<string, any>;

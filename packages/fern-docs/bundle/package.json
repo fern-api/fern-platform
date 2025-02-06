@@ -109,7 +109,6 @@
     "mermaid": "^11.2.1",
     "moment": "^2.30.1",
     "next": "14.2.23",
-    "next-mdx-remote": "^5.0.0",
     "numeral": "^2.0.6",
     "parse-numeric-range": "^1.3.0",
     "postcss-import": "^16.0.1",

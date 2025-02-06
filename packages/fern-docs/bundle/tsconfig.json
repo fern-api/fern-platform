@@ -47,9 +47,6 @@
       "path": "../syntax-highlighter"
     },
     {
-      "path": "../ui/tsconfig.build.json"
-    },
-    {
       "path": "../utils"
     }
   ]

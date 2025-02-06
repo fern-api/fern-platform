@@ -1,4 +1,4 @@
-import { getMdxBundler } from "@/components/mdx/bundlers";
+import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import type { DocsContent } from "@/components/resolver/DocsContent";
 import { resolveDocsContent } from "@/components/resolver/resolveDocsContent";
 import type { FileData } from "@/server/types";
@@ -44,9 +44,6 @@ export async function withResolvedDocsContent({
     authed: authState.authed,
   });
 
-  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-  const serializeMdx = await getMdxBundler(engine);
-
   return resolveDocsContent({
     node,
     apiReference,
@@ -82,7 +79,7 @@ export async function withResolvedDocsContent({
     },
     serializeMdx,
     domain,
-    engine,
+    engine: "mdx-bundler",
   });
 }
 

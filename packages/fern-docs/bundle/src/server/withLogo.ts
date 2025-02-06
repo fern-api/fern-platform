@@ -1,13 +1,14 @@
-import { FileData } from "@/components/atoms/types";
-import type { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
+import type { FernNavigation } from "@fern-api/fdr-sdk";
 import type { FileIdOrUrl, Frontmatter } from "@fern-api/fdr-sdk/docs";
 import { isPlainObject } from "@fern-api/ui-core-utils";
 import { addLeadingSlash, conformTrailingSlash } from "@fern-docs/utils";
+import { DocsLoader } from "./docs-loader";
+import { FileData } from "./types";
 
 const DEFAULT_LOGO_HEIGHT = 20;
 
 export function withLogo(
-  definition: FdrAPI.docs.v1.read.DocsDefinition,
+  config: Awaited<ReturnType<DocsLoader["getConfig"]>>,
   found: FernNavigation.utils.Node.Found,
   frontmatter: Frontmatter | undefined,
   resolveFileSrc: (src: string | undefined) => FileData | undefined
@@ -17,9 +18,9 @@ export function withLogo(
   light: FileData | undefined;
   dark: FileData | undefined;
 } {
-  const height = definition.config.logoHeight;
+  const height = config?.logoHeight;
   const href =
-    definition.config.logoHref ??
+    config?.logoHref ??
     encodeURI(
       conformTrailingSlash(
         addLeadingSlash(
@@ -34,16 +35,16 @@ export function withLogo(
   const frontmatterLogo = getLogoFromFrontmatter(frontmatter);
 
   const lightDocsYmlLogo =
-    definition.config.colorsV3?.type === "light"
-      ? definition.config.colorsV3.logo
-      : definition.config.colorsV3?.type === "darkAndLight"
-        ? definition.config.colorsV3.light.logo
+    config?.colorsV3?.type === "light"
+      ? config?.colorsV3?.logo
+      : config?.colorsV3?.type === "darkAndLight"
+        ? config?.colorsV3?.light?.logo
         : undefined;
   const darkDocsYmlLogo =
-    definition.config.colorsV3?.type === "dark"
-      ? definition.config.colorsV3.logo
-      : definition.config.colorsV3?.type === "darkAndLight"
-        ? definition.config.colorsV3.dark.logo
+    config?.colorsV3?.type === "dark"
+      ? config?.colorsV3.logo
+      : config?.colorsV3?.type === "darkAndLight"
+        ? config?.colorsV3.dark.logo
         : undefined;
 
   return {

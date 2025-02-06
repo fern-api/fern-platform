@@ -23,7 +23,7 @@ const MONO_FONT_FALLBACK =
 function generateFontFace(
   variant: DocsV1Read.CustomFontConfigVariant,
   fontConfig: DocsV1Read.FontConfigV2,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  files: Record<string, { src: string }>
 ): string | undefined {
   const file = files[variant.fontFile];
   if (file == null) {
@@ -31,13 +31,13 @@ function generateFontFace(
   }
   let fontExtension: string;
   try {
-    fontExtension = getFontExtension(new URL(file.url).pathname);
+    fontExtension = getFontExtension(new URL(file.src).pathname);
   } catch (_) {
-    fontExtension = getFontExtension(file.url);
+    fontExtension = getFontExtension(file.src);
   }
   const lines: string[] = [
     `font-family: '${fontConfig.name}'`,
-    `src: url('${file.url}') format('${fontExtension}')`,
+    `src: url('${file.src}') format('${fontExtension}')`,
     `font-weight: ${variant.weight?.join(" ") ?? "100 900"}`,
     `font-style: ${variant.style?.[0] ?? "normal"}`,
     `font-display: ${fontConfig.display ?? "swap"}`,
@@ -54,7 +54,7 @@ interface TypographyResult {
 
 export function getFontVariables(
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
+  files: Record<string, { src: string }>
 ): TypographyResult {
   const fontFaces: string[] = [];
   const cssVariables: Record<string, string> = {

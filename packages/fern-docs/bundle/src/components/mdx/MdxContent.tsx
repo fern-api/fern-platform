@@ -19,14 +19,6 @@ const MdxBundlerComponent = dynamic(
   { ssr: true }
 );
 
-const NextMdxRemoteComponent = dynamic(
-  () =>
-    import("./bundlers/next-mdx-remote-component").then(
-      (mod) => mod.NextMdxRemoteComponent
-    ),
-  { ssr: true }
-);
-
 function isMdxEmpty(
   mdx: FernDocs.MarkdownText | FernDocs.MarkdownText[] | undefined
 ): boolean {
@@ -67,13 +59,10 @@ export const MdxContent = memo<MdxContent.Props>(function MdxContent({
     );
   }
 
-  const MdxComponent =
-    mdx.engine === "mdx-bundler" ? MdxBundlerComponent : NextMdxRemoteComponent;
-
   return (
     <FernErrorBoundary component="MdxContent">
       <FrontmatterContextProvider value={mdx.frontmatter}>
-        <MdxComponent {...mdx} />
+        <MdxBundlerComponent {...mdx} />
       </FrontmatterContextProvider>
     </FernErrorBoundary>
   );

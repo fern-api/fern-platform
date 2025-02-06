@@ -7,7 +7,7 @@ import { getFrontmatter, makeToc, toTree } from "@fern-docs/mdx";
 import type { DocsContent } from "./DocsContent";
 
 interface ResolveMarkdownPageOptions {
-  version: FernNavigation.VersionNode | FernNavigation.RootNode;
+  apiReferenceNodes: readonly FernNavigation.ApiReferenceNode[];
   node: FernNavigation.NavigationNodeWithMarkdown;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   apiLoaders: Record<FernNavigation.ApiDefinitionId, ApiDefinitionLoader>;
@@ -29,7 +29,7 @@ function shouldFetchApiRef(markdown: FernDocs.MarkdownText): boolean {
 
 export async function resolveMarkdownPage({
   node,
-  version,
+  apiReferenceNodes,
   breadcrumb,
   apiLoaders,
   neighbors,
@@ -56,7 +56,7 @@ export async function resolveMarkdownPage({
   if (shouldFetchApiRef(markdownPageWithoutApiRefs.content)) {
     // note: we start from the version node because endpoint Ids can be duplicated across versions
     // if we introduce versioned sections, and versioned api references, this logic will need to change
-    FernNavigation.utils.collectApiReferences(version).forEach((apiRef) => {
+    apiReferenceNodes.forEach((apiRef) => {
       apiDefinitionIds.add(apiRef.apiDefinitionId);
 
       FernNavigation.traverseDF(apiRef, (node) => {

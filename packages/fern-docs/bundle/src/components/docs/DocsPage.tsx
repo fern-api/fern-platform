@@ -5,11 +5,11 @@ import { usePathname } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 import { useEdgeFlag, useMessageHandler, useSetJustNavigated } from "../atoms";
 import { BgImageGradient } from "../components/BgImageGradient";
+import { FernErrorBoundary } from "../components/FernErrorBoundary";
 import { JavascriptProvider } from "../components/JavascriptProvider";
 import { LinkPreloadApiRoute } from "../components/LinkPreload";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
 import { PlaygroundContextProvider } from "../playground/PlaygroundContext";
-import { NextSeo } from "../seo/NextSeo";
 import { InitializeTheme } from "../themes";
 import { FernTheme, ThemedDocs } from "../themes/ThemedDocs";
 import { scrollToRoute } from "../util/anchor";
@@ -69,11 +69,12 @@ export function DocsPage({
       {isApiPlaygroundEnabled && (
         <LinkPreloadApiRoute href="/api/fern-docs/auth/api-key-injection" />
       )}
-      <NextSeo />
       <InitializeTheme />
       <SearchDialog />
       <BgImageGradient />
-      <ThemedDocs theme={theme}>{children}</ThemedDocs>
+      <ThemedDocs theme={theme}>
+        <FernErrorBoundary>{children}</FernErrorBoundary>
+      </ThemedDocs>
       <PlaygroundContextProvider />
       <JavascriptProvider />
     </>

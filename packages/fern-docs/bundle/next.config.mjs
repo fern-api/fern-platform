@@ -49,7 +49,6 @@ const nextConfig = {
   reactStrictMode: true,
   trailingSlash: isTrailingSlashEnabled,
   transpilePackages: [
-    "next-mdx-remote",
     "esbuild",
     "es-toolkit",
     "three",

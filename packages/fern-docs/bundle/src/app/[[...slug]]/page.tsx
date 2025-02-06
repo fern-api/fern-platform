@@ -5,71 +5,67 @@ import type { DocsProps, NavbarLink } from "@/components/atoms/types";
 import { DocsMainContent } from "@/components/docs/DocsMainContent";
 import { DocsPage } from "@/components/docs/DocsPage";
 import { NextApp } from "@/components/docs/NextApp";
-import { getMdxBundler } from "@/components/mdx/bundlers";
+import FeedbackPopover from "@/components/feedback/FeedbackPopover";
+import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
+import { DocsContent } from "@/components/resolver/DocsContent";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
 import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
-import { getAuthState } from "@/server/auth/getAuthState";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
-import { DocsLoader } from "@/server/DocsLoader";
+import { createCachedDocsLoader, DocsLoader } from "@/server/docs-loader";
+import { createFileResolver } from "@/server/file-resolver";
+import { createFindNode } from "@/server/find-node";
 import { withLaunchDarkly } from "@/server/ld-adapter";
-import { loadWithUrl } from "@/server/loadWithUrl";
-import { FileData } from "@/server/types";
 import { withLogo } from "@/server/withLogo";
 import {
   pruneNavigationPredicate,
   withPrunedNavigation,
 } from "@/server/withPrunedNavigation";
-import {
-  extractFrontmatterFromDocsContent,
-  withResolvedDocsContent,
-} from "@/server/withResolvedDocsContent";
 import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
-import { getDocsDomainApp, getHostApp } from "@/server/xfernhost/app";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
 import {
-  getAuthEdgeConfig,
   getCustomerAnalytics,
   getEdgeFlags,
   getSeoDisabled,
 } from "@fern-docs/edge-config";
-import { withSeo } from "@fern-docs/seo";
+import { getFrontmatter, markdownToString } from "@fern-docs/mdx";
 import {
   addLeadingSlash,
+  conformTrailingSlash,
   getRedirectForPath,
   isTrailingSlashEnabled,
 } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
-import { cookies } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
-import { UnreachableCaseError } from "ts-essentials";
+import { Metadata } from "next/types";
+import React from "react";
 import urlJoin from "url-join";
+import { toImageDescriptor } from "../seo";
 
 export default async function Page({
   params,
 }: {
   params: { slug?: string[] };
 }) {
-  const domain = getDocsDomainApp();
-  const host = getHostApp() ?? domain;
   const slug = FernNavigation.slugjoin(params.slug);
-  const fern_token = cookies().get("fern_token")?.value;
-
-  const loadWithUrlResponse = await loadWithUrl(domain);
-
-  if (!loadWithUrlResponse.ok) {
-    notFound();
-  }
-
-  const docs = loadWithUrlResponse.body;
+  const loader = await createCachedDocsLoader();
+  const [baseUrl, config, authState, edgeFlags, files, colors] =
+    await Promise.all([
+      loader.getBaseUrl(),
+      loader.getConfig(),
+      loader.getAuthState(addLeadingSlash(slug)),
+      getEdgeFlags(loader.domain),
+      loader.getFiles(),
+      loader.getColors(),
+    ]);
 
   // check for redirects
   const configuredRedirect = getRedirectForPath(
     addLeadingSlash(slug),
-    docs.baseUrl,
-    docs.definition.config.redirects
+    baseUrl,
+    config?.redirects
   );
 
   if (configuredRedirect != null) {
@@ -79,27 +75,8 @@ export default async function Page({
     redirectFn(prepareRedirect(configuredRedirect.destination));
   }
 
-  // load from edge config
-  const [edgeFlags, authConfig] = await Promise.all([
-    getEdgeFlags(domain),
-    getAuthEdgeConfig(domain),
-  ]);
-  const authState = await getAuthState(
-    domain,
-    host,
-    fern_token,
-    addLeadingSlash(slug),
-    authConfig
-  );
-
-  // create loader (this will load all nodes)
-  const loader = DocsLoader.for(domain, host)
-    .withEdgeFlags(edgeFlags)
-    .withAuth(authConfig, authState)
-    .withLoadDocsForUrlResponse(docs);
-
   // get the root node
-  const root = await loader.root();
+  const root = await loader.getRoot();
 
   // this should not happen, but if it does, we should return a 404
   if (root == null) {
@@ -109,8 +86,8 @@ export default async function Page({
     notFound();
   }
 
-  // if the root has a slug and the current slug is empty, redirect to the root slug, rather than 404
-  if (root.slug.length > 0 && slug.length === 0) {
+  // always match the basepath of the root node
+  if (!slug.startsWith(root.slug)) {
     redirect(prepareRedirect(root.slug));
   }
 
@@ -160,7 +137,7 @@ export default async function Page({
 
   // TODO: parallelize this with the other edge config calls:
   const [launchDarkly, flagPredicate] = await withLaunchDarkly(
-    domain,
+    loader.domain,
     authState,
     found
   );
@@ -174,28 +151,13 @@ export default async function Page({
   }
 
   const getApiRoute = getApiRouteSupplier({
-    basepath: docs.baseUrl.basePath,
+    basepath: baseUrl.basePath,
     includeTrailingSlash: isTrailingSlashEnabled(),
   });
 
-  const colors = {
-    light:
-      docs.definition.config.colorsV3?.type === "light"
-        ? docs.definition.config.colorsV3
-        : docs.definition.config.colorsV3?.type === "darkAndLight"
-          ? docs.definition.config.colorsV3.light
-          : undefined,
-    dark:
-      docs.definition.config.colorsV3?.type === "dark"
-        ? docs.definition.config.colorsV3
-        : docs.definition.config.colorsV3?.type === "darkAndLight"
-          ? docs.definition.config.colorsV3.dark
-          : undefined,
-  };
-
   const navbarLinks: NavbarLink[] = [];
 
-  docs.definition.config.navbarLinks?.forEach((link) => {
+  config?.navbarLinks?.forEach((link) => {
     if (link.type === "github") {
       navbarLinks.push({
         type: "github",
@@ -218,11 +180,14 @@ export default async function Page({
   });
 
   // TODO: This is a hack to add a login button to the navbar. This should be done in a more generic way.
-  if (authConfig?.type === "basic_token_verification" && !authState.authed) {
-    const redirect = new URL(withDefaultProtocol(authConfig.redirect));
+  if (
+    loader.authConfig?.type === "basic_token_verification" &&
+    !authState.authed
+  ) {
+    const redirect = new URL(withDefaultProtocol(loader.authConfig.redirect));
     redirect.searchParams.set(
-      getReturnToQueryParam(authConfig),
-      urlJoin(withDefaultProtocol(host), slug)
+      getReturnToQueryParam(loader.authConfig),
+      urlJoin(withDefaultProtocol(loader.host), slug)
     );
 
     navbarLinks.push({
@@ -241,11 +206,11 @@ export default async function Page({
   if (authState.authed) {
     const logout = new URL(
       getApiRoute("/api/fern-docs/auth/logout"),
-      withDefaultProtocol(host)
+      withDefaultProtocol(loader.host)
     );
     logout.searchParams.set(
-      getReturnToQueryParam(authConfig),
-      urlJoin(withDefaultProtocol(host), slug)
+      getReturnToQueryParam(loader.authConfig),
+      urlJoin(withDefaultProtocol(loader.host), slug)
     );
 
     navbarLinks.push({
@@ -290,59 +255,6 @@ export default async function Page({
       pruneNavigationPredicate(tab, pruneOpts) || tab === found.currentTab
   );
 
-  function resolveFileSrc(src: string | undefined): FileData | undefined {
-    if (src == null) {
-      return undefined;
-    }
-
-    const fileId = FernNavigation.FileId(
-      src.startsWith("file:") ? src.slice(5) : src
-    );
-    const file = docs.definition.filesV2[fileId];
-    if (file == null) {
-      // the file is not found, so we return the src as the image data
-      return { src };
-    }
-
-    if (file.type === "image") {
-      return {
-        src: file.url,
-        width: file.width,
-        height: file.height,
-        blurDataURL: file.blurDataUrl,
-      };
-    } else if (file.type === "url") {
-      return { src: file.url };
-    } else {
-      throw new UnreachableCaseError(file);
-    }
-  }
-
-  const content = await withResolvedDocsContent({
-    domain: docs.baseUrl.domain,
-    found,
-    authState,
-    definition: docs.definition,
-    edgeFlags,
-    scope: {
-      props: {
-        authed: authState.authed,
-        user: authState.authed ? authState.user : undefined,
-        // frontmatter is already available under `{frontmatter}`, so this adds a new scope variable {props}
-        // note: do NOT override `props.components`
-        version: found?.currentVersion?.versionId,
-        tab: found?.currentTab?.title,
-      },
-    },
-    replaceSrc: resolveFileSrc,
-  });
-
-  const frontmatter = extractFrontmatterFromDocsContent(found.node.id, content);
-
-  if (content == null) {
-    notFound();
-  }
-
   const tabs = filteredTabs.map((tab, index) =>
     visitDiscriminatedUnion(tab)._visit<SidebarTab>({
       tab: (tab) => ({
@@ -379,24 +291,27 @@ export default async function Page({
       ? undefined
       : filteredTabs.indexOf(found.currentTab);
 
-  const engine = edgeFlags.useMdxBundler ? "mdx-bundler" : "next-mdx-remote";
-  const serializeMdx = await getMdxBundler(engine);
+  const pageId = FernNavigation.getPageId(found.node);
+  const page = pageId != null ? await loader.getPage(pageId) : undefined;
+  const frontmatter =
+    page != null ? getFrontmatter(page.markdown).data : undefined;
+
+  const fileResolver = await createFileResolver(loader);
 
   const props: DocsProps = {
-    baseUrl: docs.baseUrl,
-    layout: docs.definition.config.layout,
-    title: docs.definition.config.title,
-    favicon: docs.definition.config.favicon,
+    baseUrl: baseUrl,
+    layout: config?.layout,
+    title: config?.title,
+    favicon: config?.favicon,
     colors,
-    js: withCustomJavascript(docs.definition.config.js, resolveFileSrc),
+    js: withCustomJavascript(config?.js, fileResolver),
     navbarLinks,
-    logo: withLogo(docs.definition, found, frontmatter, resolveFileSrc),
-    content,
+    logo: withLogo(config, found, frontmatter, fileResolver),
     announcement:
-      docs.definition.config.announcement != null
+      config?.announcement != null
         ? {
-            mdx: await serializeMdx(docs.definition.config.announcement.text),
-            text: docs.definition.config.announcement.text,
+            mdx: await serializeMdx(config.announcement.text),
+            text: config.announcement.text,
           }
         : undefined,
     navigation: {
@@ -408,32 +323,19 @@ export default async function Page({
       trailingSlash: isTrailingSlashEnabled(),
     },
     edgeFlags,
-    apis: Object.keys(docs.definition.apis).map(FernNavigation.ApiDefinitionId),
-    seo: withSeo(
-      docs.baseUrl.domain,
-      docs.definition.config,
-      frontmatter,
-      docs.definition.filesV2,
-      docs.definition.apis,
-      found,
-      await getSeoDisabled(domain)
-    ),
     user: authState.authed ? authState.user : undefined,
     fallback: {},
 
-    analytics: await getCustomerAnalytics(
-      docs.baseUrl.domain,
-      docs.baseUrl.basePath
-    ),
+    analytics: await getCustomerAnalytics(baseUrl.domain, baseUrl.basePath),
     theme: edgeFlags.isCohereTheme ? "cohere" : "default",
-    analyticsConfig: docs.definition.config.analyticsConfig,
-    defaultLang: docs.definition.config.defaultLanguage ?? "curl",
+    analyticsConfig: config?.analyticsConfig,
+    defaultLang: config?.defaultLanguage ?? "curl",
     stylesheet: renderThemeStylesheet(
       colors,
-      docs.definition.config.typographyV2,
-      docs.definition.config.layout,
-      docs.definition.config.css,
-      docs.definition.filesV2,
+      config?.typographyV2,
+      config?.layout,
+      config?.css,
+      files,
       found.tabs.length > 0
     ),
     featureFlagsConfig: {
@@ -442,7 +344,7 @@ export default async function Page({
   };
 
   // if the user specifies a github navbar link, grab the repo info from it and save it as an SWR fallback
-  const githubNavbarLink = docs.definition.config.navbarLinks?.find(
+  const githubNavbarLink = config?.navbarLinks?.find(
     (link) => link.type === "github"
   );
   if (githubNavbarLink) {
@@ -455,13 +357,121 @@ export default async function Page({
     }
   }
 
+  // note: we start from the version node because endpoint Ids can be duplicated across versions
+  // if we introduce versioned sections, and versioned api references, this logic will need to change
+  const apiReferenceNodes = FernNavigation.utils.collectApiReferences(
+    found.currentVersion ?? found.node
+  );
+
+  const FeedbackPopoverProvider = edgeFlags.isInlineFeedbackEnabled
+    ? FeedbackPopover
+    : React.Fragment;
+
   return (
     <NextApp pageProps={props}>
       <DocsPage theme={props.theme}>
-        <DocsMainContent content={props.content} />
+        <FeedbackPopoverProvider>
+          <DocsMainContent
+            node={found.node}
+            parents={found.parents}
+            neighbors={await getNeighbors(
+              { prev: found.prev, next: found.next },
+              loader
+            )}
+            breadcrumb={found.breadcrumb}
+            apiReferenceNodes={apiReferenceNodes}
+            scope={{
+              authed: authState.authed,
+              user: authState.authed ? authState.user : undefined,
+              version: found?.currentVersion?.versionId,
+              tab: found?.currentTab?.title,
+              slug: slug,
+            }}
+          />
+        </FeedbackPopoverProvider>
       </DocsPage>
     </NextApp>
   );
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string[] };
+}): Promise<Metadata> {
+  const slug = FernNavigation.slugjoin(params.slug);
+  const docsLoader = await createCachedDocsLoader();
+  const findNode = createFindNode(docsLoader);
+  const [files, node, config, isSeoDisabled] = await Promise.all([
+    docsLoader.getFiles(),
+    findNode(slug),
+    docsLoader.getConfig(),
+    getSeoDisabled(docsLoader.domain),
+  ]);
+  const pageId = node != null ? FernNavigation.getPageId(node) : undefined;
+  const page = pageId ? await docsLoader.getPage(pageId) : undefined;
+  const frontmatter = page ? getFrontmatter(page.markdown)?.data : undefined;
+
+  const noindex =
+    node == null ||
+    (FernNavigation.hasMarkdown(node) && node.noindex) ||
+    isSeoDisabled ||
+    frontmatter?.noindex ||
+    false;
+  const nofollow = isSeoDisabled || frontmatter?.nofollow || false;
+
+  return {
+    title:
+      markdownToString(
+        frontmatter?.headline || frontmatter?.title || node?.title
+      ) ?? node?.title,
+    description: markdownToString(
+      frontmatter?.description || frontmatter?.subtitle || frontmatter?.excerpt
+    ),
+    keywords: frontmatter?.keywords,
+    robots: {
+      index: noindex ? false : undefined,
+      follow: nofollow ? false : undefined,
+    },
+    alternates: {
+      canonical:
+        frontmatter?.["canonical-url"] ??
+        (node != null
+          ? conformTrailingSlash(
+              addLeadingSlash(node.canonicalSlug ?? node.slug)
+            )
+          : undefined),
+    },
+    openGraph: {
+      title: frontmatter?.["og:title"],
+      description: frontmatter?.["og:description"],
+      locale: frontmatter?.["og:locale"],
+      url: frontmatter?.["og:url"],
+      siteName: frontmatter?.["og:site_name"],
+      images:
+        toImageDescriptor(
+          files,
+          frontmatter?.["og:image"],
+          frontmatter?.["og:image:width"],
+          frontmatter?.["og:image:height"]
+        ) ?? toImageDescriptor(files, frontmatter?.image),
+    },
+    twitter: {
+      site: frontmatter?.["twitter:site"],
+      creator: frontmatter?.["twitter:handle"],
+      title: frontmatter?.["twitter:title"],
+      description: frontmatter?.["twitter:description"],
+      images: toImageDescriptor(files, frontmatter?.["twitter:image"]),
+    },
+    icons: {
+      icon: config?.favicon
+        ? toImageDescriptor(files, {
+            type: "fileId",
+            value: config.favicon,
+          })?.url
+        : undefined,
+    },
+  };
 }
 
 function prepareRedirect(destination: string): string {
@@ -473,4 +483,41 @@ function prepareRedirect(destination: string): string {
     destination = encodeURI(addLeadingSlash(destination));
   }
   return destination;
+}
+
+async function getNeighbor(
+  loader: DocsLoader,
+  node: FernNavigation.NavigationNodeNeighbor | undefined
+): Promise<DocsContent.Neighbor | null> {
+  if (node == null) {
+    return null;
+  }
+  const pageId = FernNavigation.getPageId(node);
+  if (pageId == null) {
+    return null;
+  }
+  const page = await loader.getPage(pageId);
+  if (page == null) {
+    return null;
+  }
+  const { data: frontmatter } = getFrontmatter(page.markdown);
+  return {
+    slug: node.slug,
+    title: node.title,
+    excerpt: await serializeMdx(frontmatter.excerpt),
+  };
+}
+
+async function getNeighbors(
+  neighbors: {
+    prev: FernNavigation.NavigationNodeNeighbor | undefined;
+    next: FernNavigation.NavigationNodeNeighbor | undefined;
+  },
+  loader: DocsLoader
+): Promise<DocsContent.Neighbors> {
+  const [prev, next] = await Promise.all([
+    getNeighbor(loader, neighbors.prev),
+    getNeighbor(loader, neighbors.next),
+  ]);
+  return { prev, next };
 }

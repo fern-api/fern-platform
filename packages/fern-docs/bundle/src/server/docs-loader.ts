@@ -12,8 +12,8 @@ import { getAuthEdgeConfig, getEdgeFlags } from "@fern-docs/edge-config";
 import { DEFAULT_LOGO_HEIGHT } from "@fern-docs/utils";
 import { mapValues } from "es-toolkit/object";
 import { unstable_cache } from "next/cache";
-import { UnreachableCaseError } from "ts-essentials";
-import { AuthState, DomainAndHost, getAuthState } from "./auth/getAuthState";
+import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
+import { AuthState, createGetAuthState } from "./auth/getAuthState";
 import { loadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
@@ -23,6 +23,7 @@ export interface DocsLoader {
   host: string;
   domain: string;
   fern_token: string | undefined;
+  authConfig: AuthEdgeConfig | undefined;
 
   /**
    * @returns the base url (including base path) of the docs
@@ -93,6 +94,8 @@ export interface DocsLoader {
     contentWidth: number;
     tabsPlacement: "SIDEBAR" | "HEADER";
   }>;
+
+  getAuthState: (pathname?: string) => Promise<AuthState>;
 }
 
 /**
@@ -101,29 +104,36 @@ export interface DocsLoader {
 export const createCachedDocsLoader = async (): Promise<DocsLoader> => {
   const { domain, host, fern_token } = withServerProps();
   const authConfig = await getAuthEdgeConfig(domain);
-  const authState = await getAuthState(
+  const { getAuthState } = await createGetAuthState(
     domain,
     host,
     fern_token,
-    undefined,
     authConfig
   );
-  return new CachedDocsLoaderImpl(authConfig, authState, fern_token);
+  return new CachedDocsLoaderImpl(
+    domain,
+    host,
+    fern_token,
+    authConfig,
+    getAuthState
+  );
 };
 
 class CachedDocsLoaderImpl implements DocsLoader {
   constructor(
+    private _domain: string,
+    private _host: string,
+    private _fern_token: string | undefined,
     private _authConfig: AuthEdgeConfig | undefined,
-    private _authState: AuthState & DomainAndHost,
-    private _fern_token: string | undefined
+    private _getAuthState: (pathname?: string) => AsyncOrSync<AuthState>
   ) {}
 
   public get domain() {
-    return this._authState.domain;
+    return this._domain;
   }
 
   public get host() {
-    return this._authState.host;
+    return this._host;
   }
 
   public get fern_token() {
@@ -181,33 +191,27 @@ class CachedDocsLoaderImpl implements DocsLoader {
     { tags: [this.domain], revalidate: false }
   );
 
-  public getRoot = unstable_cache(
-    async (): Promise<FernNavigation.RootNode | undefined> => {
-      let root = await this.unsafe_getFullRoot();
+  public getRoot = async () => {
+    let root = await this.unsafe_getFullRoot();
 
-      if (!root) {
-        return undefined;
-      }
+    if (!root) {
+      return undefined;
+    }
 
-      if (this.authConfig) {
-        root = pruneWithAuthState(this.authState, this.authConfig, root);
-      }
+    if (this.authConfig) {
+      root = pruneWithAuthState(
+        await this.getAuthState(),
+        this.authConfig,
+        root
+      );
+    }
 
-      if (root) {
-        FernNavigation.utils.mutableUpdatePointsTo(root);
-      }
+    if (root) {
+      FernNavigation.utils.mutableUpdatePointsTo(root);
+    }
 
-      return root;
-    },
-    [
-      "docs-loader:root",
-      this.domain,
-      this.authState.authed
-        ? `authed:${[...(this.authState.user.roles ?? ["everyone"])].sort().join(",")}`
-        : "anonymous",
-    ],
-    { tags: [this.domain], revalidate: false }
-  );
+    return root;
+  };
 
   /**
    * beware: this returns the full tree, and ignores authentication.
@@ -371,13 +375,13 @@ class CachedDocsLoaderImpl implements DocsLoader {
     };
   };
 
-  private get authConfig() {
+  public get authConfig() {
     return this._authConfig;
   }
 
-  private get authState() {
-    return this._authState;
-  }
+  public getAuthState = async (pathname?: string) => {
+    return this._getAuthState(pathname);
+  };
 }
 
 function toRgbaColor(color: RgbaColor): RgbaColor;

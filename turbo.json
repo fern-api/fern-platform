@@ -83,14 +83,16 @@
         "QSTASH_URL",
         "TRAILING_SLASH",
         "TURBOPUFFER_API_KEY",
+        "WORKOS_CLIENT_ID",
+        "HIGHLIGHT_PROJECT_ID_FERN_APP"
+      ],
+      "passThroughEnv": [
+        "ESBUILD_BINARY_PATH",
         "VERCEL",
         "VERCEL_AUTOMATION_BYPASS_SECRET",
         "VERCEL_DEPLOYMENT_ID",
         "VERCEL_ENV",
-        "VERCEL_URL",
-        "WORKOS_API_KEY",
-        "WORKOS_CLIENT_ID",
-        "HIGHLIGHT_PROJECT_ID_FERN_APP"
+        "VERCEL_URL"
       ]
     }
   },

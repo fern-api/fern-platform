@@ -1,28 +1,27 @@
+import { ColorsThemeConfig } from "@/server/types";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import { ColorsConfig } from "@fern-platform/fdr-utils";
 import tinycolor from "tinycolor2";
 import { CSS_VARIABLES, getColorVariables } from "./getColorVariables";
 import { getFontVariables } from "./getFontVariables";
 import { getLayoutVariables } from "./getLayoutVariables";
 
 export function renderThemeStylesheet(
-  colorsConfig: ColorsConfig,
+  colorsConfig: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  },
   typography: DocsV1Read.DocsTypographyConfigV2 | undefined,
   layoutConfig: DocsV1Read.DocsLayoutConfig | undefined,
   css: DocsV1Read.CssConfig | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>,
+  files: Record<string, { src: string }>,
   hasTabs: boolean
 ): string {
-  if (colorsConfig == null) {
-    return "";
-  }
-  // const bg = getBgVariables(backgroundImage, files);
   const {
     fontFaces,
     cssVariables: fonts,
     additionalCss,
   } = getFontVariables(typography, files);
-  const colors = getColorVariables(colorsConfig, files);
+  const colors = getColorVariables(colorsConfig);
   const { root: layout, "max-lg": layoutMaxLg } = getLayoutVariables(
     layoutConfig,
     hasTabs

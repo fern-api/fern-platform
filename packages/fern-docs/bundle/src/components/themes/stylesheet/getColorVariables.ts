@@ -1,5 +1,5 @@
+import type { ColorsThemeConfig } from "@/server/types";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
-import { ColorsConfig } from "@fern-platform/fdr-utils";
 import tinycolor from "tinycolor2";
 import {
   darkGrayColors,
@@ -124,7 +124,10 @@ function isRgbColor(color: unknown): color is DocsV1Read.RgbaColor {
 }
 
 function getColor(
-  colors: ColorsConfig,
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  },
   key: "background" | "accentPrimary",
   theme: "light" | "dark"
 ): tinycolor.Instance {
@@ -137,7 +140,10 @@ function getColor(
 }
 
 function getColor2(
-  colors: ColorsConfig,
+  colors: {
+    light?: ColorsThemeConfig;
+    dark?: ColorsThemeConfig;
+  },
   key:
     | "background"
     | "accentPrimary"
@@ -154,35 +160,35 @@ function getColor2(
   return undefined;
 }
 
-export function getColorVariables(
-  colorsV3: ColorsConfig,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
-): {
+export function getColorVariables(colors: {
+  light?: ColorsThemeConfig;
+  dark?: ColorsThemeConfig;
+}): {
   light: Record<string, string | undefined>;
   dark: Record<string, string | undefined>;
 } {
   const backgroundColorLight = enforceBackgroundTheme(
-    getColor(colorsV3, "background", "light"),
+    getColor(colors, "background", "light"),
     "light"
   ).toRgb();
   const backgroundColorDark = enforceBackgroundTheme(
-    getColor(colorsV3, "background", "dark"),
+    getColor(colors, "background", "dark"),
     "dark"
   ).toRgb();
   const shouldUseAccentColorLight =
-    colorsV3.light?.background.type === "gradient" ||
+    !colors.light?.background ||
     tinycolor(backgroundColorLight).toHexString() === "#ffffff";
   const shouldUseAccentColorDark =
-    colorsV3.dark?.background.type === "gradient" ||
+    !colors.dark?.background ||
     tinycolor(backgroundColorDark).toHexString() === "#000000";
 
   const accentPrimaryLightUi = increaseForegroundContrast(
-    getColor(colorsV3, "accentPrimary", "light"),
+    getColor(colors, "accentPrimary", "light"),
     tinycolor(backgroundColorLight),
     "ui"
   ).toRgb();
   const accentPrimaryDarkUi = increaseForegroundContrast(
-    getColor(colorsV3, "accentPrimary", "dark"),
+    getColor(colors, "accentPrimary", "dark"),
     tinycolor(backgroundColorDark),
     "ui"
   ).toRgb();
@@ -231,47 +237,39 @@ export function getColorVariables(
   ).toRgb();
 
   const accentPrimaryLightAA = increaseForegroundContrast(
-    getColor(colorsV3, "accentPrimary", "light"),
+    getColor(colors, "accentPrimary", "light"),
     tinycolor(backgroundColorLight),
     "aa"
   ).toRgb();
   const accentPrimaryDarkAA = increaseForegroundContrast(
-    getColor(colorsV3, "accentPrimary", "dark"),
+    getColor(colors, "accentPrimary", "dark"),
     tinycolor(backgroundColorDark),
     "aa"
   ).toRgb();
 
   const accentPrimaryLightAAA = increaseForegroundContrast(
-    getColor(colorsV3, "accentPrimary", "light"),
+    getColor(colors, "accentPrimary", "light"),
     tinycolor(backgroundColorLight),
     "aaa"
   ).toRgb();
   const accentPrimaryDarkAAA = increaseForegroundContrast(
-    getColor(colorsV3, "accentPrimary", "dark"),
+    getColor(colors, "accentPrimary", "dark"),
     tinycolor(backgroundColorDark),
     "aaa"
   ).toRgb();
 
-  const cardBackgroundLight = getColor2(colorsV3, "cardBackground", "light");
-  const cardBackgroundDark = getColor2(colorsV3, "cardBackground", "dark");
+  const cardBackgroundLight = getColor2(colors, "cardBackground", "light");
+  const cardBackgroundDark = getColor2(colors, "cardBackground", "dark");
   const sidebarBackgroundLight = getColor2(
-    colorsV3,
+    colors,
     "sidebarBackground",
     "light"
   );
-  const sidebarBackgroundDark = getColor2(
-    colorsV3,
-    "sidebarBackground",
-    "dark"
-  );
-  const headerBackgroundLight = getColor2(
-    colorsV3,
-    "headerBackground",
-    "light"
-  );
-  const headerBackgroundDark = getColor2(colorsV3, "headerBackground", "dark");
-  const borderLight = getColor2(colorsV3, "border", "light");
-  const borderDark = getColor2(colorsV3, "border", "dark");
+  const sidebarBackgroundDark = getColor2(colors, "sidebarBackground", "dark");
+  const headerBackgroundLight = getColor2(colors, "headerBackground", "light");
+  const headerBackgroundDark = getColor2(colors, "headerBackground", "dark");
+  const borderLight = getColor2(colors, "border", "light");
+  const borderDark = getColor2(colors, "border", "dark");
 
   return {
     light: {
@@ -381,10 +379,9 @@ export function getColorVariables(
         borderLight?.toRgbString() ?? "var(--grayscale-a2)",
       [CSS_VARIABLES.BODY_TEXT]: "0, 0, 0",
       [CSS_VARIABLES.BODY_TEXT_INVERTED]: "255, 255, 255",
-      [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(
-        colorsV3.light?.backgroundImage,
-        files
-      ),
+      [CSS_VARIABLES.BACKGROUND_IMAGE]: colors.light?.backgroundImage?.src
+        ? `url(${colors.light.backgroundImage.src})`
+        : undefined,
     },
     dark: {
       [CSS_VARIABLES.GRAYSCALE_1]: getRadixGrayVar(radixGrayscaleDark, 1),
@@ -469,26 +466,11 @@ export function getColorVariables(
         borderDark?.toRgbString() ?? "var(--grayscale-a2)",
       [CSS_VARIABLES.BODY_TEXT]: "255, 255, 255",
       [CSS_VARIABLES.BODY_TEXT_INVERTED]: "0, 0, 0",
-      [CSS_VARIABLES.BACKGROUND_IMAGE]: getBackgroundImage(
-        colorsV3.dark?.backgroundImage,
-        files
-      ),
+      [CSS_VARIABLES.BACKGROUND_IMAGE]: colors.dark?.backgroundImage?.src
+        ? `url(${colors.dark.backgroundImage.src})`
+        : undefined,
     },
   };
-}
-
-function getBackgroundImage(
-  id: DocsV1Read.FileId | undefined,
-  files: Record<DocsV1Read.FileId, DocsV1Read.File_>
-): string | undefined {
-  if (id == null) {
-    return undefined;
-  }
-  const url = files[id]?.url;
-  if (url == null) {
-    return undefined;
-  }
-  return `url(${url})`;
 }
 
 export function increaseForegroundContrast(
