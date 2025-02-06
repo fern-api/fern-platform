@@ -4,4 +4,5 @@
 import * as FernRegistry from "../../../../../../../../../index";
 export interface FormDataBodyProperty extends FernRegistry.api.v1.register.ObjectProperty {
     contentType: FernRegistry.api.v1.register.ContentType | undefined;
+    exploded: boolean | undefined;
 }
