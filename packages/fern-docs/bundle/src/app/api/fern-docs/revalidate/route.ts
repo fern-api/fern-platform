@@ -1,5 +1,5 @@
-import { createCachedDocsLoader } from "@/server/cached-docs-loader";
-import { getDocsDomainEdge, getHostEdge } from "@/server/xfernhost/edge";
+import { createCachedDocsLoader } from "@/server/docs-loader";
+import { getDocsDomainEdge } from "@/server/xfernhost/edge";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   addLeadingSlash,
@@ -12,7 +12,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   const domain = getDocsDomainEdge(req);
-  const host = getHostEdge(req);
 
   revalidateTag(domain);
 

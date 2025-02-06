@@ -1,4 +1,4 @@
-import { serializeMdx } from "@/client/mdx/bundlers/mdx-bundler";
+import { serializeMdx } from "@/components/mdx/bundlers/mdx-bundler";
 import { getAuthStateEdge } from "@/server/auth/getAuthStateEdge";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import { ApiDefinitionLoader } from "@fern-docs/cache";
