@@ -43,7 +43,7 @@ describe("OperationObjectConverterNode", () => {
         displayName: undefined,
         environments: [],
         errors: undefined,
-        examples: undefined,
+        examples: [],
         id: "endpoint_.getPetsPetId",
         method: "GET",
         namespace: undefined,

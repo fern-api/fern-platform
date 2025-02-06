@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Examples
+  description: Examples fixture
+  version: 1.0.0
+  
+paths:
+  /matching-examples:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+              required:
+                - date
+            examples:
+              date1:
+                summary: date1
+                value:
+                  date: "2020-12-09T17:25:40.008307"
+              date2:
+                summary: date2
+                value:
+                  date: "2024-01-24T12:37:24.000Z"
+
+      responses:
+        '202':
+          description: date response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties: 
+                  message:
+                    type: string
+              examples: 
+                date1:
+                  summary: date1
+                  value:
+                    message: date received 1
+                date2:
+                  summary: date2
+                  value:
+                    message: date received 2
+
+  /non-matching-examples:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+              required:
+                - date
+            examples:
+              date1req:
+                summary: date1
+                value:
+                  date: "2020-12-09T17:25:40.008307"
+              date2req:
+                summary: date2
+                value:
+                  date: "2024-01-24T12:37:24.000Z"
+
+      responses:
+        '202':
+          description: date response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties: 
+                  message:
+                    type: string
+              examples: 
+                date1res:
+                  summary: date1
+                  value:
+                    message: date received 1
+                date2res:
+                  summary: date2
+                  value:
+                    message: date received 2
+  
+  /more-requests:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+              required:
+                - date
+            examples:
+              date1req:
+                summary: date1
+                value:
+                  date: "2020-12-09T17:25:40.008307"
+              date2req:
+                summary: date2
+                value:
+                  date: "2024-01-24T12:37:24.000Z"
+
+      responses:
+        '202':
+          description: date response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties: 
+                  message:
+                    type: string
+              examples: 
+                date1res:
+                  summary: date1
+                  value:
+                    message: date received 1
+
+  
+  /more-responses:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+              required:
+                - date
+            examples:
+              date1req:
+                summary: date1
+                value:
+                  date: "2020-12-09T17:25:40.008307"
+
+      responses:
+        '202':
+          description: date response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties: 
+                  message:
+                    type: string
+              examples: 
+                date1res:
+                  summary: date1
+                  value:
+                    message: date received 1
+                date2res:
+                  summary: date2
+                  value:
+                    message: date received 2
+
+  /post-empty-response:
+    post:
+      description: empty response
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+              required:
+                - date
+            examples:
+              date1req:
+                summary: date1
+                value:
+                  date: "2020-12-09T17:25:40.008307"
+
+  /single-example:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+              required:
+                - date
+            example:
+              date: "2020-12-09T17:25:40.008307"
+
+      responses:
+        '202':
+          description: date response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties: 
+                  message:
+                    type: string
+              example: 
+                message: date received 1

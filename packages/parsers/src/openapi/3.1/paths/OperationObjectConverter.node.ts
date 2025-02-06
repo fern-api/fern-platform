@@ -9,6 +9,7 @@ import { HttpMethod } from "../../constants";
 import { coalesceServers } from "../../utils/3.1/coalesceServers";
 import { resolveParameterReference } from "../../utils/3.1/resolveParameterReference";
 import { getEndpointId } from "../../utils/getEndpointId";
+import { getExampleName } from "../../utils/getExampleName";
 import { mergeSnippets } from "../../utils/mergeSnippets";
 import { mergeXFernAndResponseExamples } from "../../utils/mergeXFernAndResponsesExamples";
 import { SecurityRequirementObjectConverterNode } from "../auth/SecurityRequirementObjectConverter.node";
@@ -20,6 +21,7 @@ import { XFernSdkMethodNameConverterNode } from "../extensions/XFernSdkMethodNam
 import { XFernWebhookConverterNode } from "../extensions/XFernWebhookConverter.node";
 import { RedocExampleConverterNode } from "../extensions/examples/RedocExampleConverter.node";
 import { isReferenceObject } from "../guards/isReferenceObject";
+import { ExampleObjectConverterNode } from "./ExampleObjectConverter.node";
 import { ServerObjectConverterNode } from "./ServerObjectConverter.node";
 import {
   ParameterBaseObjectConverterNode,
@@ -47,6 +49,7 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
   namespace: XFernGroupNameConverterNode | undefined;
   xFernExamplesNode: XFernEndpointExampleConverterNode | undefined;
   redocExamplesNode: RedocExampleConverterNode | undefined;
+  emptyResponseExamples: ExampleObjectConverterNode[] | undefined;
 
   constructor(
     args: BaseOpenApiV3_1ConverterNodeConstructorArgs<OpenAPIV3_1.OperationObject>,
@@ -198,6 +201,41 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
           )
         : undefined;
 
+    if (this.responses == null) {
+      const requestBodiesByContent = this.requests?.requestBodiesByContentType;
+      if (requestBodiesByContent != null) {
+        Object.values(requestBodiesByContent).forEach((requestBody) => {
+          Object.entries(requestBody.examples ?? {}).forEach(
+            ([requestExampleName, requestExample]) => {
+              this.emptyResponseExamples ??= [];
+              this.emptyResponseExamples.push(
+                new ExampleObjectConverterNode(
+                  {
+                    input: {
+                      requestExample: requestExample,
+                      responseExample: undefined,
+                    },
+                    context: this.context,
+                    accessPath: this.accessPath,
+                    pathId: "x-fern-examples",
+                  },
+                  this.path,
+                  0,
+                  getExampleName(requestExampleName, undefined),
+                  {
+                    requestBody: requestBody,
+                    pathParameters: this.pathParameters,
+                    queryParameters: this.queryParameters,
+                    requestHeaders: this.requestHeaders,
+                  }
+                )
+              );
+            }
+          );
+        });
+      }
+    }
+
     // TODO: pass appropriate status codes for examples
     let responseStatusCode = 200;
     if (this.responses?.responsesByStatusCode != null) {
@@ -328,9 +366,16 @@ export class OperationObjectConverterNode extends BaseOpenApiV3_1ConverterNode<
       errors: undefined,
     };
 
+    const emptyResponseExamples = this.emptyResponseExamples
+      ?.map((example) => example.convert())
+      .filter(isNonNullish);
+
     const examples = mergeXFernAndResponseExamples(
       this.xFernExamplesNode?.convert(),
-      responses?.flatMap((response) => response.examples)
+      [
+        ...(emptyResponseExamples ?? []),
+        ...(responses?.flatMap((response) => response.examples) ?? []),
+      ]
     )?.map((example) => {
       return {
         ...example,
