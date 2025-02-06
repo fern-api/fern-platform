@@ -19,6 +19,7 @@ import { unstable_cache } from "next/cache";
 import { cache } from "react";
 import { AsyncOrSync, UnreachableCaseError } from "ts-essentials";
 import { AuthState, createGetAuthState } from "./auth/getAuthState";
+import { createFileResolver } from "./file-resolver";
 import { loadWithUrl } from "./loadWithUrl";
 import { ColorsThemeConfig, FileData, RgbaColor } from "./types";
 import { pruneWithAuthState } from "./withRbac";
@@ -81,13 +82,13 @@ export interface DocsLoader {
    */
   getSerializedPage: (
     pageId: string,
-    options?: Omit<FernSerializeMdxOptions, "files">,
+    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">,
     revalidate?: number | false
   ) => Promise<FernDocs.MarkdownText | undefined>;
 
   serializeMdx: (
     content: string | undefined,
-    options?: Omit<FernSerializeMdxOptions, "files">
+    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
   ) => Promise<FernDocs.MarkdownText | undefined>;
 
   getColors: () => Promise<{
@@ -297,14 +298,19 @@ class CachedDocsLoaderImpl implements DocsLoader {
   public serializeMdx = unstable_cache(
     async (
       content: string | undefined,
-      options?: Omit<FernSerializeMdxOptions, "files">
+      options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">
     ) => {
       if (content == null) {
         return undefined;
       }
+      const [files, mdxBundlerFiles] = await Promise.all([
+        this.getFiles(),
+        this.getMdxBundlerFiles(),
+      ]);
       return serializeMdx(content, {
         ...options,
-        files: await this.getMdxBundlerFiles(),
+        files: mdxBundlerFiles,
+        replaceSrc: createFileResolver(files),
       });
     },
     ["docs-loader:serialize-mdx", this.domain],
@@ -313,10 +319,14 @@ class CachedDocsLoaderImpl implements DocsLoader {
 
   public getSerializedPage = async (
     pageId: string,
-    options?: Omit<FernSerializeMdxOptions, "files">,
+    options?: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">,
     revalidate?: number | false
   ) => {
-    const page = await this.getPage(pageId);
+    const [page, files, mdxBundlerFiles] = await Promise.all([
+      this.getPage(pageId),
+      this.getFiles(),
+      this.getMdxBundlerFiles(),
+    ]);
     if (!page) {
       return undefined;
     }
@@ -325,7 +335,8 @@ class CachedDocsLoaderImpl implements DocsLoader {
         const serialized = await serializeMdx(page.markdown, {
           ...options,
           filename: pageId,
-          files: await this.getMdxBundlerFiles(),
+          files: mdxBundlerFiles,
+          replaceSrc: createFileResolver(files),
         });
         return serialized;
       },

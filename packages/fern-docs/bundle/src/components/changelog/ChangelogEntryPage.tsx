@@ -18,7 +18,7 @@ export default async function ChangelogEntryPage({
   parents: readonly FernNavigation.NavigationNodeParent[];
   domain: string;
   node: FernNavigation.ChangelogEntryNode;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   neighbors: DocsContent.Neighbors;
 }) {

@@ -295,21 +295,23 @@ export default async function Page({
       : filteredTabs.indexOf(found.currentTab);
 
   const pageId = FernNavigation.getPageId(found.node);
-  const [page, fileResolver, neighbors, analytics, announcmentMdx] =
-    await Promise.all([
+  const [page, files, neighbors, analytics, announcmentMdx] = await Promise.all(
+    [
       pageId != null ? loader.getPage(pageId) : undefined,
-      createFileResolver(loader),
+      loader.getFiles(),
       getNeighbors({ prev: found.prev, next: found.next }, loader),
       getCustomerAnalytics(baseUrl.domain, baseUrl.basePath),
       config?.announcement?.text != null
         ? serializeMdx(config.announcement.text)
         : undefined,
-    ]);
+    ]
+  );
 
   const frontmatter =
     page != null ? getFrontmatter(page.markdown).data : undefined;
   const announcementText = config?.announcement?.text;
 
+  const fileResolver = createFileResolver(files);
   const props: DocsProps = {
     baseUrl: baseUrl,
     layout: config?.layout,

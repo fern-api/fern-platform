@@ -1,7 +1,5 @@
 "use server";
 
-import { createCachedDocsLoader } from "@/server/docs-loader";
-import { createFileResolver } from "@/server/file-resolver";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { notFound } from "next/navigation";
 import ApiEndpointPage from "../api-reference/ApiEndpointPage";
@@ -30,11 +28,8 @@ export async function DocsMainContent({
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   scope?: Record<string, unknown>;
 }) {
-  const docsLoader = await createCachedDocsLoader(domain);
-  const fileResolver = await createFileResolver(docsLoader);
-  const mdxOptions: Omit<FernSerializeMdxOptions, "files"> = {
+  const mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc"> = {
     scope,
-    replaceSrc: fileResolver,
     toc: true,
   };
 

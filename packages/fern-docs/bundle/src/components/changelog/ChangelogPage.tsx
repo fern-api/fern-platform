@@ -22,7 +22,7 @@ export default async function ChangelogPage({
 }: {
   domain: string;
   node: FernNavigation.ChangelogNode;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
   const docsLoader = await createCachedDocsLoader(domain);
@@ -97,7 +97,7 @@ async function ChangelogPageOverview({
 }: {
   domain: string;
   node: FernNavigation.ChangelogNode;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
 }) {
   const docsLoader = await createCachedDocsLoader(domain);
@@ -134,7 +134,7 @@ async function ChangelogPageEntry({
 }: {
   domain: string;
   node: FernNavigation.ChangelogEntryNode;
-  mdxOptions: Omit<FernSerializeMdxOptions, "files">;
+  mdxOptions: Omit<FernSerializeMdxOptions, "files" | "replaceSrc">;
 }) {
   const docsLoader = await createCachedDocsLoader(domain);
   const mdx = await docsLoader.getSerializedPage(node.pageId, mdxOptions);

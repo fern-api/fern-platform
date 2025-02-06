@@ -1,10 +1,9 @@
 import "server-only";
 
 import { FernNavigation } from "@fern-api/fdr-sdk";
-import { DocsLoader } from "./docs-loader";
+import { FileData } from "./types";
 
-export async function createFileResolver(loader: DocsLoader) {
-  const files = await loader.getFiles();
+export function createFileResolver(files: Record<string, FileData>) {
   return (src: string | undefined) => {
     if (src == null) {
       return undefined;
