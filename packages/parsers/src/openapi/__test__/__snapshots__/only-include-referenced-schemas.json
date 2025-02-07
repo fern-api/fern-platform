@@ -30971,6 +30971,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Intercom User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -30980,6 +30981,7 @@
             }
           },
           {
+            "displayName": "Contact Reply Email Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -30989,6 +30991,7 @@
             }
           },
           {
+            "displayName": "Contact Reply User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -31152,6 +31155,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Ticket Intercom User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -31161,6 +31165,7 @@
             }
           },
           {
+            "displayName": "Contact Reply Ticket User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -31170,6 +31175,7 @@
             }
           },
           {
+            "displayName": "Contact Reply Ticket Email Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -34081,6 +34087,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -34090,6 +34097,7 @@
             }
           },
           {
+            "displayName": "Admin Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -38275,6 +38283,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "News Item",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -38284,6 +38293,7 @@
                       }
                     },
                     {
+                      "displayName": "Newsfeed",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -38597,6 +38607,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -38606,6 +38617,7 @@
             }
           },
           {
+            "displayName": "Admin Reply Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -38629,6 +38641,7 @@
               "type": "undiscriminatedUnion",
               "variants": [
                 {
+                  "displayName": "Single Filter Search Request",
                   "shape": {
                     "type": "alias",
                     "value": {
@@ -38638,6 +38651,7 @@
                   }
                 },
                 {
+                  "displayName": "Multiple Filter Search Request",
                   "shape": {
                     "type": "alias",
                     "value": {
@@ -42883,6 +42897,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Close Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42892,6 +42907,7 @@
             }
           },
           {
+            "displayName": "Snooze Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42901,6 +42917,7 @@
             }
           },
           {
+            "displayName": "Open Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42910,6 +42927,7 @@
             }
           },
           {
+            "displayName": "Assign Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42927,6 +42945,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Create or Update Tag Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42936,6 +42955,7 @@
             }
           },
           {
+            "displayName": "Tag Company Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42945,6 +42965,7 @@
             }
           },
           {
+            "displayName": "Untag Company Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42954,6 +42975,7 @@
             }
           },
           {
+            "displayName": "Tag Multiple Users Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42971,6 +42993,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -42980,6 +43003,7 @@
             }
           },
           {
+            "displayName": "Admin Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {

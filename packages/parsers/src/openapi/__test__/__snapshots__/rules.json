@@ -149,6 +149,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Schema",
             "shape": {
               "type": "alias",
               "value": {

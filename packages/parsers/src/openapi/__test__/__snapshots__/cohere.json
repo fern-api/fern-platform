@@ -1887,6 +1887,7 @@
                               }
                             },
                             {
+                              "displayName": "Document",
                               "shape": {
                                 "type": "alias",
                                 "value": {
@@ -14857,6 +14858,7 @@
                           }
                         },
                         {
+                          "displayName": "Rerank Document",
                           "shape": {
                             "type": "alias",
                             "value": {
@@ -30389,6 +30391,7 @@
         "variants": [
           {
             "discriminantValue": "CHATBOT",
+            "displayName": "Chatbot",
             "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n",
             "type": "object",
             "extends": [],
@@ -30443,6 +30446,7 @@
           },
           {
             "discriminantValue": "SYSTEM",
+            "displayName": "System",
             "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n",
             "type": "object",
             "extends": [],
@@ -30497,6 +30501,7 @@
           },
           {
             "discriminantValue": "USER",
+            "displayName": "User",
             "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n",
             "type": "object",
             "extends": [],
@@ -30551,6 +30556,7 @@
           },
           {
             "discriminantValue": "TOOL",
+            "displayName": "Tool",
             "description": "Represents tool result in the chat history.\n",
             "type": "object",
             "extends": [],
@@ -31974,6 +31980,7 @@
         "variants": [
           {
             "discriminantValue": "stream-start",
+            "displayName": "Stream Start",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -31997,6 +32004,7 @@
           },
           {
             "discriminantValue": "search-queries-generation",
+            "displayName": "Search Queries Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32023,6 +32031,7 @@
           },
           {
             "discriminantValue": "search-results",
+            "displayName": "Search Results",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32066,6 +32075,7 @@
           },
           {
             "discriminantValue": "text-generation",
+            "displayName": "Text Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32089,6 +32099,7 @@
           },
           {
             "discriminantValue": "citation-generation",
+            "displayName": "Citation Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32115,6 +32126,7 @@
           },
           {
             "discriminantValue": "tool-calls-generation",
+            "displayName": "Tool Calls Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32153,6 +32165,7 @@
           },
           {
             "discriminantValue": "stream-end",
+            "displayName": "Stream End",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32197,6 +32210,7 @@
           },
           {
             "discriminantValue": "tool-calls-chunk",
+            "displayName": "Tool Calls Chunk",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32228,6 +32242,7 @@
           },
           {
             "discriminantValue": "debug",
+            "displayName": "Debug",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32292,6 +32307,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text",
             "description": "Text content of the message.",
             "type": "object",
             "extends": [],
@@ -32545,6 +32561,7 @@
           },
           {
             "discriminantValue": "document",
+            "displayName": "Document",
             "description": "A document source object containing the unique identifier of the document and the document itself.",
             "type": "object",
             "extends": [],
@@ -32730,6 +32747,7 @@
                             "variants": [
                               {
                                 "discriminantValue": "text",
+                                "displayName": "Text",
                                 "description": "Text content of the message.",
                                 "type": "object",
                                 "extends": [],
@@ -32839,6 +32857,7 @@
                         "variants": [
                           {
                             "discriminantValue": "text",
+                            "displayName": "Text",
                             "description": "Text content of the message.",
                             "type": "object",
                             "extends": [],
@@ -32976,6 +32995,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text",
             "description": "Text content of the message.",
             "type": "object",
             "extends": [],
@@ -33007,6 +33027,7 @@
           },
           {
             "discriminantValue": "document",
+            "displayName": "Document",
             "description": "Document content.",
             "type": "object",
             "extends": [],
@@ -33258,6 +33279,7 @@
                                 "variants": [
                                   {
                                     "discriminantValue": "text",
+                                    "displayName": "Text",
                                     "description": "Text content of the message.",
                                     "type": "object",
                                     "extends": [],
@@ -33366,6 +33388,7 @@
                             "variants": [
                               {
                                 "discriminantValue": "text",
+                                "displayName": "Text",
                                 "description": "Text content of the message.",
                                 "type": "object",
                                 "extends": [],
@@ -33663,6 +33686,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text",
             "type": "object",
             "extends": [],
             "properties": [
@@ -33680,6 +33704,7 @@
           },
           {
             "discriminantValue": "json_object",
+            "displayName": "JSON Object",
             "type": "object",
             "extends": [],
             "properties": [
@@ -33812,6 +33837,7 @@
                       "variants": [
                         {
                           "discriminantValue": "text",
+                          "displayName": "Text",
                           "description": "Text content of the message.",
                           "type": "object",
                           "extends": [],
@@ -34763,6 +34789,7 @@
         "variants": [
           {
             "discriminantValue": "message-start",
+            "displayName": "Message Start",
             "description": "A streamed event which signifies that a stream has started.",
             "type": "object",
             "extends": [
@@ -34816,6 +34843,7 @@
           },
           {
             "discriminantValue": "content-start",
+            "displayName": "Content Start",
             "description": "A streamed delta event which signifies that a new content block has started.",
             "type": "object",
             "extends": [
@@ -34888,6 +34916,7 @@
           },
           {
             "discriminantValue": "content-delta",
+            "displayName": "Content Delta",
             "description": "A streamed delta event which contains a delta of chat text content.",
             "type": "object",
             "extends": [
@@ -34959,6 +34988,7 @@
           },
           {
             "discriminantValue": "content-end",
+            "displayName": "Content End",
             "description": "A streamed delta event which signifies that the content block has ended.",
             "type": "object",
             "extends": [
@@ -34981,6 +35011,7 @@
           },
           {
             "discriminantValue": "tool-plan-delta",
+            "displayName": "Tool Plan Delta",
             "description": "A streamed event which contains a delta of tool plan text.",
             "type": "object",
             "extends": [
@@ -35012,6 +35043,7 @@
           },
           {
             "discriminantValue": "tool-call-start",
+            "displayName": "Tool Call Start",
             "description": "A streamed event delta which signifies a tool call has started streaming.",
             "type": "object",
             "extends": [
@@ -35108,6 +35140,7 @@
           },
           {
             "discriminantValue": "tool-call-delta",
+            "displayName": "Tool Call Delta",
             "description": "A streamed event delta which signifies a delta in tool call arguments.",
             "type": "object",
             "extends": [
@@ -35169,6 +35202,7 @@
           },
           {
             "discriminantValue": "tool-call-end",
+            "displayName": "Tool Call End",
             "description": "A streamed event delta which signifies a tool call has finished streaming.",
             "type": "object",
             "extends": [
@@ -35191,6 +35225,7 @@
           },
           {
             "discriminantValue": "citation-start",
+            "displayName": "Citation Start",
             "description": "A streamed event which signifies a citation has been created.",
             "type": "object",
             "extends": [
@@ -35241,6 +35276,7 @@
           },
           {
             "discriminantValue": "citation-end",
+            "displayName": "Citation End",
             "description": "A streamed event which signifies a citation has finished streaming.",
             "type": "object",
             "extends": [
@@ -35263,6 +35299,7 @@
           },
           {
             "discriminantValue": "message-end",
+            "displayName": "Message End",
             "description": "A streamed event which signifies that the chat message has ended.",
             "type": "object",
             "extends": [
@@ -35314,6 +35351,7 @@
           },
           {
             "discriminantValue": "debug",
+            "displayName": "Debug",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -35825,6 +35863,7 @@
         "variants": [
           {
             "discriminantValue": "text-generation",
+            "displayName": "Text Generation",
             "type": "object",
             "extends": [
               "GenerateStreamEvent"
@@ -35872,6 +35911,7 @@
           },
           {
             "discriminantValue": "stream-end",
+            "displayName": "Stream End",
             "type": "object",
             "extends": [
               "GenerateStreamEvent"
@@ -35964,6 +36004,7 @@
           },
           {
             "discriminantValue": "stream-error",
+            "displayName": "Stream Error",
             "type": "object",
             "extends": [
               "GenerateStreamEvent"
@@ -40754,6 +40795,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Non Streamed Chat Response",
             "shape": {
               "type": "alias",
               "value": {
@@ -40763,6 +40805,7 @@
             }
           },
           {
+            "displayName": "Streamed Chat Response",
             "shape": {
               "type": "alias",
               "value": {
@@ -40780,6 +40823,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Chat Response",
             "shape": {
               "type": "alias",
               "value": {
@@ -40789,6 +40833,7 @@
             }
           },
           {
+            "displayName": "Streamed Chat Response V2",
             "shape": {
               "type": "alias",
               "value": {
@@ -40808,6 +40853,7 @@
         "variants": [
           {
             "discriminantValue": "embeddings_floats",
+            "displayName": "Embeddings Floats",
             "type": "object",
             "extends": [],
             "properties": [
@@ -40930,6 +40976,7 @@
           },
           {
             "discriminantValue": "embeddings_by_type",
+            "displayName": "Embeddings by Type",
             "type": "object",
             "extends": [],
             "properties": [

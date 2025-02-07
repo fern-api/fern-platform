@@ -53,6 +53,10 @@ export interface ApiDefinitionVisitor {
     key: string
   ): Latest.TypeDefinition;
   TypeShape(shape: Latest.TypeShape, key: string): Latest.TypeShape;
+  TypeReference(
+    reference: Latest.TypeReference,
+    key: string
+  ): Latest.TypeReference;
   ObjectType(property: Latest.ObjectType, key: string): Latest.ObjectType;
   ObjectProperty(
     property: Latest.ObjectProperty,
@@ -93,6 +97,7 @@ export class Transformer {
       ExampleWebSocketSession: visitor.ExampleWebSocketSession ?? identity,
       TypeDefinition: visitor.TypeDefinition ?? identity,
       TypeShape: visitor.TypeShape ?? identity,
+      TypeReference: visitor.TypeReference ?? identity,
       ObjectType: visitor.ObjectType ?? identity,
       ObjectProperty: visitor.ObjectProperty ?? identity,
       EnumValue: visitor.EnumValue ?? identity,
@@ -247,7 +252,6 @@ export class Transformer {
       CodeSnippet: visitor.CodeSnippet,
       ErrorExample: visitor.ErrorExample,
       ExampleWebSocketSession: visitor.ExampleWebSocketSession,
-      ObjectProperty: visitor.ObjectProperty,
       EnumValue: visitor.EnumValue,
       UndiscriminatedUnionVariant: visitor.UndiscriminatedUnionVariant,
       FormDataFile: visitor.FormDataFile,
@@ -282,8 +286,12 @@ export class Transformer {
         visitor.TypeDefinition(this.typeDefinition(type, key), key),
       TypeShape: (shape, key) =>
         visitor.TypeShape(this.typeShape(shape, key), key),
+      TypeReference: (reference, key) =>
+        visitor.TypeReference(this.typeReference(reference, key), key),
       ObjectType: (type, key) =>
         visitor.ObjectType(this.objectType(type, key), key),
+      ObjectProperty: (shape, key) =>
+        visitor.ObjectProperty(this.objectProperty(shape, key), key),
       DiscriminatedUnionVariant: (variant, key) =>
         visitor.DiscriminatedUnionVariant(this.objectType(variant, key), key),
       FormDataRequest: (request, key) =>
@@ -367,7 +375,10 @@ export class Transformer {
         ...value,
         ...this.visitor.ObjectType(value, `${parentKey}/object`),
       }),
-      alias: identity,
+      alias: (value) => ({
+        ...value,
+        value: this.visitor.TypeReference(value.value, `${parentKey}/alias`),
+      }),
       bytes: identity,
       formData: (value) => ({
         ...value,
@@ -407,11 +418,16 @@ export class Transformer {
     const body = visitDiscriminatedUnion(
       response.body
     )._visit<Latest.HttpResponseBodyShape>({
-      object: (value) => ({
+      object: (value) => {
+        return {
+          ...value,
+          ...this.visitor.ObjectType(value, `${parentKey}/object`),
+        };
+      },
+      alias: (value) => ({
         ...value,
-        ...this.visitor.ObjectType(value, `${parentKey}/object`),
+        value: this.visitor.TypeReference(value.value, `${parentKey}/alias`),
       }),
-      alias: identity,
       fileDownload: identity,
       streamingText: identity,
       stream: (value) => ({
@@ -428,6 +444,19 @@ export class Transformer {
       this.visitor.ObjectProperty(prop, `${parentKey}/property/${prop.key}`)
     );
     return { ...type, properties };
+  };
+
+  objectProperty = <T extends Latest.ObjectProperty>(
+    shape: T,
+    parentKey: string
+  ): T => {
+    return {
+      ...shape,
+      valueShape: this.visitor.TypeShape(
+        shape.valueShape,
+        `${parentKey}/valueShape`
+      ),
+    };
   };
 
   errorResponse = (
@@ -563,7 +592,11 @@ export class Transformer {
         ...value,
         ...this.visitor.ObjectType(value, `${parentKey}/object`),
       }),
-      alias: identity,
+      alias: (value) => ({
+        ...value,
+        value: this.visitor.TypeReference(value.value, `${parentKey}/alias`),
+      }),
+      // identity
       enum: (value) => ({
         ...value,
         values: value.values.map((enumValue) =>
@@ -591,6 +624,51 @@ export class Transformer {
           )
         ),
       }),
+    });
+  };
+
+  typeReference = (
+    reference: Latest.TypeReference,
+    parentKey: string
+  ): Latest.TypeReference => {
+    return visitDiscriminatedUnion(reference)._visit<Latest.TypeReference>({
+      id: identity,
+      primitive: identity,
+      optional: (value) => ({
+        ...value,
+        shape: this.visitor.TypeShape(value.shape, `${parentKey}/optional`),
+      }),
+      nullable: (value) => ({
+        ...value,
+        shape: this.visitor.TypeShape(value.shape, `${parentKey}/nullable`),
+      }),
+      list: (value) => ({
+        ...value,
+        itemShape: this.visitor.TypeShape(
+          value.itemShape,
+          `${parentKey}/list/itemShape`
+        ),
+      }),
+      set: (value) => ({
+        ...value,
+        itemShape: this.visitor.TypeShape(
+          value.itemShape,
+          `${parentKey}/set/itemShape`
+        ),
+      }),
+      map: (value) => ({
+        ...value,
+        keyShape: this.visitor.TypeShape(
+          value.keyShape,
+          `${parentKey}/map/keyShape`
+        ),
+        valueShape: this.visitor.TypeShape(
+          value.valueShape,
+          `${parentKey}/map/valueShape`
+        ),
+      }),
+      literal: identity,
+      unknown: identity,
     });
   };
 
