@@ -1761,6 +1761,7 @@
       "rest",
       "openapi",
       "json",
+      "EventTypeField",
       "ErrorSchema",
       "ErrorSchema"
     ],
@@ -1814,6 +1815,7 @@
       "rest",
       "openapi",
       "json",
+      "PatchEventTypeField",
       "ErrorSchema",
       "ErrorSchema"
     ],

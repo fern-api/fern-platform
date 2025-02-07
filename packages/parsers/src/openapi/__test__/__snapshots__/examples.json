@@ -1,0 +1,557 @@
+{
+  "id": "test-uuid-replacement",
+  "endpoints": {
+    "endpoint_.postMatchingExamples": {
+      "id": "endpoint_.postMatchingExamples",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "matching-examples"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "date",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 202,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "message",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "date response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/matching-examples",
+          "responseStatusCode": 202,
+          "name": "Date1",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 1"
+            }
+          }
+        },
+        {
+          "path": "/matching-examples",
+          "responseStatusCode": 202,
+          "name": "Date2",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2024-01-24T12:37:24.000Z"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 2"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    },
+    "endpoint_.postNonMatchingExamples": {
+      "id": "endpoint_.postNonMatchingExamples",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "non-matching-examples"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "date",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 202,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "message",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "date response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/non-matching-examples",
+          "responseStatusCode": 202,
+          "name": "Date1req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 1"
+            }
+          }
+        },
+        {
+          "path": "/non-matching-examples",
+          "responseStatusCode": 202,
+          "name": "Date2req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2024-01-24T12:37:24.000Z"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 2"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    },
+    "endpoint_.postMoreRequests": {
+      "id": "endpoint_.postMoreRequests",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "more-requests"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "date",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 202,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "message",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "date response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/more-requests",
+          "responseStatusCode": 202,
+          "name": "Date1req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 1"
+            }
+          }
+        },
+        {
+          "path": "/more-requests",
+          "responseStatusCode": 202,
+          "name": "Date2req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2024-01-24T12:37:24.000Z"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 1"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    },
+    "endpoint_.postMoreResponses": {
+      "id": "endpoint_.postMoreResponses",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "more-responses"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "date",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 202,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "message",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "date response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/more-responses",
+          "responseStatusCode": 202,
+          "name": "Date1req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 1"
+            }
+          }
+        },
+        {
+          "path": "/more-responses",
+          "responseStatusCode": 202,
+          "name": "Date1req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 2"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    },
+    "endpoint_.postPostEmptyResponse": {
+      "id": "endpoint_.postPostEmptyResponse",
+      "description": "empty response",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "post-empty-response"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "date",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "examples": [
+        {
+          "path": "/post-empty-response",
+          "responseStatusCode": 0,
+          "name": "Date1req",
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    },
+    "endpoint_.postSingleExample": {
+      "id": "endpoint_.postSingleExample",
+      "method": "POST",
+      "path": [
+        {
+          "type": "literal",
+          "value": "/"
+        },
+        {
+          "type": "literal",
+          "value": "single-example"
+        }
+      ],
+      "environments": [],
+      "requests": [
+        {
+          "contentType": "application/json",
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "date",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "responses": [
+        {
+          "statusCode": 202,
+          "body": {
+            "type": "object",
+            "extends": [],
+            "properties": [
+              {
+                "key": "message",
+                "valueShape": {
+                  "type": "alias",
+                  "value": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "description": "date response"
+        }
+      ],
+      "errors": [],
+      "examples": [
+        {
+          "path": "/single-example",
+          "responseStatusCode": 202,
+          "requestBody": {
+            "type": "json",
+            "value": {
+              "date": "2020-12-09T17:25:40.008307"
+            }
+          },
+          "responseBody": {
+            "type": "json",
+            "value": {
+              "message": "date received 1"
+            }
+          }
+        }
+      ],
+      "protocol": {
+        "type": "rest"
+      }
+    }
+  },
+  "websockets": {},
+  "webhooks": {},
+  "types": {},
+  "subpackages": {},
+  "auths": {}
+}

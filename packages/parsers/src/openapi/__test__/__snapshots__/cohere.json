@@ -1887,6 +1887,7 @@
                               }
                             },
                             {
+                              "displayName": "Document",
                               "shape": {
                                 "type": "alias",
                                 "value": {
@@ -14857,6 +14858,7 @@
                           }
                         },
                         {
+                          "displayName": "Rerank Document",
                           "shape": {
                             "type": "alias",
                             "value": {
@@ -21821,100 +21823,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v1/tokenize",
-          "responseStatusCode": 200,
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "text": "tokenize me! :D",
-              "model": "command"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "tokens": [
-                10002,
-                2261,
-                2012,
-                8,
-                2792,
-                43
-              ],
-              "token_strings": [
-                "token",
-                "ize",
-                " me",
-                "!",
-                " :",
-                "D"
-              ],
-              "meta": {
-                "api_version": {
-                  "version": "1"
-                }
-              }
-            }
-          },
-          "snippets": {
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\tcohere \"github.com/cohere-ai/cohere-go/v2\"\n\tclient \"github.com/cohere-ai/cohere-go/v2/client\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Tokenize(\n\t\tcontext.TODO(),\n\t\t&cohere.TokenizeRequest{\n\t\t\tText:  \"cohere <3\",\n\t\t\tModel: \"base\",\n\t\t},\n\t)\n\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const cohere = require('cohere-ai');\ncohere.init('<<apiKey>>')(async () => {\n  const response = await cohere.tokenize({\n    text: 'tokenize me! :D',\n    model: 'command', // optional\n  });\n  console.log(response);\n})();\n",
-                "generated": false
-              },
-              {
-                "name": "Cohere Node.js SDK",
-                "language": "typescript",
-                "code": "const cohere = require('cohere-ai');\ncohere.init('<<apiKey>>')(async () => {\n  const response = await cohere.tokenize({\n    text: 'tokenize me! :D',\n    model: 'command', // optional\n  });\n  console.log(response);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "import cohere\n\nco = cohere.Client()\n\nresponse = co.tokenize(\n    text=\"tokenize me! :D\", model=\"command-r-plus-08-2024\"\n)  # optional\nprint(response)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "import cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.tokenize(text=\"tokenize me! :D\", model=\"command-r-plus-08-2024\")\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\nimport com.cohere.api.Cohere;\nimport com.cohere.api.requests.TokenizeRequest;\nimport com.cohere.api.types.TokenizeResponse;\n\npublic class TokenizePost {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    TokenizeResponse response =\n        cohere.tokenize(\n            TokenizeRequest.builder().text(\"tokenize me\").model(\"command-r-plus-08-2024\").build());\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/tokenize \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\" \\\n  --data '{\n    \"model\": \"command-r-plus-08-2024\",\n    \"text\": \"tokenize me! :D\"\n  }'",
-                "generated": false
-              }
-            ]
-          }
         }
       ],
       "protocol": {
@@ -28358,157 +28266,6 @@
               }
             ]
           }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models",
-          "responseStatusCode": 200,
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.*;\n\npublic class CreateFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    CreateFinetunedModelResponse response =\n        cohere\n            .finetuning()\n            .createFinetunedModel(\n                FinetunedModel.builder()\n                    .name(\"test-finetuned-model\")\n                    .settings(\n                        Settings.builder()\n                            .baseModel(\n                                BaseModel.builder().baseType(BaseType.BASE_TYPE_CHAT).build())\n                            .datasetId(\"my-dataset-id\")\n                            .build())\n                    .build());\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n\t\"github.com/cohere-ai/cohere-go/v2/finetuning\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.CreateFinetunedModel(\n\t\tcontext.TODO(),\n\t\t&finetuning.FinetunedModel{\n\t\t\tName: \"test-finetuned-model\",\n\t\t\tSettings: &finetuning.Settings{\n\t\t\t\tDatasetId: \"my-dataset-id\",\n\t\t\t\tBaseModel: &finetuning.BaseModel{\n\t\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeChat,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { Cohere, CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.createFinetunedModel({\n    name: 'test-finetuned-model',\n    settings: {\n      base_model: {\n        base_type: Cohere.Finetuning.BaseType.BaseTypeChat,\n      },\n      dataset_id: 'test-dataset-id',\n    },\n  });\n\n  console.log(finetunedModel);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Hyperparameters,\n    Settings,\n    WandbConfig,\n)\nimport cohere\n\nco = cohere.Client()\nhp = Hyperparameters(\n    early_stopping_patience=10,\n    early_stopping_threshold=0.001,\n    train_batch_size=16,\n    train_epoch=1,\n    learning_rate=0.01,\n)\nwnb_config = WandbConfig(\n    project=\"test-project\",\n    api_key=\"<<wandbApiKey>>\",\n    entity=\"test-entity\",\n)\nfinetuned_model = co.finetuning.create_finetuned_model(\n    request=FinetunedModel(\n        name=\"test-finetuned-model\",\n        settings=Settings(\n            base_model=BaseModel(\n                base_type=\"BASE_TYPE_CHAT\",\n            ),\n            dataset_id=\"my-dataset-id\",\n            hyperparameters=hp,\n            wandb=wnb_config,\n        ),\n    )\n)\nprint(finetuned_model)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Settings,\n)\nimport cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.create_finetuned_model(\n        request=FinetunedModel(\n            name=\"test-finetuned-model\",\n            settings=Settings(\n                base_model=BaseModel(\n                    base_type=\"BASE_TYPE_CHAT\",\n                ),\n                dataset_id=\"my-dataset-id\",\n            ),\n        )\n    )\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\" \\\n  --data '{\n      \"name\": \"test-finetuned-model\",\n      \"settings\": {\n        \"base_model\": {\n          \"base_type\": \"BASE_TYPE_CHAT\",\n        },\n        \"dataset_id\": \"test-dataset-id\"\n      }\n  }'\n",
-                "generated": false
-              }
-            ]
-          }
-        },
-        {
-          "path": "/v1/finetuning/finetuned-models",
-          "responseStatusCode": 200,
-          "headers": {
-            "X-Client-Name": "my-cool-project"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "finetuned_model": {
-                "id": "id",
-                "name": "name",
-                "creator_id": "creator_id",
-                "organization_id": "organization_id",
-                "settings": {
-                  "base_model": {
-                    "name": "name",
-                    "version": "version",
-                    "base_type": "BASE_TYPE_UNSPECIFIED",
-                    "strategy": "STRATEGY_UNSPECIFIED"
-                  },
-                  "dataset_id": "dataset_id",
-                  "hyperparameters": {
-                    "early_stopping_patience": 0,
-                    "early_stopping_threshold": 0,
-                    "train_batch_size": 0,
-                    "train_epochs": 0,
-                    "learning_rate": 0,
-                    "lora_alpha": 0,
-                    "lora_rank": 0,
-                    "lora_target_modules": "LORA_TARGET_MODULES_UNSPECIFIED"
-                  },
-                  "multi_label": false,
-                  "wandb": {
-                    "project": "project",
-                    "api_key": "api_key",
-                    "entity": "entity"
-                  }
-                },
-                "status": "STATUS_UNSPECIFIED",
-                "created_at": "created_at",
-                "updated_at": "updated_at",
-                "completed_at": "completed_at",
-                "last_used": "last_used"
-              }
-            }
-          },
-          "snippets": {
-            "java": [
-              {
-                "name": "Cohere java SDK",
-                "language": "java",
-                "code": "/* (C)2024 */\npackage finetuning;\n\nimport com.cohere.api.Cohere;\nimport com.cohere.api.resources.finetuning.finetuning.types.*;\n\npublic class CreateFinetunedModel {\n  public static void main(String[] args) {\n    Cohere cohere = Cohere.builder().clientName(\"snippet\").build();\n\n    CreateFinetunedModelResponse response =\n        cohere\n            .finetuning()\n            .createFinetunedModel(\n                FinetunedModel.builder()\n                    .name(\"test-finetuned-model\")\n                    .settings(\n                        Settings.builder()\n                            .baseModel(\n                                BaseModel.builder().baseType(BaseType.BASE_TYPE_CHAT).build())\n                            .datasetId(\"my-dataset-id\")\n                            .build())\n                    .build());\n\n    System.out.println(response);\n  }\n}\n",
-                "generated": false
-              }
-            ],
-            "go": [
-              {
-                "name": "Cohere Go SDK",
-                "language": "go",
-                "code": "package main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/cohere-ai/cohere-go/v2/client\"\n\t\"github.com/cohere-ai/cohere-go/v2/finetuning\"\n)\n\nfunc main() {\n\tco := client.NewClient()\n\n\tresp, err := co.Finetuning.CreateFinetunedModel(\n\t\tcontext.TODO(),\n\t\t&finetuning.FinetunedModel{\n\t\t\tName: \"test-finetuned-model\",\n\t\t\tSettings: &finetuning.Settings{\n\t\t\t\tDatasetId: \"my-dataset-id\",\n\t\t\t\tBaseModel: &finetuning.BaseModel{\n\t\t\t\t\tBaseType: finetuning.BaseTypeBaseTypeChat,\n\t\t\t\t},\n\t\t\t},\n\t\t},\n\t)\n\tif err != nil {\n\t\tlog.Fatal(err)\n\t}\n\n\tlog.Printf(\"%+v\", resp.FinetunedModel)\n}\n",
-                "generated": false
-              }
-            ],
-            "typescript": [
-              {
-                "name": "Cohere TypeScript SDK",
-                "language": "typescript",
-                "code": "const { Cohere, CohereClient } = require('cohere-ai');\n\nconst cohere = new CohereClient({});\n\n(async () => {\n  const finetunedModel = await cohere.finetuning.createFinetunedModel({\n    name: 'test-finetuned-model',\n    settings: {\n      base_model: {\n        base_type: Cohere.Finetuning.BaseType.BaseTypeChat,\n      },\n      dataset_id: 'test-dataset-id',\n    },\n  });\n\n  console.log(finetunedModel);\n})();\n",
-                "generated": false
-              }
-            ],
-            "python": [
-              {
-                "name": "Sync",
-                "language": "python",
-                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Hyperparameters,\n    Settings,\n    WandbConfig,\n)\nimport cohere\n\nco = cohere.Client()\nhp = Hyperparameters(\n    early_stopping_patience=10,\n    early_stopping_threshold=0.001,\n    train_batch_size=16,\n    train_epoch=1,\n    learning_rate=0.01,\n)\nwnb_config = WandbConfig(\n    project=\"test-project\",\n    api_key=\"<<wandbApiKey>>\",\n    entity=\"test-entity\",\n)\nfinetuned_model = co.finetuning.create_finetuned_model(\n    request=FinetunedModel(\n        name=\"test-finetuned-model\",\n        settings=Settings(\n            base_model=BaseModel(\n                base_type=\"BASE_TYPE_CHAT\",\n            ),\n            dataset_id=\"my-dataset-id\",\n            hyperparameters=hp,\n            wandb=wnb_config,\n        ),\n    )\n)\nprint(finetuned_model)\n",
-                "generated": false
-              },
-              {
-                "name": "Async",
-                "language": "python",
-                "code": "from cohere.finetuning import (\n    BaseModel,\n    FinetunedModel,\n    Settings,\n)\nimport cohere\nimport asyncio\n\nco = cohere.AsyncClient()\n\n\nasync def main():\n    response = await co.finetuning.create_finetuned_model(\n        request=FinetunedModel(\n            name=\"test-finetuned-model\",\n            settings=Settings(\n                base_model=BaseModel(\n                    base_type=\"BASE_TYPE_CHAT\",\n                ),\n                dataset_id=\"my-dataset-id\",\n            ),\n        )\n    )\n    print(response)\n\n\nasyncio.run(main())\n",
-                "generated": false
-              }
-            ],
-            "curl": [
-              {
-                "name": "cURL",
-                "language": "curl",
-                "code": "curl --request POST \\\n  --url https://api.cohere.com/v1/finetuning/finetuned-models \\\n  --header 'accept: application/json' \\\n  --header 'content-type: application/json' \\\n  --header \"Authorization: bearer $CO_API_KEY\" \\\n  --data '{\n      \"name\": \"test-finetuned-model\",\n      \"settings\": {\n        \"base_model\": {\n          \"base_type\": \"BASE_TYPE_CHAT\",\n        },\n        \"dataset_id\": \"test-dataset-id\"\n      }\n  }'\n",
-                "generated": false
-              }
-            ]
-          }
         }
       ],
       "protocol": {
@@ -30634,6 +30391,7 @@
         "variants": [
           {
             "discriminantValue": "CHATBOT",
+            "displayName": "Chatbot",
             "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n",
             "type": "object",
             "extends": [],
@@ -30688,6 +30446,7 @@
           },
           {
             "discriminantValue": "SYSTEM",
+            "displayName": "System",
             "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n",
             "type": "object",
             "extends": [],
@@ -30742,6 +30501,7 @@
           },
           {
             "discriminantValue": "USER",
+            "displayName": "User",
             "description": "Represents a single message in the chat history, excluding the current user turn. It has two properties: `role` and `message`. The `role` identifies the sender (`CHATBOT`, `SYSTEM`, or `USER`), while the `message` contains the text content.\n\nThe chat_history parameter should not be used for `SYSTEM` messages in most cases. Instead, to add a `SYSTEM` role message at the beginning of a conversation, the `preamble` parameter should be used.\n",
             "type": "object",
             "extends": [],
@@ -30796,6 +30556,7 @@
           },
           {
             "discriminantValue": "TOOL",
+            "displayName": "Tool",
             "description": "Represents tool result in the chat history.\n",
             "type": "object",
             "extends": [],
@@ -32219,6 +31980,7 @@
         "variants": [
           {
             "discriminantValue": "stream-start",
+            "displayName": "Stream Start",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32242,6 +32004,7 @@
           },
           {
             "discriminantValue": "search-queries-generation",
+            "displayName": "Search Queries Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32268,6 +32031,7 @@
           },
           {
             "discriminantValue": "search-results",
+            "displayName": "Search Results",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32311,6 +32075,7 @@
           },
           {
             "discriminantValue": "text-generation",
+            "displayName": "Text Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32334,6 +32099,7 @@
           },
           {
             "discriminantValue": "citation-generation",
+            "displayName": "Citation Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32360,6 +32126,7 @@
           },
           {
             "discriminantValue": "tool-calls-generation",
+            "displayName": "Tool Calls Generation",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32398,6 +32165,7 @@
           },
           {
             "discriminantValue": "stream-end",
+            "displayName": "Stream End",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32442,6 +32210,7 @@
           },
           {
             "discriminantValue": "tool-calls-chunk",
+            "displayName": "Tool Calls Chunk",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32473,6 +32242,7 @@
           },
           {
             "discriminantValue": "debug",
+            "displayName": "Debug",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -32537,6 +32307,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text",
             "description": "Text content of the message.",
             "type": "object",
             "extends": [],
@@ -32790,6 +32561,7 @@
           },
           {
             "discriminantValue": "document",
+            "displayName": "Document",
             "description": "A document source object containing the unique identifier of the document and the document itself.",
             "type": "object",
             "extends": [],
@@ -32975,6 +32747,7 @@
                             "variants": [
                               {
                                 "discriminantValue": "text",
+                                "displayName": "Text",
                                 "description": "Text content of the message.",
                                 "type": "object",
                                 "extends": [],
@@ -33084,6 +32857,7 @@
                         "variants": [
                           {
                             "discriminantValue": "text",
+                            "displayName": "Text",
                             "description": "Text content of the message.",
                             "type": "object",
                             "extends": [],
@@ -33221,6 +32995,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text",
             "description": "Text content of the message.",
             "type": "object",
             "extends": [],
@@ -33252,6 +33027,7 @@
           },
           {
             "discriminantValue": "document",
+            "displayName": "Document",
             "description": "Document content.",
             "type": "object",
             "extends": [],
@@ -33503,6 +33279,7 @@
                                 "variants": [
                                   {
                                     "discriminantValue": "text",
+                                    "displayName": "Text",
                                     "description": "Text content of the message.",
                                     "type": "object",
                                     "extends": [],
@@ -33611,6 +33388,7 @@
                             "variants": [
                               {
                                 "discriminantValue": "text",
+                                "displayName": "Text",
                                 "description": "Text content of the message.",
                                 "type": "object",
                                 "extends": [],
@@ -33908,6 +33686,7 @@
         "variants": [
           {
             "discriminantValue": "text",
+            "displayName": "Text",
             "type": "object",
             "extends": [],
             "properties": [
@@ -33925,6 +33704,7 @@
           },
           {
             "discriminantValue": "json_object",
+            "displayName": "JSON Object",
             "type": "object",
             "extends": [],
             "properties": [
@@ -34057,6 +33837,7 @@
                       "variants": [
                         {
                           "discriminantValue": "text",
+                          "displayName": "Text",
                           "description": "Text content of the message.",
                           "type": "object",
                           "extends": [],
@@ -35008,6 +34789,7 @@
         "variants": [
           {
             "discriminantValue": "message-start",
+            "displayName": "Message Start",
             "description": "A streamed event which signifies that a stream has started.",
             "type": "object",
             "extends": [
@@ -35061,6 +34843,7 @@
           },
           {
             "discriminantValue": "content-start",
+            "displayName": "Content Start",
             "description": "A streamed delta event which signifies that a new content block has started.",
             "type": "object",
             "extends": [
@@ -35133,6 +34916,7 @@
           },
           {
             "discriminantValue": "content-delta",
+            "displayName": "Content Delta",
             "description": "A streamed delta event which contains a delta of chat text content.",
             "type": "object",
             "extends": [
@@ -35204,6 +34988,7 @@
           },
           {
             "discriminantValue": "content-end",
+            "displayName": "Content End",
             "description": "A streamed delta event which signifies that the content block has ended.",
             "type": "object",
             "extends": [
@@ -35226,6 +35011,7 @@
           },
           {
             "discriminantValue": "tool-plan-delta",
+            "displayName": "Tool Plan Delta",
             "description": "A streamed event which contains a delta of tool plan text.",
             "type": "object",
             "extends": [
@@ -35257,6 +35043,7 @@
           },
           {
             "discriminantValue": "tool-call-start",
+            "displayName": "Tool Call Start",
             "description": "A streamed event delta which signifies a tool call has started streaming.",
             "type": "object",
             "extends": [
@@ -35353,6 +35140,7 @@
           },
           {
             "discriminantValue": "tool-call-delta",
+            "displayName": "Tool Call Delta",
             "description": "A streamed event delta which signifies a delta in tool call arguments.",
             "type": "object",
             "extends": [
@@ -35414,6 +35202,7 @@
           },
           {
             "discriminantValue": "tool-call-end",
+            "displayName": "Tool Call End",
             "description": "A streamed event delta which signifies a tool call has finished streaming.",
             "type": "object",
             "extends": [
@@ -35436,6 +35225,7 @@
           },
           {
             "discriminantValue": "citation-start",
+            "displayName": "Citation Start",
             "description": "A streamed event which signifies a citation has been created.",
             "type": "object",
             "extends": [
@@ -35486,6 +35276,7 @@
           },
           {
             "discriminantValue": "citation-end",
+            "displayName": "Citation End",
             "description": "A streamed event which signifies a citation has finished streaming.",
             "type": "object",
             "extends": [
@@ -35508,6 +35299,7 @@
           },
           {
             "discriminantValue": "message-end",
+            "displayName": "Message End",
             "description": "A streamed event which signifies that the chat message has ended.",
             "type": "object",
             "extends": [
@@ -35559,6 +35351,7 @@
           },
           {
             "discriminantValue": "debug",
+            "displayName": "Debug",
             "type": "object",
             "extends": [
               "ChatStreamEvent"
@@ -36070,6 +35863,7 @@
         "variants": [
           {
             "discriminantValue": "text-generation",
+            "displayName": "Text Generation",
             "type": "object",
             "extends": [
               "GenerateStreamEvent"
@@ -36117,6 +35911,7 @@
           },
           {
             "discriminantValue": "stream-end",
+            "displayName": "Stream End",
             "type": "object",
             "extends": [
               "GenerateStreamEvent"
@@ -36209,6 +36004,7 @@
           },
           {
             "discriminantValue": "stream-error",
+            "displayName": "Stream Error",
             "type": "object",
             "extends": [
               "GenerateStreamEvent"
@@ -40999,6 +40795,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Non Streamed Chat Response",
             "shape": {
               "type": "alias",
               "value": {
@@ -41008,6 +40805,7 @@
             }
           },
           {
+            "displayName": "Streamed Chat Response",
             "shape": {
               "type": "alias",
               "value": {
@@ -41025,6 +40823,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Chat Response",
             "shape": {
               "type": "alias",
               "value": {
@@ -41034,6 +40833,7 @@
             }
           },
           {
+            "displayName": "Streamed Chat Response V2",
             "shape": {
               "type": "alias",
               "value": {
@@ -41053,6 +40853,7 @@
         "variants": [
           {
             "discriminantValue": "embeddings_floats",
+            "displayName": "Embeddings Floats",
             "type": "object",
             "extends": [],
             "properties": [
@@ -41175,6 +40976,7 @@
           },
           {
             "discriminantValue": "embeddings_by_type",
+            "displayName": "Embeddings by Type",
             "type": "object",
             "extends": [],
             "properties": [

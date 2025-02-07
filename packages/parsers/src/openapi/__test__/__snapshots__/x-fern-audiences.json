@@ -68,6 +68,7 @@
           }
         }
       ],
+      "examples": [],
       "protocol": {
         "type": "rest"
       }

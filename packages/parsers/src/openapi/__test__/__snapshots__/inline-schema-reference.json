@@ -116,6 +116,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Schema1",
             "shape": {
               "type": "alias",
               "value": {
@@ -125,6 +126,7 @@
             }
           },
           {
+            "displayName": "Schema2",
             "shape": {
               "type": "alias",
               "value": {

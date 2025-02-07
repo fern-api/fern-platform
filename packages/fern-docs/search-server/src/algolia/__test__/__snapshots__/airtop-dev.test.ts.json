@@ -4754,7 +4754,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SessionConfigV1"
     ],
     "type": "api-reference"
   },
@@ -4813,7 +4814,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SessionConfigV1"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -4870,6 +4872,7 @@
       "rest",
       "openapi",
       "json",
+      "SessionsListRequestStatus",
       "ErrorModel",
       "ErrorModel",
       "ErrorModel"
@@ -4932,6 +4935,7 @@
       "rest",
       "openapi",
       "json",
+      "SessionsListRequestStatus",
       "ErrorModel",
       "ErrorModel",
       "ErrorModel"
@@ -5164,7 +5168,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SummaryConfig"
     ],
     "type": "api-reference"
   },
@@ -5224,7 +5229,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SummaryConfig"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -5393,7 +5399,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "PromptContentConfig"
     ],
     "type": "api-reference"
   },
@@ -5452,7 +5459,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "PromptContentConfig"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -5507,7 +5515,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CreateWindowInputV1BodyWaitUntil"
     ],
     "type": "api-reference"
   },
@@ -5566,7 +5575,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CreateWindowInputV1BodyWaitUntil"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -5735,7 +5745,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "WindowLoadUrlV1BodyWaitUntil"
     ],
     "type": "api-reference"
   },
@@ -5794,7 +5805,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "WindowLoadUrlV1BodyWaitUntil"
     ],
     "type": "api-reference",
     "hash": "#response"

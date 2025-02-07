@@ -4776,7 +4776,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType",
+      "StoreType",
+      "MetadataValue",
+      "SignatureType",
+      "ExpireType"
     ],
     "type": "api-reference"
   },
@@ -4831,7 +4836,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType",
+      "StoreType",
+      "MetadataValue",
+      "SignatureType",
+      "ExpireType"
     ],
     "type": "api-reference"
   },
@@ -4939,7 +4949,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType"
     ],
     "type": "api-reference"
   },
@@ -4994,7 +5005,14 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType",
+      "StoreType",
+      "FromUrlUploadRequestCheckUrlDuplicates",
+      "FromUrlUploadRequestSaveUrlDuplicates",
+      "MetadataValue",
+      "SignatureType",
+      "ExpireType"
     ],
     "type": "api-reference"
   },
@@ -5104,7 +5122,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType"
     ],
     "type": "api-reference"
   },
@@ -5159,7 +5178,10 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType",
+      "SignatureType",
+      "ExpireType"
     ],
     "type": "api-reference"
   },
@@ -5214,7 +5236,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ProjectPublicKeyType"
     ],
     "type": "api-reference"
   },
@@ -5320,7 +5343,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FilesListRequestOrdering"
     ],
     "type": "api-reference"
   },
@@ -5650,7 +5674,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CreateLocalCopyRequestStore"
     ],
     "type": "api-reference"
   },
@@ -5705,7 +5730,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CreateRemoteCopyRequestPattern"
     ],
     "type": "api-reference"
   },
@@ -5980,7 +6006,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "UcClamavVirusScanExecuteRequestParams"
     ],
     "type": "api-reference"
   },
@@ -6090,7 +6117,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "RemoveBgExecuteRequestParams"
     ],
     "type": "api-reference"
   },
@@ -6363,7 +6391,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "GroupsListRequestOrdering"
     ],
     "type": "api-reference"
   },
@@ -6581,7 +6610,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "WebhookOfListResponse"
     ],
     "type": "api-reference"
   },
@@ -6854,7 +6884,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "DocumentJobSubmitParametersStore",
+      "DocumentJobSubmitParametersSaveInGroup"
     ],
     "type": "api-reference"
   },
@@ -6964,7 +6996,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "VideoJobSubmitParametersStore"
     ],
     "type": "api-reference"
   },

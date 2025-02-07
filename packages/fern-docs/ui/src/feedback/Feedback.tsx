@@ -1,4 +1,9 @@
-import { FernButton, FernButtonGroup, toast } from "@fern-docs/components";
+import {
+  CopyToClipboardButton,
+  FernButton,
+  FernButtonGroup,
+  toast,
+} from "@fern-docs/components";
 import { useKeyboardPress } from "@fern-ui/react-commons";
 import clsx from "clsx";
 import { ThumbsDown, ThumbsUp } from "iconoir-react";
@@ -107,70 +112,87 @@ export const Feedback: FC<FeedbackProps> = ({
   return (
     <div className={className} ref={ref}>
       {!sent ? (
-        <div className="flex flex-wrap items-center justify-start gap-4">
-          <span className="t-muted text-sm font-medium">
-            {feedbackQuestion}
-          </span>
-          <FernButtonGroup>
-            <FeedbackFormDialog
-              content={
-                isHelpful && (
-                  <FeedbackForm
-                    isHelpful={isHelpful}
-                    onSubmit={handleSubmitFeedback}
-                  />
-                )
-              }
-              trigger={
-                <FernButton
-                  icon={
-                    <ThumbsUp
-                      className={clsx({
-                        "animate-thumb-rock": isHelpful === "yes",
-                      })}
+        <div className="flex w-full flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center justify-start gap-2">
+            <span className="t-muted text-sm font-medium">
+              {feedbackQuestion}
+            </span>
+            <FernButtonGroup>
+              <FeedbackFormDialog
+                content={
+                  isHelpful && (
+                    <FeedbackForm
+                      isHelpful={isHelpful}
+                      onSubmit={handleSubmitFeedback}
                     />
-                  }
-                  variant="outlined"
-                  intent={isHelpful === "yes" ? "success" : "none"}
-                  onClick={handleYes}
-                  active={isHelpful === "yes"}
-                >
-                  Yes
-                </FernButton>
-              }
-            />
-            <FeedbackFormDialog
-              content={
-                isHelpful && (
-                  <FeedbackForm
-                    isHelpful={isHelpful}
-                    onSubmit={handleSubmitFeedback}
-                  />
-                )
-              }
-              trigger={
-                <FernButton
-                  icon={
-                    <ThumbsDown
-                      className={clsx({
-                        "animate-thumb-rock": isHelpful === "no",
-                      })}
+                  )
+                }
+                trigger={
+                  <FernButton
+                    icon={
+                      <ThumbsUp
+                        className={clsx({
+                          "animate-thumb-rock": isHelpful === "yes",
+                        })}
+                      />
+                    }
+                    variant="outlined"
+                    intent={isHelpful === "yes" ? "success" : "none"}
+                    onClick={handleYes}
+                    active={isHelpful === "yes"}
+                  >
+                    Yes
+                  </FernButton>
+                }
+              />
+              <FeedbackFormDialog
+                content={
+                  isHelpful && (
+                    <FeedbackForm
+                      isHelpful={isHelpful}
+                      onSubmit={handleSubmitFeedback}
                     />
-                  }
-                  variant="outlined"
-                  intent={isHelpful === "no" ? "danger" : "none"}
-                  onClick={handleNo}
-                  active={isHelpful === "no"}
-                >
-                  No
-                </FernButton>
-              }
-            />
-          </FernButtonGroup>
+                  )
+                }
+                trigger={
+                  <FernButton
+                    icon={
+                      <ThumbsDown
+                        className={clsx({
+                          "animate-thumb-rock": isHelpful === "no",
+                        })}
+                      />
+                    }
+                    variant="outlined"
+                    intent={isHelpful === "no" ? "danger" : "none"}
+                    onClick={handleNo}
+                    active={isHelpful === "no"}
+                  >
+                    No
+                  </FernButton>
+                }
+              />
+            </FernButtonGroup>
+          </div>
+          <CopyToClipboardButton
+            content={
+              typeof metadata === "function"
+                ? (metadata().assistant as string)
+                : (metadata?.assistant as string | undefined)
+            }
+          />
         </div>
       ) : (
         <div className="flex h-6 items-center">
           <span className="t-muted text-xs">Thank you for your feedback!</span>
+          <CopyToClipboardButton
+            className="float-right"
+            content={
+              typeof metadata === "function"
+                ? (metadata().assistant as string)
+                : (metadata?.assistant as string | undefined)
+            }
+          />
         </div>
       )}
     </div>

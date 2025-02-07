@@ -13384,7 +13384,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "EndpointResponse"
     ],
     "type": "api-reference"
   },
@@ -13561,7 +13562,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "LogEntry"
     ],
     "type": "api-reference"
   },
@@ -13620,7 +13622,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "LogEntry"
     ],
     "type": "api-reference"
   },
@@ -13679,7 +13682,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "EventEntry"
     ],
     "type": "api-reference"
   },
@@ -13738,7 +13742,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "EventEntry"
     ],
     "type": "api-reference"
   },
@@ -14322,7 +14327,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "RegistryCredentialSummary"
     ],
     "type": "api-reference"
   },
@@ -14381,7 +14387,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "HostedEndpoint"
     ],
     "type": "api-reference"
   },
@@ -14440,7 +14447,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "InstanceTypeInfo"
     ],
     "type": "api-reference"
   },
@@ -14501,6 +14509,10 @@
       "rest",
       "openapi",
       "json",
+      "DataType",
+      "AssetType",
+      "BaseEngine",
+      "BaseEngineType",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -14562,6 +14574,9 @@
       "rest",
       "openapi",
       "json",
+      "AssetType",
+      "Data",
+      "TransferApiType",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -14745,6 +14760,7 @@
       "rest",
       "openapi",
       "json",
+      "TransferApiType",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -14807,6 +14823,7 @@
       "rest",
       "openapi",
       "json",
+      "Details",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -15055,6 +15072,7 @@
       "rest",
       "openapi",
       "json",
+      "TuneType",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -15427,6 +15445,7 @@
       "rest",
       "openapi",
       "json",
+      "VideoGenerationRequestSeed",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -15489,6 +15508,11 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "ChatCompletionRequestExt",
+      "ChatCompletionResponseFormat",
+      "Stop",
+      "StreamOptions",
       "HTTPValidationError",
       "ErrorResponse"
     ],
@@ -15552,6 +15576,11 @@
       "rest",
       "openapi",
       "stream",
+      "ChatMessage",
+      "ChatCompletionRequestExt",
+      "ChatCompletionResponseFormat",
+      "Stop",
+      "StreamOptions",
       "ChatCompletionChunk",
       "HTTPValidationError",
       "ErrorResponse"
@@ -15615,6 +15644,9 @@
       "rest",
       "openapi",
       "json",
+      "Prompt",
+      "Stop",
+      "StreamOptions",
       "HTTPValidationError",
       "ErrorResponse"
     ],
@@ -15677,6 +15709,9 @@
       "rest",
       "openapi",
       "stream",
+      "Prompt",
+      "Stop",
+      "StreamOptions",
       "CompletionResponse",
       "HTTPValidationError",
       "ErrorResponse"
@@ -15723,6 +15758,8 @@
       "rest",
       "openapi",
       "json",
+      "UpscalingModel",
+      "ImageEncoding",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -15811,6 +15848,11 @@
       "rest",
       "openapi",
       "json",
+      "ImageEncoding",
+      "Scheduler",
+      "ADetailerInpaintingBaseModel",
+      "ADetailerRequestSeed",
+      "ADetailerDetector",
       "HTTPValidationError"
     ],
     "type": "api-reference"

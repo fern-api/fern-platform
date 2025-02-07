@@ -9458,6 +9458,7 @@
       "rest",
       "openapi",
       "json",
+      "WorkflowsRunRequestInputsValue",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -9514,6 +9515,7 @@
       "rest",
       "openapi",
       "stream",
+      "WorkflowsRunStreamRequestInputsValue",
       "WorkflowRunEvent",
       "HttpValidationError"
     ],
@@ -9691,6 +9693,7 @@
       "rest",
       "openapi",
       "json",
+      "EnvironmentDeploymentConfig",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -9752,6 +9755,7 @@
       "rest",
       "openapi",
       "json",
+      "EnvironmentDeploymentConfig",
       "HttpValidationError"
     ],
     "type": "api-reference",

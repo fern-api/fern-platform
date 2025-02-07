@@ -129,7 +129,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "AppointmentTaskRequestPatient"
     ],
     "type": "api-reference"
   },

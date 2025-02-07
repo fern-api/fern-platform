@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/ui-core-utils";
+import { isNonNullish, titleCase } from "@fern-api/ui-core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernRegistry } from "../../../client/generated";
 import {
@@ -136,7 +136,7 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
                     }
                     return {
                       discriminantValue: key,
-                      displayName: node.name,
+                      displayName: node.name ?? titleCase(key),
                       availability: node.availability?.convert(),
                       description: node.description,
                       ...shape,
@@ -161,7 +161,13 @@ export class OneOfConverterNode extends BaseOpenApiV3_1ConverterNodeWithTracking
                         return undefined;
                       }
                       return {
-                        displayName: node.name,
+                        displayName:
+                          node.name ??
+                          (shape.type === "alias"
+                            ? shape.value.type === "id"
+                              ? titleCase(shape.value.id)
+                              : undefined
+                            : undefined),
                         shape,
                         description: node.description,
                         availability: node.availability?.convert(),
