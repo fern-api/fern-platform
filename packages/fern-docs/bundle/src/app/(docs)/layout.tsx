@@ -1,23 +1,17 @@
 "use server";
 
-import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
-import Preload, { PreloadHref } from "@/components/preload";
-import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
-import { ThemeScript } from "@/components/themes/ThemeScript";
+import { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
 import { getDocsDomainApp } from "@/server/xfernhost/app";
 import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { Toaster } from "@fern-docs/components";
-import { getEdgeFlags } from "@fern-docs/edge-config";
 import { EdgeFlags } from "@fern-docs/utils";
 import { compact, uniqBy } from "es-toolkit/array";
 import { cookies } from "next/headers";
 import { Metadata, Viewport } from "next/types";
 import tinycolor from "tinycolor2";
 import { toImageDescriptor } from "../seo";
-import { GlobalStyles } from "./global-styles";
 
 export default async function Layout({
   children,
@@ -26,38 +20,10 @@ export default async function Layout({
   children: React.ReactNode;
   header: React.ReactNode;
 }) {
-  const domain = getDocsDomainApp();
-  const docsLoader = await createCachedDocsLoader(domain);
-  const [config, edgeFlags, files, colors] = await Promise.all([
-    docsLoader.getConfig(),
-    getEdgeFlags(domain),
-    docsLoader.getFiles(),
-    docsLoader.getColors(),
-  ]);
-  const preloadHrefs = generatePreloadHrefs(
-    config?.typographyV2,
-    files,
-    edgeFlags
-  );
-  const stylesheet = renderThemeStylesheet(
-    colors,
-    config?.typographyV2,
-    config?.layout,
-    config?.css,
-    files,
-    true // todo: fix this
-  );
   return (
     <>
       {header}
-      <GlobalStyles>{stylesheet}</GlobalStyles>
-      {preloadHrefs.map((href) => (
-        <Preload key={href.href} href={href.href} options={href.options} />
-      ))}
-      <ThemeScript colors={colors} />
-      <Toaster />
       {children}
-      <CustomerAnalytics />
     </>
   );
 }

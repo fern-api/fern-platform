@@ -3,13 +3,10 @@ import { removeLeadingSlash } from "@fern-docs/utils";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withPathname } from "./server/withPathname";
-import { getDocsDomainEdge } from "./server/xfernhost/edge";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 
 export const middleware: NextMiddleware = async (request) => {
-  const domain = getDocsDomainEdge(request);
-
   let pathname = request.nextUrl.pathname;
 
   /**

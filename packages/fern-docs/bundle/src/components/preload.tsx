@@ -1,16 +1,13 @@
 "use client";
 
-import ReactDOM from "react-dom";
+import type { PreloadOptions } from "react-dom";
 
 export interface PreloadHref {
   href: string;
-  options: ReactDOM.PreloadOptions;
+  options: PreloadOptions;
 }
 
 export default function Preload({ href, options }: PreloadHref) {
-  // useEffect(() => {
-  //   ReactDOM.preload(href, options);
-  // }, [href]);
   return (
     <link
       rel="preload"

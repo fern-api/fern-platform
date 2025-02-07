@@ -19,16 +19,21 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
     headers().get("x-basepath"),
     params.slug
   );
-  console.log("slug", headers().get("x-basepath"), params.slug, slug);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(getDocsDomainApp(), fern_token);
+  console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();
   if (root == null) {
+    console.warn(`[${loader.domain}] Could not find root for slug: ${slug}`);
     notFound();
   }
+
   const found = FernNavigation.utils.findNode(root, slug);
   if (found.type !== "found") {
     if (found.redirect) {
+      console.warn(
+        `[${loader.domain}] Redirecting from ${slug} to ${found.redirect}`
+      );
       // follows the route path hierarchy
       // e.g. /docs/foo/bar -> /docs/~/api-explorer/foo/bar
       redirect(
@@ -36,28 +41,41 @@ export default async function Page({ params }: { params: { slug: string[] } }) {
       );
     }
 
+    console.warn(`[${loader.domain}] Could not find node for slug: ${slug}`);
     notFound();
   }
   const node = found.node;
   if (!FernNavigation.isApiLeaf(node)) {
+    console.warn(`[${loader.domain}] Found non-leaf node for slug: ${slug}`);
     notFound();
   }
   const api = await loader.getApi(node.apiDefinitionId);
   if (api == null) {
+    console.warn(`[${loader.domain}] Could not find api for slug: ${slug}`);
     notFound();
   }
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);
     if (context == null) {
+      console.warn(
+        `[${loader.domain}] Could not create endpoint context for slug: ${slug}`
+      );
       notFound();
     }
     return <PlaygroundEndpoint context={context} />;
   } else if (node.type === "webSocket") {
     const context = createWebSocketContext(node, api);
     if (context == null) {
+      console.warn(
+        `[${loader.domain}] Could not create web socket context for slug: ${slug}`
+      );
       notFound();
     }
     return <PlaygroundWebSocket context={context} />;
   }
+  console.warn(
+    `[${loader.domain}] Found non-visitable node for slug: ${slug}`,
+    node
+  );
   notFound();
 }

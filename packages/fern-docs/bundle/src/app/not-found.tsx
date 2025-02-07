@@ -25,21 +25,19 @@ export default async function NotFound() {
   return (
     <main className="h-screen">
       <article className="relative flex h-full flex-col items-center justify-center">
-        <div className="w-full max-w-xl space-y-3 px-10">
-          <div>
-            <Badge>404 Not Found</Badge>
-          </div>
-          <div>
-            <HeaderLogoContainer href={config?.logoHref}>
-              <HeaderLogoImage
-                light={colors.light?.logo}
-                dark={colors.dark?.logo}
-                alt={config?.title ?? "Logo"}
-                height={config?.logoHeight ?? DEFAULT_LOGO_HEIGHT}
-              />
-            </HeaderLogoContainer>
-          </div>
-          <p className="text-lg">We can't find the page you are looking for.</p>
+        <div className="flex w-full max-w-xl flex-col items-center gap-3 px-10">
+          <Badge>Error 404</Badge>
+          <HeaderLogoContainer href={config?.logoHref}>
+            <HeaderLogoImage
+              light={colors.light?.logo}
+              dark={colors.dark?.logo}
+              alt={config?.title ?? "Logo"}
+              height={config?.logoHeight ?? DEFAULT_LOGO_HEIGHT}
+            />
+          </HeaderLogoContainer>
+          <p className="text-lg">
+            We can&apos;t find the page you are looking for.
+          </p>
           <FernLinkButton
             href={conformTrailingSlash(
               addLeadingSlash(baseUrl.basePath || "/")
@@ -48,7 +46,7 @@ export default async function NotFound() {
             intent="primary"
             rightIcon={<Undo2 />}
           >
-            Return Home
+            Return home
           </FernLinkButton>
         </div>
       </article>

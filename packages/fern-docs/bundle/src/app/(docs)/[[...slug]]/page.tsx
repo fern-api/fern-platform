@@ -55,6 +55,7 @@ export default async function Page({
   const domain = getDocsDomainApp();
   const fern_token = cookies().get("fern_token")?.value;
   const slug = FernNavigation.slugjoin(params.slug);
+  console.debug(`[${domain}] Loading page for slug: ${slug}`);
   const loader = await createCachedDocsLoader(domain, fern_token);
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
     loader.getBaseUrl(),
