@@ -1,7 +1,7 @@
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { DOCS_ATOM, LOGO_ATOM, LOGO_TEXT_ATOM, VERSIONS_ATOM } from "../atoms";
-import { HeaderLogoContainer, HeaderLogoImage } from "./HeaderLogoImage";
+import { Logo } from "../logo";
 import { VersionDropdown } from "./VersionDropdown";
 
 export function HeaderLogoSection(): ReactElement {
@@ -13,19 +13,21 @@ export function HeaderLogoSection(): ReactElement {
   return (
     <div className="relative flex h-full min-w-fit flex-1 shrink-0 items-center gap-2 py-1">
       <div className="flex items-center gap-2">
-        <HeaderLogoContainer href={href}>
-          <HeaderLogoImage
-            light={light}
-            dark={dark}
-            alt={title}
-            height={height}
-          />
-          {logoText != null && logoText.length > 0 && (
-            <span className="font-heading text-accent ml-1 text-[1.5rem] font-light lowercase">
-              {logoText}
-            </span>
-          )}
-        </HeaderLogoContainer>
+        <Logo
+          className="shrink-0"
+          alt={title}
+          logo={{
+            light,
+            dark,
+            height,
+            href,
+          }}
+        />
+        {logoText != null && logoText.length > 0 && (
+          <span className="font-heading text-accent ml-1 text-[1.5rem] font-light lowercase">
+            {logoText}
+          </span>
+        )}
         {versions.length > 1 && (
           <div>
             <VersionDropdown />

@@ -1,132 +1,103 @@
 "use client";
 
-import { atom, useAtomValue } from "jotai";
-import { ExternalLink } from "lucide-react";
+import { OpenNewWindow } from "iconoir-react";
 import Link, { LinkProps } from "next/link";
-import {
-  ReactElement,
-  forwardRef,
-  useEffect,
-  useState,
-  type ComponentProps,
-} from "react";
+import { usePathname } from "next/navigation";
+import React from "react";
 import { format, parse, resolve, type UrlObject } from "url";
-import { useMemoOne } from "use-memo-one";
-import { SLUG_ATOM, useDomain } from "../atoms";
-import { selectHref } from "../hooks/useHref";
+import { useDomain } from "../atoms";
 
-interface FernLinkProps extends ComponentProps<typeof Link> {
-  showExternalLinkIcon?: boolean;
-}
-
-export const FernLink = forwardRef<HTMLAnchorElement, FernLinkProps>(
-  ({ showExternalLinkIcon = false, ...props }, ref): ReactElement => {
-    const url = toUrlObject(props.href);
-    const isExternalUrl = checkIsExternalUrl(url);
-
-    // if the url is relative, we will need to invoke useRouter to resolve the relative url
-    // since useRouter injects the router context, it will cause a re-render any time the route changes.
-    // to avoid unnecessary re-renders, we will isolate the useRouter call to a separate component.
-    if (!isExternalUrl && checkIsRelativeUrl(url)) {
-      return <FernRelativeLink ref={ref} {...props} />;
-    }
-
-    if (isExternalUrl) {
-      // strip out the next.js specific props
-      const {
-        href,
-        replace,
-        scroll,
-        shallow,
-        passHref,
-        prefetch,
-        locale,
-        legacyBehavior,
-        ...rest
-      } = props;
-      return (
-        <FernExternalLink
-          ref={ref}
-          {...rest}
-          showExternalLinkIcon={showExternalLinkIcon}
-          url={url}
-        />
-      );
-    }
-
-    return <Link ref={ref} {...props} />;
+export const FernLink = React.forwardRef<
+  HTMLAnchorElement,
+  React.ComponentProps<typeof Link> & {
+    showExternalLinkIcon?: boolean;
   }
-);
+>(({ showExternalLinkIcon = false, ...props }, ref) => {
+  const url = toUrlObject(props.href);
+  const isExternalUrl = checkIsExternalUrl(url);
+
+  // if the url is relative, we will need to invoke useRouter to resolve the relative url
+  // since useRouter injects the router context, it will cause a re-render any time the route changes.
+  // to avoid unnecessary re-renders, we will isolate the useRouter call to a separate component.
+  if (!isExternalUrl && checkIsRelativeUrl(url)) {
+    return <FernRelativeLink ref={ref} {...props} />;
+  }
+
+  if (isExternalUrl) {
+    return (
+      <FernExternalLink
+        ref={ref}
+        {...stripNextLinkProps(props)}
+        showExternalLinkIcon={showExternalLinkIcon}
+        url={url}
+      />
+    );
+  }
+
+  return <Link ref={ref} {...props} />;
+});
 
 FernLink.displayName = "FernLink";
 
-const FernRelativeLink = forwardRef<
+const FernRelativeLink = React.forwardRef<
   HTMLAnchorElement,
-  ComponentProps<typeof Link>
+  React.ComponentProps<typeof Link>
 >((props, ref) => {
-  const href = useAtomValue(
-    useMemoOne(
-      () =>
-        atom((get) =>
-          resolveRelativeUrl(
-            selectHref(get, get(SLUG_ATOM)),
-            formatUrlString(props.href)
-          )
-        ),
-      [props.href]
-    )
-  );
+  const pathname = usePathname();
+  const href = resolveRelativeUrl(pathname, formatUrlString(props.href));
   return <Link ref={ref} {...props} href={href} />;
 });
 
 FernRelativeLink.displayName = "FernRelativeLink";
 
-interface FernExternalLinkProps extends Omit<ComponentProps<"a">, "href"> {
+interface FernExternalLinkProps
+  extends Omit<React.ComponentProps<"a">, "href"> {
   showExternalLinkIcon: boolean;
   url: UrlObject;
 }
 
-const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
-  ({ showExternalLinkIcon, url, ...props }, ref) => {
-    const domain = useDomain();
-    const [host, setHost] = useState<string>(domain);
-    useEffect(() => {
-      if (typeof window !== "undefined") {
-        setHost(window.location.host);
-      }
-    }, []);
+const FernExternalLink = React.forwardRef<
+  HTMLAnchorElement,
+  FernExternalLinkProps
+>(({ showExternalLinkIcon, url, ...props }, ref) => {
+  const domain = useDomain();
+  const [host, setHost] = React.useState<string>(domain);
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setHost(window.location.host);
+    }
+  }, []);
 
-    // if the link is to a different domain, always open in a new tab
-    // TODO: if the link is to the same domain, we should check if the page is a fern page, and if so, use the Link component to leverage client-side navigation
-    const isSameSite = host === url.host;
-    return (
-      <a
-        ref={ref}
-        {...props}
-        target={isSameSite || props.target != null ? props.target : "_blank"}
-        rel={
-          isSameSite && props.target !== "_blank"
-            ? props.rel
-            : props.rel == null
-              ? "noreferrer"
-              : props.rel.includes("noreferrer")
-                ? props.rel
-                : `${props.rel} noreferrer`
-        }
-        href={formatUrlString(url)}
-      >
-        {props.children}
-        {!isSameSite && showExternalLinkIcon && (
-          <ExternalLink className="external-link-icon" />
-        )}
-      </a>
-    );
-  }
-);
+  // if the link is to a different domain, always open in a new tab
+  // TODO: if the link is to the same domain, we should check if the page is a fern page, and if so, use the Link component to leverage client-side navigation
+  const isSameSite = host === url.host;
+  return (
+    <a
+      ref={ref}
+      {...props}
+      target={isSameSite || props.target != null ? props.target : "_blank"}
+      rel={
+        isSameSite && props.target !== "_blank"
+          ? props.rel
+          : props.rel == null
+            ? "noreferrer"
+            : props.rel.includes("noreferrer")
+              ? props.rel
+              : `${props.rel} noreferrer`
+      }
+      href={formatUrlString(url)}
+    >
+      {props.children}
+      {!isSameSite && showExternalLinkIcon && (
+        <OpenNewWindow className="external-link-icon" />
+      )}
+    </a>
+  );
+});
 
 FernExternalLink.displayName = "FernExternalLink";
 
-const LinkWith404Fallback = forwardRef<HTMLAnchorElement, LinkProps>(
+const LinkWith404Fallback = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (props, ref) => {
     return <Link ref={ref} {...props} />;
   }
@@ -188,4 +159,48 @@ export function checkIsRelativeUrl(url: UrlObject): boolean {
     url.href.startsWith("?") ||
     !url.href.startsWith("/")
   );
+}
+
+type MaybeFernLinkProps = Omit<
+  React.ComponentPropsWithoutRef<typeof FernLink>,
+  "href"
+> & {
+  href?: React.ComponentPropsWithoutRef<typeof FernLink>["href"];
+};
+
+export const MaybeFernLink = React.forwardRef<
+  HTMLAnchorElement,
+  MaybeFernLinkProps
+>(({ href, ...props }, ref) => {
+  if (href == null) {
+    return <span ref={ref} {...stripNextLinkProps(props)} />;
+  }
+  return <FernLink ref={ref} {...props} href={href} />;
+});
+
+function stripNextLinkProps<T extends MaybeFernLinkProps>(
+  props: T
+): Omit<
+  T,
+  | "href"
+  | "locale"
+  | "legacyBehavior"
+  | "prefetch"
+  | "replace"
+  | "scroll"
+  | "shallow"
+  | "passHref"
+> {
+  const {
+    href,
+    locale,
+    legacyBehavior,
+    prefetch,
+    replace,
+    scroll,
+    shallow,
+    passHref,
+    ...rest
+  } = props;
+  return rest;
 }
