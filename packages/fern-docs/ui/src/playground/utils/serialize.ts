@@ -85,6 +85,14 @@ export async function serializeFormStateBody(
             };
             break;
           }
+          case "exploded":
+            formDataValue[key] = {
+              ...value,
+              contentType: usesApplicationJsonInFormDataValue
+                ? "application/json"
+                : undefined,
+            };
+            break;
           default:
             assertNever(value);
         }
