@@ -1,23 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ReactElement, useEffect } from "react";
 import { useMessageHandler, useSetJustNavigated } from "../atoms";
-import { BgImageGradient } from "../components/BgImageGradient";
 import { FernErrorBoundary } from "../components/FernErrorBoundary";
-import { JavascriptProvider } from "../components/JavascriptProvider";
 import { useConsoleMessage } from "../hooks/useConsoleMessage";
-import { InitializeTheme } from "../themes";
 import { scrollToRoute } from "../util/anchor";
-
-const SearchDialog = dynamic(
-  () =>
-    import("../search/SearchDialog").then(({ SearchDialog }) => SearchDialog),
-  {
-    ssr: true,
-  }
-);
 
 let timer: number;
 
@@ -49,14 +37,5 @@ export function DocsPage({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  return (
-    <>
-      <InitializeTheme />
-      <SearchDialog />
-      <BgImageGradient />
-      <FernErrorBoundary>{children}</FernErrorBoundary>
-      {/* <PlaygroundContextProvider /> */}
-      <JavascriptProvider />
-    </>
-  );
+  return <FernErrorBoundary>{children}</FernErrorBoundary>;
 }

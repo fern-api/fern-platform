@@ -1,7 +1,10 @@
 "use server";
 
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import { BgImageGradient } from "@/components/components/BgImageGradient";
+import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import Preload, { PreloadHref } from "@/components/preload";
+import { SearchV2 } from "@/components/search/SearchV2";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { ThemeScript } from "@/components/themes/ThemeScript";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -57,16 +60,19 @@ export default async function DashboardLayout({
           <Preload key={href.href} href={href.href} options={href.options} />
         ))}
       </head>
-      <body className="antialiased">
+      <body className="min-h-screen antialiased">
         <StyledJsxRegistry>
           <GlobalStyles>{stylesheet}</GlobalStyles>
           <ThemeScript colors={colors} />
           <Toaster />
           <JotaiProvider>
+            <BgImageGradient colors={colors} />
             <FernTooltipProvider>
+              <SearchV2 />
               {children}
               <CustomerAnalytics />
             </FernTooltipProvider>
+            <JavascriptProvider />
           </JotaiProvider>
         </StyledJsxRegistry>
       </body>

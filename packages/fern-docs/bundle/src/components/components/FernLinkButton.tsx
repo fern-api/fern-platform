@@ -1,5 +1,6 @@
 "use client";
 
+import { FernLink } from "@/components/link";
 import {
   ButtonContent,
   FernButtonSharedProps,
@@ -12,7 +13,6 @@ import {
   createElement,
   forwardRef,
 } from "react";
-import { FernLink } from "./FernLink";
 
 interface FernLinkButtonProps
   extends ComponentProps<typeof Link>,

@@ -1,9 +1,9 @@
 "use client";
 
+import { FernImage } from "@/components/image";
+import { FernLink } from "@/components/link";
 import { FileData } from "@/server/types";
 import { PropsWithChildren } from "react";
-import { FernImage } from "../components/FernImage";
-import { FernLink } from "../components/FernLink";
 
 export function HeaderLogoImage({
   light,

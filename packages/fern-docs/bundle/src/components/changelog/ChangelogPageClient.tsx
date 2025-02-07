@@ -1,5 +1,6 @@
 "use client";
 
+import { FernLink } from "@/components/link";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_ARRAY } from "@fern-api/ui-core-utils";
 import { addLeadingSlash } from "@fern-docs/utils";
@@ -15,7 +16,6 @@ import {
   SIDEBAR_ROOT_NODE_ATOM,
 } from "../atoms";
 import { BottomNavigationButtons } from "../components/BottomNavigationButtons";
-import { FernLink } from "../components/FernLink";
 import {
   BuiltWithFern,
   HideBuiltWithFernContext,

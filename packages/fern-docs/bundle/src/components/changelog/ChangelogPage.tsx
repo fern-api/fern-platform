@@ -2,13 +2,13 @@
 
 import ChangelogPageClient from "./ChangelogPageClient";
 
+import { FernLink } from "@/components/link";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { FernDocs, FernNavigation } from "@fern-api/fdr-sdk";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";
 import { isNonNullish } from "@fern-api/ui-core-utils";
 import { makeToc, TableOfContentsItem, toTree } from "@fern-docs/mdx";
 import { compact } from "es-toolkit/compat";
-import { FernLink } from "../components/FernLink";
 import { PageHeader } from "../components/PageHeader";
 import { Markdown } from "../mdx/Markdown";
 import { MdxContent } from "../mdx/MdxContent";

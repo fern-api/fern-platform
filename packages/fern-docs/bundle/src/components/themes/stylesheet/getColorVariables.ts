@@ -539,10 +539,8 @@ function getRadixGrayVar(gray: RadixGray, scale: number): string {
   return `var(--${gray}-${scale})`;
 }
 
-export function getThemeColor(config: DocsV1Read.ThemeConfig): string {
-  const color =
-    config.headerBackground ??
-    (config.background.type === "solid" ? config.background : undefined);
+export function getThemeColor(config: ColorsThemeConfig): string {
+  const color = config.headerBackground ?? config.background;
   if (color != null) {
     return tinycolor(color).toHexString();
   }

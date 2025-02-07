@@ -1,3 +1,5 @@
+"use client";
+
 import { useAtomValue } from "jotai";
 import Script from "next/script";
 import { memo } from "react";

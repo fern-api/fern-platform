@@ -12,9 +12,8 @@ import {
   useOpenSearchDialog,
 } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
-import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
+import { SearchV2Trigger } from "../search/SearchV2";
 import { useSearchConfig } from "../services/useSearchService";
-import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { ThemeButton } from "../themes";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
@@ -35,7 +34,6 @@ const UnmemoizedHeader = forwardRef<
   const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
   const colors = useColors();
   const openSearchDialog = useOpenSearchDialog();
-  const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
   const searchService = useSearchConfig();
   const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
 
@@ -109,12 +107,8 @@ const UnmemoizedHeader = forwardRef<
       <HeaderLogoSection />
 
       {showSearchBar && (
-        <div
-          className={cn("fern-header-searchbar", {
-            invisible: isSearchBoxMounted,
-          })}
-        >
-          <SidebarSearchBar className="w-full" />
+        <div className="fern-header-searchbar">
+          <SearchV2Trigger />
         </div>
       )}
 

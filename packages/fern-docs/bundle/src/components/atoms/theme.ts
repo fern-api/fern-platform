@@ -1,6 +1,6 @@
-import { ColorsConfig } from "@fern-platform/fdr-utils";
+import { ColorsThemeConfig } from "@/server/types";
 import { isEqual } from "es-toolkit/predicate";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import { atomWithRefresh, selectAtom } from "jotai/utils";
 import { noop } from "ts-essentials";
 import { useCallbackOne } from "use-memo-one";
@@ -46,7 +46,10 @@ export const AVAILABLE_THEMES_ATOM = atom((get) =>
 );
 AVAILABLE_THEMES_ATOM.debugLabel = "AVAILABLE_THEMES_ATOM";
 
-export function useColors(): Partial<ColorsConfig> {
+export function useColors(): Partial<{
+  dark?: ColorsThemeConfig;
+  light?: ColorsThemeConfig;
+}> {
   return useAtomValue(COLORS_ATOM);
 }
 
@@ -73,6 +76,13 @@ export const THEME_ATOM = atomWithRefresh(
   },
   (_get, set, theme: Theme | typeof SYSTEM) => {
     set(SETTABLE_THEME_ATOM, theme);
+    theme = theme !== SYSTEM ? theme : getSystemTheme();
+    const enableAnimation = disableAnimation();
+    const d = document.documentElement;
+    d.classList.remove(...SYSTEM_THEMES);
+    d.classList.add(theme);
+    d.style.colorScheme = theme;
+    enableAnimation();
   }
 );
 
@@ -81,7 +91,7 @@ export function useTheme(): Theme {
 }
 
 export function useSetTheme(): (theme: Theme | typeof SYSTEM) => void {
-  return useAtom(SETTABLE_THEME_ATOM)[1];
+  return useSetAtom(SETTABLE_THEME_ATOM);
 }
 
 export function useToggleTheme(): () => void {
@@ -132,7 +142,10 @@ const disableAnimation = () => {
 
 export type AvailableThemes = [Theme] | [Theme, Theme];
 const getAvailableThemes = (
-  colors: Partial<ColorsConfig> = {}
+  colors: Partial<{
+    dark?: ColorsThemeConfig;
+    light?: ColorsThemeConfig;
+  }> = {}
 ): AvailableThemes => {
   if (
     (colors.dark != null && colors.light != null) ||
@@ -153,18 +166,6 @@ const getSystemTheme = (e?: MediaQueryList | MediaQueryListEvent) => {
 };
 
 export function useInitializeTheme(): void {
-  useAtomEffect(
-    useCallbackOne((get) => {
-      const enableAnimation = disableAnimation();
-      const theme = get(THEME_ATOM);
-      const d = document.documentElement;
-      d.classList.remove(...SYSTEM_THEMES);
-      d.classList.add(theme);
-      d.style.colorScheme = theme;
-      enableAnimation();
-    }, [])
-  );
-
   useAtomEffect(
     useCallbackOne((get, set) => {
       const handleMediaQuery = () => {

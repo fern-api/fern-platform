@@ -1,3 +1,4 @@
+import { FernLink } from "@/components/link";
 import { RemoteFontAwesomeIcon } from "@fern-docs/components";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import clsx from "clsx";
@@ -5,7 +6,6 @@ import { Lock } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { CURRENT_TAB_INDEX_ATOM, TABS_ATOM } from "../atoms";
-import { FernLink } from "../components/FernLink";
 import { useSidebarTabHref } from "../hooks/useSidebarTabHref";
 
 export function HeaderTabs(): ReactElement {

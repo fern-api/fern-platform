@@ -1,6 +1,6 @@
+import { FernLink } from "@/components/link";
 import clsx from "clsx";
 import { memo, ReactElement, useEffect, useRef } from "react";
-import { FernLink } from "../FernLink";
 
 export interface TableOfContentsItemProps {
   text: string;

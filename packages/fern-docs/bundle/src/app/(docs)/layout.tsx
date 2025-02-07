@@ -1,13 +1,10 @@
 "use server";
 
-import { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
 import { getDocsDomainApp } from "@/server/xfernhost/app";
-import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { EdgeFlags } from "@fern-docs/utils";
-import { compact, uniqBy } from "es-toolkit/array";
+import { compact } from "es-toolkit/array";
 import { cookies } from "next/headers";
 import { Metadata, Viewport } from "next/types";
 import tinycolor from "tinycolor2";
@@ -15,17 +12,13 @@ import { toImageDescriptor } from "../seo";
 
 export default async function Layout({
   children,
-  header,
+  // header,
 }: {
   children: React.ReactNode;
-  header: React.ReactNode;
+  // header: React.ReactNode;
 }) {
-  return (
-    <>
-      {header}
-      {children}
-    </>
-  );
+  // relative z-0 ensures that dialogs and popovers are always rendered above the header
+  return <div className="relative z-0">{children}</div>;
 }
 
 export async function generateViewport(): Promise<Viewport> {
@@ -107,58 +100,4 @@ export async function generateMetadata(): Promise<Metadata> {
         : undefined,
     },
   };
-}
-
-function generatePreloadHrefs(
-  typography: DocsV2Read.LoadDocsForUrlResponse["definition"]["config"]["typographyV2"],
-  files: Record<string, { src: string }>,
-  edgeFlags: EdgeFlags
-): PreloadHref[] {
-  const toReturn: PreloadHref[] = [];
-
-  const fontVariants = compact([
-    typography?.bodyFont?.variants,
-    typography?.headingsFont?.variants,
-    typography?.codeFont?.variants,
-  ]).flat();
-
-  fontVariants.forEach((variant) => {
-    try {
-      const file = files[variant.fontFile];
-      if (file != null) {
-        toReturn.push({
-          href: file.src,
-          options: {
-            as: "font",
-            crossOrigin: "anonymous",
-            type: `font/${getFontExtension(file.src)}`,
-          },
-        });
-      }
-    } catch {}
-  });
-
-  if (edgeFlags.isApiPlaygroundEnabled) {
-    toReturn.push({
-      href: "/api/fern-docs/auth/api-key-injection",
-      options: { as: "fetch" },
-    });
-  }
-
-  toReturn.push({
-    href: edgeFlags.isSearchV2Enabled
-      ? "/api/fern-docs/search/v2/key"
-      : "/api/fern-docs/search/v1/key",
-    options: { as: "fetch" },
-  });
-
-  return uniqBy(toReturn, (href) => href.href);
-}
-
-function getFontExtension(url: string): string {
-  const ext = new URL(url).pathname.split(".").pop();
-  if (ext == null) {
-    throw new Error("No extension found for font: " + url);
-  }
-  return ext;
 }

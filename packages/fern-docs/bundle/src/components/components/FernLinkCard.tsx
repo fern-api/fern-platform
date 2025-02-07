@@ -1,8 +1,8 @@
+import { FernLink } from "@/components/link";
 import { FernCardProps } from "@fern-docs/components";
 import cn from "clsx";
 import { LinkProps } from "next/link";
 import { forwardRef, PropsWithChildren } from "react";
-import { FernLink } from "./FernLink";
 
 export const FernLinkCard = forwardRef<
   HTMLAnchorElement,

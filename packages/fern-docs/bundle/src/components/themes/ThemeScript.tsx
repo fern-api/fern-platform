@@ -3,7 +3,7 @@
 import { ColorsThemeConfig } from "@/server/types";
 import Script from "next/script";
 import type { ReactElement } from "react";
-import type { AvailableThemes } from "../atoms";
+import { useInitializeTheme, type AvailableThemes } from "../atoms";
 
 // this script cannot reference any other code since it will be stringified to be executed in the browser
 const script = (themes: AvailableThemes): void => {
@@ -57,6 +57,7 @@ export function ThemeScript({
   };
 }): ReactElement {
   const args = getAvailableThemes(colors);
+  useInitializeTheme();
   return (
     // eslint-disable-next-line @next/next/no-before-interactive-script-outside-document
     <Script

@@ -13,7 +13,6 @@ import {
   useSidebarNodes,
 } from "../atoms";
 import { useIsScrolled } from "../hooks/useIsScrolled";
-import { SearchSidebar } from "../search/SearchDialog";
 import { MobileSidebarHeaderLinks } from "./MobileSidebarHeaderLinks";
 import { SidebarFixedItemsSection } from "./SidebarFixedItemsSection";
 import { SidebarTabButton } from "./SidebarTabButton";
@@ -49,38 +48,36 @@ const UnmemoizedSidebarContainer = forwardRef<
           isScrolled || (isMobileSidebarOpen && isMobileSidebarEnabled)
         }
       />
-      <SearchSidebar>
-        <FernScrollArea
-          rootClassName="flex-1"
-          className={clsx("group/sidebar fern-sidebar-content", {
-            "overscroll-contain": layout?.disableHeader === true,
-          })}
-          scrollbars="vertical"
-          ref={setScrollRef}
-        >
-          {tabs.length > 0 && (
-            <ul
-              className={clsx("fern-sidebar-tabs", {
-                "lg:hidden":
-                  layout?.disableHeader !== true &&
-                  layout?.tabsPlacement === "HEADER",
-              })}
-            >
-              {tabs.map((tab, idx) => (
-                <SidebarTabButton
-                  key={idx}
-                  tab={tab}
-                  selected={tab.index === currentTabIndex}
-                />
-              ))}
-            </ul>
-          )}
-          <FernTooltipProvider>
-            <SidebarRootNode node={sidebar} />
-          </FernTooltipProvider>
-          <MobileSidebarHeaderLinks />
-        </FernScrollArea>
-      </SearchSidebar>
+      <FernScrollArea
+        rootClassName="flex-1"
+        className={clsx("group/sidebar fern-sidebar-content", {
+          "overscroll-contain": layout?.disableHeader === true,
+        })}
+        scrollbars="vertical"
+        ref={setScrollRef}
+      >
+        {tabs.length > 0 && (
+          <ul
+            className={clsx("fern-sidebar-tabs", {
+              "lg:hidden":
+                layout?.disableHeader !== true &&
+                layout?.tabsPlacement === "HEADER",
+            })}
+          >
+            {tabs.map((tab, idx) => (
+              <SidebarTabButton
+                key={idx}
+                tab={tab}
+                selected={tab.index === currentTabIndex}
+              />
+            ))}
+          </ul>
+        )}
+        <FernTooltipProvider>
+          <SidebarRootNode node={sidebar} />
+        </FernTooltipProvider>
+        <MobileSidebarHeaderLinks />
+      </FernScrollArea>
     </nav>
   );
 });

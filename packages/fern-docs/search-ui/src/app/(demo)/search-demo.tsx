@@ -1,5 +1,6 @@
 "use client";
 
+import * as Dialog from "@radix-ui/react-dialog";
 import { useTheme } from "next-themes";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import useSWR from "swr";
@@ -13,6 +14,7 @@ import {
   CommandGroupTheme,
   CommandSearchHits,
   DefaultDesktopBackButton,
+  DesktopSearchButton,
   DesktopSearchDialog,
   MobileCommand,
   SearchClientRoot,
@@ -136,7 +138,15 @@ export function DemoInstantSearchClient({
           </MobileCommand>
         </AppSidebar>
       ) : (
-        <DesktopSearchDialog open={open} onOpenChange={setOpen}>
+        <DesktopSearchDialog
+          open={open}
+          onOpenChange={setOpen}
+          trigger={
+            <Dialog.Trigger asChild>
+              <DesktopSearchButton />
+            </Dialog.Trigger>
+          }
+        >
           <DesktopCommandWithAskAI
             domain={domain}
             askAI={askAi}

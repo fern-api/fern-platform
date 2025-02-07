@@ -1,10 +1,10 @@
+import { FernLink } from "@/components/link";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import { ArrowUpRight } from "iconoir-react";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
 import { CURRENT_NODE_ATOM, useClosePlayground } from "../../atoms";
-import { FernLink } from "../../components/FernLink";
 
 const USE_EXAMPLE_TEXT = "Use example";
 const CLEAR_FORM_TEXT = "Clear form";

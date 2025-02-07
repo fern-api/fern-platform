@@ -1,3 +1,4 @@
+import { FernLink } from "@/components/link";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-docs/components";
 import { composeEventHandlers } from "@radix-ui/primitive";
@@ -25,7 +26,6 @@ import {
   useAtomEffect,
   useCloseMobileSidebar,
 } from "../atoms";
-import { FernLink } from "../components/FernLink";
 import { useHref } from "../hooks/useHref";
 import { scrollToRoute } from "../util/anchor";
 import { scrollToCenter } from "../util/scrollToCenter";

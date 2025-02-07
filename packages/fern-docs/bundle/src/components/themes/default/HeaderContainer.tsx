@@ -1,3 +1,5 @@
+"use client";
+
 import { clsx } from "clsx";
 import { useAtomValue } from "jotai";
 import { ReactElement } from "react";
@@ -41,7 +43,10 @@ export function HeaderContainer({
         }
       >
         <div className="clipped-background">
-          <BgImageGradient className="h-screen opacity-60 dark:opacity-80" />
+          <BgImageGradient
+            colors={colors}
+            className="h-screen opacity-60 dark:opacity-80"
+          />
         </div>
         <div className="fern-header">
           <Header className="max-w-page-width mx-auto" />

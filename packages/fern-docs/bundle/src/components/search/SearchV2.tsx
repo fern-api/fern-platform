@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CommandActions,
   CommandEmpty,
@@ -15,7 +17,7 @@ import {
   useIsMobile,
 } from "@fern-docs/search-ui";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { atom, useAtom, useAtomValue } from "jotai";
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   Dispatch,
   ReactElement,
@@ -28,6 +30,7 @@ import {
 import { z } from "zod";
 
 import { useRouter } from "next/navigation";
+import React from "react";
 import {
   CURRENT_VERSION_ATOM,
   DOMAIN_ATOM,
@@ -156,11 +159,7 @@ export function SearchV2(): ReactElement | false {
       initialFilters={{ "version.title": version?.title }}
       analyticsTags={["search-v2-dialog"]}
     >
-      <DesktopSearchDialog
-        open={open}
-        onOpenChange={setOpen}
-        trigger={<DesktopSearchButton />}
-      >
+      <DesktopSearchDialog open={open} onOpenChange={setOpen}>
         {isAskAiEnabled ? (
           <DesktopCommandWithAskAI
             domain={domain}
@@ -203,6 +202,11 @@ export function SearchV2(): ReactElement | false {
     </SearchClientRoot>
   );
 }
+
+export const SearchV2Trigger = React.memo(() => {
+  const setOpen = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
+  return <DesktopSearchButton onClick={() => setOpen(true)} />;
+});
 
 function CommandPlayground({ onClose }: { onClose: () => void }) {
   const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);
