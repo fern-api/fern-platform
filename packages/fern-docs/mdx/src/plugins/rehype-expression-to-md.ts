@@ -1,4 +1,4 @@
-import { Program } from "estree";
+import type { Program } from "estree";
 import { walk } from "estree-walker";
 import { toEstree } from "hast-util-to-estree";
 import { toHast } from "mdast-util-to-hast";
@@ -10,7 +10,7 @@ import {
   isMdxJsxAttribute,
   isMdxJsxElementHast,
 } from "../mdx-utils";
-import { Hast, Mdast } from "../types";
+import type { Hast, Mdast } from "../types";
 
 export const rehypeExpressionToMd: Plugin<
   [{ mdxJsxElementAllowlist?: Record<string, string[]> }?],
