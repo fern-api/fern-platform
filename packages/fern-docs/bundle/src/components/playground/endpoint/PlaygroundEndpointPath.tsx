@@ -1,3 +1,4 @@
+import { FernLinkButton } from "@/components/components/FernLinkButton";
 import type {
   Environment,
   EnvironmentId,
@@ -19,6 +20,8 @@ import { useBooleanState } from "@fern-ui/react-commons";
 import cn from "clsx";
 import { omitBy } from "es-toolkit/object";
 import { isUndefined } from "es-toolkit/predicate";
+import { X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { FC, Fragment, ReactNode } from "react";
 import { useAllEnvironmentIds } from "../../atoms/environment";
 import { MaybeEnvironmentDropdown } from "../../components/MaybeEnvironmentDropdown";
@@ -165,9 +168,20 @@ export const PlaygroundEndpointPath: FC<PlaygroundEndpointPathProps> = ({
         />
       </div>
 
-      {/* <Dialog.Close asChild className="max-sm:hidden">
-        <FernButton icon={<Xmark />} size="large" rounded variant="outlined" />
-      </Dialog.Close> */}
+      <CloseButton />
     </div>
   );
 };
+
+function CloseButton() {
+  const pathname = usePathname();
+  return (
+    <FernLinkButton
+      icon={<X />}
+      size="large"
+      rounded
+      variant="outlined"
+      href={pathname.replace("/~/api-explorer", "")}
+    />
+  );
+}
