@@ -1,23 +1,61 @@
 "use server";
 
-import { PreloadHref } from "@/components/preload";
+import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import Preload, { PreloadHref } from "@/components/preload";
+import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
+import { ThemeScript } from "@/components/themes/ThemeScript";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
 import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
+import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
 import { EdgeFlags } from "@fern-docs/utils";
 import { compact, uniqBy } from "es-toolkit/array";
 import { cookies } from "next/headers";
 import { Metadata, Viewport } from "next/types";
 import tinycolor from "tinycolor2";
+import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
 
 export default async function Layout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { domain: string };
 }) {
-  return <>{children}</>;
+  const domain = params.domain;
+  const docsLoader = await createCachedDocsLoader(domain);
+  const [config, edgeFlags, files, colors] = await Promise.all([
+    docsLoader.getConfig(),
+    getEdgeFlags(domain),
+    docsLoader.getFiles(),
+    docsLoader.getColors(),
+  ]);
+  const preloadHrefs = generatePreloadHrefs(
+    config?.typographyV2,
+    files,
+    edgeFlags
+  );
+  const stylesheet = renderThemeStylesheet(
+    colors,
+    config?.typographyV2,
+    config?.layout,
+    config?.css,
+    files,
+    true // todo: fix this
+  );
+  return (
+    <>
+      {preloadHrefs.map((href) => (
+        <Preload key={href.href} href={href.href} options={href.options} />
+      ))}
+      <GlobalStyles>{stylesheet}</GlobalStyles>
+      <ThemeScript colors={colors} />
+      {children}
+      <CustomerAnalytics />
+    </>
+  );
 }
 
 export async function generateViewport({
@@ -59,13 +97,19 @@ export async function generateMetadata({
   const domain = params.domain;
   const fern_token = cookies().get("fern_token")?.value;
   const docsLoader = await createCachedDocsLoader(domain, fern_token);
-  const [files, config, baseUrl] = await Promise.all([
+  const [files, config, baseUrl, seoDisabled] = await Promise.all([
     docsLoader.getFiles(),
     docsLoader.getConfig(),
     docsLoader.getBaseUrl(),
+    getSeoDisabled(domain),
   ]);
-  const index = config?.metadata?.noindex ? false : undefined;
-  const follow = config?.metadata?.nofollow ? false : undefined;
+
+  let index = config?.metadata?.noindex ? false : undefined;
+  let follow = config?.metadata?.nofollow ? false : undefined;
+  if (seoDisabled) {
+    index = false;
+    follow = false;
+  }
 
   return {
     metadataBase: new URL(
