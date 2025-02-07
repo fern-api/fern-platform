@@ -5,6 +5,7 @@ export interface EdgeFlags {
   isSeoDisabled: boolean;
   isTocDefaultEnabled: boolean;
   isSnippetTemplatesEnabled: boolean;
+  isSearchDisabled: boolean;
   isHttpSnippetsEnabled: boolean;
   isInlineFeedbackEnabled: boolean;
   isDarkCodeEnabled: boolean;
@@ -40,6 +41,7 @@ export const DEFAULT_EDGE_FLAGS: EdgeFlags = {
   isSeoDisabled: false,
   isTocDefaultEnabled: false,
   isSnippetTemplatesEnabled: false,
+  isSearchDisabled: false,
   isHttpSnippetsEnabled: false,
   isInlineFeedbackEnabled: false,
   isDarkCodeEnabled: false,

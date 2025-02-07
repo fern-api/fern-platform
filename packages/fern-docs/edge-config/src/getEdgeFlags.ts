@@ -17,6 +17,7 @@ const EDGE_FLAGS = [
   "toc-default-enabled" as const,
   "snippet-template-enabled" as const,
   "http-snippets-enabled" as const,
+  "search-disabled" as const,
   "inline-feedback-enabled" as const,
   "dark-code-enabled" as const,
   "disable-proxy" as const,
@@ -74,6 +75,10 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
     const isSnippetTemplatesEnabled = checkDomainMatchesCustomers(
       domain,
       config["snippet-template-enabled"]
+    );
+    const isSearchDisabled = checkDomainMatchesCustomers(
+      domain,
+      config["search-disabled"]
     );
     const isHttpSnippetsEnabled = checkDomainMatchesCustomers(
       domain,
@@ -181,6 +186,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isTocDefaultEnabled,
       isSnippetTemplatesEnabled:
         isSnippetTemplatesEnabled || isDevelopment(domain),
+      isSearchDisabled,
       isHttpSnippetsEnabled,
       isInlineFeedbackEnabled,
       isDarkCodeEnabled,
@@ -216,6 +222,7 @@ export async function getEdgeFlags(domain: string): Promise<EdgeFlags> {
       isSeoDisabled: !isCustomDomain(domain),
       isTocDefaultEnabled: false,
       isSnippetTemplatesEnabled: isDevelopment(domain),
+      isSearchDisabled: false,
       isHttpSnippetsEnabled: false,
       isInlineFeedbackEnabled: isFern(domain),
       isDarkCodeEnabled: false,
