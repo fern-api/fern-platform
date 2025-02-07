@@ -3,7 +3,6 @@
 import { PreloadHref } from "@/components/preload";
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import { RgbaColor } from "@/server/types";
-import { getDocsDomainApp } from "@/server/xfernhost/app";
 import { DocsV2Read } from "@fern-api/fdr-sdk/client/types";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { EdgeFlags } from "@fern-docs/utils";
@@ -15,21 +14,18 @@ import { toImageDescriptor } from "../seo";
 
 export default async function Layout({
   children,
-  header,
 }: {
   children: React.ReactNode;
-  header: React.ReactNode;
 }) {
-  return (
-    <>
-      {header}
-      {children}
-    </>
-  );
+  return <>{children}</>;
 }
 
-export async function generateViewport(): Promise<Viewport> {
-  const domain = getDocsDomainApp();
+export async function generateViewport({
+  params,
+}: {
+  params: { domain: string };
+}): Promise<Viewport> {
+  const domain = params.domain;
   const docsLoader = await createCachedDocsLoader(domain);
   const colors = await docsLoader.getColors();
   const dark = maybeToHex(
@@ -55,8 +51,12 @@ function maybeToHex(color: RgbaColor | undefined): string | undefined {
   return tinycolor(color).toHexString();
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const domain = getDocsDomainApp();
+export async function generateMetadata({
+  params,
+}: {
+  params: { domain: string };
+}): Promise<Metadata> {
+  const domain = params.domain;
   const fern_token = cookies().get("fern_token")?.value;
   const docsLoader = await createCachedDocsLoader(domain, fern_token);
   const [files, config, baseUrl] = await Promise.all([

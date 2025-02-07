@@ -14,7 +14,7 @@ import { EdgeFlags } from "@fern-docs/utils";
 import { compact, uniqBy } from "es-toolkit/array";
 import { Provider as JotaiProvider } from "jotai/react";
 import { Metadata, Viewport } from "next/types";
-import { GlobalStyles } from "./(docs)/global-styles";
+import { GlobalStyles } from "./global-styles";
 import "./globals.scss";
 import StyledJsxRegistry from "./registry";
 

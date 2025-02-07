@@ -3,10 +3,13 @@ import { removeLeadingSlash } from "@fern-docs/utils";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withPathname } from "./server/withPathname";
+import { getDocsDomainEdge } from "./server/xfernhost/edge";
 
 const API_FERN_DOCS_PATTERN = /^(?!\/api\/fern-docs\/).*(\/api\/fern-docs\/)/;
 
 export const middleware: NextMiddleware = async (request) => {
+  const domain = getDocsDomainEdge(request);
+  const withDomain = createWithDomain(domain);
   let pathname = request.nextUrl.pathname;
 
   /**
@@ -20,6 +23,7 @@ export const middleware: NextMiddleware = async (request) => {
 
   const headers = new Headers(request.headers);
   headers.set("x-pathname", pathname);
+  headers.set("x-fern-host", domain);
 
   /**
    * Rewrite robots.txt
@@ -151,12 +155,12 @@ export const middleware: NextMiddleware = async (request) => {
     const basepath = pathname.slice(0, index);
     headers.set("x-basepath", basepath);
     pathname = pathname.slice(index);
-    return NextResponse.rewrite(withPathname(request, pathname), {
+    return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
       request: { headers },
     });
   }
 
-  return NextResponse.next({
+  return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
     request: { headers },
   });
 };
@@ -178,3 +182,9 @@ export const config = {
     "/((?!api/fern-docs|.well-known|_next|_vercel|favicon.ico|manifest.webmanifest).*)",
   ],
 };
+
+function createWithDomain(domain: string) {
+  return (pathname: string) => {
+    return `/${domain}${pathname}`;
+  };
+}

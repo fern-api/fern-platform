@@ -4,7 +4,6 @@ import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundE
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";
 import { createCachedDocsLoader } from "@/server/docs-loader";
-import { getDocsDomainApp } from "@/server/xfernhost/app";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import {
   createEndpointContext,
@@ -14,13 +13,19 @@ import { conformTrailingSlash, COOKIE_FERN_TOKEN } from "@fern-docs/utils";
 import { cookies, headers } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export const dynamic = "force-dynamic";
+
+export default async function Page({
+  params,
+}: {
+  params: { slug: string[]; domain: string };
+}) {
   const slug = FernNavigation.slugjoin(
     headers().get("x-basepath"),
     params.slug
   );
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
-  const loader = await createCachedDocsLoader(getDocsDomainApp(), fern_token);
+  const loader = await createCachedDocsLoader(params.domain, fern_token);
   console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();
   if (root == null) {

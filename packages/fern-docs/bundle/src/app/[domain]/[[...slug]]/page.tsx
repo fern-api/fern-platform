@@ -23,7 +23,6 @@ import {
   withPrunedNavigation,
 } from "@/server/withPrunedNavigation";
 import { withVersionSwitcherInfo } from "@/server/withVersionSwitcherInfo";
-import { getDocsDomainApp } from "@/server/xfernhost/app";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import visitDiscriminatedUnion from "@fern-api/ui-core-utils/visitDiscriminatedUnion";
@@ -50,9 +49,9 @@ import { toImageDescriptor } from "../../seo";
 export default async function Page({
   params,
 }: {
-  params: { slug?: string[] };
+  params: { slug?: string[]; domain: string };
 }) {
-  const domain = getDocsDomainApp();
+  const domain = params.domain;
   const fern_token = cookies().get("fern_token")?.value;
   const slug = FernNavigation.slugjoin(params.slug);
   console.debug(`[${domain}] Loading page for slug: ${slug}`);
@@ -402,9 +401,9 @@ export default async function Page({
 export async function generateMetadata({
   params,
 }: {
-  params: { slug?: string[] };
+  params: { slug?: string[]; domain: string };
 }): Promise<Metadata> {
-  const domain = getDocsDomainApp();
+  const domain = params.domain;
   const slug = FernNavigation.slugjoin(params.slug);
   const docsLoader = await createCachedDocsLoader(domain);
   const findNode = createFindNode(docsLoader);
