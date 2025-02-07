@@ -61,6 +61,12 @@ export async function serializeFormStateBody(
 
             if (property?.exploded) {
               // For exploded form fields, convert value to array if not already
+              console.log(
+                "In serialize.ts form-data json case. Key:",
+                key,
+                "Value:",
+                value
+              );
               const arrayValue = Array.isArray(value.value)
                 ? value.value
                 : [value.value];
@@ -85,6 +91,14 @@ export async function serializeFormStateBody(
             };
             break;
           }
+          case "exploded":
+            formDataValue[key] = {
+              ...value,
+              contentType: usesApplicationJsonInFormDataValue
+                ? "application/json"
+                : undefined,
+            };
+            break;
           default:
             assertNever(value);
         }

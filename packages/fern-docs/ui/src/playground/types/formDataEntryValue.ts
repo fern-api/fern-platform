@@ -13,12 +13,18 @@ export declare namespace PlaygroundFormDataEntryValue {
     type: "json";
     value: unknown;
   }
+
+  interface Exploded {
+    type: "exploded";
+    value: unknown[];
+  }
 }
 
 export type PlaygroundFormDataEntryValue =
   | PlaygroundFormDataEntryValue.SingleFile
   | PlaygroundFormDataEntryValue.MultipleFiles
-  | PlaygroundFormDataEntryValue.Json;
+  | PlaygroundFormDataEntryValue.Json
+  | PlaygroundFormDataEntryValue.Exploded;
 
 export const PlaygroundFormDataEntryValue = {
   isSingleFile: (
@@ -31,4 +37,8 @@ export const PlaygroundFormDataEntryValue = {
   isJson: (
     value: PlaygroundFormDataEntryValue
   ): value is PlaygroundFormDataEntryValue.Json => value.type === "json",
+  isExploded: (
+    value: PlaygroundFormDataEntryValue
+  ): value is PlaygroundFormDataEntryValue.Exploded =>
+    value.type === "exploded",
 };
