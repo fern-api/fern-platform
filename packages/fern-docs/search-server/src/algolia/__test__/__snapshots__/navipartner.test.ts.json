@@ -1952,7 +1952,10 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company"
     ],
     "type": "api-reference"
   },
@@ -2007,7 +2010,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "StoreCode",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2062,7 +2070,17 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "ItemNumber",
+      "ReferenceDate",
+      "NumberOfTickets",
+      "AdmissionCode",
+      "CustomerNumber",
+      "ApiVersionDate",
+      "AdmissionCapacity"
     ],
     "type": "api-reference"
   },
@@ -2117,7 +2135,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "TicketId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2172,7 +2195,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "TicketId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2227,7 +2255,14 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "TicketId",
+      "ApiVersionDate",
+      "ValidateTicketsRequest",
+      "AdmittedResponse"
     ],
     "type": "api-reference"
   },
@@ -2282,7 +2317,13 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "TicketId",
+      "ApiVersionDate",
+      "ValidateTicketsRequest"
     ],
     "type": "api-reference"
   },
@@ -2337,7 +2378,13 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberNumber",
+      "ApiVersionDate",
+      "TicketDetails"
     ],
     "type": "api-reference"
   },
@@ -2392,7 +2439,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "TicketId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2447,7 +2499,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "TicketId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2502,7 +2559,11 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2557,7 +2618,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "Token",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2612,7 +2678,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "Token",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2667,7 +2738,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "Token",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2722,7 +2798,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "Token",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2777,7 +2858,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "Token",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2832,7 +2918,13 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "Token",
+      "ApiVersionDate",
+      "TicketDetails"
     ],
     "type": "api-reference"
   },
@@ -2887,7 +2979,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "StoreCode",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2942,7 +3039,11 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -2997,7 +3098,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3052,7 +3158,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipNumber",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3107,7 +3218,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3162,7 +3278,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3217,7 +3338,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3272,7 +3398,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3327,7 +3458,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberNumber",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3382,7 +3518,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3437,7 +3578,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3492,7 +3638,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3547,7 +3698,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3602,7 +3758,19 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberNumber",
+      "LastName",
+      "Birthday",
+      "Email",
+      "PhoneNo",
+      "CardNumber",
+      "Limit",
+      "Offset",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3657,7 +3825,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3712,7 +3885,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3767,7 +3945,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "CardId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3822,7 +4005,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "CardNumber",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3877,7 +4065,13 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "MemberId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3932,7 +4126,14 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "MemberId",
+      "CardId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -3987,7 +4188,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "CardNumber",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4042,7 +4248,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "CardNumber",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4097,7 +4308,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4152,7 +4368,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4207,7 +4428,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4262,7 +4488,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4317,7 +4548,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4372,7 +4608,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4427,7 +4668,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4482,7 +4728,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4537,7 +4788,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "MembershipId",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   },
@@ -4592,7 +4848,11 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SaasGuid",
+      "SaasEnv",
+      "Company",
+      "ApiVersionDate"
     ],
     "type": "api-reference"
   }

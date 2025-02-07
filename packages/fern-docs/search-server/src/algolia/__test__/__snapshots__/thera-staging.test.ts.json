@@ -92,7 +92,9 @@
       "api",
       "http",
       "rest",
-      "openapi"
+      "openapi",
+      "AddEorEmployment",
+      "AddEorUser"
     ],
     "type": "api-reference"
   },
@@ -390,7 +392,8 @@
       "api",
       "http",
       "rest",
-      "openapi"
+      "openapi",
+      "TheraBillingType"
     ],
     "type": "api-reference"
   },
@@ -605,7 +608,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "GetBankAccountDetailsResponse"
     ],
     "type": "api-reference"
   },
@@ -1144,7 +1148,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "WithdrawalMethodAccountType"
     ],
     "type": "api-reference"
   },
@@ -1419,7 +1424,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "SingleWithdrawalMethodResponse"
     ],
     "type": "api-reference"
   },
@@ -1906,7 +1912,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "TransactionStatus"
     ],
     "type": "api-reference"
   },
@@ -2391,7 +2398,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "TeamRoleAndDetails",
+      "OrgRole"
     ],
     "type": "api-reference"
   },
@@ -2446,7 +2455,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "TeamRoleAndDetails"
     ],
     "type": "api-reference"
   },
@@ -2501,7 +2511,11 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "OrgAdmin",
+      "OrgAdmin",
+      "OrgManager",
+      "OrgManager"
     ],
     "type": "api-reference"
   },
@@ -2776,7 +2790,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CreateTeamRequestManager"
     ],
     "type": "api-reference"
   },
@@ -3481,7 +3496,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "OneSchemaCsvColumn",
+      "CreateContractorsCsvRecord"
     ],
     "type": "api-reference"
   },
@@ -3535,7 +3552,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "OneSchemaCsvColumn",
+      "CreateInvoiceCsvRecord"
     ],
     "type": "api-reference"
   },
@@ -4668,7 +4687,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CheckPayrollResponse"
     ],
     "type": "api-reference"
   },
@@ -4776,7 +4796,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "OnCycleChecksResponse"
     ],
     "type": "api-reference"
   },
@@ -5208,7 +5229,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "GetTimeOffStatusDTORequest"
     ],
     "type": "api-reference"
   },
@@ -5481,7 +5503,8 @@
       "api",
       "http",
       "rest",
-      "openapi"
+      "openapi",
+      "BulkModifyTimeOffStatusesRequest"
     ],
     "type": "api-reference"
   },
@@ -5591,7 +5614,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "CompanyBankingDetails"
     ],
     "type": "api-reference"
   },
@@ -5976,7 +6000,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "TpTransactionHistory"
     ],
     "type": "api-reference"
   },

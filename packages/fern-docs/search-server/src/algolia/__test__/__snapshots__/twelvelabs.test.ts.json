@@ -2289,6 +2289,7 @@
       "rest",
       "openapi",
       "json",
+      "IndexesCreateRequestEnginesItem",
       "IndexesCreateRequestBadRequestErrorBody"
     ],
     "type": "api-reference"
@@ -2349,6 +2350,7 @@
       "rest",
       "openapi",
       "json",
+      "IndexesCreateRequestEnginesItem",
       "IndexesCreateRequestBadRequestErrorBody"
     ],
     "type": "api-reference",
@@ -2635,6 +2637,7 @@
       "rest",
       "openapi",
       "json",
+      "VideosListRequestMetadataValue",
       "VideosListRequestBadRequestErrorBody"
     ],
     "type": "api-reference"
@@ -2699,6 +2702,7 @@
       "rest",
       "openapi",
       "json",
+      "VideosListRequestMetadataValue",
       "VideosListRequestBadRequestErrorBody"
     ],
     "type": "api-reference",
@@ -3856,6 +3860,12 @@
       "rest",
       "openapi",
       "json",
+      "SearchQueryRequestSearchOptionsItem",
+      "SearchQueryRequestGroupBy",
+      "ThresholdSearch",
+      "SearchQueryRequestSortOption",
+      "SearchQueryRequestOperator",
+      "ConversationOptionAnyToVideo",
       "SearchQueryRequestBadRequestErrorBody"
     ],
     "type": "api-reference"
@@ -3916,6 +3926,12 @@
       "rest",
       "openapi",
       "json",
+      "SearchQueryRequestSearchOptionsItem",
+      "SearchQueryRequestGroupBy",
+      "ThresholdSearch",
+      "SearchQueryRequestSortOption",
+      "SearchQueryRequestOperator",
+      "ConversationOptionAnyToVideo",
       "SearchQueryRequestBadRequestErrorBody"
     ],
     "type": "api-reference",

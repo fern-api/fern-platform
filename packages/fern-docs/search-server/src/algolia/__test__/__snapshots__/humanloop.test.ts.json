@@ -37246,6 +37246,10 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "ChatMessage",
+      "PromptLogRequestToolChoice",
+      "PromptKernelRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -37307,6 +37311,9 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "ChatMessage",
+      "PromptLogUpdateRequestToolChoice",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -37368,6 +37375,10 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "PromptsCallRequestToolChoice",
+      "PromptKernelRequest",
+      "ProviderApiKeys",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -37429,6 +37440,10 @@
       "rest",
       "openapi",
       "stream",
+      "ChatMessage",
+      "PromptsCallStreamRequestToolChoice",
+      "PromptKernelRequest",
+      "ProviderApiKeys",
       "PromptCallStreamResponse",
       "HttpValidationError"
     ],
@@ -37491,6 +37506,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -37552,6 +37569,12 @@
       "rest",
       "openapi",
       "json",
+      "ModelEndpoints",
+      "PromptRequestTemplate",
+      "ModelProviders",
+      "PromptRequestStop",
+      "ResponseFormat",
+      "ToolFunction",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -37794,6 +37817,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38097,6 +38121,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38158,6 +38183,7 @@
       "rest",
       "openapi",
       "json",
+      "ToolKernelRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38280,6 +38306,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38341,6 +38369,8 @@
       "rest",
       "openapi",
       "json",
+      "ToolFunction",
+      "FilesToolType",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38583,6 +38613,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38886,6 +38917,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -38947,6 +38979,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -39008,6 +39042,8 @@
       "rest",
       "openapi",
       "json",
+      "CreateDatapointRequest",
+      "UpdateDatesetAction",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -39311,6 +39347,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -39614,6 +39651,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -39675,6 +39713,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -39736,6 +39776,7 @@
       "rest",
       "openapi",
       "json",
+      "SrcExternalAppModelsV5EvaluatorsEvaluatorRequestSpec",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -39978,6 +40019,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -40220,6 +40262,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -40281,6 +40324,8 @@
       "rest",
       "openapi",
       "json",
+      "CreateEvaluatorLogRequestJudgment",
+      "CreateEvaluatorLogRequestSpec",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -40523,6 +40568,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -40645,6 +40692,8 @@
       "rest",
       "openapi",
       "json",
+      "FlowKernelRequest",
+      "TraceStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -40706,6 +40755,7 @@
       "rest",
       "openapi",
       "json",
+      "TraceStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -40767,6 +40817,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41009,6 +41060,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41131,6 +41183,9 @@
       "rest",
       "openapi",
       "json",
+      "FileType",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41253,6 +41308,10 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationsDatasetRequest",
+      "EvaluateeRequest",
+      "EvaluationsRequest",
+      "FileRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41434,6 +41493,10 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationsDatasetRequest",
+      "EvaluateeRequest",
+      "EvaluationsRequest",
+      "FileRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41495,6 +41558,7 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41678,6 +41742,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41859,6 +41924,10 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "ChatMessage",
+      "PromptLogRequestToolChoice",
+      "PromptKernelRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41920,6 +41989,9 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "ChatMessage",
+      "PromptLogUpdateRequestToolChoice",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -41981,6 +42053,10 @@
       "rest",
       "openapi",
       "json",
+      "ChatMessage",
+      "PromptsCallRequestToolChoice",
+      "PromptKernelRequest",
+      "ProviderApiKeys",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42042,6 +42118,10 @@
       "rest",
       "openapi",
       "stream",
+      "ChatMessage",
+      "PromptsCallStreamRequestToolChoice",
+      "PromptKernelRequest",
+      "ProviderApiKeys",
       "PromptCallStreamResponse",
       "HttpValidationError"
     ],
@@ -42104,6 +42184,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42165,6 +42247,12 @@
       "rest",
       "openapi",
       "json",
+      "ModelEndpoints",
+      "PromptRequestTemplate",
+      "ModelProviders",
+      "PromptRequestStop",
+      "ResponseFormat",
+      "ToolFunction",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42407,6 +42495,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42710,6 +42799,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42771,6 +42861,7 @@
       "rest",
       "openapi",
       "json",
+      "ToolKernelRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42893,6 +42984,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -42954,6 +43047,8 @@
       "rest",
       "openapi",
       "json",
+      "ToolFunction",
+      "FilesToolType",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -43196,6 +43291,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -43499,6 +43595,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -43560,6 +43657,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -43621,6 +43720,8 @@
       "rest",
       "openapi",
       "json",
+      "CreateDatapointRequest",
+      "UpdateDatesetAction",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -43924,6 +44025,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -44227,6 +44329,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -44288,6 +44391,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -44349,6 +44454,7 @@
       "rest",
       "openapi",
       "json",
+      "SrcExternalAppModelsV5EvaluatorsEvaluatorRequestSpec",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -44591,6 +44697,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -44833,6 +44940,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -44894,6 +45002,8 @@
       "rest",
       "openapi",
       "json",
+      "CreateEvaluatorLogRequestJudgment",
+      "CreateEvaluatorLogRequestSpec",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45136,6 +45246,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45258,6 +45370,8 @@
       "rest",
       "openapi",
       "json",
+      "FlowKernelRequest",
+      "TraceStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45319,6 +45433,7 @@
       "rest",
       "openapi",
       "json",
+      "TraceStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45380,6 +45495,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45622,6 +45738,7 @@
       "rest",
       "openapi",
       "json",
+      "FileEnvironmentResponse",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45744,6 +45861,9 @@
       "rest",
       "openapi",
       "json",
+      "FileType",
+      "ProjectSortBy",
+      "SortOrder",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -45866,6 +45986,10 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationsDatasetRequest",
+      "EvaluateeRequest",
+      "EvaluationsRequest",
+      "FileRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -46047,6 +46171,10 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationsDatasetRequest",
+      "EvaluateeRequest",
+      "EvaluationsRequest",
+      "FileRequest",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -46108,6 +46236,7 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -46291,6 +46420,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HttpValidationError"
     ],
     "type": "api-reference"
@@ -46472,6 +46602,12 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
+      "ChatMessageWithToolCall",
+      "ChatsCreateRequestToolChoice",
+      "ChatsCreateRequestToolCall",
+      "ResponseFormat",
+      "ModelConfigChatRequest",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -46533,6 +46669,12 @@
       "rest",
       "openapi",
       "stream",
+      "ProviderApiKeys",
+      "ChatMessageWithToolCall",
+      "ChatsCreateStreamRequestToolChoice",
+      "ChatsCreateStreamRequestToolCall",
+      "ResponseFormat",
+      "ModelConfigChatRequest",
       "ChatResponse",
       "HTTPValidationError"
     ],
@@ -46595,6 +46737,11 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
+      "ChatMessageWithToolCall",
+      "ChatsCreateDeployedRequestToolChoice",
+      "ChatsCreateDeployedRequestToolCall",
+      "ResponseFormat",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -46656,6 +46803,11 @@
       "rest",
       "openapi",
       "stream",
+      "ProviderApiKeys",
+      "ChatMessageWithToolCall",
+      "ChatsCreateDeployedStreamRequestToolChoice",
+      "ChatsCreateDeployedStreamRequestToolCall",
+      "ResponseFormat",
       "ChatResponse",
       "HTTPValidationError"
     ],
@@ -46718,6 +46870,11 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
+      "ChatMessageWithToolCall",
+      "ChatsCreateConfigRequestToolChoice",
+      "ChatsCreateConfigRequestToolCall",
+      "ResponseFormat",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -46779,6 +46936,11 @@
       "rest",
       "openapi",
       "stream",
+      "ProviderApiKeys",
+      "ChatMessageWithToolCall",
+      "ChatsCreateConfigStreamRequestToolChoice",
+      "ChatsCreateConfigStreamRequestToolCall",
+      "ResponseFormat",
       "ChatResponse",
       "HTTPValidationError"
     ],
@@ -46960,6 +47122,8 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
+      "ModelConfigCompletionRequest",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -47021,6 +47185,8 @@
       "rest",
       "openapi",
       "stream",
+      "ProviderApiKeys",
+      "ModelConfigCompletionRequest",
       "CompletionResponse",
       "HTTPValidationError"
     ],
@@ -47083,6 +47249,7 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -47144,6 +47311,7 @@
       "rest",
       "openapi",
       "stream",
+      "ProviderApiKeys",
       "CompletionResponse",
       "HTTPValidationError"
     ],
@@ -47206,6 +47374,7 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -47267,6 +47436,7 @@
       "rest",
       "openapi",
       "stream",
+      "ProviderApiKeys",
       "CompletionResponse",
       "HTTPValidationError"
     ],
@@ -47632,6 +47802,7 @@
       "rest",
       "openapi",
       "json",
+      "DatasetResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -47694,6 +47865,7 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -47755,6 +47927,8 @@
       "rest",
       "openapi",
       "json",
+      "ProjectSortBy",
+      "SortOrder",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -48058,6 +48232,7 @@
       "rest",
       "openapi",
       "json",
+      "ProjectConfigResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -48119,6 +48294,8 @@
       "rest",
       "openapi",
       "json",
+      "FeedbackClass",
+      "FeedbackLabelRequest",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -48437,6 +48614,7 @@
       "rest",
       "openapi",
       "json",
+      "EnvironmentProjectConfigResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -48502,6 +48680,8 @@
       "rest",
       "openapi",
       "json",
+      "EnvironmentRequest",
+      "EnvironmentProjectConfigResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -48689,6 +48869,7 @@
       "rest",
       "openapi",
       "json",
+      "DatasetResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -48994,6 +49175,7 @@
       "rest",
       "openapi",
       "json",
+      "DatapointResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49177,6 +49359,7 @@
       "rest",
       "openapi",
       "json",
+      "ProviderApiKeys",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49238,6 +49421,7 @@
       "rest",
       "openapi",
       "json",
+      "LogRequest",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49299,6 +49483,7 @@
       "rest",
       "openapi",
       "json",
+      "CreateEvaluationResultLogRequestResult",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49360,6 +49545,7 @@
       "rest",
       "openapi",
       "json",
+      "EvaluationStatus",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49543,6 +49729,7 @@
       "rest",
       "openapi",
       "json",
+      "EvaluatorResponse",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49604,6 +49791,10 @@
       "rest",
       "openapi",
       "json",
+      "EvaluatorArgumentsType",
+      "EvaluatorReturnTypeEnum",
+      "ModelConfigCompletionRequest",
+      "EvaluatorType",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49785,6 +49976,9 @@
       "rest",
       "openapi",
       "json",
+      "EvaluatorArgumentsType",
+      "EvaluatorReturnTypeEnum",
+      "ModelConfigCompletionRequest",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -49907,6 +50101,7 @@
       "rest",
       "openapi",
       "json",
+      "VersionStatus",
       "HTTPValidationError"
     ],
     "type": "api-reference"
@@ -50270,6 +50465,12 @@
       "rest",
       "openapi",
       "json",
+      "ModelProviders",
+      "ProjectModelConfigRequestStop",
+      "ResponseFormat",
+      "ChatMessageWithToolCall",
+      "ModelEndpoints",
+      "ProjectModelConfigRequestToolsItem",
       "HTTPValidationError"
     ],
     "type": "api-reference"

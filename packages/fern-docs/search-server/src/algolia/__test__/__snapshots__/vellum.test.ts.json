@@ -15316,6 +15316,9 @@
       "rest",
       "openapi",
       "json",
+      "PromptDeploymentInputRequest",
+      "PromptDeploymentExpandMetaRequest",
+      "RawPromptExecutionOverridesRequest",
       "ExecutePromptApiErrorResponse",
       "ExecutePromptApiErrorResponse",
       "ExecutePromptApiErrorResponse",
@@ -15376,6 +15379,9 @@
       "rest",
       "openapi",
       "stream",
+      "PromptDeploymentInputRequest",
+      "PromptDeploymentExpandMetaRequest",
+      "RawPromptExecutionOverridesRequest",
       "ExecutePromptEvent",
       "ExecutePromptApiErrorResponse",
       "ExecutePromptApiErrorResponse",
@@ -15435,6 +15441,7 @@
       "http",
       "rest",
       "openapi",
+      "SubmitCompletionActualRequest",
       "SubmitCompletionActualsErrorResponse",
       "SubmitCompletionActualsErrorResponse",
       "SubmitCompletionActualsErrorResponse"
@@ -15494,6 +15501,8 @@
       "rest",
       "openapi",
       "json",
+      "PromptDeploymentInputRequest",
+      "CompilePromptDeploymentExpandMetaRequest",
       "ExecutePromptApiErrorResponse",
       "ExecutePromptApiErrorResponse",
       "ExecutePromptApiErrorResponse",
@@ -15616,7 +15625,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "NamedScenarioInputRequest"
     ],
     "type": "api-reference"
   },
@@ -15734,7 +15744,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "DeploymentsListRequestStatus"
     ],
     "type": "api-reference"
   },
@@ -15971,6 +15982,8 @@
       "rest",
       "openapi",
       "json",
+      "WorkflowRequestInputRequest",
+      "WorkflowExpandMetaRequest",
       "ExecuteWorkflowErrorResponse"
     ],
     "type": "api-reference"
@@ -16028,6 +16041,9 @@
       "rest",
       "openapi",
       "stream",
+      "WorkflowRequestInputRequest",
+      "WorkflowExpandMetaRequest",
+      "WorkflowExecutionEventType",
       "WorkflowStreamEvent",
       "ExecuteWorkflowStreamErrorResponse",
       "ExecuteWorkflowStreamErrorResponse"
@@ -16084,7 +16100,8 @@
       "api",
       "http",
       "rest",
-      "openapi"
+      "openapi",
+      "SubmitWorkflowExecutionActualRequest"
     ],
     "type": "api-reference"
   },
@@ -16203,7 +16220,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "WorkflowDeploymentsListRequestStatus"
     ],
     "type": "api-reference"
   },
@@ -16440,6 +16458,7 @@
       "rest",
       "openapi",
       "json",
+      "SearchRequestOptionsRequest",
       "SearchErrorResponse",
       "SearchErrorResponse",
       "SearchErrorResponse"
@@ -16552,7 +16571,10 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "EntityStatus",
+      "EnvironmentEnum",
+      "DocumentIndexIndexingConfigRequest"
     ],
     "type": "api-reference"
   },
@@ -16664,7 +16686,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "DocumentIndexesListRequestStatus"
     ],
     "type": "api-reference"
   },
@@ -16720,7 +16743,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "EntityStatus",
+      "EnvironmentEnum"
     ],
     "type": "api-reference"
   },
@@ -16776,7 +16801,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "EntityStatus",
+      "EnvironmentEnum"
     ],
     "type": "api-reference"
   },
@@ -17111,7 +17138,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "DocumentStatus"
     ],
     "type": "api-reference"
   },
@@ -17345,7 +17373,9 @@
       "http",
       "rest",
       "openapi",
-      "stream"
+      "stream",
+      "TestSuiteTestCaseBulkOperationRequest",
+      "TestSuiteTestCaseBulkResult"
     ],
     "type": "api-reference"
   },
@@ -17463,7 +17493,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "TestSuiteRunExecConfigRequest"
     ],
     "type": "api-reference"
   },
@@ -17692,7 +17723,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FolderEntitiesListRequestEntityStatus"
     ],
     "type": "api-reference"
   },

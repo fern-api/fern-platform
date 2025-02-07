@@ -5620,6 +5620,10 @@
       "rest",
       "openapi",
       "json",
+      "Currency",
+      "OrderDetailsApiSchema",
+      "CheckoutCustomerDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -5678,6 +5682,9 @@
       "rest",
       "openapi",
       "json",
+      "CheckoutCustomerDetailsApiSchema",
+      "OrderDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -5742,6 +5749,8 @@
       "rest",
       "openapi",
       "json",
+      "PaymentStatus",
+      "PaymentMethodTypeEnum",
       "four_hundred_twenty_two_ErrorResponse"
     ],
     "type": "api-reference"
@@ -5799,6 +5808,10 @@
       "rest",
       "openapi",
       "json",
+      "Currency",
+      "OrderDetailsApiSchema",
+      "CustomerDetailsApiSchema",
+      "PaymentRequestPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -5857,6 +5870,7 @@
       "rest",
       "openapi",
       "json",
+      "PaymentAuthorizationRequestProcessorApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_four_ErrorResponse",
       "four_hundred_nine_ErrorResponse",
@@ -5917,6 +5931,7 @@
       "rest",
       "openapi",
       "json",
+      "PaymentCaptureApiRequestOrder",
       "four_hundred_ErrorResponse",
       "four_hundred_nine_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
@@ -6550,7 +6565,14 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "PaymentsInsightsPatchedPaymentCurrencyCode",
+      "PaymentsInsightsProcessor",
+      "PaymentsInsightsOrder",
+      "PaymentsInsightsPatchedPaymentStatus",
+      "PaymentsInsightsStatusReason",
+      "PaymentsInsightsPaymentMethod",
+      "PaymentsInsightsPatchedPaymentPaymentType"
     ],
     "type": "api-reference"
   },
@@ -6722,6 +6744,7 @@
       "rest",
       "openapi",
       "json",
+      "LoyaltyTransactionTypeEnum",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -7002,6 +7025,10 @@
       "rest",
       "openapi",
       "json",
+      "Currency",
+      "OrderDetailsApiSchema",
+      "CheckoutCustomerDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -7060,6 +7087,9 @@
       "rest",
       "openapi",
       "json",
+      "CheckoutCustomerDetailsApiSchema",
+      "OrderDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -7124,6 +7154,8 @@
       "rest",
       "openapi",
       "json",
+      "PaymentStatus",
+      "PaymentMethodTypeEnum",
       "four_hundred_twenty_two_ErrorResponse"
     ],
     "type": "api-reference"
@@ -7181,6 +7213,10 @@
       "rest",
       "openapi",
       "json",
+      "Currency",
+      "OrderDetailsApiSchema",
+      "CustomerDetailsApiSchema",
+      "PaymentRequestPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -7239,6 +7275,7 @@
       "rest",
       "openapi",
       "json",
+      "PaymentAuthorizationRequestProcessorApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_four_ErrorResponse",
       "four_hundred_nine_ErrorResponse",
@@ -7299,6 +7336,7 @@
       "rest",
       "openapi",
       "json",
+      "PaymentCaptureApiRequestOrder",
       "four_hundred_ErrorResponse",
       "four_hundred_nine_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
@@ -7932,7 +7970,14 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "PaymentsInsightsPatchedPaymentCurrencyCode",
+      "PaymentsInsightsProcessor",
+      "PaymentsInsightsOrder",
+      "PaymentsInsightsPatchedPaymentStatus",
+      "PaymentsInsightsStatusReason",
+      "PaymentsInsightsPaymentMethod",
+      "PaymentsInsightsPatchedPaymentPaymentType"
     ],
     "type": "api-reference"
   },
@@ -8104,6 +8149,7 @@
       "rest",
       "openapi",
       "json",
+      "LoyaltyTransactionTypeEnum",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -8384,6 +8430,10 @@
       "rest",
       "openapi",
       "json",
+      "Currency",
+      "OrderDetailsApiSchema",
+      "CheckoutCustomerDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -8442,6 +8492,9 @@
       "rest",
       "openapi",
       "json",
+      "CheckoutCustomerDetailsApiSchema",
+      "OrderDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -8506,6 +8559,8 @@
       "rest",
       "openapi",
       "json",
+      "PaymentStatus",
+      "PaymentMethodTypeEnum",
       "four_hundred_twenty_two_ErrorResponse"
     ],
     "type": "api-reference"
@@ -8563,6 +8618,10 @@
       "rest",
       "openapi",
       "json",
+      "Currency",
+      "OrderDetailsApiSchema",
+      "CustomerDetailsApiSchema",
+      "PaymentRequestPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -8621,6 +8680,7 @@
       "rest",
       "openapi",
       "json",
+      "PaymentAuthorizationRequestProcessorApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_four_ErrorResponse",
       "four_hundred_nine_ErrorResponse",
@@ -8681,6 +8741,7 @@
       "rest",
       "openapi",
       "json",
+      "PaymentCaptureApiRequestOrder",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -9310,7 +9371,14 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "PaymentsInsightsPatchedPaymentCurrencyCode",
+      "PaymentsInsightsProcessor",
+      "PaymentsInsightsOrder",
+      "PaymentsInsightsPatchedPaymentStatus",
+      "PaymentsInsightsStatusReason",
+      "PaymentsInsightsPaymentMethod",
+      "PaymentsInsightsPatchedPaymentPaymentType"
     ],
     "type": "api-reference"
   },
@@ -9482,6 +9550,7 @@
       "rest",
       "openapi",
       "json",
+      "LoyaltyTransactionTypeEnum",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -9762,6 +9831,9 @@
       "rest",
       "openapi",
       "json",
+      "OrderDetailsApiSchema",
+      "CheckoutCustomerDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -9820,6 +9892,9 @@
       "rest",
       "openapi",
       "json",
+      "CheckoutCustomerDetailsApiSchema",
+      "OrderDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -9884,6 +9959,8 @@
       "rest",
       "openapi",
       "json",
+      "PaymentStatus",
+      "PaymentMethodTypeEnum",
       "four_hundred_twenty_two_ErrorResponse"
     ],
     "type": "api-reference"
@@ -9941,6 +10018,9 @@
       "rest",
       "openapi",
       "json",
+      "OrderDetailsApiSchema",
+      "CustomerDetailsApiSchema",
+      "PaymentRequestPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -10517,7 +10597,9 @@
       "api",
       "http",
       "rest",
-      "openapi"
+      "openapi",
+      "PaymentStatusWebhookPayloadNotificationConfig",
+      "PaymentStatusWebhookPayloadPayment"
     ],
     "type": "api-reference"
   },
@@ -10571,7 +10653,9 @@
       "api",
       "http",
       "rest",
-      "openapi"
+      "openapi",
+      "PaymentRefundWebhookPayloadNotificationConfig",
+      "PaymentRefundWebhookPayloadPayment"
     ],
     "type": "api-reference"
   },
@@ -10688,6 +10772,9 @@
       "rest",
       "openapi",
       "json",
+      "OrderDetailsApiSchema",
+      "CheckoutCustomerDetailsApiSchema",
+      "CheckoutPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
@@ -10752,6 +10839,8 @@
       "rest",
       "openapi",
       "json",
+      "PaymentStatus",
+      "PaymentMethodTypeEnum",
       "four_hundred_twenty_two_ErrorResponse"
     ],
     "type": "api-reference"
@@ -10809,6 +10898,9 @@
       "rest",
       "openapi",
       "json",
+      "OrderDetailsApiSchema",
+      "CustomerDetailsApiSchema",
+      "PaymentRequestPaymentMethodOptionsApiSchema",
       "four_hundred_ErrorResponse",
       "four_hundred_twenty_two_ErrorResponse"
     ],
