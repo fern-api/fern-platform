@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@fern-docs/components/badges";
 import { ReactElement } from "react";
 import { noop } from "ts-essentials";
