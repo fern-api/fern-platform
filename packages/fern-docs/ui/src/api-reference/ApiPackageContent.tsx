@@ -4,6 +4,9 @@ import dynamic from "next/dynamic";
 import { type ReactNode } from "react";
 import { UnreachableCaseError } from "ts-essentials";
 import { DocsContent } from "../resolver/DocsContent";
+import { EndpointSkeleton } from "./skeletons/EndpointSkeleton";
+import { WebhookSkeleton } from "./skeletons/WebhookSkeleton";
+import { WebSocketSkeleton } from "./skeletons/WebSocketSkeleton";
 
 // TODO: implemenet suspense so that dynamic imports do not break the page layout on load
 const ApiSectionMarkdownPage = dynamic(
@@ -15,22 +18,20 @@ const ApiSectionMarkdownPage = dynamic(
 );
 const Endpoint = dynamic(
   () => import("./endpoints/Endpoint").then(({ Endpoint }) => Endpoint),
-  { ssr: true }
+  { ssr: true, loading: () => <EndpointSkeleton /> }
 );
 const Webhook = dynamic(
   () => import("./webhooks/Webhook").then(({ Webhook }) => Webhook),
-  { ssr: true }
+  { ssr: true, loading: () => <WebhookSkeleton /> }
 );
 const WebSocket = dynamic(
   () => import("./web-socket/WebSocket").then(({ WebSocket }) => WebSocket),
-  { ssr: true }
+  { ssr: true, loading: () => <WebSocketSkeleton /> }
 );
 const EndpointPair = dynamic(
   () =>
     import("./endpoints/EndpointPair").then(({ EndpointPair }) => EndpointPair),
-  {
-    ssr: true,
-  }
+  { ssr: true }
 );
 
 export type ApiPackageContentNode =
@@ -66,55 +67,51 @@ interface ApiPackageContentProps {
 export function ApiPackageContent(props: ApiPackageContentProps): ReactNode {
   const { node, mdxs, apiDefinition, breadcrumb, showErrors, last } = props;
 
-  switch (node.type) {
-    case "apiReference":
-    case "apiPackage": {
-      if (FernNavigation.hasMarkdown(node)) {
-        return <ApiSectionMarkdownPage node={node} mdxs={mdxs} last={last} />;
+  const renderContent = () => {
+    switch (node.type) {
+      case "apiReference":
+      case "apiPackage": {
+        if (FernNavigation.hasMarkdown(node)) {
+          return <ApiSectionMarkdownPage node={node} mdxs={mdxs} last={last} />;
+        }
+        return null;
       }
-      return null;
+      case "endpoint":
+        return <EndpointSkeleton />;
+      case "webhook":
+        return (
+          <Webhook
+            node={node}
+            apiDefinition={apiDefinition}
+            breadcrumb={breadcrumb}
+            last={last}
+          />
+        );
+      case "webSocket":
+        return (
+          <WebSocket
+            node={node}
+            apiDefinition={apiDefinition}
+            breadcrumb={breadcrumb}
+            last={last}
+          />
+        );
+      case "page":
+        return <ApiSectionMarkdownPage node={node} mdxs={mdxs} last={last} />;
+      case "endpointPair":
+        return (
+          <EndpointPair
+            node={node}
+            apiDefinition={apiDefinition}
+            breadcrumb={breadcrumb}
+            showErrors={showErrors}
+            last={last}
+          />
+        );
+      default:
+        throw new UnreachableCaseError(node);
     }
-    case "endpoint":
-      return (
-        <Endpoint
-          node={node}
-          apiDefinition={apiDefinition}
-          breadcrumb={breadcrumb}
-          showErrors={showErrors}
-          last={last}
-        />
-      );
-    case "webhook":
-      return (
-        <Webhook
-          node={node}
-          apiDefinition={apiDefinition}
-          breadcrumb={breadcrumb}
-          last={last}
-        />
-      );
-    case "webSocket":
-      return (
-        <WebSocket
-          node={node}
-          apiDefinition={apiDefinition}
-          breadcrumb={breadcrumb}
-          last={last}
-        />
-      );
-    case "page":
-      return <ApiSectionMarkdownPage node={node} mdxs={mdxs} last={last} />;
-    case "endpointPair":
-      return (
-        <EndpointPair
-          node={node}
-          apiDefinition={apiDefinition}
-          breadcrumb={breadcrumb}
-          showErrors={showErrors}
-          last={last}
-        />
-      );
-    default:
-      throw new UnreachableCaseError(node);
-  }
+  };
+
+  return renderContent();
 }
