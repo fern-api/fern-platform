@@ -9,7 +9,7 @@ interface PlaygroundEndpointAliasFormProps {
   alias: ApiDefinition.HttpRequestBodyShape.Alias;
   types: Record<ApiDefinition.TypeId, ApiDefinition.TypeDefinition>;
   ignoreHeaders: boolean;
-  setBodyJson: (value: unknown, exploded?: boolean) => void;
+  setBodyJson: (value: unknown) => void;
   value: unknown;
 }
 
