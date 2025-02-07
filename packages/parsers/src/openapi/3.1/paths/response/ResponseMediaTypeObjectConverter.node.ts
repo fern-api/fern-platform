@@ -128,20 +128,14 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[],
     ][]
   ) {
-    const requestExampleIndex = 0;
-    const responseExampleIndex = 0;
+    let requestExampleIndex = 0;
     for (const maybeRequestContainer of requestExamples) {
+      let responseExampleIndex = 0;
       for (const [
         responseExampleName,
         responseExampleList,
       ] of responseExamples) {
-        if (
-          responseExampleIndex === requestExampleIndex ||
-          (requestExampleIndex === responseExamples.length - 1 &&
-            responseExampleIndex >= requestExampleIndex) ||
-          (responseExampleIndex === responseExamples.length - 1 &&
-            requestExampleIndex >= responseExampleIndex)
-        ) {
+        if (responseExampleIndex === requestExampleIndex) {
           const [request, requestExampleName, requestExample] =
             maybeRequestContainer ?? [undefined, undefined, undefined];
 
@@ -175,6 +169,90 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
             )
           );
         }
+        responseExampleIndex++;
+      }
+      requestExampleIndex++;
+    }
+
+    if (requestExamples.length > responseExamples.length) {
+      for (const maybeRequestContainer of requestExamples.slice(
+        responseExamples.length
+      )) {
+        const [responseExampleName, responseExampleList] = responseExamples[
+          responseExamples.length - 1
+        ] ?? [undefined, undefined];
+        const [request, requestExampleName, requestExample] =
+          maybeRequestContainer ?? [undefined, undefined, undefined];
+        this.examples?.push(
+          ...(responseExampleList ?? [undefined]).map(
+            (responseExample) =>
+              new ExampleObjectConverterNode(
+                {
+                  input: {
+                    requestExample,
+                    responseExample,
+                  },
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId:
+                    requestExampleName != null && requestExampleName !== ""
+                      ? ["examples", requestExampleName]
+                      : "examples",
+                },
+                this.path,
+                this.statusCode,
+                getExampleName(requestExampleName, responseExampleName),
+                {
+                  requestBody: request,
+                  responseBody: this,
+                  pathParameters: this.shapes.pathParameters,
+                  queryParameters: this.shapes.queryParameters,
+                  requestHeaders: this.shapes.requestHeaders,
+                }
+              )
+          )
+        );
+      }
+    }
+
+    if (responseExamples.length > requestExamples.length) {
+      const [request, requestExampleName, requestExample] = requestExamples[
+        requestExamples.length - 1
+      ] ?? [undefined, undefined, undefined];
+
+      for (const [
+        responseExampleName,
+        responseExampleList,
+      ] of responseExamples.slice(requestExamples.length)) {
+        this.examples?.push(
+          ...responseExampleList.map(
+            (responseExample) =>
+              new ExampleObjectConverterNode(
+                {
+                  input: {
+                    requestExample,
+                    responseExample,
+                  },
+                  context: this.context,
+                  accessPath: this.accessPath,
+                  pathId:
+                    requestExampleName != null && requestExampleName !== ""
+                      ? ["examples", requestExampleName]
+                      : "examples",
+                },
+                this.path,
+                this.statusCode,
+                getExampleName(requestExampleName, responseExampleName),
+                {
+                  requestBody: request,
+                  responseBody: this,
+                  pathParameters: this.shapes.pathParameters,
+                  queryParameters: this.shapes.queryParameters,
+                  requestHeaders: this.shapes.requestHeaders,
+                }
+              )
+          )
+        );
       }
     }
   }
@@ -281,7 +359,15 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       string | symbol,
       (OpenAPIV3_1.ReferenceObject | OpenAPIV3_1.ExampleObject | undefined)[]
     > = {};
-    if (this.input.example != null) {
+
+    if (this.input.examples != null) {
+      responseExamples = mapValues(this.input.examples, (v) => [v]);
+    }
+
+    if (
+      this.input.example != null &&
+      Object.keys(responseExamples).length === 0
+    ) {
       responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
       responseExamples[GLOBAL_EXAMPLE_NAME] = [
         {
@@ -290,33 +376,27 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       ];
     }
 
-    if (this.input.examples != null) {
-      responseExamples = {
-        ...responseExamples,
-        ...mapValues(this.input.examples, (v) => [v]),
-      };
-    }
-
     const resolvedSchema = resolveSchemaReference(
       this.input.schema,
       this.context.document
     );
 
     if (resolvedSchema != null) {
-      if (resolvedSchema.example != null) {
+      if (
+        resolvedSchema.examples != null &&
+        Object.keys(responseExamples).length === 0
+      ) {
+        responseExamples = mapValues(resolvedSchema.examples, (v) => [v]);
+      }
+
+      if (
+        resolvedSchema.example != null &&
+        Object.keys(responseExamples).length === 0
+      ) {
         responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
         responseExamples[GLOBAL_EXAMPLE_NAME]?.push({
           value: resolvedSchema.example,
         });
-      }
-
-      if (resolvedSchema.examples != null) {
-        responseExamples[GLOBAL_EXAMPLE_NAME] ??= [];
-        responseExamples[GLOBAL_EXAMPLE_NAME]?.push(
-          ...resolvedSchema.examples.map((v) => ({
-            value: v,
-          }))
-        );
       }
     }
 
@@ -369,25 +449,19 @@ export class ResponseMediaTypeObjectConverterNode extends BaseOpenApiV3_1Convert
       );
     }
 
-    if (filteredRequestExamples.length === 0) {
-      filteredRequestExamples.push(undefined);
-    }
-
     const filteredResponseExamples = Object.entries(responseExamples).filter(
       ([exampleName, examples]) =>
         !matchedExampleNames.has(exampleName) && isNonNullish(examples)
     );
-
-    if (filteredResponseExamples.length === 0) {
-      filteredResponseExamples.push(["", [undefined]]);
-    }
 
     // Match based on index, saturating examples at the end of lists if mismatched
     this.matchExamplesByIndex(
       filteredRequestExamples,
       filteredResponseExamples
     );
-    this.addGlobalFallbackExample(this.requests, responseExamples);
+    if (!matchedExampleNames.has(GLOBAL_EXAMPLE_NAME)) {
+      this.addGlobalFallbackExample(this.requests, responseExamples);
+    }
 
     if (this.examples.length === 0) {
       this.examples = undefined;

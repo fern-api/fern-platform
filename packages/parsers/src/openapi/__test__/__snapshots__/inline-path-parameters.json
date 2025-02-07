@@ -39,6 +39,7 @@
           }
         }
       ],
+      "examples": [],
       "protocol": {
         "type": "rest"
       }

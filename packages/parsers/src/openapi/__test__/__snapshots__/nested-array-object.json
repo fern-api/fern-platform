@@ -72,6 +72,21 @@
           }
         }
       ],
+      "examples": [
+        {
+          "path": "/test/nested/array-object",
+          "responseStatusCode": 0,
+          "requestBody": {
+            "type": "json",
+            "value": [
+              {
+                "a": "a",
+                "b": "b"
+              }
+            ]
+          }
+        }
+      ],
       "protocol": {
         "type": "rest"
       }

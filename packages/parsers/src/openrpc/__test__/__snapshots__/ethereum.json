@@ -845,6 +845,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Transaction",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -854,6 +855,7 @@
                       }
                     },
                     {
+                      "displayName": "Transaction Hash",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -1783,6 +1785,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -1792,6 +1795,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -2376,6 +2380,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -2385,6 +2390,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -2579,6 +2585,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -2588,6 +2595,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3158,6 +3166,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3167,6 +3176,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3297,6 +3307,7 @@
                         "type": "undiscriminatedUnion",
                         "variants": [
                           {
+                            "displayName": "Address",
                             "shape": {
                               "type": "alias",
                               "value": {
@@ -3306,6 +3317,7 @@
                             }
                           },
                           {
+                            "displayName": "Addresses",
                             "shape": {
                               "type": "alias",
                               "value": {
@@ -3443,6 +3455,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3452,6 +3465,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3655,6 +3669,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3664,6 +3679,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3876,6 +3892,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -3885,6 +3902,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -4364,6 +4382,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -4373,6 +4392,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -4486,6 +4506,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "Block Number",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -4495,6 +4516,7 @@
                       }
                     },
                     {
+                      "displayName": "Block Number Tag",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -4994,6 +5016,7 @@
                         "type": "undiscriminatedUnion",
                         "variants": [
                           {
+                            "displayName": "Address",
                             "shape": {
                               "type": "alias",
                               "value": {
@@ -5003,6 +5026,7 @@
                             }
                           },
                           {
+                            "displayName": "Addresses",
                             "shape": {
                               "type": "alias",
                               "value": {

@@ -7459,6 +7459,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -7519,6 +7520,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -7693,6 +7695,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -7753,6 +7756,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -7918,6 +7922,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -7978,6 +7983,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -8089,6 +8095,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -8149,6 +8156,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnUserDefinedTool",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -8323,6 +8331,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -8383,6 +8392,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -8557,6 +8567,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -8617,6 +8628,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -8782,6 +8794,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -8842,6 +8855,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -8953,6 +8967,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -9013,6 +9028,7 @@
       "rest",
       "openapi",
       "json",
+      "ReturnPrompt",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -9763,6 +9779,14 @@
       "rest",
       "openapi",
       "json",
+      "PostedConfigPromptSpec",
+      "PostedVoice",
+      "PostedLanguageModel",
+      "PostedEllmModel",
+      "PostedUserDefinedToolSpec",
+      "PostedBuiltinTool",
+      "PostedEventMessageSpecs",
+      "PostedTimeoutSpecs",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -9823,6 +9847,14 @@
       "rest",
       "openapi",
       "json",
+      "PostedConfigPromptSpec",
+      "PostedVoice",
+      "PostedLanguageModel",
+      "PostedEllmModel",
+      "PostedUserDefinedToolSpec",
+      "PostedBuiltinTool",
+      "PostedEventMessageSpecs",
+      "PostedTimeoutSpecs",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -9997,6 +10029,14 @@
       "rest",
       "openapi",
       "json",
+      "PostedConfigPromptSpec",
+      "PostedVoice",
+      "PostedLanguageModel",
+      "PostedEllmModel",
+      "PostedUserDefinedToolSpec",
+      "PostedBuiltinTool",
+      "PostedEventMessageSpecs",
+      "PostedTimeoutSpecs",
       "ErrorResponse"
     ],
     "type": "api-reference"
@@ -10057,6 +10097,14 @@
       "rest",
       "openapi",
       "json",
+      "PostedConfigPromptSpec",
+      "PostedVoice",
+      "PostedLanguageModel",
+      "PostedEllmModel",
+      "PostedUserDefinedToolSpec",
+      "PostedBuiltinTool",
+      "PostedEventMessageSpecs",
+      "PostedTimeoutSpecs",
       "ErrorResponse"
     ],
     "type": "api-reference",
@@ -11382,7 +11430,12 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "Status",
+      "When",
+      "SortBy",
+      "Direction",
+      "UnionJob"
     ],
     "type": "api-reference"
   },
@@ -11547,7 +11600,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "UnionPredictResult"
     ],
     "type": "api-reference"
   },
@@ -11657,7 +11711,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "InferenceBaseRequest"
     ],
     "type": "api-reference"
   },
@@ -11881,7 +11936,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FileWithAttributesInput",
+      "FileWithAttributes"
     ],
     "type": "api-reference"
   },
@@ -11940,7 +11997,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FileWithAttributesInput",
+      "FileWithAttributes"
     ],
     "type": "api-reference",
     "hash": "#request"
@@ -12000,7 +12059,9 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FileWithAttributesInput",
+      "FileWithAttributes"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -12976,7 +13037,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ReturnDataset"
     ],
     "type": "api-reference"
   },
@@ -13035,7 +13097,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ReturnDataset"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -13321,7 +13384,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FilePage"
     ],
     "type": "api-reference"
   },
@@ -13380,7 +13444,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FilePage"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -13551,7 +13616,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FilePage"
     ],
     "type": "api-reference"
   },
@@ -13610,7 +13676,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "FilePage"
     ],
     "type": "api-reference",
     "hash": "#response"
@@ -14011,7 +14078,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ExternalModelVersion"
     ],
     "type": "api-reference"
   },
@@ -14070,7 +14138,8 @@
       "http",
       "rest",
       "openapi",
-      "json"
+      "json",
+      "ExternalModelVersion"
     ],
     "type": "api-reference",
     "hash": "#response"

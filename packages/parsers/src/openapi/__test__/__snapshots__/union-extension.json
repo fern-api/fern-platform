@@ -10,6 +10,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Iban Field",
             "shape": {
               "type": "alias",
               "value": {
@@ -19,6 +20,7 @@
             }
           },
           {
+            "displayName": "Other Field",
             "shape": {
               "type": "alias",
               "value": {

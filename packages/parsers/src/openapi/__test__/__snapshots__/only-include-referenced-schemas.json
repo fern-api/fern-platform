@@ -9012,16 +9012,6 @@
               "referrer": null
             }
           }
-        },
-        {
-          "path": "/contacts/63a07ddf05a32042dffac965",
-          "responseStatusCode": 200,
-          "pathParameters": {
-            "id": "63a07ddf05a32042dffac965"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          }
         }
       ],
       "protocol": {
@@ -9410,13 +9400,6 @@
               "referrer": null
             }
           }
-        },
-        {
-          "path": "/contacts/merge",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
-          }
         }
       ],
       "protocol": {
@@ -9568,13 +9551,6 @@
                 "total_pages": 0
               }
             }
-          }
-        },
-        {
-          "path": "/contacts/search",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
           }
         }
       ],
@@ -9940,13 +9916,6 @@
               "utm_term": null,
               "referrer": null
             }
-          }
-        },
-        {
-          "path": "/contacts",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
           }
         }
       ],
@@ -12202,13 +12171,6 @@
               ]
             }
           }
-        },
-        {
-          "path": "/conversations/search",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
-          }
         }
       ],
       "protocol": {
@@ -12530,623 +12492,7 @@
         {
           "path": "/conversations/123 or \"last\"/reply",
           "responseStatusCode": 200,
-          "name": "User Reply",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "388",
-              "created_at": 1719492852,
-              "updated_at": 1719492853,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918270",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267596",
-                  "name": "Ciaran183 Lee",
-                  "email": "admin183@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f38a68186f43bafdf5",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "100",
-                    "part_type": "note",
-                    "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
-                    "created_at": 1719492853,
-                    "updated_at": 1719492853,
-                    "notified_at": 1719492853,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267596",
-                      "type": "admin",
-                      "name": "Ciaran183 Lee",
-                      "email": "admin183@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "User Reply",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "390",
-              "created_at": 1719492855,
-              "updated_at": 1719492856,
-              "waiting_since": 1719492856,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918272",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267600",
-                  "name": "Ciaran185 Lee",
-                  "email": "admin185@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f78a68186f43bafdf7",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": {
-                "created_at": 1719492856,
-                "type": "conversation",
-                "url": null
-              },
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "101",
-                    "part_type": "open",
-                    "body": "<p>Thanks again :)</p>",
-                    "created_at": 1719492856,
-                    "updated_at": 1719492856,
-                    "notified_at": 1719492856,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "667d60f78a68186f43bafdf7",
-                      "type": "user",
-                      "name": "Joe Bloggs",
-                      "email": "joe@bloggs.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
           "name": "Admin Note Reply",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "387",
-              "created_at": 1719492849,
-              "updated_at": 1719492850,
-              "waiting_since": 1719492850,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918269",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267594",
-                  "name": "Ciaran182 Lee",
-                  "email": "admin182@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f18a68186f43bafdf4",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": {
-                "created_at": 1719492850,
-                "type": "conversation",
-                "url": null
-              },
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "99",
-                    "part_type": "open",
-                    "body": "<p>Thanks again :)</p>",
-                    "created_at": 1719492850,
-                    "updated_at": 1719492850,
-                    "notified_at": 1719492850,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "667d60f18a68186f43bafdf4",
-                      "type": "user",
-                      "name": "Joe Bloggs",
-                      "email": "joe@bloggs.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "Admin Note Reply",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "388",
-              "created_at": 1719492852,
-              "updated_at": 1719492853,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918270",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267596",
-                  "name": "Ciaran183 Lee",
-                  "email": "admin183@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f38a68186f43bafdf5",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "100",
-                    "part_type": "note",
-                    "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
-                    "created_at": 1719492853,
-                    "updated_at": 1719492853,
-                    "notified_at": 1719492853,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267596",
-                      "type": "admin",
-                      "name": "Ciaran183 Lee",
-                      "email": "admin183@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "Admin Note Reply",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "390",
-              "created_at": 1719492855,
-              "updated_at": 1719492856,
-              "waiting_since": 1719492856,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918272",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267600",
-                  "name": "Ciaran185 Lee",
-                  "email": "admin185@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f78a68186f43bafdf7",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": {
-                "created_at": 1719492856,
-                "type": "conversation",
-                "url": null
-              },
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "101",
-                    "part_type": "open",
-                    "body": "<p>Thanks again :)</p>",
-                    "created_at": 1719492856,
-                    "updated_at": 1719492856,
-                    "notified_at": 1719492856,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "667d60f78a68186f43bafdf7",
-                      "type": "user",
-                      "name": "Joe Bloggs",
-                      "email": "joe@bloggs.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "User Last Conversation Reply",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "387",
-              "created_at": 1719492849,
-              "updated_at": 1719492850,
-              "waiting_since": 1719492850,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918269",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267594",
-                  "name": "Ciaran182 Lee",
-                  "email": "admin182@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f18a68186f43bafdf4",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": {
-                "created_at": 1719492850,
-                "type": "conversation",
-                "url": null
-              },
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "99",
-                    "part_type": "open",
-                    "body": "<p>Thanks again :)</p>",
-                    "created_at": 1719492850,
-                    "updated_at": 1719492850,
-                    "notified_at": 1719492850,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "667d60f18a68186f43bafdf4",
-                      "type": "user",
-                      "name": "Joe Bloggs",
-                      "email": "joe@bloggs.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "User Last Conversation Reply",
           "pathParameters": {
             "id": "123 or \"last\""
           },
@@ -13336,210 +12682,6 @@
                       "type": "user",
                       "name": "Joe Bloggs",
                       "email": "joe@bloggs.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "Not Found",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "387",
-              "created_at": 1719492849,
-              "updated_at": 1719492850,
-              "waiting_since": 1719492850,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918269",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267594",
-                  "name": "Ciaran182 Lee",
-                  "email": "admin182@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f18a68186f43bafdf4",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": {
-                "created_at": 1719492850,
-                "type": "conversation",
-                "url": null
-              },
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "99",
-                    "part_type": "open",
-                    "body": "<p>Thanks again :)</p>",
-                    "created_at": 1719492850,
-                    "updated_at": 1719492850,
-                    "notified_at": 1719492850,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "667d60f18a68186f43bafdf4",
-                      "type": "user",
-                      "name": "Joe Bloggs",
-                      "email": "joe@bloggs.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123 or \"last\"/reply",
-          "responseStatusCode": 200,
-          "name": "Not Found",
-          "pathParameters": {
-            "id": "123 or \"last\""
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "388",
-              "created_at": 1719492852,
-              "updated_at": 1719492853,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918270",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267596",
-                  "name": "Ciaran183 Lee",
-                  "email": "admin183@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60f38a68186f43bafdf5",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "100",
-                    "part_type": "note",
-                    "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
-                    "created_at": 1719492853,
-                    "updated_at": 1719492853,
-                    "notified_at": 1719492853,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267596",
-                      "type": "admin",
-                      "name": "Ciaran183 Lee",
-                      "email": "admin183@email.com"
                     },
                     "attachments": [],
                     "external_id": null,
@@ -13980,336 +13122,6 @@
         {
           "path": "/conversations/123/parts",
           "responseStatusCode": 200,
-          "name": "Close a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "close",
-              "type": "admin",
-              "admin_id": 991267608,
-              "body": "Goodbye :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "395",
-              "created_at": 1719492864,
-              "updated_at": 1719492864,
-              "waiting_since": null,
-              "snoozed_until": 1719496464,
-              "source": {
-                "type": "conversation",
-                "id": "403918277",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267610",
-                  "name": "Ciaran190 Lee",
-                  "email": "admin190@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60ff8a68186f43bafdfc",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "snoozed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "103",
-                    "part_type": "snoozed",
-                    "body": null,
-                    "created_at": 1719492864,
-                    "updated_at": 1719492864,
-                    "notified_at": 1719492864,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267610",
-                      "type": "admin",
-                      "name": "Ciaran190 Lee",
-                      "email": "admin190@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Close a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "close",
-              "type": "admin",
-              "admin_id": 991267608,
-              "body": "Goodbye :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "400",
-              "created_at": 1719492863,
-              "updated_at": 1719492873,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918278",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267612",
-                  "name": "Ciaran191 Lee",
-                  "email": "admin191@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d61038a68186f43bafe01",
-                    "external_id": "74"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": true,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": "",
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "105",
-                    "part_type": "open",
-                    "body": null,
-                    "created_at": 1719492873,
-                    "updated_at": 1719492873,
-                    "notified_at": 1719492873,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267612",
-                      "type": "admin",
-                      "name": "Ciaran191 Lee",
-                      "email": "admin191@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Close a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "close",
-              "type": "admin",
-              "admin_id": 991267608,
-              "body": "Goodbye :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "405",
-              "created_at": 1719492874,
-              "updated_at": 1719492875,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918281",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267615",
-                  "name": "Ciaran193 Lee",
-                  "email": "admin193@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d610a8a68186f43bafe05",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": 991267615,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "106",
-                    "part_type": "assign_and_reopen",
-                    "body": null,
-                    "created_at": 1719492875,
-                    "updated_at": 1719492875,
-                    "notified_at": 1719492875,
-                    "assigned_to": {
-                      "type": "admin",
-                      "id": "991267615"
-                    },
-                    "author": {
-                      "id": "991267615",
-                      "type": "admin",
-                      "name": "Ciaran193 Lee",
-                      "email": "admin193@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
           "name": "Snooze a Conversation",
           "pathParameters": {
             "id": "123"
@@ -14323,547 +13135,6 @@
               "message_type": "snoozed",
               "admin_id": 991267610,
               "snoozed_until": 1719496464
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "394",
-              "created_at": 1719492862,
-              "updated_at": 1719492862,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918276",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267608",
-                  "name": "Ciaran189 Lee",
-                  "email": "admin189@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60fd8a68186f43bafdfb",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "102",
-                    "part_type": "close",
-                    "body": "<p>Goodbye :)</p>",
-                    "created_at": 1719492862,
-                    "updated_at": 1719492862,
-                    "notified_at": 1719492862,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267608",
-                      "type": "admin",
-                      "name": "Ciaran189 Lee",
-                      "email": "admin189@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Snooze a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "snoozed",
-              "admin_id": 991267610,
-              "snoozed_until": 1719496464
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "395",
-              "created_at": 1719492864,
-              "updated_at": 1719492864,
-              "waiting_since": null,
-              "snoozed_until": 1719496464,
-              "source": {
-                "type": "conversation",
-                "id": "403918277",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267610",
-                  "name": "Ciaran190 Lee",
-                  "email": "admin190@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60ff8a68186f43bafdfc",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "snoozed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "103",
-                    "part_type": "snoozed",
-                    "body": null,
-                    "created_at": 1719492864,
-                    "updated_at": 1719492864,
-                    "notified_at": 1719492864,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267610",
-                      "type": "admin",
-                      "name": "Ciaran190 Lee",
-                      "email": "admin190@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Snooze a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "snoozed",
-              "admin_id": 991267610,
-              "snoozed_until": 1719496464
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "400",
-              "created_at": 1719492863,
-              "updated_at": 1719492873,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918278",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267612",
-                  "name": "Ciaran191 Lee",
-                  "email": "admin191@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d61038a68186f43bafe01",
-                    "external_id": "74"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": true,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": "",
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "105",
-                    "part_type": "open",
-                    "body": null,
-                    "created_at": 1719492873,
-                    "updated_at": 1719492873,
-                    "notified_at": 1719492873,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267612",
-                      "type": "admin",
-                      "name": "Ciaran191 Lee",
-                      "email": "admin191@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Snooze a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "snoozed",
-              "admin_id": 991267610,
-              "snoozed_until": 1719496464
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "405",
-              "created_at": 1719492874,
-              "updated_at": 1719492875,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918281",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267615",
-                  "name": "Ciaran193 Lee",
-                  "email": "admin193@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d610a8a68186f43bafe05",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": 991267615,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "106",
-                    "part_type": "assign_and_reopen",
-                    "body": null,
-                    "created_at": 1719492875,
-                    "updated_at": 1719492875,
-                    "notified_at": 1719492875,
-                    "assigned_to": {
-                      "type": "admin",
-                      "id": "991267615"
-                    },
-                    "author": {
-                      "id": "991267615",
-                      "type": "admin",
-                      "name": "Ciaran193 Lee",
-                      "email": "admin193@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Open a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "open",
-              "admin_id": 991267612
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "394",
-              "created_at": 1719492862,
-              "updated_at": 1719492862,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918276",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267608",
-                  "name": "Ciaran189 Lee",
-                  "email": "admin189@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60fd8a68186f43bafdfb",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "102",
-                    "part_type": "close",
-                    "body": "<p>Goodbye :)</p>",
-                    "created_at": 1719492862,
-                    "updated_at": 1719492862,
-                    "notified_at": 1719492862,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267608",
-                      "type": "admin",
-                      "name": "Ciaran189 Lee",
-                      "email": "admin189@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Open a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "open",
-              "admin_id": 991267612
             }
           },
           "responseBody": {
@@ -15066,443 +13337,6 @@
         {
           "path": "/conversations/123/parts",
           "responseStatusCode": 200,
-          "name": "Open a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "open",
-              "admin_id": 991267612
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "405",
-              "created_at": 1719492874,
-              "updated_at": 1719492875,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918281",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267615",
-                  "name": "Ciaran193 Lee",
-                  "email": "admin193@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d610a8a68186f43bafe05",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": 991267615,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "106",
-                    "part_type": "assign_and_reopen",
-                    "body": null,
-                    "created_at": 1719492875,
-                    "updated_at": 1719492875,
-                    "notified_at": 1719492875,
-                    "assigned_to": {
-                      "type": "admin",
-                      "id": "991267615"
-                    },
-                    "author": {
-                      "id": "991267615",
-                      "type": "admin",
-                      "name": "Ciaran193 Lee",
-                      "email": "admin193@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Assign a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "assignment",
-              "type": "admin",
-              "admin_id": 991267615,
-              "assignee_id": 991267615
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "394",
-              "created_at": 1719492862,
-              "updated_at": 1719492862,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918276",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267608",
-                  "name": "Ciaran189 Lee",
-                  "email": "admin189@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60fd8a68186f43bafdfb",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "102",
-                    "part_type": "close",
-                    "body": "<p>Goodbye :)</p>",
-                    "created_at": 1719492862,
-                    "updated_at": 1719492862,
-                    "notified_at": 1719492862,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267608",
-                      "type": "admin",
-                      "name": "Ciaran189 Lee",
-                      "email": "admin189@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Assign a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "assignment",
-              "type": "admin",
-              "admin_id": 991267615,
-              "assignee_id": 991267615
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "395",
-              "created_at": 1719492864,
-              "updated_at": 1719492864,
-              "waiting_since": null,
-              "snoozed_until": 1719496464,
-              "source": {
-                "type": "conversation",
-                "id": "403918277",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267610",
-                  "name": "Ciaran190 Lee",
-                  "email": "admin190@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60ff8a68186f43bafdfc",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "snoozed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "103",
-                    "part_type": "snoozed",
-                    "body": null,
-                    "created_at": 1719492864,
-                    "updated_at": 1719492864,
-                    "notified_at": 1719492864,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267610",
-                      "type": "admin",
-                      "name": "Ciaran190 Lee",
-                      "email": "admin190@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Assign a Conversation",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "assignment",
-              "type": "admin",
-              "admin_id": 991267615,
-              "assignee_id": 991267615
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "400",
-              "created_at": 1719492863,
-              "updated_at": 1719492873,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918278",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267612",
-                  "name": "Ciaran191 Lee",
-                  "email": "admin191@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d61038a68186f43bafe01",
-                    "external_id": "74"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": true,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": "",
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "105",
-                    "part_type": "open",
-                    "body": null,
-                    "created_at": 1719492873,
-                    "updated_at": 1719492873,
-                    "notified_at": 1719492873,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267612",
-                      "type": "admin",
-                      "name": "Ciaran191 Lee",
-                      "email": "admin191@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
           "name": "Assign a Conversation",
           "pathParameters": {
             "id": "123"
@@ -15601,333 +13435,6 @@
                       "type": "admin",
                       "name": "Ciaran193 Lee",
                       "email": "admin193@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Not Found",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "close",
-              "type": "admin",
-              "admin_id": 991267617,
-              "body": "Goodbye :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "394",
-              "created_at": 1719492862,
-              "updated_at": 1719492862,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918276",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267608",
-                  "name": "Ciaran189 Lee",
-                  "email": "admin189@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60fd8a68186f43bafdfb",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": false,
-              "state": "closed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "102",
-                    "part_type": "close",
-                    "body": "<p>Goodbye :)</p>",
-                    "created_at": 1719492862,
-                    "updated_at": 1719492862,
-                    "notified_at": 1719492862,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267608",
-                      "type": "admin",
-                      "name": "Ciaran189 Lee",
-                      "email": "admin189@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Not Found",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "close",
-              "type": "admin",
-              "admin_id": 991267617,
-              "body": "Goodbye :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "395",
-              "created_at": 1719492864,
-              "updated_at": 1719492864,
-              "waiting_since": null,
-              "snoozed_until": 1719496464,
-              "source": {
-                "type": "conversation",
-                "id": "403918277",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267610",
-                  "name": "Ciaran190 Lee",
-                  "email": "admin190@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d60ff8a68186f43bafdfc",
-                    "external_id": "70"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "snoozed",
-              "read": false,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": null,
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "103",
-                    "part_type": "snoozed",
-                    "body": null,
-                    "created_at": 1719492864,
-                    "updated_at": 1719492864,
-                    "notified_at": 1719492864,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267610",
-                      "type": "admin",
-                      "name": "Ciaran190 Lee",
-                      "email": "admin190@email.com"
-                    },
-                    "attachments": [],
-                    "external_id": null,
-                    "redacted": false
-                  }
-                ],
-                "total_count": 1
-              }
-            }
-          }
-        },
-        {
-          "path": "/conversations/123/parts",
-          "responseStatusCode": 200,
-          "name": "Not Found",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "close",
-              "type": "admin",
-              "admin_id": 991267617,
-              "body": "Goodbye :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "conversation",
-              "id": "400",
-              "created_at": 1719492863,
-              "updated_at": 1719492873,
-              "waiting_since": null,
-              "snoozed_until": null,
-              "source": {
-                "type": "conversation",
-                "id": "403918278",
-                "delivered_as": "admin_initiated",
-                "subject": "",
-                "body": "<p>this is the message body</p>",
-                "author": {
-                  "type": "admin",
-                  "id": "991267612",
-                  "name": "Ciaran191 Lee",
-                  "email": "admin191@email.com"
-                },
-                "attachments": [],
-                "url": null,
-                "redacted": false
-              },
-              "contacts": {
-                "type": "contact.list",
-                "contacts": [
-                  {
-                    "type": "contact",
-                    "id": "667d61038a68186f43bafe01",
-                    "external_id": "74"
-                  }
-                ]
-              },
-              "first_contact_reply": null,
-              "admin_assignee_id": null,
-              "team_assignee_id": null,
-              "open": true,
-              "state": "open",
-              "read": true,
-              "tags": {
-                "type": "tag.list",
-                "tags": []
-              },
-              "priority": "not_priority",
-              "sla_applied": null,
-              "statistics": null,
-              "conversation_rating": null,
-              "teammates": null,
-              "title": "",
-              "custom_attributes": {},
-              "topics": {},
-              "ticket": null,
-              "linked_objects": {
-                "type": "list",
-                "data": [],
-                "total_count": 0,
-                "has_more": false
-              },
-              "ai_agent": null,
-              "ai_agent_participated": false,
-              "conversation_parts": {
-                "type": "conversation_part.list",
-                "conversation_parts": [
-                  {
-                    "type": "conversation_part",
-                    "id": "105",
-                    "part_type": "open",
-                    "body": null,
-                    "created_at": 1719492873,
-                    "updated_at": 1719492873,
-                    "notified_at": 1719492873,
-                    "assigned_to": null,
-                    "author": {
-                      "id": "991267612",
-                      "type": "admin",
-                      "name": "Ciaran191 Lee",
-                      "email": "admin191@email.com"
                     },
                     "attachments": [],
                     "external_id": null,
@@ -19416,13 +16923,6 @@
               "download_expires_at": ""
             }
           }
-        },
-        {
-          "path": "/export/content/data",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
-          }
         }
       ],
       "protocol": {
@@ -20066,137 +17566,7 @@
         {
           "path": "/messages",
           "responseStatusCode": 200,
-          "name": "User Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918317",
-              "created_at": 1719492971,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "477"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "User Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "admin_message",
-              "id": "15",
-              "created_at": 1719492972,
-              "subject": "heyy",
-              "body": "heyy",
-              "message_type": "inapp",
-              "owner": {
-                "type": "admin",
-                "id": "991267716",
-                "name": "Ciaran269 Lee",
-                "email": "admin269@email.com",
-                "away_mode_enabled": false,
-                "away_mode_reassign": false
-              }
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
           "name": "Lead Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918316",
-              "created_at": 1719492969,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "476"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "Lead Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918317",
-              "created_at": 1719492971,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "477"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "Lead Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "admin_message",
-              "id": "15",
-              "created_at": 1719492972,
-              "subject": "heyy",
-              "body": "heyy",
-              "message_type": "inapp",
-              "owner": {
-                "type": "admin",
-                "id": "991267716",
-                "name": "Ciaran269 Lee",
-                "email": "admin269@email.com",
-                "away_mode_enabled": false,
-                "away_mode_reassign": false
-              }
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "Admin Message Created",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918316",
-              "created_at": 1719492969,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "476"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "Admin Message Created",
           "headers": {
             "Intercom-Version": "2.11"
           },
@@ -20249,44 +17619,6 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "type": "user_message",
-              "id": "403918316",
-              "created_at": 1719492969,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "476"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "No Body Supplied for Message",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918317",
-              "created_at": 1719492971,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "477"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "No Body Supplied for Message",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
               "type": "admin_message",
               "id": "15",
               "created_at": 1719492972,
@@ -20314,44 +17646,6 @@
           "responseBody": {
             "type": "json",
             "value": {
-              "type": "user_message",
-              "id": "403918316",
-              "created_at": 1719492969,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "476"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "No Subject Supplied for Email Message",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918317",
-              "created_at": 1719492971,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "477"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "No Subject Supplied for Email Message",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
               "type": "admin_message",
               "id": "15",
               "created_at": 1719492972,
@@ -20366,44 +17660,6 @@
                 "away_mode_enabled": false,
                 "away_mode_reassign": false
               }
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "No Body Supplied for Email Message",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918316",
-              "created_at": 1719492969,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "476"
-            }
-          }
-        },
-        {
-          "path": "/messages",
-          "responseStatusCode": 200,
-          "name": "No Body Supplied for Email Message",
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "user_message",
-              "id": "403918317",
-              "created_at": 1719492971,
-              "body": "heyy",
-              "message_type": "inapp",
-              "conversation_id": "477"
             }
           }
         },
@@ -20784,13 +18040,6 @@
                 }
               ]
             }
-          }
-        },
-        {
-          "path": "/news/news_items",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
           }
         }
       ],
@@ -25392,83 +22641,6 @@
         {
           "path": "/tickets/123/reply",
           "responseStatusCode": 200,
-          "name": "User Reply",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "comment",
-              "type": "user",
-              "intercom_user_id": "667d619d8a68186f43bafe82",
-              "body": "Thanks again :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "ticket_part",
-              "id": "124",
-              "part_type": "quick_reply",
-              "created_at": 1719493029,
-              "updated_at": 1719493029,
-              "author": {
-                "id": "991267834",
-                "type": "admin",
-                "name": "Ciaran379 Lee",
-                "email": "admin379@email.com"
-              },
-              "attachments": [],
-              "redacted": false
-            }
-          }
-        },
-        {
-          "path": "/tickets/123/reply",
-          "responseStatusCode": 200,
-          "name": "Admin Note Reply",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "note",
-              "type": "admin",
-              "admin_id": 991267829,
-              "body": "<html> <body>  <h2>An Unordered HTML List</h2>  <ul>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ul>    <h2>An Ordered HTML List</h2>  <ol>   <li>Coffee</li>   <li>Tea</li>   <li>Milk</li> </ol>   </body> </html>"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "ticket_part",
-              "id": "122",
-              "part_type": "note",
-              "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
-              "created_at": 1719493024,
-              "updated_at": 1719493024,
-              "author": {
-                "id": "991267829",
-                "type": "admin",
-                "name": "Ciaran375 Lee",
-                "email": "admin375@email.com"
-              },
-              "attachments": [],
-              "redacted": false
-            }
-          }
-        },
-        {
-          "path": "/tickets/123/reply",
-          "responseStatusCode": 200,
           "name": "Admin Note Reply",
           "pathParameters": {
             "id": "123"
@@ -25536,54 +22708,6 @@
             "type": "json",
             "value": {
               "type": "ticket_part",
-              "id": "122",
-              "part_type": "note",
-              "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
-              "created_at": 1719493024,
-              "updated_at": 1719493024,
-              "author": {
-                "id": "991267829",
-                "type": "admin",
-                "name": "Ciaran375 Lee",
-                "email": "admin375@email.com"
-              },
-              "attachments": [],
-              "redacted": false
-            }
-          }
-        },
-        {
-          "path": "/tickets/123/reply",
-          "responseStatusCode": 200,
-          "name": "Admin Quick Reply Reply",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "quick_reply",
-              "type": "admin",
-              "admin_id": 991267834,
-              "reply_options": [
-                {
-                  "text": "Yes",
-                  "uuid": "test-uuid-replacement"
-                },
-                {
-                  "text": "No",
-                  "uuid": "test-uuid-replacement"
-                }
-              ]
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "ticket_part",
               "id": "124",
               "part_type": "quick_reply",
               "created_at": 1719493029,
@@ -25593,45 +22717,6 @@
                 "type": "admin",
                 "name": "Ciaran379 Lee",
                 "email": "admin379@email.com"
-              },
-              "attachments": [],
-              "redacted": false
-            }
-          }
-        },
-        {
-          "path": "/tickets/123/reply",
-          "responseStatusCode": 200,
-          "name": "Not Found",
-          "pathParameters": {
-            "id": "123"
-          },
-          "headers": {
-            "Intercom-Version": "2.11"
-          },
-          "requestBody": {
-            "type": "json",
-            "value": {
-              "message_type": "comment",
-              "type": "user",
-              "intercom_user_id": "667d61a68a68186f43bafe85",
-              "body": "Thanks again :)"
-            }
-          },
-          "responseBody": {
-            "type": "json",
-            "value": {
-              "type": "ticket_part",
-              "id": "122",
-              "part_type": "note",
-              "body": "<h2>An Unordered HTML List</h2>\n<ul>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ul>\n<h2>An Ordered HTML List</h2>\n<ol>\n<li>Coffee</li>\n<li>Tea</li>\n<li>Milk</li>\n</ol>",
-              "created_at": 1719493024,
-              "updated_at": 1719493024,
-              "author": {
-                "id": "991267829",
-                "type": "admin",
-                "name": "Ciaran375 Lee",
-                "email": "admin375@email.com"
               },
               "attachments": [],
               "redacted": false
@@ -27742,13 +24827,6 @@
               ]
             }
           }
-        },
-        {
-          "path": "/tickets/search",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
-          }
         }
       ],
       "protocol": {
@@ -28423,13 +25501,6 @@
               "utm_term": null,
               "referrer": null
             }
-          }
-        },
-        {
-          "path": "/visitors/convert",
-          "responseStatusCode": 200,
-          "headers": {
-            "Intercom-Version": "2.11"
           }
         }
       ],
@@ -33900,6 +30971,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Intercom User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -33909,6 +30981,7 @@
             }
           },
           {
+            "displayName": "Contact Reply Email Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -33918,6 +30991,7 @@
             }
           },
           {
+            "displayName": "Contact Reply User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -34081,6 +31155,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Ticket Intercom User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -34090,6 +31165,7 @@
             }
           },
           {
+            "displayName": "Contact Reply Ticket User ID Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -34099,6 +31175,7 @@
             }
           },
           {
+            "displayName": "Contact Reply Ticket Email Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -37010,6 +34087,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -37019,6 +34097,7 @@
             }
           },
           {
+            "displayName": "Admin Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -41204,6 +38283,7 @@
                   "type": "undiscriminatedUnion",
                   "variants": [
                     {
+                      "displayName": "News Item",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -41213,6 +38293,7 @@
                       }
                     },
                     {
+                      "displayName": "Newsfeed",
                       "shape": {
                         "type": "alias",
                         "value": {
@@ -41526,6 +38607,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -41535,6 +38617,7 @@
             }
           },
           {
+            "displayName": "Admin Reply Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -41558,6 +38641,7 @@
               "type": "undiscriminatedUnion",
               "variants": [
                 {
+                  "displayName": "Single Filter Search Request",
                   "shape": {
                     "type": "alias",
                     "value": {
@@ -41567,6 +38651,7 @@
                   }
                 },
                 {
+                  "displayName": "Multiple Filter Search Request",
                   "shape": {
                     "type": "alias",
                     "value": {
@@ -45812,6 +42897,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Close Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45821,6 +42907,7 @@
             }
           },
           {
+            "displayName": "Snooze Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45830,6 +42917,7 @@
             }
           },
           {
+            "displayName": "Open Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45839,6 +42927,7 @@
             }
           },
           {
+            "displayName": "Assign Conversation Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45856,6 +42945,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Create or Update Tag Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45865,6 +42955,7 @@
             }
           },
           {
+            "displayName": "Tag Company Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45874,6 +42965,7 @@
             }
           },
           {
+            "displayName": "Untag Company Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45883,6 +42975,7 @@
             }
           },
           {
+            "displayName": "Tag Multiple Users Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45900,6 +42993,7 @@
         "type": "undiscriminatedUnion",
         "variants": [
           {
+            "displayName": "Contact Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {
@@ -45909,6 +43003,7 @@
             }
           },
           {
+            "displayName": "Admin Reply Ticket Request",
             "shape": {
               "type": "alias",
               "value": {

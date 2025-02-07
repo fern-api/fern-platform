@@ -1,0 +1,10 @@
+[
+  {
+    "message": "Error converting node. Please contact support if the error persists",
+    "path": [
+      "paths",
+      "/empty-response",
+      "post",
+    ],
+  },
+]

@@ -732,6 +732,7 @@
       "rest",
       "openapi",
       "json",
+      "ToolsDataFrameRequestColumnsItem",
       "FileFetchError",
       "DataFrameUnknownFormatError",
       "HTTPValidationError",
