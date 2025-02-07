@@ -9,6 +9,7 @@ import {
 } from "@fern-docs/mdx";
 import {
   rehypeAcornErrorBoundary,
+  rehypeExpressionToMd,
   rehypeMdxClassStyle,
   rehypeSqueezeParagraphs,
   remarkSanitizeAcorn,
@@ -58,6 +59,19 @@ function withDefaultMdxOptions(
 
   const rehypePlugins: PluggableList = [
     rehypeSqueezeParagraphs,
+    [
+      rehypeExpressionToMd,
+      {
+        mdxJsxElementAllowlist: {
+          Frame: ["caption"],
+          Tab: ["title"],
+          Card: ["title", "icon"],
+          Callout: ["title", "icon"],
+          Step: ["title"],
+          Accordion: ["title"],
+        },
+      },
+    ],
     rehypeMdxClassStyle,
     [rehypeFiles, { replaceSrc }],
     rehypeAcornErrorBoundary,
