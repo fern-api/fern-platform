@@ -1,63 +1,78 @@
-import { ElementType, SVGProps, forwardRef } from "react";
+import { isEqual } from "es-toolkit/predicate";
+import React from "react";
 import useSWRImmutable from "swr/immutable";
 
-export const RemoteIcon = forwardRef<
-  SVGSVGElement,
-  {
-    icon: string;
-    fallback?: ElementType<SVGProps<SVGSVGElement>>;
-  } & SVGProps<SVGSVGElement>
->(({ icon, fallback: Fallback = "svg", ...props }, ref) => {
-  const { data } = useSWRImmutable(icon, () =>
-    fetch(getIconUrl(icon)).then((res) => res.text())
-  );
+export const FaIcon = React.memo(
+  React.forwardRef<
+    React.ComponentRef<"svg">,
+    {
+      icon: string;
+      fallback?: React.ElementType<React.SVGProps<SVGSVGElement>>;
+    } & React.SVGProps<SVGSVGElement>
+  >(({ icon, fallback: Fallback = "svg", ...props }, ref) => {
+    const url = getIconUrl(icon);
 
-  if (data == null) {
+    const { data } = useSWRImmutable(url, () =>
+      fetch(url).then((res) => res.text())
+    );
+
+    if (data == null) {
+      return (
+        <Fallback
+          ref={ref}
+          aria-hidden="true"
+          focusable="false"
+          role="img"
+          {...props}
+        />
+      );
+    }
+
+    // parse the svg
+    const { props: svgProps, body } = parseSvg(data);
+
+    if (body == null) {
+      return (
+        <Fallback
+          ref={ref}
+          aria-hidden="true"
+          focusable="false"
+          role="img"
+          {...props}
+        />
+      );
+    }
+
+    delete svgProps.class;
+    delete svgProps.className;
+    delete svgProps.hidden;
+
     return (
-      <Fallback
+      <svg
         ref={ref}
+        xmlns="http://www.w3.org/2000/svg"
+        {...props}
+        {...svgProps}
         aria-hidden="true"
         focusable="false"
         role="img"
-        {...props}
+        dangerouslySetInnerHTML={{ __html: body }}
       />
     );
-  }
-
-  // parse the svg
-  const { props: svgProps, body } = parseSvg(data);
-
-  if (body == null) {
+  }),
+  (prevProps, nextProps) => {
     return (
-      <Fallback
-        ref={ref}
-        aria-hidden="true"
-        focusable="false"
-        role="img"
-        {...props}
-      />
+      prevProps.icon === nextProps.icon &&
+      prevProps.className === nextProps.className &&
+      isEqual(prevProps.style, nextProps.style) &&
+      prevProps.width === nextProps.width &&
+      prevProps.height === nextProps.height &&
+      prevProps.color === nextProps.color &&
+      prevProps.fill === nextProps.fill &&
+      prevProps.stroke === nextProps.stroke
     );
   }
-
-  delete svgProps.class;
-  delete svgProps.className;
-  delete svgProps.hidden;
-
-  return (
-    <svg
-      ref={ref}
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-      {...svgProps}
-      aria-hidden="true"
-      focusable="false"
-      role="img"
-      dangerouslySetInnerHTML={{ __html: body }}
-    />
-  );
-});
-
-RemoteIcon.displayName = "RemoteIcon";
+);
 
 // parse the svg
 function parseSvg(svg: string): {

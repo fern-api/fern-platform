@@ -1,11 +1,6 @@
 @layer components {
   .callout-icon,
-  .callout-icon > svg,
-  .callout-icon > .fa-icon {
-    @apply size-icon-md;
-  }
-
-  .callout-icon.fa-icon {
-    @apply bg-accent;
+  .callout-icon > svg {
+    @apply size-icon-md text-accent;
   }
 }

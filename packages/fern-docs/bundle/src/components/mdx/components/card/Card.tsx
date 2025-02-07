@@ -1,4 +1,4 @@
-import { FernCard, RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon, FernCard } from "@fern-docs/components";
 import cn from "clsx";
 import { isValidElement } from "react";
 import { FernLinkCard } from "../../../components/FernLinkCard";
@@ -52,23 +52,23 @@ export const Card: React.FC<Card.Props> = ({
           "flex-row space-x-3": iconPosition === "left",
         })}
       >
+        <style jsx>
+          {`
+            .card-icon {
+              color: ${lightModeColor ?? color};
+              width: ${iconSize * 4}px;
+              height: ${iconSize * 4}px;
+            }
+
+            .card-icon:is(.dark *) {
+              color: ${darkModeColor ?? color};
+            }
+          `}
+        </style>
         {typeof icon === "string" ? (
-          <RemoteFontAwesomeIcon
-            className="card-icon"
-            icon={icon}
-            color={color}
-            darkModeColor={darkModeColor}
-            lightModeColor={lightModeColor}
-            size={iconSize}
-          />
+          <FaIcon className="card-icon" icon={icon} />
         ) : isValidElement(icon) ? (
-          <span
-            className="card-icon"
-            style={{
-              width: `${iconSize * 4}px`,
-              height: `${iconSize * 4}px`,
-            }}
-          >
+          <span className="card-icon">
             <NoZoom>{icon}</NoZoom>
           </span>
         ) : null}

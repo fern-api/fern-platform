@@ -1,5 +1,5 @@
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon } from "@fern-docs/components";
 import clsx from "clsx";
 import { ReactElement } from "react";
 import { SidebarPageNode } from "./SidebarPageNode";
@@ -29,7 +29,7 @@ export function SidebarRootHeading({
 
   return (
     <div className={clsx("fern-sidebar-heading", className)}>
-      {node.icon != null && <RemoteFontAwesomeIcon icon={node.icon} />}
+      {node.icon != null && <FaIcon icon={node.icon} />}
       <span className="fern-sidebar-heading-content">{node.title}</span>
     </div>
   );

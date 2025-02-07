@@ -1,7 +1,7 @@
 import cn from "clsx";
 import { arrayIncludes, objectKeys } from "ts-extras";
 import { CopyToClipboardButton } from "./CopyToClipboardButton";
-import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
+import { FaIcon } from "./fa-icon";
 
 const languages = [
   "node",
@@ -148,12 +148,11 @@ export const FernSdk: React.FC<{
                   onChange(lang);
                 }}
               >
-                <RemoteFontAwesomeIcon
-                  className="mx-auto"
+                <FaIcon
+                  className="mx-auto size-6"
                   key={index}
                   color={color}
                   icon={icon}
-                  size={6}
                 />
                 <div className="pb-0.5 text-xs">{name}</div>
               </button>

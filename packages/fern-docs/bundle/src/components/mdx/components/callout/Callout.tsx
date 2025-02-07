@@ -1,5 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
-import { RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon } from "@fern-docs/components";
 import cn from "clsx";
 import {
   Bell,
@@ -66,14 +66,14 @@ export const Callout: FC<PropsWithChildren<Callout.Props>> = ({
       <div className="flex items-start space-x-3">
         <div className="mt-0.5 w-4">
           {typeof icon === "string" ? (
-            <RemoteFontAwesomeIcon
+            <FaIcon
               className={cn("card-icon size-icon-md", {
-                "bg-intent-default": intent === "info",
-                "bg-intent-warning": intent === "warning",
-                "bg-intent-success": intent === "success",
-                "bg-intent-danger": intent === "error",
-                "bg-intent-info": intent === "note",
-                "bg-accent": intent === "launch",
+                "text-intent-default": intent === "info",
+                "text-intent-warning": intent === "warning",
+                "text-intent-success": intent === "success",
+                "text-intent-danger": intent === "error",
+                "text-intent-info": intent === "note",
+                "text-accent": intent === "launch",
               })}
               icon={icon}
             />

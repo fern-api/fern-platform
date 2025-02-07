@@ -14,12 +14,10 @@
       @apply rounded-full;
     }
 
-    &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
     &:not(.square):has(> .fern-button-content > svg:first-child) {
       @apply pl-2;
     }
 
-    &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
     &:not(.square):has(> .fern-button-content > svg:last-child) {
       @apply pr-2;
     }
@@ -28,7 +26,6 @@
       @apply inline-flex min-w-0 shrink items-center;
       @apply h-6 gap-1.5;
 
-      > .fa-icon,
       > svg {
         @apply size-icon-md shrink-0;
       }
@@ -67,12 +64,10 @@
     &.small {
       @apply h-7 px-2 py-1 text-xs sm:h-6;
 
-      &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
       &:not(.square):has(> .fern-button-content > svg:first-child) {
         @apply pl-1.5;
       }
 
-      &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
       &:not(.square):has(> .fern-button-content > svg:last-child) {
         @apply pr-1.5;
       }
@@ -80,7 +75,6 @@
       > .fern-button-content {
         @apply h-4 gap-1.5;
 
-        > .fa-icon,
         > svg {
           @apply size-icon-sm;
         }
@@ -98,12 +92,10 @@
     &.large {
       @apply h-11 px-3 py-2 text-base sm:h-10 lg:px-4;
 
-      &:not(.square):has(> .fern-button-content > .fa-icon:first-child),
       &:not(.square):has(> .fern-button-content > svg:first-child) {
         @apply pl-3;
       }
 
-      &:not(.square):has(> .fern-button-content > .fa-icon:last-child),
       &:not(.square):has(> .fern-button-content > svg:last-child) {
         @apply pr-3;
       }
@@ -111,7 +103,6 @@
       > .fern-button-content {
         @apply h-6 gap-2;
 
-        > .fa-icon,
         > svg {
           @apply size-icon-lg;
         }
@@ -142,19 +133,11 @@
         // @apply t-muted hover:t-default;
         @apply hover:bg-tag-default data-[selected=true]:bg-tag-default data-[state=checked]:bg-tag-default data-[state=on]:bg-tag-default data-[state=open]:bg-tag-default data-[state=opening]:bg-tag-default;
 
-        .fa-icon {
-          @apply bg-text-default/60;
-        }
-
         svg {
           @apply text-text-default/60;
         }
 
         &:not(.primary, .success, .warning, .danger) {
-          .fa-icon {
-            @apply dark:bg-text-default/70;
-          }
-
           svg {
             @apply dark:text-text-default/70;
           }
@@ -163,10 +146,6 @@
         &.primary {
           @apply t-accent hover:t-accent;
           @apply hover:bg-tag-primary data-[selected=true]:bg-tag-primary data-[state=checked]:bg-tag-primary data-[state=on]:bg-tag-primary data-[state=open]:bg-tag-primary data-[state=opening]:bg-tag-primary;
-
-          .fa-icon {
-            @apply bg-accent-aa;
-          }
 
           svg {
             @apply text-accent-aa;
@@ -177,10 +156,6 @@
           @apply t-success hover:t-success;
           @apply hover:bg-tag-success data-[selected=true]:bg-tag-success data-[state=checked]:bg-tag-success data-[state=on]:bg-tag-success data-[state=open]:bg-tag-success data-[state=opening]:bg-tag-success;
 
-          .fa-icon {
-            @apply bg-intent-success;
-          }
-
           svg {
             @apply text-intent-success;
           }
@@ -190,10 +165,6 @@
           @apply t-warning hover:t-warning;
           @apply hover:bg-tag-warning data-[selected=true]:bg-tag-warning data-[state=checked]:bg-tag-warning data-[state=on]:bg-tag-warning data-[state=open]:bg-tag-warning data-[state=opening]:bg-tag-warning;
 
-          .fa-icon {
-            @apply bg-intent-warning;
-          }
-
           svg {
             @apply text-intent-warning;
           }
@@ -202,10 +173,6 @@
         &.danger {
           @apply t-danger hover:t-danger;
           @apply hover:bg-tag-danger data-[selected=true]:bg-tag-danger data-[state=checked]:bg-tag-danger data-[state=on]:bg-tag-danger data-[state=open]:bg-tag-danger data-[state=opening]:bg-tag-danger;
-
-          .fa-icon {
-            @apply bg-intent-danger;
-          }
 
           svg {
             @apply text-intent-danger;
@@ -224,10 +191,6 @@
           @apply t-default bg-text-default/60;
         }
 
-        .fa-icon {
-          @apply t-default bg-text-default/60;
-        }
-
         svg {
           @apply text-text-default/60;
         }
@@ -241,10 +204,6 @@
           &[data-state="open"],
           &[data-state="opening"] {
             @apply t-accent-contrast bg-accent-tinted;
-          }
-
-          .fa-icon {
-            @apply bg-accent-contrast;
           }
 
           svg {
@@ -291,10 +250,6 @@
         &.success,
         &.warning,
         &.danger {
-          .fa-icon {
-            @apply bg-accent-contrast;
-          }
-
           svg {
             @apply text-accent-contrast;
           }
@@ -313,20 +268,12 @@
           @apply t-default bg-tag-default;
         }
 
-        .fa-icon {
-          @apply bg-text-default/60;
-        }
-
         svg {
           @apply text-text-default/60;
         }
 
         &.primary {
           @apply t-accent ring-border-primary;
-
-          .fa-icon {
-            @apply bg-accent-aa;
-          }
 
           svg {
             @apply text-accent-aa;
@@ -338,10 +285,6 @@
           &[data-state="open"],
           &[data-state="opening"] {
             @apply t-accent-aaa bg-tag-primary;
-
-            .fa-icon {
-              @apply bg-accent-aaa;
-            }
 
             svg {
               @apply text-accent-aaa;
@@ -360,10 +303,6 @@
             @apply bg-tag-success text-intent-success;
           }
 
-          .fa-icon {
-            @apply bg-intent-success;
-          }
-
           svg {
             @apply text-intent-success;
           }
@@ -380,10 +319,6 @@
             @apply bg-tag-warning text-intent-warning;
           }
 
-          .fa-icon {
-            @apply bg-intent-warning;
-          }
-
           svg {
             @apply text-intent-warning;
           }
@@ -398,10 +333,6 @@
           &[data-state="open"],
           &[data-state="opening"] {
             @apply bg-tag-danger text-intent-danger;
-          }
-
-          .fa-icon {
-            @apply bg-intent-danger;
           }
 
           svg {

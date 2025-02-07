@@ -3,10 +3,6 @@
     @apply mb-1 flex min-h-[32px] lg:min-h-[36px];
     @apply inline-flex items-center px-4 lg:px-3;
 
-    .fa-icon {
-      @apply text-faded mr-3 shrink-0;
-    }
-
     .fern-sidebar-heading-content {
       @apply m-0 text-base font-semibold leading-6 lg:text-sm lg:leading-5;
     }
@@ -42,15 +38,15 @@
     @apply my-0.5 mr-3 inline-flex items-center;
   }
 
+  .fern-sidebar-icon > svg {
+    @apply size-4;
+  }
+
   .fern-sidebar-link-container[data-state="active"] {
     .fern-sidebar-link-indent::after {
       @apply border-accented-a7 absolute inset-y-1 -left-px border-l;
 
       content: "";
-    }
-
-    .fa-icon {
-      @apply bg-accented-a10;
     }
 
     .fern-sidebar-icon {
@@ -59,10 +55,6 @@
   }
 
   .fern-sidebar-link-container[data-state="inactive"] {
-    .fa-icon {
-      @apply bg-faded;
-    }
-
     .fern-sidebar-icon {
       @apply text-faded;
     }

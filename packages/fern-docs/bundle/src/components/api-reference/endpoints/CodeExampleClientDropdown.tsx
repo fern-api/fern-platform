@@ -1,8 +1,4 @@
-import {
-  FernButton,
-  FernDropdown,
-  RemoteFontAwesomeIcon,
-} from "@fern-docs/components";
+import { FaIcon, FernButton, FernDropdown } from "@fern-docs/components";
 import { NavArrowDown } from "iconoir-react";
 import {
   getIconForClient,
@@ -26,8 +22,8 @@ export const CodeExampleClientDropdown: React.FC<
     value: language,
     className: "group/option",
     icon: (
-      <RemoteFontAwesomeIcon
-        className="size-icon-sm bg-intent-default group-data-[highlighted]/option:bg-accent-contrast"
+      <FaIcon
+        className="size-icon-sm text-intent-default group-data-[highlighted]/option:text-accent-contrast"
         icon={getIconForClient(language)}
       />
     ),
@@ -43,8 +39,8 @@ export const CodeExampleClientDropdown: React.FC<
       >
         <FernButton
           icon={
-            <RemoteFontAwesomeIcon
-              className="bg-accent size-4"
+            <FaIcon
+              className="text-accent size-4"
               icon={getIconForClient(value)}
             />
           }

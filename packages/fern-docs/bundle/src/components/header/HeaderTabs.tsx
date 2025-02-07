@@ -1,4 +1,4 @@
-import { RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon } from "@fern-docs/components";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import clsx from "clsx";
 import { Lock } from "iconoir-react";
@@ -31,7 +31,7 @@ export function HeaderTab({ tab }: { tab: SidebarTab }): ReactElement {
         data-state={currentTabIndex === tab.index ? "active" : "inactive"}
       >
         <div className="flex min-w-0 items-center justify-start space-x-2">
-          {tab.icon && <RemoteFontAwesomeIcon icon={tab.icon} />}
+          {tab.icon && <FaIcon icon={tab.icon} />}
           <span className="truncate font-medium">{tab.title}</span>
           {tab.type !== "tabLink" && tab.authed && (
             <Lock className="text-faded size-4 self-center" />

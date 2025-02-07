@@ -1,4 +1,4 @@
-import { RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon } from "@fern-docs/components";
 import type { MDXComponents } from "@fern-docs/mdx";
 import dynamic from "next/dynamic";
 import { ComponentProps, PropsWithChildren, ReactElement } from "react";
@@ -66,7 +66,7 @@ const FERN_COMPONENTS = {
   EndpointResponseSnippet,
   Feature,
   Frame,
-  Icon: RemoteFontAwesomeIcon,
+  Icon: FaIcon,
   If,
   Mermaid,
   ParamField,

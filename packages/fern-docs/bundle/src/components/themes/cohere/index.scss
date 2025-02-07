@@ -73,18 +73,10 @@
 
     .fern-header-tab-button {
       @apply flex h-[40px] select-none items-center rounded-lg border px-3 text-sm;
-
-      .fa-icon {
-        @apply size-3.5;
-      }
     }
 
     .fern-header-tab-button[data-state="inactive"] {
       @apply t-default border-default;
-
-      .fa-icon {
-        @apply bg-text-muted;
-      }
 
       &:hover {
         background-color: var(--bg-color-header-tab-inactive-hover);
@@ -94,10 +86,6 @@
     .fern-header-tab-button[data-state="active"] {
       border-color: var(--border-color-header-tab-active);
       background-color: var(--bg-color-header-tab-active);
-
-      .fa-icon {
-        @apply bg-text-default;
-      }
     }
   }
 

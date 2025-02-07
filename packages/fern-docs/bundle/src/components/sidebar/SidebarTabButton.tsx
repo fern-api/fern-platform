@@ -1,4 +1,4 @@
-import { RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon } from "@fern-docs/components";
 import { SidebarTab } from "@fern-platform/fdr-utils";
 import cn, { clsx } from "clsx";
 import { memo } from "react";
@@ -34,8 +34,8 @@ const UnmemoizedSidebarTabButton: React.FC<SidebarTabButton.Props> = ({
         >
           <div className="min-w-fit">
             <div className="bg-card-surface ring-border-default group-hover/tab-button:bg-tag-primary group-hover/tab-button:ring-accent/70 group-data-[state=active]/tab-button:bg-accent group-hover/tab-button:group-data-[state=active]/tab-button:bg-accent flex size-6 items-center justify-center rounded-md shadow-sm ring-1 group-data-[state=active]/tab-button:ring-0">
-              <RemoteFontAwesomeIcon
-                className="bg-faded group-hover/tab-button:bg-accent group-data-[state=active]/tab-button:bg-background group-hover/tab-button:group-data-[state=active]/tab-button:bg-background size-4"
+              <FaIcon
+                className="text-faded group-hover/tab-button:text-accent group-data-[state=active]/tab-button:text-background group-hover/tab-button:group-data-[state=active]/tab-button:text-background size-4"
                 // TODO: Should we validate that the icon is not undefined in sidebar mode
                 icon={
                   tab.type !== "tabLink" && tab.authed

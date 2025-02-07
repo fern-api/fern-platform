@@ -1,5 +1,5 @@
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { FernTooltip, RemoteFontAwesomeIcon } from "@fern-docs/components";
+import { FaIcon, FernTooltip } from "@fern-docs/components";
 import { composeEventHandlers } from "@radix-ui/primitive";
 import { composeRefs } from "@radix-ui/react-compose-refs";
 import cn, { clsx } from "clsx";
@@ -184,14 +184,7 @@ const SidebarLinkInternal = forwardRef<HTMLDivElement, SidebarLinkProps>(
               <span className="fern-sidebar-link-content">
                 {icon != null && (
                   <span className="fern-sidebar-icon">
-                    {typeof icon === "string" ? (
-                      <RemoteFontAwesomeIcon
-                        icon={icon}
-                        className="bg-faded group-data-[state=active]:bg-accent"
-                      />
-                    ) : (
-                      icon
-                    )}
+                    {typeof icon === "string" ? <FaIcon icon={icon} /> : icon}
                   </span>
                 )}
                 {createElement(

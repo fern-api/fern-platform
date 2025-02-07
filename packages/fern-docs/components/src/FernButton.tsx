@@ -9,8 +9,8 @@ import {
   useRef,
 } from "react";
 import { SemanticColor } from "./colors";
+import { FaIcon } from "./fa-icon";
 import { FernTooltip, FernTooltipProvider } from "./FernTooltip";
-import { RemoteFontAwesomeIcon } from "./FontAwesomeIcon";
 
 export interface FernButtonSharedProps {
   className?: string;
@@ -36,7 +36,7 @@ export interface FernButtonProps
 
 function renderIcon(icon: string | ReactNode | undefined) {
   if (typeof icon === "string") {
-    return <RemoteFontAwesomeIcon icon={icon} />;
+    return <FaIcon icon={icon} />;
   } else {
     return icon;
   }

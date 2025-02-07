@@ -1,7 +1,7 @@
 "use client";
 
-import { OpenNewWindow } from "iconoir-react";
 import { atom, useAtomValue } from "jotai";
+import { ExternalLink } from "lucide-react";
 import Link, { LinkProps } from "next/link";
 import {
   ReactElement,
@@ -117,7 +117,7 @@ const FernExternalLink = forwardRef<HTMLAnchorElement, FernExternalLinkProps>(
       >
         {props.children}
         {!isSameSite && showExternalLinkIcon && (
-          <OpenNewWindow className="external-link-icon" />
+          <ExternalLink className="external-link-icon" />
         )}
       </a>
     );

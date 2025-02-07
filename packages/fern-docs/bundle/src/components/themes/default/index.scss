@@ -38,18 +38,10 @@
     .fern-header-tab-button {
       @apply relative flex h-full min-w-0 flex-1 select-none items-center justify-start p-3 text-base;
       @apply lg:text-sm;
-
-      .fa-icon {
-        @apply size-3.5;
-      }
     }
 
     .fern-header-tab-button[data-state="active"] {
       @apply t-accent;
-
-      .fa-icon {
-        @apply bg-accent;
-      }
 
       &::after {
         content: "";
@@ -61,16 +53,8 @@
     .fern-header-tab-button[data-state="inactive"] {
       @apply t-muted;
 
-      .fa-icon {
-        @apply bg-text-muted;
-      }
-
       &:hover {
         @apply t-default;
-
-        .fa-icon {
-          @apply bg-text-default;
-        }
       }
     }
   }
