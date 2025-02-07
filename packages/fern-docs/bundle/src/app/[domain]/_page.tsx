@@ -1,5 +1,6 @@
 "use server";
 
+import { toImageDescriptor } from "@/app/seo";
 import { withCustomJavascript } from "@/components/atoms/docs";
 import type { DocsProps, NavbarLink } from "@/components/atoms/types";
 import { DocsMainContent } from "@/components/docs/DocsMainContent";
@@ -39,20 +40,19 @@ import {
   isTrailingSlashEnabled,
 } from "@fern-docs/utils";
 import { SidebarTab } from "@fern-platform/fdr-utils";
-import { cookies } from "next/headers";
 import { notFound, permanentRedirect, redirect } from "next/navigation";
 import { Metadata } from "next/types";
 import React from "react";
 import urlJoin from "url-join";
-import { toImageDescriptor } from "../../seo";
 
 export default async function Page({
   params,
+  fern_token,
 }: {
   params: { slug?: string[]; domain: string };
+  fern_token: string | undefined;
 }) {
   const domain = params.domain;
-  const fern_token = cookies().get("fern_token")?.value;
   const slug = FernNavigation.slugjoin(params.slug);
   console.debug(`[${domain}] Loading page for slug: ${slug}`);
   const loader = await createCachedDocsLoader(domain, fern_token);
@@ -400,12 +400,14 @@ export default async function Page({
 
 export async function generateMetadata({
   params,
+  fern_token,
 }: {
   params: { slug?: string[]; domain: string };
+  fern_token: string | undefined;
 }): Promise<Metadata> {
   const domain = params.domain;
   const slug = FernNavigation.slugjoin(params.slug);
-  const docsLoader = await createCachedDocsLoader(domain);
+  const docsLoader = await createCachedDocsLoader(domain, fern_token);
   const findNode = createFindNode(docsLoader);
   const [files, node, config, isSeoDisabled] = await Promise.all([
     docsLoader.getFiles(),

@@ -1,5 +1,5 @@
 import { rewritePosthog } from "@/server/analytics/rewritePosthog";
-import { removeLeadingSlash } from "@fern-docs/utils";
+import { COOKIE_FERN_TOKEN, removeLeadingSlash } from "@fern-docs/utils";
 import { NextResponse, type NextMiddleware } from "next/server";
 import { MARKDOWN_PATTERN, RSS_PATTERN } from "./server/patterns";
 import { withPathname } from "./server/withPathname";
@@ -160,9 +160,13 @@ export const middleware: NextMiddleware = async (request) => {
     });
   }
 
-  return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
-    request: { headers },
-  });
+  const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
+  const withPrefix = createWithPrefix(fern_token);
+
+  return NextResponse.rewrite(
+    withPathname(request, withDomain(withPrefix(pathname))),
+    { request: { headers } }
+  );
 };
 
 export const config = {
@@ -186,5 +190,12 @@ export const config = {
 function createWithDomain(domain: string) {
   return (pathname: string) => {
     return `/${domain}${pathname}`;
+  };
+}
+
+function createWithPrefix(fern_token: string | undefined) {
+  return (pathname: string) => {
+    const prefix = fern_token == null ? "static" : "dynamic";
+    return `/${prefix}${pathname}`;
   };
 }
