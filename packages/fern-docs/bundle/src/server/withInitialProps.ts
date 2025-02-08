@@ -22,6 +22,7 @@ import {
 import { getMdxBundler } from "@fern-docs/ui/bundlers";
 import {
   addLeadingSlash,
+  conformTrailingSlash,
   getRedirectForPath,
   isTrailingSlashEnabled,
 } from "@fern-docs/utils";
@@ -280,7 +281,8 @@ export async function withInitialProps({
       : undefined,
   };
 
-  const currentVersionId = found.currentVersion?.versionId;
+  const currentVersion = found.currentVersion;
+  const currentVersionId = currentVersion?.versionId;
   const versions = withVersionSwitcherInfo({
     node: found.node,
     parents: found.parents,
@@ -327,6 +329,35 @@ export async function withInitialProps({
     }
   }
 
+  // sometimes absolute paths need to be attached to the current version prefix, or basepath
+  const rootSlug = root.slug;
+  const versionSlug = currentVersion?.slug;
+  const slugMap = found.collector.slugMap;
+  function resolveLinkHref(href: string): string | undefined {
+    if (href.startsWith("/")) {
+      const url = new URL(href, withDefaultProtocol(domain));
+      if (versionSlug != null) {
+        const slugWithVersion = FernNavigation.slugjoin(
+          versionSlug,
+          url.pathname
+        );
+        const found = slugMap.get(slugWithVersion);
+        if (found) {
+          return `${conformTrailingSlash(addLeadingSlash(found.slug))}${url.search}${url.hash}`;
+        }
+      }
+
+      if (rootSlug.length > 0) {
+        const slugWithRoot = FernNavigation.slugjoin(rootSlug, url.pathname);
+        const found = slugMap.get(slugWithRoot);
+        if (found) {
+          return `${conformTrailingSlash(addLeadingSlash(found.slug))}${url.search}${url.hash}`;
+        }
+      }
+    }
+    return;
+  }
+
   const content = await withResolvedDocsContent({
     domain: docs.baseUrl.domain,
     found,
@@ -343,6 +374,7 @@ export async function withInitialProps({
       slug: slug,
     },
     replaceSrc: resolveFileSrc,
+    replaceHref: resolveLinkHref,
   });
 
   const frontmatter = extractFrontmatterFromDocsContent(found.node.id, content);

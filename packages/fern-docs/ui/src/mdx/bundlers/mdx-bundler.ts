@@ -26,6 +26,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import remarkSmartypants from "remark-smartypants";
 import { rehypeFiles } from "../plugins/rehype-files";
+import { rehypeLinks } from "../plugins/rehype-links";
 import { rehypeExtractAsides } from "../plugins/rehypeExtractAsides";
 import { rehypeFernCode } from "../plugins/rehypeFernCode";
 import { rehypeFernComponents } from "../plugins/rehypeFernComponents";
@@ -51,6 +52,7 @@ async function serializeMdxImpl(
     filename,
     scope = {},
     replaceSrc,
+    replaceHref,
   }: FernSerializeMdxOptions = {}
 ): Promise<FernDocs.MarkdownText | undefined> {
   if (content == null) {
@@ -155,6 +157,7 @@ async function serializeMdxImpl(
         ],
         rehypeMdxClassStyle,
         [rehypeFiles, { replaceSrc }],
+        [rehypeLinks, { replaceHref }],
         rehypeAcornErrorBoundary,
         rehypeSlug,
         rehypeKatex,

@@ -1,6 +1,7 @@
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import type { Options } from "@mdx-js/esbuild";
 import { RehypeFilesOptions } from "./plugins/rehype-files";
+import { RehypeLinksOptions } from "./plugins/rehype-links";
 
 export type FernSerializeMdxOptions = {
   filename?: string;
@@ -10,6 +11,7 @@ export type FernSerializeMdxOptions = {
   files?: Record<string, string>;
   scope?: Record<string, unknown>;
   replaceSrc?: RehypeFilesOptions["replaceSrc"];
+  replaceHref?: RehypeLinksOptions["replaceHref"];
 };
 
 export type SerializeMdxFunc =

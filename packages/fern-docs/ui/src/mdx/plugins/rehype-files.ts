@@ -1,9 +1,11 @@
 import type {
   Hast,
+  MdxExpression,
   MdxJsxAttribute,
   MdxJsxExpressionAttribute,
 } from "@fern-docs/mdx";
 import {
+  isMdxExpression,
   isMdxJsxAttribute,
   isMdxJsxElementHast,
   mdxJsxAttributeToString,
@@ -33,9 +35,12 @@ export interface RehypeFilesOptions {
  * @returns a function that will transform the tree
  */
 export function rehypeFiles(
-  options: RehypeFilesOptions
+  options: RehypeFilesOptions = {}
 ): (tree: Hast.Root) => void {
   return function (tree: Hast.Root): void {
+    if (options == null) {
+      return;
+    }
     visit(tree, (node) => {
       if (isMdxJsxElementHast(node)) {
         const attributes = node.attributes.filter(isMdxJsxAttribute);
@@ -136,6 +141,7 @@ export function rehypeFiles(
           if (estree == null) {
             return;
           }
+          // TODO: make this less hacky
           walk(estree, {
             enter(node) {
               if (node.type === "Literal" && typeof node.value === "string") {
@@ -149,11 +155,27 @@ export function rehypeFiles(
           });
         });
       }
+
+      if (isMdxExpression(node)) {
+        const estree = getEstree(node);
+        if (estree == null) {
+          return;
+        }
+        walk(estree, {
+          enter(node) {
+            if (node.type === "Literal" && typeof node.value === "string") {
+              node.value = options.replaceSrc?.(node.value)?.src ?? node.value;
+            }
+          },
+        });
+      }
     });
   };
 }
 
-function getEstree(attr: MdxJsxAttribute | MdxJsxExpressionAttribute) {
+function getEstree(
+  attr: MdxJsxAttribute | MdxJsxExpressionAttribute | MdxExpression
+) {
   if (
     attr.type === "mdxJsxAttribute" &&
     attr.value &&
@@ -163,6 +185,8 @@ function getEstree(attr: MdxJsxAttribute | MdxJsxExpressionAttribute) {
   ) {
     return attr.value.data?.estree;
   } else if (attr.type === "mdxJsxExpressionAttribute" && attr.data?.estree) {
+    return attr.data?.estree;
+  } else if (isMdxExpression(attr) && attr.data?.estree) {
     return attr.data?.estree;
   }
   return null;
