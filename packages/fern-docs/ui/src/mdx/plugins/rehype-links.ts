@@ -13,7 +13,7 @@ export interface RehypeLinksOptions {
 export function rehypeLinks({ replaceHref }: RehypeLinksOptions = {}): (
   ast: Hast.Root
 ) => void {
-  return function (ast): void {
+  return (ast) => {
     if (replaceHref == null) {
       return;
     }
