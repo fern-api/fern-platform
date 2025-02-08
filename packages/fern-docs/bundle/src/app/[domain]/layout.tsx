@@ -1,5 +1,7 @@
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
+import { JavascriptProvider } from "@/components/components/JavascriptProvider";
 import Preload, { PreloadHref } from "@/components/preload";
+import { SearchV2 } from "@/components/search";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";
 import { ThemeScript } from "@/components/themes/ThemeScript";
 import { createCachedDocsLoader } from "@/server/docs-loader";
@@ -50,6 +52,8 @@ export default async function Layout({
       <GlobalStyles>{stylesheet}</GlobalStyles>
       <ThemeScript colors={colors} />
       {children}
+      <SearchV2 />
+      <JavascriptProvider />
       <CustomerAnalytics />
     </>
   );
@@ -186,9 +190,7 @@ function generatePreloadHrefs(
   }
 
   toReturn.push({
-    href: edgeFlags.isSearchV2Enabled
-      ? "/api/fern-docs/search/v2/key"
-      : "/api/fern-docs/search/v1/key",
+    href: "/api/fern-docs/search/v2/key",
     options: { as: "fetch" },
   });
 

@@ -1,3 +1,4 @@
+import { SearchV2Trigger } from "@/components/search";
 import cn from "clsx";
 import { useAtomValue } from "jotai";
 import { useMemo } from "react";
@@ -8,7 +9,6 @@ import {
 } from "../atoms";
 import { HeaderLogoSection } from "../header/HeaderLogoSection";
 import { ThemeButton } from "../themes";
-import { SidebarSearchBar } from "./SidebarSearchBar";
 
 export declare namespace SidebarFixedItemsSection {
   export interface Props {
@@ -28,7 +28,7 @@ export const SidebarFixedItemsSection: React.FC<
   const searchBar = useMemo(() => {
     return showSearchBar ? (
       <div className="fern-sidebar-searchbar-container">
-        <SidebarSearchBar className="w-full" />
+        <SearchV2Trigger />
       </div>
     ) : null;
   }, [showSearchBar]);

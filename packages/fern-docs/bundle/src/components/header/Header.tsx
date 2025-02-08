@@ -1,3 +1,4 @@
+import { SearchV2Trigger } from "@/components/search";
 import type { DocsV1Read } from "@fern-api/fdr-sdk/client/types";
 import { FernButton, FernButtonGroup } from "@fern-docs/components";
 import cn, { clsx } from "clsx";
@@ -12,9 +13,6 @@ import {
   useOpenSearchDialog,
 } from "../atoms";
 import { FernLinkButton } from "../components/FernLinkButton";
-import { SEARCH_BOX_MOUNTED } from "../search/algolia/SearchBox";
-import { useSearchConfig } from "../services/useSearchService";
-import { SidebarSearchBar } from "../sidebar/SidebarSearchBar";
 import { ThemeButton } from "../themes";
 import { getGitHubRepo } from "../util/github";
 import { GitHubWidget } from "./GitHubWidget";
@@ -35,8 +33,6 @@ const UnmemoizedHeader = forwardRef<
   const navbarLinks = useAtomValue(NAVBAR_LINKS_ATOM);
   const colors = useColors();
   const openSearchDialog = useOpenSearchDialog();
-  const isSearchBoxMounted = useAtomValue(SEARCH_BOX_MOUNTED);
-  const searchService = useSearchConfig();
   const showSearchBar = useAtomValue(SEARCHBAR_PLACEMENT_ATOM) === "HEADER";
 
   const navbarLinksSection = (
@@ -109,12 +105,8 @@ const UnmemoizedHeader = forwardRef<
       <HeaderLogoSection />
 
       {showSearchBar && (
-        <div
-          className={cn("fern-header-searchbar", {
-            invisible: isSearchBoxMounted,
-          })}
-        >
-          <SidebarSearchBar className="w-full" />
+        <div className={cn("fern-header-searchbar")}>
+          <SearchV2Trigger />
         </div>
       )}
 
@@ -136,21 +128,19 @@ const UnmemoizedHeader = forwardRef<
 
           {colors.dark && colors.light && <ThemeButton size="large" />}
 
-          {searchService.isAvailable && (
-            <FernButton
-              onClickCapture={(e) => {
-                e.stopPropagation();
-                openSearchDialog();
-              }}
-              icon={<Search className="!size-icon-md" />}
-              intent="none"
-              variant="minimal"
-              rounded={true}
-              size="large"
-              className="max-sm:hidden"
-              id="fern-search-button"
-            />
-          )}
+          <FernButton
+            onClickCapture={(e) => {
+              e.stopPropagation();
+              openSearchDialog();
+            }}
+            icon={<Search className="!size-icon-md" />}
+            intent="none"
+            variant="minimal"
+            rounded={true}
+            size="large"
+            className="max-sm:hidden"
+            id="fern-search-button"
+          />
 
           <MobileMenuButton />
         </div>

@@ -1,9 +1,9 @@
+import { SearchV2Trigger } from "@/components/search";
 import { useAtomValue } from "jotai";
 import { ReactElement, memo } from "react";
 import { HAS_HORIZONTAL_TABS, SEARCHBAR_PLACEMENT_ATOM } from "../../atoms";
 import { Header } from "../../header/Header";
 import { HeaderTabs } from "../../header/HeaderTabs";
-import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
 
 interface HeaderContainerProps {
   className?: string;
@@ -26,7 +26,11 @@ export const HeaderContainer = memo(function HeaderContainer({
           <nav aria-label="tabs" className="fern-header-tabs">
             <HeaderTabs />
 
-            {showSearchBar && <SidebarSearchBar className="w-96 shrink" />}
+            {showSearchBar && (
+              <div className="w-96 shrink">
+                <SearchV2Trigger />
+              </div>
+            )}
           </nav>
         )}
       </div>

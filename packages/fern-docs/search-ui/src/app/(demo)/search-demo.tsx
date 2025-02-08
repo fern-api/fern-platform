@@ -13,12 +13,14 @@ import {
   CommandGroupTheme,
   CommandSearchHits,
   DefaultDesktopBackButton,
+  DesktopSearchButton,
   DesktopSearchDialog,
   MobileCommand,
   SearchClientRoot,
 } from "@/components";
 import { ChatbotModelSelect } from "@/components/chatbot/model-select";
 import { DesktopCommandWithAskAI } from "@/components/desktop/desktop-ask-ai";
+import { DialogTrigger } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { FacetsResponse, SEARCH_INDEX } from "@fern-docs/search-server/algolia";
 import { useAtom } from "jotai";
@@ -136,7 +138,15 @@ export function DemoInstantSearchClient({
           </MobileCommand>
         </AppSidebar>
       ) : (
-        <DesktopSearchDialog open={open} onOpenChange={setOpen}>
+        <DesktopSearchDialog
+          open={open}
+          onOpenChange={setOpen}
+          trigger={
+            <DialogTrigger asChild>
+              <DesktopSearchButton />
+            </DialogTrigger>
+          }
+        >
           <DesktopCommandWithAskAI
             domain={domain}
             askAI={askAi}

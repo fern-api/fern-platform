@@ -1,3 +1,4 @@
+import { SearchV2Trigger } from "@/components/search";
 import { FaIcon } from "@fern-docs/components";
 import type { MDXComponents } from "@fern-docs/mdx";
 import dynamic from "next/dynamic";
@@ -7,7 +8,6 @@ import {
   FernErrorBoundaryProps,
   FernErrorTag,
 } from "../../components/FernErrorBoundary";
-import { SidebarSearchBar } from "../../sidebar/SidebarSearchBar";
 import { AccordionGroup } from "./accordion";
 import { Availability } from "./availability";
 import { Badge } from "./badge";
@@ -70,7 +70,7 @@ const FERN_COMPONENTS = {
   If,
   Mermaid,
   ParamField,
-  SearchBar: SidebarSearchBar,
+  SearchBar: SearchV2Trigger,
   Step,
   StepGroup,
   TabGroup,

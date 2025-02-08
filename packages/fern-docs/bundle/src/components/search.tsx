@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CommandActions,
   CommandEmpty,
@@ -15,10 +17,9 @@ import {
   useIsMobile,
 } from "@fern-docs/search-ui";
 import { useEventCallback } from "@fern-ui/react-commons";
-import { atom, useAtom, useAtomValue } from "jotai";
-import {
+import { atom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import React, {
   Dispatch,
-  ReactElement,
   SetStateAction,
   useCallback,
   useEffect,
@@ -27,24 +28,24 @@ import {
 } from "react";
 import { z } from "zod";
 
-import { useRouter } from "next/navigation";
 import {
+  atomWithStorageString,
   CURRENT_VERSION_ATOM,
   DOMAIN_ATOM,
   HAS_API_PLAYGROUND,
   SEARCH_DIALOG_OPEN_ATOM,
   THEME_SWITCH_ENABLED_ATOM,
-  atomWithStorageString,
   useClosePlayground,
   useEdgeFlags,
   useFernUser,
   useIsPlaygroundOpen,
   useSetTheme,
   useTogglePlayground,
-} from "../atoms";
-import { Feedback } from "../feedback/Feedback";
-import { useApiRoute } from "../hooks/useApiRoute";
-import { useApiRouteSWRImmutable } from "../hooks/useApiRouteSWR";
+} from "@/components/atoms";
+import { Feedback } from "@/components/feedback/Feedback";
+import { useApiRoute } from "@/components/hooks/useApiRoute";
+import { useApiRouteSWRImmutable } from "@/components/hooks/useApiRouteSWR";
+import { useRouter } from "next/navigation";
 
 const ALGOLIA_USER_TOKEN_KEY = "algolia-user-token";
 
@@ -66,7 +67,7 @@ function useAlgoliaUserToken() {
 
 const askAiAtom = atom(false);
 
-export function SearchV2(): ReactElement | false {
+export const SearchV2 = React.memo(() => {
   const version = useAtomValue(CURRENT_VERSION_ATOM);
   const { isAskAiEnabled } = useEdgeFlags();
 
@@ -156,11 +157,7 @@ export function SearchV2(): ReactElement | false {
       initialFilters={{ "version.title": version?.title }}
       analyticsTags={["search-v2-dialog"]}
     >
-      <DesktopSearchDialog
-        open={open}
-        onOpenChange={setOpen}
-        trigger={<DesktopSearchButton />}
-      >
+      <DesktopSearchDialog open={open} onOpenChange={setOpen}>
         {isAskAiEnabled ? (
           <DesktopCommandWithAskAI
             domain={domain}
@@ -202,7 +199,12 @@ export function SearchV2(): ReactElement | false {
       </DesktopSearchDialog>
     </SearchClientRoot>
   );
-}
+});
+
+export const SearchV2Trigger = React.memo(() => {
+  const setOpen = useSetAtom(SEARCH_DIALOG_OPEN_ATOM);
+  return <DesktopSearchButton onClick={() => setOpen(true)} />;
+});
 
 function CommandPlayground({ onClose }: { onClose: () => void }) {
   const hasApiPlayground = useAtomValue(HAS_API_PLAYGROUND);

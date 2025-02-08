@@ -17,7 +17,6 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { DesktopCommandAfterInput } from "./desktop-command";
-import { DesktopSearchButton } from "./desktop-search-button";
 
 export const DesktopSearchDialog = memo(
   ({
@@ -35,9 +34,7 @@ export const DesktopSearchDialog = memo(
   >) => {
     return (
       <Dialog.Root {...rest}>
-        <Dialog.Trigger asChild>
-          {trigger ?? <DesktopSearchButton />}
-        </Dialog.Trigger>
+        {trigger}
 
         <DesktopCommandAfterInput>
           {afterInput || (
