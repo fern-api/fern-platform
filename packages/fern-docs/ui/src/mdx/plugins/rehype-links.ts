@@ -7,7 +7,7 @@ import {
 } from "@fern-docs/mdx";
 
 export interface RehypeLinksOptions {
-  replaceHref?(href: string): string | undefined;
+  replaceHref?: (href: string) => string | undefined;
 }
 
 export function rehypeLinks({ replaceHref }: RehypeLinksOptions = {}): (
