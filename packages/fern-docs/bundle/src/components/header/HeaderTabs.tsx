@@ -31,11 +31,12 @@ export function HeaderTab({ tab }: { tab: SidebarTab }): ReactElement {
         data-state={currentTabIndex === tab.index ? "active" : "inactive"}
       >
         <div className="flex min-w-0 items-center justify-start space-x-2">
-          {tab.icon && <FaIcon icon={tab.icon} />}
-          <span className="truncate font-medium">{tab.title}</span>
-          {tab.type !== "tabLink" && tab.authed && (
-            <Lock className="text-faded size-4 self-center" />
+          {tab.type !== "tabLink" && tab.authed ? (
+            <Lock className="size-3.5" />
+          ) : (
+            tab.icon && <FaIcon icon={tab.icon} className="size-3.5" />
           )}
+          <span className="truncate font-medium">{tab.title}</span>
         </div>
       </FernLink>
     </li>

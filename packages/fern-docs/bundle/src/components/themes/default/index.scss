@@ -41,12 +41,12 @@
     }
 
     .fern-header-tab-button[data-state="active"] {
-      @apply t-accent;
+      @apply font-semibold text-[var(--accent-11)];
 
       &::after {
         content: "";
 
-        @apply bg-accent absolute inset-x-3 bottom-0 h-px;
+        @apply absolute inset-x-3 bottom-0 h-0.5 bg-[var(--accent-11)];
       }
     }
 
