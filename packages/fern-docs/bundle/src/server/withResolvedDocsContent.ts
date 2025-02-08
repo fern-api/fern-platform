@@ -20,6 +20,7 @@ interface WithResolvedDocsContentOpts {
   edgeFlags: EdgeFlags;
   scope?: Record<string, unknown>;
   replaceSrc?: (src: string) => ImageData | undefined;
+  replaceHref?: (href: string) => string | undefined;
 }
 
 export async function withResolvedDocsContent({
@@ -30,6 +31,7 @@ export async function withResolvedDocsContent({
   edgeFlags,
   scope,
   replaceSrc,
+  replaceHref,
 }: WithResolvedDocsContentOpts): Promise<DocsContent | undefined> {
   const node = withPrunedNavigation(found.node, {
     visibleNodeIds: [found.node.id],
@@ -81,6 +83,8 @@ export async function withResolvedDocsContent({
 
       // inject the file url and dimensions for images and other embeddable files
       replaceSrc,
+      // resolve absolute pathed hrefs to the correct path (considers version and basepath)
+      replaceHref,
     },
     serializeMdx,
     domain,

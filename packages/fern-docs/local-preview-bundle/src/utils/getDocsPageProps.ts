@@ -14,7 +14,10 @@ import {
   type DocsV2Read,
 } from "@fern-api/fdr-sdk/client/types";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import { visitDiscriminatedUnion } from "@fern-api/ui-core-utils";
+import {
+  visitDiscriminatedUnion,
+  withDefaultProtocol,
+} from "@fern-api/ui-core-utils";
 import { getFrontmatter } from "@fern-docs/mdx";
 import { withSeo } from "@fern-docs/seo";
 import {
@@ -31,6 +34,8 @@ import {
 } from "@fern-docs/ui";
 import { serializeMdx } from "@fern-docs/ui/bundlers/next-mdx-remote";
 import {
+  addLeadingSlash,
+  conformTrailingSlash,
   DEFAULT_EDGE_FLAGS,
   EdgeFlags,
   getRedirectForPath,
@@ -119,6 +124,35 @@ export async function getDocsPageProps(
     }
   }
 
+  // sometimes absolute paths need to be attached to the current version prefix, or basepath
+  const rootSlug = root.slug;
+  const versionSlug = node.currentVersion?.slug;
+  const slugMap = node.collector.slugMap;
+  function resolveLinkHref(href: string): string | undefined {
+    if (href.startsWith("/")) {
+      const url = new URL(href, withDefaultProtocol(docs.baseUrl.domain));
+      if (versionSlug != null) {
+        const slugWithVersion = FernNavigation.slugjoin(
+          versionSlug,
+          url.pathname
+        );
+        const found = slugMap.get(slugWithVersion);
+        if (found) {
+          return `${conformTrailingSlash(addLeadingSlash(found.slug))}${url.search}${url.hash}`;
+        }
+      }
+
+      if (rootSlug.length > 0) {
+        const slugWithRoot = FernNavigation.slugjoin(rootSlug, url.pathname);
+        const found = slugMap.get(slugWithRoot);
+        if (found) {
+          return `${conformTrailingSlash(addLeadingSlash(found.slug))}${url.search}${url.hash}`;
+        }
+      }
+    }
+    return;
+  }
+
   const content = await resolveDocsContent({
     domain: docs.baseUrl.domain,
     node: node.node,
@@ -154,6 +188,7 @@ export async function getDocsPageProps(
 
       // inject the file url and dimensions for images and other embeddable files
       replaceSrc: resolveFileSrc,
+      replaceHref: resolveLinkHref,
     },
     serializeMdx,
     engine: "next-mdx-remote",
