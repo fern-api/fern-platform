@@ -13,10 +13,12 @@ export default async function Layout({
   children: React.ReactNode;
   params: { domain: string };
 }) {
+  console.debug(`[${params.domain}] Loading API Explorer layout`);
   const fern_token = cookies().get(COOKIE_FERN_TOKEN)?.value;
   const loader = await createCachedDocsLoader(params.domain, fern_token);
   const root = await loader.getRoot();
   if (!root) {
+    console.error(`[${params.domain}] Root node not found`);
     notFound();
   }
   const apiGroups = flattenApiSection(root);

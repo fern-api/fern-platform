@@ -16,6 +16,7 @@ export default async function Page({
 }: {
   params: { slug: string[]; domain: string };
 }) {
+  console.debug(`[${params.domain}] Loading API Explorer page`);
   const slug = FernNavigation.slugjoin(
     headers().get("x-basepath"),
     params.slug
@@ -25,14 +26,14 @@ export default async function Page({
   console.debug(`[${loader.domain}] Loading API Explorer for slug: ${slug}`);
   const root = await loader.getRoot();
   if (root == null) {
-    console.warn(`[${loader.domain}] Could not find root for slug: ${slug}`);
+    console.error(`[${loader.domain}] Could not find root for slug: ${slug}`);
     notFound();
   }
 
   const found = FernNavigation.utils.findNode(root, slug);
   if (found.type !== "found") {
     if (found.redirect) {
-      console.warn(
+      console.log(
         `[${loader.domain}] Redirecting from ${slug} to ${found.redirect}`
       );
       // follows the route path hierarchy
@@ -42,23 +43,23 @@ export default async function Page({
       );
     }
 
-    console.warn(`[${loader.domain}] Could not find node for slug: ${slug}`);
+    console.error(`[${loader.domain}] Could not find node for slug: ${slug}`);
     notFound();
   }
   const node = found.node;
   if (!FernNavigation.isApiLeaf(node)) {
-    console.warn(`[${loader.domain}] Found non-leaf node for slug: ${slug}`);
+    console.error(`[${loader.domain}] Found non-leaf node for slug: ${slug}`);
     notFound();
   }
   const api = await loader.getApi(node.apiDefinitionId);
   if (api == null) {
-    console.warn(`[${loader.domain}] Could not find api for slug: ${slug}`);
+    console.error(`[${loader.domain}] Could not find api for slug: ${slug}`);
     notFound();
   }
   if (node.type === "endpoint") {
     const context = createEndpointContext(node, api);
     if (context == null) {
-      console.warn(
+      console.error(
         `[${loader.domain}] Could not create endpoint context for slug: ${slug}`
       );
       notFound();
@@ -67,14 +68,14 @@ export default async function Page({
   } else if (node.type === "webSocket") {
     const context = createWebSocketContext(node, api);
     if (context == null) {
-      console.warn(
+      console.error(
         `[${loader.domain}] Could not create web socket context for slug: ${slug}`
       );
       notFound();
     }
     return <PlaygroundWebSocket context={context} />;
   }
-  console.warn(
+  console.error(
     `[${loader.domain}] Found non-visitable node for slug: ${slug}`,
     node
   );

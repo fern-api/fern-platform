@@ -27,7 +27,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const node = getPageNodeForPath(await loader.root(), path);
   console.log(path, node);
   if (node == null) {
-    console.warn("node not found", path);
+    console.error(`[${domain}] Node not found: ${path}`);
     notFound();
   }
 
@@ -38,7 +38,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   const markdown = await getMarkdownForPath(node, loader, edgeFlags);
   if (markdown == null) {
-    console.warn("markdown not found", path);
+    console.error(`[${domain}] Markdown not found: ${path}`);
     notFound();
   }
 

@@ -148,20 +148,18 @@ export const middleware: NextMiddleware = async (request) => {
   }
 
   /**
-   * Rewrite .../~/... to /~/...
+   * Rewrite .../~/... to /[domain]/~/...
    */
-  if (!pathname.startsWith("/~") && pathname.includes("/~/")) {
-    const index = pathname.indexOf("/~/");
-    const basepath = pathname.slice(0, index);
-    headers.set("x-basepath", basepath);
-    pathname = pathname.slice(index);
+  if (pathname.includes("/~/")) {
+    if (!pathname.startsWith("/~/")) {
+      const index = pathname.indexOf("/~/");
+      const basepath = pathname.slice(0, index);
+      headers.set("x-basepath", basepath);
+      pathname = pathname.slice(index);
+    }
     return NextResponse.rewrite(withPathname(request, withDomain(pathname)), {
       request: { headers },
     });
-  }
-
-  if (pathname.startsWith("/~/")) {
-    return NextResponse.next({ headers });
   }
 
   const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
@@ -179,10 +177,9 @@ export const config = {
      * Match all requests to posthog
      */
     "/api/fern-docs/analytics/posthog/:path*",
-    "/:prefix*/api/fern-docs/analytics/posthog/:path*",
     /*
      * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * - api/fern-docs (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)

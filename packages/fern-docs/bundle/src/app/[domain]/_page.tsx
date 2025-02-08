@@ -82,8 +82,7 @@ export default async function Page({
   // this should not happen, but if it does, we should return a 404
   if (root == null) {
     // TODO: sentry
-
-    console.error("Root node not found");
+    console.error(`[${domain}] Root node not found`);
     notFound();
   }
 
@@ -106,6 +105,8 @@ export default async function Page({
   }
 
   if (found.type === "notFound") {
+    console.error(`[${domain}] Not found: ${slug}`);
+
     // TODO: returning "notFound: true" here will render vercel's default 404 page
     // this is better than following redirects, since it will signal a proper 404 status code.
     // however, we should consider rendering a custom 404 page in the future using the customer's branding.
@@ -123,6 +124,8 @@ export default async function Page({
 
   // if the current node requires authentication and the user is not authenticated, redirect to the auth page
   if (found.node.authed && !authState.authed) {
+    console.error(`[${domain}] Not authed: ${slug}`);
+
     // if the page can be considered an edge node when it's unauthed, then we'll follow the redirect
     if (FernNavigation.hasRedirect(found.node)) {
       redirect(prepareRedirect(found.node.pointsTo));
@@ -148,6 +151,7 @@ export default async function Page({
       .filter(FernNavigation.hasMetadata)
       .every((node) => flagPredicate(node))
   ) {
+    console.error(`[${domain}] Feature flag predicate failed: ${slug}`);
     notFound();
   }
 
