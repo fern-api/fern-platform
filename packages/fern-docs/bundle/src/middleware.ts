@@ -160,6 +160,10 @@ export const middleware: NextMiddleware = async (request) => {
     });
   }
 
+  if (pathname.startsWith("/~/")) {
+    return NextResponse.next({ headers });
+  }
+
   const fern_token = request.cookies.get(COOKIE_FERN_TOKEN)?.value;
   const withPrefix = createWithPrefix(fern_token);
 

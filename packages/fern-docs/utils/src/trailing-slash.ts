@@ -11,7 +11,9 @@ export const addTrailingSlash = (pathname: string): string => {
 };
 
 export const removeTrailingSlash = (pathname: string): string => {
-  return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+  return pathname.endsWith("/") && pathname !== "/"
+    ? pathname.slice(0, -1)
+    : pathname;
 };
 
 export function conformTrailingSlash(pathname: string): string {

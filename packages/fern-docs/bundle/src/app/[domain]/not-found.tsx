@@ -31,8 +31,8 @@ export default async function NotFound() {
             We can&apos;t find the page you are looking for.
           </p>
           <FernLinkButton
-            href={conformTrailingSlash(
-              addLeadingSlash(baseUrl.basePath || "/")
+            href={addLeadingSlash(
+              conformTrailingSlash(baseUrl.basePath || "/")
             )}
             variant="filled"
             intent="primary"
