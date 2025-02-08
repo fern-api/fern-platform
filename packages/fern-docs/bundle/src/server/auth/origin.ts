@@ -1,13 +1,11 @@
-import { withDefaultProtocol } from "@fern-api/ui-core-utils";
-import { getEnv } from "@vercel/functions";
-import { headers } from "next/headers";
+import "server-only";
 
-export function getOrigin() {
-  const { VERCEL_ENV } = getEnv();
-  return withDefaultProtocol(
-    (VERCEL_ENV === "preview" ? headers().get("host") : undefined) ||
-      headers().get("x-fern-host") ||
-      headers().get("host") ||
-      ""
-  );
+import { getEnv } from "@vercel/functions";
+
+export function preferPreview(domain: string) {
+  const { VERCEL_ENV, VERCEL_URL } = getEnv();
+  if (VERCEL_ENV === "production") {
+    return domain;
+  }
+  return VERCEL_URL || domain;
 }

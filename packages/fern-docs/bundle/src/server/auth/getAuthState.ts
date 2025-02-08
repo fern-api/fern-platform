@@ -11,7 +11,7 @@ import urlJoin from "url-join";
 import { safeVerifyFernJWTConfig } from "./FernJWT";
 import { getAllowedRedirectUrls } from "./allowed-redirects";
 import { getOrgMetadataForDomain } from "./metadata-for-url";
-import { getOrigin } from "./origin";
+import { preferPreview } from "./origin";
 import { getOryAuthorizationUrl } from "./ory";
 import { getReturnToQueryParam } from "./return-to";
 import { getWebflowAuthorizationUrl } from "./webflow";
@@ -79,11 +79,13 @@ export async function getAuthStateInternal({
   authConfig,
   previewAuthConfig,
   setFernToken,
+  domain,
 }: {
   fernToken: string | undefined;
   authConfig?: AuthEdgeConfig;
   previewAuthConfig?: PreviewUrlAuth;
   setFernToken?: (token: string) => void;
+  domain: string;
 }): Promise<(pathname?: string) => AsyncOrSync<AuthState>> {
   // if the auth type is neither sso nor basic_token_verification, allow the request to pass through
   if (!authConfig) {
@@ -91,6 +93,7 @@ export async function getAuthStateInternal({
       if (previewAuthConfig.type === "workos") {
         return (pathname) =>
           handleWorkosAuth({
+            domain,
             fernToken,
             organization: previewAuthConfig.org,
             pathname,
@@ -120,7 +123,7 @@ export async function getAuthStateInternal({
       return (pathname) => ({
         authed: false,
         ok: true,
-        authorizationUrl: getAuthorizationUrl(authConfig, pathname),
+        authorizationUrl: getAuthorizationUrl(authConfig, domain, pathname),
         partner,
       });
     }
@@ -130,6 +133,7 @@ export async function getAuthStateInternal({
   if (authConfig.type === "sso" && authConfig.partner === "workos") {
     return (pathname) =>
       handleWorkosAuth({
+        domain,
         fernToken,
         organization: authConfig.organization,
         pathname,
@@ -182,6 +186,7 @@ export async function createGetAuthState(
     authConfig,
     setFernToken,
     previewAuthConfig,
+    domain,
   });
 
   const allowedDestinations = getAllowedRedirectUrls(
@@ -198,13 +203,13 @@ export async function createGetAuthState(
 
 function getAuthorizationUrl(
   authConfig: AuthEdgeConfig,
+  domain: string,
   pathname?: string
 ): string | undefined {
-  const origin = getOrigin();
   // TODO: this is currently not a correct implementation of the state parameter b/c it should be signed w/ the jwt secret
   // however, we should not break existing customers who are consuming the state as a `return_to` param in their auth flows.
   const state = urlJoin(
-    removeTrailingSlash(withDefaultProtocol(origin)),
+    removeTrailingSlash(withDefaultProtocol(preferPreview(domain))),
     pathname ?? ""
   );
 
@@ -214,7 +219,7 @@ function getAuthorizationUrl(
     // note: `redirect` is allowed to override the default redirect uri, and the `return_to` param
     if (!destination.searchParams.has("redirect_uri")) {
       const redirectUri = urlJoin(
-        removeTrailingSlash(origin),
+        removeTrailingSlash(preferPreview(domain)),
         "/api/fern-docs/auth/jwt/callback"
       );
 
@@ -226,7 +231,7 @@ function getAuthorizationUrl(
     return destination.toString();
   } else if (authConfig.type === "sso" && authConfig.partner === "workos") {
     const redirectUri = urlJoin(
-      removeTrailingSlash(origin),
+      removeTrailingSlash(preferPreview(domain)),
       "/api/fern-docs/auth/sso/callback"
     );
     return getWorkosSSOAuthorizationUrl({
@@ -243,7 +248,7 @@ function getAuthorizationUrl(
       return getWebflowAuthorizationUrl(authConfig, {
         state,
         redirectUri: urlJoin(
-          removeTrailingSlash(origin),
+          removeTrailingSlash(preferPreview(domain)),
           "/api/fern-docs/oauth/webflow/callback"
         ),
       });
@@ -251,7 +256,7 @@ function getAuthorizationUrl(
       return getOryAuthorizationUrl(authConfig, {
         state,
         redirectUri: urlJoin(
-          removeTrailingSlash(origin),
+          removeTrailingSlash(preferPreview(domain)),
           "/api/fern-docs/oauth/ory/callback"
         ),
       });

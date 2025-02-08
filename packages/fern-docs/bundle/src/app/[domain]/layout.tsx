@@ -9,11 +9,12 @@ import { withDefaultProtocol } from "@fern-api/ui-core-utils";
 import { getEdgeFlags, getSeoDisabled } from "@fern-docs/edge-config";
 import { EdgeFlags } from "@fern-docs/utils";
 import { compact, uniqBy } from "es-toolkit/array";
-import { cookies } from "next/headers";
 import { Metadata, Viewport } from "next/types";
 import tinycolor from "tinycolor2";
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
+
+export const dynamic = "force-static";
 
 export default async function Layout({
   children,
@@ -93,8 +94,7 @@ export async function generateMetadata({
   params: { domain: string };
 }): Promise<Metadata> {
   const domain = params.domain;
-  const fern_token = cookies().get("fern_token")?.value;
-  const docsLoader = await createCachedDocsLoader(domain, fern_token);
+  const docsLoader = await createCachedDocsLoader(domain);
   const [files, config, baseUrl, seoDisabled] = await Promise.all([
     docsLoader.getFiles(),
     docsLoader.getConfig(),

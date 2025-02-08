@@ -5,6 +5,7 @@ export const COOKIE_FERN_TOKEN = "fern_token";
 export const COOKIE_ACCESS_TOKEN = "access_token"; // for api key injection
 export const COOKIE_REFRESH_TOKEN = "refresh_token"; // for api key injection
 export const COOKIE_EMAIL = "email"; // for api key injection
+export const HEADER_HOST = "host";
 export const HEADER_X_FERN_HOST = "x-fern-host";
 export const HEADER_X_MATCHED_PATH = "x-matched-path";
 export const HEADER_X_VERCEL_PROTECTION_BYPASS = "x-vercel-protection-bypass";

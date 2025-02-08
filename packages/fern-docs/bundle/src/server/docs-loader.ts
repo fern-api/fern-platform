@@ -115,18 +115,22 @@ const cachedLoadWithUrl = cache(loadWithUrl);
 /**
  * Force cache the loadWithUrl call, so that `JSON.parse()` is called only once.
  */
-export const createCachedDocsLoader = async (
-  domain: string,
-  fern_token?: string
-): Promise<DocsLoader> => {
-  const authConfig = await cachedGetAuthEdgeConfig(domain);
-  const { getAuthState } = await cachedGetAuthState(
-    domain,
-    fern_token,
-    authConfig
-  );
-  return new CachedDocsLoaderImpl(domain, fern_token, authConfig, getAuthState);
-};
+export const createCachedDocsLoader = cache(
+  async (domain: string, fern_token?: string): Promise<DocsLoader> => {
+    const authConfig = await cachedGetAuthEdgeConfig(domain);
+    const { getAuthState } = await cachedGetAuthState(
+      domain,
+      fern_token,
+      authConfig
+    );
+    return new CachedDocsLoaderImpl(
+      domain,
+      fern_token,
+      authConfig,
+      getAuthState
+    );
+  }
+);
 
 /**
  * This class implements the DocsLoader interface using loadWithUrl + unstable_cache.

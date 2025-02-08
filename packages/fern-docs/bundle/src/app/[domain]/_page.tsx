@@ -10,7 +10,7 @@ import { DocsContent } from "@/components/resolver/DocsContent";
 import { ThemedDocs } from "@/components/themes/ThemedDocs";
 import { getApiRouteSupplier } from "@/components/util/getApiRouteSupplier";
 import { getGitHubInfo, getGitHubRepo } from "@/components/util/github";
-import { getOrigin } from "@/server/auth/origin";
+import { preferPreview } from "@/server/auth/origin";
 import { getReturnToQueryParam } from "@/server/auth/return-to";
 import { createCachedDocsLoader, DocsLoader } from "@/server/docs-loader";
 import { createFileResolver } from "@/server/file-resolver";
@@ -57,14 +57,14 @@ export default async function Page({
   const [baseUrl, config, authState, edgeFlags, colors] = await Promise.all([
     loader.getBaseUrl(),
     loader.getConfig(),
-    loader.getAuthState(addLeadingSlash(slug)),
+    loader.getAuthState(conformTrailingSlash(addLeadingSlash(slug))),
     getEdgeFlags(loader.domain),
     loader.getColors(),
   ]);
 
   // check for redirects
   const configuredRedirect = getRedirectForPath(
-    addLeadingSlash(slug),
+    conformTrailingSlash(addLeadingSlash(slug)),
     baseUrl,
     config?.redirects
   );
@@ -188,7 +188,7 @@ export default async function Page({
     const redirect = new URL(withDefaultProtocol(loader.authConfig.redirect));
     redirect.searchParams.set(
       getReturnToQueryParam(loader.authConfig),
-      urlJoin(getOrigin(), slug)
+      urlJoin(preferPreview(domain), slug)
     );
 
     navbarLinks.push({
@@ -207,11 +207,11 @@ export default async function Page({
   if (authState.authed) {
     const logout = new URL(
       getApiRoute("/api/fern-docs/auth/logout"),
-      withDefaultProtocol(getOrigin())
+      withDefaultProtocol(preferPreview(domain))
     );
     logout.searchParams.set(
       getReturnToQueryParam(loader.authConfig),
-      urlJoin(withDefaultProtocol(getOrigin()), slug)
+      urlJoin(withDefaultProtocol(preferPreview(domain)), slug)
     );
 
     navbarLinks.push({
