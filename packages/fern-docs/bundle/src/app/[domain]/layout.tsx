@@ -14,8 +14,6 @@ import tinycolor from "tinycolor2";
 import { GlobalStyles } from "../global-styles";
 import { toImageDescriptor } from "../seo";
 
-export const dynamic = "force-static";
-
 export default async function Layout({
   children,
   params,
