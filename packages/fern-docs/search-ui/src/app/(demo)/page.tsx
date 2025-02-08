@@ -1,5 +1,3 @@
-"use server";
-
 import { ReactElement, Suspense } from "react";
 
 import { algoliaAppId } from "@/server/env-variables";

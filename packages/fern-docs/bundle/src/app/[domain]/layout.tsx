@@ -1,5 +1,3 @@
-"use server";
-
 import { CustomerAnalytics } from "@/components/analytics/CustomerAnalytics";
 import Preload, { PreloadHref } from "@/components/preload";
 import { renderThemeStylesheet } from "@/components/themes/stylesheet/renderThemeStylesheet";

@@ -1,5 +1,3 @@
-"use server";
-
 import { Client } from "@upstash/qstash";
 
 import { qstashToken } from "@/server/env-variables";
@@ -36,11 +34,11 @@ export const handleReindex = async (
   }
 
   const response = await runReindexAlgolia(domain);
-  // eslint-disable-next-line no-console
+
   console.debug(response);
 
   const response2 = await runReindexTurbopuffer(domain);
-  // eslint-disable-next-line no-console
+
   console.debug(response2);
 
   return;

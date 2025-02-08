@@ -1,5 +1,3 @@
-"use server";
-
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import type * as FernDocs from "@fern-api/fdr-sdk/docs";
 import { EMPTY_FRONTMATTER } from "@fern-api/fdr-sdk/docs";

@@ -1,5 +1,3 @@
-"use server";
-
 import { toImageDescriptor } from "@/app/seo";
 import { withCustomJavascript } from "@/components/atoms/docs";
 import type { DocsProps, NavbarLink } from "@/components/atoms/types";

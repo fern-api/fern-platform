@@ -1,5 +1,3 @@
-"use server";
-
 import ChangelogPageClient from "./ChangelogPageClient";
 
 import { createCachedDocsLoader } from "@/server/docs-loader";

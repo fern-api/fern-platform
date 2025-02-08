@@ -1,5 +1,3 @@
-"use server";
-
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import {
   ApiDefinition,

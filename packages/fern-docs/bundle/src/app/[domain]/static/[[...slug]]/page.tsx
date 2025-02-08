@@ -1,5 +1,3 @@
-"use server";
-
 import { Metadata } from "next/types";
 import Page, { generateMetadata as _generateMetadata } from "../../_page";
 

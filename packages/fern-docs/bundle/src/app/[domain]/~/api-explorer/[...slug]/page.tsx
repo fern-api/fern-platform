@@ -1,5 +1,3 @@
-"use server";
-
 import { PlaygroundEndpoint } from "@/components/playground/endpoint/PlaygroundEndpoint";
 import { conformExplorerRoute } from "@/components/playground/utils/explorer-route";
 import { PlaygroundWebSocket } from "@/components/playground/websocket/PlaygroundWebSocket";

@@ -1,5 +1,3 @@
-"use server";
-
 import { CohereDocs } from "./cohere/CohereDocs";
 import { DefaultDocs } from "./default/DefaultDocs";
 

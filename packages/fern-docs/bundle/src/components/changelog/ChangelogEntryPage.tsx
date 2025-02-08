@@ -1,5 +1,3 @@
-"use server";
-
 import { createCachedDocsLoader } from "@/server/docs-loader";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { notFound } from "next/navigation";

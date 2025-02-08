@@ -1,5 +1,3 @@
-"use server";
-
 import { FernLinkButton } from "@/components/components/FernLinkButton";
 import { Logo } from "@/components/logo";
 import { createCachedDocsLoader } from "@/server/docs-loader";

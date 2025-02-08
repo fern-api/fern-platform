@@ -1,5 +1,3 @@
-"use server";
-
 import { PlaygroundEndpointSelectorContent } from "@/components/playground/endpoint/PlaygroundEndpointSelectorContent";
 import { flattenApiSection } from "@/components/playground/utils/flatten-apis";
 import { HorizontalSplitPane } from "@/components/playground/VerticalSplitPane";

@@ -1,5 +1,3 @@
-"use server";
-
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { notFound } from "next/navigation";
 import ApiEndpointPage from "../api-reference/ApiEndpointPage";
