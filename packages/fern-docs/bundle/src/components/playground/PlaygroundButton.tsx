@@ -1,3 +1,5 @@
+"use client";
+
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
 import { FernTooltip, FernTooltipProvider } from "@fern-docs/components";
 import { PlaySolid } from "iconoir-react";

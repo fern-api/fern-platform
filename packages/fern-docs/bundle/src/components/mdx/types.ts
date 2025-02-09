@@ -6,6 +6,7 @@ export type FernSerializeMdxOptions = {
   filename?: string;
   showError?: boolean;
   options?: Options;
+  stripParagraph?: boolean;
 
   files?: Record<string, string>;
   scope?: Record<string, unknown>;

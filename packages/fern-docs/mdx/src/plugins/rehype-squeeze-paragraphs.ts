@@ -15,13 +15,20 @@ function isParagraphElement(
 /**
  * Removes <p> tags that are nested inside <p> tags
  */
-export function rehypeSqueezeParagraphs(): (tree: Root) => void {
+export function rehypeSqueezeParagraphs({
+  stripParagraph = false,
+}: {
+  stripParagraph?: boolean;
+} = {}): (tree: Root) => void {
   return function (tree: Root): void {
     visit(tree, (node, index, parent) => {
       if (index == null || parent == null) {
         return;
       }
-      if (isParagraphElement(node) && isParagraphElement(parent)) {
+      if (
+        isParagraphElement(node) &&
+        (isParagraphElement(parent) || stripParagraph)
+      ) {
         parent.children.splice(index, 1, ...node.children);
         return index;
       }

@@ -1,3 +1,5 @@
+"use client";
+
 import type { FernNavigation } from "@fern-api/fdr-sdk";
 import { NavArrowRight } from "iconoir-react";
 import { Fragment, ReactElement } from "react";
@@ -20,24 +22,22 @@ export function FernBreadcrumbs({
     return null;
   }
   return (
-    <div>
-      <span className="fern-breadcrumb">
-        {filteredBreadcrumbs.map((breadcrumb, idx) => (
-          <Fragment key={idx}>
-            {idx > 0 && <NavArrowRight className="fern-breadcrumb-arrow" />}
-            {breadcrumb.pointsTo != null ? (
-              <FernLink
-                className="fern-breadcrumb-item"
-                href={toHref(breadcrumb.pointsTo)}
-              >
-                {breadcrumb.title}
-              </FernLink>
-            ) : (
-              <span className="fern-breadcrumb-item">{breadcrumb.title}</span>
-            )}
-          </Fragment>
-        ))}
-      </span>
-    </div>
+    <span className="fern-breadcrumb">
+      {filteredBreadcrumbs.map((breadcrumb, idx) => (
+        <Fragment key={idx}>
+          {idx > 0 && <NavArrowRight className="fern-breadcrumb-arrow" />}
+          {breadcrumb.pointsTo != null ? (
+            <FernLink
+              className="fern-breadcrumb-item"
+              href={toHref(breadcrumb.pointsTo)}
+            >
+              {breadcrumb.title}
+            </FernLink>
+          ) : (
+            <span className="fern-breadcrumb-item">{breadcrumb.title}</span>
+          )}
+        </Fragment>
+      ))}
+    </span>
   );
 }

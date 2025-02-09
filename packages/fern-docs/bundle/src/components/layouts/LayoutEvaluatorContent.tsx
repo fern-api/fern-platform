@@ -12,9 +12,10 @@ import { ReferenceLayout } from "./ReferenceLayout";
 import { TableOfContentsLayout } from "./TableOfContentsLayout";
 
 interface LayoutEvaluatorProps {
+  domain: string;
   frontmatter: FernDocs.Frontmatter;
-  title: ReactNode;
-  subtitle: ReactNode | undefined;
+  title: string;
+  subtitle?: string;
   breadcrumb: readonly FernNavigation.BreadcrumbItem[];
   tableOfContents: TableOfContentsItem[];
   children: ReactNode;
@@ -22,6 +23,7 @@ interface LayoutEvaluatorProps {
 }
 
 export function LayoutEvaluatorContent({
+  domain,
   frontmatter,
   title,
   subtitle,
@@ -34,7 +36,12 @@ export function LayoutEvaluatorContent({
 
   const PageHeaderComponent = () => {
     return (
-      <PageHeader title={title} subtitle={subtitle} breadcrumb={breadcrumb} />
+      <PageHeader
+        domain={domain}
+        title={title}
+        subtitle={subtitle}
+        breadcrumb={breadcrumb}
+      />
     );
   };
 

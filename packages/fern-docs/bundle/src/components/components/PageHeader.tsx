@@ -1,37 +1,51 @@
-"use client";
+import "server-only";
 
+import { createCachedDocsLoader } from "@/server/docs-loader";
 import type { FernNavigation } from "@fern-api/fdr-sdk";
-import type { ReactElement, ReactNode } from "react";
+import React from "react";
+import { MdxContent } from "../mdx/MdxContent";
 import { FernBreadcrumbs } from "./FernBreadcrumbs";
 
-interface PageHeaderProps {
-  title: ReactNode;
-  subtitle: ReactNode | undefined;
-  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
-}
-
-export const PageHeader = ({
+export const PageHeader = async ({
+  domain,
   breadcrumb,
-  title,
-  subtitle,
-}: PageHeaderProps): ReactElement => {
-  return (
-    <header className="mb-8">
-      <div className="space-y-1">
-        <FernBreadcrumbs breadcrumb={breadcrumb} />
+  title: titleProp,
+  tags,
+  subtitle: subtitleProp,
+  children,
+}: {
+  domain: string;
+  breadcrumb: readonly FernNavigation.BreadcrumbItem[];
+  title: string;
+  subtitle?: string;
+  tags?: React.ReactNode;
+  children?: React.ReactNode;
+}) => {
+  const docsLoader = await createCachedDocsLoader(domain);
 
-        <h1 className="fern-page-heading">{title}</h1>
+  const [title, subtitle] = await Promise.all([
+    docsLoader.serializeMdx(titleProp, { stripParagraph: true }),
+    docsLoader.serializeMdx(subtitleProp),
+  ]);
+
+  return (
+    <header className="my-8 space-y-2">
+      <div className="flex justify-between">
+        <FernBreadcrumbs breadcrumb={breadcrumb} />
+        {tags}
       </div>
 
-      {/* <Markdown
-                mdx={isResolvedMdx(subtitle) ? subtitle : undefined}
-                fallback={!isResolvedMdx(subtitle) ? subtitle : undefined}
-                size="lg"
-                className="mt-2 leading-7 prose-p:t-muted"
-            /> */}
-      {subtitle != null && (
-        <div className="prose-p:t-muted mt-2 leading-7">{subtitle}</div>
+      <h1 className="text-balance break-words">
+        <MdxContent mdx={title} fallback={titleProp} />
+      </h1>
+
+      {subtitleProp && (
+        <div className="prose-p:t-muted mt-2 leading-7">
+          <MdxContent mdx={subtitle} fallback={subtitleProp} />
+        </div>
       )}
+
+      {children}
     </header>
   );
 };

@@ -59,13 +59,13 @@ function ApiEndpointContent({
     case "endpoint": {
       const context = createEndpointContext(node, apiDefinition);
       if (!context) {
-        console.error(
+        throw new Error(
           `[${domain}] Could not create endpoint context for ${node.id}`
         );
-        notFound();
       }
       return (
         <EndpointContent
+          domain={domain}
           breadcrumb={breadcrumb}
           context={context}
           showErrors
@@ -76,13 +76,13 @@ function ApiEndpointContent({
     case "webSocket": {
       const context = createWebSocketContext(node, apiDefinition);
       if (!context) {
-        console.error(
+        throw new Error(
           `[${domain}] Could not create web socket context for ${node.id}`
         );
-        notFound();
       }
       return (
         <WebSocketContent
+          domain={domain}
           breadcrumb={breadcrumb}
           context={context}
           rootslug={rootslug}
@@ -92,12 +92,17 @@ function ApiEndpointContent({
     case "webhook": {
       const context = createWebhookContext(node, apiDefinition);
       if (!context) {
-        console.error(
+        throw new Error(
           `[${domain}] Could not create web hook context for ${node.id}`
         );
-        notFound();
       }
-      return <WebhookContent breadcrumb={breadcrumb} context={context} />;
+      return (
+        <WebhookContent
+          domain={domain}
+          breadcrumb={breadcrumb}
+          context={context}
+        />
+      );
     }
     default:
       return null;

@@ -1,20 +1,24 @@
+import { PageHeader } from "@/components/components/PageHeader";
 import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import { Markdown } from "@/components/mdx/Markdown";
 import { EndpointContext } from "@fern-api/fdr-sdk/api-definition";
 import type * as FernNavigation from "@fern-api/fdr-sdk/navigation";
+import { AvailabilityBadge } from "@fern-docs/components/badges";
 import { ApiPageCenter } from "../api-page-center";
 import { EndpointContentCodeSnippets } from "./EndpointContentCodeSnippets";
-import { EndpointContentHeader } from "./EndpointContentHeader";
 import { EndpointContentLeft } from "./EndpointContentLeft";
 import { EndpointContextProvider } from "./EndpointContext";
+import { EndpointUrlWithPlaygroundBaseUrl } from "./EndpointUrlWithPlaygroundBaseUrl";
 
 export async function EndpointContent({
+  domain,
   showErrors,
   context,
   breadcrumb,
   rootslug,
   streamToggle,
 }: {
+  domain: string;
   showErrors: boolean;
   context: EndpointContext;
   // hideBottomSeparator?: boolean;
@@ -30,11 +34,21 @@ export async function EndpointContent({
       <ApiPageCenter slug={node.slug} asChild>
         <ReferenceLayout
           header={
-            <EndpointContentHeader
-              context={context}
+            <PageHeader
+              domain={domain}
               breadcrumb={breadcrumb}
-              streamToggle={streamToggle}
-            />
+              title={node.title}
+              tags={
+                endpoint.availability != null && (
+                  <AvailabilityBadge
+                    availability={endpoint.availability}
+                    rounded
+                  />
+                )
+              }
+            >
+              <EndpointUrlWithPlaygroundBaseUrl endpoint={endpoint} />
+            </PageHeader>
           }
           aside={
             <EndpointContentCodeSnippets
@@ -45,7 +59,11 @@ export async function EndpointContent({
             />
           }
           reference={
-            <EndpointContentLeft context={context} showErrors={showErrors} />
+            <EndpointContentLeft
+              domain={domain}
+              context={context}
+              showErrors={showErrors}
+            />
           }
         >
           <Markdown

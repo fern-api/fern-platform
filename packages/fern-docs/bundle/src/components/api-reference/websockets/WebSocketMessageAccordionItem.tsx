@@ -1,3 +1,5 @@
+"use client";
+
 import { APIV1Read } from "@fern-api/fdr-sdk/client/types";
 import { CopyToClipboardButton } from "@fern-docs/components";
 import { FernSyntaxHighlighter } from "@fern-docs/syntax-highlighter";

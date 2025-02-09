@@ -52,6 +52,7 @@ async function serializeMdxImpl(
     scope = {},
     replaceSrc,
     toc = false,
+    stripParagraph = false,
   }: FernSerializeMdxOptions = {}
 ): Promise<string | FernDocs.ResolvedMdx | undefined> {
   if (content == null) {
@@ -140,7 +141,7 @@ async function serializeMdxImpl(
       ];
 
       const rehypePlugins: PluggableList = [
-        rehypeSqueezeParagraphs,
+        rehypeSqueezeParagraphs({ stripParagraph }),
         rehypeMdxClassStyle,
         [rehypeFiles, { replaceSrc }],
         rehypeAcornErrorBoundary,

@@ -38,15 +38,11 @@ export async function LayoutEvaluator({
     }
   }
 
-  const [title, subtitle] = await Promise.all([
-    docsLoader.serializeMdx(frontmatter.title),
-    docsLoader.serializeMdx(frontmatter.subtitle),
-  ]);
-
   return (
     <LayoutEvaluatorContent
-      title={<MdxContent mdx={title} fallback={fallbackTitle} />}
-      subtitle={subtitle ? <MdxContent mdx={subtitle} /> : undefined}
+      domain={domain}
+      title={frontmatter.title ?? fallbackTitle}
+      subtitle={frontmatter.subtitle ?? frontmatter.excerpt}
       frontmatter={frontmatter}
       breadcrumb={breadcrumb}
       tableOfContents={toc}

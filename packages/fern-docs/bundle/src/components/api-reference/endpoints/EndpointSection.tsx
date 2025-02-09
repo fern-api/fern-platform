@@ -1,15 +1,12 @@
+"use client";
+
+import { Markdown } from "@/components/mdx/Markdown";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import dynamic from "next/dynamic";
 import { ReactNode, createElement, useRef } from "react";
 import { FernAnchor } from "../../components/FernAnchor";
 import { FernErrorBoundary } from "../../components/FernErrorBoundary";
 import { useHref } from "../../hooks/useHref";
 import { getAnchorId } from "../../util/anchor";
-
-const Markdown = dynamic(
-  () => import("../../mdx/Markdown").then(({ Markdown }) => Markdown),
-  { ssr: true }
-);
 
 export declare namespace EndpointSection {
   export type Props = React.PropsWithChildren<{

@@ -1,3 +1,5 @@
+"use client";
+
 import { CopyToClipboardButton, SemanticColor } from "@fern-docs/components";
 import cn from "clsx";
 import {

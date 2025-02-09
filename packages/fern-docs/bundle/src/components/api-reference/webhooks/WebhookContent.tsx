@@ -1,147 +1,108 @@
-"use client";
-
-import { WithAside } from "@/components/contexts/api-page";
+import { PageHeader } from "@/components/components/PageHeader";
+import { ReferenceLayout } from "@/components/layouts/ReferenceLayout";
 import * as ApiDefinition from "@fern-api/fdr-sdk/api-definition";
 import * as FernNavigation from "@fern-api/fdr-sdk/navigation";
-import cn from "clsx";
-import { memo, useRef } from "react";
-import { FernBreadcrumbs } from "../../components/FernBreadcrumbs";
-import { useHref } from "../../hooks/useHref";
 import { Markdown } from "../../mdx/Markdown";
+import { ApiPageCenter } from "../api-page-center";
 import { EndpointParameter } from "../endpoints/EndpointParameter";
 import { EndpointSection } from "../endpoints/EndpointSection";
 import { TypeComponentSeparator } from "../types/TypeComponentSeparator";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { WebhookPayloadSection } from "./WebhookPayloadSection";
 import { WebhookResponseSection } from "./WebhookResponseSection";
 import { WebhookExample } from "./webhook-examples/WebhookExample";
 
 export declare namespace WebhookContent {
   export interface Props {
+    domain: string;
     context: ApiDefinition.WebhookContext;
     breadcrumb: readonly FernNavigation.BreadcrumbItem[];
     last?: boolean;
   }
 }
 
-export const WebhookContent = memo<WebhookContent.Props>((props) => {
-  const { context, breadcrumb, last = false } = props;
+export function WebhookContent({
+  domain,
+  context,
+  breadcrumb,
+  last = false,
+}: WebhookContent.Props) {
   const { node, webhook, types } = context;
-
-  const ref = useRef<HTMLDivElement>(null);
-  useApiPageCenterElement(ref, node.slug);
 
   const example = webhook.examples?.[0]; // TODO: Need a way to show all the examples
 
   const webhookExample = example ? <WebhookExample example={example} /> : null;
 
-  const article = (
-    <div className="fern-endpoint-content">
-      <article
-        className={cn(
-          "scroll-mt-content max-w-content-width md:max-w-endpoint-width mx-auto md:grid md:grid-cols-2 md:gap-8 lg:gap-12",
-          {
-            "border-default mb-px border-b pb-20": !last,
-          }
-        )}
-        ref={ref}
-        id={useHref(node.slug)}
-      >
-        <div className="max-w-content-width flex min-w-0 flex-1 flex-col">
-          <div className="space-y-1 py-8">
-            <FernBreadcrumbs breadcrumb={breadcrumb} />
-            <h1 className="my-0 inline-block leading-tight">{node.title}</h1>
-          </div>
-          <Markdown className="leading-6" mdx={webhook.description} />
-          {webhook.headers && webhook.headers.length > 0 && (
-            <div className="mt-8 flex">
-              <div className="flex max-w-full flex-1 flex-col gap-12">
-                <EndpointSection
-                  title="Headers"
-                  anchorIdParts={["payload", "header"]}
-                  slug={node.slug}
-                >
-                  <div className="flex flex-col">
-                    {webhook.headers.map((parameter) => (
-                      <div className="flex flex-col" key={parameter.key}>
-                        <TypeComponentSeparator />
-                        <EndpointParameter
-                          name={parameter.key}
-                          shape={parameter.valueShape}
-                          anchorIdParts={["payload", "header", parameter.key]}
-                          slug={node.slug}
-                          description={parameter.description}
-                          additionalDescriptions={
-                            ApiDefinition.unwrapReference(
-                              parameter.valueShape,
-                              types
-                            ).descriptions
-                          }
-                          availability={parameter.availability}
-                          types={types}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </EndpointSection>
-              </div>
-            </div>
-          )}
-
-          {webhook.payloads?.[0] && (
-            <div className="mt-8 flex">
-              <div className="flex max-w-full flex-1 flex-col gap-12">
-                <EndpointSection
-                  title="Payload"
-                  anchorIdParts={["payload"]}
-                  slug={node.slug}
-                >
-                  <WebhookPayloadSection
-                    payload={webhook.payloads?.[0]}
-                    anchorIdParts={["payload", "body"]}
-                    slug={node.slug}
-                    types={types}
-                  />
-                </EndpointSection>
-              </div>
-            </div>
-          )}
-
-          <div className="mt-8 flex">
-            <div className="flex max-w-full flex-1 flex-col gap-12">
+  return (
+    <ApiPageCenter slug={node.slug} asChild>
+      <ReferenceLayout
+        header={
+          <PageHeader
+            domain={domain}
+            breadcrumb={breadcrumb}
+            title={node.title}
+          />
+        }
+        aside={webhookExample}
+        reference={
+          <div className="space-y-12">
+            {webhook.headers && webhook.headers.length > 0 && (
               <EndpointSection
-                title="Response"
-                anchorIdParts={["response"]}
+                title="Headers"
+                anchorIdParts={["payload", "header"]}
                 slug={node.slug}
               >
-                <WebhookResponseSection />
+                <div className="flex flex-col">
+                  {webhook.headers.map((parameter) => (
+                    <div className="flex flex-col" key={parameter.key}>
+                      <TypeComponentSeparator />
+                      <EndpointParameter
+                        name={parameter.key}
+                        shape={parameter.valueShape}
+                        anchorIdParts={["payload", "header", parameter.key]}
+                        slug={node.slug}
+                        description={parameter.description}
+                        additionalDescriptions={
+                          ApiDefinition.unwrapReference(
+                            parameter.valueShape,
+                            types
+                          ).descriptions
+                        }
+                        availability={parameter.availability}
+                        types={types}
+                      />
+                    </div>
+                  ))}
+                </div>
               </EndpointSection>
-            </div>
+            )}
+
+            {webhook.payloads?.[0] && (
+              <EndpointSection
+                title="Payload"
+                anchorIdParts={["payload"]}
+                slug={node.slug}
+              >
+                <WebhookPayloadSection
+                  payload={webhook.payloads?.[0]}
+                  anchorIdParts={["payload", "body"]}
+                  slug={node.slug}
+                  types={types}
+                />
+              </EndpointSection>
+            )}
+
+            <EndpointSection
+              title="Response"
+              anchorIdParts={["response"]}
+              slug={node.slug}
+            >
+              <WebhookResponseSection />
+            </EndpointSection>
           </div>
-        </div>
-        <div
-          className={cn(
-            "max-w-content-width",
-            "top-header-offset sticky flex-1 self-start",
-            // the py-10 is the same as the 40px below
-            "pb-10 pt-8",
-            // the 4rem is the same as the h-10 as the Header
-            "max-h-content",
-            // hide on mobile,
-            "hidden md:flex"
-          )}
-        >
-          {webhookExample}
-        </div>
-
-        <div className="mt-10 flex max-h-[150vh] md:mt-0 md:hidden">
-          {webhookExample}
-        </div>
-      </article>
-    </div>
+        }
+      >
+        <Markdown className="leading-6" mdx={webhook.description} />
+      </ReferenceLayout>
+    </ApiPageCenter>
   );
-
-  return <WithAside.Provider value={true}>{article}</WithAside.Provider>;
-});
-
-WebhookContent.displayName = "WebhookContent";
+}
